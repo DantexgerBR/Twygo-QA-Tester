@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Twygo — Relatório de Testes</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --fg: #e2e8f0;
+      --muted: #94a3b8;
+      --pass: #22c55e;
+      --fail: #ef4444;
+      --skip: #f59e0b;
+      --border: #334155;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      padding: 2rem;
+    }
+    header { margin-bottom: 2rem; }
+    h1 { margin: 0 0 0.25rem; font-size: 1.75rem; }
+    .subtitle { color: var(--muted); font-size: 0.9rem; }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .stat {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+    }
+    .stat .label { color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .stat .value { font-size: 2rem; font-weight: 600; margin-top: 0.25rem; }
+    .stat.pass .value { color: var(--pass); }
+    .stat.fail .value { color: var(--fail); }
+    .stat.skip .value { color: var(--skip); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      font-size: 0.9rem;
+    }
+    th { background: #0f172a; color: var(--muted); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; }
+    tr:last-child td { border-bottom: none; }
+    .badge {
+      display: inline-block;
+      padding: 0.15rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .badge-passed { background: rgba(34, 197, 94, 0.15); color: var(--pass); }
+    .badge-failed, .badge-timedOut, .badge-interrupted { background: rgba(239, 68, 68, 0.15); color: var(--fail); }
+    .badge-skipped { background: rgba(245, 158, 11, 0.15); color: var(--skip); }
+    details { margin-top: 0.25rem; }
+    details summary { cursor: pointer; color: var(--muted); }
+    pre {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.75rem;
+      overflow-x: auto;
+      font-size: 0.8rem;
+      margin: 0.5rem 0 0;
+    }
+    a { color: #60a5fa; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Twygo — Relatório de Testes</h1>
+    <div class="subtitle">Gerado em {{GENERATED_AT}}</div>
+  </header>
+
+  <section class="summary">
+    <div class="stat"><div class="label">Total</div><div class="value">{{TOTAL}}</div></div>
+    <div class="stat pass"><div class="label">Passaram</div><div class="value">{{PASSED}}</div></div>
+    <div class="stat fail"><div class="label">Falharam</div><div class="value">{{FAILED}}</div></div>
+    <div class="stat skip"><div class="label">Pularam</div><div class="value">{{SKIPPED}}</div></div>
+    <div class="stat"><div class="label">Duração</div><div class="value">{{DURATION}}</div></div>
+  </section>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Suíte</th>
+        <th>Teste</th>
+        <th>Browser</th>
+        <th>Status</th>
+        <th>Duração</th>
+        <th>Detalhes</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{ROWS}}
+    </tbody>
+  </table>
+</body>
+</html>

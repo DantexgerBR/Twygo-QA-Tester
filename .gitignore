@@ -1,0 +1,55 @@
+# ===== Node.js =====
+node_modules/
+dist/
+build/
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ===== Playwright =====
+playwright-report/
+test-results/
+.playwright/
+agent-playwright/outputs/screenshots/
+agent-playwright/outputs/traces/
+agent-playwright/outputs/test-results.json
+agent-playwright/outputs/test-report.html
+agent-playwright/outputs/html-report/
+agent-playwright/outputs/test-artifacts/
+
+# ===== Env / segredos =====
+.env
+.env.local
+.env.*.local
+
+# ===== Logs =====
+*.log
+
+# ===== IDEs / Editors =====
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== Claude Code (workspace local) =====
+.claude/settings.local.json

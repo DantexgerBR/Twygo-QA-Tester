@@ -1,0 +1,33 @@
+{
+  "name": "twygo-test-agent",
+  "version": "1.0.0",
+  "description": "Agente Genérico de Execução de Testes Playwright para a plataforma Twygo.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:chromium": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=firefox",
+    "test:debug": "playwright test --debug",
+    "test:report": "playwright show-report outputs/html-report",
+    "agent:parse": "tsx skills/twygo-xml-parser/parser.ts",
+    "agent:generate": "tsx skills/twygo-test-executor/executor.ts --generate-only",
+    "agent:run": "tsx skills/twygo-test-executor/executor.ts",
+    "agent:report": "tsx skills/twygo-report-generator/generator.ts",
+    "typecheck": "tsc --noEmit",
+    "clean": "rimraf outputs/screenshots outputs/traces outputs/test-results.json outputs/test-report.html outputs/html-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "@types/node": "^22.10.0",
+    "fast-xml-parser": "^4.5.0",
+    "rimraf": "^6.0.1",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

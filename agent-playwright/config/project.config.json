@@ -1,0 +1,22 @@
+{
+  "projectName": "twygo-test-agent",
+  "testAnalysisFile": "inputs/test-analysis.xml",
+  "environment": "staging",
+  "browsers": ["chromium"],
+  "headless": true,
+  "reporting": {
+    "format": "html",
+    "outputDir": "outputs",
+    "screenshotsOnFailure": true
+  },
+  "performance": {
+    "enableTracing": true,
+    "enableVideo": false
+  },
+  "codeGeneration": {
+    "pagesDir": "src/pages",
+    "featuresDir": "tests/features",
+    "overwriteExistingPages": false,
+    "overwriteExistingTests": true
+  }
+}

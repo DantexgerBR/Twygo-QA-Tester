@@ -1,0 +1,10 @@
+{
+  "staging": {
+    "baseUrl": "https://eduapi.stage.twygoead.com/",
+    "credentials": {
+      "email": "eduardo.schmidt@twygo.com",
+      "password": "123456"
+    },
+    "timeout": 30000
+  }
+}
