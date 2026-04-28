@@ -1,6 +1,6 @@
 ---
 name: twygo-test-orchestrator
-description: Orquestra o ciclo completo de geração e execução de testes Playwright a partir do JSON parseado do XML TestLink. Delega planejamento, geração e healing aos subagentes do plugin oficial Playwright (planner/generator/healer) com contexto Twygo. Suporta modo per-suite (dia-a-dia) e modo regressivo (CI).
+description: Orquestra o ciclo completo de geração e execução de testes Playwright a partir do JSON parseado do XML TestLink. Delega planejamento, geração e healing aos subagentes do plugin oficial Playwright (playwright-test-planner / playwright-test-generator / playwright-test-healer) com contexto Twygo. Suporta modo per-suite (dia-a-dia) e modo regressivo (CI).
 version: 1.0.0
 ---
 
@@ -43,7 +43,7 @@ Para cada `<testcase>` no escopo:
 
 1. Carregar do JSON parseado: `name`, `summary`, `preconditions`, `importance`,
    `executionType`, `steps[]`.
-2. Invocar o subagente **`planner`** do plugin Playwright com este contexto:
+2. Invocar o subagent **`playwright-test-planner`** (definido em `.claude/agents/`, MCP `playwright-test`) com este contexto:
    ```
    Você está testando a plataforma Twygo (módulo: <nome da testsuite>).
    Caso de teste: <nome do testcase>
@@ -79,7 +79,7 @@ Antes do generator escrever o spec:
 
 Para cada testcase planejado:
 
-1. Invocar o subagente **`generator`** do plugin Playwright com:
+1. Invocar o subagent **`playwright-test-generator`** (definido em `.claude/agents/`, MCP `playwright-test`) com:
    - O plano da Etapa 2.
    - Lista de Page Objects disponíveis (e quais métodos eles expõem).
    - Acesso ao Playwright MCP para validar seletores ao vivo.
@@ -135,7 +135,7 @@ npm run agent:report -- --regression             # regressivo
 Se houve falhas que parecem **mudança de UI** (não bug funcional):
 
 1. Identificar specs com falha por seletor não encontrado / timeout.
-2. Para cada um, invocar o subagente **`healer`** do plugin Playwright:
+2. Para cada um, invocar o subagent **`playwright-test-healer`** (definido em `.claude/agents/`, MCP `playwright-test`):
    - Input: spec + screenshot da falha + DOM atual via Playwright MCP.
    - O healer propõe correção minimal (apenas seletor/espera/asserção,
      **nunca** muda o que o teste valida).

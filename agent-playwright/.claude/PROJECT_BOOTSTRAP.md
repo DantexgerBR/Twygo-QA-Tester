@@ -51,10 +51,30 @@ mudarem por projeto (geralmente não — é a mesma plataforma Twygo).
 ```bash
 cd agent-playwright
 npm install                                # se primeira vez na máquina
+npx playwright install chromium            # se primeira vez na máquina
 npm run typecheck                          # garantir que tudo compila
 npm run agent:parse                        # parsear o XML, verificar contagens
 npm run agent:suites                       # listar as testsuites do projeto
 ```
+
+### 4.1. Subagents oficiais Playwright (uma vez por repo)
+
+Os subagents `playwright-test-planner`, `playwright-test-generator` e
+`playwright-test-healer` ficam em `.claude/agents/` e devem estar commitados
+no master. Se algum projeto novo precisar regenerar (por exemplo, após
+upgrade do Playwright), rode:
+
+```bash
+npx playwright init-agents --loop claude
+```
+
+Esse comando atualiza `.claude/agents/*.md`, `.mcp.json`, `tests/seed.spec.ts`
+e `specs/README.md`. Reveja diffs antes de commitar — `init-agents`
+sobrescreve sem perguntar.
+
+> **Importante**: os subagents só ficam disponíveis em **sessões NOVAS** do
+> Claude Code. Se você acabou de rodar `init-agents`, feche e reabra o
+> `claude` em `agent-playwright/` para que apareçam como `subagent_type`.
 
 A última saída deve mostrar a quebra de blocos em testsuites (1 bloco do
 XLSX ≈ 1 testsuite no XML).

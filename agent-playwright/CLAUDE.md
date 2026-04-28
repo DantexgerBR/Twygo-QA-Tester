@@ -73,7 +73,9 @@ agent-playwright/
 ├── tests/
 │   ├── auth/                       # specs hand-written (referência)
 │   ├── features/                   # specs gerados pelo orquestrador
+│   ├── seed.spec.ts                # seed para o playwright-test-generator
 │   └── setup/
+├── specs/                          # test plans salvos pelo playwright-test-planner
 ├── outputs/                        # 100% gerado — NÃO commitar
 │   ├── test-analysis.parsed.json   # do twygo-xml-parser
 │   ├── test-results.json           # JSON reporter Playwright
@@ -84,8 +86,13 @@ agent-playwright/
 │   └── (screenshots, traces, html-report)
 ├── .claude/
 │   ├── SETUP.md                    # instalação inicial
+│   ├── PROJECT_BOOTSTRAP.md        # ritual de iniciar projeto novo
 │   ├── prose-patterns.md           # padrões prosa PT-BR → Playwright
 │   ├── commands.md                 # comandos npm + flags + env vars
+│   ├── agents/                     # subagents oficiais Playwright (init-agents --loop claude)
+│   │   ├── playwright-test-planner.md
+│   │   ├── playwright-test-generator.md
+│   │   └── playwright-test-healer.md
 │   └── skills/                     # skills locais Twygo + webapp-testing
 │       ├── twygo-xml-parser/
 │       ├── twygo-test-orchestrator/
@@ -153,18 +160,29 @@ política para prosa ambígua e cenários fora do escopo.
 
 | MCP | Quando usar |
 |---|---|
-| **`playwright`** ([microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp)) | **Padrão** — Fase 4 (validação de seletores ao vivo) + Fase 7 (healing) |
+| **`playwright-test`** (`npx playwright run-test-mcp-server`) | **Padrão** — usado pelos 3 subagents oficiais de test (Fases 3/4/7). Expõe `browser_*`, `planner_*`, `generator_*`, `test_*`, `browser_generate_locator` |
 | **`chrome-devtools`** ([ChromeDevTools/chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp)) | Opt-in — debug profundo (Web Vitals, traces) |
 | **`github`** ([github/github-mcp-server](https://github.com/github/github-mcp-server)) | Opt-in — CI/healer abrindo issues + PRs |
 
-### 6.2. Skills externas
+> O `.mcp.json` é gerado por `npx playwright init-agents --loop claude` no SETUP. Não editar manualmente.
+
+### 6.2. Subagents Claude Code para Playwright (`.claude/agents/`)
+
+Definidos por `npx playwright init-agents --loop claude` (oficial Microsoft). São Markdown com frontmatter declarando `tools` (ferramentas do MCP `playwright-test`) e ficam disponíveis via `subagent_type` em sessões iniciadas dentro de `agent-playwright/`.
+
+| Subagent (`subagent_type`) | Papel | Tools principais |
+|---|---|---|
+| **`playwright-test-planner`** | Lê o XML/contexto, navega no app real, salva plano estruturado em `specs/` | `browser_*`, `planner_setup_page`, `planner_save_plan` |
+| **`playwright-test-generator`** | Lê o plano + seed (`tests/seed.spec.ts`), gera `.spec.ts` com seletores validados | `browser_*`, `generator_setup_page`, `generator_write_test` |
+| **`playwright-test-healer`** | Roda specs, identifica falhas, edita corrigindo seletor/timing/asserção | `test_run`, `test_debug`, `browser_generate_locator` |
+
+### 6.3. Skill externa metodológica
 
 | Skill | Origem | Papel |
 |---|---|---|
-| **`webapp-testing`** | [anthropics/skills](https://github.com/anthropics/skills) | Guia metodológico de boas práticas de teste web |
-| **Plugin Playwright** (planner/generator/healer) | [claude.com/plugins/playwright](https://claude.com/plugins/playwright) | 3 subagentes que o orquestrador delega |
+| **`webapp-testing`** | [anthropics/skills](https://github.com/anthropics/skills) | Guia metodológico de boas práticas de teste web (carregada como contexto) |
 
-### 6.3. Skills locais Twygo (`.claude/skills/`)
+### 6.4. Skills locais Twygo (`.claude/skills/`)
 
 | Skill | Fase | Papel |
 |---|---|---|
@@ -173,7 +191,7 @@ política para prosa ambígua e cenários fora do escopo.
 | **`twygo-exploratory-validator`** | 5.5 | Agrega findings + cobertura + exporter Allure |
 | **`twygo-report-generator`** | 6 | HTML híbrido per-suite + delega Allure CLI no regressivo |
 
-### 6.4. Bibliotecas npm
+### 6.5. Bibliotecas npm
 
 `@playwright/test` · `@axe-core/playwright` · `allure-playwright` ·
 `allure-commandline` · `fast-xml-parser`

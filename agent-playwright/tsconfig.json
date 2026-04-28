@@ -39,6 +39,7 @@
     "node_modules",
     "dist",
     "outputs",
-    "templates"
+    "templates",
+    "tests/seed.spec.ts"
   ]
 }
