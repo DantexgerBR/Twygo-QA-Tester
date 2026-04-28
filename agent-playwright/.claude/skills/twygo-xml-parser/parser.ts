@@ -74,6 +74,11 @@ const xmlReader = new XMLParser({
   textNodeName: '#text',
   trimValues: false,
   parseAttributeValue: false,
+  // O TestLink exporta texto duplamente escapado (ex.: `&amp;gt;`). O default
+  // do fast-xml-parser limita expansões a 1000 e XMLs maiores estouram esse
+  // teto. Desligamos a expansão aqui e fazemos a decodificação manualmente
+  // em decodeHtmlEntities() (tratamento iterativo cobre dupla codificação).
+  processEntities: false,
   isArray: (name) => ['testsuite', 'testcase', 'step'].includes(name),
 });
 
@@ -86,11 +91,22 @@ const ENTITY_MAP: Record<string, string> = {
   nbsp: ' ',
 };
 
+/**
+ * Decodifica entidades HTML iterativamente para lidar com codificação dupla
+ * comum em exports TestLink (`&amp;gt;` → `&gt;` → `>`). Limite de 5
+ * iterações como guardrail; convergência típica ocorre em 1-2 passes.
+ */
 function decodeHtmlEntities(text: string): string {
-  return text.replace(
-    /&(gt|lt|amp|quot|apos|nbsp);/g,
-    (match, name: string) => ENTITY_MAP[name] ?? match,
-  );
+  let curr = text;
+  for (let i = 0; i < 5; i++) {
+    const next = curr.replace(
+      /&(gt|lt|amp|quot|apos|nbsp);/g,
+      (match, name: string) => ENTITY_MAP[name] ?? match,
+    );
+    if (next === curr) break;
+    curr = next;
+  }
+  return curr;
 }
 
 function cleanText(input: unknown): string {
