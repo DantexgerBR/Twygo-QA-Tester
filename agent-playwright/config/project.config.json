@@ -1,6 +1,6 @@
 {
-  "projectName": "twygo-novo-projeto",
-  "testAnalysisFile": "inputs/test-analysis.xml",
+  "projectName": "Gestão de Créditos de IA - Fase 2",
+  "testAnalysisFile": "inputs/Gestão de Créditos de IA - Fase 2 1.xml",
   "environment": "staging",
   "browsers": ["chromium"],
   "headless": true,
