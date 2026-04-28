@@ -1,194 +1,261 @@
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { XMLParser, XMLValidator } from 'fast-xml-parser';
-import { createLogger } from '../../src/utils/logger.js';
-import { FILES } from '../../src/utils/constants.js';
-import { ensureParentDir } from '../../src/utils/helpers.js';
+import { createLogger } from '../../../src/utils/logger.js';
+import { FILES } from '../../../src/utils/constants.js';
+import { ensureParentDir } from '../../../src/utils/helpers.js';
 
 const log = createLogger('xml-parser');
 
-export type ParsedStep = {
-  id: string;
-  action: string;
-  target?: string;
-  locator?: string;
-  value?: string;
-  description: string;
-};
+/**
+ * Tipos do JSON parseado a partir de XML TestLink padrão:
+ *   <testsuite name="">
+ *     <testsuite name="bloco">
+ *       <testcase name="...">
+ *         <summary>...</summary>
+ *         <preconditions>...</preconditions>
+ *         <execution_type>1|2</execution_type>
+ *         <importance>1|2|3</importance>
+ *         <steps>
+ *           <step>
+ *             <step_number>1</step_number>
+ *             <actions>prosa em PT-BR</actions>
+ *             <expectedresults>prosa em PT-BR</expectedresults>
+ *             <execution_type>1|2</execution_type>
+ *           </step>
+ *         </steps>
+ *       </testcase>
+ *     </testsuite>
+ *   </testsuite>
+ *
+ * `<actions>` e `<expectedresults>` carregam texto livre (frequentemente em
+ * PT-BR) — não há códigos semânticos como `action="fill"`. A interpretação
+ * para Playwright é responsabilidade do orquestrador, não do parser.
+ */
 
-export type ParsedAssertion = {
-  id: string;
-  type: string;
-  target?: string;
-  locator?: string;
-  value?: string;
-  description: string;
+export type ParsedStep = {
+  stepNumber: number;
+  actions: string;
+  expectedResults: string;
+  executionType: number;
 };
 
 export type ParsedTestCase = {
-  id: string;
   name: string;
-  preconditions: string[];
+  internalId?: string;
+  externalId?: string;
+  summary: string;
+  preconditions: string;
+  executionType: number;
+  importance: number;
   steps: ParsedStep[];
-  assertions: ParsedAssertion[];
 };
 
-export type ParsedScenario = {
-  id: string;
+export type ParsedTestSuite = {
   name: string;
-  description: string;
   testCases: ParsedTestCase[];
+  childSuites: ParsedTestSuite[];
+};
+
+export type AnalysisTotals = {
+  suites: number;
+  testCases: number;
+  steps: number;
 };
 
 export type ParsedAnalysis = {
-  project: string;
-  version: string;
-  date: string;
-  author?: string;
-  scenarios: ParsedScenario[];
+  rootSuite: ParsedTestSuite;
+  totals: AnalysisTotals;
 };
 
-const parser = new XMLParser({
+const xmlReader = new XMLParser({
   ignoreAttributes: false,
   attributeNamePrefix: '@_',
   textNodeName: '#text',
-  trimValues: true,
+  trimValues: false,
   parseAttributeValue: false,
-  isArray: (name) =>
-    ['scenario', 'test-case', 'step', 'result', 'condition'].includes(name),
+  isArray: (name) => ['testsuite', 'testcase', 'step'].includes(name),
 });
+
+const ENTITY_MAP: Record<string, string> = {
+  gt: '>',
+  lt: '<',
+  amp: '&',
+  quot: '"',
+  apos: "'",
+  nbsp: ' ',
+};
+
+function decodeHtmlEntities(text: string): string {
+  return text.replace(
+    /&(gt|lt|amp|quot|apos|nbsp);/g,
+    (match, name: string) => ENTITY_MAP[name] ?? match,
+  );
+}
+
+function cleanText(input: unknown): string {
+  if (input === null || input === undefined) return '';
+  let text: string;
+  if (typeof input === 'string') {
+    text = input;
+  } else if (typeof input === 'number' || typeof input === 'boolean') {
+    text = String(input);
+  } else if (typeof input === 'object' && '#text' in (input as Record<string, unknown>)) {
+    const t = (input as Record<string, unknown>)['#text'];
+    text = typeof t === 'string' ? t : String(t ?? '');
+  } else {
+    text = String(input);
+  }
+  text = decodeHtmlEntities(text);
+  text = text.replace(/\s+/g, ' ').trim();
+  return text;
+}
 
 function asArray<T>(value: T | T[] | undefined): T[] {
   if (value === undefined || value === null) return [];
   return Array.isArray(value) ? value : [value];
 }
 
-function textOf(node: unknown): string {
-  if (typeof node === 'string') return node.trim();
-  if (node && typeof node === 'object' && '#text' in (node as Record<string, unknown>)) {
-    return String((node as Record<string, unknown>)['#text'] ?? '').trim();
+type RawNode = Record<string, unknown>;
+
+function mapStep(raw: RawNode): ParsedStep {
+  return {
+    stepNumber: Number(cleanText(raw['step_number'])) || 0,
+    actions: cleanText(raw['actions']),
+    expectedResults: cleanText(raw['expectedresults']),
+    executionType: Number(cleanText(raw['execution_type'])) || 1,
+  };
+}
+
+function mapTestCase(raw: RawNode): ParsedTestCase {
+  const stepsContainer = (raw['steps'] as RawNode | undefined) ?? {};
+  const stepsRaw = asArray<RawNode>(
+    stepsContainer['step'] as RawNode | RawNode[] | undefined,
+  );
+  const tc: ParsedTestCase = {
+    name: cleanText(raw['@_name']),
+    summary: cleanText(raw['summary']),
+    preconditions: cleanText(raw['preconditions']),
+    executionType: Number(cleanText(raw['execution_type'])) || 1,
+    importance: Number(cleanText(raw['importance'])) || 2,
+    steps: stepsRaw.map(mapStep),
+  };
+  if (raw['@_internalid']) tc.internalId = String(raw['@_internalid']);
+  if (raw['@_externalid']) tc.externalId = String(raw['@_externalid']);
+  return tc;
+}
+
+function mapTestSuite(raw: RawNode): ParsedTestSuite {
+  return {
+    name: cleanText(raw['@_name']),
+    testCases: asArray<RawNode>(
+      raw['testcase'] as RawNode | RawNode[] | undefined,
+    ).map(mapTestCase),
+    childSuites: asArray<RawNode>(
+      raw['testsuite'] as RawNode | RawNode[] | undefined,
+    ).map(mapTestSuite),
+  };
+}
+
+function computeTotals(suite: ParsedTestSuite): AnalysisTotals {
+  let suites = 1;
+  let testCases = suite.testCases.length;
+  let steps = suite.testCases.reduce((n, tc) => n + tc.steps.length, 0);
+  for (const child of suite.childSuites) {
+    const c = computeTotals(child);
+    suites += c.suites;
+    testCases += c.testCases;
+    steps += c.steps;
   }
-  return '';
+  return { suites, testCases, steps };
 }
 
-type RawStep = Record<string, unknown>;
-type RawCase = Record<string, unknown>;
-type RawScenario = Record<string, unknown>;
-
-function mapStep(raw: RawStep): ParsedStep {
-  return {
-    id: String(raw['@_id'] ?? ''),
-    action: String(raw['@_action'] ?? ''),
-    target: raw['@_target'] ? String(raw['@_target']) : undefined,
-    locator: raw['@_locator'] ? String(raw['@_locator']) : undefined,
-    value: raw['@_value'] ? String(raw['@_value']) : undefined,
-    description: textOf(raw),
-  };
-}
-
-function mapAssertion(raw: RawStep): ParsedAssertion {
-  return {
-    id: String(raw['@_id'] ?? ''),
-    type: String(raw['@_assertion'] ?? ''),
-    target: raw['@_target'] ? String(raw['@_target']) : undefined,
-    locator: raw['@_locator'] ? String(raw['@_locator']) : undefined,
-    value: raw['@_value'] ? String(raw['@_value']) : undefined,
-    description: textOf(raw),
-  };
-}
-
-function mapTestCase(raw: RawCase): ParsedTestCase {
-  const preconditionsNode = (raw['preconditions'] as Record<string, unknown>) ?? {};
-  const stepsNode = (raw['steps'] as Record<string, unknown>) ?? {};
-  const expectedNode = (raw['expected-results'] as Record<string, unknown>) ?? {};
-
-  return {
-    id: String(raw['@_id'] ?? ''),
-    name: String(raw['@_name'] ?? ''),
-    preconditions: asArray<Record<string, unknown> | string>(
-      preconditionsNode['condition'] as Record<string, unknown> | string | undefined,
-    ).map((c) => textOf(c)),
-    steps: asArray<RawStep>(stepsNode['step'] as RawStep | RawStep[] | undefined).map(mapStep),
-    assertions: asArray<RawStep>(expectedNode['result'] as RawStep | RawStep[] | undefined).map(
-      mapAssertion,
-    ),
-  };
-}
-
-function mapScenario(raw: RawScenario): ParsedScenario {
-  return {
-    id: String(raw['@_id'] ?? ''),
-    name: String(raw['@_name'] ?? ''),
-    description: textOf(raw['description']),
-    testCases: asArray<RawCase>(raw['test-case'] as RawCase | RawCase[] | undefined).map(
-      mapTestCase,
-    ),
-  };
-}
-
-export function parseAnalysisXml(xmlContent: string): ParsedAnalysis {
+export function parseTestLinkXml(xmlContent: string): ParsedAnalysis {
   const validation = XMLValidator.validate(xmlContent);
   if (validation !== true) {
-    throw new Error(`XML inválido: ${validation.err.msg} (linha ${validation.err.line})`);
+    throw new Error(
+      `XML mal-formado: ${validation.err.msg} (linha ${validation.err.line})`,
+    );
   }
-
-  const doc = parser.parse(xmlContent) as Record<string, unknown>;
-  const root = doc['test-analysis'] as Record<string, unknown> | undefined;
-  if (!root) {
-    throw new Error('Elemento raiz <test-analysis> ausente.');
+  const doc = xmlReader.parse(xmlContent) as Record<string, unknown>;
+  const rootRaw = doc['testsuite'];
+  if (!rootRaw) {
+    throw new Error(
+      'Elemento raiz <testsuite> ausente. O XML deve seguir o formato TestLink.',
+    );
   }
+  const rootNode = (Array.isArray(rootRaw) ? rootRaw[0] : rootRaw) as RawNode;
+  const rootSuite = mapTestSuite(rootNode);
+  return { rootSuite, totals: computeTotals(rootSuite) };
+}
 
-  const metadata = (root['metadata'] as Record<string, unknown>) ?? {};
-  const scenariosNode = (root['test-scenarios'] as Record<string, unknown>) ?? {};
-
-  return {
-    project: textOf(metadata['project']),
-    version: textOf(metadata['version']),
-    date: textOf(metadata['date']),
-    author: textOf(metadata['author']) || undefined,
-    scenarios: asArray<RawScenario>(
-      scenariosNode['scenario'] as RawScenario | RawScenario[] | undefined,
-    ).map(mapScenario),
-  };
+function walkAndValidate(suite: ParsedTestSuite, path: string[]): void {
+  const here = [...path, suite.name || '<root>'];
+  for (const tc of suite.testCases) {
+    if (!tc.name) {
+      throw new Error(`Testcase sem nome em ${here.join(' > ')}`);
+    }
+    if (tc.steps.length === 0) {
+      throw new Error(`Testcase "${tc.name}" sem <step> em ${here.join(' > ')}`);
+    }
+  }
+  for (const child of suite.childSuites) {
+    walkAndValidate(child, here);
+  }
 }
 
 export function validateAnalysis(analysis: ParsedAnalysis): void {
-  if (!analysis.project) throw new Error('Metadata <project> obrigatório.');
-  if (analysis.scenarios.length === 0) throw new Error('Nenhum <scenario> encontrado.');
-  for (const scenario of analysis.scenarios) {
-    if (!scenario.id) throw new Error(`Cenário sem id: ${scenario.name}`);
-    if (scenario.testCases.length === 0)
-      throw new Error(`Cenário ${scenario.id} sem <test-case>.`);
-    for (const testCase of scenario.testCases) {
-      if (!testCase.id) throw new Error(`Test case sem id no cenário ${scenario.id}.`);
-      if (testCase.steps.length === 0)
-        throw new Error(`Test case ${testCase.id} sem <step>.`);
+  if (analysis.totals.testCases === 0) {
+    throw new Error('Nenhum <testcase> encontrado no XML.');
+  }
+  walkAndValidate(analysis.rootSuite, []);
+}
+
+type ProjectConfigPartial = { testAnalysisFile?: string };
+
+function resolveDefaultInputPath(): string {
+  const cfgPath = resolve(process.cwd(), FILES.projectConfig);
+  if (existsSync(cfgPath)) {
+    try {
+      const cfg = JSON.parse(readFileSync(cfgPath, 'utf-8')) as ProjectConfigPartial;
+      if (cfg.testAnalysisFile) {
+        return resolve(process.cwd(), cfg.testAnalysisFile);
+      }
+    } catch {
+      /* config ilegível: cai no fallback */
     }
   }
+  return resolve(process.cwd(), 'inputs/test-analysis.xml');
 }
 
 async function main(): Promise<void> {
-  const inputPath = resolve(process.cwd(), process.argv[2] ?? FILES.testAnalysis);
+  const cliArg = process.argv[2];
+  const inputPath = cliArg
+    ? resolve(process.cwd(), cliArg)
+    : resolveDefaultInputPath();
   const outputPath = resolve(process.cwd(), FILES.parsedAnalysis);
 
-  log.info(`Lendo XML: ${inputPath}`);
+  if (!existsSync(inputPath)) {
+    throw new Error(
+      `XML não encontrado: ${inputPath}. Passe o caminho como argumento ou ajuste 'testAnalysisFile' em ${FILES.projectConfig}.`,
+    );
+  }
+
+  log.info(`Lendo XML TestLink: ${inputPath}`);
   const xmlContent = readFileSync(inputPath, 'utf-8');
 
-  const analysis = parseAnalysisXml(xmlContent);
+  const analysis = parseTestLinkXml(xmlContent);
   validateAnalysis(analysis);
 
   ensureParentDir(outputPath);
   writeFileSync(outputPath, JSON.stringify(analysis, null, 2), 'utf-8');
 
-  const totalCases = analysis.scenarios.reduce((n, s) => n + s.testCases.length, 0);
   log.info(
-    `Parser concluído: ${analysis.scenarios.length} cenário(s), ${totalCases} caso(s) de teste → ${outputPath}`,
+    `Parser concluído: ${analysis.totals.suites} testsuite(s), ${analysis.totals.testCases} testcase(s), ${analysis.totals.steps} step(s) → ${outputPath}`,
   );
 }
 
-const invokedDirectly =
-  import.meta.url === `file://${process.argv[1]?.replace(/\\/g, '/')}` ||
-  process.argv[1]?.endsWith('parser.ts');
+const invokedDirectly = process.argv[1]?.endsWith('parser.ts');
 
 if (invokedDirectly) {
   main().catch((err) => {

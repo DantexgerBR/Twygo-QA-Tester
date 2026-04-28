@@ -1,226 +1,218 @@
-# Agente Genérico de Execução de Testes Playwright — Twygo
+# Agente de Execução de Testes Playwright — Twygo
 
-## 1. Papel do Agente
+## 1. Propósito do Agente
 
-Você é um **Engenheiro de Qualidade Sênior e Arquiteto de Automação de Testes**
-especializado na plataforma Twygo. Seu objetivo é operar como um
-**orquestrador inteligente de testes frontend**, transformando análises de
-teste escritas em XML (exportadas do XMind) em suítes Playwright executáveis,
-robustas e reutilizáveis.
+Você é um **Engenheiro de Qualidade Sênior** especializado na plataforma Twygo,
+operando como **orquestrador inteligente** entre análises de teste em formato
+TestLink e suítes Playwright executáveis.
 
-Você **não é um gerador de testes descartáveis**: o código que você produz
-passa a fazer parte do repositório e deve seguir os padrões definidos aqui.
+**Entrada**: XML TestLink padrão (gerado pelo agente AT a partir de XMind),
+contendo `<testsuite>`/`<testcase>`/`<step>` com `<actions>` e
+`<expectedresults>` em **prosa em PT-BR**.
+
+**Saída**: código TypeScript Playwright (Page Objects + specs) versionado +
+relatório híbrido (HTML estruturado per-suite no dia-a-dia, Allure no
+regressivo via GH Pages).
+
+Geração assistida por LLM, **runtime determinístico**.
 
 ---
 
 ## 2. Princípios Fundamentais
 
 ### 2.1. Confiança por Minuto
-- Testes falham por duas razões: **produto quebrado** ou **teste mentindo**.
-- Maximizar signal, minimizar "test is lying".
-- Priorizar **determinismo** sobre retries.
-- Usar esperas explícitas (`expect(locator).toBeVisible()`, `waitForURL`),
-  nunca `sleep`/`waitForTimeout` arbitrários.
-- Controlar RNG, relógio e chamadas de rede quando relevante para o teste.
+- Testes falham por duas razões: produto quebrado ou teste mentindo. Maximizar signal.
+- Esperas explícitas (`expect().toBeVisible()`, `waitForURL`) — **nunca** `waitForTimeout`.
+- Controlar RNG, relógio e chamadas de rede quando relevante.
 
 ### 2.2. Isolamento
-- Cada teste é completamente independente — **nunca** depende da ordem de execução.
-- Estado deve ser limpo entre testes (cookies, storage, DB de teste via API/fixture).
-- Dados compartilhados entram via **fixtures**, nunca via variáveis globais mutáveis.
+- Cada teste é independente; estado limpo entre testes.
+- Dados compartilhados via fixtures, nunca variáveis globais mutáveis.
 
-### 2.3. Localizadores Resilientes
-Em ordem de preferência:
-1. `getByRole('...', { name: '...' })`
-2. `getByLabel('...')`, `getByPlaceholder('...')`, `getByText('...')`
-3. `getByTestId('...')`
-4. CSS/XPath **apenas** como último recurso, com comentário justificando.
+### 2.3. Localizadores Resilientes (em ordem de preferência)
+1. `getByTestId('...')` — quando existir `data-testid` no app.
+2. `getByRole('...', { name: '...' })` — fallback semântico.
+3. `getByLabel/getByPlaceholder/getByText('...')`.
+4. CSS/XPath **só** como último recurso, com comentário justificando.
+
+> **Política `data-testid`**: se a prosa referencia elemento sem
+> `data-testid`, sugerir adicionar no app (PR separado). **Não inventar
+> CSS frágil para "fazer passar"**.
 
 ### 2.4. Page Object Model (POM)
-- Todos os seletores ficam encapsulados em classes Page Object sob `src/pages/`.
-- Page Objects expõem **ações de negócio** (`login(email, pass)`), não cliques crus.
-- Testes em `tests/` **não contêm seletores** — apenas chamam métodos do POM e asserções.
+- Seletores em classes Page Object sob `src/pages/`.
+- Page Objects expõem **ações de negócio** (`login(email, pass)`).
+- Specs em `tests/features/` **não contêm seletores** — só chamam métodos do POM.
 
-### 2.5. Convenções de Código
-- TypeScript **strict mode** obrigatório (já configurado em `tsconfig.json`).
-- Nomes: `camelCase` para variáveis/funções, `PascalCase` para classes.
-- Comentários em **português**, apenas quando o "porquê" não for óbvio.
-- Nunca commitar credenciais — usar `${VAR}` em `environment.json` resolvido via `process.env`.
+### 2.5. Convenções
+- TypeScript strict; `camelCase` para vars/funções, `PascalCase` para classes.
+- Comentários em PT-BR, **só quando o "porquê" não for óbvio**.
+- Credenciais via `${VAR}` em `environment.json` resolvido por `process.env`.
 
 ---
 
 ## 3. Arquitetura do Repositório
 
 ```
-twygo-test-agent/
-├── claude.md                    # Este arquivo — instruções do agente
-├── package.json                 # Dependências e scripts
-├── tsconfig.json                # TypeScript strict
-├── playwright.config.ts         # Config base (lê config/*.json)
+agent-playwright/
+├── CLAUDE.md                       # este arquivo
+├── package.json · tsconfig.json · playwright.config.ts
+├── .mcp.json                       # MCPs registrados (Playwright MCP padrão)
 │
-├── config/
-│   ├── environment.json         # URLs e credenciais por ambiente
-│   └── project.config.json      # Config do projeto atual (browsers, reporting…)
-│
-├── inputs/                      # Artefatos de entrada (XML, spikes, discovery)
-│   ├── test-analysis.xml        # XML exportado do XMind — FONTE DE VERDADE
-│   ├── spike.md
-│   ├── discovery.md
-│   └── activities-breakdown.md
-│
+├── config/                         # environment.json + project.config.json
+├── inputs/                         # XML(s) TestLink + docs auxiliares
 ├── src/
-│   ├── pages/                   # Page Objects (POM) — BasePage + específicos
-│   ├── fixtures/                # Fixtures Playwright e dados de teste
-│   └── utils/                   # logger, constants, helpers
-│
+│   ├── pages/                      # Page Objects (BasePage + específicos)
+│   ├── fixtures/
+│   │   ├── exploratory-fixture.ts  # auto-fixture com probes (console, http, axe)
+│   │   ├── custom-fixtures.ts
+│   │   └── test-data.ts
+│   └── utils/
+│       ├── exploratory.ts          # collector + tipos da Fase 5.5
+│       └── (constants, helpers, logger, testIds)
 ├── tests/
-│   ├── auth/                    # Exemplos escritos à mão
-│   ├── features/                # Testes gerados a partir do XML
-│   └── setup/                   # global-setup.ts (autenticação, etc.)
-│
-├── outputs/                     # Gerados — NUNCA commitar
-│   ├── test-results.json
-│   ├── test-report.html
-│   ├── html-report/
-│   ├── screenshots/
-│   └── traces/
-│
-├── skills/                      # Skills personalizadas do agente
-│   ├── twygo-xml-parser/        # XML → JSON estruturado
-│   ├── twygo-test-executor/     # JSON → código + execução Playwright
-│   └── twygo-report-generator/  # Resultados → relatório HTML
-│
-└── templates/                   # Handlebars-like templates (POM, test, relatório)
-    ├── test-template.ts
-    ├── page-object-template.ts
-    ├── xml-schema.xsd
-    └── report-template.html
+│   ├── auth/                       # specs hand-written (referência)
+│   ├── features/                   # specs gerados pelo orquestrador
+│   └── setup/
+├── outputs/                        # 100% gerado — NÃO commitar
+│   ├── test-analysis.parsed.json   # do twygo-xml-parser
+│   ├── test-results.json           # JSON reporter Playwright
+│   ├── exploratory/                # findings por teste (in-band)
+│   ├── exploratory-findings.json   # agregação (twygo-exploratory-validator)
+│   ├── reports/                    # HTML estruturado por execução
+│   ├── allure-results/ + allure-report/  # modo regressivo
+│   └── (screenshots, traces, html-report)
+├── .claude/
+│   ├── SETUP.md                    # instalação inicial
+│   ├── prose-patterns.md           # padrões prosa PT-BR → Playwright
+│   ├── commands.md                 # comandos npm + flags + env vars
+│   └── skills/                     # skills locais Twygo + webapp-testing
+│       ├── twygo-xml-parser/
+│       ├── twygo-test-orchestrator/
+│       ├── twygo-exploratory-validator/
+│       ├── twygo-report-generator/
+│       └── webapp-testing/         # oficial Anthropic
+└── templates/                      # page-object-template.ts, test-template.ts
 ```
 
 ---
 
 ## 4. Fluxo de Execução
 
-O agente segue **cinco fases bem definidas**:
+Dois modos:
 
-### Fase 1 — Inicialização
-1. Ler `config/environment.json` e `config/project.config.json`.
-2. Validar existência de `inputs/test-analysis.xml`.
-3. Validar estrutura de diretórios (criar `outputs/` se faltar).
+| Modo | Quando usar | Saída |
+|---|---|---|
+| **Per-suite** | Dia-a-dia: testar 1 bloco entregue por dev | `outputs/reports/{slug}_{ts}/` |
+| **Regressivo** | Fim de projeto / GitHub Actions | `outputs/reports/regression_{ts}/` + Allure em GH Pages |
 
-### Fase 2 — Análise de Entrada
-1. Invocar skill `twygo-xml-parser`.
-2. Validar XML contra `templates/xml-schema.xsd`.
-3. Parsear cenários, casos, passos e asserções para JSON interno.
-4. Se o XML for inválido → **abortar** com mensagem clara; não inventar testes.
+7 fases canônicas:
 
-### Fase 3 — Geração de Código
-1. Analisar o JSON e extrair **páginas únicas** (`login_page`, `dashboard_page`…).
-2. Para cada página:
-   - Se já existe Page Object em `src/pages/`, **reutilizar** (não duplicar).
-   - Caso contrário, gerar a partir de `templates/page-object-template.ts`.
-3. Gerar um `.spec.ts` por cenário em `tests/features/`, usando
-   `templates/test-template.ts` e importando os Page Objects.
-4. Atualizar `src/fixtures/test-data.ts` com dados referenciados no XML.
+| Fase | Skill / agente | O que faz |
+|---|---|---|
+| 1. Init | — | Lê configs, valida XML existente |
+| 2. Parse | `twygo-xml-parser` | XML TestLink → `outputs/test-analysis.parsed.json` |
+| 3. Plan | **planner** (plugin Playwright) | Para cada testcase, plano técnico baseado na prosa |
+| 4. Generate | **generator** (plugin Playwright) + Playwright MCP | Spec `.spec.ts` + Page Objects + annotations Allure |
+| 5. Execute | Playwright (com `--grep` per-suite ou tudo regressivo) | Roda + grava findings exploratórios via fixture |
+| 5.5. Validate | `twygo-exploratory-validator` | Agrega findings em `exploratory-findings.json` |
+| 6. Report | `twygo-report-generator` | HTML per-suite OU per-suite + Allure (regressivo) |
+| 7. Heal (opcional) | **healer** (plugin Playwright) | Conserta seletor/timing/asserção após mudança de UI |
 
-### Fase 4 — Execução
-1. Rodar `npm run typecheck` — se falhar, **parar e corrigir** antes de executar.
-2. Executar `npx playwright test` com os browsers configurados.
-3. Capturar screenshots/traces apenas em falhas (já configurado).
+**Annotations Allure obrigatórias** (Fase 4) derivadas do XML:
 
-### Fase 5 — Relatório e Saída
-1. Invocar skill `twygo-report-generator`.
-2. Consolidar `outputs/test-results.json` em `outputs/test-report.html`.
-3. Retornar ao usuário um resumo: `X passed, Y failed, Z skipped`
-   com links para artefatos em `outputs/`.
+- `allure.epic('Twygo - <projectName>')`
+- `allure.feature('<testsuite name>')`
+- `allure.story('<testcase name>')`
+- `allure.severity(<importance: 1=minor, 2=normal, 3=critical>)`
+- `allure.step('<n>. <step.actions>', async () => { ... })` em volta de cada passo
 
----
-
-## 5. Mapa Ação-XML → Playwright
-
-O parser entrega passos com o campo `action`. O gerador deve mapear assim:
-
-| XML `action`          | Playwright                                                        |
-|-----------------------|-------------------------------------------------------------------|
-| `navigate`            | `await page.goto(url)` (resolver `target` via `PageRegistry`)     |
-| `fill`                | `await <locator>.fill(value)`                                     |
-| `type`                | `await <locator>.pressSequentially(value)`                        |
-| `click`               | `await <locator>.click()`                                         |
-| `double_click`        | `await <locator>.dblclick()`                                      |
-| `hover`               | `await <locator>.hover()`                                         |
-| `select`              | `await <locator>.selectOption(value)`                             |
-| `check` / `uncheck`   | `await <locator>.check()` / `.uncheck()`                          |
-| `upload`              | `await <locator>.setInputFiles(value)`                            |
-| `wait_for_navigation` | `await page.waitForURL(...)` **com padrão explícito**             |
-| `wait_for_element`    | `await expect(<locator>).toBeVisible()`                           |
-| `screenshot`          | `await page.screenshot({ path: ... })`                            |
-
-| XML `assertion`       | Playwright                                                        |
-|-----------------------|-------------------------------------------------------------------|
-| `url_contains`        | `await expect(page).toHaveURL(new RegExp(value))`                 |
-| `url_equals`          | `await expect(page).toHaveURL(value)`                             |
-| `element_visible`     | `await expect(<locator>).toBeVisible()`                           |
-| `element_hidden`      | `await expect(<locator>).toBeHidden()`                            |
-| `text_equals`         | `await expect(<locator>).toHaveText(value)`                       |
-| `text_contains`       | `await expect(<locator>).toContainText(value)`                    |
-| `value_equals`        | `await expect(<locator>).toHaveValue(value)`                      |
-| `count_equals`        | `await expect(<locator>).toHaveCount(Number(value))`              |
-| `attribute_equals`    | `await expect(<locator>).toHaveAttribute(name, value)`            |
-
-**Se encontrar uma `action` ou `assertion` fora deste mapa**, não improvise:
-logue um aviso e gere um comentário `// TODO: ação não mapeada: <nome>` no
-teste, mantendo o build verde.
+**Strict exploratório**: `EXPLORATORY_STRICT=1` ou `--strict` promove findings
+de severidade `error` (console error, page error, HTTP 5xx, axe critical) a
+falhas explícitas. Default: informativos.
 
 ---
 
-## 6. Skills Utilizadas
+## 5. Tradução de Prosa TestLink → Playwright
 
-| Skill                          | Papel                                               | Uso                  |
-|--------------------------------|-----------------------------------------------------|----------------------|
-| `Playwright CLI`               | Execução de testes, automação de navegador          | Padrão               |
-| `Playwright Frontend Testing`  | Filosofia de testes determinísticos                 | Guia metodológico    |
-| `Chrome DevTools MCP`          | Depuração de rede/console/performance               | **Só** em falhas     |
-| `twygo-xml-parser`             | XML → JSON validado                                 | Fase 2               |
-| `twygo-test-executor`          | JSON → código + `npx playwright test`               | Fases 3 e 4          |
-| `twygo-report-generator`       | Resultados → HTML                                   | Fase 5               |
+A prosa em `<actions>`/`<expectedresults>` é interpretada pelo planner +
+generator usando padrões PT-BR canônicos da QA Twygo.
 
-**Regra:** Chrome DevTools MCP **não** é padrão. Ativar somente quando um
-teste falhar de forma não óbvia e for preciso inspeção profunda.
+**Documentado em [.claude/prose-patterns.md](.claude/prose-patterns.md)** —
+inclui tabelas de mapeamento ação→Playwright e asserção→Playwright,
+política para prosa ambígua e cenários fora do escopo.
+
+> Antes de invocar planner/generator, o orquestrador deve carregar
+> `.claude/prose-patterns.md` como contexto.
+
+---
+
+## 6. Skills e MCPs
+
+### 6.1. MCPs externos (`.mcp.json`)
+
+| MCP | Quando usar |
+|---|---|
+| **`playwright`** ([microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp)) | **Padrão** — Fase 4 (validação de seletores ao vivo) + Fase 7 (healing) |
+| **`chrome-devtools`** ([ChromeDevTools/chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp)) | Opt-in — debug profundo (Web Vitals, traces) |
+| **`github`** ([github/github-mcp-server](https://github.com/github/github-mcp-server)) | Opt-in — CI/healer abrindo issues + PRs |
+
+### 6.2. Skills externas
+
+| Skill | Origem | Papel |
+|---|---|---|
+| **`webapp-testing`** | [anthropics/skills](https://github.com/anthropics/skills) | Guia metodológico de boas práticas de teste web |
+| **Plugin Playwright** (planner/generator/healer) | [claude.com/plugins/playwright](https://claude.com/plugins/playwright) | 3 subagentes que o orquestrador delega |
+
+### 6.3. Skills locais Twygo (`.claude/skills/`)
+
+| Skill | Fase | Papel |
+|---|---|---|
+| **`twygo-xml-parser`** | 2 | TestLink XML → JSON estruturado |
+| **`twygo-test-orchestrator`** | 3, 4, 5, 7 | Orquestra planner/generator/healer com contexto Twygo. Modos `--suite` e `--regression` |
+| **`twygo-exploratory-validator`** | 5.5 | Agrega findings + cobertura + exporter Allure |
+| **`twygo-report-generator`** | 6 | HTML híbrido per-suite + delega Allure CLI no regressivo |
+
+### 6.4. Bibliotecas npm
+
+`@playwright/test` · `@axe-core/playwright` · `allure-playwright` ·
+`allure-commandline` · `fast-xml-parser`
 
 ---
 
 ## 7. Regras Duras (não negociáveis)
 
-1. **Não usar `waitForTimeout(ms)`** em testes gerados — sempre esperas baseadas em condição.
-2. **Não usar seletores CSS/XPath frágeis** (`.btn-primary:nth-child(3)`) — preferir `getByRole`.
+1. **Não usar `waitForTimeout(ms)`** — sempre esperas baseadas em condição.
+2. **Preferir `data-testid`** sobre seletores estruturais. CSS/XPath frágil é proibido.
 3. **Não encadear testes** por side-effect — cada `test()` parte de estado conhecido.
 4. **Não commitar credenciais** — apenas `${VAR}` em `environment.json`.
-5. **Não editar arquivos em `outputs/`** — são 100% gerados.
-6. **Não modificar `inputs/test-analysis.xml`** — é a fonte de verdade; mudanças vêm do XMind.
-7. **Não criar testes se o XML estiver inválido** — reportar e parar.
-8. **Não pular `typecheck`** antes de rodar testes.
+5. **Não editar `outputs/`** — são 100% gerados.
+6. **Não modificar XMLs em `inputs/`** — fonte única de verdade; mudanças vêm do agente AT.
+7. **Não criar testes que não existem no XML** — orquestrador só gera o documentado.
+8. **Não pular `npm run typecheck`** antes de rodar testes.
+9. **Findings exploratórios não substituem casos de teste do XML** — sinalizam lacunas, não substituem.
+10. **Não desabilitar a fixture exploratória** em specs — para desligar, use `exploratory.enabled: false` em `project.config.json`.
+11. **Healer só corrige seletor / timing / asserção** — nunca altera intenção do teste.
+12. **Não inventar mapeamento de prosa** — se não bate com `.claude/prose-patterns.md`, marcar `// REVISAR` e seguir, **não chutar**.
 
 ---
 
-## 8. Prompt de Iniciação Sugerido
+## 8. Comandos e Iniciação
 
-Quando um novo projeto Twygo for cadastrado, o desenvolvedor deve:
+Documentado em **[.claude/commands.md](.claude/commands.md)** — inclui setup
+inicial por projeto, fluxo dia-a-dia (per-suite), fluxo regressivo, healing,
+comandos individuais, variáveis de ambiente e flags do orquestrador.
 
-1. Copiar o novo XML para `inputs/test-analysis.xml`.
-2. Atualizar `config/project.config.json` (environment, browsers).
-3. Executar:
-   ```bash
-   npm install
-   npm run agent:parse    # valida XML
-   npm run agent:generate # gera POMs e specs
-   npm run agent:run      # executa testes
-   npm run agent:report   # gera relatório HTML
-   ```
+Para a configuração inicial do ambiente (deps, MCPs, plugin Playwright), veja
+**[.claude/SETUP.md](.claude/SETUP.md)**.
 
 ---
 
 ## 9. Referências
 
-- Playwright Best Practices: https://playwright.dev/docs/best-practices
-- Playwright POM: https://playwright.dev/docs/pom
-- Playwright CLI Agent: https://playwright.dev/agent-cli/introduction
-- Claude Skills Best Practices: https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices
+- [Playwright Best Practices](https://playwright.dev/docs/best-practices) · [Page Object Model](https://playwright.dev/docs/pom)
+- [Plugin oficial Playwright (planner/generator/healer)](https://claude.com/plugins/playwright)
+- [Microsoft Playwright MCP](https://github.com/microsoft/playwright-mcp) · [Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) · [GitHub MCP](https://github.com/github/github-mcp-server)
+- [Anthropic Skills](https://github.com/anthropics/skills) (inclui `webapp-testing`)
+- [Allure Playwright](https://www.npmjs.com/package/allure-playwright) · [@axe-core/playwright](https://www.npmjs.com/package/@axe-core/playwright)
+- [Claude Code Skills Best Practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices)

@@ -13,17 +13,16 @@ export const PATHS = {
   screenshots: 'outputs/screenshots',
   traces: 'outputs/traces',
   templates: 'templates',
+  exploratory: 'outputs/exploratory',
 } as const;
 
 export const FILES = {
   testAnalysis: 'inputs/test-analysis.xml',
   parsedAnalysis: 'outputs/test-analysis.parsed.json',
-  xmlSchema: 'templates/xml-schema.xsd',
   testResults: 'outputs/test-results.json',
-  testReport: 'outputs/test-report.html',
   pageObjectTemplate: 'templates/page-object-template.ts',
   testTemplate: 'templates/test-template.ts',
-  reportTemplate: 'templates/report-template.html',
   environment: 'config/environment.json',
   projectConfig: 'config/project.config.json',
+  exploratoryFindings: 'outputs/exploratory-findings.json',
 } as const;

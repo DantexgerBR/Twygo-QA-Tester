@@ -25,12 +25,10 @@ env/
 playwright-report/
 test-results/
 .playwright/
-agent-playwright/outputs/screenshots/
-agent-playwright/outputs/traces/
-agent-playwright/outputs/test-results.json
-agent-playwright/outputs/test-report.html
-agent-playwright/outputs/html-report/
-agent-playwright/outputs/test-artifacts/
+
+# ===== Outputs gerados pelo agente Playwright =====
+# Toda a pasta outputs/ é regenerada (parser, executor, validator, report, allure)
+agent-playwright/outputs/
 
 # ===== Env / segredos =====
 .env

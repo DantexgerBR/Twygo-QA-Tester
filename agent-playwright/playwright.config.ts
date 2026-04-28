@@ -59,11 +59,21 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: [
-    ['list'],
-    ['html', { outputFolder: `${projectConfig.reporting.outputDir}/html-report`, open: 'never' }],
-    ['json', { outputFile: `${projectConfig.reporting.outputDir}/test-results.json` }],
-  ],
+  reporter: process.env.REGRESSION === 'true'
+    ? [
+        ['list'],
+        ['json', { outputFile: `${projectConfig.reporting.outputDir}/test-results.json` }],
+        ['allure-playwright', {
+          resultsDir: `${projectConfig.reporting.outputDir}/allure-results`,
+          detail: true,
+          suiteTitle: false,
+        }],
+      ]
+    : [
+        ['list'],
+        ['html', { outputFolder: `${projectConfig.reporting.outputDir}/html-report`, open: 'never' }],
+        ['json', { outputFile: `${projectConfig.reporting.outputDir}/test-results.json` }],
+      ],
   outputDir: `${projectConfig.reporting.outputDir}/test-artifacts`,
   use: {
     baseURL: env.baseUrl,
