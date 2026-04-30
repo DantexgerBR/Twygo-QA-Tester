@@ -564,7 +564,42 @@ details summary { cursor: pointer; color: var(--muted); font-size: 0.85rem; }
 .material-symbols-outlined { font-family: "Material Symbols Outlined"; font-weight: normal; font-style: normal; font-size: 1.4rem; line-height: 1; vertical-align: middle; display: inline-block; font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24; }
 .icon-ok { color: var(--ok); } .icon-fail { color: var(--fail); } .icon-warn { color: var(--warn); }
 
+/* Status ícone-only (inspirado na referência API: print do projeto C:\Cursor\API).
+   Evita quebra vertical do texto em colunas estreitas de tabelas internas. */
+.status-icon { display: inline-flex; align-items: center; justify-content: center; cursor: help; }
+.status-icon .material-symbols-outlined { font-size: 1.4rem; }
+.status-icon.icon-ok .material-symbols-outlined { color: var(--ok); }
+.status-icon.icon-fail .material-symbols-outlined { color: var(--fail); }
+.status-icon.icon-warn .material-symbols-outlined { color: var(--warn); }
+.inner-table .col-status, .inner-table th.col-status { width: 3rem; text-align: center; }
+.inner-table .precond-row td { background: rgba(88, 166, 255, 0.06); font-style: italic; }
+.inner-table .precond-row .precond-tag { font-style: normal; font-weight: 600; color: var(--info); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 6px; }
+
 hr.sep { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+
+/* Tabela ordenável (inspirado em session-report) */
+table.sortable th[data-sort-key] { cursor: pointer; user-select: none; }
+table.sortable th[data-sort-key]:hover { color: var(--text); }
+table.sortable th.sorted-asc::after { content: ' ↑'; color: var(--info); }
+table.sortable th.sorted-desc::after { content: ' ↓'; color: var(--info); }
+
+/* Stacked progress bar (padrão da indústria — PractiTest, Allure, Zephyr) */
+.stacked-bar {
+  display: flex; height: 18px; border-radius: 3px; overflow: hidden;
+  background: var(--card); border: 1px solid var(--border); min-width: 120px;
+  font-size: 0.7rem; font-weight: 700; color: #fff;
+}
+.stacked-bar > span { display: flex; align-items: center; justify-content: center; transition: filter 0.15s; }
+.stacked-bar > span:hover { filter: brightness(1.15); }
+.stacked-bar .seg-ok { background: var(--ok); }
+.stacked-bar .seg-fail { background: var(--fail); }
+.stacked-bar .seg-skip { background: var(--warn); }
+.stacked-bar .seg-empty { color: var(--muted); font-weight: 500; }
+
+.pct-pass { font-variant-numeric: tabular-nums; font-weight: 600; }
+.pct-pass.high { color: var(--ok); }
+.pct-pass.mid { color: var(--warn); }
+.pct-pass.low { color: var(--fail); }
 
 .kind-section { margin-top: 14px; }
 .kind-section .header { padding: 8px 12px; background: var(--card); border-left: 3px solid var(--border); border-radius: 0 4px 4px 0; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin: 0 0 8px; }
@@ -600,6 +635,18 @@ function statusBadge(status: string): string {
   return `<span class="badge ${cls}"><span class="material-symbols-outlined" style="font-size:1rem">${icon}</span>${escapeHtml(label)}</span>`;
 }
 
+/**
+ * Versão ícone-only do status — usada em colunas estreitas de tabelas internas
+ * (linha de step), onde o badge com texto quebraria verticalmente uma letra
+ * por linha (referência: print do usuário em 2026-04-30).
+ */
+function statusIcon(status: string): string {
+  const cls = statusClass(status);
+  const icon = STATUS_ICON[status] ?? STATUS_ICON.unknown;
+  const label = STATUS_PT[status] ?? status;
+  return `<span class="status-icon icon-${cls}" title="${escapeHtml(label)}" aria-label="${escapeHtml(label)}"><span class="material-symbols-outlined">${icon}</span></span>`;
+}
+
 function statusStrip(status: string, durationMs: number): string {
   const cls = statusClass(status);
   const icon = STATUS_ICON[status] ?? STATUS_ICON.unknown;
@@ -632,6 +679,7 @@ function renderIndex(args: {
   exploratoryByTestsuite: Map<string, ExploratorySuite>;
   failedTests: FlatTest[];
   xmlByName: Map<string, ParsedTestCase>;
+  runId: string;
 }): string {
   const t = args.testsSummary;
   const e = args.exploratorySummary;
@@ -654,7 +702,6 @@ function renderIndex(args: {
           ${args.failedTests.slice(0, 8).map((ft) => {
             const xml = args.xmlByName.get(ft.testcase.trim());
             const sev = xml ? severityBadge(xml.importance) : '';
-            // Preferir o erro do step específico que falhou (mais informativo que o erro top-level "Test timeout")
             const failedStep = ft.failedStepIndex !== null ? ft.steps[ft.failedStepIndex] : null;
             const rawErr = failedStep?.errorMessage ?? ft.errorMessage ?? '';
             return `<li>${sev} <a href="tests.html#tc-${slugify(ft.testcase)}">${escapeHtml(ft.testcase)}</a> <span class="muted">— ${escapeHtml(playwrightHumanSummary(stripAnsi(rawErr)))}</span></li>`;
@@ -663,7 +710,26 @@ function renderIndex(args: {
         </ul>
       </div>`;
 
-  // Tabela por testsuite
+  // Stacked progress bar (padrão indústria — PractiTest/Zephyr/Allure)
+  const stackedBar = (passed: number, failed: number, skipped: number): string => {
+    const total = passed + failed + skipped;
+    if (total === 0) return '<span class="muted">—</span>';
+    const pctOk = (passed / total) * 100;
+    const pctFail = (failed / total) * 100;
+    const pctSkip = (skipped / total) * 100;
+    const seg = (cls: string, pct: number, label: number) =>
+      pct > 0 ? `<span class="${cls}" style="width:${pct.toFixed(2)}%" title="${label} ${cls === 'seg-ok' ? 'aprovado(s)' : cls === 'seg-fail' ? 'falha(s)' : 'ignorado(s)'} (${pct.toFixed(0)}%)">${pct >= 12 ? label : ''}</span>` : '';
+    return `<div class="stacked-bar">${seg('seg-ok', pctOk, passed)}${seg('seg-fail', pctFail, failed)}${seg('seg-skip', pctSkip, skipped)}</div>`;
+  };
+
+  const pctPassCell = (passed: number, total: number): string => {
+    if (total === 0) return '<span class="muted">—</span>';
+    const pct = Math.round((passed / total) * 100);
+    const cls = pct >= 80 ? 'high' : pct >= 50 ? 'mid' : 'low';
+    return `<span class="pct-pass ${cls}">${pct}%</span>`;
+  };
+
+  // Tabela por testsuite (sortable + stacked bar + %pass)
   const suiteRows = [...args.byTestsuite.entries()]
     .map(([name, tests]) => {
       const ss = summarizeTests(tests);
@@ -671,10 +737,12 @@ function renderIndex(args: {
       const expCol = exp
         ? `${exp.totals.errors > 0 ? `<span class="badge fail">${exp.totals.errors} erro${exp.totals.errors === 1 ? '' : 's'}</span> ` : ''}${exp.totals.warnings > 0 ? `<span class="badge warn">${exp.totals.warnings} aviso${exp.totals.warnings === 1 ? '' : 's'}</span>` : ''}${exp.totals.errors === 0 && exp.totals.warnings === 0 ? '<span class="muted">—</span>' : ''}`
         : '<span class="muted">—</span>';
-      return `<tr>
+      const pctPass = ss.total > 0 ? Math.round((ss.passed / ss.total) * 100) : 0;
+      return `<tr data-fail-count="${ss.failed}" data-total="${ss.total}" data-duration="${ss.durationMs}" data-pct-pass="${pctPass}">
         <td><strong>${escapeHtml(name)}</strong></td>
         <td style="text-align:center">${ss.total}</td>
-        <td style="text-align:center">${ss.passed > 0 ? `<span class="badge ok">${ss.passed}</span>` : '<span class="muted">0</span>'}</td>
+        <td>${stackedBar(ss.passed, ss.failed, ss.skipped)}</td>
+        <td style="text-align:center">${pctPassCell(ss.passed, ss.total)}</td>
         <td style="text-align:center">${ss.failed > 0 ? `<span class="badge fail">${ss.failed}</span>` : '<span class="muted">0</span>'}</td>
         <td style="text-align:center">${ss.skipped > 0 ? `<span class="badge warn">${ss.skipped}</span>` : '<span class="muted">0</span>'}</td>
         <td>${expCol}</td>
@@ -682,6 +750,22 @@ function renderIndex(args: {
       </tr>`;
     })
     .join('\n');
+
+  // JSON data block (inspirado em session-report — permite queries client-side)
+  const dataBlock = JSON.stringify({
+    runId: args.runId,
+    generatedAt: args.generatedAt,
+    scope: args.scopeLabel,
+    summary: t,
+    failedTests: args.failedTests.map((ft) => ({
+      testcase: ft.testcase,
+      testsuite: ft.testsuite,
+      status: ft.status,
+      durationMs: ft.durationMs,
+      summary: playwrightHumanSummary(stripAnsi(ft.errorMessage ?? '')),
+    })),
+    bySuite: [...args.byTestsuite.entries()].map(([name, tests]) => ({ name, ...summarizeTests(tests) })),
+  });
 
   const allureLink = args.mode === 'regression'
     ? '<div class="section-card"><h3>Allure (regressivo, com histórico)</h3><p class="muted" style="margin:0 0 8px">Relatório executivo com trend entre execuções (publicado em GH Pages no CI).</p><p style="margin:0"><a href="../../allure-report/index.html">Abrir Allure →</a></p></div>'
@@ -712,19 +796,60 @@ function renderIndex(args: {
       <div class="kpi"><div class="num">${e.testsuites}</div><div class="lbl">Testsuites c/ findings</div></div>
     </div>` : ''}
 
-    <h2>Por testsuite</h2>
-    <table>
+    <h2>Por testsuite <span class="muted" style="font-size:0.78rem;font-weight:normal">— clique nos cabeçalhos pra ordenar; passe o mouse na barra pra ver detalhes</span></h2>
+    <table class="sortable" id="suiteTable">
       <thead><tr>
         <th>Testsuite</th>
-        <th style="text-align:center">Total</th>
-        <th style="text-align:center">Aprovados</th>
-        <th style="text-align:center">Falhas</th>
-        <th style="text-align:center">Ignorados</th>
+        <th style="text-align:center" data-sort-key="total" data-sort-type="num">Total</th>
+        <th>Distribuição (aprovados / falhas / ignorados)</th>
+        <th style="text-align:center" data-sort-key="pct-pass" data-sort-type="num">% Pass</th>
+        <th style="text-align:center" data-sort-key="failed" data-sort-type="num">Falhas</th>
+        <th style="text-align:center" data-sort-key="skipped" data-sort-type="num">Ignorados</th>
         <th>Findings exploratórios</th>
-        <th>Tempo</th>
+        <th data-sort-key="duration" data-sort-type="num">Tempo</th>
       </tr></thead>
-      <tbody>${suiteRows || '<tr><td colspan="7" class="muted" style="text-align:center">Nenhum teste executado.</td></tr>'}</tbody>
+      <tbody>${suiteRows || '<tr><td colspan="8" class="muted" style="text-align:center">Nenhum teste executado.</td></tr>'}</tbody>
     </table>
+    <script>
+    // Tabela ordenável (inspirado em session-report). Vanilla JS, sem libs.
+    document.querySelectorAll('table.sortable').forEach((tbl) => {
+      const ths = tbl.querySelectorAll('th[data-sort-key]');
+      ths.forEach((th, idx) => {
+        th.addEventListener('click', () => {
+          const key = th.dataset.sortKey;
+          const type = th.dataset.sortType || 'str';
+          const tbody = tbl.querySelector('tbody');
+          const rows = [...tbody.querySelectorAll('tr')];
+          const dir = th.classList.contains('sorted-asc') ? 'desc' : 'asc';
+          ths.forEach((o) => o.classList.remove('sorted-asc', 'sorted-desc'));
+          th.classList.add('sorted-' + dir);
+          // Mapa key → atributo data-* (camelCase) ou fallback texto da célula
+          const datasetKey = (k) => ({
+            duration: 'duration',
+            failed: 'failCount',
+            'pct-pass': 'pctPass',
+            total: 'total',
+          })[k] || k;
+          const cellIdx = [...th.parentElement.children].indexOf(th);
+          rows.sort((a, b) => {
+            let va, vb;
+            if (type === 'num') {
+              const dk = datasetKey(key);
+              va = a.dataset[dk] !== undefined ? Number(a.dataset[dk]) : (parseFloat(a.children[cellIdx].textContent) || 0);
+              vb = b.dataset[dk] !== undefined ? Number(b.dataset[dk]) : (parseFloat(b.children[cellIdx].textContent) || 0);
+            } else {
+              va = a.children[idx].textContent.trim();
+              vb = b.children[idx].textContent.trim();
+            }
+            if (va < vb) return dir === 'asc' ? -1 : 1;
+            if (va > vb) return dir === 'asc' ? 1 : -1;
+            return 0;
+          });
+          rows.forEach((r) => tbody.appendChild(r));
+        });
+      });
+    });
+    </script>
 
     <h2>Onde ir agora</h2>
     <div class="nav">
@@ -736,6 +861,9 @@ function renderIndex(args: {
     <hr class="sep">
     <h2>Dados brutos (JSON)</h2>
     <p class="muted"><a href="summary.json">summary.json</a> · <a href="tests.json">tests.json</a> · <a href="exploratory.json">exploratory.json</a> · <a href="run_context.json">run_context.json</a></p>
+    <p class="muted" style="font-size:0.78rem">Dica: o índice também inclui um bloco <code>&lt;script id="report-data" type="application/json"&gt;</code> com os dados consolidados — útil pra queries no console do navegador.</p>
+
+    <script id="report-data" type="application/json">${dataBlock.replace(/</g, '\\u003c')}</script>
   `;
   return htmlShell(`Relatório — ${args.projectName}`, body);
 }
@@ -780,75 +908,89 @@ function renderEvidenceCards(t: FlatTest, reportDir: string): string {
   return `<div class="evidence-grid">${cards.join('\n')}</div>`;
 }
 
-function renderXmlStepsTable(xml: ParsedTestCase | undefined, t: FlatTest): string {
-  if (!xml || xml.steps.length === 0) {
-    return xml
-      ? '<p class="muted" style="margin:0">XML sem steps registrados.</p>'
-      : '<p class="muted" style="margin:0">Sem metadata XML para este testcase.</p>';
-  }
-  const failedStep = t.failedStepIndex !== null ? t.steps[t.failedStepIndex] : null;
-  const lastFailNote = failedStep
-    ? `Falhou no step "${failedStep.title}": ${playwrightHumanSummary(stripAnsi(failedStep.errorMessage ?? t.errorMessage ?? ''))}`
-    : null;
-  const overallNote = t.status !== 'passed'
-    ? lastFailNote ?? playwrightHumanSummary(stripAnsi(t.errorMessage ?? ''))
-    : '—';
+/**
+ * Tabela unificada de execução: combina os steps do XML com a execução
+ * Allure correspondente em uma única tabela (decisão tomada após feedback
+ * do usuário em 2026-04-30, ref. ao print do projeto C:\Cursor\API onde
+ * existe apenas uma tabela "Passos do caso (XML/TestLink)").
+ *
+ * Cada XML step é mapeado pelo número ao Allure step `${n}. <action>`
+ * (convenção do generator). Steps Allure que NÃO correspondem a um XML
+ * step (ex.: `Pré-condição: Login...`) viram linhas no topo da tabela
+ * destacadas como "PRÉ-CONDIÇÃO".
+ */
+function renderUnifiedStepsTable(xml: ParsedTestCase | undefined, t: FlatTest): string {
+  const overallNote = t.status !== 'passed' ? playwrightHumanSummary(stripAnsi(t.errorMessage ?? '')) : '—';
 
-  const rows = xml.steps.map((s, i) => {
-    // Mapeia step do XML para step Allure pelo número (a convenção é
-    // `allure.step('<n>. <action>', ...)` no generator, então o índice
-    // bate). Se houver mismatch, mostra status global.
-    const allureMatch = t.steps.find((as) => as.title.startsWith(`${i + 1}. `) || as.title.startsWith(`${s.stepNumber}. `));
+  // 1. Identificar steps Allure que NÃO casam com nenhum XML step
+  const xmlNumbers = (xml?.steps ?? []).map((s, i) => s.stepNumber ?? i + 1);
+  const isXmlStep = (allureTitle: string): boolean =>
+    xmlNumbers.some((n) => allureTitle.startsWith(`${n}. `));
+  const preconditionSteps = t.steps.filter((as) => !isXmlStep(as.title));
+
+  // 2. Linhas de pré-condição (no topo)
+  const preRows = preconditionSteps.map((as) => {
+    const note = as.errorMessage ? playwrightHumanSummary(stripAnsi(as.errorMessage)) : '—';
+    const cls = as.status === 'failed' ? 'step-failed precond-row' : 'precond-row';
+    return `<tr class="${cls}">
+      <td class="col-num">—</td>
+      <td colspan="2"><span class="precond-tag">Pré-condição</span>${escapeHtml(as.title)}</td>
+      <td style="text-align:center">${statusIcon(as.status)}</td>
+      <td style="font-size:0.82rem;color:var(--text-soft)">${escapeHtml(note)}</td>
+      <td class="col-time">${(as.durationMs / 1000).toFixed(2)}s</td>
+    </tr>`;
+  }).join('\n');
+
+  // 3. Linhas dos steps do XML (com status do Allure correspondente)
+  const xmlRows = (xml?.steps ?? []).map((s, i) => {
+    const allureMatch = t.steps.find(
+      (as) => as.title.startsWith(`${i + 1}. `) || as.title.startsWith(`${s.stepNumber}. `),
+    );
     const stepStatus = allureMatch?.status ?? (t.status === 'passed' ? 'passed' : 'failed');
     const stepNote = allureMatch?.errorMessage
       ? playwrightHumanSummary(stripAnsi(allureMatch.errorMessage))
       : (allureMatch?.status === 'failed' ? overallNote : '—');
     const cls = stepStatus === 'failed' ? 'step-failed' : '';
+    const duration = allureMatch ? `${(allureMatch.durationMs / 1000).toFixed(2)}s` : '—';
     return `<tr class="${cls}">
       <td class="col-num">${s.stepNumber}</td>
       <td>${escapeHtml(s.actions || '(sem ação)')}</td>
       <td>${escapeHtml(s.expectedResults || '(sem esperado)')}</td>
-      <td style="text-align:center">${statusBadge(stepStatus)}</td>
+      <td style="text-align:center">${statusIcon(stepStatus)}</td>
       <td style="font-size:0.82rem;color:var(--text-soft)">${escapeHtml(stepNote)}</td>
+      <td class="col-time">${duration}</td>
     </tr>`;
   }).join('\n');
+
+  // 4. Casos de borda
+  if (!xml || xml.steps.length === 0) {
+    if (preconditionSteps.length === 0) {
+      return '<p class="muted" style="margin:0">Sem steps Allure ou metadata XML para este testcase.</p>';
+    }
+    // Só pré-condição (sem XML)
+    return `<div class="inner-scroll"><table class="inner-table">
+      <thead><tr>
+        <th class="col-num">#</th>
+        <th colspan="2">Step executado</th>
+        <th class="col-status">Status</th>
+        <th>Notas da execução</th>
+        <th class="col-time">Duração</th>
+      </tr></thead>
+      <tbody>${preRows}</tbody>
+    </table></div>
+    <p class="muted" style="margin:6px 0 0;font-size:0.78rem">Sem metadata XML para mapear roteiro planejado.</p>`;
+  }
 
   return `<div class="inner-scroll"><table class="inner-table">
     <thead><tr>
       <th class="col-num">#</th>
       <th>Ação do passo</th>
       <th>Resultado esperado</th>
-      <th class="col-status">Execução</th>
-      <th>Notas da execução</th>
-    </tr></thead>
-    <tbody>${rows}</tbody>
-  </table></div>`;
-}
-
-function renderAllureStepsTable(t: FlatTest): string {
-  if (t.steps.length === 0) {
-    return '<p class="muted" style="margin:0">Spec não emitiu steps Allure.</p>';
-  }
-  const rows = t.steps.map((s) => {
-    const cls = s.status === 'failed' ? 'step-failed' : '';
-    const note = s.errorMessage ? playwrightHumanSummary(stripAnsi(s.errorMessage)) : '—';
-    return `<tr class="${cls}">
-      <td class="col-num">${s.number}</td>
-      <td>${escapeHtml(s.title)}</td>
-      <td class="col-time">${(s.durationMs / 1000).toFixed(2)}s</td>
-      <td style="text-align:center">${statusBadge(s.status)}</td>
-      <td style="font-size:0.82rem;color:var(--text-soft)">${escapeHtml(note)}</td>
-    </tr>`;
-  }).join('\n');
-  return `<div class="inner-scroll"><table class="inner-table">
-    <thead><tr>
-      <th class="col-num">#</th>
-      <th>Step executado</th>
-      <th class="col-time">Duração</th>
       <th class="col-status">Status</th>
-      <th>Erro (PT-BR)</th>
+      <th>Notas da execução</th>
+      <th class="col-time">Duração</th>
     </tr></thead>
-    <tbody>${rows}</tbody>
+    <tbody>${preRows}${xmlRows}</tbody>
   </table></div>`;
 }
 
@@ -903,10 +1045,9 @@ Execução
 }
 
 function renderTestcaseDetailPanel(t: FlatTest, xml: ParsedTestCase | undefined, runId: string, reportDir: string): string {
-  const summary = t.status !== 'passed'
-    ? playwrightHumanSummary(stripAnsi(t.errorMessage ?? ''))
-    : null;
   const failedStep = t.failedStepIndex !== null ? t.steps[t.failedStepIndex] : null;
+  const rawErr = failedStep?.errorMessage ?? t.errorMessage ?? '';
+  const summary = t.status !== 'passed' ? playwrightHumanSummary(stripAnsi(rawErr)) : null;
 
   const failureBlock = summary
     ? `<div class="failure-summary">
@@ -930,11 +1071,9 @@ function renderTestcaseDetailPanel(t: FlatTest, xml: ParsedTestCase | undefined,
     ${summaryBlock}
     ${preconditionsBlock}
 
-    <h4>Roteiro do XML (passos planejados)</h4>
-    ${renderXmlStepsTable(xml, t)}
-
-    <h4>Steps executados (Playwright/Allure)</h4>
-    ${renderAllureStepsTable(t)}
+    <h4>Passos do caso (XML/TestLink + execução Playwright)</h4>
+    <p class="muted" style="margin:0 0 6px;font-size:0.82rem">Cada linha reproduz um passo do XML; a coluna <strong>Status</strong> traz o resultado da execução automatizada (do step Allure correspondente). Linhas em azul claro são <strong>pré-condições</strong> da execução (login, navegação inicial) que não fazem parte do roteiro do XML mas são necessárias pra rodar o teste.</p>
+    ${renderUnifiedStepsTable(xml, t)}
 
     <h4>Evidências</h4>
     ${renderEvidenceCards(t, reportDir)}
@@ -1345,7 +1484,8 @@ async function main(): Promise<void> {
 
   const ts = timestamp();
   const folderName = `${folderPrefix}_${ts}`;
-  const reportDir = resolve(process.cwd(), PATHS.outputs, 'reports', folderName);
+  const reportsRoot = resolve(process.cwd(), PATHS.outputs, 'reports');
+  const reportDir = join(reportsRoot, folderName);
   ensureDir(reportDir);
 
   const byTestsuite = groupByTestsuite(tests);
@@ -1385,6 +1525,7 @@ async function main(): Promise<void> {
       exploratoryByTestsuite,
       failedTests,
       xmlByName,
+      runId: folderName,
     }),
   );
   writeFileSync(
@@ -1410,7 +1551,6 @@ async function main(): Promise<void> {
     copyFileSync(resolve(process.cwd(), FILES.exploratoryFindings), join(reportDir, 'exploratory.json'));
   }
 
-  const reportsRoot = resolve(process.cwd(), PATHS.outputs, 'reports');
   writeFileSync(join(reportsRoot, latestPointerName), metaRefresh(`${folderName}/index.html`));
 
   log.info(`Relatório gerado → ${reportDir}/index.html`);
