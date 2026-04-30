@@ -1,0 +1,27 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - generic "Logo - Stage 10" [ref=e4]:
+        - img "Logo - Stage 10" [ref=e5]
+        - generic:
+          - img
+      - img [ref=e7]
+    - link "Logar" [ref=e10] [cursor=pointer]:
+      - /url: /users/login
+  - text: "0"
+  - generic [ref=e13]:
+    - generic "Logo - Stage 10" [ref=e15]
+    - link "Entrar" [ref=e19] [cursor=pointer]:
+      - /url: /users/login
+    - text: M * M * *
+  - generic [ref=e25]:
+    - generic "Logo - Stage 10" [ref=e26]:
+      - img "Logo - Stage 10" [ref=e27]
+    - generic [ref=e28]:
+      - textbox "Login" [ref=e30]
+      - textbox "Senha" [ref=e32]
+      - button "Entrar" [ref=e34] [cursor=pointer]
+      - link "Esqueci minha senha" [ref=e35] [cursor=pointer]:
+        - /url: /users/password/new
+      - link "Reenviar e-mail de confirmação" [ref=e36] [cursor=pointer]:
+        - /url: /users/confirmation/new

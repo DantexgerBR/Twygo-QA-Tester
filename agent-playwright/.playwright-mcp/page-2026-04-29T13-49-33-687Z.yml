@@ -1,0 +1,381 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - generic "Logo - Stage 10" [ref=e4]:
+        - img "Logo - Stage 10" [ref=e5]
+      - img [ref=e7]
+    - generic [ref=e9]:
+      - list [ref=e10]:
+        - list [ref=e11]:
+          - listitem [ref=e12]:
+            - link "leaderboard Dashboard" [ref=e13] [cursor=pointer]:
+              - /url: /o/36602/dashboard
+              - generic [ref=e14]:
+                - generic [ref=e16]: leaderboard
+                - generic [ref=e17]: Dashboard
+          - listitem [ref=e18]:
+            - generic [ref=e20]:
+              - generic [ref=e23]: school
+              - generic [ref=e24]: Aprendizagem
+            - list [ref=e25]:
+              - listitem [ref=e26]:
+                - link "format_list_bulleted_add Conteúdos" [ref=e27] [cursor=pointer]:
+                  - /url: /o/36602/events?tab=events
+                  - generic [ref=e28]:
+                    - generic [ref=e30]: format_list_bulleted_add
+                    - generic [ref=e31]: Conteúdos
+              - listitem [ref=e32]:
+                - link "send Compartilhamentos" [ref=e33] [cursor=pointer]:
+                  - /url: /o/36602/shared_events
+                  - generic [ref=e34]:
+                    - generic [ref=e36]: send
+                    - generic [ref=e37]: Compartilhamentos
+              - listitem [ref=e38]:
+                - link "description Registros BETA" [ref=e39] [cursor=pointer]:
+                  - /url: /o/36602/records
+                  - generic [ref=e40]:
+                    - generic [ref=e42]: description
+                    - generic [ref=e43]: Registros
+                    - generic [ref=e44]: BETA
+              - listitem [ref=e45]:
+                - link "workspace_premium Certificados" [ref=e46] [cursor=pointer]:
+                  - /url: /o/36602/certificate_models
+                  - generic [ref=e47]:
+                    - generic [ref=e49]: workspace_premium
+                    - generic [ref=e50]: Certificados
+          - listitem [ref=e51]:
+            - link "book Biblioteca" [ref=e52] [cursor=pointer]:
+              - /url: /o/36602/events/?tab=libraries
+              - generic [ref=e53]:
+                - generic [ref=e55]: book
+                - generic [ref=e56]: Biblioteca
+          - listitem [ref=e57]:
+            - link "group Usuários" [ref=e58] [cursor=pointer]:
+              - /url: /o/36602/users
+              - generic [ref=e59]:
+                - generic [ref=e61]: group
+                - generic [ref=e62]: Usuários
+          - listitem [ref=e63]:
+            - link "work Empresas" [ref=e64] [cursor=pointer]:
+              - /url: /o/36602/companies
+              - generic [ref=e65]:
+                - generic [ref=e67]: work
+                - generic [ref=e68]: Empresas
+          - listitem [ref=e69]:
+            - link "live_help Questionários" [ref=e70] [cursor=pointer]:
+              - /url: /o/36602/question_lists
+              - generic [ref=e71]:
+                - generic [ref=e73]: live_help
+                - generic [ref=e74]: Questionários
+          - listitem [ref=e75]:
+            - link "groups Comunidades" [ref=e76] [cursor=pointer]:
+              - /url: /o/36602/feed
+              - generic [ref=e77]:
+                - generic [ref=e79]: groups
+                - generic [ref=e80]: Comunidades
+          - listitem [ref=e81]:
+            - generic [ref=e83]:
+              - generic [ref=e86]: psychology
+              - generic [ref=e87]:
+                - text: Skills
+                - generic [ref=e88]: BETA
+            - list [ref=e89]:
+              - listitem [ref=e90]:
+                - link "lan Organograma" [ref=e91] [cursor=pointer]:
+                  - /url: /o/36602/organization_chart
+                  - generic [ref=e92]:
+                    - generic [ref=e94]: lan
+                    - generic [ref=e95]: Organograma
+              - listitem [ref=e96]:
+                - link "badge Funções" [ref=e97] [cursor=pointer]:
+                  - /url: /o/36602/roles
+                  - generic [ref=e98]:
+                    - generic [ref=e100]: badge
+                    - generic [ref=e101]: Funções
+              - listitem [ref=e102]:
+                - link "award_star Competências" [ref=e103] [cursor=pointer]:
+                  - /url: /o/36602/organization_chart_competencies
+                  - generic [ref=e104]:
+                    - generic [ref=e106]: award_star
+                    - generic [ref=e107]: Competências
+          - listitem [ref=e108]:
+            - generic [ref=e110]:
+              - generic [ref=e113]: account_tree
+              - generic [ref=e114]: Processos
+            - list [ref=e115]:
+              - listitem [ref=e116]:
+                - link "send Repositórios" [ref=e117] [cursor=pointer]:
+                  - /url: /o/36602/organization_datasets
+                  - generic [ref=e118]:
+                    - generic [ref=e120]: send
+                    - generic [ref=e121]: Repositórios
+              - listitem [ref=e122]:
+                - link "send Arquitetura de Processos" [ref=e123] [cursor=pointer]:
+                  - /url: /o/36602/process_architecture
+                  - generic [ref=e124]:
+                    - generic [ref=e126]: send
+                    - generic [ref=e127]: Arquitetura de Processos
+              - listitem [ref=e128]:
+                - link "send Agente de Documentação" [ref=e129] [cursor=pointer]:
+                  - /url: /o/36602/process_documentations
+                  - generic [ref=e130]:
+                    - generic [ref=e132]: send
+                    - generic [ref=e133]: Agente de Documentação
+              - listitem [ref=e134]:
+                - link "send Documentos de Referência" [ref=e135] [cursor=pointer]:
+                  - /url: /o/36602/reference_documents
+                  - generic [ref=e136]:
+                    - generic [ref=e138]: send
+                    - generic [ref=e139]: Documentos de Referência
+              - listitem [ref=e140]:
+                - link "send Portal de processos" [ref=e141] [cursor=pointer]:
+                  - /url: /o/36602/visualize_documentations
+                  - generic [ref=e142]:
+                    - generic [ref=e144]: send
+                    - generic [ref=e145]: Portal de processos
+      - generic [ref=e146]: Stage 10
+      - list [ref=e147]:
+        - listitem [ref=e148]:
+          - generic [ref=e149]:
+            - generic [ref=e150]: f
+            - text: Configurações
+          - list [ref=e151]:
+            - listitem [ref=e152]:
+              - link "e Organização" [ref=e153] [cursor=pointer]:
+                - /url: /o/36602/edit
+                - generic [ref=e154]: e
+                - text: Organização
+            - listitem [ref=e155]:
+              - link " Menu" [ref=e156] [cursor=pointer]:
+                - /url: /o/36602/use_modes
+                - generic [ref=e157]: 
+                - text: Menu
+            - listitem [ref=e158]:
+              - link "electrical_services Integrações" [ref=e159] [cursor=pointer]:
+                - /url: /o/36602/integrations
+                - generic [ref=e160]: electrical_services
+                - text: Integrações
+            - listitem [ref=e161]:
+              - link "flash_auto Piloto automático" [ref=e162] [cursor=pointer]:
+                - /url: /o/36602/autopilots
+                - generic [ref=e163]: flash_auto
+                - text: Piloto automático
+            - listitem [ref=e164]:
+              - link " Regras do Jogo" [ref=e165] [cursor=pointer]:
+                - /url: /o/36602/game_rules
+                - generic [ref=e166]: 
+                - text: Regras do Jogo
+            - listitem [ref=e167]:
+              - link " Comunicação" [ref=e168] [cursor=pointer]:
+                - /url: /o/36602/communication
+                - generic [ref=e169]: 
+                - text: Comunicação
+            - listitem [ref=e170]:
+              - link "sell Cobrança de inscrição" [ref=e171] [cursor=pointer]:
+                - /url: /o/36602/payments
+                - generic [ref=e172]: sell
+                - text: Cobrança de inscrição
+            - listitem [ref=e173]:
+              - link "credit_card Plano e assinatura" [ref=e174] [cursor=pointer]:
+                - /url: /o/36602/subscription_plans
+                - generic [ref=e175]: credit_card
+                - text: Plano e assinatura
+            - text: s
+            - listitem [ref=e176]:
+              - link " Segurança NOVO" [ref=e177] [cursor=pointer]:
+                - /url: /o/36602/security
+                - generic [ref=e178]: 
+                - text: Segurança NOVO
+            - listitem [ref=e179]:
+              - link "palette Aparência" [ref=e180] [cursor=pointer]:
+                - /url: /o/36602/appearance
+                - generic [ref=e181]: palette
+                - text: Aparência
+            - listitem [ref=e182]:
+              - link "credit_card Créditos de IA BETA" [ref=e183] [cursor=pointer]:
+                - /url: /o/36602/ai_consumption_analysis
+                - generic [ref=e184]: credit_card
+                - text: Créditos de IA BETA
+    - generic [ref=e187]:
+      - generic [ref=e188]:
+        - img [ref=e189]
+        - text: Éverton Gambeta
+      - img [ref=e191]
+  - text: "0"
+  - generic [ref=e193]:
+    - generic [ref=e194]:
+      - generic "Logo - Stage 10" [ref=e197]:
+        - link "Logo - Stage 10" [ref=e198] [cursor=pointer]:
+          - /url: /o/36602/dashboard
+          - img "Logo - Stage 10" [ref=e199]
+      - generic [ref=e200]:
+        - link "Open chat" [ref=e204] [cursor=pointer]:
+          - /url: /o/36602/chats
+          - button "Open chat" [ref=e205]:
+            - img [ref=e206]
+        - button "Users" [ref=e213] [cursor=pointer]:
+          - img [ref=e214]
+        - img [ref=e218] [cursor=pointer]
+    - generic: G M * * M * *
+  - generic [ref=e221]:
+    - text: G G G f G e    s 
+    - generic [ref=e223]:
+      - generic [ref=e226]: Créditos de IA
+      - generic [ref=e235]:
+        - tablist [ref=e237]:
+          - tab "Extrato" [ref=e238] [cursor=pointer]
+          - tab "Configurações" [selected] [ref=e239] [cursor=pointer]:
+            - generic [ref=e240]: Configurações
+          - tab "Política de créditos de IA" [ref=e241] [cursor=pointer]:
+            - generic [ref=e242]: Política de créditos de IA
+          - tab "Glossário de termos" [ref=e243] [cursor=pointer]:
+            - generic [ref=e244]: Glossário de termos
+        - tabpanel "Configurações" [ref=e246]:
+          - generic [ref=e247]:
+            - generic [ref=e251]:
+              - img [ref=e253]
+              - textbox "Insira sua busca" [ref=e255]
+            - generic [ref=e256]:
+              - generic [ref=e262] [cursor=pointer]:
+                - paragraph [ref=e264]: Stage 10
+                - checkbox [checked] [ref=e267]
+                - generic [ref=e271]: Ambiente principal
+              - generic [ref=e277] [cursor=pointer]:
+                - paragraph [ref=e279]: _Ambiente
+                - checkbox [checked] [ref=e282]
+                - checkbox [ref=e287]
+              - generic [ref=e295] [cursor=pointer]:
+                - paragraph [ref=e297]: 123 Ambiente
+                - checkbox [checked] [ref=e300]
+                - checkbox [ref=e305]
+              - generic [ref=e313] [cursor=pointer]:
+                - paragraph [ref=e315]: Avião
+                - checkbox [checked] [ref=e318]
+                - checkbox [checked] [ref=e323]
+              - generic [ref=e331] [cursor=pointer]:
+                - paragraph [ref=e333]: Chat e Notificação
+                - checkbox [ref=e336]
+                - checkbox [ref=e341]
+              - generic [ref=e349] [cursor=pointer]:
+                - paragraph [ref=e351]: Fenix
+                - checkbox [checked] [ref=e354]
+                - checkbox [checked] [ref=e359]
+              - generic [ref=e367] [cursor=pointer]:
+                - paragraph [ref=e369]: Parceira com nome grande nome grande 123
+                - checkbox [checked] [ref=e372]
+                - checkbox [checked] [ref=e377]
+              - generic [ref=e385] [cursor=pointer]:
+                - paragraph [ref=e387]: Ração
+                - checkbox [ref=e390]
+                - checkbox [ref=e395]
+              - generic [ref=e403] [cursor=pointer]:
+                - paragraph [ref=e405]: Stage 10.1 Parceira
+                - checkbox [checked] [ref=e408]
+                - checkbox [ref=e413]
+              - generic [ref=e421] [cursor=pointer]:
+                - paragraph [ref=e423]: Stage 10.10 Parceira
+                - checkbox [checked] [ref=e426]
+                - checkbox [checked] [ref=e431]
+              - generic [ref=e439] [cursor=pointer]:
+                - paragraph [ref=e441]: Stage 10.11 Parceira
+                - checkbox [checked] [ref=e444]
+                - checkbox [ref=e449]
+              - generic [ref=e457] [cursor=pointer]:
+                - paragraph [ref=e459]: Stage 10.12 Parceira
+                - checkbox [checked] [ref=e462]
+                - checkbox [checked] [ref=e467]
+              - generic [ref=e475] [cursor=pointer]:
+                - paragraph [ref=e477]: Stage 10.13 Parceira
+                - checkbox [checked] [ref=e480]
+                - checkbox [checked] [ref=e485]
+              - generic [ref=e493] [cursor=pointer]:
+                - paragraph [ref=e495]: Stage 10.14 Parceira
+                - checkbox [checked] [ref=e498]
+                - checkbox [checked] [ref=e503]
+              - generic [ref=e511] [cursor=pointer]:
+                - paragraph [ref=e513]: Stage 10.15 Parceira
+                - checkbox [checked] [ref=e516]
+                - checkbox [checked] [ref=e521]
+              - generic [ref=e529] [cursor=pointer]:
+                - paragraph [ref=e531]: Stage 10.16 Parceira
+                - checkbox [checked] [ref=e534]
+                - checkbox [checked] [ref=e539]
+              - generic [ref=e547] [cursor=pointer]:
+                - paragraph [ref=e549]: Stage 10.17 Parceira
+                - checkbox [checked] [ref=e552]
+                - checkbox [checked] [ref=e557]
+              - generic [ref=e565] [cursor=pointer]:
+                - paragraph [ref=e567]: Stage 10.18 Parceira
+                - checkbox [checked] [ref=e570]
+                - checkbox [checked] [ref=e575]
+              - generic [ref=e583] [cursor=pointer]:
+                - paragraph [ref=e585]: Stage 10.19 Parceira
+                - checkbox [checked] [ref=e588]
+                - checkbox [checked] [ref=e593]
+              - generic [ref=e601] [cursor=pointer]:
+                - paragraph [ref=e603]: Stage 10.2 Parceira
+                - checkbox [checked] [ref=e606]
+                - checkbox [checked] [ref=e611]
+              - generic [ref=e619] [cursor=pointer]:
+                - paragraph [ref=e621]: Stage 10.20 Parceira
+                - checkbox [ref=e624]
+                - checkbox [checked] [ref=e629]
+              - generic [ref=e637] [cursor=pointer]:
+                - paragraph [ref=e639]: Stage 10.21 Parceira
+                - checkbox [checked] [ref=e642]
+                - checkbox [checked] [ref=e647]
+              - generic [ref=e655] [cursor=pointer]:
+                - paragraph [ref=e657]: Stage 10.22 Parceira
+                - checkbox [checked] [ref=e660]
+                - checkbox [checked] [ref=e665]
+              - generic [ref=e673] [cursor=pointer]:
+                - paragraph [ref=e675]: Stage 10.23 Parceira
+                - checkbox [checked] [ref=e678]
+                - checkbox [checked] [ref=e683]
+              - generic [ref=e691] [cursor=pointer]:
+                - paragraph [ref=e693]: Stage 10.24 Parceira
+                - checkbox [checked] [ref=e696]
+                - checkbox [ref=e701]
+            - generic [ref=e705]:
+              - generic [ref=e706]:
+                - button "keyboard_double_arrow_left" [disabled] [ref=e707]:
+                  - generic [ref=e708]: keyboard_double_arrow_left
+                - button "chevron_left" [disabled] [ref=e709]:
+                  - generic [ref=e710]: chevron_left
+                - button "1" [ref=e711] [cursor=pointer]
+                - button "2" [ref=e712] [cursor=pointer]
+                - button "chevron_right" [ref=e713] [cursor=pointer]:
+                  - generic [ref=e714]: chevron_right
+              - generic [ref=e715]:
+                - combobox [ref=e716]:
+                  - option "25 por página" [selected]
+                  - option "50 por página"
+                  - option "100 por página"
+                - generic:
+                  - img
+  - region "Widget de chat" [ref=e717]:
+    - iframe [ref=e718]:
+      - button "Abrir chat ao vivo" [ref=f26e5]:
+        - img [ref=f26e8]
+        - img [ref=f26e15]
+  - generic:
+    - region "Notifications-top"
+    - region "Notifications-top-left"
+    - region "Notifications-top-right"
+    - region "Notifications-bottom-left"
+    - region "Notifications-bottom"
+    - region "Notifications-bottom-right"
+  - generic:
+    - region "Notifications-top"
+    - region "Notifications-top-left"
+    - region "Notifications-top-right"
+    - region "Notifications-bottom-left"
+    - region "Notifications-bottom"
+    - region "Notifications-bottom-right"
+  - generic:
+    - region "Notifications-top"
+    - region "Notifications-top-left"
+    - region "Notifications-top-right"
+    - region "Notifications-bottom-left"
+    - region "Notifications-bottom"
+    - region "Notifications-bottom-right"

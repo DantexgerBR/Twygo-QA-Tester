@@ -59,10 +59,11 @@ const browserProjects = projectConfig.browsers.map((browser) => {
 
 export default defineConfig({
   testDir: './tests',
-  fullyParallel: true,
+  fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  workers: 1,
+  timeout: 120_000,
   reporter: process.env.REGRESSION === 'true'
     ? [
         ['list'],
@@ -91,9 +92,14 @@ export default defineConfig({
     ignoreHTTPSErrors: true,
     locale: 'pt-BR',
     timezoneId: 'America/Sao_Paulo',
+    testIdAttribute: 'data-test-id',
   },
   projects: browserProjects,
   expect: {
     timeout: 10_000,
   },
 });
+
+// O app Twygo usa `data-test-id` (com hífen) em vez do padrão Playwright `data-testid`.
+// Sem configurar isso, todos os `getByTestId(...)` falhariam.
+// Aplicar via expect.configure não funciona — precisa ser na raiz config.use.
