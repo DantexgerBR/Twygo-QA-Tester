@@ -21,7 +21,7 @@ sumário por suíte.
 - `outputs/test-analysis.parsed.json` (do `twygo-xml-parser`) — usado para
   calcular cobertura: quantos locators a suíte exercitou vs. quantos
   elementos interativos foram observados nas páginas visitadas.
-- `config/project.config.json` (campo `exploratory`).
+- `projects/<slug>/project.config.json` (campo `exploratory`).
 
 ## Saída
 

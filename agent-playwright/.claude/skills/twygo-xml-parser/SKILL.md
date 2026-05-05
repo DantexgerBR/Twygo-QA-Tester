@@ -49,7 +49,7 @@ Pontos importantes:
 
 Em ordem de prioridade:
 1. Caminho passado como argumento CLI: `npm run agent:parse -- caminho/do/projeto.xml`
-2. Campo `testAnalysisFile` em `config/project.config.json`.
+2. Campo `testAnalysisFile` em `projects/<slug>/project.config.json`.
 3. Fallback: `inputs/test-analysis.xml` (não recomendado — explícito é melhor).
 
 ## Saída
