@@ -107,17 +107,23 @@ git checkout -b project/widgets
 
 > Convenção: `project/<slug>` em lowercase com hífens. Ex.: `project/kit-de-marca`, `project/widgets`.
 
-### 2. Receber o XML do agente AT
+### 2. Criar a pasta do projeto
 
-O agente AT gera um XML TestLink a partir do XMind. Coloque o arquivo em `inputs/`:
-
-```
-inputs/Analise_Teste_Widgets.xml
+```bash
+mkdir -p projects/widgets/{inputs,specs,tests/features,pages,utils}
 ```
 
-### 3. Atualizar `config/project.config.json`
+### 3. Receber o XML do agente AT
 
-Edite com o nome do projeto e o caminho do XML:
+O agente AT gera um XML TestLink a partir do XMind. Coloque o arquivo em `projects/widgets/inputs/`:
+
+```
+projects/widgets/inputs/Analise_Teste_Widgets.xml
+```
+
+### 4. Criar `projects/widgets/project.config.json`
+
+Use [`projects/creditos-fase-02/project.config.json`](projects/creditos-fase-02/project.config.json) como referência. Mínimo:
 
 ```jsonc
 {
@@ -125,19 +131,35 @@ Edite com o nome do projeto e o caminho do XML:
   "testAnalysisFile": "inputs/Analise_Teste_Widgets.xml",
   "environment": "staging",
   "browsers": ["chromium"],
-  // ...
+  "headless": true,
+  "reporting": {
+    "format": "html",
+    "outputDir": "outputs",
+    "screenshotsOnFailure": true
+  },
+  "performance": {
+    "enableTracing": true,
+    "enableVideo": false
+  },
+  "exploratory": {
+    "enabled": true,
+    "scopedRoutes": [],
+    "scopedKeywords": []
+  }
 }
 ```
 
-### 4. Validar
+> O caminho de `testAnalysisFile` é **relativo ao diretório do projeto** (`projects/widgets/`), não à raiz do agente.
+
+### 5. Validar
 
 ```bash
-npm run typecheck       # deve passar limpo
-npm run agent:parse     # parseia o XML
-npm run agent:suites    # lista as testsuites do projeto
+npm run typecheck                          # deve passar limpo
+npm run agent:parse -- --project widgets   # parseia o XML do projeto
+npm run agent:suites -- --project widgets  # lista as testsuites do projeto
 ```
 
-A última saída mostra os blocos do projeto (1 bloco do XLSX ≈ 1 testsuite no XML).
+> Se `projects/` tiver **só 1 projeto**, a flag `--project` é opcional — o agente auto-detecta. Quando houver 2+ projetos coexistindo (na master cumulativa), a flag é obrigatória.
 
 > **Checklist completo + commits**: [.claude/PROJECT_BOOTSTRAP.md](.claude/PROJECT_BOOTSTRAP.md).
 
@@ -235,6 +257,8 @@ Você revisa, aprova, commita.
 
 ## Estrutura de pastas
 
+A separação é entre **infra do agente** (compartilhada por projetos) e **conteúdo do projeto** (em `projects/<slug>/`):
+
 ```
 agent-playwright/
 ├── CLAUDE.md                       # Especificação técnica (engenharia QA sênior)
@@ -244,33 +268,38 @@ agent-playwright/
 ├── .mcp.json                       # MCPs registrados (Playwright MCP)
 │
 ├── config/
-│   ├── environment.json            # baseUrl + credenciais (referencia ${VAR})
-│   └── project.config.json         # nome do projeto, XML, exploratório, etc.
+│   └── environment.json            # baseUrl + credenciais (compartilhado entre projetos)
 │
-├── inputs/
-│   ├── Analise_Teste_<projeto>.xml # XML do AT (fonte única de verdade)
-│   └── recon-<slug>.md             # Catálogo de test-ids/labels (gerado)
+├── projects/                       # 1 subpasta por projeto Twygo
+│   └── <slug>/                     # ex.: creditos-fase-02, widgets
+│       ├── project.config.json     # nome do projeto, XML, exploratório
+│       ├── inputs/                 # XML TestLink + recons gerados
+│       ├── specs/                  # Plans do planner (Markdown)
+│       ├── tests/features/         # Specs gerados (1 dir por testsuite)
+│       ├── pages/                  # Page Objects específicos do projeto
+│       └── utils/                  # testIds + helpers específicos
 │
-├── src/
-│   ├── pages/                      # Page Objects (BasePage + Login + Dashboard + ...)
+├── src/                            # infra compartilhada — genérico Twygo
+│   ├── pages/                      # BasePage, LoginPage, DashboardPage, SuperAdminPage
 │   ├── fixtures/                   # Fixtures (exploratório, etc.) — auto-aplicadas
-│   └── utils/                      # Helpers (environment, constants, testIds, modals)
+│   └── utils/                      # environment, constants, helpers, modals, exploratory, logger
 │
-├── tests/
-│   ├── auth/                       # Specs de referência da tela de login
-│   ├── features/                   # Specs gerados pelo orquestrador (1 dir por suíte)
+├── tests/                          # specs e setup compartilhados
+│   ├── auth/                       # Specs de referência da tela de login Twygo
 │   ├── seed.spec.ts                # Seed do generator (não é caso de teste)
 │   └── setup/
 │       ├── global-setup.ts         # Login 1× → grava storageState
-│       └── smoke.spec.ts           # Pre-flight (Fase 1.5)
-│
-├── specs/                          # Test plans gerados pelo planner (Markdown)
+│       └── smoke.spec.ts           # Pre-flight universal (Fase 1.5)
 │
 ├── outputs/                        # 100% gerado — gitignored
-│   ├── .auth/storage.json          # storageState do globalSetup
-│   ├── reports/                    # HTML estruturado por execução
-│   ├── allure-report/              # Allure (modo regressivo)
-│   └── (screenshots, traces, logs, exploratory-findings.json)
+│   ├── .auth/storage.json          # storageState do globalSetup (compartilhado)
+│   ├── <slug>/                     # 1 subpasta por projeto rodado
+│   │   ├── test-results.json
+│   │   ├── exploratory-findings.json
+│   │   ├── reports/                # HTML estruturado por execução
+│   │   ├── allure-report/          # Allure (modo regressivo)
+│   │   └── (screenshots, traces, logs)
+│   └── _all/                       # quando PROJECT_ALL=true (regressivo cumulativo)
 │
 └── .claude/
     ├── SETUP.md                    # Instalação inicial (Java, MCPs, plugin)
@@ -294,21 +323,24 @@ npm run typecheck                        # tsc --noEmit (deve passar limpo)
 
 ### Inspeção do XML do agente AT
 ```bash
-npm run agent:parse                      # XML TestLink → JSON estruturado
-npm run agent:suites                     # listar testsuites disponíveis
-npm run agent:recon -- --suite "<nome>"  # mapear test-ids/labels da área da suíte
+npm run agent:parse                                     # XML TestLink → JSON estruturado
+npm run agent:suites                                    # listar testsuites disponíveis
+npm run agent:recon -- --suite "<nome>"                 # mapear test-ids/labels da área
 ```
 
 ### Execução
 ```bash
-npm run agent:smoke                      # só smoke pre-flight (~10s)
-npm run agent:run -- --suite "<nome>"    # per-suite (dia-a-dia)
-npm run agent:regression                 # tudo + Allure (fim de projeto)
-npm run test                             # Playwright puro (sem orquestração)
-npm run test:headed                      # com browser visível
-npm run test:ui                          # Playwright UI mode (debug interativo)
-npm run test:debug                       # debug step-by-step
+npm run agent:smoke                                     # só smoke pre-flight (~10s)
+npm run agent:run -- --suite "<nome>"                   # per-suite (dia-a-dia)
+npm run agent:run -- --project widgets --suite "<nome>" # explicitar projeto (quando há 2+)
+npm run agent:regression                                # tudo + Allure (fim de projeto)
+npm run test                                            # Playwright puro (sem orquestração)
+npm run test:headed                                     # com browser visível
+npm run test:ui                                         # Playwright UI mode (debug interativo)
+npm run test:debug                                      # debug step-by-step
 ```
+
+> **Sobre `--project <slug>`**: opcional quando `projects/` tem só 1 projeto (auto-detect). Obrigatório quando há 2+ (master cumulativa). Pode ser substituído por `export PROJECT=<slug>` (ou `$env:PROJECT="<slug>"` no PowerShell) antes do comando.
 
 ### Pós-execução
 ```bash

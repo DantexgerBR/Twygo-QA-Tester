@@ -137,19 +137,24 @@ git checkout master
 git pull
 git checkout -b project/widgets
 
+# Criar pasta do projeto
+mkdir -p projects/widgets/{inputs,specs,tests/features,pages,utils}
+
 # Receber XML do AT
-cp <caminho>/Analise_Teste_Widgets.xml inputs/
+cp <caminho>/Analise_Teste_Widgets.xml projects/widgets/inputs/
 
-# Atualizar config/project.config.json com nome + caminho do XML
+# Criar projects/widgets/project.config.json (nome + XML + env)
 
-npm run agent:parse           # parsear XML
-npm run agent:suites          # listar testsuites
+npm run agent:parse -- --project widgets    # parsear XML
+npm run agent:suites -- --project widgets   # listar testsuites
 
 # Por cada bloco entregue pelo dev:
-npm run agent:run -- --suite "<nome literal da suíte>"
+npm run agent:run -- --project widgets --suite "<nome literal da suíte>"
 ```
 
-Saída: `agent-playwright/outputs/reports/{slug-suite}_{timestamp}/index.html`.
+Saída: `agent-playwright/outputs/widgets/reports/{slug-suite}_{timestamp}/index.html`.
+
+> Se houver só 1 projeto em `projects/`, a flag `--project` é opcional (auto-detect).
 
 ### 3. Validações em banco (quando o caso de teste exigir)
 
@@ -193,10 +198,10 @@ A branch `project/<slug>` fica preservada como histórico do projeto. Próximo p
 │   ├── CLAUDE.md                   # especificação técnica
 │   ├── package.json                # dependências Node
 │   ├── playwright.config.ts        # config Playwright
-│   ├── config/                     # environment.json + project.config.json
-│   ├── inputs/                     # XML TestLink + recons (entrada)
-│   ├── tests/                      # specs gerados + setup
-│   ├── src/                        # Page Objects + fixtures + utils
+│   ├── config/environment.json     # baseUrl + credenciais (compartilhado)
+│   ├── projects/<slug>/            # 1 subpasta por projeto Twygo (XML, specs, pages específicos)
+│   ├── tests/{auth,setup}/         # specs e setup compartilhados
+│   ├── src/                        # Page Objects + fixtures + utils — infra compartilhada
 │   ├── outputs/                    # relatórios + traces (gerado, gitignored)
 │   └── .claude/                    # SETUP, PROJECT_BOOTSTRAP, commands, skills, agents
 │

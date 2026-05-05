@@ -2,7 +2,12 @@ import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { XMLParser, XMLValidator } from 'fast-xml-parser';
 import { createLogger } from '../../../src/utils/logger.js';
-import { FILES } from '../../../src/utils/constants.js';
+import {
+  getOutputPath,
+  getProjectConfigPath,
+  loadProjectConfig,
+  resolveProjectPath,
+} from '../../../src/utils/environment.js';
 import { ensureParentDir } from '../../../src/utils/helpers.js';
 
 const log = createLogger('xml-parser');
@@ -227,21 +232,19 @@ export function validateAnalysis(analysis: ParsedAnalysis): void {
   walkAndValidate(analysis.rootSuite, []);
 }
 
-type ProjectConfigPartial = { testAnalysisFile?: string };
-
 function resolveDefaultInputPath(): string {
-  const cfgPath = resolve(process.cwd(), FILES.projectConfig);
+  const cfgPath = getProjectConfigPath();
   if (existsSync(cfgPath)) {
     try {
-      const cfg = JSON.parse(readFileSync(cfgPath, 'utf-8')) as ProjectConfigPartial;
+      const cfg = loadProjectConfig();
       if (cfg.testAnalysisFile) {
-        return resolve(process.cwd(), cfg.testAnalysisFile);
+        return resolveProjectPath(cfg.testAnalysisFile);
       }
     } catch {
       /* config ilegível: cai no fallback */
     }
   }
-  return resolve(process.cwd(), 'inputs/test-analysis.xml');
+  return resolveProjectPath('inputs/test-analysis.xml');
 }
 
 async function main(): Promise<void> {
@@ -249,11 +252,11 @@ async function main(): Promise<void> {
   const inputPath = cliArg
     ? resolve(process.cwd(), cliArg)
     : resolveDefaultInputPath();
-  const outputPath = resolve(process.cwd(), FILES.parsedAnalysis);
+  const outputPath = getOutputPath('test-analysis.parsed.json');
 
   if (!existsSync(inputPath)) {
     throw new Error(
-      `XML não encontrado: ${inputPath}. Passe o caminho como argumento ou ajuste 'testAnalysisFile' em ${FILES.projectConfig}.`,
+      `XML não encontrado: ${inputPath}. Passe o caminho como argumento ou ajuste 'testAnalysisFile' em projects/<slug>/project.config.json.`,
     );
   }
 

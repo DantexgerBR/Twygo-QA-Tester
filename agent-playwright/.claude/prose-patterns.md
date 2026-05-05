@@ -92,7 +92,7 @@ Specs gerados **nunca** devem hardcodar host, orgId ou credenciais. Importe
 de [src/utils/environment.ts](../src/utils/environment.ts):
 
 ```ts
-import { getBaseUrl, getOrgId, getEnvByName, getEditContractPath } from '../../../src/utils/environment.js';
+import { getBaseUrl, getOrgId, getEnvByName, getEditContractPath } from '../../../../../src/utils/environment.js';
 
 // rota com orgId do env atual
 await page.goto(`/o/${getOrgId()}/ai_consumption_analysis?tab=settings`);

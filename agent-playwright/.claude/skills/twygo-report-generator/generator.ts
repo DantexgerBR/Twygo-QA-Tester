@@ -3,7 +3,12 @@ import { resolve, join, basename, relative } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { parseArgs } from 'node:util';
 import { createLogger } from '../../../src/utils/logger.js';
-import { FILES, PATHS } from '../../../src/utils/constants.js';
+import { FILES } from '../../../src/utils/constants.js';
+import {
+  getOutputDir,
+  getOutputPath,
+  getProjectConfigPath,
+} from '../../../src/utils/environment.js';
 import { ensureDir, slugify } from '../../../src/utils/helpers.js';
 import type {
   ParsedAnalysis,
@@ -1924,10 +1929,10 @@ function metaRefresh(target: string): string {
 }
 
 function runAllureGenerate(): boolean {
-  const resultsDir = resolve(process.cwd(), 'outputs/allure-results');
-  const reportDir = resolve(process.cwd(), 'outputs/allure-report');
+  const resultsDir = getOutputDir('allure-results');
+  const reportDir = getOutputDir('allure-report');
   if (!existsSync(resultsDir)) {
-    log.warn('outputs/allure-results não existe — pular geração Allure (rodou em modo regressivo?)');
+    log.warn(`${resultsDir} não existe — pular geração Allure (rodou em modo regressivo?)`);
     return false;
   }
   log.info('Gerando relatório Allure...');
@@ -1951,8 +1956,8 @@ function runAllureGenerate(): boolean {
 async function main(): Promise<void> {
   const args = parseFlags();
 
-  const cfg = loadJson<ProjectConfig>(resolve(process.cwd(), FILES.projectConfig));
-  if (!cfg) throw new Error(`Config ausente: ${FILES.projectConfig}`);
+  const cfg = loadJson<ProjectConfig>(getProjectConfigPath());
+  if (!cfg) throw new Error('Config ausente: projects/<slug>/project.config.json');
 
   // Carrega environment.json pro bloco "Pronto para registro de bug" — extrai
   // URL/Login/Senha/orgId pra encaixar nos campos padrão do template de bug.
@@ -1962,15 +1967,15 @@ async function main(): Promise<void> {
     log.warn(`Environment "${cfg.environment}" ausente em environment.json — campos URL/Login/Senha do bug-block ficarão como "—".`);
   }
 
-  const playwrightReport = loadJson<PlaywrightReport>(resolve(process.cwd(), FILES.testResults));
+  const playwrightReport = loadJson<PlaywrightReport>(getOutputPath('test-results.json'));
   if (!playwrightReport) {
-    throw new Error(`${FILES.testResults} ausente. Execute os testes antes (npm run agent:run).`);
+    throw new Error('outputs/<slug>/test-results.json ausente. Execute os testes antes (npm run agent:run).');
   }
-  const exploratoryReport = loadJson<ExploratoryReport>(resolve(process.cwd(), FILES.exploratoryFindings));
-  const parsedAnalysis = loadJson<ParsedAnalysis>(resolve(process.cwd(), FILES.parsedAnalysis));
+  const exploratoryReport = loadJson<ExploratoryReport>(getOutputPath('exploratory-findings.json'));
+  const parsedAnalysis = loadJson<ParsedAnalysis>(getOutputPath('test-analysis.parsed.json'));
   const xmlByName = parsedAnalysis ? indexTestCasesByName(parsedAnalysis) : new Map<string, ParsedTestCase>();
   if (!parsedAnalysis) {
-    log.warn(`${FILES.parsedAnalysis} ausente — tests.html não terá metadata do XML (steps, summary, preconditions).`);
+    log.warn('outputs/<slug>/test-analysis.parsed.json ausente — tests.html não terá metadata do XML (steps, summary, preconditions).');
   }
 
   const allTests = flatten(playwrightReport.suites);
@@ -1996,7 +2001,7 @@ async function main(): Promise<void> {
 
   const ts = timestamp();
   const folderName = `${folderPrefix}_${ts}`;
-  const reportsRoot = resolve(process.cwd(), PATHS.outputs, 'reports');
+  const reportsRoot = getOutputDir('reports');
   const reportDir = join(reportsRoot, folderName);
   ensureDir(reportDir);
 
@@ -2071,11 +2076,13 @@ async function main(): Promise<void> {
     join(reportDir, 'summary.json'),
     JSON.stringify({ runId: folderName, scope: scopeLabel, tests: testsSummary, exploratory: exploratorySummary }, null, 2),
   );
-  if (existsSync(resolve(process.cwd(), FILES.testResults))) {
-    copyFileSync(resolve(process.cwd(), FILES.testResults), join(reportDir, 'tests.json'));
+  const testResultsPath = getOutputPath('test-results.json');
+  if (existsSync(testResultsPath)) {
+    copyFileSync(testResultsPath, join(reportDir, 'tests.json'));
   }
-  if (existsSync(resolve(process.cwd(), FILES.exploratoryFindings))) {
-    copyFileSync(resolve(process.cwd(), FILES.exploratoryFindings), join(reportDir, 'exploratory.json'));
+  const exploratoryFindingsPath = getOutputPath('exploratory-findings.json');
+  if (existsSync(exploratoryFindingsPath)) {
+    copyFileSync(exploratoryFindingsPath, join(reportDir, 'exploratory.json'));
   }
 
   writeFileSync(join(reportsRoot, latestPointerName), metaRefresh(`${folderName}/index.html`));

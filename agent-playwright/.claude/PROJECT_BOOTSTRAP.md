@@ -1,8 +1,15 @@
 # Bootstrap de novo projeto Twygo
 
-Ritual para iniciar um projeto novo no agente Playwright. O `master` é o
-baseline genérico do agente; cada projeto vive na própria branch para
-isolar inputs, specs gerados, POMs específicos e relatórios.
+Ritual para iniciar um projeto novo no agente Playwright. Cada projeto vive
+em duas dimensões:
+
+- **Pasta**: `projects/<slug>/` (com seus próprios `inputs/`, `specs/`,
+  `tests/features/`, `pages/`, `utils/` e `project.config.json`).
+- **Branch**: `project/<slug>` para o trabalho ativo. Quando concluído,
+  merge para `master`, onde os projetos coexistem em `projects/*/`.
+
+Infra do agente (`src/`, `config/environment.json`, `tests/{auth,setup}/`)
+fica em raiz e é compartilhada por todos os projetos.
 
 ## 1. Criar branch dedicada
 
@@ -16,11 +23,18 @@ git checkout -b project/<slug-do-projeto>     # ex.: project/kit-de-marca
 ```
 
 > **Convenção de slug**: lowercase, hífens. Ex.: `kit-de-marca`,
-> `aprendizagem-compartilhamentos`, `play-config-aparencia`.
+> `widgets`, `aprendizagem-compartilhamentos`.
 
-## 2. Receber inputs do agente AT
+## 2. Criar a pasta do projeto
 
-Drop os arquivos em [`inputs/`](../inputs/):
+```bash
+cd agent-playwright
+mkdir -p projects/<slug>/{inputs,specs,tests/features,pages,utils}
+```
+
+## 3. Receber inputs do agente AT
+
+Drop os arquivos em `projects/<slug>/inputs/`:
 
 - **`Analise_Teste_<NomeDoProjeto>.xml`** — XML TestLink gerado pelo agente
   AT a partir do XMind. **Obrigatório** — é a fonte de verdade dos casos
@@ -29,33 +43,49 @@ Drop os arquivos em [`inputs/`](../inputs/):
   referência humana (este agente não processa o XLSX; ele é input do
   agente AT, não do Playwright).
 
-## 3. Atualizar configuração
+## 4. Criar `projects/<slug>/project.config.json`
 
-Edite [`config/project.config.json`](../config/project.config.json):
+Use [`projects/creditos-fase-02/project.config.json`](../projects/creditos-fase-02/project.config.json)
+como referência:
 
 ```jsonc
 {
   "projectName": "Kit de Marca",                                   // nome literal — vai pro Allure epic
-  "testAnalysisFile": "inputs/Analise_Teste_Kit_de_Marca.xml",     // caminho do XML do passo 2
+  "testAnalysisFile": "inputs/Analise_Teste_Kit_de_Marca.xml",     // RELATIVO ao projects/<slug>/
   "environment": "staging",                                         // staging | production
   "browsers": ["chromium"],
-  // ... resto inalterado
+  "headless": true,
+  "reporting": { "format": "html", "outputDir": "outputs", "screenshotsOnFailure": true },
+  "performance": { "enableTracing": true, "enableVideo": false },
+  "exploratory": {
+    "enabled": true,
+    "scopedRoutes": [],            // rotas in-scope para findings exploratórios
+    "scopedKeywords": [],          // palavras-chave que indicam route in-scope
+    "activeProbes": { "hoverTooltips": true, "formEdge": true, "visualStability": true }
+  }
 }
 ```
 
-E [`config/environment.json`](../config/environment.json) se URLs/credenciais
-mudarem por projeto (geralmente não — é a mesma plataforma Twygo).
+> O `testAnalysisFile` é **relativo ao diretório do projeto**, não à raiz.
 
-## 4. Validar setup
+[`config/environment.json`](../config/environment.json) é compartilhado entre
+projetos (mesma plataforma Twygo). Só altere se um projeto precisar de
+ambiente novo.
+
+## 5. Validar setup
 
 ```bash
 cd agent-playwright
 npm install                                # se primeira vez na máquina
 npx playwright install chromium            # se primeira vez na máquina
 npm run typecheck                          # garantir que tudo compila
-npm run agent:parse                        # parsear o XML, verificar contagens
-npm run agent:suites                       # listar as testsuites do projeto
+npm run agent:parse -- --project <slug>    # parsear o XML, verificar contagens
+npm run agent:suites -- --project <slug>   # listar as testsuites do projeto
 ```
+
+> Se houver **só 1 projeto** em `projects/`, a flag `--project` é opcional
+> (auto-detect). Quando há 2+ projetos coexistindo (master cumulativa), é
+> obrigatória — ou export `PROJECT=<slug>` antes dos comandos.
 
 ### 4.1. Subagents oficiais Playwright (uma vez por repo)
 
@@ -79,29 +109,29 @@ sobrescreve sem perguntar.
 A última saída deve mostrar a quebra de blocos em testsuites (1 bloco do
 XLSX ≈ 1 testsuite no XML).
 
-## 5. Commit baseline da branch
+## 6. Commit baseline da branch
 
 ```bash
-git add agent-playwright/inputs/Analise_Teste_<projeto>.xml \
-        agent-playwright/config/project.config.json
-# (opcional) git add "agent-playwright/inputs/Quebra de atividades - <projeto>.xlsx"
+git add agent-playwright/projects/<slug>/
 git commit -m "chore(<slug>): bootstrap projeto <Nome do Projeto>"
-git push -u origin project/<slug-do-projeto>
+git push -u origin project/<slug>
 ```
 
-## 6. Fluxo dia-a-dia (per-suite, conforme dev entrega blocos)
+## 7. Fluxo dia-a-dia (per-suite, conforme dev entrega blocos)
 
 Cada bloco entregue:
 
 ```bash
 # Liste as suítes para confirmar o nome literal
-npm run agent:suites
+npm run agent:suites -- --project <slug>
 
 # Rode parse + planner + generator + execução + validador + report
-npm run agent:run -- --suite "[Kit de marca] QA 2.1 - Kit de marca - Criar / Editar - Identificação"
+npm run agent:run -- --project <slug> --suite "[Kit de marca] QA 2.1 - Kit de marca - Criar / Editar - Identificação"
 ```
 
-Resultado: `outputs/reports/{slug-suite}_{timestamp}/index.html`.
+> Se `projects/` tem só 1 projeto, `--project` é opcional (auto-detect).
+
+Resultado: `outputs/<slug>/reports/{slug-suite}_{timestamp}/index.html`.
 
 Se a geração precisar do plugin oficial Playwright (planner/generator/healer),
 use o Claude Code interativo dentro de `agent-playwright/`:
@@ -115,25 +145,29 @@ claude
 Após a execução estabilizar:
 
 ```bash
-git add agent-playwright/tests/features/<slug-suite>/ \
-        agent-playwright/src/pages/<NewPages>.ts \
-        agent-playwright/src/utils/testIds.ts
+git add agent-playwright/projects/<slug>/tests/features/<slug-suite>/ \
+        agent-playwright/projects/<slug>/pages/<NewPage>.ts \
+        agent-playwright/projects/<slug>/utils/testIds.ts
 git commit -m "test(<slug-suite>): add specs do bloco QA 2.1"
 ```
 
-## 7. Healing após mudança de UI
+> Page Objects **genéricos Twygo** (que beneficiam outros projetos) vão em
+> `src/pages/`. Page Objects **específicos** desta feature vão em
+> `projects/<slug>/pages/`. Ver CLAUDE.md §3 (linha de corte).
+
+## 8. Healing após mudança de UI
 
 Quando um teste falha por seletor não encontrado / timing (não bug funcional):
 
 ```bash
 cd agent-playwright
 claude
-> Invocar o healer do plugin Playwright para tests/features/<arquivo>.spec.ts
+> Invocar o healer do plugin Playwright para projects/<slug>/tests/features/<arquivo>.spec.ts
 ```
 
 O healer propõe correção via diff. Aprove → commit no branch do projeto.
 
-## 8. Encerramento do projeto: regressivo completo
+## 9. Encerramento do projeto: regressivo completo
 
 Quando todos os blocos passaram individualmente:
 
@@ -141,29 +175,35 @@ Quando todos os blocos passaram individualmente:
 # Limpa outputs antigos
 npm run clean
 
-# Rodada completa: todos os specs + Allure + GH Pages
-npm run agent:regression
+# Rodada completa do projeto: todos os specs + Allure
+npm run agent:regression -- --project <slug>
 ```
 
-O workflow [`.github/workflows/regression.yml`](../../.github/workflows/regression.yml)
-roda automaticamente em PR para `main` (se você abrir um); localmente o
-mesmo comando produz `outputs/allure-report/` + `outputs/reports/regression_{ts}/`.
+Saída: `outputs/<slug>/allure-report/` + `outputs/<slug>/reports/regression_{ts}/`.
 
-## 9. Arquivar o projeto
+O workflow `.github/workflows/regression.yml` roda automaticamente em PR
+para `master` (se aplicável).
 
-A branch fica preservada como histórico:
+## 10. Merge para master e arquivamento
+
+Quando o projeto está validado:
 
 ```bash
-# Opcional — se quiser tag para releases
-git tag project/kit-de-marca/v1.0
-git push origin project/kit-de-marca/v1.0
+# Abrir PR project/<slug> → master
+# Após aprovado, merge → master fica cumulativa com projects/<slug>/ junto com os outros
+
+# Opcional — tag de release
+git tag project/<slug>/v1.0
+git push origin project/<slug>/v1.0
 ```
 
-**Não merge** a branch de volta no `master` — ela contém artefatos
-específicos do projeto (XML, specs, POMs específicos) que poluiriam o
-baseline. O master só recebe melhorias do agente em si, em PRs separados.
+> **Master é cumulativa** — todos os `projects/*/` coexistem nela. Pra rodar
+> regressivo cumulativo (todos os projetos juntos) em master, use:
+> ```bash
+> PROJECT_ALL=true npm run agent:regression
+> ```
 
-## 10. Próximo projeto
+## 11. Próximo projeto
 
 Repete do passo 1 com novo slug e novo XML.
 
@@ -172,11 +212,11 @@ Repete do passo 1 com novo slug e novo XML.
 ## Checklist rápido para um novo projeto
 
 - [ ] Branch `project/<slug>` criada a partir do master atualizado
-- [ ] XML TestLink dropado em `inputs/Analise_Teste_<projeto>.xml`
-- [ ] (opcional) XLSX dropado em `inputs/Quebra de atividades - <projeto>.xlsx`
-- [ ] `config/project.config.json` atualizado (`projectName` + `testAnalysisFile`)
+- [ ] Pasta `projects/<slug>/{inputs,specs,tests/features,pages,utils}/` criada
+- [ ] XML TestLink dropado em `projects/<slug>/inputs/Analise_Teste_<projeto>.xml`
+- [ ] `projects/<slug>/project.config.json` criado (`projectName` + `testAnalysisFile` relativo ao projeto)
 - [ ] `npm run typecheck` exit 0
-- [ ] `npm run agent:parse` lista as suítes esperadas
+- [ ] `npm run agent:parse -- --project <slug>` lista as suítes esperadas
 - [ ] `npm run agent:suites` mostra os blocos
 - [ ] Commit baseline da branch
 - [ ] Push para o remoto

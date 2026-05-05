@@ -53,37 +53,61 @@ Geração assistida por LLM, **runtime determinístico**.
 
 ## 3. Arquitetura do Repositório
 
+A estrutura separa **infra do agente** (compartilhada entre projetos) de
+**conteúdo do projeto** (em `projects/<slug>/`):
+
 ```
 agent-playwright/
 ├── CLAUDE.md                       # este arquivo
+├── README.md                       # onboarding pra QA novo
 ├── package.json · tsconfig.json · playwright.config.ts
 ├── .mcp.json                       # MCPs registrados (Playwright MCP padrão)
 │
-├── config/                         # environment.json + project.config.json
-├── inputs/                         # XML(s) TestLink + docs auxiliares
-├── src/
-│   ├── pages/                      # Page Objects (BasePage + específicos)
+├── config/
+│   └── environment.json            # baseUrl + credenciais (compartilhado entre projetos)
+│
+├── projects/                       # 1 subpasta por projeto Twygo (creditos, widgets, ...)
+│   └── <slug>/                     # ex.: creditos-fase-02
+│       ├── project.config.json     # nome do projeto, XML, exploratory config
+│       ├── inputs/                 # XML TestLink + recons (gerados pelo recon)
+│       ├── specs/                  # planos salvos pelo playwright-test-planner
+│       ├── tests/features/         # specs gerados (1 dir por testsuite)
+│       ├── pages/                  # Page Objects específicos do projeto
+│       └── utils/                  # testIds.ts e helpers específicos
+│
+├── src/                            # infra compartilhada — genérico Twygo
+│   ├── pages/                      # BasePage, LoginPage, DashboardPage, SuperAdminPage
 │   ├── fixtures/
 │   │   ├── exploratory-fixture.ts  # auto-fixture com probes (console, http, axe)
 │   │   ├── custom-fixtures.ts
 │   │   └── test-data.ts
 │   └── utils/
 │       ├── exploratory.ts          # collector + tipos da Fase 5.5
-│       └── (constants, helpers, logger, testIds)
+│       ├── environment.ts          # getProjectSlug, getOrgId, getOutputDir, ...
+│       ├── modals.ts               # dismissCommonModals (NPS Sofia, etc.)
+│       └── (constants, helpers, logger)
+│
 ├── tests/
-│   ├── auth/                       # specs hand-written (referência)
-│   ├── features/                   # specs gerados pelo orquestrador
-│   ├── seed.spec.ts                # seed para o playwright-test-generator
+│   ├── auth/                       # specs hand-written (referência login Twygo)
+│   ├── seed.spec.ts                # seed do playwright-test-generator
 │   └── setup/
-├── specs/                          # test plans salvos pelo playwright-test-planner
-├── outputs/                        # 100% gerado — NÃO commitar
-│   ├── test-analysis.parsed.json   # do twygo-xml-parser
-│   ├── test-results.json           # JSON reporter Playwright
-│   ├── exploratory/                # findings por teste (in-band)
-│   ├── exploratory-findings.json   # agregação (twygo-exploratory-validator)
-│   ├── reports/                    # HTML estruturado por execução
-│   ├── allure-results/ + allure-report/  # modo regressivo
-│   └── (screenshots, traces, html-report)
+│       ├── global-setup.ts         # login 1× → outputs/.auth/storage.json
+│       └── smoke.spec.ts           # smoke universal Twygo (Fase 1.5)
+│
+├── outputs/                        # 100% gerado — NÃO commitar (gitignored)
+│   ├── .auth/                      # storageState compartilhado (mesmo Twygo)
+│   ├── <slug>/                     # 1 subpasta por projeto rodado
+│   │   ├── test-analysis.parsed.json   # do twygo-xml-parser
+│   │   ├── test-results.json           # JSON reporter Playwright
+│   │   ├── exploratory-findings.json   # agregação (twygo-exploratory-validator)
+│   │   ├── exploratory/                # findings por teste
+│   │   ├── reports/<runId>/            # HTML estruturado
+│   │   ├── allure-results/             # modo regressivo
+│   │   ├── allure-report/              # Allure CLI
+│   │   ├── html-report/                # Playwright HTML
+│   │   └── test-artifacts/             # screenshots, traces
+│   └── _all/                       # quando PROJECT_ALL=true (regressivo cumulativo)
+│
 ├── .claude/
 │   ├── SETUP.md                    # instalação inicial
 │   ├── PROJECT_BOOTSTRAP.md        # ritual de iniciar projeto novo
@@ -96,11 +120,26 @@ agent-playwright/
 │   └── skills/                     # skills locais Twygo + webapp-testing
 │       ├── twygo-xml-parser/
 │       ├── twygo-test-orchestrator/
+│       ├── twygo-recon/
 │       ├── twygo-exploratory-validator/
 │       ├── twygo-report-generator/
 │       └── webapp-testing/         # oficial Anthropic
 └── templates/                      # page-object-template.ts, test-template.ts
 ```
+
+### Como o orquestrador descobre o projeto ativo
+
+1. Flag `--project <slug>` no orchestrator → seta `process.env.PROJECT`
+2. Variável de ambiente `PROJECT=<slug>`
+3. Auto-detect: se há **exatamente 1** projeto em `projects/`, usa ele
+4. Erro explícito: lista projetos disponíveis e pede flag
+
+Para regressivo cumulativo (todos os projetos juntos), use `PROJECT_ALL=true`.
+
+### Linha de corte genérico vs específico
+
+- **Genérico** (em `src/`, `tests/{auth,setup}/`, `config/environment.json`): serve a 2+ projetos hoje ou claramente serviria.
+- **Específico** (em `projects/<slug>/`): nasceu para um projeto e ninguém mais tem motivo para mexer.
 
 ---
 
@@ -273,8 +312,8 @@ Erros comuns que custaram horas em sessões anteriores. Generator/healer/planner
 - `globalSetup` detecta automaticamente qualquer chave terminando em `-without-credits` e gera storage adicional em `outputs/.auth/storage-without-credits.json`.
 - Specs que precisam dele importam o caminho e plugam via `test.use`:
   ```ts
-  import { SECONDARY_STORAGE_PATH } from '../../setup/global-setup.js';
-  import { getEnvByName } from '../../../src/utils/environment.js';
+  import { SECONDARY_STORAGE_PATH } from '../../../../../tests/setup/global-setup.js';
+  import { getEnvByName } from '../../../../../src/utils/environment.js';
   test.use({
     storageState: SECONDARY_STORAGE_PATH,
     baseURL: getEnvByName('staging-without-credits').baseUrl,
@@ -307,7 +346,7 @@ introduzam qualquer um deles.
 - ❌ `await page.goto('/o/36602/ai_consumption_analysis?tab=settings');`
 - ✅ Importar de [src/utils/environment.ts](src/utils/environment.ts):
   ```ts
-  import { getBaseUrl, getOrgId } from '../../../src/utils/environment.js';
+  import { getBaseUrl, getOrgId } from '../../../../../src/utils/environment.js';
   await page.goto(`/o/${getOrgId()}/ai_consumption_analysis?tab=settings`);
   ```
 - **Por quê**: specs hardcoded só rodam contra UM ambiente; quebram quando

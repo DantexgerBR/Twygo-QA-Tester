@@ -4,6 +4,8 @@ import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'no
 import { dirname, resolve } from 'node:path';
 import { createLogger } from '../../src/utils/logger.js';
 import { LoginPage } from '../../src/pages/LoginPage.js';
+import { loadProjectConfig } from '../../src/utils/environment.js';
+import { FILES } from '../../src/utils/constants.js';
 
 const log = createLogger('global-setup');
 
@@ -24,7 +26,6 @@ const STORAGE_TTL_MS = 30 * 60 * 1000; // 30 min — re-login se mais antigo
 export const SECONDARY_STORAGE_PATH = resolve(process.cwd(), 'outputs/.auth/storage-without-credits.json');
 
 type EnvConfig = Record<string, { baseUrl: string; credentials: { email: string; password: string }; timeout: number }>;
-type ProjConfig = { environment: string };
 
 function isStorageFreshAt(path: string): boolean {
   if (!existsSync(path)) return false;
@@ -89,14 +90,12 @@ async function globalSetup(_config: FullConfig): Promise<void> {
     return;
   }
 
-  const projectConfig: ProjConfig = JSON.parse(
-    readFileSync(resolve(process.cwd(), 'config/project.config.json'), 'utf-8'),
-  );
+  const projectConfig = loadProjectConfig();
   const envConfig: EnvConfig = JSON.parse(
-    readFileSync(resolve(process.cwd(), 'config/environment.json'), 'utf-8'),
+    readFileSync(resolve(process.cwd(), FILES.environment), 'utf-8'),
   );
   const env = envConfig[projectConfig.environment];
-  if (!env) throw new Error(`Environment "${projectConfig.environment}" ausente em environment.json`);
+  if (!env) throw new Error(`Environment "${projectConfig.environment}" ausente em ${FILES.environment}`);
 
   // Login no ambiente principal (storage padrão consumido por playwright.config.ts/use.storageState)
   await loginAndPersist(projectConfig.environment, env, STORAGE_PATH);

@@ -4,6 +4,10 @@ import { resolve } from 'node:path';
 import { spawn } from 'node:child_process';
 import { createLogger } from '../../../src/utils/logger.js';
 import { FILES } from '../../../src/utils/constants.js';
+import {
+  getOutputPath,
+  getProjectConfigPath,
+} from '../../../src/utils/environment.js';
 import { slugify } from '../../../src/utils/helpers.js';
 import type {
   ParsedAnalysis,
@@ -13,6 +17,7 @@ import type {
 const log = createLogger('orchestrator');
 
 type Args = {
+  project?: string;
   suite?: string;
   all: boolean;
   regression: boolean;
@@ -26,6 +31,7 @@ type Args = {
 function parseFlags(): Args {
   const { values } = parseArgs({
     options: {
+      project: { type: 'string' },
       suite: { type: 'string' },
       all: { type: 'boolean', default: false },
       regression: { type: 'boolean', default: false },
@@ -39,6 +45,7 @@ function parseFlags(): Args {
     strict: false,
   });
   return {
+    project: values.project as string | undefined,
     suite: values.suite as string | undefined,
     all: Boolean(values.all) || Boolean(values.regression),
     regression: Boolean(values.regression),
@@ -57,10 +64,10 @@ function flattenSuites(suite: ParsedTestSuite, acc: ParsedTestSuite[] = []): Par
 }
 
 function loadParsed(): ParsedAnalysis {
-  const path = resolve(process.cwd(), FILES.parsedAnalysis);
+  const path = getOutputPath('test-analysis.parsed.json');
   if (!existsSync(path)) {
     throw new Error(
-      `Faltando ${FILES.parsedAnalysis}. Rode 'npm run agent:parse' antes.`,
+      `Faltando outputs/<slug>/test-analysis.parsed.json. Rode 'npm run agent:parse' antes.`,
     );
   }
   return JSON.parse(readFileSync(path, 'utf-8')) as ParsedAnalysis;
@@ -145,9 +152,13 @@ async function runPlaywright(
 async function preflight(): Promise<number> {
   log.info('=== Fase 1.5: Pre-flight ===');
   // Valida configs presentes
-  for (const required of [FILES.projectConfig, FILES.environment]) {
-    if (!existsSync(resolve(process.cwd(), required))) {
-      log.error(`Config ausente: ${required}`);
+  const requiredConfigs: { path: string; label: string }[] = [
+    { path: getProjectConfigPath(), label: 'projects/<slug>/project.config.json' },
+    { path: resolve(process.cwd(), FILES.environment), label: FILES.environment },
+  ];
+  for (const required of requiredConfigs) {
+    if (!existsSync(required.path)) {
+      log.error(`Config ausente: ${required.label}`);
       return 2;
     }
   }
@@ -190,6 +201,14 @@ function listSuites(parsed: ParsedAnalysis): void {
 
 async function main(): Promise<void> {
   const args = parseFlags();
+
+  // Propaga --project como env var PROJECT para que playwright.config.ts,
+  // global-setup, exploratory-fixture e demais helpers leiam o slug correto.
+  // Em modo regressivo cumulativo, usuário define PROJECT_ALL=true diretamente.
+  if (args.project) {
+    process.env.PROJECT = args.project;
+  }
+
   const parsed = loadParsed();
 
   if (args.list) {

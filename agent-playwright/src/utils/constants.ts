@@ -5,24 +5,21 @@ export const TIMEOUTS = {
   navigation: 45_000,
 } as const;
 
+/**
+ * Paths fixos do agente (não dependem de projeto). Para paths específicos do
+ * projeto ativo (inputs/, specs/, tests/features/, etc.), usar helpers de
+ * `src/utils/environment.ts` (getProjectDir, resolveProjectPath).
+ */
 export const PATHS = {
-  inputs: 'inputs',
   outputs: 'outputs',
   pages: 'src/pages',
-  features: 'tests/features',
   screenshots: 'outputs/screenshots',
   traces: 'outputs/traces',
   templates: 'templates',
-  exploratory: 'outputs/exploratory',
 } as const;
 
 export const FILES = {
-  testAnalysis: 'inputs/test-analysis.xml',
-  parsedAnalysis: 'outputs/test-analysis.parsed.json',
-  testResults: 'outputs/test-results.json',
   pageObjectTemplate: 'templates/page-object-template.ts',
   testTemplate: 'templates/test-template.ts',
   environment: 'config/environment.json',
-  projectConfig: 'config/project.config.json',
-  exploratoryFindings: 'outputs/exploratory-findings.json',
 } as const;

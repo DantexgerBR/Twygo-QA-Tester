@@ -4,8 +4,13 @@ import { dirname, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import { createLogger } from '../../../src/utils/logger.js';
 import { FILES } from '../../../src/utils/constants.js';
+import {
+  getOutputPath,
+  getProjectConfigPath,
+  resolveProjectPath,
+} from '../../../src/utils/environment.js';
 import { slugify } from '../../../src/utils/helpers.js';
-import type { ParsedAnalysis, ParsedTestCase, ParsedTestSuite } from '../twygo-xml-parser/parser.js';
+import type { ParsedAnalysis, ParsedTestSuite } from '../twygo-xml-parser/parser.js';
 
 const log = createLogger('recon');
 
@@ -235,21 +240,22 @@ async function main(): Promise<void> {
 
   // Carrega configs
   const projectConfig: ProjConfig = JSON.parse(
-    readFileSync(resolve(process.cwd(), 'config/project.config.json'), 'utf-8'),
+    readFileSync(getProjectConfigPath(), 'utf-8'),
   );
   const envConfig: EnvConfig = JSON.parse(
-    readFileSync(resolve(process.cwd(), 'config/environment.json'), 'utf-8'),
+    readFileSync(resolve(process.cwd(), FILES.environment), 'utf-8'),
   );
   const env = envConfig[projectConfig.environment];
 
   // Resolve testsuite
   let suite: ParsedTestSuite | null = null;
   if (args.suite) {
-    if (!existsSync(resolve(process.cwd(), FILES.parsedAnalysis))) {
-      log.error(`${FILES.parsedAnalysis} ausente — rode 'npm run agent:parse' primeiro.`);
+    const parsedPath = getOutputPath('test-analysis.parsed.json');
+    if (!existsSync(parsedPath)) {
+      log.error(`outputs/<slug>/test-analysis.parsed.json ausente — rode 'npm run agent:parse' primeiro.`);
       process.exit(2);
     }
-    const parsed: ParsedAnalysis = JSON.parse(readFileSync(resolve(process.cwd(), FILES.parsedAnalysis), 'utf-8'));
+    const parsed: ParsedAnalysis = JSON.parse(readFileSync(parsedPath, 'utf-8'));
     suite = findSuite(parsed, args.suite);
     if (!suite) {
       log.error(`Testsuite não encontrada: "${args.suite}"`);
@@ -259,7 +265,7 @@ async function main(): Promise<void> {
 
   const urls = args.urls ?? (suite ? [inferCanonicalUrl(suite)] : ['/']);
   const slug = suite ? slugify(suite.name) : slugify(urls[0]);
-  const outputPath = resolve(process.cwd(), 'inputs', `recon-${slug}.md`);
+  const outputPath = resolveProjectPath(`inputs/recon-${slug}.md`);
 
   // Verifica storageState válido
   const storagePath = resolve(process.cwd(), 'outputs/.auth/storage.json');

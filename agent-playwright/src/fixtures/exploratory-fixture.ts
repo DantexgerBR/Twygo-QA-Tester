@@ -1,6 +1,5 @@
 import { test as base, expect } from '@playwright/test';
 import { existsSync, readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
 import {
   ExploratoryCollector,
   DEFAULT_PROBE_CONFIG,
@@ -10,13 +9,21 @@ import {
   writeActiveProbeResults,
   type ProbeConfig,
 } from '../utils/exploratory.js';
-import { FILES } from '../utils/constants.js';
+import { getProjectConfigPath } from '../utils/environment.js';
 
 let cachedConfig: ProbeConfig | null = null;
 
 function loadProbeConfig(): ProbeConfig {
   if (cachedConfig) return cachedConfig;
-  const path = resolve(process.cwd(), FILES.projectConfig);
+  // project.config.json[exploratory] tem a config de probes específica do
+  // projeto ativo. Se ausente (ou nenhum projeto resolvido), cai pro default.
+  let path: string;
+  try {
+    path = getProjectConfigPath();
+  } catch {
+    cachedConfig = DEFAULT_PROBE_CONFIG;
+    return cachedConfig;
+  }
   if (!existsSync(path)) {
     cachedConfig = DEFAULT_PROBE_CONFIG;
     return cachedConfig;

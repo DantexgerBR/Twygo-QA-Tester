@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
-import { resolve, join } from 'node:path';
+import { join } from 'node:path';
 import { createLogger } from '../../../src/utils/logger.js';
-import { FILES, PATHS } from '../../../src/utils/constants.js';
+import { getOutputDir, getOutputPath } from '../../../src/utils/environment.js';
 import { ensureParentDir, slugify } from '../../../src/utils/helpers.js';
 import type {
   Finding,
@@ -214,7 +214,7 @@ function aggregate(perTest: SuiteFindings[], probeRuns: ActiveProbeResults[]): A
  * durante o `allure generate`).
  */
 function writeAllureExports(report: AggregatedReport): void {
-  const outDir = resolve(process.cwd(), 'outputs/allure-results');
+  const outDir = getOutputDir('allure-results');
   if (!existsSync(outDir)) mkdirSync(outDir, { recursive: true });
   for (const ts of report.testsuites) {
     const filename = `exploratory_${slugify(ts.testsuiteName)}.json`;
@@ -261,7 +261,7 @@ function printSummary(report: AggregatedReport, quiet: boolean): void {
 
 async function main(): Promise<void> {
   const flags = parseFlags(process.argv.slice(2));
-  const dir = resolve(process.cwd(), PATHS.exploratory);
+  const dir = getOutputDir('exploratory');
   const perTest = loadSuiteFindingsFiles(dir);
   const probeRuns = loadActiveProbeFiles(dir);
 
@@ -270,14 +270,14 @@ async function main(): Promise<void> {
   }
 
   const report = aggregate(perTest, probeRuns);
-  const outputPath = resolve(process.cwd(), FILES.exploratoryFindings);
+  const outputPath = getOutputPath('exploratory-findings.json');
   ensureParentDir(outputPath);
   writeFileSync(outputPath, JSON.stringify(report, null, 2), 'utf-8');
   log.info(`Findings consolidados → ${outputPath}`);
 
   if (process.env.REGRESSION === 'true') {
     writeAllureExports(report);
-    log.info(`Exports Allure-compatíveis em outputs/allure-results/`);
+    log.info(`Exports Allure-compatíveis em outputs/<slug>/allure-results/`);
   }
 
   printSummary(report, flags.quiet);

@@ -1,9 +1,9 @@
 import { writeFileSync } from 'node:fs';
-import { resolve, join } from 'node:path';
+import { join } from 'node:path';
 import type { Page, Request, Response, ConsoleMessage } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { ensureDir, slugify } from './helpers.js';
-import { PATHS } from './constants.js';
+import { getOutputDir } from './environment.js';
 
 export type FindingSeverity = 'error' | 'warn' | 'info';
 
@@ -388,7 +388,7 @@ export class ExploratoryCollector {
 }
 
 export function writeSuiteFindings(payload: SuiteFindings): string {
-  const dir = resolve(process.cwd(), PATHS.exploratory);
+  const dir = getOutputDir('exploratory');
   ensureDir(dir);
   const fileName = `${slugify(payload.suite)}__${slugify(payload.test)}__w${payload.workerIndex}.json`;
   const filePath = join(dir, fileName);
@@ -434,7 +434,7 @@ export function summarizeFindings(
 // ─── Active probes (opt-in) ──────────────────────────────────────────────────
 
 export function writeActiveProbeResults(payload: ActiveProbeResults): string {
-  const dir = resolve(process.cwd(), PATHS.exploratory);
+  const dir = getOutputDir('exploratory');
   ensureDir(dir);
   const fileName = `active-probes__${slugify(payload.suite)}__${slugify(payload.test)}__w${payload.workerIndex}.json`;
   const filePath = join(dir, fileName);

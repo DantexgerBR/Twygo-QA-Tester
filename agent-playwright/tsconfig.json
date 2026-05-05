@@ -32,7 +32,8 @@
   "include": [
     "src/**/*.ts",
     "tests/**/*.ts",
-    "skills/**/*.ts",
+    "projects/**/*.ts",
+    ".claude/skills/**/*.ts",
     "playwright.config.ts"
   ],
   "exclude": [
