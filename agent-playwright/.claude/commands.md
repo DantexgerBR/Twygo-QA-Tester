@@ -1,16 +1,18 @@
 # Comandos e iniciação do agente Playwright Twygo
 
 > Para a configuração inicial (deps, MCPs, plugin), veja [SETUP.md](SETUP.md).
+> Para o ritual completo de novo projeto (branches, commits), veja [PROJECT_BOOTSTRAP.md](PROJECT_BOOTSTRAP.md).
 
 ## 1. Setup por novo projeto (uma vez por projeto Twygo)
 
-1. Copiar o XML do agente AT para `inputs/Analise_Teste_<projeto>.xml`.
-2. Atualizar `config/project.config.json`:
-   - `testAnalysisFile`: caminho do XML do passo 1.
+1. `mkdir -p projects/<slug>/{inputs,specs,tests/features,pages,utils}`.
+2. Copiar o XML do agente AT para `projects/<slug>/inputs/Analise_Teste_<projeto>.xml`.
+3. Criar `projects/<slug>/project.config.json` com:
+   - `testAnalysisFile`: caminho do XML do passo 2 (relativo ao projeto).
    - `projectName`: nome do projeto (vai pro `allure.epic`).
    - `environment`: `staging` | `production`.
    - `browsers`: `["chromium"]` (ou multi-browser).
-3. Garantir que `.mcp.json` tem o Playwright MCP registrado (já vem por padrão).
+4. Garantir que `.mcp.json` tem o Playwright MCP registrado (já vem por padrão).
 
 ## 2. Fluxo dia-a-dia (per-suite)
 
@@ -94,9 +96,16 @@ Definidas em `agent-playwright/.env` (gitignored):
 
 | Flag | Comportamento |
 |---|---|
+| `--project <slug>` | Projeto ativo (`projects/<slug>/`). Opcional se há só 1 projeto em `projects/` (auto-detect). Obrigatório quando há 2+ |
 | `--suite "<nome>"` | Filtra por nome literal ou substring de uma testsuite |
-| `--all` | Todas as testsuites (sem filtro) |
+| `--all` | Todas as testsuites do projeto (sem filtro) |
 | `--regression` | `--all` + ativa Allure |
 | `--no-explore` | Pula a Fase 5.5 (validador exploratório) |
 | `--no-report` | Pula a Fase 6 (gerador de relatório) |
+| `--no-preflight` | Pula a Fase 1.5 (smoke pre-flight) |
+| `--smoke-only` | Roda só o smoke e sai |
 | `--list` | Apenas lista as testsuites disponíveis e sai |
+
+> Alternativa a `--project <slug>`: `export PROJECT=<slug>` antes do comando
+> (ou `$env:PROJECT="<slug>"` em PowerShell). Para regressivo cumulativo
+> (todos os projetos juntos em master), use `PROJECT_ALL=true`.

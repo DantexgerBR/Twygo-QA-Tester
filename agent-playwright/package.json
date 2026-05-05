@@ -15,11 +15,13 @@
     "agent:parse": "tsx .claude/skills/twygo-xml-parser/parser.ts",
     "agent:suites": "tsx .claude/skills/twygo-test-orchestrator/orchestrator.ts --list",
     "agent:run": "tsx .claude/skills/twygo-test-orchestrator/orchestrator.ts",
+    "agent:smoke": "tsx .claude/skills/twygo-test-orchestrator/orchestrator.ts --smoke-only",
+    "agent:recon": "tsx .claude/skills/twygo-recon/recon.ts",
     "agent:regression": "tsx .claude/skills/twygo-test-orchestrator/orchestrator.ts --regression",
     "agent:explore": "tsx .claude/skills/twygo-exploratory-validator/validator.ts",
     "agent:report": "tsx .claude/skills/twygo-report-generator/generator.ts",
     "typecheck": "tsc --noEmit",
-    "clean": "rimraf outputs/screenshots outputs/traces outputs/test-results.json outputs/test-report.html outputs/html-report outputs/exploratory outputs/exploratory-findings.json outputs/reports outputs/allure-results outputs/allure-report"
+    "clean": "rimraf outputs/screenshots outputs/traces outputs/test-results.json outputs/test-report.html outputs/html-report outputs/exploratory outputs/exploratory-findings.json outputs/reports outputs/allure-results outputs/allure-report outputs/test-analysis.parsed.json"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.2",

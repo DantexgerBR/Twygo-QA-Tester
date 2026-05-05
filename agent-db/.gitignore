@@ -1,0 +1,26 @@
+# Credenciais
+.env
+.env.*
+!.env.example
+
+# Saídas geradas
+output/
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+venv/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+.DS_Store

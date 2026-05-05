@@ -36,6 +36,8 @@ Para cada suíte, criar casos de teste seguindo as convenções da skill `twygo-
 
 **Regra fundamental:** NÃO se limitar apenas ao que está na coluna "descrição" da planilha. A análise deve ser COMPLETA, ROBUSTA e cobrir TODOS os cenários possíveis, incluindo cenários de falha e tentativas de forçar erros.
 
+**Compatibilidade com agent-playwright:** Os casos serão executados pelo `agent-playwright` (XMind → XML TestLink → planner/generator/healer). Antes de fechar cada caso, garantir que toda AÇÃO use verbo canônico ("Clicar no botão 'X'", "Preencher o campo 'X' com 'Y'") e todo RESULTADO ESPERADO seja assertável (texto literal entre aspas + elemento alvo). Ver seção 8 da skill `twygo-qa-conventions`.
+
 Para exemplos de casos de teste bem escritos, consultar [examples/ui_example.md](examples/ui_example.md), [examples/api_example.md](examples/api_example.md) e [examples/bloqueio_example.md](examples/bloqueio_example.md).
 
 ## Etapa 5: Geração do XMind

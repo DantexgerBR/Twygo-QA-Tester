@@ -1,11 +1,130 @@
 import type { FullConfig } from '@playwright/test';
+import { chromium } from '@playwright/test';
+import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
 import { createLogger } from '../../src/utils/logger.js';
+import { LoginPage } from '../../src/pages/LoginPage.js';
+import { loadProjectConfig } from '../../src/utils/environment.js';
+import { FILES } from '../../src/utils/constants.js';
 
 const log = createLogger('global-setup');
 
+const STORAGE_PATH = resolve(process.cwd(), 'outputs/.auth/storage.json');
+const STORAGE_TTL_MS = 30 * 60 * 1000; // 30 min — re-login se mais antigo
+
+/**
+ * Storage secundário para o ambiente "sem saldo de créditos" — usado por
+ * testes de bloqueio de funcionalidades (RN: organização sem créditos
+ * disponíveis). O storage é criado quando `staging-without-credits` (ou
+ * outro env terminado em `-without-credits`) está presente em
+ * `environment.json`. Specs consomem via:
+ *
+ *   test.use({ storageState: SECONDARY_STORAGE_PATH });
+ *
+ * Importado como `import { SECONDARY_STORAGE_PATH } from 'tests/setup/global-setup.js'`.
+ */
+export const SECONDARY_STORAGE_PATH = resolve(process.cwd(), 'outputs/.auth/storage-without-credits.json');
+
+type EnvConfig = Record<string, { baseUrl: string; credentials: { email: string; password: string }; timeout: number }>;
+
+function isStorageFreshAt(path: string): boolean {
+  if (!existsSync(path)) return false;
+  const ageMs = Date.now() - statSync(path).mtimeMs;
+  if (ageMs > STORAGE_TTL_MS) return false;
+  try {
+    const j = JSON.parse(readFileSync(path, 'utf-8'));
+    return Array.isArray(j.cookies) && j.cookies.length > 0;
+  } catch {
+    return false;
+  }
+}
+
+function isStorageFresh(): boolean {
+  return isStorageFreshAt(STORAGE_PATH);
+}
+
+/**
+ * Faz login uma vez em um ambiente alvo e grava o storageState resultante.
+ * Reusa storage já existente se ainda estiver fresh.
+ */
+async function loginAndPersist(
+  envName: string,
+  envEntry: { baseUrl: string; credentials: { email: string; password: string }; timeout: number },
+  destinationPath: string,
+): Promise<void> {
+  if (isStorageFreshAt(destinationPath)) {
+    log.info(`storageState reutilizado para "${envName}" (${destinationPath})`);
+    return;
+  }
+  log.info(`Login global "${envName}" em ${envEntry.baseUrl}users/login...`);
+  const browser = await chromium.launch();
+  try {
+    const context = await browser.newContext({ baseURL: envEntry.baseUrl, ignoreHTTPSErrors: true });
+    const page = await context.newPage();
+    const loginPage = new LoginPage(page);
+    await page.goto('/users/login');
+    await loginPage.login(envEntry.credentials.email, envEntry.credentials.password);
+    await page.waitForURL((url) => !url.pathname.startsWith('/users/login'), { timeout: 30_000 });
+
+    mkdirSync(dirname(destinationPath), { recursive: true });
+    await context.storageState({ path: destinationPath });
+    log.info(`storageState gravado para "${envName}" (${destinationPath})`);
+  } finally {
+    await browser.close();
+  }
+}
+
+/**
+ * globalSetup do Playwright: faz login 1× e grava storageState em
+ * outputs/.auth/storage.json. Specs reusam via `use.storageState` configurado
+ * em playwright.config.ts — não precisam mais de login boilerplate por test.
+ *
+ * Re-login automático se storage tem >30min ou está corrompido.
+ *
+ * Pode ser desligado via SKIP_GLOBAL_LOGIN=1 (útil para tests/auth/login.spec.ts
+ * que valida a tela de login em si — esse spec deve rodar com `test.use({ storageState: { cookies: [], origins: [] } })`).
+ */
 async function globalSetup(_config: FullConfig): Promise<void> {
-  log.info('Iniciando setup global da suíte de testes Twygo');
-  // Ponto de extensão: autenticação programática, seeding, etc.
+  if (process.env.SKIP_GLOBAL_LOGIN === '1') {
+    log.info('SKIP_GLOBAL_LOGIN=1 — pulando login global');
+    return;
+  }
+
+  const projectConfig = loadProjectConfig();
+  const envConfig: EnvConfig = JSON.parse(
+    readFileSync(resolve(process.cwd(), FILES.environment), 'utf-8'),
+  );
+  const env = envConfig[projectConfig.environment];
+  if (!env) throw new Error(`Environment "${projectConfig.environment}" ausente em ${FILES.environment}`);
+
+  // Login no ambiente principal (storage padrão consumido por playwright.config.ts/use.storageState)
+  await loginAndPersist(projectConfig.environment, env, STORAGE_PATH);
+
+  // Login secundário: se environment.json define um env terminando em
+  // `-without-credits`, prepara storage para specs de "bloqueio sem saldo".
+  // Hoje convencionado como `staging-without-credits` (criado em 2026-05-04
+  // junto com Fase 2 de Gestão de Créditos de IA — organização sem saldo).
+  const secondaryEnvName = Object.keys(envConfig).find((k) => k.endsWith('-without-credits'));
+  if (secondaryEnvName) {
+    try {
+      await loginAndPersist(secondaryEnvName, envConfig[secondaryEnvName]!, SECONDARY_STORAGE_PATH);
+    } catch (e) {
+      log.warn(`Falha ao preparar storage secundário "${secondaryEnvName}": ${(e as Error).message}. Specs que dependem dele serão pulados.`);
+    }
+  }
+}
+
+/**
+ * Helpers exportados pro orchestrator preflight().
+ */
+export function storageStateIsFresh(): boolean {
+  return isStorageFresh();
+}
+
+export function invalidateStorageState(): void {
+  if (existsSync(STORAGE_PATH)) {
+    writeFileSync(STORAGE_PATH, '{"cookies":[],"origins":[]}');
+  }
 }
 
 export default globalSetup;

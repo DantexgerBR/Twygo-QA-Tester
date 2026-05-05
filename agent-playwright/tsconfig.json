@@ -32,13 +32,15 @@
   "include": [
     "src/**/*.ts",
     "tests/**/*.ts",
-    "skills/**/*.ts",
+    "projects/**/*.ts",
+    ".claude/skills/**/*.ts",
     "playwright.config.ts"
   ],
   "exclude": [
     "node_modules",
     "dist",
     "outputs",
-    "templates"
+    "templates",
+    "tests/seed.spec.ts"
   ]
 }

@@ -1,6 +1,10 @@
 import { test, expect } from '../../src/fixtures/custom-fixtures.js';
 import { users, expectedMessages } from '../../src/fixtures/test-data.js';
 
+// Este spec testa a tela de login em si — precisa começar SEM autenticação.
+// Override do storageState global (que viria do globalSetup) com state vazio.
+test.use({ storageState: { cookies: [], origins: [] } });
+
 test.describe('Autenticação', () => {
   test.beforeEach(async ({ loginPage }) => {
     await loginPage.goto();

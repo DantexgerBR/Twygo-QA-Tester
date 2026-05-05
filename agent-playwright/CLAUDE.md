@@ -53,47 +53,93 @@ Geração assistida por LLM, **runtime determinístico**.
 
 ## 3. Arquitetura do Repositório
 
+A estrutura separa **infra do agente** (compartilhada entre projetos) de
+**conteúdo do projeto** (em `projects/<slug>/`):
+
 ```
 agent-playwright/
 ├── CLAUDE.md                       # este arquivo
+├── README.md                       # onboarding pra QA novo
 ├── package.json · tsconfig.json · playwright.config.ts
 ├── .mcp.json                       # MCPs registrados (Playwright MCP padrão)
 │
-├── config/                         # environment.json + project.config.json
-├── inputs/                         # XML(s) TestLink + docs auxiliares
-├── src/
-│   ├── pages/                      # Page Objects (BasePage + específicos)
+├── config/
+│   └── environment.json            # baseUrl + credenciais (compartilhado entre projetos)
+│
+├── projects/                       # 1 subpasta por projeto Twygo (creditos, widgets, ...)
+│   └── <slug>/                     # ex.: creditos-fase-02
+│       ├── project.config.json     # nome do projeto, XML, exploratory config
+│       ├── inputs/                 # XML TestLink + recons (gerados pelo recon)
+│       ├── specs/                  # planos salvos pelo playwright-test-planner
+│       ├── tests/features/         # specs gerados (1 dir por testsuite)
+│       ├── pages/                  # Page Objects específicos do projeto
+│       └── utils/                  # testIds.ts e helpers específicos
+│
+├── src/                            # infra compartilhada — genérico Twygo
+│   ├── pages/                      # BasePage, LoginPage, DashboardPage, SuperAdminPage
 │   ├── fixtures/
 │   │   ├── exploratory-fixture.ts  # auto-fixture com probes (console, http, axe)
 │   │   ├── custom-fixtures.ts
 │   │   └── test-data.ts
 │   └── utils/
 │       ├── exploratory.ts          # collector + tipos da Fase 5.5
-│       └── (constants, helpers, logger, testIds)
+│       ├── environment.ts          # getProjectSlug, getOrgId, getOutputDir, ...
+│       ├── modals.ts               # dismissCommonModals (NPS Sofia, etc.)
+│       └── (constants, helpers, logger)
+│
 ├── tests/
-│   ├── auth/                       # specs hand-written (referência)
-│   ├── features/                   # specs gerados pelo orquestrador
+│   ├── auth/                       # specs hand-written (referência login Twygo)
+│   ├── seed.spec.ts                # seed do playwright-test-generator
 │   └── setup/
-├── outputs/                        # 100% gerado — NÃO commitar
-│   ├── test-analysis.parsed.json   # do twygo-xml-parser
-│   ├── test-results.json           # JSON reporter Playwright
-│   ├── exploratory/                # findings por teste (in-band)
-│   ├── exploratory-findings.json   # agregação (twygo-exploratory-validator)
-│   ├── reports/                    # HTML estruturado por execução
-│   ├── allure-results/ + allure-report/  # modo regressivo
-│   └── (screenshots, traces, html-report)
+│       ├── global-setup.ts         # login 1× → outputs/.auth/storage.json
+│       └── smoke.spec.ts           # smoke universal Twygo (Fase 1.5)
+│
+├── outputs/                        # 100% gerado — NÃO commitar (gitignored)
+│   ├── .auth/                      # storageState compartilhado (mesmo Twygo)
+│   ├── <slug>/                     # 1 subpasta por projeto rodado
+│   │   ├── test-analysis.parsed.json   # do twygo-xml-parser
+│   │   ├── test-results.json           # JSON reporter Playwright
+│   │   ├── exploratory-findings.json   # agregação (twygo-exploratory-validator)
+│   │   ├── exploratory/                # findings por teste
+│   │   ├── reports/<runId>/            # HTML estruturado
+│   │   ├── allure-results/             # modo regressivo
+│   │   ├── allure-report/              # Allure CLI
+│   │   ├── html-report/                # Playwright HTML
+│   │   └── test-artifacts/             # screenshots, traces
+│   └── _all/                       # quando PROJECT_ALL=true (regressivo cumulativo)
+│
 ├── .claude/
 │   ├── SETUP.md                    # instalação inicial
+│   ├── PROJECT_BOOTSTRAP.md        # ritual de iniciar projeto novo
 │   ├── prose-patterns.md           # padrões prosa PT-BR → Playwright
 │   ├── commands.md                 # comandos npm + flags + env vars
+│   ├── agents/                     # subagents oficiais Playwright (init-agents --loop claude)
+│   │   ├── playwright-test-planner.md
+│   │   ├── playwright-test-generator.md
+│   │   └── playwright-test-healer.md
 │   └── skills/                     # skills locais Twygo + webapp-testing
 │       ├── twygo-xml-parser/
 │       ├── twygo-test-orchestrator/
+│       ├── twygo-recon/
 │       ├── twygo-exploratory-validator/
 │       ├── twygo-report-generator/
 │       └── webapp-testing/         # oficial Anthropic
 └── templates/                      # page-object-template.ts, test-template.ts
 ```
+
+### Como o orquestrador descobre o projeto ativo
+
+1. Flag `--project <slug>` no orchestrator → seta `process.env.PROJECT`
+2. Variável de ambiente `PROJECT=<slug>`
+3. Auto-detect: se há **exatamente 1** projeto em `projects/`, usa ele
+4. Erro explícito: lista projetos disponíveis e pede flag
+
+Para regressivo cumulativo (todos os projetos juntos), use `PROJECT_ALL=true`.
+
+### Linha de corte genérico vs específico
+
+- **Genérico** (em `src/`, `tests/{auth,setup}/`, `config/environment.json`): serve a 2+ projetos hoje ou claramente serviria.
+- **Específico** (em `projects/<slug>/`): nasceu para um projeto e ninguém mais tem motivo para mexer.
 
 ---
 
@@ -106,13 +152,15 @@ Dois modos:
 | **Per-suite** | Dia-a-dia: testar 1 bloco entregue por dev | `outputs/reports/{slug}_{ts}/` |
 | **Regressivo** | Fim de projeto / GitHub Actions | `outputs/reports/regression_{ts}/` + Allure em GH Pages |
 
-7 fases canônicas:
+9 fases canônicas (3 novas adicionadas em 2026-04 após diagnóstico de lentidão):
 
 | Fase | Skill / agente | O que faz |
 |---|---|---|
 | 1. Init | — | Lê configs, valida XML existente |
+| 1.5. **Pre-flight** *(novo)* | orquestrador | Valida configs + baseURL responde + storageState válido. Falha cedo, falha barato — antes de gastar planners |
 | 2. Parse | `twygo-xml-parser` | XML TestLink → `outputs/test-analysis.parsed.json` |
-| 3. Plan | **planner** (plugin Playwright) | Para cada testcase, plano técnico baseado na prosa |
+| 2.5. **Recon** *(novo, opt-in)* | `twygo-recon` | Login + navegação na área da testsuite + dump de test-ids/labels em `inputs/recon-{slug}.md`. Planners consomem isso e pulam exploração ao vivo |
+| 3. Plan | **planner** (plugin Playwright) | Para cada testcase, plano técnico baseado na prosa + recon |
 | 4. Generate | **generator** (plugin Playwright) + Playwright MCP | Spec `.spec.ts` + Page Objects + annotations Allure |
 | 5. Execute | Playwright (com `--grep` per-suite ou tudo regressivo) | Roda + grava findings exploratórios via fixture |
 | 5.5. Validate | `twygo-exploratory-validator` | Agrega findings em `exploratory-findings.json` |
@@ -153,18 +201,29 @@ política para prosa ambígua e cenários fora do escopo.
 
 | MCP | Quando usar |
 |---|---|
-| **`playwright`** ([microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp)) | **Padrão** — Fase 4 (validação de seletores ao vivo) + Fase 7 (healing) |
+| **`playwright-test`** (`npx playwright run-test-mcp-server`) | **Padrão** — usado pelos 3 subagents oficiais de test (Fases 3/4/7). Expõe `browser_*`, `planner_*`, `generator_*`, `test_*`, `browser_generate_locator` |
 | **`chrome-devtools`** ([ChromeDevTools/chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp)) | Opt-in — debug profundo (Web Vitals, traces) |
 | **`github`** ([github/github-mcp-server](https://github.com/github/github-mcp-server)) | Opt-in — CI/healer abrindo issues + PRs |
 
-### 6.2. Skills externas
+> O `.mcp.json` é gerado por `npx playwright init-agents --loop claude` no SETUP. Não editar manualmente.
+
+### 6.2. Subagents Claude Code para Playwright (`.claude/agents/`)
+
+Definidos por `npx playwright init-agents --loop claude` (oficial Microsoft). São Markdown com frontmatter declarando `tools` (ferramentas do MCP `playwright-test`) e ficam disponíveis via `subagent_type` em sessões iniciadas dentro de `agent-playwright/`.
+
+| Subagent (`subagent_type`) | Papel | Tools principais |
+|---|---|---|
+| **`playwright-test-planner`** | Lê o XML/contexto, navega no app real, salva plano estruturado em `specs/` | `browser_*`, `planner_setup_page`, `planner_save_plan` |
+| **`playwright-test-generator`** | Lê o plano + seed (`tests/seed.spec.ts`), gera `.spec.ts` com seletores validados | `browser_*`, `generator_setup_page`, `generator_write_test` |
+| **`playwright-test-healer`** | Roda specs, identifica falhas, edita corrigindo seletor/timing/asserção | `test_run`, `test_debug`, `browser_generate_locator` |
+
+### 6.3. Skill externa metodológica
 
 | Skill | Origem | Papel |
 |---|---|---|
-| **`webapp-testing`** | [anthropics/skills](https://github.com/anthropics/skills) | Guia metodológico de boas práticas de teste web |
-| **Plugin Playwright** (planner/generator/healer) | [claude.com/plugins/playwright](https://claude.com/plugins/playwright) | 3 subagentes que o orquestrador delega |
+| **`webapp-testing`** | [anthropics/skills](https://github.com/anthropics/skills) | Guia metodológico de boas práticas de teste web (carregada como contexto) |
 
-### 6.3. Skills locais Twygo (`.claude/skills/`)
+### 6.4. Skills locais Twygo (`.claude/skills/`)
 
 | Skill | Fase | Papel |
 |---|---|---|
@@ -173,7 +232,7 @@ política para prosa ambígua e cenários fora do escopo.
 | **`twygo-exploratory-validator`** | 5.5 | Agrega findings + cobertura + exporter Allure |
 | **`twygo-report-generator`** | 6 | HTML híbrido per-suite + delega Allure CLI no regressivo |
 
-### 6.4. Bibliotecas npm
+### 6.5. Bibliotecas npm
 
 `@playwright/test` · `@axe-core/playwright` · `allure-playwright` ·
 `allure-commandline` · `fast-xml-parser`
@@ -194,6 +253,132 @@ política para prosa ambígua e cenários fora do escopo.
 10. **Não desabilitar a fixture exploratória** em specs — para desligar, use `exploratory.enabled: false` em `project.config.json`.
 11. **Healer só corrige seletor / timing / asserção** — nunca altera intenção do teste.
 12. **Não inventar mapeamento de prosa** — se não bate com `.claude/prose-patterns.md`, marcar `// REVISAR` e seguir, **não chutar**.
+
+---
+
+## 7.5. Convenções específicas Twygo (gotchas descobertos)
+
+Erros comuns que custaram horas em sessões anteriores. Generator/healer/planner devem ler antes de gerar código:
+
+### Auth e navegação
+- **Login URL real**: `/users/login` (não `/login`).
+- **Labels do formulário de login**: `Login` (email) e `Senha`. Botão `Entrar`.
+  - `getByLabel(/e-?mail/i)` é regex amplo demais — bate em checkbox `send_copy` da tela. Use `getByRole('textbox', { name: 'Login' })`.
+- **Pós-login redireciona pra `/play?menu_id=play`**, não `/dashboard_students`.
+- **Não precisa "trocar perfil Administrador" via UI** — basta navegar direto pra `/o/{orgId}/...` que o app abre o contexto admin.
+- **storageState global**: `tests/setup/global-setup.ts` faz login 1× e salva `outputs/.auth/storage.json`. Specs novos NÃO precisam fazer login — config já tem `use.storageState`. Specs antigos com `loginPage.login()` ainda funcionam (idempotente).
+
+### Imports e bibliotecas
+- **Allure facade** vem de `allure-js-commons`, NÃO `allure-playwright`:
+  ```ts
+  import * as allure from 'allure-js-commons';  // ← certo
+  // import * as allure from 'allure-playwright';  // ← errado, sem epic/feature/story
+  ```
+- **`Locator` type** vem de `@playwright/test`, NÃO da fixture:
+  ```ts
+  import type { Locator } from '@playwright/test';                                    // ← certo
+  // import { test, expect, type Locator } from '../../../src/fixtures/...';          // ← errado
+  ```
+
+### Test-IDs e seletores
+- **Atributo `data-test-id` (com hífen)**, não `data-testid` padrão Playwright. Já configurado em `playwright.config.ts` via `use.testIdAttribute`.
+- **Sync alert bloqueia o toggle Indexação**: quando `[role="alert"][data-status="warning"]` está visível, o container fica `aria-disabled` e clicks normais falham. Use `.click({ force: true })` OU verifique `editPage.isSyncBlocking()` e branch.
+- **Test-IDs aparecem só com toggle pai habilitado**: sub-fields de Indexação (Período, datas, Tipo, Situação, Exceções) só renderizam quando o toggle mestre está ON.
+
+### Modal RN37 ("Processo de indexação de conteúdo")
+- Aparece apenas após **clicar Salvar com mudança real**. Se nada mudou, modal não dispara — não force `expect(creditsModal).toBeVisible()` sem mudar estado antes.
+
+### Spec test() title = testcase name do XML
+- A convenção é: `test.describe('<testsuite>', () => { test('<testcase>', ...) })`. O reporter tira o nome da testsuite do `describe` e o nome do testcase do `test()`.
+
+### Super Admin (`/admin`) — tabela de preços e contratos
+- **Pré-requisito**: usuário do `environment.json` precisa estar logado E em perfil "Administrador". O `globalSetup` cobre o login; o perfil já vem do user evertongambeta@gmail.com / eduardo.schmidt@twygo.com.
+- **Não trocar perfil pela UI** — basta acessar a rota `/admin` direto. Use `SuperAdminPage` (`src/pages/SuperAdminPage.ts`).
+- **Caminhos canônicos** (validados em 2026-05-05 com o usuário):
+  | Operação | Rota direta | Helper |
+  |---|---|---|
+  | Entrada Super Admin | `/admin` | `superAdminPage.openSuperAdmin()` |
+  | Tabela de preços (todas) | `/admin/subscription_plans` | `superAdminPage.openSubscriptionPlans()` — na lista, identificar tabela com coluna "Ativo" = Sim e clicar Editar |
+  | Editar contrato vigente da org | `/admin/edit_sys_subscription_settings/{orgId}` | `superAdminPage.openEditContract(orgId)` |
+- **orgIds em `environment.json`**:
+  - `staging.orgId = 36602` (`stage10.stage.twygoead.com`)
+  - `staging-without-credits.orgId = 36912` (`eduapi.stage.twygoead.com`)
+- **Tabela de preços é COMPARTILHADA**: alterar a tabela ativa afeta TODAS as organizações daquele banco. Se um teste muda a tabela ativa, faça o **revert ao final** (idealmente via `test.afterEach`/`test.afterAll`). Tests que apenas leem (asserções) não precisam de revert.
+- Padrões de prosa Super Admin estão em `.claude/prose-patterns.md` seção 3.5 — generator deve consultar antes de marcar `test.fixme` por "requer Super Admin".
+
+### Cenários "sem saldo de créditos de IA" (organização zerada/negativa)
+- Ambiente principal `staging` (`stage10.stage.twygoead.com`) tem créditos sobrando — não dá pra zerar sem afetar outras suítes.
+- Para testes de bloqueio de funcionalidades (RN: organização sem saldo) use o ambiente secundário **`staging-without-credits`** (`eduapi.stage.twygoead.com`, login `eduardo.schmidt@twygo.com`). Já está em `config/environment.json`.
+- `globalSetup` detecta automaticamente qualquer chave terminando em `-without-credits` e gera storage adicional em `outputs/.auth/storage-without-credits.json`.
+- Specs que precisam dele importam o caminho e plugam via `test.use`:
+  ```ts
+  import { SECONDARY_STORAGE_PATH } from '../../../../../tests/setup/global-setup.js';
+  import { getEnvByName } from '../../../../../src/utils/environment.js';
+  test.use({
+    storageState: SECONDARY_STORAGE_PATH,
+    baseURL: getEnvByName('staging-without-credits').baseUrl,
+  });
+  ```
+- Não invente outras organizações pra "esvaziar saldo" — sempre use o env secundário convencionado.
+
+---
+
+## 7.6. Anti-patterns do output do generator (proibidos em specs gerados)
+
+Estes 4 anti-patterns foram observados em specs gerados anteriormente e
+violam regras do próprio CLAUDE.md. O `twygo-test-orchestrator` deve passá-los
+explicitamente ao `playwright-test-generator` antes de cada geração (ver
+SKILL.md do orchestrator, Etapa 4). Healer deve recusar correções que
+introduzam qualquer um deles.
+
+### A. NUNCA fazer login no spec
+- ❌ `await page.goto('/users/login'); await loginPage.login(email, password);`
+- ✅ Não fazer nada — `tests/setup/global-setup.ts` já gravou storageState e
+  `playwright.config.ts` consome via `use.storageState`.
+- **Por quê**: duplica trabalho do globalSetup, vaza credenciais em texto
+  plano no git (regra dura #4), e quebra com refresh do storageState (TTL
+  30min — global-setup re-loga sozinho).
+- **Exceção**: specs em `tests/auth/` que testam a tela de login em si
+  declaram `test.use({ storageState: { cookies: [], origins: [] } })`.
+
+### B. NUNCA hardcodar URL/orgId/credenciais
+- ❌ `const BASE_URL = 'https://stage10.stage.twygoead.com';`
+- ❌ `await page.goto('/o/36602/ai_consumption_analysis?tab=settings');`
+- ✅ Importar de [src/utils/environment.ts](src/utils/environment.ts):
+  ```ts
+  import { getBaseUrl, getOrgId } from '../../../../../src/utils/environment.js';
+  await page.goto(`/o/${getOrgId()}/ai_consumption_analysis?tab=settings`);
+  ```
+- **Por quê**: specs hardcoded só rodam contra UM ambiente; quebram quando
+  você quer rodar em `staging-without-credits` ou produção. Forçar o
+  helper centraliza a fonte de verdade em `config/environment.json`.
+- **Exceção**: rotas que não dependem de env (`/users/login`, `/play`) podem
+  ficar literais — não são acopladas a host nem a org.
+
+### C. NUNCA inline helpers de UI no spec
+- ❌ `async function marcarApenasCheckboxESalvar(alvo, outros) { ... }` dentro do `test()`
+- ✅ Adicionar método na Page Object correspondente:
+  ```ts
+  // EnvironmentEditPage.ts
+  async marcarSomenteCheckbox(target: 'curso' | 'pacote' | 'trilha'): Promise<void> { ... }
+  ```
+- **Por quê**: viola regra dura #3 ("Specs em `tests/features/` não contêm
+  seletores"). Helper inline com seletores polui o spec, dificulta reuso e
+  quebra coesão do POM. Se a lógica é específica de um único teste, ainda
+  assim deve viver no Page Object — apenas como método nomeado conforme a
+  intenção do teste.
+
+### D. Comentários no spec só justificam WHY, nunca explicam WHAT
+- ❌ `// Habilitar toggle mestre se não estiver`
+- ❌ `// Marcar o alvo se ainda não estiver marcado`
+- ❌ `// Preencher credenciais e submeter`
+- ✅ `// REVISAR: prosa ambígua "<texto original>"` (ver §5)
+- ✅ `// Use force:true porque o sync alert deixa container aria-disabled (§7.5)`
+- ✅ `// Tabela compartilhada — revert no afterAll obrigatório (§7.5)`
+- **Por quê**: comentário WHAT (o que o código faz) duplica o que o código já
+  diz com nome de método/variável. Comentários WHY (por que assim) capturam
+  invariantes não-óbvias que somem se removidos. Allure step já narra o
+  fluxo — comentário extra é ruído.
 
 ---
 

@@ -2,7 +2,12 @@ import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { XMLParser, XMLValidator } from 'fast-xml-parser';
 import { createLogger } from '../../../src/utils/logger.js';
-import { FILES } from '../../../src/utils/constants.js';
+import {
+  getOutputPath,
+  getProjectConfigPath,
+  loadProjectConfig,
+  resolveProjectPath,
+} from '../../../src/utils/environment.js';
 import { ensureParentDir } from '../../../src/utils/helpers.js';
 
 const log = createLogger('xml-parser');
@@ -74,6 +79,11 @@ const xmlReader = new XMLParser({
   textNodeName: '#text',
   trimValues: false,
   parseAttributeValue: false,
+  // O TestLink exporta texto duplamente escapado (ex.: `&amp;gt;`). O default
+  // do fast-xml-parser limita expansões a 1000 e XMLs maiores estouram esse
+  // teto. Desligamos a expansão aqui e fazemos a decodificação manualmente
+  // em decodeHtmlEntities() (tratamento iterativo cobre dupla codificação).
+  processEntities: false,
   isArray: (name) => ['testsuite', 'testcase', 'step'].includes(name),
 });
 
@@ -86,11 +96,22 @@ const ENTITY_MAP: Record<string, string> = {
   nbsp: ' ',
 };
 
+/**
+ * Decodifica entidades HTML iterativamente para lidar com codificação dupla
+ * comum em exports TestLink (`&amp;gt;` → `&gt;` → `>`). Limite de 5
+ * iterações como guardrail; convergência típica ocorre em 1-2 passes.
+ */
 function decodeHtmlEntities(text: string): string {
-  return text.replace(
-    /&(gt|lt|amp|quot|apos|nbsp);/g,
-    (match, name: string) => ENTITY_MAP[name] ?? match,
-  );
+  let curr = text;
+  for (let i = 0; i < 5; i++) {
+    const next = curr.replace(
+      /&(gt|lt|amp|quot|apos|nbsp);/g,
+      (match, name: string) => ENTITY_MAP[name] ?? match,
+    );
+    if (next === curr) break;
+    curr = next;
+  }
+  return curr;
 }
 
 function cleanText(input: unknown): string {
@@ -211,21 +232,19 @@ export function validateAnalysis(analysis: ParsedAnalysis): void {
   walkAndValidate(analysis.rootSuite, []);
 }
 
-type ProjectConfigPartial = { testAnalysisFile?: string };
-
 function resolveDefaultInputPath(): string {
-  const cfgPath = resolve(process.cwd(), FILES.projectConfig);
+  const cfgPath = getProjectConfigPath();
   if (existsSync(cfgPath)) {
     try {
-      const cfg = JSON.parse(readFileSync(cfgPath, 'utf-8')) as ProjectConfigPartial;
+      const cfg = loadProjectConfig();
       if (cfg.testAnalysisFile) {
-        return resolve(process.cwd(), cfg.testAnalysisFile);
+        return resolveProjectPath(cfg.testAnalysisFile);
       }
     } catch {
       /* config ilegível: cai no fallback */
     }
   }
-  return resolve(process.cwd(), 'inputs/test-analysis.xml');
+  return resolveProjectPath('inputs/test-analysis.xml');
 }
 
 async function main(): Promise<void> {
@@ -233,11 +252,11 @@ async function main(): Promise<void> {
   const inputPath = cliArg
     ? resolve(process.cwd(), cliArg)
     : resolveDefaultInputPath();
-  const outputPath = resolve(process.cwd(), FILES.parsedAnalysis);
+  const outputPath = getOutputPath('test-analysis.parsed.json');
 
   if (!existsSync(inputPath)) {
     throw new Error(
-      `XML não encontrado: ${inputPath}. Passe o caminho como argumento ou ajuste 'testAnalysisFile' em ${FILES.projectConfig}.`,
+      `XML não encontrado: ${inputPath}. Passe o caminho como argumento ou ajuste 'testAnalysisFile' em projects/<slug>/project.config.json.`,
     );
   }
 

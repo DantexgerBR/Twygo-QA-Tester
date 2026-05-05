@@ -1,6 +1,6 @@
 {
-  "projectName": "twygo-novo-projeto",
-  "testAnalysisFile": "inputs/test-analysis.xml",
+  "projectName": "Gestão de Créditos de IA - Fase 2",
+  "testAnalysisFile": "inputs/Gestão de Créditos de IA - Fase 2 1.xml",
   "environment": "staging",
   "browsers": ["chromium"],
   "headless": true,
@@ -31,6 +31,26 @@
     },
     "a11yTags": ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "best-practice"],
     "ignoredHttpStatuses": [],
-    "ignoredHostnames": []
+    "ignoredHostnames": [],
+    "scopedRoutes": ["ai_consumption_analysis"],
+    "scopedKeywords": [
+      "ai_consumption",
+      "créditos de ia",
+      "creditos de ia",
+      "credits",
+      "indexação",
+      "indexacao",
+      "indexing",
+      "agente de atendimento",
+      "attendant_agent"
+    ],
+    "activeProbes": {
+      "hoverTooltips": true,
+      "keyboardNav": false,
+      "formEdge": true,
+      "clickabilitySweep": false,
+      "a11yDeep": false,
+      "visualStability": true
+    }
   }
 }

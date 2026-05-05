@@ -1,0 +1,487 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - generic "Logo - Stage 10" [ref=e4]:
+        - img "Logo - Stage 10" [ref=e5]
+      - img [ref=e7]
+    - generic [ref=e9]:
+      - list [ref=e10]:
+        - list [ref=e11]:
+          - listitem [ref=e12]:
+            - link "leaderboard Dashboard" [ref=e13] [cursor=pointer]:
+              - /url: /o/36602/dashboard
+              - generic [ref=e14]:
+                - generic [ref=e16]: leaderboard
+                - generic [ref=e17]: Dashboard
+          - listitem [ref=e18]:
+            - generic [ref=e20]:
+              - generic [ref=e23]: school
+              - generic [ref=e24]: Aprendizagem
+            - list [ref=e25]:
+              - listitem [ref=e26]:
+                - link "format_list_bulleted_add Conteúdos" [ref=e27] [cursor=pointer]:
+                  - /url: /o/36602/events?tab=events
+                  - generic [ref=e28]:
+                    - generic [ref=e30]: format_list_bulleted_add
+                    - generic [ref=e31]: Conteúdos
+              - listitem [ref=e32]:
+                - link "send Compartilhamentos" [ref=e33] [cursor=pointer]:
+                  - /url: /o/36602/shared_events
+                  - generic [ref=e34]:
+                    - generic [ref=e36]: send
+                    - generic [ref=e37]: Compartilhamentos
+              - listitem [ref=e38]:
+                - link "description Registros BETA" [ref=e39] [cursor=pointer]:
+                  - /url: /o/36602/records
+                  - generic [ref=e40]:
+                    - generic [ref=e42]: description
+                    - generic [ref=e43]: Registros
+                    - generic [ref=e44]: BETA
+              - listitem [ref=e45]:
+                - link "workspace_premium Certificados" [ref=e46] [cursor=pointer]:
+                  - /url: /o/36602/certificate_models
+                  - generic [ref=e47]:
+                    - generic [ref=e49]: workspace_premium
+                    - generic [ref=e50]: Certificados
+          - listitem [ref=e51]:
+            - link "book Biblioteca" [ref=e52] [cursor=pointer]:
+              - /url: /o/36602/events/?tab=libraries
+              - generic [ref=e53]:
+                - generic [ref=e55]: book
+                - generic [ref=e56]: Biblioteca
+          - listitem [ref=e57]:
+            - link "group Usuários" [ref=e58] [cursor=pointer]:
+              - /url: /o/36602/users
+              - generic [ref=e59]:
+                - generic [ref=e61]: group
+                - generic [ref=e62]: Usuários
+          - listitem [ref=e63]:
+            - link "work Empresas" [ref=e64] [cursor=pointer]:
+              - /url: /o/36602/companies
+              - generic [ref=e65]:
+                - generic [ref=e67]: work
+                - generic [ref=e68]: Empresas
+          - listitem [ref=e69]:
+            - link "live_help Questionários" [ref=e70] [cursor=pointer]:
+              - /url: /o/36602/question_lists
+              - generic [ref=e71]:
+                - generic [ref=e73]: live_help
+                - generic [ref=e74]: Questionários
+          - listitem [ref=e75]:
+            - link "groups Comunidades" [ref=e76] [cursor=pointer]:
+              - /url: /o/36602/feed
+              - generic [ref=e77]:
+                - generic [ref=e79]: groups
+                - generic [ref=e80]: Comunidades
+          - listitem [ref=e81]:
+            - generic [ref=e83]:
+              - generic [ref=e86]: psychology
+              - generic [ref=e87]:
+                - text: Skills
+                - generic [ref=e88]: BETA
+            - list [ref=e89]:
+              - listitem [ref=e90]:
+                - link "lan Organograma" [ref=e91] [cursor=pointer]:
+                  - /url: /o/36602/organization_chart
+                  - generic [ref=e92]:
+                    - generic [ref=e94]: lan
+                    - generic [ref=e95]: Organograma
+              - listitem [ref=e96]:
+                - link "badge Funções" [ref=e97] [cursor=pointer]:
+                  - /url: /o/36602/roles
+                  - generic [ref=e98]:
+                    - generic [ref=e100]: badge
+                    - generic [ref=e101]: Funções
+              - listitem [ref=e102]:
+                - link "award_star Competências" [ref=e103] [cursor=pointer]:
+                  - /url: /o/36602/organization_chart_competencies
+                  - generic [ref=e104]:
+                    - generic [ref=e106]: award_star
+                    - generic [ref=e107]: Competências
+          - listitem [ref=e108]:
+            - generic [ref=e110]:
+              - generic [ref=e113]: account_tree
+              - generic [ref=e114]: Processos
+            - list [ref=e115]:
+              - listitem [ref=e116]:
+                - link "send Repositórios" [ref=e117] [cursor=pointer]:
+                  - /url: /o/36602/organization_datasets
+                  - generic [ref=e118]:
+                    - generic [ref=e120]: send
+                    - generic [ref=e121]: Repositórios
+              - listitem [ref=e122]:
+                - link "send Arquitetura de Processos" [ref=e123] [cursor=pointer]:
+                  - /url: /o/36602/process_architecture
+                  - generic [ref=e124]:
+                    - generic [ref=e126]: send
+                    - generic [ref=e127]: Arquitetura de Processos
+              - listitem [ref=e128]:
+                - link "send Agente de Documentação" [ref=e129] [cursor=pointer]:
+                  - /url: /o/36602/process_documentations
+                  - generic [ref=e130]:
+                    - generic [ref=e132]: send
+                    - generic [ref=e133]: Agente de Documentação
+              - listitem [ref=e134]:
+                - link "send Documentos de Referência" [ref=e135] [cursor=pointer]:
+                  - /url: /o/36602/reference_documents
+                  - generic [ref=e136]:
+                    - generic [ref=e138]: send
+                    - generic [ref=e139]: Documentos de Referência
+              - listitem [ref=e140]:
+                - link "send Portal de processos" [ref=e141] [cursor=pointer]:
+                  - /url: /o/36602/visualize_documentations
+                  - generic [ref=e142]:
+                    - generic [ref=e144]: send
+                    - generic [ref=e145]: Portal de processos
+      - generic [ref=e146]: Stage 10
+      - list [ref=e147]:
+        - listitem [ref=e148]:
+          - generic [ref=e149]:
+            - generic [ref=e150]: f
+            - text: Configurações
+          - list [ref=e151]:
+            - listitem [ref=e152]:
+              - link "e Organização" [ref=e153] [cursor=pointer]:
+                - /url: /o/36602/edit
+                - generic [ref=e154]: e
+                - text: Organização
+            - listitem [ref=e155]:
+              - link " Menu" [ref=e156] [cursor=pointer]:
+                - /url: /o/36602/use_modes
+                - generic [ref=e157]: 
+                - text: Menu
+            - listitem [ref=e158]:
+              - link "electrical_services Integrações" [ref=e159] [cursor=pointer]:
+                - /url: /o/36602/integrations
+                - generic [ref=e160]: electrical_services
+                - text: Integrações
+            - listitem [ref=e161]:
+              - link "flash_auto Piloto automático" [ref=e162] [cursor=pointer]:
+                - /url: /o/36602/autopilots
+                - generic [ref=e163]: flash_auto
+                - text: Piloto automático
+            - listitem [ref=e164]:
+              - link " Regras do Jogo" [ref=e165] [cursor=pointer]:
+                - /url: /o/36602/game_rules
+                - generic [ref=e166]: 
+                - text: Regras do Jogo
+            - listitem [ref=e167]:
+              - link " Comunicação" [ref=e168] [cursor=pointer]:
+                - /url: /o/36602/communication
+                - generic [ref=e169]: 
+                - text: Comunicação
+            - listitem [ref=e170]:
+              - link "sell Cobrança de inscrição" [ref=e171] [cursor=pointer]:
+                - /url: /o/36602/payments
+                - generic [ref=e172]: sell
+                - text: Cobrança de inscrição
+            - listitem [ref=e173]:
+              - link "credit_card Plano e assinatura" [ref=e174] [cursor=pointer]:
+                - /url: /o/36602/subscription_plans
+                - generic [ref=e175]: credit_card
+                - text: Plano e assinatura
+            - text: s
+            - listitem [ref=e176]:
+              - link " Segurança NOVO" [ref=e177] [cursor=pointer]:
+                - /url: /o/36602/security
+                - generic [ref=e178]: 
+                - text: Segurança NOVO
+            - listitem [ref=e179]:
+              - link "palette Aparência" [ref=e180] [cursor=pointer]:
+                - /url: /o/36602/appearance
+                - generic [ref=e181]: palette
+                - text: Aparência
+            - listitem [ref=e182]:
+              - link "credit_card Créditos de IA BETA" [ref=e183] [cursor=pointer]:
+                - /url: /o/36602/ai_consumption_analysis
+                - generic [ref=e184]: credit_card
+                - text: Créditos de IA BETA
+    - generic [ref=e187]:
+      - generic [ref=e188]:
+        - img [ref=e189]
+        - text: Éverton Gambeta
+      - img [ref=e191]
+  - text: "0"
+  - generic [ref=e194]:
+    - generic "Logo - Stage 10" [ref=e196]:
+      - link "Logo - Stage 10" [ref=e197] [cursor=pointer]:
+        - /url: /o/36602/dashboard
+        - img "Logo - Stage 10" [ref=e198]
+    - generic [ref=e202]:
+      - link "Open chat" [ref=e206] [cursor=pointer]:
+        - /url: /o/36602/chats
+        - button "Open chat" [ref=e207]:
+          - img [ref=e208]
+      - button "Users" [ref=e215] [cursor=pointer]:
+        - img [ref=e216]
+      - generic [ref=e219]:
+        - link "6810115 - Éverton Gambeta" [ref=e220] [cursor=pointer]:
+          - /url: javascript:void(0);
+        - generic [ref=e221]: Éverton Gambeta
+      - button "Administrador G" [ref=e222] [cursor=pointer]:
+        - text: Administrador
+        - generic [ref=e223]: G
+    - text: M * * M * *
+  - generic [ref=e226]:
+    - generic [ref=e228]:
+      - list [ref=e229]:
+        - list [ref=e230]:
+          - listitem [ref=e231] [cursor=pointer]:
+            - link "leaderboard Dashboard" [ref=e232]:
+              - /url: /o/36602/dashboard
+              - generic [ref=e233]:
+                - generic [ref=e235]: leaderboard
+                - generic [ref=e236]: Dashboard
+          - listitem [ref=e237] [cursor=pointer]:
+            - generic [ref=e239]:
+              - generic [ref=e242]: school
+              - generic [ref=e243]: Aprendizagem
+              - generic [ref=e245]: G
+          - listitem [ref=e246] [cursor=pointer]:
+            - link "book Biblioteca" [ref=e247]:
+              - /url: /o/36602/events/?tab=libraries
+              - generic [ref=e248]:
+                - generic [ref=e250]: book
+                - generic [ref=e251]: Biblioteca
+          - listitem [ref=e252] [cursor=pointer]:
+            - link "group Usuários" [ref=e253]:
+              - /url: /o/36602/users
+              - generic [ref=e254]:
+                - generic [ref=e256]: group
+                - generic [ref=e257]: Usuários
+          - listitem [ref=e258] [cursor=pointer]:
+            - link "work Empresas" [ref=e259]:
+              - /url: /o/36602/companies
+              - generic [ref=e260]:
+                - generic [ref=e262]: work
+                - generic [ref=e263]: Empresas
+          - listitem [ref=e264] [cursor=pointer]:
+            - link "live_help Questionários" [ref=e265]:
+              - /url: /o/36602/question_lists
+              - generic [ref=e266]:
+                - generic [ref=e268]: live_help
+                - generic [ref=e269]: Questionários
+          - listitem [ref=e270] [cursor=pointer]:
+            - link "groups Comunidades" [ref=e271]:
+              - /url: /o/36602/feed
+              - generic [ref=e272]:
+                - generic [ref=e274]: groups
+                - generic [ref=e275]: Comunidades
+          - listitem [ref=e276] [cursor=pointer]:
+            - generic [ref=e278]:
+              - generic [ref=e281]: psychology
+              - generic [ref=e282]:
+                - text: Skills
+                - generic [ref=e283]: BETA
+              - generic [ref=e285]: G
+          - listitem [ref=e286] [cursor=pointer]:
+            - generic [ref=e288]:
+              - generic [ref=e291]: account_tree
+              - generic [ref=e292]: Processos
+              - generic [ref=e294]: G
+      - generic [ref=e296]: Stage 10
+      - list [ref=e297]:
+        - listitem [ref=e298] [cursor=pointer]:
+          - generic [ref=e299]:
+            - generic [ref=e300]: f
+            - text: Configurações
+            - generic [ref=e301]: G
+          - text: e    s 
+    - generic [ref=e303]:
+      - generic [ref=e306]: Créditos de IA
+      - generic [ref=e315]:
+        - tablist [ref=e316]:
+          - tab "Extrato" [ref=e317] [cursor=pointer]
+          - tab "Configurações" [ref=e318] [cursor=pointer]:
+            - generic [ref=e319]: Configurações
+          - tab "Política de créditos de IA" [active] [selected] [ref=e320] [cursor=pointer]:
+            - generic [ref=e321]: Política de créditos de IA
+          - tab "Glossário de termos" [ref=e322] [cursor=pointer]:
+            - generic [ref=e323]: Glossário de termos
+        - tabpanel "Política de créditos de IA" [ref=e1007]:
+          - generic [ref=e1008]:
+            - button "Como funciona o consumo de créditos" [ref=e1009] [cursor=pointer]
+            - generic [ref=e1010]:
+              - generic [ref=e1012]:
+                - heading "Tabela de consumo aproximado" [level=2] [ref=e1013]
+                - img [ref=e1015]
+              - table [ref=e1018]:
+                - rowgroup [ref=e1019]:
+                  - row "Ação Créditos aproximados Descrição" [ref=e1020]:
+                    - columnheader "Ação" [ref=e1021] [cursor=pointer]:
+                      - generic [ref=e1024]:
+                        - text: Ação
+                        - img [ref=e1025]
+                    - columnheader "Créditos aproximados" [ref=e1027]:
+                      - generic [ref=e1028]: Créditos aproximados
+                    - columnheader "Descrição" [ref=e1029]:
+                      - generic [ref=e1030]: Descrição
+                - rowgroup [ref=e1031]:
+                  - row "Conteúdo com carga horária micro (30s-5min) ~800-1500 Criação de conteúdo educacional curto com IA" [ref=e1032]:
+                    - cell "Conteúdo com carga horária micro (30s-5min)" [ref=e1033]:
+                      - generic [ref=e1034]: Conteúdo com carga horária micro (30s-5min)
+                    - cell "~800-1500" [ref=e1035]:
+                      - generic [ref=e1036]: ~800-1500
+                    - cell "Criação de conteúdo educacional curto com IA" [ref=e1037]:
+                      - generic [ref=e1038]: Criação de conteúdo educacional curto com IA
+                  - row "Conteúdo com carga horária curto (5-15min) ~1500-2500 Criação de conteúdo educacional de curta duração com IA" [ref=e1039]:
+                    - cell "Conteúdo com carga horária curto (5-15min)" [ref=e1040]:
+                      - generic [ref=e1041]: Conteúdo com carga horária curto (5-15min)
+                    - cell "~1500-2500" [ref=e1042]:
+                      - generic [ref=e1043]: ~1500-2500
+                    - cell "Criação de conteúdo educacional de curta duração com IA" [ref=e1044]:
+                      - generic [ref=e1045]: Criação de conteúdo educacional de curta duração com IA
+                  - row "Conteúdo com carga horária médio (15-30min) ~2500-3500 Criação de conteúdo educacional de média duração com IA" [ref=e1046]:
+                    - cell "Conteúdo com carga horária médio (15-30min)" [ref=e1047]:
+                      - generic [ref=e1048]: Conteúdo com carga horária médio (15-30min)
+                    - cell "~2500-3500" [ref=e1049]:
+                      - generic [ref=e1050]: ~2500-3500
+                    - cell "Criação de conteúdo educacional de média duração com IA" [ref=e1051]:
+                      - generic [ref=e1052]: Criação de conteúdo educacional de média duração com IA
+                  - row "Conteúdo com carga horária longo (30-60min) ~3500-5000 Criação de conteúdo educacional de longa duração com IA" [ref=e1053]:
+                    - cell "Conteúdo com carga horária longo (30-60min)" [ref=e1054]:
+                      - generic [ref=e1055]: Conteúdo com carga horária longo (30-60min)
+                    - cell "~3500-5000" [ref=e1056]:
+                      - generic [ref=e1057]: ~3500-5000
+                    - cell "Criação de conteúdo educacional de longa duração com IA" [ref=e1058]:
+                      - generic [ref=e1059]: Criação de conteúdo educacional de longa duração com IA
+                  - row "Conteúdo com carga horária muito longo (1-2h) ~6000-10000 Criação de conteúdo educacional extenso com IA" [ref=e1060]:
+                    - cell "Conteúdo com carga horária muito longo (1-2h)" [ref=e1061]:
+                      - generic [ref=e1062]: Conteúdo com carga horária muito longo (1-2h)
+                    - cell "~6000-10000" [ref=e1063]:
+                      - generic [ref=e1064]: ~6000-10000
+                    - cell "Criação de conteúdo educacional extenso com IA" [ref=e1065]:
+                      - generic [ref=e1066]: Criação de conteúdo educacional extenso com IA
+                  - row "Agente de importação - Questionário ~3-10 Importação e conversão automática de arquivos em questionários" [ref=e1067]:
+                    - cell "Agente de importação - Questionário" [ref=e1068]:
+                      - generic [ref=e1069]: Agente de importação - Questionário
+                    - cell "~3-10" [ref=e1070]:
+                      - generic [ref=e1071]: ~3-10
+                    - cell "Importação e conversão automática de arquivos em questionários" [ref=e1072]:
+                      - generic [ref=e1073]: Importação e conversão automática de arquivos em questionários
+                  - row "Análise de IA - Questionário (para 1 usuário) ~3-10 Análise completa do questionário respondido com insights" [ref=e1074]:
+                    - cell "Análise de IA - Questionário (para 1 usuário)" [ref=e1075]:
+                      - generic [ref=e1076]: Análise de IA - Questionário (para 1 usuário)
+                    - cell "~3-10" [ref=e1077]:
+                      - generic [ref=e1078]: ~3-10
+                    - cell "Análise completa do questionário respondido com insights" [ref=e1079]:
+                      - generic [ref=e1080]: Análise completa do questionário respondido com insights
+                  - row "Geração de questionários com base em conteúdo ~30-300 Geração automática de questionários personalizados" [ref=e1081]:
+                    - cell "Geração de questionários com base em conteúdo" [ref=e1082]:
+                      - generic [ref=e1083]: Geração de questionários com base em conteúdo
+                    - cell "~30-300" [ref=e1084]:
+                      - generic [ref=e1085]: ~30-300
+                    - cell "Geração automática de questionários personalizados" [ref=e1086]:
+                      - generic [ref=e1087]: Geração automática de questionários personalizados
+                  - row "Geração de atividades ~10-20 Criação de atividades educacionais adaptadas" [ref=e1088]:
+                    - cell "Geração de atividades" [ref=e1089]:
+                      - generic [ref=e1090]: Geração de atividades
+                    - cell "~10-20" [ref=e1091]:
+                      - generic [ref=e1092]: ~10-20
+                    - cell "Criação de atividades educacionais adaptadas" [ref=e1093]:
+                      - generic [ref=e1094]: Criação de atividades educacionais adaptadas
+                  - row "Geração de resumo ~10-20 Geração automática de resumos com base em conteúdo indexado para cada atividade" [ref=e1095]:
+                    - cell "Geração de resumo" [ref=e1096]:
+                      - generic [ref=e1097]: Geração de resumo
+                    - cell "~10-20" [ref=e1098]:
+                      - generic [ref=e1099]: ~10-20
+                    - cell "Geração automática de resumos com base em conteúdo indexado para cada atividade" [ref=e1100]:
+                      - generic [ref=e1101]: Geração automática de resumos com base em conteúdo indexado para cada atividade
+                  - row "Indexação de conteúdo - Vídeo (60 minutos) ~2000-2400 Sincronização de vídeos para aprendizado da IA" [ref=e1102]:
+                    - cell "Indexação de conteúdo - Vídeo (60 minutos)" [ref=e1103]:
+                      - generic [ref=e1104]: Indexação de conteúdo - Vídeo (60 minutos)
+                    - cell "~2000-2400" [ref=e1105]:
+                      - generic [ref=e1106]: ~2000-2400
+                    - cell "Sincronização de vídeos para aprendizado da IA" [ref=e1107]:
+                      - generic [ref=e1108]: Sincronização de vídeos para aprendizado da IA
+                  - row "Indexação de conteúdo - Texto (10.000 caracteres) ~80-120 Sincronização de conteúdo em texto para aprendizado da IA" [ref=e1109]:
+                    - cell "Indexação de conteúdo - Texto (10.000 caracteres)" [ref=e1110]:
+                      - generic [ref=e1111]: Indexação de conteúdo - Texto (10.000 caracteres)
+                    - cell "~80-120" [ref=e1112]:
+                      - generic [ref=e1113]: ~80-120
+                    - cell "Sincronização de conteúdo em texto para aprendizado da IA" [ref=e1114]:
+                      - generic [ref=e1115]: Sincronização de conteúdo em texto para aprendizado da IA
+                  - row "Indexação de conteúdo - PDF (100 páginas) ~20-40 Sincronização de arquivos PDF para aprendizado da IA" [ref=e1116]:
+                    - cell "Indexação de conteúdo - PDF (100 páginas)" [ref=e1117]:
+                      - generic [ref=e1118]: Indexação de conteúdo - PDF (100 páginas)
+                    - cell "~20-40" [ref=e1119]:
+                      - generic [ref=e1120]: ~20-40
+                    - cell "Sincronização de arquivos PDF para aprendizado da IA" [ref=e1121]:
+                      - generic [ref=e1122]: Sincronização de arquivos PDF para aprendizado da IA
+                  - row "Indexação de conteúdo - Imagem (10 imagens) ~1-3 Sincronização de imagens para aprendizado da IA" [ref=e1123]:
+                    - cell "Indexação de conteúdo - Imagem (10 imagens)" [ref=e1124]:
+                      - generic [ref=e1125]: Indexação de conteúdo - Imagem (10 imagens)
+                    - cell "~1-3" [ref=e1126]:
+                      - generic [ref=e1127]: ~1-3
+                    - cell "Sincronização de imagens para aprendizado da IA" [ref=e1128]:
+                      - generic [ref=e1129]: Sincronização de imagens para aprendizado da IA
+                  - row "Indexação de conteúdo - PPTX (8 slides) ~3-8 Sincronização de arquivos PPT para aprendizado da IA" [ref=e1130]:
+                    - cell "Indexação de conteúdo - PPTX (8 slides)" [ref=e1131]:
+                      - generic [ref=e1132]: Indexação de conteúdo - PPTX (8 slides)
+                    - cell "~3-8" [ref=e1133]:
+                      - generic [ref=e1134]: ~3-8
+                    - cell "Sincronização de arquivos PPT para aprendizado da IA" [ref=e1135]:
+                      - generic [ref=e1136]: Sincronização de arquivos PPT para aprendizado da IA
+                  - row "Indexação de conteúdo - CSV (150 linhas) ~1-3 Sincronização de arquivos CSV para aprendizado da IA" [ref=e1137]:
+                    - cell "Indexação de conteúdo - CSV (150 linhas)" [ref=e1138]:
+                      - generic [ref=e1139]: Indexação de conteúdo - CSV (150 linhas)
+                    - cell "~1-3" [ref=e1140]:
+                      - generic [ref=e1141]: ~1-3
+                    - cell "Sincronização de arquivos CSV para aprendizado da IA" [ref=e1142]:
+                      - generic [ref=e1143]: Sincronização de arquivos CSV para aprendizado da IA
+                  - row "Indexação de conteúdo - DOCX (100 páginas) ~20-40 Sincronização de arquivos DOC para aprendizado da IA" [ref=e1144]:
+                    - cell "Indexação de conteúdo - DOCX (100 páginas)" [ref=e1145]:
+                      - generic [ref=e1146]: Indexação de conteúdo - DOCX (100 páginas)
+                    - cell "~20-40" [ref=e1147]:
+                      - generic [ref=e1148]: ~20-40
+                    - cell "Sincronização de arquivos DOC para aprendizado da IA" [ref=e1149]:
+                      - generic [ref=e1150]: Sincronização de arquivos DOC para aprendizado da IA
+                  - row "Agente de atendimento – Resposta ~3-10 Cada resposta gerada pelo assistente virtual" [ref=e1151]:
+                    - cell "Agente de atendimento – Resposta" [ref=e1152]:
+                      - generic [ref=e1153]: Agente de atendimento – Resposta
+                    - cell "~3-10" [ref=e1154]:
+                      - generic [ref=e1155]: ~3-10
+                    - cell "Cada resposta gerada pelo assistente virtual" [ref=e1156]:
+                      - generic [ref=e1157]: Cada resposta gerada pelo assistente virtual
+              - generic [ref=e1159]:
+                - generic [ref=e1160]:
+                  - button "keyboard_double_arrow_left" [disabled] [ref=e1161]:
+                    - generic [ref=e1162]: keyboard_double_arrow_left
+                  - button "chevron_left" [disabled] [ref=e1163]:
+                    - generic [ref=e1164]: chevron_left
+                  - button "1" [ref=e1165] [cursor=pointer]
+                  - button "chevron_right" [disabled] [ref=e1166]:
+                    - generic [ref=e1167]: chevron_right
+                - generic [ref=e1168]:
+                  - combobox [ref=e1169]:
+                    - option "25 por página" [selected]
+                    - option "50 por página"
+                    - option "100 por página"
+                  - generic:
+                    - img
+  - region "Widget de chat" [ref=e416]:
+    - iframe [ref=e417]:
+      - button "Abrir chat ao vivo" [ref=f5e5]:
+        - img [ref=f5e8]
+        - img [ref=f5e15]
+  - generic:
+    - region "Notifications-top"
+    - region "Notifications-top-left"
+    - region "Notifications-top-right"
+    - region "Notifications-bottom-left"
+    - region "Notifications-bottom"
+    - region "Notifications-bottom-right"
+  - generic:
+    - region "Notifications-top"
+    - region "Notifications-top-left"
+    - region "Notifications-top-right"
+    - region "Notifications-bottom-left"
+    - region "Notifications-bottom"
+    - region "Notifications-bottom-right"
+  - generic:
+    - region "Notifications-top"
+    - region "Notifications-top-left"
+    - region "Notifications-top-right"
+    - region "Notifications-bottom-left"
+    - region "Notifications-bottom"
+    - region "Notifications-bottom-right"

@@ -76,7 +76,7 @@ execução anterior para alimentar os trends.
 
 - `outputs/test-results.json` (Playwright JSON reporter — obrigatório).
 - `outputs/exploratory-findings.json` (validator — opcional, mas recomendado).
-- `config/project.config.json` (projectName, environment, browsers).
+- `projects/<slug>/project.config.json` (projectName, environment, browsers).
 
 ## Saída resumida no console
 

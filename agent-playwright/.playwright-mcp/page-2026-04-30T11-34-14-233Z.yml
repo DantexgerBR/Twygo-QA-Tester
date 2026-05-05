@@ -1,0 +1,594 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - generic "Logo - Stage 10" [ref=e884]:
+        - img "Logo - Stage 10" [ref=e885]
+      - img [ref=e7]
+    - generic [ref=e9]:
+      - list [ref=e10]:
+        - list [ref=e11]:
+          - listitem [ref=e12]:
+            - link "leaderboard Dashboard" [ref=e886] [cursor=pointer]:
+              - /url: /o/36602/dashboard
+              - generic [ref=e14]:
+                - generic [ref=e16]: leaderboard
+                - generic [ref=e17]: Dashboard
+          - listitem [ref=e18]:
+            - generic [ref=e20]:
+              - generic [ref=e23]: school
+              - generic [ref=e24]: Aprendizagem
+            - list [ref=e25]:
+              - listitem [ref=e26]:
+                - link "format_list_bulleted_add Conteúdos" [ref=e887] [cursor=pointer]:
+                  - /url: /o/36602/events?tab=events
+                  - generic [ref=e28]:
+                    - generic [ref=e30]: format_list_bulleted_add
+                    - generic [ref=e31]: Conteúdos
+              - listitem [ref=e32]:
+                - link "send Compartilhamentos" [ref=e888] [cursor=pointer]:
+                  - /url: /o/36602/shared_events
+                  - generic [ref=e34]:
+                    - generic [ref=e36]: send
+                    - generic [ref=e37]: Compartilhamentos
+              - listitem [ref=e38]:
+                - link "description Registros BETA" [ref=e889] [cursor=pointer]:
+                  - /url: /o/36602/records
+                  - generic [ref=e40]:
+                    - generic [ref=e42]: description
+                    - generic [ref=e43]: Registros
+                    - generic [ref=e44]: BETA
+              - listitem [ref=e45]:
+                - link "workspace_premium Certificados" [ref=e890] [cursor=pointer]:
+                  - /url: /o/36602/certificate_models
+                  - generic [ref=e47]:
+                    - generic [ref=e49]: workspace_premium
+                    - generic [ref=e50]: Certificados
+          - listitem [ref=e51]:
+            - link "book Biblioteca" [ref=e891] [cursor=pointer]:
+              - /url: /o/36602/events/?tab=libraries
+              - generic [ref=e53]:
+                - generic [ref=e55]: book
+                - generic [ref=e56]: Biblioteca
+          - listitem [ref=e57]:
+            - link "group Usuários" [ref=e892] [cursor=pointer]:
+              - /url: /o/36602/users
+              - generic [ref=e59]:
+                - generic [ref=e61]: group
+                - generic [ref=e62]: Usuários
+          - listitem [ref=e63]:
+            - link "work Empresas" [ref=e893] [cursor=pointer]:
+              - /url: /o/36602/companies
+              - generic [ref=e65]:
+                - generic [ref=e67]: work
+                - generic [ref=e68]: Empresas
+          - listitem [ref=e69]:
+            - link "live_help Questionários" [ref=e894] [cursor=pointer]:
+              - /url: /o/36602/question_lists
+              - generic [ref=e71]:
+                - generic [ref=e73]: live_help
+                - generic [ref=e74]: Questionários
+          - listitem [ref=e75]:
+            - link "groups Comunidades" [ref=e895] [cursor=pointer]:
+              - /url: /o/36602/feed
+              - generic [ref=e77]:
+                - generic [ref=e79]: groups
+                - generic [ref=e80]: Comunidades
+          - listitem [ref=e81]:
+            - generic [ref=e83]:
+              - generic [ref=e86]: psychology
+              - generic [ref=e87]:
+                - text: Skills
+                - generic [ref=e88]: BETA
+            - list [ref=e89]:
+              - listitem [ref=e90]:
+                - link "lan Organograma" [ref=e896] [cursor=pointer]:
+                  - /url: /o/36602/organization_chart
+                  - generic [ref=e92]:
+                    - generic [ref=e94]: lan
+                    - generic [ref=e95]: Organograma
+              - listitem [ref=e96]:
+                - link "badge Funções" [ref=e897] [cursor=pointer]:
+                  - /url: /o/36602/roles
+                  - generic [ref=e98]:
+                    - generic [ref=e100]: badge
+                    - generic [ref=e101]: Funções
+              - listitem [ref=e102]:
+                - link "award_star Competências" [ref=e898] [cursor=pointer]:
+                  - /url: /o/36602/organization_chart_competencies
+                  - generic [ref=e104]:
+                    - generic [ref=e106]: award_star
+                    - generic [ref=e107]: Competências
+          - listitem [ref=e108]:
+            - generic [ref=e110]:
+              - generic [ref=e113]: account_tree
+              - generic [ref=e114]: Processos
+            - list [ref=e115]:
+              - listitem [ref=e116]:
+                - link "send Repositórios" [ref=e899] [cursor=pointer]:
+                  - /url: /o/36602/organization_datasets
+                  - generic [ref=e118]:
+                    - generic [ref=e120]: send
+                    - generic [ref=e121]: Repositórios
+              - listitem [ref=e122]:
+                - link "send Arquitetura de Processos" [ref=e900] [cursor=pointer]:
+                  - /url: /o/36602/process_architecture
+                  - generic [ref=e124]:
+                    - generic [ref=e126]: send
+                    - generic [ref=e127]: Arquitetura de Processos
+              - listitem [ref=e128]:
+                - link "send Agente de Documentação" [ref=e901] [cursor=pointer]:
+                  - /url: /o/36602/process_documentations
+                  - generic [ref=e130]:
+                    - generic [ref=e132]: send
+                    - generic [ref=e133]: Agente de Documentação
+              - listitem [ref=e134]:
+                - link "send Documentos de Referência" [ref=e902] [cursor=pointer]:
+                  - /url: /o/36602/reference_documents
+                  - generic [ref=e136]:
+                    - generic [ref=e138]: send
+                    - generic [ref=e139]: Documentos de Referência
+              - listitem [ref=e140]:
+                - link "send Portal de processos" [ref=e903] [cursor=pointer]:
+                  - /url: /o/36602/visualize_documentations
+                  - generic [ref=e142]:
+                    - generic [ref=e144]: send
+                    - generic [ref=e145]: Portal de processos
+      - generic [ref=e146]: Stage 10
+      - list [ref=e147]:
+        - listitem [ref=e148]:
+          - generic [ref=e149]:
+            - generic [ref=e150]: f
+            - text: Configurações
+          - list [ref=e151]:
+            - listitem [ref=e152]:
+              - link "e Organização" [ref=e904] [cursor=pointer]:
+                - /url: /o/36602/edit
+                - generic [ref=e154]: e
+                - text: Organização
+            - listitem [ref=e155]:
+              - link " Menu" [ref=e905] [cursor=pointer]:
+                - /url: /o/36602/use_modes
+                - generic [ref=e157]: 
+                - text: Menu
+            - listitem [ref=e158]:
+              - link "electrical_services Integrações" [ref=e906] [cursor=pointer]:
+                - /url: /o/36602/integrations
+                - generic [ref=e160]: electrical_services
+                - text: Integrações
+            - listitem [ref=e161]:
+              - link "flash_auto Piloto automático" [ref=e907] [cursor=pointer]:
+                - /url: /o/36602/autopilots
+                - generic [ref=e163]: flash_auto
+                - text: Piloto automático
+            - listitem [ref=e164]:
+              - link " Regras do Jogo" [ref=e908] [cursor=pointer]:
+                - /url: /o/36602/game_rules
+                - generic [ref=e166]: 
+                - text: Regras do Jogo
+            - listitem [ref=e167]:
+              - link " Comunicação" [ref=e909] [cursor=pointer]:
+                - /url: /o/36602/communication
+                - generic [ref=e169]: 
+                - text: Comunicação
+            - listitem [ref=e170]:
+              - link "sell Cobrança de inscrição" [ref=e910] [cursor=pointer]:
+                - /url: /o/36602/payments
+                - generic [ref=e172]: sell
+                - text: Cobrança de inscrição
+            - listitem [ref=e173]:
+              - link "credit_card Plano e assinatura" [ref=e911] [cursor=pointer]:
+                - /url: /o/36602/subscription_plans
+                - generic [ref=e175]: credit_card
+                - text: Plano e assinatura
+            - text: s
+            - listitem [ref=e176]:
+              - link " Segurança NOVO" [ref=e912] [cursor=pointer]:
+                - /url: /o/36602/security
+                - generic [ref=e178]: 
+                - text: Segurança NOVO
+            - listitem [ref=e179]:
+              - link "palette Aparência" [ref=e913] [cursor=pointer]:
+                - /url: /o/36602/appearance
+                - generic [ref=e181]: palette
+                - text: Aparência
+            - listitem [ref=e182]:
+              - link "credit_card Créditos de IA BETA" [ref=e914] [cursor=pointer]:
+                - /url: /o/36602/ai_consumption_analysis
+                - generic [ref=e184]: credit_card
+                - text: Créditos de IA BETA
+    - generic [ref=e187]:
+      - generic [ref=e188]:
+        - img [ref=e189]
+        - text: Éverton Gambeta
+      - img [ref=e191]
+  - text: "0"
+  - generic [ref=e194]:
+    - generic "Logo - Stage 10" [ref=e915]:
+      - link "Logo - Stage 10" [ref=e916] [cursor=pointer]:
+        - /url: /o/36602/dashboard
+        - img "Logo - Stage 10" [ref=e917]
+    - generic [ref=e202]:
+      - link "Open chat" [ref=e918] [cursor=pointer]:
+        - /url: /o/36602/chats
+        - button "Open chat" [ref=e919]:
+          - img [ref=e208]
+      - button "Users" [ref=e920] [cursor=pointer]:
+        - img [ref=e216]
+      - generic [ref=e219]:
+        - link "6810115 - Éverton Gambeta" [ref=e921] [cursor=pointer]:
+          - /url: javascript:void(0);
+        - generic [ref=e221]: Éverton Gambeta
+      - button "Administrador G" [ref=e922] [cursor=pointer]:
+        - text: Administrador
+        - generic [ref=e223]: G
+    - text: M * * M * *
+  - generic [ref=e226]:
+    - generic [ref=e228]:
+      - list [ref=e229]:
+        - list [ref=e230]:
+          - listitem [ref=e231] [cursor=pointer]:
+            - link "leaderboard Dashboard" [ref=e923]:
+              - /url: /o/36602/dashboard
+              - generic [ref=e233]:
+                - generic [ref=e235]: leaderboard
+                - generic [ref=e236]: Dashboard
+          - listitem [ref=e237] [cursor=pointer]:
+            - generic [ref=e239]:
+              - generic [ref=e242]: school
+              - generic [ref=e243]: Aprendizagem
+              - generic [ref=e245]: G
+          - listitem [ref=e246] [cursor=pointer]:
+            - link "book Biblioteca" [ref=e924]:
+              - /url: /o/36602/events/?tab=libraries
+              - generic [ref=e248]:
+                - generic [ref=e250]: book
+                - generic [ref=e251]: Biblioteca
+          - listitem [ref=e252] [cursor=pointer]:
+            - link "group Usuários" [ref=e925]:
+              - /url: /o/36602/users
+              - generic [ref=e254]:
+                - generic [ref=e256]: group
+                - generic [ref=e257]: Usuários
+          - listitem [ref=e258] [cursor=pointer]:
+            - link "work Empresas" [ref=e926]:
+              - /url: /o/36602/companies
+              - generic [ref=e260]:
+                - generic [ref=e262]: work
+                - generic [ref=e263]: Empresas
+          - listitem [ref=e264] [cursor=pointer]:
+            - link "live_help Questionários" [ref=e927]:
+              - /url: /o/36602/question_lists
+              - generic [ref=e266]:
+                - generic [ref=e268]: live_help
+                - generic [ref=e269]: Questionários
+          - listitem [ref=e270] [cursor=pointer]:
+            - link "groups Comunidades" [ref=e928]:
+              - /url: /o/36602/feed
+              - generic [ref=e272]:
+                - generic [ref=e274]: groups
+                - generic [ref=e275]: Comunidades
+          - listitem [ref=e276] [cursor=pointer]:
+            - generic [ref=e278]:
+              - generic [ref=e281]: psychology
+              - generic [ref=e282]:
+                - text: Skills
+                - generic [ref=e283]: BETA
+              - generic [ref=e285]: G
+          - listitem [ref=e286] [cursor=pointer]:
+            - generic [ref=e288]:
+              - generic [ref=e291]: account_tree
+              - generic [ref=e292]: Processos
+              - generic [ref=e294]: G
+      - generic [ref=e296]: Stage 10
+      - list [ref=e297]:
+        - listitem [ref=e298] [cursor=pointer]:
+          - generic [ref=e299]:
+            - generic [ref=e300]: f
+            - text: Configurações
+            - generic [ref=e301]: G
+          - text: e    s 
+    - generic [ref=e303]:
+      - generic [ref=e306]: Créditos de IA
+      - generic [ref=e315]:
+        - tablist [ref=e316]:
+          - tab "Extrato" [ref=e929] [cursor=pointer]
+          - tab "Configurações" [selected] [ref=e930] [cursor=pointer]:
+            - generic [ref=e319]: Configurações
+          - tab "Política de créditos de IA" [ref=e931] [cursor=pointer]:
+            - generic [ref=e321]: Política de créditos de IA
+          - tab "Glossário de termos" [ref=e932] [cursor=pointer]:
+            - generic [ref=e323]: Glossário de termos
+        - tabpanel "Configurações" [ref=e933]:
+          - generic [ref=e326]:
+            - generic [ref=e328]:
+              - generic [ref=e329]:
+                - img [ref=e331]
+                - textbox "Pesquise aqui" [ref=e934]
+              - generic [ref=e334]:
+                - generic [ref=e335] [cursor=pointer]: grid_view
+                - generic [ref=e336] [cursor=pointer]: reorder
+            - table [ref=e338]:
+              - rowgroup [ref=e339]:
+                - row "Ambiente Acesso de IA ativo Herdar configurações do principal Ações" [ref=e935]:
+                  - columnheader "Ambiente" [ref=e936] [cursor=pointer]:
+                    - generic [ref=e344]:
+                      - text: Ambiente
+                      - img [ref=e345]
+                  - columnheader "Acesso de IA ativo" [ref=e937] [cursor=pointer]:
+                    - generic [ref=e350]:
+                      - text: Acesso de IA ativo
+                      - img [ref=e351]
+                  - columnheader "Herdar configurações do principal" [ref=e938] [cursor=pointer]:
+                    - generic [ref=e356]:
+                      - text: Herdar configurações do principal
+                      - img [ref=e357]
+                  - columnheader "Ações" [ref=e939]:
+                    - generic [ref=e360]: Ações
+              - rowgroup [ref=e361]:
+                - row "Stage 10 Ambiente principal edit" [ref=e940]:
+                  - cell "Stage 10" [ref=e941] [cursor=pointer]:
+                    - paragraph [ref=e364]: Stage 10
+                  - cell [ref=e365]:
+                    - checkbox [checked] [ref=e367]
+                  - cell "Ambiente principal" [ref=e942]
+                  - cell "edit" [ref=e943]:
+                    - generic [ref=e375] [cursor=pointer]: edit
+                - row "_Ambiente edit" [ref=e944]:
+                  - cell "_Ambiente" [ref=e945] [cursor=pointer]:
+                    - paragraph [ref=e378]: _Ambiente
+                  - cell [ref=e379]:
+                    - checkbox [checked] [ref=e381]
+                  - cell [ref=e384]:
+                    - checkbox [ref=e386]
+                  - cell "edit" [ref=e946]:
+                    - generic [ref=e393] [cursor=pointer]: edit
+                - row "123 Ambiente edit" [ref=e947]:
+                  - cell "123 Ambiente" [ref=e948] [cursor=pointer]:
+                    - paragraph [ref=e396]: 123 Ambiente
+                  - cell [ref=e397]:
+                    - checkbox [checked] [ref=e399]
+                  - cell [ref=e402]:
+                    - checkbox [ref=e404]
+                  - cell "edit" [ref=e949]:
+                    - generic [ref=e411] [cursor=pointer]: edit
+                - row "Avião edit" [ref=e950]:
+                  - cell "Avião" [ref=e951] [cursor=pointer]:
+                    - paragraph [ref=e414]: Avião
+                  - cell [ref=e415]:
+                    - checkbox [checked] [ref=e417]
+                  - cell [ref=e420]:
+                    - checkbox [checked] [ref=e422]
+                  - cell "edit" [ref=e952]:
+                    - generic [ref=e430]: edit
+                - row "Chat e Notificação edit" [ref=e953]:
+                  - cell "Chat e Notificação" [ref=e954] [cursor=pointer]:
+                    - paragraph [ref=e433]: Chat e Notificação
+                  - cell [ref=e434]:
+                    - checkbox [ref=e436]
+                  - cell [ref=e439]:
+                    - checkbox [ref=e441]
+                  - cell "edit" [ref=e955]:
+                    - generic [ref=e449]: edit
+                - row "Fenix edit" [ref=e956]:
+                  - cell "Fenix" [ref=e957] [cursor=pointer]:
+                    - paragraph [ref=e452]: Fenix
+                  - cell [ref=e453]:
+                    - checkbox [checked] [ref=e455]
+                  - cell [ref=e458]:
+                    - checkbox [checked] [ref=e460]
+                  - cell "edit" [ref=e958]:
+                    - generic [ref=e468]: edit
+                - row "Parceira com nome grande nome grande 123 edit" [ref=e959]:
+                  - cell "Parceira com nome grande nome grande 123" [ref=e960] [cursor=pointer]:
+                    - paragraph [ref=e471]: Parceira com nome grande nome grande 123
+                  - cell [ref=e472]:
+                    - checkbox [checked] [ref=e474]
+                  - cell [ref=e477]:
+                    - checkbox [checked] [ref=e479]
+                  - cell "edit" [ref=e961]:
+                    - generic [ref=e487]: edit
+                - row "Ração edit" [ref=e962]:
+                  - cell "Ração" [ref=e963] [cursor=pointer]:
+                    - paragraph [ref=e490]: Ração
+                  - cell [ref=e491]:
+                    - checkbox [ref=e493]
+                  - cell [ref=e496]:
+                    - checkbox [ref=e498]
+                  - cell "edit" [ref=e964]:
+                    - generic [ref=e506]: edit
+                - row "Stage 10.1 Parceira edit" [ref=e965]:
+                  - cell "Stage 10.1 Parceira" [ref=e966] [cursor=pointer]:
+                    - paragraph [ref=e509]: Stage 10.1 Parceira
+                  - cell [ref=e510]:
+                    - checkbox [checked] [ref=e512]
+                  - cell [ref=e515]:
+                    - checkbox [ref=e517]
+                  - cell "edit" [ref=e967]:
+                    - generic [ref=e524] [cursor=pointer]: edit
+                - row "Stage 10.10 Parceira edit" [ref=e968]:
+                  - cell "Stage 10.10 Parceira" [ref=e969] [cursor=pointer]:
+                    - paragraph [ref=e527]: Stage 10.10 Parceira
+                  - cell [ref=e528]:
+                    - checkbox [checked] [ref=e530]
+                  - cell [ref=e533]:
+                    - checkbox [checked] [ref=e535]
+                  - cell "edit" [ref=e970]:
+                    - generic [ref=e543]: edit
+                - row "Stage 10.11 Parceira edit" [ref=e971]:
+                  - cell "Stage 10.11 Parceira" [ref=e972] [cursor=pointer]:
+                    - paragraph [ref=e546]: Stage 10.11 Parceira
+                  - cell [ref=e547]:
+                    - checkbox [checked] [ref=e549]
+                  - cell [ref=e552]:
+                    - checkbox [ref=e554]
+                  - cell "edit" [ref=e973]:
+                    - generic [ref=e561] [cursor=pointer]: edit
+                - row "Stage 10.12 Parceira edit" [ref=e974]:
+                  - cell "Stage 10.12 Parceira" [ref=e975] [cursor=pointer]:
+                    - paragraph [ref=e564]: Stage 10.12 Parceira
+                  - cell [ref=e565]:
+                    - checkbox [checked] [ref=e567]
+                  - cell [ref=e570]:
+                    - checkbox [checked] [ref=e572]
+                  - cell "edit" [ref=e976]:
+                    - generic [ref=e580]: edit
+                - row "Stage 10.13 Parceira edit" [ref=e977]:
+                  - cell "Stage 10.13 Parceira" [ref=e978] [cursor=pointer]:
+                    - paragraph [ref=e583]: Stage 10.13 Parceira
+                  - cell [ref=e584]:
+                    - checkbox [checked] [ref=e586]
+                  - cell [ref=e589]:
+                    - checkbox [checked] [ref=e591]
+                  - cell "edit" [ref=e979]:
+                    - generic [ref=e599]: edit
+                - row "Stage 10.14 Parceira edit" [ref=e980]:
+                  - cell "Stage 10.14 Parceira" [ref=e981] [cursor=pointer]:
+                    - paragraph [ref=e602]: Stage 10.14 Parceira
+                  - cell [ref=e603]:
+                    - checkbox [checked] [ref=e605]
+                  - cell [ref=e608]:
+                    - checkbox [checked] [ref=e610]
+                  - cell "edit" [ref=e982]:
+                    - generic [ref=e618]: edit
+                - row "Stage 10.15 Parceira edit" [ref=e983]:
+                  - cell "Stage 10.15 Parceira" [ref=e984] [cursor=pointer]:
+                    - paragraph [ref=e621]: Stage 10.15 Parceira
+                  - cell [ref=e622]:
+                    - checkbox [checked] [ref=e624]
+                  - cell [ref=e627]:
+                    - checkbox [checked] [ref=e629]
+                  - cell "edit" [ref=e985]:
+                    - generic [ref=e637]: edit
+                - row "Stage 10.16 Parceira edit" [ref=e986]:
+                  - cell "Stage 10.16 Parceira" [ref=e987] [cursor=pointer]:
+                    - paragraph [ref=e640]: Stage 10.16 Parceira
+                  - cell [ref=e641]:
+                    - checkbox [checked] [ref=e643]
+                  - cell [ref=e646]:
+                    - checkbox [checked] [ref=e648]
+                  - cell "edit" [ref=e988]:
+                    - generic [ref=e656]: edit
+                - row "Stage 10.17 Parceira edit" [ref=e989]:
+                  - cell "Stage 10.17 Parceira" [ref=e990] [cursor=pointer]:
+                    - paragraph [ref=e659]: Stage 10.17 Parceira
+                  - cell [ref=e660]:
+                    - checkbox [checked] [ref=e662]
+                  - cell [ref=e665]:
+                    - checkbox [checked] [ref=e667]
+                  - cell "edit" [ref=e991]:
+                    - generic [ref=e675]: edit
+                - row "Stage 10.18 Parceira edit" [ref=e992]:
+                  - cell "Stage 10.18 Parceira" [ref=e993] [cursor=pointer]:
+                    - paragraph [ref=e678]: Stage 10.18 Parceira
+                  - cell [ref=e679]:
+                    - checkbox [checked] [ref=e681]
+                  - cell [ref=e684]:
+                    - checkbox [checked] [ref=e686]
+                  - cell "edit" [ref=e994]:
+                    - generic [ref=e694]: edit
+                - row "Stage 10.19 Parceira edit" [ref=e995]:
+                  - cell "Stage 10.19 Parceira" [ref=e996] [cursor=pointer]:
+                    - paragraph [ref=e697]: Stage 10.19 Parceira
+                  - cell [ref=e698]:
+                    - checkbox [checked] [ref=e700]
+                  - cell [ref=e703]:
+                    - checkbox [checked] [ref=e705]
+                  - cell "edit" [ref=e997]:
+                    - generic [ref=e713]: edit
+                - row "Stage 10.2 Parceira edit" [ref=e998]:
+                  - cell "Stage 10.2 Parceira" [ref=e999] [cursor=pointer]:
+                    - paragraph [ref=e716]: Stage 10.2 Parceira
+                  - cell [ref=e717]:
+                    - checkbox [checked] [ref=e719]
+                  - cell [ref=e722]:
+                    - checkbox [checked] [ref=e724]
+                  - cell "edit" [ref=e1000]:
+                    - generic [ref=e732]: edit
+                - row "Stage 10.20 Parceira edit" [ref=e1001]:
+                  - cell "Stage 10.20 Parceira" [ref=e1002] [cursor=pointer]:
+                    - paragraph [ref=e735]: Stage 10.20 Parceira
+                  - cell [ref=e736]:
+                    - checkbox [ref=e738]
+                  - cell [ref=e741]:
+                    - checkbox [checked] [ref=e743]
+                  - cell "edit" [ref=e1003]:
+                    - generic [ref=e751]: edit
+                - row "Stage 10.21 Parceira edit" [ref=e1004]:
+                  - cell "Stage 10.21 Parceira" [ref=e1005] [cursor=pointer]:
+                    - paragraph [ref=e754]: Stage 10.21 Parceira
+                  - cell [ref=e755]:
+                    - checkbox [checked] [ref=e757]
+                  - cell [ref=e760]:
+                    - checkbox [checked] [ref=e762]
+                  - cell "edit" [ref=e1006]:
+                    - generic [ref=e770]: edit
+                - row "Stage 10.22 Parceira edit" [ref=e1007]:
+                  - cell "Stage 10.22 Parceira" [ref=e1008] [cursor=pointer]:
+                    - paragraph [ref=e773]: Stage 10.22 Parceira
+                  - cell [ref=e774]:
+                    - checkbox [checked] [ref=e776]
+                  - cell [ref=e779]:
+                    - checkbox [checked] [ref=e781]
+                  - cell "edit" [ref=e1009]:
+                    - generic [ref=e789]: edit
+                - row "Stage 10.23 Parceira edit" [ref=e1010]:
+                  - cell "Stage 10.23 Parceira" [ref=e1011] [cursor=pointer]:
+                    - paragraph [ref=e792]: Stage 10.23 Parceira
+                  - cell [ref=e793]:
+                    - checkbox [checked] [ref=e795]
+                  - cell [ref=e798]:
+                    - checkbox [checked] [ref=e800]
+                  - cell "edit" [ref=e1012]:
+                    - generic [ref=e808]: edit
+                - row "Stage 10.24 Parceira edit" [ref=e1013]:
+                  - cell "Stage 10.24 Parceira" [ref=e1014] [cursor=pointer]:
+                    - paragraph [ref=e811]: Stage 10.24 Parceira
+                  - cell [ref=e812]:
+                    - checkbox [checked] [ref=e814]
+                  - cell [ref=e817]:
+                    - checkbox [ref=e819]
+                  - cell "edit" [ref=e1015]:
+                    - generic [ref=e826] [cursor=pointer]: edit
+            - generic [ref=e828]:
+              - generic [ref=e829]:
+                - button "keyboard_double_arrow_left" [disabled] [ref=e1016]:
+                  - generic [ref=e831]: keyboard_double_arrow_left
+                - button "chevron_left" [disabled] [ref=e1017]:
+                  - generic [ref=e833]: chevron_left
+                - button "1" [ref=e1018] [cursor=pointer]
+                - button "2" [ref=e1019] [cursor=pointer]
+                - button "chevron_right" [ref=e1020] [cursor=pointer]:
+                  - generic [ref=e837]: chevron_right
+              - generic [ref=e838]:
+                - combobox [ref=e839]:
+                  - option "25 por página" [selected]
+                  - option "50 por página"
+                  - option "100 por página"
+                - generic:
+                  - img
+  - region "Widget de chat" [ref=e1021]:
+    - iframe [ref=e841]:
+      - button "Abrir chat ao vivo" [ref=f1e5]:
+        - img [ref=f1e8]
+        - img [ref=f1e15]
+  - generic:
+    - region "Notifications-top"
+    - region "Notifications-top-left"
+    - region "Notifications-top-right"
+    - region "Notifications-bottom-left"
+    - region "Notifications-bottom"
+    - region "Notifications-bottom-right"
+  - generic:
+    - region "Notifications-top"
+    - region "Notifications-top-left"
+    - region "Notifications-top-right"
+    - region "Notifications-bottom-left"
+    - region "Notifications-bottom"
+    - region "Notifications-bottom-right"
+  - generic:
+    - region "Notifications-top"
+    - region "Notifications-top-left"
+    - region "Notifications-top-right"
+    - region "Notifications-bottom-left"
+    - region "Notifications-bottom"
+    - region "Notifications-bottom-right"

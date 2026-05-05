@@ -49,6 +49,34 @@ ordenada?), aplique:
 
 Não invente asserções extras nem omita asserções por insegurança.
 
+## 3.5. Padrões Super Admin (área `/admin`)
+
+A prosa frequentemente diz "no Super Admin", "em Super Admin", "acessar Super
+Admin", "tabela de preços", "editar contrato" — esses padrões se traduzem para
+operações na rota `/admin` (validado em 2026-05-05). Pré-requisito: usuário
+do `environment.json` precisa estar logado **e** em perfil "Administrador" da
+organização. O `globalSetup` já cobre isso quando o user tem o perfil — não é
+necessário trocar perfil pela UI.
+
+| Padrão de prosa | Caminho / Helper canônico |
+|---|---|
+| "Acessar Super Admin" / "Em Super Admin" | `await page.goto('/admin')` ou `superAdminPage.openSuperAdmin()` |
+| "Acessar a tabela de preços" / "Editar tabela de preços ativa" | `await page.goto('/admin/subscription_plans')` ou `superAdminPage.openSubscriptionPlans()`. Na lista, identificar a tabela com coluna "Ativo" = Sim e clicar em "Editar". |
+| "Editar o contrato da organização <X>" | `await page.goto('/admin/edit_sys_subscription_settings/{orgId}')` ou `superAdminPage.openEditContract(orgId)`. orgId vem de `environment.json[env].orgId` (`staging = 36602`, `staging-without-credits = 36912`). |
+| "Pesquisar pela organização" → "Editar/Visualizar" → "Aba Contratos" → "Editar contrato vigente" | `superAdminPage.navigateToOrgSubscriptions(orgIdOrName)` quando a prosa exige passar pela UI; caso contrário usar deep-link `openEditContract(orgId)`. |
+
+**IDs das organizações de referência** (estão em `environment.json`):
+
+| Ambiente | Host | orgId |
+|---|---|---|
+| `staging` | `stage10.stage.twygoead.com` | `36602` |
+| `staging-without-credits` | `eduapi.stage.twygoead.com` | `36912` |
+
+> Quando um caso de teste do XML pede operação Super Admin, **importe e use
+> `SuperAdminPage`**; não invente seletores nem rotas. Se a prosa fala em
+> ajustar a tabela de preços ativa (afeta TODAS as orgs), faça reverso ao
+> final do teste — esse banco é compartilhado.
+
 ## 4. Quando a prosa pede algo fora do escopo Playwright puro
 
 | Cenário na prosa | O que fazer |
@@ -57,6 +85,35 @@ Não invente asserções extras nem omita asserções por insegurança.
 | "Verificar comportamento mobile" | Usar `test.use({ viewport: ... })` + executar contra o viewport apropriado |
 | "Verificar via API" | Out-of-scope para este agente. Logar `// TODO: API test em outro agente` e seguir |
 | "Verificar comportamento de email/SMS" | Out-of-scope. Asserir no estado da UI imediatamente após o trigger e marcar `allure.tag('NEEDS_INTEGRATION_TEST')` |
+
+## 4.5. Lendo dados do ambiente (host, orgId) — sem hardcode
+
+Specs gerados **nunca** devem hardcodar host, orgId ou credenciais. Importe
+de [src/utils/environment.ts](../src/utils/environment.ts):
+
+```ts
+import { getBaseUrl, getOrgId, getEnvByName, getEditContractPath } from '../../../../../src/utils/environment.js';
+
+// rota com orgId do env atual
+await page.goto(`/o/${getOrgId()}/ai_consumption_analysis?tab=settings`);
+
+// usar baseURL de outro env (ex.: secundário "sem créditos")
+test.use({ baseURL: getEnvByName('staging-without-credits').baseUrl });
+
+// path canônico de "editar contrato" no Super Admin
+await page.goto(getEditContractPath());
+```
+
+**Quando é OK ficar literal**: rotas que não dependem de env nem de org
+(`/users/login`, `/play`, `/admin`, `/admin/subscription_plans`). Hosts e
+orgIds, **nunca**.
+
+Anti-pattern proibido (CLAUDE.md §7.6 B):
+```ts
+// ❌ proibido
+const BASE_URL = 'https://stage10.stage.twygoead.com';
+await page.goto(`${BASE_URL}/o/36602/ai_consumption_analysis?tab=settings`);
+```
 
 ## 5. Heurística de seletor (resumo da política `data-testid`)
 
