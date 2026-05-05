@@ -5,8 +5,12 @@ import { test, expect } from '../../../src/fixtures/exploratory-fixture.js';
 import * as allure from 'allure-js-commons';
 import { CreditosIaSettingsPage } from '../../../src/pages/CreditosIaSettingsPage.js';
 import { EnvironmentEditPage } from '../../../src/pages/EnvironmentEditPage.js';
-import { LoginPage } from '../../../src/pages/LoginPage.js';
 import { TOOLTIP_TEXTS, SYNC_ALERT_TEXT } from '../../../src/utils/testIds.js';
+import { getOrgId } from '../../../src/utils/environment.js';
+
+const ORG_ID = getOrgId();
+const ENV_ID = 36799;
+const SETTINGS_PATH = `/o/${ORG_ID}/ai_consumption_analysis?tab=settings`;
 
 test.describe('Configurar a utilização do indexação de conteúdo por ambiente', () => {
   test('Indexação e Agente de atendimento - Layout', async ({ page }) => {
@@ -18,23 +22,17 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
     // Steps 2-9 têm partes REVIEW_NEEDED (sync ativo bloqueia toggle Indexação no ambiente de staging)
     await allure.tag('REVIEW_NEEDED');
 
-    const loginPage = new LoginPage(page);
     const settingsPage = new CreditosIaSettingsPage(page);
     const editPage = new EnvironmentEditPage(page);
 
-    // Pré-condição: Login SuperAdmin + troca para perfil Administrador + navegação até tela de edição
+    // Pré-condição: navegar para edição de ambiente (storageState global cobre auth)
     await allure.step(
-      'Pré-condição: Login SuperAdmin + perfil Administrador + abrir edição de ambiente',
+      'Pré-condição: abrir edição de ambiente independente _Ambiente (envId=36799)',
       async () => {
-        await page.goto('/users/login');
-        await loginPage.login('evertongambeta@gmail.com', '123456');
-
-        // Navegar para aba Configurações de Créditos de IA
-        await page.goto('/o/36602/ai_consumption_analysis?tab=settings');
+        await page.goto(SETTINGS_PATH);
         await expect(settingsPage.listContainer).toBeVisible();
 
-        // Abrir edição do _Ambiente (envId=36799, independente — controles completos)
-        await settingsPage.openEnvironmentEdit(36799);
+        await settingsPage.openEnvironmentEdit(ENV_ID);
         await page.waitForURL('**edit_additional_organization_permissions**');
       },
     );

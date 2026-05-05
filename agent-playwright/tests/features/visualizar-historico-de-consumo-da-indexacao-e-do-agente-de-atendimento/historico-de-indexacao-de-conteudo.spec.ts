@@ -3,6 +3,10 @@
 
 import { test, expect } from '../../../src/fixtures/exploratory-fixture.js';
 import * as allure from 'allure-js-commons';
+import { getOrgId } from '../../../src/utils/environment.js';
+
+const ORG_ID = getOrgId();
+const EXTRACT_PATH = `/o/${ORG_ID}/ai_consumption_analysis?tab=consumption`;
 
 test.describe('Visualizar histórico de consumo da indexação e do agente de atendimento', () => {
   test('Histórico de indexação de conteúdo', async ({ page }) => {
@@ -15,7 +19,7 @@ test.describe('Visualizar histórico de consumo da indexação e do agente de at
 
     // Pré-condição: navegar à aba Extrato
     await allure.step('Pré-condição: navegar à aba Extrato', async () => {
-      await page.goto('/o/36602/ai_consumption_analysis?tab=consumption');
+      await page.goto(EXTRACT_PATH);
       await expect(page.getByTestId('ai-consumption-analysis-extract-tab')).toBeVisible();
     });
 

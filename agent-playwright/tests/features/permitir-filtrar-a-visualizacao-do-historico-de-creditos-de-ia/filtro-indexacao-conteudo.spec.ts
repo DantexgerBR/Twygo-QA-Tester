@@ -10,6 +10,10 @@
 import { test, expect } from '../../../src/fixtures/exploratory-fixture';
 import * as allure from 'allure-js-commons';
 import { dismissCommonModals } from '../../../src/utils/modals';
+import { getOrgId } from '../../../src/utils/environment.js';
+
+const ORG_ID = getOrgId();
+const EXTRACT_PATH = `/o/${ORG_ID}/ai_consumption_analysis`;
 
 test.describe('Permitir filtrar a visualização do histórico de créditos de IA', () => {
   test('Filtrar a visualização da indexação de conteúdo', async ({ page }) => {
@@ -18,7 +22,7 @@ test.describe('Permitir filtrar a visualização do histórico de créditos de I
     await allure.story('Filtrar a visualização da indexação de conteúdo');
     await allure.severity('critical');
 
-    await page.goto('https://stage10.stage.twygoead.com/o/36602/ai_consumption_analysis');
+    await page.goto(EXTRACT_PATH);
     await dismissCommonModals(page);
 
     await expect(page.getByRole('tab', { name: 'Extrato' })).toHaveAttribute('aria-selected', 'true');

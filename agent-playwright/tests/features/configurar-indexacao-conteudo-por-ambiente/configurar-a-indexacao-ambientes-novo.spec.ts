@@ -5,8 +5,11 @@ import { test, expect } from '../../../src/fixtures/exploratory-fixture.js';
 import * as allure from 'allure-js-commons';
 import { CreditosIaSettingsPage } from '../../../src/pages/CreditosIaSettingsPage.js';
 import { EnvironmentEditPage } from '../../../src/pages/EnvironmentEditPage.js';
-import { LoginPage } from '../../../src/pages/LoginPage.js';
 import { INHERITED_EDIT_BLOCK_TOOLTIP, SYNC_ALERT_TEXT } from '../../../src/utils/testIds.js';
+import { getOrgId } from '../../../src/utils/environment.js';
+
+const ORG_ID = getOrgId();
+const SETTINGS_PATH = `/o/${ORG_ID}/ai_consumption_analysis?tab=settings`;
 
 test.describe('Configurar a utilização do indexação de conteúdo por ambiente', () => {
   test('Configurar a indexação - Ambientes novo', async ({ page }) => {
@@ -18,22 +21,14 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
     // REVISAR: criação de ambiente novo não existe via UI — asserções usam proxy environment '_Ambiente' (envId=36799)
     await allure.tag('REVIEW_NEEDED');
 
-    const loginPage = new LoginPage(page);
     const settingsPage = new CreditosIaSettingsPage(page);
     const editPage = new EnvironmentEditPage(page);
 
-    // Pré-condição: Login SuperAdmin + perfil Administrador + abrir Créditos de IA → Configurações
+    // Pré-condição: navegar para Créditos de IA → Configurações (storageState global cobre auth)
     await allure.step(
-      'Pré-condição: Login SuperAdmin + perfil Administrador + abrir Créditos de IA → Configurações',
+      'Pré-condição: abrir Créditos de IA → Configurações',
       async () => {
-        // Navegar para a tela de login (URL real: /users/login)
-        await page.goto('https://stage10.stage.twygoead.com/users/login');
-
-        // Preencher credenciais e submeter via page object
-        await loginPage.login('evertongambeta@gmail.com', '123456');
-
-        // Navegar para a aba Configurações de Créditos de IA
-        await page.goto('https://stage10.stage.twygoead.com/o/36602/ai_consumption_analysis?tab=settings');
+        await page.goto(SETTINGS_PATH);
         await expect(settingsPage.listContainer).toBeVisible();
       },
     );
@@ -67,7 +62,7 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
         }
 
         // Voltar para a lista de ambientes
-        await page.goto('https://stage10.stage.twygoead.com/o/36602/ai_consumption_analysis?tab=settings');
+        await page.goto(SETTINGS_PATH);
         await expect(settingsPage.listContainer).toBeVisible();
       },
     );

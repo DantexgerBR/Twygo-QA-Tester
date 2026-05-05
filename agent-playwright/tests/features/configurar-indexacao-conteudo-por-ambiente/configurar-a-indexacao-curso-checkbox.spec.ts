@@ -2,16 +2,17 @@
 // seed: tests/seed.spec.ts
 
 import { test, expect } from '../../../src/fixtures/exploratory-fixture.js';
-import type { Locator } from '@playwright/test';
 import * as allure from 'allure-js-commons';
 import { CreditosIaSettingsPage } from '../../../src/pages/CreditosIaSettingsPage.js';
 import { EnvironmentEditPage } from '../../../src/pages/EnvironmentEditPage.js';
-import { LoginPage } from '../../../src/pages/LoginPage.js';
 import { SYNC_ALERT_TEXT } from '../../../src/utils/testIds.js';
+import { getOrgId } from '../../../src/utils/environment.js';
 
-const BASE_URL = 'https://stage10.stage.twygoead.com';
-const ENV_EDIT_URL = `${BASE_URL}/o/36602/ai_consumption_analysis/36799/edit_additional_organization_permissions`;
-const SETTINGS_URL = `${BASE_URL}/o/36602/ai_consumption_analysis?tab=settings`;
+const ORG_ID = getOrgId();
+const ENV_ID = 36799;
+const AVIAO_ENV_ID = 36796;
+const SETTINGS_PATH = `/o/${ORG_ID}/ai_consumption_analysis?tab=settings`;
+const ENV_EDIT_PATH = `/o/${ORG_ID}/ai_consumption_analysis/${ENV_ID}/edit_additional_organization_permissions`;
 
 test.describe('Configurar a utilização do indexação de conteúdo por ambiente', () => {
   test('Configurar a indexação - CURSO checkbox', async ({ page }) => {
@@ -23,57 +24,17 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
     // REVISAR: validações via chat IA do aluno são fora do escopo desta suite UI
     await allure.tag('REVIEW_NEEDED');
 
-    const loginPage = new LoginPage(page);
     const settingsPage = new CreditosIaSettingsPage(page);
     const editPage = new EnvironmentEditPage(page);
 
-    /**
-     * Helper local: garante toggle mestre habilitado e marca apenas o checkbox informado
-     * (force:true por conta do possível aria-disabled do container).
-     * Uso apenas quando !isSyncBlocking.
-     */
-    async function marcarApenasCheckboxESalvar(
-      alvo: Locator,
-      outrosElegiveis: Locator[],
-    ): Promise<void> {
-      // Habilitar toggle mestre se não estiver
-      if (!(await editPage.contentIndexingMasterInput.isChecked())) {
-        await editPage.contentIndexingMasterSwitch.click({ force: true });
-        await expect(editPage.contentIndexingMasterInput).toBeChecked();
-      }
-      // Desmarcar todos os outros elegíveis antes de marcar o alvo
-      for (const outro of outrosElegiveis) {
-        try {
-          if (await outro.isChecked()) {
-            await outro.click({ force: true });
-          }
-        } catch {
-          // ignora se não estiver visível
-        }
-      }
-      // Marcar o alvo se ainda não estiver marcado
-      if (!(await alvo.isChecked())) {
-        await alvo.click({ force: true });
-      }
-      await editPage.saveButton.click();
-      if (await editPage.creditsModal.isVisible({ timeout: 5000 }).catch(() => false)) { await editPage.creditsModalConfirm.click(); await expect(editPage.creditsModal).toBeHidden(); }
-    }
-
-    // ─── PRÉ-CONDIÇÃO: Login + perfil Administrador + navegar para edit page ───
+    // ─── PRÉ-CONDIÇÃO: navegar para edit page (storageState global cobre auth) ───
     await allure.step(
-      'Pré-condição: Login SuperAdmin + perfil Administrador + abrir edição do _Ambiente (envId=36799)',
+      'Pré-condição: abrir edição do _Ambiente (envId=36799)',
       async () => {
-        // Navegar para a tela de login
-        await page.goto(`${BASE_URL}/users/login`);
-
-        // Preencher credenciais e submeter
-        await loginPage.login('evertongambeta@gmail.com', '123456');
-
-        // Navegar para a aba Configurações de Créditos de IA e depois edição do _Ambiente
-        await page.goto(SETTINGS_URL);
+        await page.goto(SETTINGS_PATH);
         await expect(settingsPage.listContainer).toBeVisible();
 
-        await settingsPage.openEnvironmentEdit(36799);
+        await settingsPage.openEnvironmentEdit(ENV_ID);
         await page.waitForURL('**edit_additional_organization_permissions**');
 
         // Verificações de pré-condição
@@ -103,12 +64,12 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
             editPage.assetVideo,
             editPage.assetFiles,
           ];
-          await marcarApenasCheckboxESalvar(editPage.assetText, outrosAssets);
+          await editPage.markOnlyOneEligibleAndSave(editPage.assetText, outrosAssets);
           await page.waitForURL('**/ai_consumption_analysis?tab=settings**');
           await expect(settingsPage.listContainer).toBeVisible();
 
           // Reabrir para próximo step
-          await settingsPage.openEnvironmentEdit(36799);
+          await settingsPage.openEnvironmentEdit(ENV_ID);
           await page.waitForURL('**edit_additional_organization_permissions**');
         }
         // REVIEW_NEEDED: chat IA do aluno deve responder baseado em indexação de Texto
@@ -131,11 +92,11 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
             editPage.assetVideo,
             editPage.assetFiles,
           ];
-          await marcarApenasCheckboxESalvar(editPage.assetPage, outrosAssets);
+          await editPage.markOnlyOneEligibleAndSave(editPage.assetPage, outrosAssets);
           await page.waitForURL('**/ai_consumption_analysis?tab=settings**');
           await expect(settingsPage.listContainer).toBeVisible();
 
-          await settingsPage.openEnvironmentEdit(36799);
+          await settingsPage.openEnvironmentEdit(ENV_ID);
           await page.waitForURL('**edit_additional_organization_permissions**');
         }
         // REVIEW_NEEDED: chat IA do aluno deve responder baseado em indexação de Página
@@ -158,11 +119,11 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
             editPage.assetVideo,
             editPage.assetFiles,
           ];
-          await marcarApenasCheckboxESalvar(editPage.assetLesson, outrosAssets);
+          await editPage.markOnlyOneEligibleAndSave(editPage.assetLesson, outrosAssets);
           await page.waitForURL('**/ai_consumption_analysis?tab=settings**');
           await expect(settingsPage.listContainer).toBeVisible();
 
-          await settingsPage.openEnvironmentEdit(36799);
+          await settingsPage.openEnvironmentEdit(ENV_ID);
           await page.waitForURL('**edit_additional_organization_permissions**');
         }
         // REVIEW_NEEDED: chat IA do aluno deve responder baseado em indexação de Aula
@@ -185,11 +146,11 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
             editPage.assetVideo,
             editPage.assetFiles,
           ];
-          await marcarApenasCheckboxESalvar(editPage.assetStampedPdf, outrosAssets);
+          await editPage.markOnlyOneEligibleAndSave(editPage.assetStampedPdf, outrosAssets);
           await page.waitForURL('**/ai_consumption_analysis?tab=settings**');
           await expect(settingsPage.listContainer).toBeVisible();
 
-          await settingsPage.openEnvironmentEdit(36799);
+          await settingsPage.openEnvironmentEdit(ENV_ID);
           await page.waitForURL('**edit_additional_organization_permissions**');
         }
         // REVIEW_NEEDED: chat IA do aluno deve responder baseado em indexação de PDF Estampado
@@ -212,11 +173,11 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
             editPage.assetStampedPdf,
             editPage.assetFiles,
           ];
-          await marcarApenasCheckboxESalvar(editPage.assetVideo, outrosAssets);
+          await editPage.markOnlyOneEligibleAndSave(editPage.assetVideo, outrosAssets);
           await page.waitForURL('**/ai_consumption_analysis?tab=settings**');
           await expect(settingsPage.listContainer).toBeVisible();
 
-          await settingsPage.openEnvironmentEdit(36799);
+          await settingsPage.openEnvironmentEdit(ENV_ID);
           await page.waitForURL('**edit_additional_organization_permissions**');
         }
         // REVIEW_NEEDED: chat IA do aluno deve responder baseado em indexação de Vídeo
@@ -239,11 +200,11 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
             editPage.assetStampedPdf,
             editPage.assetVideo,
           ];
-          await marcarApenasCheckboxESalvar(editPage.assetFiles, outrosAssets);
+          await editPage.markOnlyOneEligibleAndSave(editPage.assetFiles, outrosAssets);
           await page.waitForURL('**/ai_consumption_analysis?tab=settings**');
           await expect(settingsPage.listContainer).toBeVisible();
 
-          await settingsPage.openEnvironmentEdit(36799);
+          await settingsPage.openEnvironmentEdit(ENV_ID);
           await page.waitForURL('**edit_additional_organization_permissions**');
         }
         // REVIEW_NEEDED: chat IA do aluno deve responder baseado em indexação de Arquivos
@@ -317,7 +278,7 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
           await page.waitForURL('**/ai_consumption_analysis?tab=settings**');
           await expect(settingsPage.listContainer).toBeVisible();
 
-          await settingsPage.openEnvironmentEdit(36799);
+          await settingsPage.openEnvironmentEdit(ENV_ID);
           await page.waitForURL('**edit_additional_organization_permissions**');
         }
         // REVIEW_NEEDED: chat IA do aluno deve responder somente para conteúdos Em Desenvolvimento
@@ -355,7 +316,7 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
           await page.waitForURL('**/ai_consumption_analysis?tab=settings**');
           await expect(settingsPage.listContainer).toBeVisible();
 
-          await settingsPage.openEnvironmentEdit(36799);
+          await settingsPage.openEnvironmentEdit(ENV_ID);
           await page.waitForURL('**edit_additional_organization_permissions**');
         }
         // REVIEW_NEEDED: chat IA do aluno deve responder somente para conteúdos Liberados
@@ -393,7 +354,7 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
           await page.waitForURL('**/ai_consumption_analysis?tab=settings**');
           await expect(settingsPage.listContainer).toBeVisible();
 
-          await settingsPage.openEnvironmentEdit(36799);
+          await settingsPage.openEnvironmentEdit(ENV_ID);
           await page.waitForURL('**edit_additional_organization_permissions**');
         }
         // REVIEW_NEEDED: chat IA do aluno deve responder somente para conteúdos Suspensos
@@ -433,7 +394,7 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
           await expect(settingsPage.listContainer).toBeVisible();
 
           // Reabrir para verificar persistência (apenas quando sync não estiver bloqueando)
-          await settingsPage.openEnvironmentEdit(36799);
+          await settingsPage.openEnvironmentEdit(ENV_ID);
           await page.waitForURL('**edit_additional_organization_permissions**');
           const syncBlockingAfter = await editPage.isSyncBlocking();
           if (!syncBlockingAfter) {
@@ -495,7 +456,7 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
           await expect(settingsPage.listContainer).toBeVisible();
 
           // Reabrir para verificar persistência total (apenas quando não bloqueado)
-          await settingsPage.openEnvironmentEdit(36799);
+          await settingsPage.openEnvironmentEdit(ENV_ID);
           await page.waitForURL('**edit_additional_organization_permissions**');
           const syncBlockingAfter = await editPage.isSyncBlocking();
           if (!syncBlockingAfter) {
@@ -549,7 +510,7 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
           await page.waitForURL('**/ai_consumption_analysis?tab=settings**');
 
           // Reabrir e desmarcar CURSO
-          await settingsPage.openEnvironmentEdit(36799);
+          await settingsPage.openEnvironmentEdit(ENV_ID);
           await page.waitForURL('**edit_additional_organization_permissions**');
           const syncBlockingReopen = await editPage.isSyncBlocking();
           if (!syncBlockingReopen) {
@@ -566,7 +527,7 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
             await page.waitForURL('**/ai_consumption_analysis?tab=settings**');
 
             // Reabrir para verificar que CURSO persiste desmarcado
-            await settingsPage.openEnvironmentEdit(36799);
+            await settingsPage.openEnvironmentEdit(ENV_ID);
             await page.waitForURL('**edit_additional_organization_permissions**');
             const syncBlockingFinal = await editPage.isSyncBlocking();
             if (!syncBlockingFinal) {
@@ -631,7 +592,7 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
       '15. Verificar BLOQUEIO DA TELA (aria-disabled=true) imediatamente após confirmar indexação',
       async () => {
         // Reabrir edição imediatamente após save anterior — espera-se sincronização em andamento
-        await page.goto(ENV_EDIT_URL);
+        await page.goto(ENV_EDIT_PATH);
         await page.waitForURL('**edit_additional_organization_permissions**');
 
         // Verificar se sync está bloqueando (estado esperado logo após save com indexação)
@@ -714,11 +675,11 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
       '18. Verificar ambiente HERDADO (Avião, envId=36796): herança bloqueia edição independente',
       async () => {
         // Navegar para a lista de ambientes
-        await page.goto(SETTINGS_URL);
+        await page.goto(SETTINGS_PATH);
         await expect(settingsPage.listContainer).toBeVisible();
 
         // Verificar que o switch de herança do Avião está ON (checked)
-        await expect(settingsPage.inheritSwitch(36796)).toBeChecked();
+        await expect(settingsPage.inheritSwitch(AVIAO_ENV_ID)).toBeChecked();
 
         // Verificar a linha Avião na tabela
         const aviaoRow = page.getByRole('row', { name: 'Avião edit' });
@@ -741,14 +702,14 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
       '19. Verificar ambiente INDEPENDENTE (_Ambiente, envId=36799): permite configuração autônoma',
       async () => {
         // Navegar de volta para a lista de ambientes
-        await page.goto(SETTINGS_URL);
+        await page.goto(SETTINGS_PATH);
         await expect(settingsPage.listContainer).toBeVisible();
 
         // Verificar que o switch de herança do _Ambiente está OFF (unchecked = independente)
         await expect(settingsPage.inheritSwitch(36799)).not.toBeChecked();
 
         // Abrir edição do _Ambiente
-        await settingsPage.openEnvironmentEdit(36799);
+        await settingsPage.openEnvironmentEdit(ENV_ID);
         await page.waitForURL('**36799/edit_additional_organization_permissions**');
         await expect(page.getByRole('heading', { name: '_Ambiente' })).toBeVisible();
 

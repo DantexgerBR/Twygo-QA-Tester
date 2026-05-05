@@ -11,8 +11,11 @@ import { test, expect } from '../../../src/fixtures/exploratory-fixture';
 import * as allure from 'allure-js-commons';
 import { dismissCommonModals } from '../../../src/utils/modals';
 import { CreditosIaSettingsPage } from '../../../src/pages/CreditosIaSettingsPage';
+import { getOrgId } from '../../../src/utils/environment.js';
 
+const ORG_ID = getOrgId();
 const ENV_ID = 36799; // _Ambiente (independente)
+const SETTINGS_PATH = `/o/${ORG_ID}/ai_consumption_analysis?tab=settings`;
 
 test.describe('Bloquear uso por não possuírem a funcionalidade habilitada no contrato', () => {
   test('Bloquear quando não tem a funcionalidade "Agente de atendimento" habilitada no contrato', async ({ page }) => {
@@ -29,7 +32,7 @@ test.describe('Bloquear uso por não possuírem a funcionalidade habilitada no c
       .or(page.getByText('Agente de atendimento', { exact: true }))
       .first();
 
-    await page.goto('https://stage10.stage.twygoead.com/o/36602/ai_consumption_analysis?tab=settings');
+    await page.goto(SETTINGS_PATH);
     await dismissCommonModals(page);
     await expect(settingsPage.listContainer).toBeVisible();
 

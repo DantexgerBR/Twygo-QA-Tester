@@ -25,8 +25,11 @@ import * as allure from 'allure-js-commons';
 import { dismissCommonModals } from '../../../src/utils/modals';
 import { CreditosIaSettingsPage } from '../../../src/pages/CreditosIaSettingsPage';
 import { EnvironmentEditPage } from '../../../src/pages/EnvironmentEditPage';
+import { getOrgId } from '../../../src/utils/environment.js';
 
+const ORG_ID = getOrgId();
 const ENV_ID = 36799; // _Ambiente (independente)
+const SETTINGS_PATH = `/o/${ORG_ID}/ai_consumption_analysis?tab=settings`;
 
 async function persistOffThenReopen(
   page: Page,
@@ -66,7 +69,7 @@ test.describe.serial('Mensagem de aviso e saldo ao salvar configurações com a 
     const settingsPage = new CreditosIaSettingsPage(page);
     const editPage = new EnvironmentEditPage(page);
 
-    await page.goto('https://stage10.stage.twygoead.com/o/36602/ai_consumption_analysis?tab=settings');
+    await page.goto(SETTINGS_PATH);
     await dismissCommonModals(page);
     await expect(settingsPage.listContainer).toBeVisible();
 
@@ -135,7 +138,7 @@ test.describe.serial('Mensagem de aviso e saldo ao salvar configurações com a 
     const settingsPage = new CreditosIaSettingsPage(page);
     const editPage = new EnvironmentEditPage(page);
 
-    await page.goto('https://stage10.stage.twygoead.com/o/36602/ai_consumption_analysis?tab=settings');
+    await page.goto(SETTINGS_PATH);
     await dismissCommonModals(page);
     await expect(settingsPage.listContainer).toBeVisible();
 

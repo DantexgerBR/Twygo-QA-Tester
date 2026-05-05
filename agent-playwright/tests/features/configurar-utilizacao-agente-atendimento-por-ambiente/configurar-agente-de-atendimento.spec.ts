@@ -5,6 +5,11 @@ import { test, expect } from '../../../src/fixtures/exploratory-fixture.js';
 import * as allure from 'allure-js-commons';
 import { CreditosIaSettingsPage } from '../../../src/pages/CreditosIaSettingsPage.js';
 import { TOOLTIP_TEXTS } from '../../../src/utils/testIds.js';
+import { getOrgId } from '../../../src/utils/environment.js';
+
+const ORG_ID = getOrgId();
+const ENV_ID = 36799;
+const SETTINGS_PATH = `/o/${ORG_ID}/ai_consumption_analysis?tab=settings`;
 
 test.describe('Configurar a utilização do agente de atendimento por ambiente', () => {
   test('Configurar Agente de atendimento', async ({ page }) => {
@@ -23,7 +28,7 @@ test.describe('Configurar a utilização do agente de atendimento por ambiente',
 
     await allure.step('Pré-condição: abrir edição do _Ambiente (envId=36799)', async () => {
       // 1. Navegar para a página de configurações e localizar o ambiente _Ambiente
-      await page.goto('/o/36602/ai_consumption_analysis?tab=settings');
+      await page.goto(SETTINGS_PATH);
 
       // Fechar diálogo de pesquisa NPS se presente
       const npsCloseButton = page.getByRole('button', { name: 'Close' });
@@ -35,7 +40,7 @@ test.describe('Configurar a utilização do agente de atendimento por ambiente',
       await expect(page.getByText('_Ambiente')).toBeVisible();
 
       // Clicar no botão de editar correspondente ao _Ambiente
-      await settingsPage.openEnvironmentEdit(36799);
+      await settingsPage.openEnvironmentEdit(ENV_ID);
       await page.waitForURL('**/edit_additional_organization_permissions');
     });
 

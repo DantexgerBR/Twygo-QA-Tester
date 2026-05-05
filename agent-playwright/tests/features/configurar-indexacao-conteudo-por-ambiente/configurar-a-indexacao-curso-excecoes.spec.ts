@@ -5,11 +5,12 @@ import { test, expect } from '../../../src/fixtures/exploratory-fixture.js';
 import * as allure from 'allure-js-commons';
 import { CreditosIaSettingsPage } from '../../../src/pages/CreditosIaSettingsPage.js';
 import { EnvironmentEditPage } from '../../../src/pages/EnvironmentEditPage.js';
-import { LoginPage } from '../../../src/pages/LoginPage.js';
 import { INHERITED_EDIT_BLOCK_TOOLTIP, SYNC_ALERT_TEXT } from '../../../src/utils/testIds.js';
+import { getOrgId } from '../../../src/utils/environment.js';
 
-const BASE_URL = 'https://stage10.stage.twygoead.com';
-const SETTINGS_URL = `${BASE_URL}/o/36602/ai_consumption_analysis?tab=settings`;
+const ORG_ID = getOrgId();
+const ENV_ID = 36799;
+const SETTINGS_PATH = `/o/${ORG_ID}/ai_consumption_analysis?tab=settings`;
 
 // Texto do tooltip do campo Exceções confirmado via React fiber em 2026-04
 const EXCEPTIONS_TOOLTIP_TEXT =
@@ -25,26 +26,17 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
     // REVISAR: validações via chat IA do Agente de Atendimento e comportamento de backend fora do escopo UI
     await allure.tag('REVIEW_NEEDED');
 
-    const loginPage = new LoginPage(page);
     const settingsPage = new CreditosIaSettingsPage(page);
     const editPage = new EnvironmentEditPage(page);
 
-    // ─── PRÉ-CONDIÇÃO: Login SuperAdmin + perfil Administrador + abrir edição do _Ambiente ───
+    // ─── PRÉ-CONDIÇÃO: navegar para edit page (storageState global cobre auth) ───
     await allure.step(
-      'Pré-condição: Login SuperAdmin + perfil Administrador + abrir edição do _Ambiente (envId=36799)',
+      'Pré-condição: abrir edição do _Ambiente (envId=36799)',
       async () => {
-        // Navegar para a tela de login
-        await page.goto(`${BASE_URL}/users/login`);
-
-        // Preencher credenciais e submeter
-        await loginPage.login('evertongambeta@gmail.com', '123456');
-
-        // Navegar para a aba Configurações de Créditos de IA
-        await page.goto(SETTINGS_URL);
+        await page.goto(SETTINGS_PATH);
         await expect(settingsPage.listContainer).toBeVisible();
 
-        // Abrir edição do _Ambiente (envId=36799)
-        await settingsPage.openEnvironmentEdit(36799);
+        await settingsPage.openEnvironmentEdit(ENV_ID);
         await page.waitForURL('**36799/edit_additional_organization_permissions**');
 
         await expect(page.getByRole('heading', { name: '_Ambiente' })).toBeVisible();
@@ -168,7 +160,7 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
           // Reabrir para verificar persistência
           if (!page.url().includes('edit_additional_organization_permissions')) {
             await expect(settingsPage.listContainer).toBeVisible();
-            await settingsPage.openEnvironmentEdit(36799);
+            await settingsPage.openEnvironmentEdit(ENV_ID);
             await page.waitForURL('**36799/edit_additional_organization_permissions**');
           }
 
@@ -195,7 +187,7 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
       '3. Navegar para lista → verificar ambiente herdado (Avião, envId=36796) → asserir tooltip de bloqueio → abrir edição → verificar ausência de controles detalhados (modo herdado)',
       async () => {
         // Navegar para lista de configurações
-        await page.goto(SETTINGS_URL);
+        await page.goto(SETTINGS_PATH);
         await expect(settingsPage.listContainer).toBeVisible();
 
         // Verificar que o switch de herança do Avião está ON (checked = herdado)
@@ -211,7 +203,7 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
 
         // Abrir edição do ambiente Avião (36796) via URL direta
         await page.goto(
-          `${BASE_URL}/o/36602/ai_consumption_analysis/36796/edit_additional_organization_permissions`,
+          `/o/${ORG_ID}/ai_consumption_analysis/36796/edit_additional_organization_permissions`,
         );
         await page.waitForURL('**36796/edit_additional_organization_permissions**');
 
@@ -245,7 +237,7 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
       '4. Navegar para lista → confirmar _Ambiente (envId=36799) independente (inheritSwitch unchecked) → abrir edição → verificar controles completos incluindo campo Exceções',
       async () => {
         // Navegar para lista de configurações
-        await page.goto(SETTINGS_URL);
+        await page.goto(SETTINGS_PATH);
         await expect(settingsPage.listContainer).toBeVisible();
 
         // Verificar que o switch de herança do _Ambiente está OFF (unchecked = independente)
@@ -254,7 +246,7 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
         await expect(ambienteRow.locator('input[type="checkbox"]').nth(1)).not.toBeChecked();
 
         // Abrir edição do _Ambiente (envId=36799)
-        await settingsPage.openEnvironmentEdit(36799);
+        await settingsPage.openEnvironmentEdit(ENV_ID);
         await page.waitForURL('**36799/edit_additional_organization_permissions**');
 
         // Título deve exibir '_Ambiente'

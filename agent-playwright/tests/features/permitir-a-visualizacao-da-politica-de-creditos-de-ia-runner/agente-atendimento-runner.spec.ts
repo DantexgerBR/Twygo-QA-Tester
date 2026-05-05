@@ -4,6 +4,10 @@
 import { test, expect } from '../../../src/fixtures/exploratory-fixture';
 import * as allure from 'allure-js-commons';
 import { dismissCommonModals } from '../../../src/utils/modals';
+import { getOrgId } from '../../../src/utils/environment.js';
+
+const ORG_ID = getOrgId();
+const POLICY_PATH = `/o/${ORG_ID}/ai_consumption_analysis?tab=policy`;
 
 test.describe('Permitir a visualização da política de créditos de IA + Runner', () => {
   test('Política de créditos de IA - agente de atendimento + RUNNER', async ({ page }) => {
@@ -14,7 +18,7 @@ test.describe('Permitir a visualização da política de créditos de IA + Runne
     await allure.severity('critical');
 
     // 2. NAVEGAÇÃO — storageState já carregado pelo global-setup; sem login manual
-    await page.goto('https://stage10.stage.twygoead.com/o/36602/ai_consumption_analysis?tab=policy');
+    await page.goto(POLICY_PATH);
     await dismissCommonModals(page);
 
     // 3. ATIVAR TAB — o tab "Extrato" é selecionado por padrão mesmo com ?tab=policy

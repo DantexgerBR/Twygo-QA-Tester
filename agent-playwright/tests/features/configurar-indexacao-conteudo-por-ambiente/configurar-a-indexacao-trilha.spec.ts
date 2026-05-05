@@ -5,12 +5,13 @@ import { test, expect } from '../../../src/fixtures/exploratory-fixture.js';
 import * as allure from 'allure-js-commons';
 import { CreditosIaSettingsPage } from '../../../src/pages/CreditosIaSettingsPage.js';
 import { EnvironmentEditPage } from '../../../src/pages/EnvironmentEditPage.js';
-import { LoginPage } from '../../../src/pages/LoginPage.js';
 import { INHERITED_EDIT_BLOCK_TOOLTIP, SYNC_ALERT_TEXT } from '../../../src/utils/testIds.js';
+import { getOrgId } from '../../../src/utils/environment.js';
 
-const BASE_URL = 'https://stage10.stage.twygoead.com';
-const ENV_EDIT_URL = `${BASE_URL}/o/36602/ai_consumption_analysis/36799/edit_additional_organization_permissions`;
-const SETTINGS_URL = `${BASE_URL}/o/36602/ai_consumption_analysis?tab=settings`;
+const ORG_ID = getOrgId();
+const ENV_ID = 36799;
+const SETTINGS_PATH = `/o/${ORG_ID}/ai_consumption_analysis?tab=settings`;
+const ENV_EDIT_PATH = `/o/${ORG_ID}/ai_consumption_analysis/${ENV_ID}/edit_additional_organization_permissions`;
 
 test.describe('Configurar a utilização do indexação de conteúdo por ambiente', () => {
   test('Configurar a indexação - TRILHA', async ({ page }) => {
@@ -22,26 +23,17 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
     // REVISAR: validações via chat IA do aluno são fora do escopo desta suite UI
     await allure.tag('REVIEW_NEEDED');
 
-    const loginPage = new LoginPage(page);
     const settingsPage = new CreditosIaSettingsPage(page);
     const editPage = new EnvironmentEditPage(page);
 
-    // ─── PRÉ-CONDIÇÃO: Login + perfil Administrador + navegar para edit page ───
+    // ─── PRÉ-CONDIÇÃO: navegar para edit page (storageState global cobre auth) ───
     await allure.step(
-      'Pré-condição: Login SuperAdmin + perfil Administrador + abrir edição do _Ambiente (envId=36799)',
+      'Pré-condição: abrir edição do _Ambiente (envId=36799)',
       async () => {
-        // Navegar para a tela de login
-        await page.goto(`${BASE_URL}/users/login`);
-
-        // Preencher credenciais e submeter
-        await loginPage.login('evertongambeta@gmail.com', '123456');
-
-        // Navegar para a aba Configurações de Créditos de IA
-        await page.goto(SETTINGS_URL);
+        await page.goto(SETTINGS_PATH);
         await expect(settingsPage.listContainer).toBeVisible();
 
-        // Abrir edição do _Ambiente (envId=36799)
-        await settingsPage.openEnvironmentEdit(36799);
+        await settingsPage.openEnvironmentEdit(ENV_ID);
         await page.waitForURL('**edit_additional_organization_permissions**');
 
         // Verificar pré-condições
@@ -87,7 +79,7 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
           }
 
           // Verificar persistência: recarregar a página e confirmar que Trilha ainda está checked
-          await page.goto(ENV_EDIT_URL);
+          await page.goto(ENV_EDIT_PATH);
           await page.waitForURL('**edit_additional_organization_permissions**');
 
           const syncBlockingAfter = await editPage.isSyncBlocking();
@@ -109,7 +101,7 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
       '2. Acessar ambiente herdado (Avião, envId=36796): herança bloqueia edição independente + tooltip visível',
       async () => {
         // Navegar para a lista de ambientes
-        await page.goto(SETTINGS_URL);
+        await page.goto(SETTINGS_PATH);
         await expect(settingsPage.listContainer).toBeVisible();
 
         // Verificar que o switch de herança do Avião está ON (checked)
@@ -136,7 +128,7 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
         await expect(settingsPage.inheritSwitch(36799)).not.toBeChecked();
 
         // Clicar no botão de edição do _Ambiente — verificar que navega corretamente
-        await settingsPage.openEnvironmentEdit(36799);
+        await settingsPage.openEnvironmentEdit(ENV_ID);
         await page.waitForURL(
           '**/o/36602/ai_consumption_analysis/36799/edit_additional_organization_permissions',
         );
