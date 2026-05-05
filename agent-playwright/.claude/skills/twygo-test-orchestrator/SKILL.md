@@ -84,6 +84,23 @@ Para cada testcase planejado:
    - Lista de Page Objects disponíveis (e quais métodos eles expõem).
    - Acesso ao Playwright MCP para validar seletores ao vivo.
    - Convenções do CLAUDE.md (importar de `exploratory-fixture`).
+   - **Anti-patterns proibidos no output (CLAUDE.md §7.6)** — comunicar
+     literalmente ao generator antes da geração:
+     - **A. Não fazer login no spec.** `globalSetup` já cobre via
+       `storageState`. Não chamar `loginPage.login()` nem `page.goto('/users/login')`.
+       Excetua-se apenas specs em `tests/auth/` (que testam a tela de login).
+     - **B. Não hardcodar URL/orgId/credenciais.** Importar de
+       `src/utils/environment.ts` (`getBaseUrl()`, `getOrgId()`,
+       `getEnvByName('<env>')`, `getEditContractPath()`). Rotas livres de env
+       (`/users/login`, `/play`) podem ficar literais.
+     - **C. Não inline helpers de UI no `test()`.** Lógica com seletores ou
+       fluxos UI multi-step vai como método na Page Object correspondente
+       (regra dura #3 de POM). Se ambígua, criar método nomeado conforme a
+       intenção e referenciar no spec via `pageObject.metodo()`.
+     - **D. Comentários só WHY, nunca WHAT.** Allure `step()` já narra o
+       fluxo. Comentário no código serve só pra capturar invariante não-óbvia
+       (sync alert que força `force:true`, tabela compartilhada que exige
+       revert, prosa ambígua marcada `// REVISAR`).
 2. Annotations Allure obrigatórias no início de cada `test()`:
    ```ts
    await allure.epic(`Twygo - ${projectName}`);                    // do projectName em config

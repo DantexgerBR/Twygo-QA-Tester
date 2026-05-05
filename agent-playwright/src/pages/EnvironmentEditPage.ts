@@ -1,4 +1,5 @@
 import type { Page, Locator } from '@playwright/test';
+import { expect } from '@playwright/test';
 import { BasePage } from './BasePage.js';
 import { TEST_IDS } from '../utils/testIds.js';
 
@@ -114,5 +115,36 @@ export class EnvironmentEditPage extends BasePage {
    */
   async isSyncBlocking(): Promise<boolean> {
     return await this.syncAlert.isVisible().catch(() => false);
+  }
+
+  /**
+   * Marca exclusivamente o checkbox `target`, desmarca os `others` que estiverem
+   * checados, salva e confirma o modal RN37 se aparecer. Garante toggle mestre
+   * habilitado antes. `force:true` é necessário porque o container pode ficar
+   * `aria-disabled` quando o sync alert está visível — só chame quando
+   * `!isSyncBlocking()`.
+   */
+  async markOnlyOneEligibleAndSave(target: Locator, others: Locator[]): Promise<void> {
+    if (!(await this.contentIndexingMasterInput.isChecked())) {
+      await this.contentIndexingMasterSwitch.click({ force: true });
+      await expect(this.contentIndexingMasterInput).toBeChecked();
+    }
+    for (const other of others) {
+      try {
+        if (await other.isChecked()) {
+          await other.click({ force: true });
+        }
+      } catch {
+        // Outro pode não estar visível em ambientes herdados; segue.
+      }
+    }
+    if (!(await target.isChecked())) {
+      await target.click({ force: true });
+    }
+    await this.saveButton.click();
+    if (await this.creditsModal.isVisible({ timeout: 5000 }).catch(() => false)) {
+      await this.creditsModalConfirm.click();
+      await expect(this.creditsModal).toBeHidden();
+    }
   }
 }

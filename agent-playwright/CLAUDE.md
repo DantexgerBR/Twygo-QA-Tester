@@ -252,6 +252,21 @@ Erros comuns que custaram horas em sessões anteriores. Generator/healer/planner
 ### Spec test() title = testcase name do XML
 - A convenção é: `test.describe('<testsuite>', () => { test('<testcase>', ...) })`. O reporter tira o nome da testsuite do `describe` e o nome do testcase do `test()`.
 
+### Super Admin (`/admin`) — tabela de preços e contratos
+- **Pré-requisito**: usuário do `environment.json` precisa estar logado E em perfil "Administrador". O `globalSetup` cobre o login; o perfil já vem do user evertongambeta@gmail.com / eduardo.schmidt@twygo.com.
+- **Não trocar perfil pela UI** — basta acessar a rota `/admin` direto. Use `SuperAdminPage` (`src/pages/SuperAdminPage.ts`).
+- **Caminhos canônicos** (validados em 2026-05-05 com o usuário):
+  | Operação | Rota direta | Helper |
+  |---|---|---|
+  | Entrada Super Admin | `/admin` | `superAdminPage.openSuperAdmin()` |
+  | Tabela de preços (todas) | `/admin/subscription_plans` | `superAdminPage.openSubscriptionPlans()` — na lista, identificar tabela com coluna "Ativo" = Sim e clicar Editar |
+  | Editar contrato vigente da org | `/admin/edit_sys_subscription_settings/{orgId}` | `superAdminPage.openEditContract(orgId)` |
+- **orgIds em `environment.json`**:
+  - `staging.orgId = 36602` (`stage10.stage.twygoead.com`)
+  - `staging-without-credits.orgId = 36912` (`eduapi.stage.twygoead.com`)
+- **Tabela de preços é COMPARTILHADA**: alterar a tabela ativa afeta TODAS as organizações daquele banco. Se um teste muda a tabela ativa, faça o **revert ao final** (idealmente via `test.afterEach`/`test.afterAll`). Tests que apenas leem (asserções) não precisam de revert.
+- Padrões de prosa Super Admin estão em `.claude/prose-patterns.md` seção 3.5 — generator deve consultar antes de marcar `test.fixme` por "requer Super Admin".
+
 ### Cenários "sem saldo de créditos de IA" (organização zerada/negativa)
 - Ambiente principal `staging` (`stage10.stage.twygoead.com`) tem créditos sobrando — não dá pra zerar sem afetar outras suítes.
 - Para testes de bloqueio de funcionalidades (RN: organização sem saldo) use o ambiente secundário **`staging-without-credits`** (`eduapi.stage.twygoead.com`, login `eduardo.schmidt@twygo.com`). Já está em `config/environment.json`.
@@ -259,9 +274,72 @@ Erros comuns que custaram horas em sessões anteriores. Generator/healer/planner
 - Specs que precisam dele importam o caminho e plugam via `test.use`:
   ```ts
   import { SECONDARY_STORAGE_PATH } from '../../setup/global-setup.js';
-  test.use({ storageState: SECONDARY_STORAGE_PATH, baseURL: 'https://eduapi.stage.twygoead.com/' });
+  import { getEnvByName } from '../../../src/utils/environment.js';
+  test.use({
+    storageState: SECONDARY_STORAGE_PATH,
+    baseURL: getEnvByName('staging-without-credits').baseUrl,
+  });
   ```
 - Não invente outras organizações pra "esvaziar saldo" — sempre use o env secundário convencionado.
+
+---
+
+## 7.6. Anti-patterns do output do generator (proibidos em specs gerados)
+
+Estes 4 anti-patterns foram observados em specs gerados anteriormente e
+violam regras do próprio CLAUDE.md. O `twygo-test-orchestrator` deve passá-los
+explicitamente ao `playwright-test-generator` antes de cada geração (ver
+SKILL.md do orchestrator, Etapa 4). Healer deve recusar correções que
+introduzam qualquer um deles.
+
+### A. NUNCA fazer login no spec
+- ❌ `await page.goto('/users/login'); await loginPage.login(email, password);`
+- ✅ Não fazer nada — `tests/setup/global-setup.ts` já gravou storageState e
+  `playwright.config.ts` consome via `use.storageState`.
+- **Por quê**: duplica trabalho do globalSetup, vaza credenciais em texto
+  plano no git (regra dura #4), e quebra com refresh do storageState (TTL
+  30min — global-setup re-loga sozinho).
+- **Exceção**: specs em `tests/auth/` que testam a tela de login em si
+  declaram `test.use({ storageState: { cookies: [], origins: [] } })`.
+
+### B. NUNCA hardcodar URL/orgId/credenciais
+- ❌ `const BASE_URL = 'https://stage10.stage.twygoead.com';`
+- ❌ `await page.goto('/o/36602/ai_consumption_analysis?tab=settings');`
+- ✅ Importar de [src/utils/environment.ts](src/utils/environment.ts):
+  ```ts
+  import { getBaseUrl, getOrgId } from '../../../src/utils/environment.js';
+  await page.goto(`/o/${getOrgId()}/ai_consumption_analysis?tab=settings`);
+  ```
+- **Por quê**: specs hardcoded só rodam contra UM ambiente; quebram quando
+  você quer rodar em `staging-without-credits` ou produção. Forçar o
+  helper centraliza a fonte de verdade em `config/environment.json`.
+- **Exceção**: rotas que não dependem de env (`/users/login`, `/play`) podem
+  ficar literais — não são acopladas a host nem a org.
+
+### C. NUNCA inline helpers de UI no spec
+- ❌ `async function marcarApenasCheckboxESalvar(alvo, outros) { ... }` dentro do `test()`
+- ✅ Adicionar método na Page Object correspondente:
+  ```ts
+  // EnvironmentEditPage.ts
+  async marcarSomenteCheckbox(target: 'curso' | 'pacote' | 'trilha'): Promise<void> { ... }
+  ```
+- **Por quê**: viola regra dura #3 ("Specs em `tests/features/` não contêm
+  seletores"). Helper inline com seletores polui o spec, dificulta reuso e
+  quebra coesão do POM. Se a lógica é específica de um único teste, ainda
+  assim deve viver no Page Object — apenas como método nomeado conforme a
+  intenção do teste.
+
+### D. Comentários no spec só justificam WHY, nunca explicam WHAT
+- ❌ `// Habilitar toggle mestre se não estiver`
+- ❌ `// Marcar o alvo se ainda não estiver marcado`
+- ❌ `// Preencher credenciais e submeter`
+- ✅ `// REVISAR: prosa ambígua "<texto original>"` (ver §5)
+- ✅ `// Use force:true porque o sync alert deixa container aria-disabled (§7.5)`
+- ✅ `// Tabela compartilhada — revert no afterAll obrigatório (§7.5)`
+- **Por quê**: comentário WHAT (o que o código faz) duplica o que o código já
+  diz com nome de método/variável. Comentários WHY (por que assim) capturam
+  invariantes não-óbvias que somem se removidos. Allure step já narra o
+  fluxo — comentário extra é ruído.
 
 ---
 
