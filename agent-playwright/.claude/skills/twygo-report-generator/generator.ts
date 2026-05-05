@@ -2000,7 +2000,14 @@ async function main(): Promise<void> {
   const reportDir = join(reportsRoot, folderName);
   ensureDir(reportDir);
 
-  const byTestsuite = groupByTestsuite(tests);
+  const xmlOrder = xmlSuiteOrder(parsedAnalysis);
+  const byTestsuite = reorderByXml(groupByTestsuite(tests), xmlOrder);
+  // Mantém apenas testes em suítes do XML para o resumo/failed list (defesa
+  // em profundidade contra spec hand-written ou seed escapando do testIgnore).
+  if (xmlOrder.length > 0) {
+    const allowed = new Set(xmlOrder.map((n) => n.toLowerCase()));
+    tests = tests.filter((t) => allowed.has(t.testsuite.toLowerCase()));
+  }
   const failedTests = tests.filter((t) => t.status !== 'passed' && t.status !== 'skipped');
 
   const filteredExploratory = exploratoryReport
