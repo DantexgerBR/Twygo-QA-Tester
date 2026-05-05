@@ -1,0 +1,20 @@
+# Agente DB — dependências
+# Stack alinhado ao migration-validator para reuso direto de padrões.
+
+# Core
+SQLAlchemy>=2.0,<3.0
+PyMySQL>=1.1
+cryptography>=42.0          # exigido pelo PyMySQL para auth caching_sha2_password
+
+# Config & validação
+pydantic>=2.0,<3.0
+python-dotenv>=1.0,<2.0
+PyYAML>=6.0
+
+# Templates / CLI
+Jinja2>=3.1
+rich>=13.3
+
+# Testes do próprio agente
+pytest>=8.0
+pytest-cov>=5.0

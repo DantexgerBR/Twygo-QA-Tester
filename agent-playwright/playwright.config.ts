@@ -57,13 +57,23 @@ const browserProjects = projectConfig.browsers.map((browser) => {
   };
 });
 
+const STORAGE_PATH = resolve(__dirname, 'outputs/.auth/storage.json');
+
 export default defineConfig({
   testDir: './tests',
-  fullyParallel: false,
+  // Specs hand-written / utilitários NÃO entram em execuções de feature/regressivo.
+  // - auth/**: spec de referência da LoginPage (storageState global cobre login real).
+  // - seed.spec.ts: seed do `playwright-test-generator` (não é caso de teste).
+  // Smoke (`tests/setup/smoke.spec.ts`) NÃO entra aqui — é invocado pelo
+  // orchestrator com path explícito na fase 1.5 e ainda assim é filtrado fora
+  // do regressivo via `--grep-invert Smoke`.
+  testIgnore: ['**/auth/**', '**/seed.spec.ts'],
+  fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: 1,
+  workers: 4,
   timeout: 120_000,
+  globalSetup: './tests/setup/global-setup.ts',
   reporter: process.env.REGRESSION === 'true'
     ? [
         ['list'],
@@ -93,6 +103,10 @@ export default defineConfig({
     locale: 'pt-BR',
     timezoneId: 'America/Sao_Paulo',
     testIdAttribute: 'data-test-id',
+    // Reusa sessão autenticada gravada por globalSetup. Se ausente,
+    // Playwright ignora silenciosamente — specs antigos com loginPage.login()
+    // continuam funcionando.
+    storageState: STORAGE_PATH,
   },
   projects: browserProjects,
   expect: {

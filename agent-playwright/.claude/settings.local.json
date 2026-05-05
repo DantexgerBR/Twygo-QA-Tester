@@ -14,7 +14,17 @@
       "mcp__playwright-test__browser_navigate_back",
       "mcp__playwright-test__browser_take_screenshot",
       "mcp__playwright-test__planner_save_plan",
-      "mcp__playwright-test__browser_network_requests"
+      "mcp__playwright-test__browser_network_requests",
+      "Edit(/.claude/skills/twygo-recon/**)",
+      "mcp__playwright-test__generator_setup_page",
+      "mcp__playwright-test__browser_verify_element_visible",
+      "mcp__playwright-test__browser_verify_text_visible",
+      "mcp__playwright-test__browser_verify_value",
+      "mcp__playwright-test__browser_hover",
+      "mcp__playwright-test__browser_wait_for",
+      "mcp__playwright-test__generator_read_log",
+      "mcp__playwright-test__generator_write_test",
+      "Read(//c/Users/edu-s/AppData/Local/Temp/claude/c--Claude-AgentesQA-agent-playwright/2e3d3686-e25c-4ade-b816-3328156ea729/tasks/**)"
     ]
   }
 }

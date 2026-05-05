@@ -113,13 +113,15 @@ Dois modos:
 | **Per-suite** | Dia-a-dia: testar 1 bloco entregue por dev | `outputs/reports/{slug}_{ts}/` |
 | **Regressivo** | Fim de projeto / GitHub Actions | `outputs/reports/regression_{ts}/` + Allure em GH Pages |
 
-7 fases canônicas:
+9 fases canônicas (3 novas adicionadas em 2026-04 após diagnóstico de lentidão):
 
 | Fase | Skill / agente | O que faz |
 |---|---|---|
 | 1. Init | — | Lê configs, valida XML existente |
+| 1.5. **Pre-flight** *(novo)* | orquestrador | Valida configs + baseURL responde + storageState válido. Falha cedo, falha barato — antes de gastar planners |
 | 2. Parse | `twygo-xml-parser` | XML TestLink → `outputs/test-analysis.parsed.json` |
-| 3. Plan | **planner** (plugin Playwright) | Para cada testcase, plano técnico baseado na prosa |
+| 2.5. **Recon** *(novo, opt-in)* | `twygo-recon` | Login + navegação na área da testsuite + dump de test-ids/labels em `inputs/recon-{slug}.md`. Planners consomem isso e pulam exploração ao vivo |
+| 3. Plan | **planner** (plugin Playwright) | Para cada testcase, plano técnico baseado na prosa + recon |
 | 4. Generate | **generator** (plugin Playwright) + Playwright MCP | Spec `.spec.ts` + Page Objects + annotations Allure |
 | 5. Execute | Playwright (com `--grep` per-suite ou tudo regressivo) | Roda + grava findings exploratórios via fixture |
 | 5.5. Validate | `twygo-exploratory-validator` | Agrega findings em `exploratory-findings.json` |
@@ -212,6 +214,54 @@ Definidos por `npx playwright init-agents --loop claude` (oficial Microsoft). S�
 10. **Não desabilitar a fixture exploratória** em specs — para desligar, use `exploratory.enabled: false` em `project.config.json`.
 11. **Healer só corrige seletor / timing / asserção** — nunca altera intenção do teste.
 12. **Não inventar mapeamento de prosa** — se não bate com `.claude/prose-patterns.md`, marcar `// REVISAR` e seguir, **não chutar**.
+
+---
+
+## 7.5. Convenções específicas Twygo (gotchas descobertos)
+
+Erros comuns que custaram horas em sessões anteriores. Generator/healer/planner devem ler antes de gerar código:
+
+### Auth e navegação
+- **Login URL real**: `/users/login` (não `/login`).
+- **Labels do formulário de login**: `Login` (email) e `Senha`. Botão `Entrar`.
+  - `getByLabel(/e-?mail/i)` é regex amplo demais — bate em checkbox `send_copy` da tela. Use `getByRole('textbox', { name: 'Login' })`.
+- **Pós-login redireciona pra `/play?menu_id=play`**, não `/dashboard_students`.
+- **Não precisa "trocar perfil Administrador" via UI** — basta navegar direto pra `/o/{orgId}/...` que o app abre o contexto admin.
+- **storageState global**: `tests/setup/global-setup.ts` faz login 1× e salva `outputs/.auth/storage.json`. Specs novos NÃO precisam fazer login — config já tem `use.storageState`. Specs antigos com `loginPage.login()` ainda funcionam (idempotente).
+
+### Imports e bibliotecas
+- **Allure facade** vem de `allure-js-commons`, NÃO `allure-playwright`:
+  ```ts
+  import * as allure from 'allure-js-commons';  // ← certo
+  // import * as allure from 'allure-playwright';  // ← errado, sem epic/feature/story
+  ```
+- **`Locator` type** vem de `@playwright/test`, NÃO da fixture:
+  ```ts
+  import type { Locator } from '@playwright/test';                                    // ← certo
+  // import { test, expect, type Locator } from '../../../src/fixtures/...';          // ← errado
+  ```
+
+### Test-IDs e seletores
+- **Atributo `data-test-id` (com hífen)**, não `data-testid` padrão Playwright. Já configurado em `playwright.config.ts` via `use.testIdAttribute`.
+- **Sync alert bloqueia o toggle Indexação**: quando `[role="alert"][data-status="warning"]` está visível, o container fica `aria-disabled` e clicks normais falham. Use `.click({ force: true })` OU verifique `editPage.isSyncBlocking()` e branch.
+- **Test-IDs aparecem só com toggle pai habilitado**: sub-fields de Indexação (Período, datas, Tipo, Situação, Exceções) só renderizam quando o toggle mestre está ON.
+
+### Modal RN37 ("Processo de indexação de conteúdo")
+- Aparece apenas após **clicar Salvar com mudança real**. Se nada mudou, modal não dispara — não force `expect(creditsModal).toBeVisible()` sem mudar estado antes.
+
+### Spec test() title = testcase name do XML
+- A convenção é: `test.describe('<testsuite>', () => { test('<testcase>', ...) })`. O reporter tira o nome da testsuite do `describe` e o nome do testcase do `test()`.
+
+### Cenários "sem saldo de créditos de IA" (organização zerada/negativa)
+- Ambiente principal `staging` (`stage10.stage.twygoead.com`) tem créditos sobrando — não dá pra zerar sem afetar outras suítes.
+- Para testes de bloqueio de funcionalidades (RN: organização sem saldo) use o ambiente secundário **`staging-without-credits`** (`eduapi.stage.twygoead.com`, login `eduardo.schmidt@twygo.com`). Já está em `config/environment.json`.
+- `globalSetup` detecta automaticamente qualquer chave terminando em `-without-credits` e gera storage adicional em `outputs/.auth/storage-without-credits.json`.
+- Specs que precisam dele importam o caminho e plugam via `test.use`:
+  ```ts
+  import { SECONDARY_STORAGE_PATH } from '../../setup/global-setup.js';
+  test.use({ storageState: SECONDARY_STORAGE_PATH, baseURL: 'https://eduapi.stage.twygoead.com/' });
+  ```
+- Não invente outras organizações pra "esvaziar saldo" — sempre use o env secundário convencionado.
 
 ---
 

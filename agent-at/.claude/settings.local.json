@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Claude/AgentesQA/agent-playwright/.claude/skills/**)",
+      "Read(//c/Claude/AgentesQA/agent-playwright/**)",
+      "Edit(/.claude/skills/twygo-qa-conventions/**)",
+      "Edit(/.claude/skills/analyze-test/**)",
+      "Bash(python -c ' *)",
+      "Bash(where python3 *)",
+      "Bash(python -m pip install --user openpyxl)",
+      "Bash(\"C:/Python314/python.exe\" -m ensurepip --upgrade --user)",
+      "Bash(\"C:/Python314/python.exe\" -m pip install --upgrade --force-reinstall pip)",
+      "Read(//c/Claude/AgentesQA/**)",
+      "Bash(git show *)",
+      "Read(//tmp/**)",
+      "Bash(mkdir -p tmp)",
+      "Bash(python output/generate_xmind.py)"
+    ],
+    "additionalDirectories": [
+      "c:\\Claude\\AgentesQA\\agent-at\\output"
+    ]
+  }
+}

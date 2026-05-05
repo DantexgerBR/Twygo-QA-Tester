@@ -1203,7 +1203,8 @@ A funcionalidade também deve ser considerada na tabela de consumo aproximado da
 			</summary>
 			<preconditions>Acesso SuperAdmin - Contrato
 Estar com a opção de "Agente de atendimento" habilitada no contrato vigente
-Estar com a feature flag "analise_creditos_ia_beta_test" habilitada no ambiente</preconditions>
+Estar com a feature flag "analise_creditos_ia_beta_test" habilitada no ambiente
+Validar se já existe indexação realizada, se ja estiver indexação não é necessário executar caso de teste</preconditions>
 			<execution_type>1</execution_type>
 			<importance>3</importance>
 			<steps>

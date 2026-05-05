@@ -13,22 +13,31 @@ Versão: 01 (criada 23.03.2026, concluída 06.04.2026 por Alexandre)
 - **Novos componentes**: Listagem list-control, tela de criação com abas "Identificação" e "Layouts", modais (renomear, adicionar aba), drawers (widgets disponíveis, configurações do widget), barras de ferramentas (topo da aba, rodapé de ações)
 - **Dispositivos**: Edição apenas Desktop; visualização disponível Desktop / Tablet (768) / Mobile (360)
 
-## 2. Suítes de Teste (propostas — sem planilha de quebra de atividades)
+## 2. Suítes de Teste (extraídas da planilha de quebra de atividades — aba `dev-qa`, atividades do tipo "Execução de testes")
 
-| # | Título | Descrição |
-|---|--------|-----------|
-| 1 | Feature flag e exibição do módulo de Painéis | Valida exibição/ocultação do módulo conforme feature flag, renomeações de menu e breadcrumb (R1) |
-| 2 | Listagem de painéis | Valida componente list-control, colunas, visualizações lista/cards, switch ativo, bloqueios (R2) |
-| 3 | Filtros e pesquisa de painéis | Valida filtros padrão, filtros por coluna e pesquisa (R3) |
-| 4 | Duplicação de painéis | Valida cópia de abas/widgets/configurações e padrão de nomenclatura (R4) |
-| 5 | Criação de painel - aba Identificação | Valida campos Nome e Descrição na tela de criação/edição (R5) |
-| 6 | Gerenciamento de abas do painel | Valida criação, renomeação, exclusão, regras de aba única e modais (R6) |
-| 7 | Importação de abas de outro painel | Valida seleção painel/aba origem, preview, cópia de widgets e toast (R7) |
-| 8 | Visualização e interação com o layout | Valida barra de ferramentas, controles de visualização, switch reorganizar, estado vazio e ações Cancelar/Salvar layout (R8) |
-| 9 | Adição de widgets ao layout | Valida drawer, filtros, categorias, listagem e adição de widgets (R9) |
-| 10 | Edição e exclusão de widgets | Valida drawer de configurações, switches, campos e ações (R10) |
-| 11 | Modo de uso - Painéis do usuário | Valida modelo de página, campo Espaço, visualização aluno e bloqueios (R11, R15) |
-| 12 | Banco histórico e Logs | Valida rotina de exclusão histórica e registro de logs CRUD (R13, R14) |
+| # | Título | RNs cobertos | Origem (planilha) |
+|---|--------|--------------|--------------------|
+| 1 | Listagem de painéis | R1 (1-4), R2 (6,7,9,10,11,13) | QA 2.1 - Listagem |
+| 2 | Ativar / Inativar painel | R2 (12, 12.1), R15 (93) | QA 2.2 - Ativar / Inativar |
+| 3 | Compartilhamento de painéis | R2 (14, 15) | QA 2.3 - Compartilhamento |
+| 4 | Pesquisa e Filtros | R2 (8), R3 (16-18) | QA 2.4 - Pesquisa e Filtros |
+| 5 | Adicionar/editar aba | R5 (21-23), R6 (25-41) | QA 3.1 - Adicionar/editar aba |
+| 6 | Layout das abas | R8 (54-65.2) | QA 3.2 - Layout das abas |
+| 7 | Adicionar widgets | R9 (66-83.1) | QA 3.3 - Adicionar widgets |
+| 8 | Editar/Excluir widgets | R10 (84-87) | QA 3.4 - Editar/Excluir widgets |
+| 9 | Duplicar painéis | R4 (19, 20) | QA 4.1 - Duplicar painéis |
+| 10 | Importar abas | R7 (42-53) | QA 5.1 - Importar abas |
+| 11 | Modo de uso - Painéis do usuário | R11 (88-89.2) | QA 6.1 - Modo de uso > Painéis do usuário |
+| 12 | Dashboard - Visão do aluno | — | QA 6.2 - Dashboard - Visão do aluno |
+| 13 | Mobile | — | QA 6.3 - Mobile |
+| 14 | Worker - Migração de painéis | — | QA 7.1 - [Workers] Criar worker para a migração dos painéis |
+| 15 | Worker - Reversão | — | QA 7.2 - [Workers] Criar worker de reversão |
+| 16 | Beta / Launch | — | QA 8.1 - Beta / Launch |
+| 17 | Banco histórico | R13 (91) | QA 9.1 - Banco histórico |
+| 18 | Logs | R14 (92) | QA 10.1 - Logs |
+| 19 | Ambientes adicionais | — | QA 11.1 - Ambientes adicionais |
+| 20 | Feature flag | — | QA 11.2 - Feature flag |
+| 21 | Trial | — | QA 11.3 - Trial |
 
 ## 3. Regras de Negócio
 

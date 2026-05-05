@@ -5,6 +5,26 @@
       "email": "evertongambeta@gmail.com",
       "password": "123456"
     },
-    "timeout": 30000
+    "timeout": 30000,
+    "orgId": "36602",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/36602"
+    }
+  },
+  "staging-without-credits": {
+    "baseUrl": "https://eduapi.stage.twygoead.com/",
+    "credentials": {
+      "email": "eduardo.schmidt@twygo.com",
+      "password": "123456"
+    },
+    "timeout": 30000,
+    "orgId": "36912",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/36912"
+    }
   }
 }

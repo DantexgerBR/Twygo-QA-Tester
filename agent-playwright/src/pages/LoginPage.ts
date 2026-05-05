@@ -17,7 +17,17 @@ export class LoginPage extends BasePage {
     this.errorAlert = page.getByRole('alert');
   }
 
+  /**
+   * Login idempotente: se a página atual NÃO está em /users/login (já
+   * autenticada via storageState do globalSetup), retorna sem fazer nada.
+   * Isso permite que specs antigos chamem `loginPage.login(...)` sem custo
+   * quando o storageState global já cobriu autenticação.
+   */
   async login(email: string, password: string): Promise<void> {
+    if (!this.page.url().includes('/users/login')) {
+      // Já autenticado — provavelmente via storageState global
+      return;
+    }
     await this.emailInput.fill(email);
     await this.passwordInput.fill(password);
     await Promise.all([

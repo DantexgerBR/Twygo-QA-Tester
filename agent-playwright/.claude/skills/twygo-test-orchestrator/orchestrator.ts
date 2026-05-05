@@ -19,6 +19,8 @@ type Args = {
   noExplore: boolean;
   noReport: boolean;
   list: boolean;
+  noPreflight: boolean;
+  smokeOnly: boolean;
 };
 
 function parseFlags(): Args {
@@ -30,6 +32,8 @@ function parseFlags(): Args {
       'no-explore': { type: 'boolean', default: false },
       'no-report': { type: 'boolean', default: false },
       list: { type: 'boolean', default: false },
+      'no-preflight': { type: 'boolean', default: false },
+      'smoke-only': { type: 'boolean', default: false },
     },
     allowPositionals: true,
     strict: false,
@@ -41,6 +45,8 @@ function parseFlags(): Args {
     noExplore: Boolean(values['no-explore']),
     noReport: Boolean(values['no-report']),
     list: Boolean(values.list),
+    noPreflight: Boolean(values['no-preflight']),
+    smokeOnly: Boolean(values['smoke-only']),
   };
 }
 
@@ -89,6 +95,15 @@ function buildGrep(suites: ParsedTestSuite[]): string | null {
   return escaped.length === 1 ? escaped[0] : `(${escaped.join('|')})`;
 }
 
+function quoteArg(a: string): string {
+  // Windows + shell:true concatena args sem quotar — args com espaços/acentos
+  // viram tokens distintos no cmd.exe. Sempre quotar com aspas duplas.
+  if (process.platform !== 'win32') return a;
+  if (a === '') return '""';
+  if (!/[\s"&|<>^()]/.test(a)) return a;
+  return `"${a.replace(/"/g, '\\"')}"`;
+}
+
 function runShell(
   cmd: string,
   args: string[],
@@ -96,9 +111,11 @@ function runShell(
 ): Promise<number> {
   return new Promise((resolvePromise) => {
     log.debug(`$ ${cmd} ${args.join(' ')}`);
-    const child = spawn(cmd, args, {
+    const useShell = process.platform === 'win32';
+    const finalArgs = useShell ? args.map(quoteArg) : args;
+    const child = spawn(cmd, finalArgs, {
       stdio: 'inherit',
-      shell: process.platform === 'win32',
+      shell: useShell,
       env: { ...process.env, ...env },
     });
     child.on('close', (code) => resolvePromise(code ?? 1));
@@ -112,9 +129,36 @@ async function runPlaywright(
   const env: Record<string, string> = {};
   if (regression) env.REGRESSION = 'true';
   const grep = regression ? null : buildGrep(suites);
-  const args = ['playwright', 'test'];
+  const args = ['playwright', 'test', '--grep-invert', 'Smoke'];
   if (grep) args.push('--grep', grep);
   return runShell('npx', args, env);
+}
+
+/**
+ * Pre-flight (Fase 1.5): valida configs + smoke test antes de qualquer planner
+ * ou execução pesada. Falha cedo, falha barato.
+ *
+ * O smoke (`tests/setup/smoke.spec.ts`) também dispara o globalSetup, que faz
+ * login e grava storageState — então este pre-flight também aquece o cache de
+ * autenticação pra próximas rodadas.
+ */
+async function preflight(): Promise<number> {
+  log.info('=== Fase 1.5: Pre-flight ===');
+  // Valida configs presentes
+  for (const required of [FILES.projectConfig, FILES.environment]) {
+    if (!existsSync(resolve(process.cwd(), required))) {
+      log.error(`Config ausente: ${required}`);
+      return 2;
+    }
+  }
+  // Smoke test (login + nav direta + container visível)
+  const smokeExit = await runShell('npx', ['playwright', 'test', 'tests/setup/smoke.spec.ts', '--reporter=list']);
+  if (smokeExit !== 0) {
+    log.error('Smoke test falhou — não vou prosseguir com planner/execução. Verifique LoginPage, baseURL, credenciais.');
+    return smokeExit;
+  }
+  log.info('Pre-flight OK — pode avançar para planning/execução.');
+  return 0;
 }
 
 async function chainExplore(): Promise<number> {
@@ -151,6 +195,21 @@ async function main(): Promise<void> {
   if (args.list) {
     listSuites(parsed);
     return;
+  }
+
+  // Pre-flight (1.5) — sempre, exceto se --no-preflight ou --smoke-only (que já é o smoke)
+  if (!args.noPreflight && !args.smokeOnly) {
+    const pre = await preflight();
+    if (pre !== 0) {
+      log.error('Abortando: pre-flight falhou.');
+      process.exit(pre);
+    }
+  }
+
+  // --smoke-only: roda só o smoke e sai
+  if (args.smokeOnly) {
+    const pre = await preflight();
+    process.exit(pre);
   }
 
   const suites = selectSuites(parsed, args);

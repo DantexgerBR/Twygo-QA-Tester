@@ -7,6 +7,7 @@ import {
   isStrictModeEnv,
   summarizeFindings,
   writeSuiteFindings,
+  writeActiveProbeResults,
   type ProbeConfig,
 } from '../utils/exploratory.js';
 import { FILES } from '../utils/constants.js';
@@ -28,6 +29,9 @@ function loadProbeConfig(): ProbeConfig {
     probes: { ...DEFAULT_PROBE_CONFIG.probes, ...(userCfg.probes ?? {}) },
     ignoredHttpStatuses: userCfg.ignoredHttpStatuses ?? DEFAULT_PROBE_CONFIG.ignoredHttpStatuses,
     ignoredHostnames: userCfg.ignoredHostnames ?? DEFAULT_PROBE_CONFIG.ignoredHostnames,
+    scopedRoutes: userCfg.scopedRoutes ?? DEFAULT_PROBE_CONFIG.scopedRoutes,
+    scopedKeywords: userCfg.scopedKeywords ?? DEFAULT_PROBE_CONFIG.scopedKeywords,
+    activeProbes: { ...DEFAULT_PROBE_CONFIG.activeProbes, ...(userCfg.activeProbes ?? {}) },
   };
   return cachedConfig;
 }
@@ -70,12 +74,40 @@ export const test = base.extend<ExploratoryFixtures>({
         coverage: collector.coverage,
       });
 
+      // Active probes: rodam apenas em páginas in-scope, e só os habilitados em
+      // config.activeProbes. Salvam em arquivo separado pra não poluir o
+      // bucket principal de findings passivos.
+      const anyActiveProbeOn = Object.values(config.activeProbes).some(Boolean);
+      if (anyActiveProbeOn) {
+        const url = page.url();
+        const byProbe = await collector.runActiveProbes(page).catch(() => ({}));
+        if (Object.keys(byProbe).length > 0) {
+          writeActiveProbeResults({
+            suite: suiteTitle,
+            test: testInfo.title,
+            file: testInfo.file,
+            workerIndex: testInfo.workerIndex,
+            url,
+            startedAt,
+            finishedAt: new Date().toISOString(),
+            inScope: collector.pageInScope(url),
+            byProbe,
+          });
+        }
+      }
+
+      // Strict mode considera apenas findings in-scope — fora do escopo
+      // (ex.: requests de telemetria, console errors de outros módulos) não
+      // promove falha. Auditoria desses findings continua acessível no bucket
+      // out-of-scope do relatório.
       if ((config.strict || isStrictModeEnv()) && collector.findings.length > 0) {
-        const summary = summarizeFindings(collector.findings);
+        const summary = summarizeFindings(collector.findings, { onlyInScope: true });
         if (summary.errors > 0) {
-          const sample = collector.findings.find((f) => f.severity === 'error');
+          const sample = collector.findings.find(
+            (f) => f.severity === 'error' && f.inScope !== false,
+          );
           throw new Error(
-            `Modo strict: ${summary.errors} erro(s) exploratório(s) detectado(s). Ex.: ${sample?.message}`,
+            `Modo strict: ${summary.errors} erro(s) exploratório(s) in-scope detectado(s). Ex.: ${sample?.message}`,
           );
         }
       }

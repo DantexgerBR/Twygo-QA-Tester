@@ -41,6 +41,12 @@ type PlaywrightTestResult = {
   steps?: PlaywrightStep[];
   attachments?: PlaywrightAttachment[];
   errorLocation?: { file?: string; line?: number; column?: number };
+  annotations?: Array<{ type: string; description?: string }>;
+};
+
+type PlaywrightAnnotation = {
+  type: string;
+  description?: string;
 };
 
 type PlaywrightSpec = {
@@ -49,6 +55,7 @@ type PlaywrightSpec = {
   tests: Array<{
     title: string;
     projectName: string;
+    annotations?: PlaywrightAnnotation[];
     results: PlaywrightTestResult[];
   }>;
 };
@@ -83,6 +90,12 @@ type FlatTest = {
   durationMs: number;
   errorMessage?: string;
   errorLocation?: string;
+  // Motivo registrado por test.fixme(true, '...') ou test.skip(true, '...')
+  // ou annotation explícita ({ type: 'fixme' | 'skip', description: '...' }).
+  // Usado no relatório quando status === 'skipped' para evitar a frase
+  // genérica "Sem mensagem registrada pelo Playwright."
+  skipReason?: string;
+  skipKind?: 'fixme' | 'skip' | 'manual' | 'other';
   attachments: Array<{ name: string; path: string; contentType: string }>;
   steps: FlatStep[];
   failedStepIndex: number | null;
@@ -94,6 +107,7 @@ type ExploratoryFinding = {
   url: string;
   message: string;
   detail?: Record<string, unknown>;
+  inScope?: boolean;
 };
 
 type ExploratoryCoverage = {
@@ -103,18 +117,58 @@ type ExploratoryCoverage = {
   samples: Array<{ role: string; name: string }>;
 };
 
+type ExploratoryScopedBucket = {
+  totals: { errors: number; warnings: number; info: number };
+  byKind: Record<string, number>;
+  findings: ExploratoryFinding[];
+};
+
+type ActiveProbeFindingExt = {
+  probe: string;
+  severity: 'error' | 'warn' | 'info';
+  message: string;
+  detail?: Record<string, unknown>;
+  test: string;
+  url: string;
+};
+
+type ExploratoryActiveProbes = {
+  totals: { errors: number; warnings: number; info: number };
+  byProbe: Record<string, { ran: number; failed: number; findings: number; totalDurationMs: number }>;
+  findings: ActiveProbeFindingExt[];
+};
+
 type ExploratorySuite = {
   testsuiteName: string;
   totals: { errors: number; warnings: number; info: number };
   byKind: Record<string, number>;
   findings: ExploratoryFinding[];
   coverage: ExploratoryCoverage[];
+  outOfScope?: ExploratoryScopedBucket;
+  activeProbes?: ExploratoryActiveProbes;
 };
 
 type ExploratoryReport = {
   generatedAt: string;
-  summary: { errors: number; warnings: number; info: number; testsuites: number; tests: number };
+  summary: {
+    errors: number;
+    warnings: number;
+    info: number;
+    testsuites: number;
+    tests: number;
+    outOfScope?: { errors: number; warnings: number; info: number };
+    activeProbes?: { errors: number; warnings: number; info: number; tests: number };
+  };
   testsuites: ExploratorySuite[];
+};
+
+const PROBE_PT: Record<string, string> = {
+  hoverTooltips: 'Hover em tooltips',
+  keyboardNav: 'Navegação por teclado',
+  formEdge: 'Valores extremos em formulário',
+  clickabilitySweep: 'Varredura de clicáveis',
+  a11yDeep: 'Acessibilidade (deep, por modal)',
+  visualStability: 'Estabilidade visual (CLS)',
 };
 
 type ProjectConfig = {
@@ -123,6 +177,60 @@ type ProjectConfig = {
   browsers: string[];
   testAnalysisFile?: string;
 };
+
+type EnvironmentEntry = {
+  baseUrl: string;
+  credentials: { email: string; password: string };
+  timeout?: number;
+};
+
+type EnvironmentMap = Record<string, EnvironmentEntry>;
+
+/**
+ * Extrai o orgId (ID do ambiente Twygo) de uma URL.
+ * Padrão observado: `/o/{orgId}/...` ou `/o/{orgId}/ai_consumption_analysis/{envId}/...`.
+ * Retorna `{ orgId, envId }` quando ambos podem ser identificados.
+ */
+function extractIdsFromUrl(url: string | undefined | null): { orgId?: string; envId?: string } {
+  if (!url) return {};
+  const out: { orgId?: string; envId?: string } = {};
+  const orgMatch = url.match(/\/o\/(\d+)/);
+  if (orgMatch) out.orgId = orgMatch[1];
+  const envMatch = url.match(/\/ai_consumption_analysis\/(\d+)/);
+  if (envMatch) out.envId = envMatch[1];
+  return out;
+}
+
+/**
+ * Tenta inferir a URL onde o teste estava no momento da falha. Procura, na
+ * ordem: error-context attachment (Playwright grava o URL no markdown),
+ * mensagem de erro (regex `at https://...`) e, em último caso, o baseUrl.
+ *
+ * O regex tira aspas/parênteses/vírgulas finais que vêm coladas em mensagens
+ * de stack trace (ex.: `at https://x.com/y'`).
+ */
+function cleanUrl(url: string): string {
+  return url.replace(/[)'",;.]+$/, '');
+}
+
+function inferFailureUrl(t: FlatTest, baseUrl: string | undefined): string {
+  // 1. error-context.md frequentemente contém "URL: ..." ou linha com a URL
+  const errCtx = t.attachments.find((a) => a.name === 'error-context');
+  if (errCtx && existsSync(errCtx.path)) {
+    try {
+      const md = readFileSync(errCtx.path, 'utf-8');
+      const urlLine = md.match(/-\s*url:\s*(\S+)/i)?.[1] ?? md.match(/(https?:\/\/[^\s)]+)/)?.[1];
+      if (urlLine) return cleanUrl(urlLine);
+    } catch {
+      // ignora — fallback abaixo
+    }
+  }
+  // 2. URL no stack/erro
+  const fromErr = (t.errorMessage || '').match(/(https?:\/\/[^\s)"']+)/)?.[1];
+  if (fromErr) return cleanUrl(fromErr);
+  // 3. Last resort
+  return baseUrl ?? '—';
+}
 
 // ─── Parsing & helpers ──────────────────────────────────────────────────────
 
@@ -266,14 +374,18 @@ function playwrightHumanSummary(rawError: string): string {
     return 'Um elemento que deveria estar oculto continuou visível.';
   }
 
-  // expect(...).toBeChecked() failed
-  if (/toBeChecked\(\)?\s*failed/.test(text)) {
-    const loc = text.match(/Locator:\s*([^\n]+)/)?.[1]?.trim();
-    return `O checkbox/toggle esperava estar marcado mas estava desmarcado${loc ? ` (locator: ${loc})` : ''}.`;
-  }
+  // expect(...).not.toBeChecked() failed → ordem importa: tem que vir ANTES
+  // do regex genérico de toBeChecked, senão a regra abaixo casa também com
+  // `not.toBeChecked` e gera mensagem invertida (bug visto em 2026-05-04 nas
+  // suítes de Indexação onde o XML pede toggle DESABILITADA por padrão).
   if (/not\.toBeChecked\(\)?\s*failed/.test(text)) {
     const loc = text.match(/Locator:\s*([^\n]+)/)?.[1]?.trim();
-    return `O checkbox/toggle deveria estar desmarcado mas estava marcado${loc ? ` (locator: ${loc})` : ''}.`;
+    return `O checkbox/toggle deveria estar DESMARCADO/DESABILITADO mas estava marcado${loc ? ` (locator: ${loc})` : ''}.`;
+  }
+  // expect(...).toBeChecked() failed — usa lookbehind pra não capturar `not.toBeChecked`
+  if (/(?<!not\.)toBeChecked\(\)?\s*failed/.test(text)) {
+    const loc = text.match(/Locator:\s*([^\n]+)/)?.[1]?.trim();
+    return `O checkbox/toggle esperava estar MARCADO/HABILITADO mas estava desmarcado${loc ? ` (locator: ${loc})` : ''}.`;
   }
 
   // expect(...).toHaveURL failed
@@ -342,6 +454,30 @@ function playwrightHumanSummary(rawError: string): string {
   return truncate(firstMeaningful, 240);
 }
 
+/**
+ * Resumo humano para QUALQUER status não-aprovado:
+ * - failed/timedOut/interrupted: usa `playwrightHumanSummary` no erro técnico.
+ * - skipped: explicita o motivo do `test.fixme()`/`test.skip()` (annotation
+ *   description). Sem isso, o relatório mostrava "Sem mensagem registrada
+ *   pelo Playwright." para todos os pulados intencionais — comportamento
+ *   reportado pelo usuário em 2026-05-05.
+ */
+function failureOrSkipSummary(t: FlatTest): string {
+  if (t.status === 'passed') return '—';
+  if (t.status === 'skipped' || t.status === 'interrupted' && !t.errorMessage) {
+    if (t.skipReason) {
+      const prefix = t.skipKind === 'manual' || /REVISAR_MANUAL/i.test(t.skipReason)
+        ? 'Caso requer intervenção manual: '
+        : t.skipKind === 'fixme'
+          ? 'Marcado para revisão (test.fixme): '
+          : 'Caso ignorado intencionalmente: ';
+      return `${prefix}${t.skipReason}`;
+    }
+    return 'Caso ignorado pelo Playwright sem justificativa registrada (test.skip/fixme sem mensagem).';
+  }
+  return playwrightHumanSummary(stripAnsi(t.errorMessage ?? ''));
+}
+
 // ─── Flatten do JSON do Playwright ──────────────────────────────────────────
 
 /**
@@ -372,6 +508,22 @@ function flatten(suites: PlaywrightSuite[]): FlatTest[] {
           errorMessage: s.error?.message,
         }));
         const failedIdx = steps.findIndex((s) => s.status === 'failed');
+        // Annotations vêm tanto no `test` quanto no `result` — preferir test
+        // (mais estável). `test.fixme(true, '...')` e `test.skip(true, '...')`
+        // produzem `{ type: 'fixme'|'skip', description: '...' }`.
+        const allAnn: PlaywrightAnnotation[] = [
+          ...((test.annotations as PlaywrightAnnotation[] | undefined) ?? []),
+          ...((last?.annotations as PlaywrightAnnotation[] | undefined) ?? []),
+        ];
+        const skipAnn = allAnn.find((a) => a.type === 'fixme' || a.type === 'skip');
+        const skipReason = skipAnn?.description?.trim() || undefined;
+        const skipKind: FlatTest['skipKind'] = skipAnn?.type === 'fixme'
+          ? 'fixme'
+          : skipAnn?.type === 'skip'
+            ? 'skip'
+            : (last?.status === 'skipped' && /REVISAR_MANUAL|intervenção manual/i.test(skipReason ?? '')
+                ? 'manual'
+                : (last?.status === 'skipped' ? 'other' : undefined));
         out.push({
           testsuite,
           fileLabel,
@@ -383,6 +535,8 @@ function flatten(suites: PlaywrightSuite[]): FlatTest[] {
           errorLocation: last?.errorLocation
             ? `${last.errorLocation.file ?? ''}:${last.errorLocation.line ?? ''}`
             : undefined,
+          skipReason,
+          skipKind,
           attachments: (last?.attachments ?? [])
             .filter((a): a is Required<PlaywrightAttachment> => typeof a.path === 'string')
             .map((a) => ({ name: a.name, path: a.path, contentType: a.contentType })),
@@ -434,6 +588,46 @@ function indexTestCasesByName(parsed: ParsedAnalysis): Map<string, ParsedTestCas
     }
   }
   return m;
+}
+
+/**
+ * Devolve a ordem em que as testsuites aparecem no XML (depth-first).
+ * Usada para reordenar `byTestsuite` no `tests.html` — antes a ordem era
+ * alfabética/inserção, o que confundia revisores acostumados ao XmindMap.
+ */
+function xmlSuiteOrder(parsed: ParsedAnalysis | null): string[] {
+  if (!parsed) return [];
+  const all = flattenSuitesFromXml(parsed.rootSuite);
+  return all.map((s) => s.name.trim());
+}
+
+/**
+ * Reordena o agrupamento por testsuite na mesma ordem do XML. Suites que
+ * existem na execução mas não no XML (legados, seed, hand-written) são
+ * descartadas com warn — protege contra "suítes inventadas" no relatório,
+ * complementando o `testIgnore` do `playwright.config.ts`.
+ */
+function reorderByXml(
+  byTestsuite: Map<string, FlatTest[]>,
+  xmlOrder: string[],
+): Map<string, FlatTest[]> {
+  if (xmlOrder.length === 0) return byTestsuite;
+  const out = new Map<string, FlatTest[]>();
+  const xmlSet = new Set(xmlOrder.map((n) => n.toLowerCase()));
+  for (const name of xmlOrder) {
+    const tests = byTestsuite.get(name);
+    if (tests && tests.length > 0) out.set(name, tests);
+  }
+  // Suites que sobraram (não estão no XML): logar e descartar do relatório
+  for (const [name, tests] of byTestsuite.entries()) {
+    if (!xmlSet.has(name.toLowerCase())) {
+      log.warn(
+        `Testsuite "${name}" (${tests.length} caso(s)) executada mas NÃO existe no XML — omitida do relatório. ` +
+          `Verifique testIgnore em playwright.config.ts ou ajuste o nome do describe() no spec.`,
+      );
+    }
+  }
+  return out;
 }
 
 // ─── HTML / CSS / JS ────────────────────────────────────────────────────────
@@ -920,7 +1114,8 @@ function renderEvidenceCards(t: FlatTest, reportDir: string): string {
  * destacadas como "PRÉ-CONDIÇÃO".
  */
 function renderUnifiedStepsTable(xml: ParsedTestCase | undefined, t: FlatTest): string {
-  const overallNote = t.status !== 'passed' ? playwrightHumanSummary(stripAnsi(t.errorMessage ?? '')) : '—';
+  const overallNote = t.status !== 'passed' ? failureOrSkipSummary(t) : '—';
+  const isSkipped = t.status === 'skipped';
 
   // 1. Identificar steps Allure que NÃO casam com nenhum XML step
   const xmlNumbers = (xml?.steps ?? []).map((s, i) => s.stepNumber ?? i + 1);
@@ -930,7 +1125,13 @@ function renderUnifiedStepsTable(xml: ParsedTestCase | undefined, t: FlatTest): 
 
   // 2. Linhas de pré-condição (no topo)
   const preRows = preconditionSteps.map((as) => {
-    const note = as.errorMessage ? playwrightHumanSummary(stripAnsi(as.errorMessage)) : '—';
+    const note = as.errorMessage
+      ? playwrightHumanSummary(stripAnsi(as.errorMessage))
+      : as.status === 'failed'
+        ? (overallNote !== '—'
+            ? `Falha sem mensagem específica do step. Causa geral do teste: ${overallNote}`
+            : 'Pré-condição marcada como falha sem mensagem específica do Playwright.')
+        : '—';
     const cls = as.status === 'failed' ? 'step-failed precond-row' : 'precond-row';
     return `<tr class="${cls}">
       <td class="col-num">—</td>
@@ -942,14 +1143,65 @@ function renderUnifiedStepsTable(xml: ParsedTestCase | undefined, t: FlatTest): 
   }).join('\n');
 
   // 3. Linhas dos steps do XML (com status do Allure correspondente)
+  // Identifica o último step Allure que efetivamente rodou (passou ou falhou)
+  // pra marcar steps subsequentes como "não executado" quando o teste foi
+  // interrompido por timeout ou falha catastrófica antes de chegar lá.
+  const lastExecutedXmlIndex = (() => {
+    if (!xml?.steps?.length) return -1;
+    let last = -1;
+    xml.steps.forEach((s, i) => {
+      const matched = t.steps.find(
+        (as) => as.title.startsWith(`${i + 1}. `) || as.title.startsWith(`${s.stepNumber}. `),
+      );
+      if (matched) last = i;
+    });
+    return last;
+  })();
+
   const xmlRows = (xml?.steps ?? []).map((s, i) => {
     const allureMatch = t.steps.find(
       (as) => as.title.startsWith(`${i + 1}. `) || as.title.startsWith(`${s.stepNumber}. `),
     );
-    const stepStatus = allureMatch?.status ?? (t.status === 'passed' ? 'passed' : 'failed');
-    const stepNote = allureMatch?.errorMessage
-      ? playwrightHumanSummary(stripAnsi(allureMatch.errorMessage))
-      : (allureMatch?.status === 'failed' ? overallNote : '—');
+
+    // Determina status do step:
+    // - allureMatch existe → usa o status do Allure (passed/failed)
+    // - sem match + teste passou → step também passou (caso raro de step sem instrumentação)
+    // - sem match + teste falhou + step antes do último executado → "passed" (já passou; só não foi instrumentado)
+    // - sem match + teste falhou + step depois do último executado → "skipped" (não chegou aqui — interrompido)
+    let stepStatus: 'passed' | 'failed' | 'skipped';
+    let stepNote: string;
+    if (allureMatch) {
+      stepStatus = allureMatch.status;
+      // Mesmo se errorMessage for vazio mas status=failed (caso raro), usa overallNote
+      // ao invés de '—' para garantir que uma falha sempre tenha justificativa.
+      if (allureMatch.errorMessage) {
+        stepNote = playwrightHumanSummary(stripAnsi(allureMatch.errorMessage));
+      } else if (allureMatch.status === 'failed') {
+        stepNote = overallNote !== '—'
+          ? `Falha sem mensagem específica do step. Causa geral do teste: ${overallNote}`
+          : 'Step marcado como falho sem mensagem específica do Playwright.';
+      } else {
+        stepNote = '—';
+      }
+    } else if (t.status === 'passed') {
+      stepStatus = 'passed';
+      stepNote = '—';
+    } else if (isSkipped) {
+      // Teste skipado/fixme: nenhum step executou — todos compartilham o motivo do skip.
+      stepStatus = 'skipped';
+      stepNote = overallNote !== '—'
+        ? `Step não executado — ${overallNote}`
+        : 'Step não executado (caso ignorado, sem justificativa registrada).';
+    } else if (i <= lastExecutedXmlIndex) {
+      // Casos raros: step não capturado pelo Allure mas teste tentou continuar
+      stepStatus = 'passed';
+      stepNote = '—';
+    } else {
+      // Step depois do último executado e teste falhou → não rodou
+      stepStatus = 'skipped';
+      stepNote = `Step não executado: o teste foi interrompido antes de chegar aqui. Causa: ${overallNote !== '—' ? overallNote : 'falha em step anterior ou timeout do teste'}.`;
+    }
+
     const cls = stepStatus === 'failed' ? 'step-failed' : '';
     const duration = allureMatch ? `${(allureMatch.durationMs / 1000).toFixed(2)}s` : '—';
     return `<tr class="${cls}">
@@ -994,64 +1246,249 @@ function renderUnifiedStepsTable(xml: ParsedTestCase | undefined, t: FlatTest): 
   </table></div>`;
 }
 
-function renderBugReportBlock(t: FlatTest, xml: ParsedTestCase | undefined, runId: string): string {
-  if (t.status === 'passed') return '';
+function renderManualPendingBlock(t: FlatTest, xml: ParsedTestCase | undefined): string {
   const sev = xml ? SEVERITY_PT[severityFromImportance(xml.importance)] : '—';
-  const summary = playwrightHumanSummary(stripAnsi(t.errorMessage ?? ''));
-  const failedStep = t.failedStepIndex !== null ? t.steps[t.failedStepIndex] : null;
-  const stepRef = failedStep ? `${failedStep.number}. ${failedStep.title}` : '—';
-  const expected = xml?.steps.map((s) => `  ${s.stepNumber}. ${s.actions} → ${s.expectedResults}`).join('\n') ?? '—';
-  const evidenceList = t.attachments
-    .filter((a) => a.contentType === 'image/png' || a.contentType === 'application/zip')
-    .map((a) => `  - ${a.name}: outputs/test-artifacts/${a.path.replace(/\\/g, '/')}`)
-    .join('\n') || '  (sem anexos)';
+  const reason = t.skipReason ?? 'Sem motivo registrado.';
+  const reproSteps: string[] = [];
+  if (xml?.preconditions) {
+    xml.preconditions
+      .split(/\r?\n/)
+      .map((l) => l.trim())
+      .filter(Boolean)
+      .forEach((l) => reproSteps.push(`Pré: ${l}`));
+  }
+  for (const s of xml?.steps ?? []) {
+    reproSteps.push(`${s.stepNumber}. ${s.actions}`);
+  }
+  if (reproSteps.length === 0) {
+    reproSteps.push('— (sem steps documentados no XML)');
+  }
+  const reproHtml = `<ol style="margin:0;padding-left:20px;color:var(--text-soft);font-size:0.86rem">${reproSteps.map((l) => `<li style="margin:3px 0">${escapeHtml(l)}</li>`).join('\n')}</ol>`;
+  const labelStyle = 'font-size:0.74rem;font-weight:700;color:var(--warn);text-transform:uppercase;letter-spacing:0.06em;margin-top:14px;margin-bottom:4px;display:block';
+  const fieldStyle = 'background:#010409;border:1px solid var(--border);border-radius:4px;padding:8px 10px;margin:4px 0 10px;font-size:0.86rem;color:var(--text-soft);white-space:pre-wrap;word-break:break-word';
 
-  const text = `[${sev}] ${t.testcase}
+  return `<h4>Pendente — execução automatizada não realizada</h4>
+    <div class="bug-block" style="padding:14px 16px;border-color:var(--warn)">
+      <span style="${labelStyle}">Severidade do caso (XML)</span>
+      <div style="${fieldStyle}">${escapeHtml(sev)}</div>
 
-Resumo da falha
-${summary}
+      <span style="${labelStyle}">Motivo do skip / fixme</span>
+      <div style="${fieldStyle}">${escapeHtml(reason)}</div>
 
-Step que falhou
-${stepRef}
+      <span style="${labelStyle}">Roteiro do XML (para validação manual)</span>
+      <div style="${fieldStyle.replace('white-space:pre-wrap;', '')}">${reproHtml}</div>
 
-Testsuite
-${t.testsuite}
-
-Pré-condições do XML
-${xml?.preconditions || '—'}
-
-Roteiro esperado
-${expected}
-
-Evidências
-${evidenceList}
-
-Execução
-- runId: ${runId}
-- ambiente: staging (stage10.stage.twygoead.com)
-- browser: ${t.project}
-- duração: ${(t.durationMs / 1000).toFixed(2)}s
-`;
-
-  const id = `bug-${slugify(t.testcase)}`;
-  return `<h4>Pronto para registro de bug</h4>
-    <div class="bug-block">
-      <textarea id="${id}" readonly>${escapeHtml(text)}</textarea>
-      <div class="btn-row">
-        <button type="button" onclick="copyBug('${id}', this)">Copiar texto</button>
-        <span class="muted" style="margin-left:6px">Cole no Jira/GitHub/Linear como descrição do bug.</span>
-      </div>
+      <p class="muted" style="margin:10px 0 0;font-size:0.82rem">Esse caso não bloqueia a build, mas precisa de validação manual ou ajuste no agente para passar a rodar automaticamente.</p>
     </div>`;
 }
 
-function renderTestcaseDetailPanel(t: FlatTest, xml: ParsedTestCase | undefined, runId: string, reportDir: string): string {
+function renderBugReportBlock(
+  t: FlatTest,
+  xml: ParsedTestCase | undefined,
+  runId: string,
+  reportDir: string,
+  envEntry: EnvironmentEntry | undefined,
+  envName: string,
+): string {
+  if (t.status === 'passed') return '';
+  // Skipped/fixme não é bug — é pendência manual. Renderiza bloco diferente.
+  if (t.status === 'skipped') return renderManualPendingBlock(t, xml);
+  const sev = xml ? SEVERITY_PT[severityFromImportance(xml.importance)] : '—';
+  const summary = failureOrSkipSummary(t);
   const failedStep = t.failedStepIndex !== null ? t.steps[t.failedStepIndex] : null;
-  const rawErr = failedStep?.errorMessage ?? t.errorMessage ?? '';
-  const summary = t.status !== 'passed' ? playwrightHumanSummary(stripAnsi(rawErr)) : null;
+  const stepRef = failedStep ? `${failedStep.number}. ${failedStep.title}` : '—';
 
+  // ─── Descrição do BUG: 1ª linha = severidade + nome + resumo
+  const bugDescription = `[${sev}] ${t.testcase} — ${summary}`;
+
+  // ─── Passo a passo para reprodução: pré-condições + steps do XML
+  const reproSteps: string[] = [];
+  if (xml?.preconditions) {
+    const lines = xml.preconditions
+      .split(/\r?\n/)
+      .map((l) => l.trim())
+      .filter(Boolean);
+    for (const l of lines) reproSteps.push(`Pré: ${l}`);
+  }
+  for (const s of xml?.steps ?? []) {
+    reproSteps.push(`${s.stepNumber}. ${s.actions}`);
+  }
+  if (reproSteps.length === 0) {
+    reproSteps.push('— (sem steps documentados no XML)');
+  }
+
+  // ─── Comportamento esperado vs. atual
+  const expectedFromFailedStep = failedStep && xml?.steps
+    ? xml.steps.find((s) => s.stepNumber === failedStep.number)?.expectedResults
+    : undefined;
+  const expectedBehavior = expectedFromFailedStep
+    || xml?.steps.map((s) => `${s.stepNumber}. ${s.expectedResults}`).join(' | ')
+    || '—';
+  const actualBehavior = summary;
+
+  // ─── Informações: URL, Login, Senha, ID do ambiente, Outros
+  const failureUrl = inferFailureUrl(t, envEntry?.baseUrl);
+  const ids = extractIdsFromUrl(failureUrl);
+  // Fallback: se não achou orgId/envId na URL de falha, varre todas as URLs do
+  // error-context (Playwright lista várias URLs intermediárias) ou do erro completo.
+  if (!ids.orgId || !ids.envId) {
+    const errCtx = t.attachments.find((a) => a.name === 'error-context');
+    let fullText = t.errorMessage || '';
+    if (errCtx && existsSync(errCtx.path)) {
+      try { fullText += '\n' + readFileSync(errCtx.path, 'utf-8'); } catch { /* ignore */ }
+    }
+    if (!ids.orgId) {
+      const m = fullText.match(/\/o\/(\d+)/);
+      if (m) ids.orgId = m[1];
+    }
+    if (!ids.envId) {
+      const m = fullText.match(/\/ai_consumption_analysis\/(\d+)/);
+      if (m) ids.envId = m[1];
+    }
+  }
+  const others: string[] = [];
+  if (ids.envId) others.push(`envId interno (rota /ai_consumption_analysis/{envId}): ${ids.envId}`);
+  others.push(`Browser: ${t.project}`);
+  others.push(`runId: ${runId}`);
+  others.push(`Duração até a falha: ${(t.durationMs / 1000).toFixed(2)}s`);
+  if (failedStep) others.push(`Step impactado: ${stepRef}`);
+
+  // ─── Evidências: para cada attachment relevante, descrição + caminho relativo
+  const relPath = (p: string) => relative(reportDir, p).replace(/\\/g, '/');
+  type EvidenceItem = { description: string; href: string; isImage: boolean };
+  const evidences: EvidenceItem[] = [];
+  for (const a of t.attachments) {
+    if (a.contentType === 'image/png') {
+      evidences.push({
+        description: `Screenshot capturado pelo Playwright no momento da falha (${a.name})`,
+        href: relPath(a.path),
+        isImage: true,
+      });
+    } else if (a.contentType === 'application/zip') {
+      evidences.push({
+        description: 'Trace completo do Playwright (.zip) — abrir com `npx playwright show-trace`',
+        href: relPath(a.path),
+        isImage: false,
+      });
+    } else if (a.name === 'error-context') {
+      evidences.push({
+        description: 'Snapshot do DOM/contexto da página no momento da falha (error-context.md)',
+        href: relPath(a.path),
+        isImage: false,
+      });
+    }
+  }
+
+  // ─── Texto agregado para botão "Copiar"
+  const evidenceLines = evidences.length === 0
+    ? '  (sem anexos)'
+    : evidences.map((e) => `  - ${e.description}: ${e.href}`).join('\n');
+  const aggregateText = `Descrição do BUG
+${bugDescription}
+
+Passo a passo para reprodução
+${reproSteps.map((l) => `  ${l}`).join('\n')}
+
+Comportamento esperado
+${expectedBehavior}
+
+Comportamento atual
+${actualBehavior}
+
+Informações
+- URL: ${failureUrl}
+- Login: ${envEntry?.credentials.email ?? '—'}
+- Senha: ${envEntry?.credentials.password ?? '—'}
+- ID do ambiente (orgId): ${ids.orgId ?? '—'}
+- Outros:
+${others.map((o) => `  - ${o}`).join('\n')}
+
+Evidências
+${evidenceLines}
+
+Execução
+- runId: ${runId}
+- environment.json: ${envName}
+- testsuite: ${t.testsuite}
+- testcase: ${t.testcase}
+`;
+
+  // ─── Render visual estruturado por campos padrão
+  const fieldStyle = 'background:#010409;border:1px solid var(--border);border-radius:4px;padding:8px 10px;margin:4px 0 10px;font-size:0.86rem;color:var(--text-soft);white-space:pre-wrap;word-break:break-word';
+  const labelStyle = 'font-size:0.74rem;font-weight:700;color:var(--info);text-transform:uppercase;letter-spacing:0.06em;margin-top:14px;margin-bottom:4px;display:block';
+
+  const reproHtml = `<ol style="margin:0;padding-left:20px;color:var(--text-soft);font-size:0.86rem">${reproSteps.map((l) => `<li style="margin:3px 0">${escapeHtml(l)}</li>`).join('\n')}</ol>`;
+  const othersHtml = `<ul style="margin:0;padding-left:18px;color:var(--text-soft);font-size:0.86rem">${others.map((o) => `<li style="margin:2px 0">${escapeHtml(o)}</li>`).join('\n')}</ul>`;
+  const infoTable = `<table class="inner-table" style="margin:4px 0 8px">
+    <tbody>
+      <tr><td style="width:14rem;color:var(--muted);font-weight:600">URL</td><td style="font-family:ui-monospace,monospace;font-size:0.8rem;word-break:break-all">${escapeHtml(failureUrl)}</td></tr>
+      <tr><td style="color:var(--muted);font-weight:600">Login</td><td>${escapeHtml(envEntry?.credentials.email ?? '—')}</td></tr>
+      <tr><td style="color:var(--muted);font-weight:600">Senha</td><td>${escapeHtml(envEntry?.credentials.password ?? '—')}</td></tr>
+      <tr><td style="color:var(--muted);font-weight:600">ID do ambiente (orgId)</td><td>${escapeHtml(ids.orgId ?? '—')}</td></tr>
+      <tr><td style="color:var(--muted);font-weight:600;vertical-align:top">Outros</td><td>${othersHtml}</td></tr>
+    </tbody>
+  </table>`;
+
+  const evidenceHtml = evidences.length === 0
+    ? '<p class="muted" style="margin:4px 0 8px">Sem anexos coletados pelo Playwright.</p>'
+    : evidences.map((e) => `<div style="display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-bottom:1px dashed var(--border)">
+        <div style="flex:1">
+          <div style="font-size:0.86rem;color:var(--text-soft)">${escapeHtml(e.description)}</div>
+          <div style="margin-top:4px;font-size:0.78rem"><a href="${escapeHtml(e.href)}" target="_blank">${escapeHtml(e.href)}</a></div>
+        </div>
+        ${e.isImage ? `<a href="${escapeHtml(e.href)}" target="_blank" style="flex-shrink:0"><img src="${escapeHtml(e.href)}" alt="evidência" style="max-width:160px;max-height:90px;border-radius:4px;border:1px solid var(--border);object-fit:contain"></a>` : ''}
+      </div>`).join('\n');
+
+  const id = `bug-${slugify(t.testcase)}`;
+  const aggregateId = `${id}-text`;
+  return `<h4>Pronto para registro de bug</h4>
+    <div class="bug-block" style="padding:14px 16px">
+      <span style="${labelStyle}">Descrição do BUG</span>
+      <div style="${fieldStyle}">${escapeHtml(bugDescription)}</div>
+
+      <span style="${labelStyle}">Passo a passo para reprodução</span>
+      <div style="${fieldStyle.replace('white-space:pre-wrap;', '')}">${reproHtml}</div>
+
+      <span style="${labelStyle}">Comportamento esperado</span>
+      <div style="${fieldStyle}">${escapeHtml(expectedBehavior)}</div>
+
+      <span style="${labelStyle}">Comportamento atual</span>
+      <div style="${fieldStyle}">${escapeHtml(actualBehavior)}</div>
+
+      <span style="${labelStyle}">Informações</span>
+      ${infoTable}
+
+      <span style="${labelStyle}">Evidências</span>
+      <div style="background:#010409;border:1px solid var(--border);border-radius:4px;padding:8px 12px;margin:4px 0 10px">${evidenceHtml}</div>
+
+      <details style="margin-top:14px">
+        <summary>Ver texto agregado para copiar (Jira/GitHub/Linear)</summary>
+        <textarea id="${aggregateId}" readonly style="width:100%;height:18rem;background:#010409;color:var(--text-soft);border:1px solid var(--border);resize:vertical;font-family:ui-monospace,SF Mono,Consolas,monospace;font-size:0.78rem;padding:10px;margin-top:8px;border-radius:4px">${escapeHtml(aggregateText)}</textarea>
+        <div class="btn-row">
+          <button type="button" onclick="copyBug('${aggregateId}', this)">Copiar texto agregado</button>
+          <span class="muted" style="margin-left:6px">Cola direto na descrição do ticket.</span>
+        </div>
+      </details>
+    </div>`;
+}
+
+function renderTestcaseDetailPanel(
+  t: FlatTest,
+  xml: ParsedTestCase | undefined,
+  runId: string,
+  reportDir: string,
+  envEntry: EnvironmentEntry | undefined,
+  envName: string,
+): string {
+  const failedStep = t.failedStepIndex !== null ? t.steps[t.failedStepIndex] : null;
+  const summary = t.status !== 'passed' ? failureOrSkipSummary(t) : null;
+
+  const failureBlockLabel = t.status === 'skipped'
+    ? 'Por que foi ignorado'
+    : 'Por que falhou';
   const failureBlock = summary
     ? `<div class="failure-summary">
-        <div class="label">Por que falhou</div>
+        <div class="label">${failureBlockLabel}</div>
         <div class="text">${escapeHtml(summary)}</div>
         ${failedStep ? `<div class="step-ref">Step impactado: <strong>${escapeHtml(failedStep.title)}</strong></div>` : ''}
       </div>`
@@ -1078,9 +1515,9 @@ function renderTestcaseDetailPanel(t: FlatTest, xml: ParsedTestCase | undefined,
     <h4>Evidências</h4>
     ${renderEvidenceCards(t, reportDir)}
 
-    ${renderBugReportBlock(t, xml, runId)}
+    ${renderBugReportBlock(t, xml, runId, reportDir, envEntry, envName)}
 
-    ${t.errorMessage ? `<details><summary>Stack trace técnica completa (para desenvolvedor)</summary>
+    ${t.errorMessage && t.status !== 'skipped' ? `<details><summary>Stack trace técnica completa (para desenvolvedor)</summary>
       <pre>${escapeHtml(truncate(stripAnsi(t.errorMessage), 12000))}</pre>
     </details>` : ''}
   </div>`;
@@ -1092,6 +1529,8 @@ function renderTests(args: {
   xmlByName: Map<string, ParsedTestCase>;
   runId: string;
   reportDir: string;
+  envEntry: EnvironmentEntry | undefined;
+  envName: string;
 }): string {
   const blocks = [...args.byTestsuite.entries()]
     .map(([suiteName, tests]) => {
@@ -1102,7 +1541,7 @@ function renderTests(args: {
           const sev = importance !== undefined ? severityBadge(importance) : '';
           const detailId = `tc-${slugify(t.testcase)}`;
           const summaryHint = t.status !== 'passed'
-            ? `<div style="font-size:0.82rem;color:var(--muted);margin-top:4px">${escapeHtml(playwrightHumanSummary(stripAnsi(t.errorMessage ?? '')))}</div>`
+            ? `<div style="font-size:0.82rem;color:var(--muted);margin-top:4px">${escapeHtml(failureOrSkipSummary(t))}</div>`
             : '';
           return `<tr class="tc-summary-row" data-idx="${idx}-${slugify(suiteName)}" data-status="${t.status}" data-importance="${importance ?? ''}" id="${detailId}">
             <td><strong>${escapeHtml(t.testcase)}</strong> ${sev}${summaryHint}<div class="muted" style="font-size:0.74rem;margin-top:3px">${escapeHtml(t.fileLabel)}</div></td>
@@ -1111,7 +1550,7 @@ function renderTests(args: {
             <td class="col-actions"><button type="button" class="tc-toggle" data-idx="${idx}-${slugify(suiteName)}" aria-expanded="false">Expandir detalhes</button></td>
           </tr>
           <tr class="tc-detail-row" data-idx="${idx}-${slugify(suiteName)}">
-            <td colspan="4">${renderTestcaseDetailPanel(t, xml, args.runId, args.reportDir)}</td>
+            <td colspan="4">${renderTestcaseDetailPanel(t, xml, args.runId, args.reportDir, args.envEntry, args.envName)}</td>
           </tr>`;
         })
         .join('\n');
@@ -1382,6 +1821,69 @@ function renderCoverageSection(coverage: ExploratoryCoverage[]): string {
   </div>`;
 }
 
+function renderOutOfScopeSection(bucket: ExploratoryScopedBucket | undefined): string {
+  if (!bucket) return '';
+  const total = bucket.totals.errors + bucket.totals.warnings + bucket.totals.info;
+  if (total === 0) return '';
+  const partitioned = partitionFindings(bucket.findings);
+  const inner = [
+    renderConsoleSection(partitioned.consoleAndPage),
+    renderHttpSection(partitioned.http),
+    renderA11ySection(partitioned.a11y),
+    renderBrokenImagesSection(partitioned.brokenImages),
+  ].filter(Boolean).join('\n');
+  return `<details style="margin-top:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px">
+    <summary style="cursor:pointer;color:var(--muted);font-size:0.88rem">
+      <strong style="color:var(--text-soft)">Fora do escopo "Créditos de IA"</strong>
+      <span style="margin-left:8px">${bucket.totals.errors > 0 ? `<span class="badge fail">${bucket.totals.errors} erro(s)</span>` : ''}${bucket.totals.warnings > 0 ? `<span class="badge warn" style="margin-left:6px">${bucket.totals.warnings} aviso(s)</span>` : ''}${bucket.totals.info > 0 ? `<span class="badge info" style="margin-left:6px">${bucket.totals.info} info</span>` : ''}</span>
+      <span class="muted" style="margin-left:6px">(silenciado dos KPIs principais — telemetria, módulos não relacionados etc.)</span>
+    </summary>
+    <div style="padding:10px 0">${inner || '<p class="muted">Sem detalhes.</p>'}</div>
+  </details>`;
+}
+
+function renderActiveProbesSection(ap: ExploratoryActiveProbes | undefined): string {
+  if (!ap) return '';
+  const probeKeys = Object.keys(ap.byProbe);
+  if (probeKeys.length === 0 && ap.findings.length === 0) return '';
+
+  const probeRows = probeKeys
+    .map((key) => {
+      const stats = ap.byProbe[key];
+      const findingCount = ap.findings.filter((f) => f.probe === key).length;
+      const sevCls = findingCount === 0 ? 'ok' : ap.findings.some((f) => f.probe === key && f.severity === 'error') ? 'fail' : 'warn';
+      return `<tr>
+        <td><strong>${escapeHtml(PROBE_PT[key] ?? key)}</strong></td>
+        <td style="text-align:center">${stats.ran}</td>
+        <td style="text-align:center">${stats.failed > 0 ? `<span class="badge fail">${stats.failed}</span>` : '<span class="muted">0</span>'}</td>
+        <td style="text-align:center">${findingCount > 0 ? `<span class="badge ${sevCls}">${findingCount}</span>` : '<span class="muted">0</span>'}</td>
+        <td class="col-time">${(stats.totalDurationMs / 1000).toFixed(2)}s</td>
+      </tr>`;
+    })
+    .join('\n');
+
+  const findingsItems = ap.findings.length === 0
+    ? '<p class="muted">Probes ativos rodaram sem encontrar problemas.</p>'
+    : ap.findings.map((f) => {
+        const sevCls = f.severity === 'error' ? 'fail' : f.severity === 'warn' ? 'warn' : 'info';
+        return `<div class="finding-row">
+          <span class="badge ${sevCls}">${escapeHtml(PROBE_PT[f.probe] ?? f.probe)}</span>
+          <span class="muted" style="margin-left:6px;font-size:0.78rem">teste: ${escapeHtml(f.test)}</span>
+          <div style="margin-top:6px">${escapeHtml(truncate(f.message, 400))}</div>
+          <div class="url">${escapeHtml(f.url)}</div>
+        </div>`;
+      }).join('\n');
+
+  return `<div class="kind-section kind-info" style="margin-top:18px">
+    <h4 class="header">Probes ativos — descobertas adicionais (${ap.findings.length} finding(s))</h4>
+    <table class="inner-table" style="margin-bottom:10px">
+      <thead><tr><th>Probe</th><th style="text-align:center">Execuções OK</th><th style="text-align:center">Falhas internas</th><th style="text-align:center">Findings</th><th>Tempo total</th></tr></thead>
+      <tbody>${probeRows}</tbody>
+    </table>
+    ${findingsItems}
+  </div>`;
+}
+
 function renderExploratory(args: { exploratoryByTestsuite: Map<string, ExploratorySuite>; projectName: string }): string {
   const blocks = [...args.exploratoryByTestsuite.values()]
     .map((s) => {
@@ -1397,17 +1899,19 @@ function renderExploratory(args: { exploratoryByTestsuite: Map<string, Explorato
         ${s.totals.errors > 0 ? `<span class="badge fail">${s.totals.errors} erro(s)</span>` : ''}
         ${s.totals.warnings > 0 ? `<span class="badge warn" style="margin-left:6px">${s.totals.warnings} aviso(s)</span>` : ''}
         ${s.totals.info > 0 ? `<span class="badge info" style="margin-left:6px">${s.totals.info} info</span>` : ''}
-        ${s.totals.errors === 0 && s.totals.warnings === 0 && s.totals.info === 0 ? '<span class="muted">Sem findings nesta testsuite.</span>' : ''}
+        ${s.totals.errors === 0 && s.totals.warnings === 0 && s.totals.info === 0 ? '<span class="muted">Sem findings in-scope nesta testsuite.</span>' : ''}
       </div>`;
       return `<h3 style="margin-top:24px">${escapeHtml(s.testsuiteName)}</h3>
         ${totalsBar}
-        ${sections}`;
+        ${sections}
+        ${renderOutOfScopeSection(s.outOfScope)}
+        ${renderActiveProbesSection(s.activeProbes)}`;
     })
     .join('\n');
   const body = `
     <h1>Validação Exploratória — ${escapeHtml(args.projectName)}</h1>
     <p class="subtitle"><a href="index.html">← Voltar ao dashboard</a></p>
-    <p class="lede">Achados capturados pelas probes da fixture exploratória durante a execução dos testes: erros de JavaScript no navegador, respostas HTTP de falha, violações de acessibilidade (axe-core), imagens quebradas e cobertura observada por URL. Estes findings sinalizam problemas reais do app que aparecem mesmo quando os casos de teste roteirizados passam.</p>
+    <p class="lede">Achados capturados pelas probes da fixture exploratória durante a execução dos testes: erros de JavaScript no navegador, respostas HTTP de falha, violações de acessibilidade (axe-core), imagens quebradas e cobertura observada por URL. Os KPIs principais consideram apenas findings <strong>dentro do escopo "Créditos de IA"</strong> (rotas <code>ai_consumption_analysis</code> ou mensagens com palavras-chave do domínio). Findings fora do escopo continuam acessíveis em uma seção colapsada por testsuite. A seção <strong>"Probes ativos"</strong> reúne descobertas além do que os casos do XML cobrem (hover em tooltips, navegação por teclado, valores extremos em forms, varredura de clicáveis, axe deep e estabilidade visual).</p>
     ${blocks || '<p class="muted">Nenhum finding exploratório registrado.</p>'}
   `;
   return htmlShell(`Exploratório — ${args.projectName}`, body);
@@ -1449,6 +1953,14 @@ async function main(): Promise<void> {
 
   const cfg = loadJson<ProjectConfig>(resolve(process.cwd(), FILES.projectConfig));
   if (!cfg) throw new Error(`Config ausente: ${FILES.projectConfig}`);
+
+  // Carrega environment.json pro bloco "Pronto para registro de bug" — extrai
+  // URL/Login/Senha/orgId pra encaixar nos campos padrão do template de bug.
+  const envMap = loadJson<EnvironmentMap>(resolve(process.cwd(), FILES.environment));
+  const envEntry = envMap?.[cfg.environment];
+  if (!envEntry) {
+    log.warn(`Environment "${cfg.environment}" ausente em environment.json — campos URL/Login/Senha do bug-block ficarão como "—".`);
+  }
 
   const playwrightReport = loadJson<PlaywrightReport>(resolve(process.cwd(), FILES.testResults));
   if (!playwrightReport) {
@@ -1530,7 +2042,15 @@ async function main(): Promise<void> {
   );
   writeFileSync(
     join(reportDir, 'tests.html'),
-    renderTests({ byTestsuite, projectName: cfg.projectName, xmlByName, runId: folderName, reportDir }),
+    renderTests({
+      byTestsuite,
+      projectName: cfg.projectName,
+      xmlByName,
+      runId: folderName,
+      reportDir,
+      envEntry,
+      envName: cfg.environment,
+    }),
   );
   writeFileSync(
     join(reportDir, 'exploratory.html'),
