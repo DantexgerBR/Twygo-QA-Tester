@@ -25,6 +25,9 @@ env/
 playwright-report/
 test-results/
 .playwright/
+# Scratch do Playwright MCP (snapshots aria/CSV gravados pelo MCP server
+# durante exploration de planner/healer). 100% volátil — não deve subir.
+.playwright-mcp/
 
 # ===== Outputs gerados pelo agente Playwright =====
 # Toda a pasta outputs/ é regenerada (parser, executor, validator, report, allure)

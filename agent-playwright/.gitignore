@@ -11,6 +11,7 @@ outputs/test-artifacts/
 playwright-report/
 test-results/
 .playwright/
+.playwright-mcp/
 
 .env
 .env.local
