@@ -44,6 +44,10 @@ import { getOrgId } from '../../../src/utils/environment.js';
  * `#first-page-button`, etc.), `getByRole`, `getByPlaceholder`. Cada uso
  * fica marcado com `// REVISAR: aguardando data-test-id`.
  */
+
+// Escape user-provided text antes de injetar em RegExp literal.
+const escapeRegex = (s: string): string => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
 export class PaineisListPage {
   constructor(private readonly page: Page) {}
 
@@ -409,5 +413,561 @@ export class PaineisListPage {
 
   getContractBlockTitle(): Locator {
     return this.page.getByTestId('integrations-contract-block-card-title');
+  }
+
+  // ---------- Linhas por NOME (suite Ativar / Inativar painel) ----------
+
+  /**
+   * Retorna a `<tr>` da listagem em modo Lista que contém um `<p>{name}</p>`
+   * na primeira coluna. Usa filter+has para evitar dependência de índice
+   * (ordem da listagem muda com sort/paginação). Nomes de painéis são únicos
+   * no contexto do XML (TC1 fala em "Painel QA Teste", TC3 em "Painel
+   * Vinculado") — o filtro por texto exato é seguro.
+   * REVISAR: aguardando data-test-id "paineis-list-row-{paineId}".
+   */
+  getRowByName(name: string): Locator {
+    return this.page
+      .locator('tbody tr')
+      .filter({ has: this.page.locator('td:first-child p', { hasText: name }) });
+  }
+
+  /**
+   * Checkbox da coluna "Ativo?" da linha cujo nome é `{name}`. O elemento é
+   * `<input id="panel-situation-{paineId}" type="checkbox">` (id estável
+   * descoberto live em 2026-05-06). O input em si tem `clip: rect(0,0,0,0)`
+   * — para CLICK use `getRowActiveSwitchLabelByName`; este locator serve a
+   * asserções (`toBeChecked()`) que leem state via attribute.
+   * REVISAR: aguardando data-test-id "paineis-list-row-{paineId}-active-switch".
+   */
+  getRowActiveSwitchByName(name: string): Locator {
+    return this.getRowByName(name).locator('input[type="checkbox"]');
+  }
+
+  /**
+   * Label clicável (chakra-switch) que envolve o `<input>` do switch da linha
+   * `{name}`. Necessário porque o input é hidden (clip 1×1 px) — click
+   * direto no input falha em actionability. O `<label class="chakra-switch">`
+   * captura o click e dispara o toggle do input via DOM.
+   */
+  getRowActiveSwitchLabelByName(name: string): Locator {
+    return this.getRowByName(name).locator('label.chakra-switch');
+  }
+
+  /**
+   * Lê o estado atual do switch da linha `{name}`. Usa o atributo do DOM
+   * (não evaluate) — o `<input>` chakra mantém o property `checked`
+   * sincronizado com o state interno.
+   */
+  async getActiveStateByName(name: string): Promise<boolean> {
+    return this.getRowActiveSwitchByName(name).isChecked();
+  }
+
+  /**
+   * Click no label do switch da linha `{name}` e aguarda mudança de estado.
+   * Para painel SEM associação a modos de uso, o estado muda imediatamente.
+   * Para painel ASSOCIADO, abre modal de bloqueio e o estado NÃO muda — use
+   * `getBlockedModal()` para asserir nesse caso.
+   */
+  async toggleActiveByName(name: string): Promise<void> {
+    const before = await this.getActiveStateByName(name);
+    await this.getRowActiveSwitchLabelByName(name).click();
+    // Aguarda either: state mudou (caso normal) OU modal de bloqueio apareceu.
+    // Polling baseado em condição (regra dura #1).
+    await expect
+      .poll(
+        async () => {
+          const dialogVisible = await this.getBlockedModal()
+            .isVisible()
+            .catch(() => false);
+          if (dialogVisible) return 'modal';
+          const after = await this.getActiveStateByName(name);
+          return after !== before ? 'toggled' : 'pending';
+        },
+        {
+          timeout: 5_000,
+          message: `aguardando toggle ou modal após click no switch de "${name}"`,
+        },
+      )
+      .not.toBe('pending');
+  }
+
+  /**
+   * Garante que o painel `{name}` esteja ATIVO (checked). No-op se já estiver.
+   * Usado em pre-conditions de TC1 e em cleanup de TC1/TC2 (`afterEach`)
+   * para isolamento entre runs paralelos. **NÃO** trata o caso de painel
+   * associado (modal de bloqueio) — caller é responsável por garantir que
+   * `{name}` é um painel desassociado.
+   */
+  async ensureActive(name: string): Promise<void> {
+    if (!(await this.getActiveStateByName(name))) {
+      await this.toggleActiveByName(name);
+    }
+  }
+
+  /**
+   * Garante que o painel `{name}` esteja INATIVO (unchecked). No-op se já
+   * estiver. Usado em pre-condition de TC2.
+   */
+  async ensureInactive(name: string): Promise<void> {
+    if (await this.getActiveStateByName(name)) {
+      await this.toggleActiveByName(name);
+    }
+  }
+
+  // ---------- Modal de bloqueio (TC3) ----------
+  // Confirmado live 2026-05-06 com auto-seed via UI (associação painel↔menu
+  // funcional após deploy de "Painéis do usuário" no `<select id="page_model">`):
+  // ao clicar no switch "Ativo?" de painel ASSOCIADO a 1+ menus, abre
+  // `<div role="dialog" class="chakra-modal__content">` com:
+  // - Header literal: "Painel em uso" (precedido do ícone material "warning")
+  // - Body literal: "Não é possível desabilitar pois existem menus
+  //   configurados que estão utilizando este painel no modo de uso." +
+  //   lista de cada menu vinculado no formato "Nome do menu: <itemName>
+  //   Modo de uso: <useModeName>".
+  // - Footer: botão "Entendi" com `data-test-id="panel-in-use-modal-confirm"`
+  //   (único data-test-id real descoberto na UI da listagem até hoje).
+
+  /**
+   * Modal informativo "Painel em uso" que aparece ao tentar inativar painel
+   * vinculado a 1+ menus de modos de uso. Ancoramos pelo botão estável
+   * `[data-test-id="panel-in-use-modal-confirm"]` subindo até o
+   * `.chakra-modal__content` para evitar o falso positivo do popover de
+   * Notificações (que também é `role="dialog"` mas é Chakra Popover, não Modal).
+   * REVISAR: aguardando data-test-id no container do modal em si.
+   */
+  getInactivationBlockedModal(): Locator {
+    return this.page
+      .locator('.chakra-modal__content')
+      .filter({ has: this.page.locator('[data-test-id="panel-in-use-modal-confirm"]') });
+  }
+
+  getInactivationBlockedModalTitle(): Locator {
+    return this.getInactivationBlockedModal().locator('header.chakra-modal__header');
+  }
+
+  getInactivationBlockedModalBody(): Locator {
+    return this.getInactivationBlockedModal().locator('.chakra-modal__body');
+  }
+
+  /**
+   * Botão "Entendi" — único confirm do modal. Texto literal "Entendi" e
+   * `data-test-id` estável.
+   */
+  getInactivationBlockedModalCloseButton(): Locator {
+    return this.page.locator('[data-test-id="panel-in-use-modal-confirm"]');
+  }
+
+  async closeInactivationBlockedModal(): Promise<void> {
+    await this.getInactivationBlockedModalCloseButton().click();
+    await expect(this.getInactivationBlockedModal()).not.toBeVisible();
+  }
+
+  // ---------- Aliases legados (TC4 ainda referencia getBlockedModal*) ----------
+  // Mantidos enquanto TC4 estiver `BLOCKED-BY-SEED`. Quando TC4 for
+  // reescrito, migrar pra `getInactivationBlockedModal*` ou criar `getReactivationBlockedModal*`
+  // se o modal de TC4 (reativar menu vinculado a painel inativo) tiver
+  // estrutura diferente — ainda não validado live.
+
+  getBlockedModal(): Locator {
+    return this.getInactivationBlockedModal();
+  }
+
+  getBlockedModalTitle(): Locator {
+    return this.getInactivationBlockedModalTitle();
+  }
+
+  getBlockedModalCloseButton(): Locator {
+    return this.getInactivationBlockedModalCloseButton();
+  }
+
+  async closeBlockedModal(): Promise<void> {
+    await this.closeInactivationBlockedModal();
+  }
+
+  // ---------- Modos de uso (TC4) ----------
+
+  /**
+   * Navega direto para a aba "Modos de uso" (irmã de Painéis) em modo Lista.
+   * Usado pelo TC4 que opera fora da listagem de Painéis.
+   */
+  async goToModosDeUso(): Promise<void> {
+    await this.page.goto(`/o/${getOrgId()}/use_modes?tab=list-tab`);
+    await this.page
+      .getByRole('tab', { name: 'Modos de uso', selected: true })
+      .waitFor();
+  }
+
+  /**
+   * Linha do modo de uso (Colaborador / Aluno) na aba list-tab. Identifica
+   * por `data-item-id="{useModeId}"` na `<tr>` (id da entidade UseMode no
+   * backend, descoberto live: 70077 = Colaborador, 70078 = Aluno).
+   * Filtramos por texto exato do nome para não acoplar ao id numérico.
+   * REVISAR: aguardando data-test-id "use-modes-row-{useModeId}".
+   */
+  getModoDeUsoRowByName(name: string): Locator {
+    return this.page
+      .locator('tbody tr[data-item-id]')
+      .filter({ has: this.page.locator('p', { hasText: name }) });
+  }
+
+  // ---------- CRUD: criação de painel ----------
+  // Suite "Ativar / Inativar painel" (TC1/TC2) cria/deleta painel próprio
+  // por spec — sem depender de seed externo. Estrutura observada live em
+  // 2026-05-06 (org 36988):
+  // - Form em /o/{orgId}/panels/new com tabs "Identificação" (ativa) e
+  //   "Layouts" (disabled até salvar).
+  // - Pós-save: redireciona pra /o/{orgId}/panels/{paineId}/edit (NÃO volta
+  //   pra listagem). paineId é numérico (ex.: 802029).
+  // - `<tr>` da listagem tem `data-item-id="{paineId}"` e `data-item-name="{name}"`
+  //   (selector estável para localizar a linha sem depender do <p> da coluna 1).
+
+  /**
+   * Navega ao form de criação. Goto direto é mais rápido que clicar
+   * "+ Adicionar" e o teste de navegação por ele já está coberto pelo TC2
+   * da listagem.
+   */
+  async openNewPanelForm(): Promise<void> {
+    await this.page.goto(`/o/${getOrgId()}/panels/new`);
+    // Aguarda input do nome estar interagível antes de retornar — evita race
+    // com hidratação tardia do React/Chakra (form usa Chakra UI).
+    await this.getNewPanelNameInput().waitFor();
+  }
+
+  /**
+   * Input do nome do painel no form de criação.
+   * REVISAR: aguardando data-test-id "panel-form-name-input"; fallback usa
+   * id estável `#panel-form-name-input` descoberto live.
+   */
+  getNewPanelNameInput(): Locator {
+    return this.page.locator('#panel-form-name-input');
+  }
+
+  /**
+   * Botão "Salvar" do form. Já tem `data-test-id` estável.
+   */
+  getNewPanelSaveButton(): Locator {
+    return this.page.locator('[data-test-id="panel-form-save-button"]');
+  }
+
+  /**
+   * Preenche o form de criação. `description` ignorado por enquanto — o
+   * editor é rich-text Chakra e não há TC que precise de descrição
+   * preenchida. Painel é criado ATIVO por default (checkbox `#is_active`
+   * vem checked); para criar inativo o caller faz toggle pós-criação via
+   * `toggleActiveByName`.
+   */
+  async fillNewPanelForm(data: { name: string; description?: string }): Promise<void> {
+    await this.getNewPanelNameInput().fill(data.name);
+    if (data.description) {
+      // REVISAR: rich-text Chakra (ProseMirror-like). Não há TC que
+      // precise — caller que precise descrição customizada deve
+      // implementar o flow específico aqui.
+      throw new Error('fillNewPanelForm: description ainda não implementado (rich-text Chakra)');
+    }
+  }
+
+  /**
+   * Click "Salvar" e aguarda redirect para `/panels/{paineId}/edit` (sucesso)
+   * — comportamento real, NÃO volta para a listagem após salvar (descoberto
+   * live 2026-05-06).
+   */
+  async submitNewPanelForm(): Promise<void> {
+    await this.getNewPanelSaveButton().click();
+    await this.page.waitForURL(/\/panels\/\d+\/edit/);
+  }
+
+  /**
+   * Conveniência: open + fill + submit. Usado por `beforeAll` dos specs
+   * para criar painel próprio antes de cada describe.
+   */
+  async createPanel(data: { name: string; description?: string }): Promise<void> {
+    await this.openNewPanelForm();
+    await this.fillNewPanelForm(data);
+    await this.submitNewPanelForm();
+  }
+
+  // ---------- CRUD: exclusão ----------
+
+  /**
+   * Modal de confirmação de exclusão (Chakra `<AlertDialog>`). Aparece após
+   * click no ícone delete da linha. IDs estáveis dos botões descobertos live
+   * 2026-05-06: `#panels-delete-confirm-button`, `#panels-delete-cancel-button`,
+   * `#panels-delete-close-button` (X no header).
+   * REVISAR: aguardando data-test-id "paineis-list-delete-modal".
+   */
+  getDeleteConfirmModal(): Locator {
+    return this.page.getByRole('alertdialog');
+  }
+
+  getDeleteConfirmButton(): Locator {
+    return this.page.locator('#panels-delete-confirm-button');
+  }
+
+  getDeleteCancelButton(): Locator {
+    return this.page.locator('#panels-delete-cancel-button');
+  }
+
+  /**
+   * Linha estável por `data-item-name`. Mais robusto que `getRowByName`
+   * (que casa via `<p>` na coluna 1) porque não falha se a row tiver
+   * variação de whitespace ou se houver outra `<p>` com o mesmo nome em
+   * outro contexto. Descoberto live 2026-05-06.
+   */
+  getRowByItemName(name: string): Locator {
+    // CSS attribute selector com escape: nomes com timestamp/aspas seriam
+    // problema, mas geramos nomes ASCII-safe (`Painel QA Teste TC1 w0-...`).
+    return this.page.locator(`tbody tr[data-item-name="${name}"]`);
+  }
+
+  /**
+   * Click no ícone delete da linha cujo nome é `{name}` e confirma o modal.
+   * Aguarda a linha desaparecer da listagem (condição-based, sem
+   * waitForTimeout). Falha se a row ou o modal não aparecerem — caller
+   * que precise tolerar painel inexistente deve usar `deletePanelByNameSafe`.
+   */
+  async deletePanelByName(name: string): Promise<void> {
+    // Garante modo Lista antes de buscar — `getRowByName` casa em `tbody tr`,
+    // que só existe em modo Lista. Em viewport menor (default ~1280×720,
+    // como em afterAll/beforeAll sem test.use), o default é Cards e a row
+    // não aparece. setViewMode é idempotente (no-op se já está em Lista).
+    await this.setViewMode('lista');
+    const row = this.getRowByName(name);
+    await row.locator('[data-icon="delete"]').click();
+    await this.getDeleteConfirmModal().waitFor();
+    await this.getDeleteConfirmButton().click();
+    await expect(row).toHaveCount(0, {
+      timeout: 10_000,
+    });
+  }
+
+  /**
+   * Versão tolerante a falhas — não estoura se o painel já foi deletado ou
+   * nunca foi criado. Usado em `afterAll` para cleanup robusto: se o teste
+   * falhou antes de criar o painel, o cleanup vira no-op em vez de
+   * mascarar o erro original do teste.
+   */
+  async deletePanelByNameSafe(name: string): Promise<void> {
+    try {
+      await this.setViewMode('lista');
+      const row = this.getRowByName(name);
+      const exists = (await row.count()) > 0;
+      if (!exists) {
+        // eslint-disable-next-line no-console -- diagnóstico em afterAll
+        console.warn(`[deletePanelByNameSafe] painel "${name}" não existe — cleanup no-op`);
+        return;
+      }
+      await this.deletePanelByName(name);
+    } catch (err) {
+      // eslint-disable-next-line no-console -- diagnóstico em afterAll
+      console.warn(
+        `[deletePanelByNameSafe] falha ao deletar "${name}": ${(err as Error).message}`,
+      );
+    }
+  }
+
+  // ---------- Associação painel↔menu de modo de uso (TC3) ----------
+  // Validado live 2026-05-06 (após deploy da opção "Painéis do usuário" no
+  // `<select id="page_model">`). Estrutura do form de novo item de menu:
+  // - URL: /o/{orgId}/use_modes/{useModeId}/use_mode_itens/new
+  // - Campo Nome: `<input id="title" placeholder="Nome do menu">` (obrigatório)
+  // - Campo Ícone: grid de `<i class="material-symbols-outlined">` — ícone
+  //   default é selecionado automaticamente pelo backend (não precisa clicar)
+  //   se o usuário não escolher; campo é obrigatório por label mas o submit
+  //   passa sem click manual no item.
+  // - Campo Modelo de página: `<select id="page_model">` com option
+  //   `value="user_panels"` (texto "Painéis do usuário") — última posição.
+  // - Quando page_model="user_panels": aparece group "Espaço*" com
+  //   react-select de container `#panel` e input `input[id^="react-select-"][id$="-input"]`.
+  //   Filtro client-side por substring; opções têm id `react-select-{N}-option-{idx}`.
+  // - Salvar: botão `#use-model-submit` (texto "Salvar") faz POST e
+  //   redireciona para `/use_modes/{useModeId}/edit?tab=items`.
+  //
+  // Disassociação = excluir o item de menu via ícone Delete da row do item:
+  // - Row na tabela de items tem `data-item-name="{itemName}"`.
+  // - Ícone Delete: `<span class="material-symbols-outlined">Delete</span>` na
+  //   última coluna da row (texto literal "Delete", não "delete" minúsculo —
+  //   é o nome do ícone Material Symbols).
+  // - Click abre `<div role="alertdialog">` com `#modal-delete-confirm`
+  //   (texto "Excluir") e `#modal-delete-cancel`.
+
+  /**
+   * Cria item de menu vinculado ao painel `panelName` no modo de uso
+   * `useModeId`. Se `itemName` não for fornecido, gera baseado no panelName.
+   *
+   * Pré-condição: painel `panelName` já existe e está ativo. Se o nome não
+   * for único, o react-select pode resolver a primeira ocorrência — caller
+   * deve garantir unicidade (TC3 usa nome worker-isolated com timestamp).
+   */
+  async associatePanelToMenu(
+    panelName: string,
+    useModeId: number,
+    itemName?: string,
+  ): Promise<void> {
+    const finalItemName = itemName ?? `Item ${panelName}`;
+    await this.page.goto(
+      `/o/${getOrgId()}/use_modes/${useModeId}/use_mode_itens/new`,
+    );
+    await this.getMenuItemNameInput().waitFor();
+    await this.getMenuItemNameInput().fill(finalItemName);
+    await this.getMenuItemPageModelSelect().selectOption('user_panels');
+    // O react-select container `#panel` só renderiza após page_model="user_panels".
+    // Aguardamos visibilidade antes de clicar — sem waitForTimeout (regra dura #1).
+    await this.getMenuItemPanelChooser().waitFor();
+    await this.getMenuItemPanelChooser().click();
+    // Filtro client-side: digitar o nome do painel restringe options ao alvo.
+    await this.getMenuItemPanelChooserInput().fill(panelName);
+    // A primeira (e única, pós-filtro) option tem id `react-select-{N}-option-0`.
+    // O `{N}` é dinâmico (incrementa por mount do react-select); ancoramos pelo
+    // suffix `-option-0` em qualquer combobox aberto.
+    await this.page.locator('[id^="react-select-"][id$="-option-0"]').first().click();
+    await this.getMenuItemSubmitButton().click();
+    await this.page.waitForURL(
+      new RegExp(`/use_modes/${useModeId}/edit\\?tab=items`),
+    );
+    // Click no Salvar do menu edit comita ordem/flags (descoberto live: o
+    // POST do form do item já persiste, mas a UI do menu edit espera um
+    // segundo Salvar para encerrar o fluxo limpo).
+    await this.getMenuItemSubmitButton().click();
+  }
+
+  /**
+   * Remove o item de menu cujo nome é `itemName` do modo de uso `useModeId`.
+   * Se `itemName` não fornecido, usa o mesmo padrão de `associatePanelToMenu`
+   * (`Item ${panelName}`).
+   */
+  async disassociatePanelFromMenu(
+    panelName: string,
+    useModeId: number,
+    itemName?: string,
+  ): Promise<void> {
+    const finalItemName = itemName ?? `Item ${panelName}`;
+    await this.page.goto(
+      `/o/${getOrgId()}/use_modes/${useModeId}/edit?tab=items`,
+    );
+    const row = this.getMenuItemRowByName(finalItemName);
+    await row.waitFor();
+    await this.getMenuItemDeleteIcon(finalItemName).click();
+    await this.getMenuItemDeleteConfirmButton().waitFor();
+    await this.getMenuItemDeleteConfirmButton().click();
+    await expect(row).toHaveCount(0, { timeout: 10_000 });
+    await this.getMenuItemSubmitButton().click();
+  }
+
+  /**
+   * Versão tolerante a falhas — usado em `afterAll` para cleanup robusto.
+   * Se o item já foi deletado ou nunca foi criado, vira no-op em vez de
+   * mascarar a falha original do teste.
+   */
+  async disassociatePanelFromMenu_safe(
+    panelName: string,
+    useModeId: number,
+    itemName?: string,
+  ): Promise<void> {
+    const finalItemName = itemName ?? `Item ${panelName}`;
+    try {
+      await this.page.goto(
+        `/o/${getOrgId()}/use_modes/${useModeId}/edit?tab=items`,
+      );
+      const row = this.getMenuItemRowByName(finalItemName);
+      const exists = (await row.count()) > 0;
+      if (!exists) {
+        // eslint-disable-next-line no-console -- diagnóstico em afterAll
+        console.warn(
+          `[disassociatePanelFromMenu_safe] item "${finalItemName}" não existe no menu ${useModeId} — cleanup no-op`,
+        );
+        return;
+      }
+      await this.disassociatePanelFromMenu(panelName, useModeId, itemName);
+    } catch (err) {
+      // eslint-disable-next-line no-console -- diagnóstico em afterAll
+      console.warn(
+        `[disassociatePanelFromMenu_safe] falha ao desassociar "${finalItemName}" de ${useModeId}: ${(err as Error).message}`,
+      );
+    }
+  }
+
+  // ---------- Form de item de menu (auxiliares de associação) ----------
+
+  getMenuItemNameInput(): Locator {
+    // REVISAR: aguardando data-test-id "use-mode-item-form-name-input";
+    // fallback usa id estável `#title` (descoberto live 2026-05-06).
+    return this.page.locator('#title');
+  }
+
+  getMenuItemPageModelSelect(): Locator {
+    // REVISAR: aguardando data-test-id "use-mode-item-form-page-model-select".
+    // Atributo name + id são ambos `page_model` no `<select>` real.
+    return this.page.locator('#page_model');
+  }
+
+  /**
+   * Container clicável do react-select que aparece quando page_model="user_panels".
+   * O container tem id estável `#panel` (descoberto live). O `<input>` interno
+   * tem id dinâmico `react-select-{N}-input` que muda entre re-mounts do
+   * componente — por isso ancoramos no container, não no input.
+   */
+  getMenuItemPanelChooser(): Locator {
+    return this.page.locator('#panel');
+  }
+
+  /**
+   * Input de busca do react-select de painel. ID dinâmico (`react-select-3-input`
+   * na exploração live, mas o `3` muda); ancoramos pelo prefix/suffix.
+   * REVISAR: o react-select não expõe id estável próprio — caso o backend
+   * estabilize via PR de data-test-id, atualizar.
+   */
+  getMenuItemPanelChooserInput(): Locator {
+    return this.page.locator('input[id^="react-select-"][id$="-input"]').first();
+  }
+
+  /**
+   * Botão Salvar do form de novo item de menu. Mesmo id é usado pelo botão
+   * Salvar do menu edit (tab Menu) — ambos com `#use-model-submit`. Descoberto
+   * live 2026-05-06.
+   */
+  getMenuItemSubmitButton(): Locator {
+    return this.page.locator('#use-model-submit');
+  }
+
+  /**
+   * Row da tabela de items na aba Menu do menu edit. Ancora pelo `<p>` da
+   * 2ª `<td>` com texto exato (mirror de `getRowByName` para panels — mesmo
+   * padrão filter+has).
+   *
+   * REVISAR: a `<tr>` expõe `data-item-name="{name}"` e o seletor anterior
+   * `tbody tr[data-item-name="${name}"]` parecia direto; falha porque o
+   * `<input id="title" maxLength="25">` do form de novo item TRUNCA
+   * silenciosamente nomes >25 chars no backend. Quando o caller passa
+   * "Item Painel Vinculado TC3 w1-1778104667626" (43 chars), o stored fica
+   * "Item Painel Vinculado TC3" (25 chars) — `data-item-name` reflete o
+   * truncado e o seletor não casa. Truncamos aqui pra refletir o contrato
+   * real do backend. Mesma classe de bug do `data-paineid`/encoding em
+   * panels (caso anterior que motivou `getRowByName` via `<p>`).
+   */
+  getMenuItemRowByName(name: string): Locator {
+    const truncated = name.slice(0, 25);
+    const exactRe = new RegExp(`^${escapeRegex(truncated)}$`);
+    return this.page
+      .locator('tbody tr')
+      .filter({ has: this.page.locator('td:nth-child(2) p', { hasText: exactRe }) });
+  }
+
+  /**
+   * Ícone Delete (Material Symbol literal "Delete") da última coluna da row
+   * de item. Filtro `hasText` exato evita conflito com a coluna "Modelo de
+   * página" se algum modelo se chamar literalmente "Delete" no futuro.
+   */
+  getMenuItemDeleteIcon(name: string): Locator {
+    return this.getMenuItemRowByName(name)
+      .locator('span.material-symbols-outlined', { hasText: /^Delete$/ });
+  }
+
+  /**
+   * Botão "Excluir" do `<div role="alertdialog">` que confirma exclusão de
+   * item de menu. ID estável `#modal-delete-confirm` (≠ do modal de delete
+   * de painel que usa `#panels-delete-confirm-button`).
+   */
+  getMenuItemDeleteConfirmButton(): Locator {
+    return this.page.locator('#modal-delete-confirm');
   }
 }
