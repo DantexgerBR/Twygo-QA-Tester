@@ -1,10 +1,11 @@
 import { parseArgs } from 'node:util';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, rmSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { spawn } from 'node:child_process';
 import { createLogger } from '../../../src/utils/logger.js';
 import { FILES } from '../../../src/utils/constants.js';
 import {
+  getOutputDir,
   getOutputPath,
   getProjectConfigPath,
 } from '../../../src/utils/environment.js';
@@ -129,10 +130,31 @@ function runShell(
   });
 }
 
+/**
+ * Limpa findings exploratórios e artifacts do run anterior, ANTES do
+ * Playwright iniciar uma nova execução. Sem isso, JSONs nomeados por
+ * `__w{workerIndex}` acumulam entre runs (Playwright pode atribuir
+ * worker diferente) e o validator agrega findings stale (potencialmente
+ * de envs/orgIds removidos).
+ */
+function cleanRunArtifacts(): void {
+  const dirsToClean = [
+    getOutputDir('exploratory'),
+    getOutputDir('test-artifacts'),
+  ];
+  for (const d of dirsToClean) {
+    if (existsSync(d)) {
+      rmSync(d, { recursive: true, force: true });
+      log.debug(`Limpou ${d} (run anterior)`);
+    }
+  }
+}
+
 async function runPlaywright(
   suites: ParsedTestSuite[],
   regression: boolean,
 ): Promise<number> {
+  cleanRunArtifacts();
   const env: Record<string, string> = {};
   if (regression) env.REGRESSION = 'true';
   const grep = regression ? null : buildGrep(suites);

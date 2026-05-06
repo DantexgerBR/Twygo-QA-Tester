@@ -36,6 +36,12 @@ function loadProbeConfig(): ProbeConfig {
     probes: { ...DEFAULT_PROBE_CONFIG.probes, ...(userCfg.probes ?? {}) },
     ignoredHttpStatuses: userCfg.ignoredHttpStatuses ?? DEFAULT_PROBE_CONFIG.ignoredHttpStatuses,
     ignoredHostnames: userCfg.ignoredHostnames ?? DEFAULT_PROBE_CONFIG.ignoredHostnames,
+    // Concatena defaults Twygo-wide com extensões do projeto (vs. substituir).
+    // Projeto pode silenciar mais erros conhecidos sem perder os globais.
+    ignoredMessagePatterns: [
+      ...DEFAULT_PROBE_CONFIG.ignoredMessagePatterns,
+      ...(userCfg.ignoredMessagePatterns ?? []),
+    ],
     scopedRoutes: userCfg.scopedRoutes ?? DEFAULT_PROBE_CONFIG.scopedRoutes,
     scopedKeywords: userCfg.scopedKeywords ?? DEFAULT_PROBE_CONFIG.scopedKeywords,
     activeProbes: { ...DEFAULT_PROBE_CONFIG.activeProbes, ...(userCfg.activeProbes ?? {}) },
