@@ -75,10 +75,11 @@ Se os 3 passos terminaram sem erro, abra o Claude Code:
 claude
 ```
 
-Dentro do Claude Code, instale o plugin oficial Playwright (subagents que o orquestrador usa para planner/generator/healer):
+Dentro do Claude Code, instale o marketplace oficial do Claude e plugin oficial do Playwright (subagents que o orquestrador usa para planner/generator/healer):
 
 ```
-/plugin install playwright
+claude plugin marketplace add anthropics/claude-plugins-official
+claude plugin install playwright@claude-plugins-official
 ```
 
 Conferir que está OK:
@@ -151,15 +152,96 @@ Use [`projects/creditos-fase-02/project.config.json`](projects/creditos-fase-02/
 
 > O caminho de `testAnalysisFile` é **relativo ao diretório do projeto** (`projects/widgets/`), não à raiz do agente.
 
-### 5. Validar
+### 5. Sanity check de configuração
 
 ```bash
 npm run typecheck                          # deve passar limpo
 npm run agent:parse -- --project widgets   # parseia o XML do projeto
-npm run agent:suites -- --project widgets  # lista as testsuites do projeto
+npm run agent:suites -- --project widgets  # lista as testsuites disponíveis
 ```
 
+Se os 3 comandos terminaram sem erro, o XML está válido e o projeto está pronto pra preparação + geração de specs.
+
 > Se `projects/` tiver **só 1 projeto**, a flag `--project` é opcional — o agente auto-detecta. Quando houver 2+ projetos coexistindo (na master cumulativa), a flag é obrigatória.
+
+### 6. Preparar storageState (login global 1×)
+
+```bash
+npm run agent:smoke -- --project widgets
+```
+
+Faz login no env primário (e no secundário se houver `*-without-credits` ou `*-widgets-disabled` em `environment.json`) e grava `outputs/.auth/storage.json`. Specs reusam esse storage — não logam por teste.
+
+> Idempotente: o smoke detecta storage fresco (<30min) e não re-loga sem necessidade.
+
+### 7. Gerar specs por bloco (primeira vez)
+
+Para **cada testsuite** que você quer cobrir, rode este ciclo: recon → plan + generate → run. Faça **uma de cada vez** — generator funciona melhor com escopo enxuto e dá pra revisar diff por bloco.
+
+#### 7.1. Recon da área (opcional, recomendado)
+
+```bash
+# Linux / macOS / Git Bash
+PROJECT=widgets npm run agent:recon -- --suite "Listagem de painéis"
+
+# Windows PowerShell
+$env:PROJECT="widgets"; npm run agent:recon -- --suite "Listagem de painéis"
+```
+
+Loga no app, navega na área da testsuite, captura test-ids/roles/labels e salva em `projects/<slug>/inputs/recon-<slug-suite>.md`. O planner consome isso depois e corta ~70% do tempo de exploração live.
+
+> A flag `--project` ainda não é parseada por `agent:recon` — use a env var `PROJECT=<slug>` (ou rode dentro de um shell já exportado).
+
+#### 7.2. Plan + Generate (interativo via Claude Code)
+
+```bash
+claude
+```
+
+Dentro do Claude Code, peça em linguagem natural:
+
+```
+Execute o orquestrador para a suite "Listagem de painéis"
+```
+
+O agente:
+1. Carrega `CLAUDE.md` + skill `twygo-test-orchestrator`
+2. Despacha o subagent **planner** (exploração live → plano em `projects/<slug>/specs/<slug-suite>-plan.md`)
+3. Despacha o subagent **generator** (Page Objects em `projects/<slug>/pages/` + specs em `projects/<slug>/tests/features/<slug-suite>/`)
+4. Roda `npm run typecheck`
+
+> Testcases com pré-condição não satisfeita (dados não seedados, env não disponível) saem do generator com `test.fixme(true, "<motivo>")` — não chutamos.
+
+#### 7.3. Executar e validar a suite gerada
+
+```bash
+npm run agent:run -- --project widgets --suite "Listagem de painéis"
+```
+
+Pre-flight + Playwright filtrado por suite + validador exploratório + relatório. Saída:
+
+```
+outputs/widgets/reports/listagem-de-paineis_{timestamp}/index.html
+outputs/reports/latest-suite-listagem-de-paineis.html
+```
+
+Se algum teste quebrar por seletor após mudança de UI, use **healing** (ver [seção dedicada](#healing-teste-quebrou-depois-de-mudança-de-ui)).
+
+### 8. Iterar pelos demais blocos
+
+Repita **7.1 → 7.3** para cada testsuite do projeto. Cada bloco vira um diretório em `projects/<slug>/tests/features/<slug-suite>/` com 1 `.spec.ts` por testcase.
+
+### 9. Geração completa / regressivo final
+
+Quando os blocos individuais estiverem todos passando, rode o projeto inteiro:
+
+```bash
+# Todas as suítes do projeto (pre-flight → execução completa → report)
+npm run agent:run -- --project widgets
+
+# Regressivo final com Allure CLI + GH Pages (fim de projeto)
+npm run agent:regression -- --project widgets
+```
 
 > **Checklist completo + commits**: [.claude/PROJECT_BOOTSTRAP.md](.claude/PROJECT_BOOTSTRAP.md).
 
