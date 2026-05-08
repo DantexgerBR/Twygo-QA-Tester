@@ -101,12 +101,27 @@ async function globalSetup(_config: FullConfig): Promise<void> {
 
   // Login secundário: detecta um env "negado" para specs de bloqueio.
   // Convenções aceitas (sufixos): `-without-credits` (créditos de IA) e
-  // `-widgets-disabled` (Widgets/Painéis sem contrato/flag). O primeiro
-  // que casar é usado.
-  const SECONDARY_SUFFIXES = ['-without-credits', '-widgets-disabled'];
-  const secondaryEnvName = Object.keys(envConfig).find((k) =>
-    SECONDARY_SUFFIXES.some((s) => k.endsWith(s)),
-  );
+  // `-widgets-disabled` (Widgets/Painéis sem contrato/flag).
+  //
+  // Prioridade:
+  //   1. Casa o sufixo com o env PRINCIPAL: ex. principal=`staging-widgets`
+  //      → procura `staging-widgets-disabled` (extensão direta do principal).
+  //   2. Fallback: pega o primeiro env que casa com QUALQUER sufixo —
+  //      cobre o caso legado onde o principal é só `staging` e o secundário
+  //      é `staging-without-credits` (independente de prefixo).
+  //
+  // Sem isso, ao rodar com principal=`staging-widgets` o find caía no
+  // `staging-without-credits` (que tem widgets ativos!), e specs de
+  // "feature-flag-desabilitada" logavam no env errado.
+  const SECONDARY_SUFFIXES = ['-without-credits', '-disabled', '-widgets-disabled'];
+  const principal = projectConfig.environment;
+  const directMatch = SECONDARY_SUFFIXES
+    .map((s) => `${principal}${s}`)
+    .find((candidate) => candidate in envConfig);
+  const secondaryEnvName = directMatch
+    ?? Object.keys(envConfig).find((k) =>
+      k !== principal && SECONDARY_SUFFIXES.some((s) => k.endsWith(s)),
+    );
   if (secondaryEnvName) {
     try {
       await loginAndPersist(secondaryEnvName, envConfig[secondaryEnvName]!, SECONDARY_STORAGE_PATH);

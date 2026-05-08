@@ -1,7 +1,7 @@
 {
   "projectName": "Widgets",
   "testAnalysisFile": "inputs/Analise_Teste_Paineis_Widgets.xml",
-  "environment": "staging",
+  "environment": "staging-widgets",
   "browsers": ["chromium"],
   "headless": true,
   "reporting": {
