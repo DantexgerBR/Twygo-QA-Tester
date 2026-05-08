@@ -2,7 +2,11 @@ import { defineConfig, devices } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { getProjectSlug, listAvailableProjects } from './src/utils/environment.js';
+import {
+  getProjectSlug,
+  listAvailableProjects,
+  loadEnvironmentConfig,
+} from './src/utils/environment.js';
 
 // __dirname não existe em ES modules; reconstruímos a partir de import.meta.url
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -44,9 +48,9 @@ const projectConfig: ProjectConfig = JSON.parse(
     'utf-8',
   ),
 );
-const environmentConfig: EnvironmentConfig = JSON.parse(
-  readFileSync(resolve(__dirname, 'config/environment.json'), 'utf-8'),
-);
+// Resolve `${VAR}` placeholders via process.env (carregado de .env).
+// Ver agent-playwright/.env.example.
+const environmentConfig: EnvironmentConfig = loadEnvironmentConfig();
 
 const env = environmentConfig[projectConfig.environment];
 if (!env) {

@@ -4,7 +4,7 @@ import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'no
 import { dirname, resolve } from 'node:path';
 import { createLogger } from '../../src/utils/logger.js';
 import { LoginPage } from '../../src/pages/LoginPage.js';
-import { loadProjectConfig } from '../../src/utils/environment.js';
+import { loadEnvironmentConfig, loadProjectConfig } from '../../src/utils/environment.js';
 import { FILES } from '../../src/utils/constants.js';
 
 const log = createLogger('global-setup');
@@ -91,9 +91,8 @@ async function globalSetup(_config: FullConfig): Promise<void> {
   }
 
   const projectConfig = loadProjectConfig();
-  const envConfig: EnvConfig = JSON.parse(
-    readFileSync(resolve(process.cwd(), FILES.environment), 'utf-8'),
-  );
+  // Carrega config com placeholders `${VAR}` já resolvidos via process.env.
+  const envConfig: EnvConfig = loadEnvironmentConfig() as EnvConfig;
   const env = envConfig[projectConfig.environment];
   if (!env) throw new Error(`Environment "${projectConfig.environment}" ausente em ${FILES.environment}`);
 
