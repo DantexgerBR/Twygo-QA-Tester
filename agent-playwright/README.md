@@ -181,16 +181,21 @@ Para **cada testsuite** que você quer cobrir, rode este ciclo: recon → plan +
 #### 7.1. Recon da área (opcional, recomendado)
 
 ```bash
-# Linux / macOS / Git Bash
-PROJECT=widgets npm run agent:recon -- --suite "Listagem de painéis"
-
-# Windows PowerShell
-$env:PROJECT="widgets"; npm run agent:recon -- --suite "Listagem de painéis"
+# Funciona igual em Linux / macOS / Git Bash / Windows PowerShell
+npm run agent:recon -- --project widgets --suite "Listagem de painéis"
 ```
 
 Loga no app, navega na área da testsuite, captura test-ids/roles/labels e salva em `projects/<slug>/inputs/recon-<slug-suite>.md`. O planner consome isso depois e corta ~70% do tempo de exploração live.
 
-> A flag `--project` ainda não é parseada por `agent:recon` — use a env var `PROJECT=<slug>` (ou rode dentro de um shell já exportado).
+> A flag `--project` é opcional quando há só 1 projeto em `projects/` (auto-detect). Alternativa: env var (útil pra encadear múltiplos comandos sem repetir):
+>
+> ```bash
+> # Linux / macOS / Git Bash
+> PROJECT=widgets npm run agent:recon -- --suite "Listagem de painéis"
+>
+> # Windows PowerShell
+> $env:PROJECT="widgets"; npm run agent:recon -- --suite "Listagem de painéis"
+> ```
 
 #### 7.2. Plan + Generate (interativo via Claude Code)
 

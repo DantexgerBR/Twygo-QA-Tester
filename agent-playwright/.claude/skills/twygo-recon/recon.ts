@@ -17,21 +17,31 @@ const log = createLogger('recon');
 type ProjConfig = { environment: string };
 type EnvConfig = Record<string, { baseUrl: string; credentials: { email: string; password: string }; timeout: number }>;
 
-function parseFlags(): { suite?: string; urls?: string[] } {
+function parseFlags(): { suite?: string; urls?: string[]; project?: string } {
   const { values } = parseArgs({
     options: {
       suite: { type: 'string' },
       url: { type: 'string' },
       urls: { type: 'string' }, // comma-separated multiple URLs
+      project: { type: 'string' },
     },
     strict: false,
   });
+  // Propaga --project como env var PROJECT antes que getProjectSlug() seja
+  // chamado pelos imports (mirror do orchestrator.ts).
+  if (values.project) {
+    process.env.PROJECT = values.project as string;
+  }
   const single = values.url as string | undefined;
   const multi = values.urls as string | undefined;
   let urls: string[] | undefined;
   if (multi) urls = multi.split(',').map((u) => u.trim()).filter(Boolean);
   else if (single) urls = [single];
-  return { suite: values.suite as string | undefined, urls };
+  return {
+    suite: values.suite as string | undefined,
+    urls,
+    project: values.project as string | undefined,
+  };
 }
 
 function flattenSuites(suite: ParsedTestSuite, acc: ParsedTestSuite[] = []): ParsedTestSuite[] {
