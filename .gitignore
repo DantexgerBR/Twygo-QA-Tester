@@ -32,9 +32,12 @@ test-results/
 # ===== Outputs gerados pelo agente Playwright =====
 # Outputs SÃO commitados (decisão 2026-05-08): histórico de execuções
 # acessível direto no git facilita PR review e compartilhamento sem
-# clone+run. Única exceção: storage de auth (`.auth/`) — contém cookies
-# de sessão Twygo, sensível, não vai pro repo.
+# clone+run. test-artifacts/ inclusive (PNGs, error-context.md) — só os
+# trace.zip ficam fora porque inflam o repo (~12MB cada).
+# Única outra exceção: storage de auth (`.auth/`) — cookies Twygo,
+# sensível, não vai pro repo.
 agent-playwright/outputs/.auth/
+agent-playwright/outputs/**/*.zip
 
 # ===== Env / segredos =====
 .env
