@@ -1,13 +1,13 @@
 import { readFileSync, writeFileSync, existsSync, copyFileSync } from 'node:fs';
-import { resolve, join, basename, relative } from 'node:path';
+import { join, basename, relative } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { parseArgs } from 'node:util';
 import { createLogger } from '../../../src/utils/logger.js';
-import { FILES } from '../../../src/utils/constants.js';
 import {
   getOutputDir,
   getOutputPath,
   getProjectConfigPath,
+  loadEnvironmentConfig,
 } from '../../../src/utils/environment.js';
 import { ensureDir, slugify } from '../../../src/utils/helpers.js';
 import type {
@@ -1313,8 +1313,11 @@ async function main(): Promise<void> {
   const cfg = loadJson<ProjectConfig>(getProjectConfigPath());
   if (!cfg) throw new Error('Config ausente: projects/<slug>/project.config.json');
 
-  const envMap = loadJson<EnvironmentMap>(resolve(process.cwd(), FILES.environment));
-  const envEntry = envMap?.[cfg.environment];
+  // Bug fix (regra 3 do CLAUDE.md raiz): usar o resolver canônico, não
+  // loadJson cru. Sem isso, o bloco "Pronto para registro de bug" vazava
+  // os placeholders literais (${TWYGO_*}) em vez das credenciais expandidas.
+  const envMap = loadEnvironmentConfig() as EnvironmentMap;
+  const envEntry = envMap[cfg.environment];
   if (!envEntry) {
     log.warn(`Environment "${cfg.environment}" ausente em environment.json — campos URL/Login/Senha do bug-block ficarão como "—".`);
   }
