@@ -99,11 +99,14 @@ async function globalSetup(_config: FullConfig): Promise<void> {
   // Login no ambiente principal (storage padrão consumido por playwright.config.ts/use.storageState)
   await loginAndPersist(projectConfig.environment, env, STORAGE_PATH);
 
-  // Login secundário: se environment.json define um env terminando em
-  // `-without-credits`, prepara storage para specs de "bloqueio sem saldo".
-  // Hoje convencionado como `staging-without-credits` (criado em 2026-05-04
-  // junto com Fase 2 de Gestão de Créditos de IA — organização sem saldo).
-  const secondaryEnvName = Object.keys(envConfig).find((k) => k.endsWith('-without-credits'));
+  // Login secundário: detecta um env "negado" para specs de bloqueio.
+  // Convenções aceitas (sufixos): `-without-credits` (créditos de IA) e
+  // `-widgets-disabled` (Widgets/Painéis sem contrato/flag). O primeiro
+  // que casar é usado.
+  const SECONDARY_SUFFIXES = ['-without-credits', '-widgets-disabled'];
+  const secondaryEnvName = Object.keys(envConfig).find((k) =>
+    SECONDARY_SUFFIXES.some((s) => k.endsWith(s)),
+  );
   if (secondaryEnvName) {
     try {
       await loginAndPersist(secondaryEnvName, envConfig[secondaryEnvName]!, SECONDARY_STORAGE_PATH);

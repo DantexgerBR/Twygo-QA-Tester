@@ -1,5 +1,6 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { parseArgs } from 'node:util';
 import { XMLParser, XMLValidator } from 'fast-xml-parser';
 import { createLogger } from '../../../src/utils/logger.js';
 import {
@@ -248,9 +249,23 @@ function resolveDefaultInputPath(): string {
 }
 
 async function main(): Promise<void> {
-  const cliArg = process.argv[2];
-  const inputPath = cliArg
-    ? resolve(process.cwd(), cliArg)
+  const { values, positionals } = parseArgs({
+    options: {
+      project: { type: 'string' },
+    },
+    allowPositionals: true,
+    strict: false,
+  });
+
+  // Propaga --project como env var PROJECT antes de qualquer call que resolva
+  // o slug (resolveDefaultInputPath -> getProjectConfigPath -> getProjectSlug).
+  if (values.project) {
+    process.env.PROJECT = values.project as string;
+  }
+
+  const cliPath = positionals[0];
+  const inputPath = cliPath
+    ? resolve(process.cwd(), cliPath)
     : resolveDefaultInputPath();
   const outputPath = getOutputPath('test-analysis.parsed.json');
 

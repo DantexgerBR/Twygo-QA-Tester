@@ -97,6 +97,16 @@ export type ProbeConfig = {
   ignoredHttpStatuses: number[];
   ignoredHostnames: string[];
   /**
+   * Padrões (substring, case-insensitive) que silenciam findings de
+   * `console_error` e `page_error` cuja mensagem contenha qualquer um
+   * deles. Útil para erros conhecidos do produto sem fix imediato — o
+   * time confirmou e prefere não poluir os KPIs.
+   *
+   * Convenção: defaults capturam ruído Twygo-wide. Projetos estendem
+   * via `project.config.json[exploratory].ignoredMessagePatterns`.
+   */
+  ignoredMessagePatterns: string[];
+  /**
    * Substring(s) que, quando presentes na URL do request/console, marcam o
    * finding como **in-scope** (entra nos KPIs principais). Default focado em
    * `ai_consumption_analysis`.
@@ -136,6 +146,12 @@ export const DEFAULT_PROBE_CONFIG: ProbeConfig = {
   a11yTags: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'best-practice'],
   ignoredHttpStatuses: [],
   ignoredHostnames: [],
+  ignoredMessagePatterns: [
+    // Erro Twygo-wide: ícones servidos como `.sass` com MIME `text/sass`,
+    // strict MIME do Chrome rejeita. Time confirmou que afeta só estilo
+    // de ícones e não há correção específica planejada.
+    'text/sass',
+  ],
   scopedRoutes: ['ai_consumption_analysis'],
   scopedKeywords: [
     'ai_consumption',
@@ -159,7 +175,17 @@ export const DEFAULT_PROBE_CONFIG: ProbeConfig = {
 };
 
 /**
- * Determina se uma URL+mensagem cai no escopo "Créditos de IA" configurado.
+ * Substring-match case-insensitive em qualquer um dos padrões. Usado para
+ * suprimir findings de `console_error`/`page_error` conhecidos.
+ */
+export function isIgnoredMessage(message: string, patterns: string[]): boolean {
+  if (!patterns || patterns.length === 0) return false;
+  const lower = message.toLowerCase();
+  return patterns.some((p) => p && lower.includes(p.toLowerCase()));
+}
+
+/**
+ * Determina se uma URL+mensagem cai no escopo configurado para o projeto.
  * Match em qualquer um dos dois eixos (rota ou keyword) é suficiente.
  */
 export function isInScope(
@@ -197,10 +223,12 @@ export class ExploratoryCollector {
     if (!this.config.enabled) return;
 
     if (this.config.probes.consoleErrors) {
+      const ignored = this.config.ignoredMessagePatterns ?? [];
       page.on('console', (msg: ConsoleMessage) => {
         if (msg.type() !== 'error') return;
         const url = page.url();
         const text = msg.text();
+        if (isIgnoredMessage(text, ignored)) return;
         this.findings.push({
           kind: 'console_error',
           severity: 'error',
@@ -210,6 +238,7 @@ export class ExploratoryCollector {
         });
       });
       page.on('pageerror', (err: Error) => {
+        if (isIgnoredMessage(err.message, ignored)) return;
         const url = page.url();
         this.findings.push({
           kind: 'page_error',

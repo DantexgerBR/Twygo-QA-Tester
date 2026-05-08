@@ -1826,7 +1826,10 @@ function renderCoverageSection(coverage: ExploratoryCoverage[]): string {
   </div>`;
 }
 
-function renderOutOfScopeSection(bucket: ExploratoryScopedBucket | undefined): string {
+function renderOutOfScopeSection(
+  bucket: ExploratoryScopedBucket | undefined,
+  projectName: string,
+): string {
   if (!bucket) return '';
   const total = bucket.totals.errors + bucket.totals.warnings + bucket.totals.info;
   if (total === 0) return '';
@@ -1839,7 +1842,7 @@ function renderOutOfScopeSection(bucket: ExploratoryScopedBucket | undefined): s
   ].filter(Boolean).join('\n');
   return `<details style="margin-top:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px">
     <summary style="cursor:pointer;color:var(--muted);font-size:0.88rem">
-      <strong style="color:var(--text-soft)">Fora do escopo "Créditos de IA"</strong>
+      <strong style="color:var(--text-soft)">Fora do escopo "${escapeHtml(projectName)}"</strong>
       <span style="margin-left:8px">${bucket.totals.errors > 0 ? `<span class="badge fail">${bucket.totals.errors} erro(s)</span>` : ''}${bucket.totals.warnings > 0 ? `<span class="badge warn" style="margin-left:6px">${bucket.totals.warnings} aviso(s)</span>` : ''}${bucket.totals.info > 0 ? `<span class="badge info" style="margin-left:6px">${bucket.totals.info} info</span>` : ''}</span>
       <span class="muted" style="margin-left:6px">(silenciado dos KPIs principais — telemetria, módulos não relacionados etc.)</span>
     </summary>
@@ -1909,14 +1912,14 @@ function renderExploratory(args: { exploratoryByTestsuite: Map<string, Explorato
       return `<h3 style="margin-top:24px">${escapeHtml(s.testsuiteName)}</h3>
         ${totalsBar}
         ${sections}
-        ${renderOutOfScopeSection(s.outOfScope)}
+        ${renderOutOfScopeSection(s.outOfScope, args.projectName)}
         ${renderActiveProbesSection(s.activeProbes)}`;
     })
     .join('\n');
   const body = `
     <h1>Validação Exploratória — ${escapeHtml(args.projectName)}</h1>
     <p class="subtitle"><a href="index.html">← Voltar ao dashboard</a></p>
-    <p class="lede">Achados capturados pelas probes da fixture exploratória durante a execução dos testes: erros de JavaScript no navegador, respostas HTTP de falha, violações de acessibilidade (axe-core), imagens quebradas e cobertura observada por URL. Os KPIs principais consideram apenas findings <strong>dentro do escopo "Créditos de IA"</strong> (rotas <code>ai_consumption_analysis</code> ou mensagens com palavras-chave do domínio). Findings fora do escopo continuam acessíveis em uma seção colapsada por testsuite. A seção <strong>"Probes ativos"</strong> reúne descobertas além do que os casos do XML cobrem (hover em tooltips, navegação por teclado, valores extremos em forms, varredura de clicáveis, axe deep e estabilidade visual).</p>
+    <p class="lede">Achados capturados pelas probes da fixture exploratória durante a execução dos testes: erros de JavaScript no navegador, respostas HTTP de falha, violações de acessibilidade (axe-core), imagens quebradas e cobertura observada por URL. Os KPIs principais consideram apenas findings <strong>dentro do escopo "${escapeHtml(args.projectName)}"</strong> (rotas e palavras-chave configuradas em <code>project.config.json</code> &rarr; <code>exploratory.scopedRoutes</code> / <code>exploratory.scopedKeywords</code>). Findings fora do escopo continuam acessíveis em uma seção colapsada por testsuite. A seção <strong>"Probes ativos"</strong> reúne descobertas além do que os casos do XML cobrem (hover em tooltips, navegação por teclado, valores extremos em forms, varredura de clicáveis, axe deep e estabilidade visual).</p>
     ${blocks || '<p class="muted">Nenhum finding exploratório registrado.</p>'}
   `;
   return htmlShell(`Exploratório — ${args.projectName}`, body);
