@@ -360,11 +360,21 @@ npm run clean                            # apaga outputs/
 
 ## Variáveis de ambiente
 
-Crie `.env` na raiz do agente (gitignored):
+Copie o template e preencha:
 
 ```bash
-TWYGO_STAGING_USER=qa@twygo.com
-TWYGO_STAGING_PASS=<senha do staging>
+cp .env.example .env
+```
+
+Variáveis obrigatórias (todas em `.env`):
+
+```bash
+TWYGO_STAGING_EMAIL=<email da conta de QA staging>
+TWYGO_STAGING_PASSWORD=<senha staging>
+
+# Para specs de bloqueio "sem créditos" (ver CLAUDE.md §7.5):
+TWYGO_STAGING_WITHOUT_CREDITS_EMAIL=<email da conta zerada>
+TWYGO_STAGING_WITHOUT_CREDITS_PASSWORD=<senha da conta zerada>
 
 # Opcionais:
 EXPLORATORY_STRICT=1     # promove findings exploratórios (axe, console errors) a falhas
@@ -372,7 +382,13 @@ LOG_LEVEL=debug          # output verbose dos scripts
 REGRESSION=true          # ativa reporter Allure (geralmente setado pelo agent:regression)
 ```
 
-`config/environment.json` resolve `${TWYGO_STAGING_USER}` automaticamente.
+`config/environment.json` referencia essas variáveis via `${VAR}` e
+`src/utils/environment.ts#loadEnvironmentConfig()` resolve no boot. `.env`
+está no `.gitignore` da raiz do monorepo — nunca commitar.
+
+> Se aparecer `Variável de ambiente "TWYGO_*" referenciada em
+> config/environment.json mas não definida`, sua `.env` está faltando ou
+> incompleta. Use a skill `configurar-ambiente` (`.claude/skills/configurar-ambiente/SKILL.md`).
 
 ---
 

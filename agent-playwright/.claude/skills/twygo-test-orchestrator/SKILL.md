@@ -101,6 +101,12 @@ Para cada testcase planejado:
        fluxo. Comentário no código serve só pra capturar invariante não-óbvia
        (sync alert que força `force:true`, tabela compartilhada que exige
        revert, prosa ambígua marcada `// REVISAR`).
+     - **E. Constantes-de-domínio em `<test-case>.data.ts`, não inline.**
+       IDs (`envId: 36799`), slugs, listas de fixtures vão num arquivo
+       `<mesmo-nome>.data.ts` ao lado do spec, exportando um objeto `as const`.
+       O spec só importa e referencia (`data.envId`). Convenção em CLAUDE.md
+       §3.1. Generator deve emitir o `.data.ts` SEMPRE que o teste tiver ≥1
+       constante de domínio — mesmo que seja só uma. Não inline.
 2. Annotations Allure obrigatórias no início de cada `test()`:
    ```ts
    await allure.epic(`Twygo - ${projectName}`);                    // do projectName em config

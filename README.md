@@ -198,7 +198,8 @@ A branch `project/<slug>` fica preservada como histórico do projeto. Próximo p
 │   ├── CLAUDE.md                   # especificação técnica
 │   ├── package.json                # dependências Node
 │   ├── playwright.config.ts        # config Playwright
-│   ├── config/environment.json     # baseUrl + credenciais (compartilhado)
+│   ├── config/environment.json     # baseUrl/orgId/paths (credenciais via ${VAR} → .env)
+│   ├── .env.example                # template das vars TWYGO_* — copiar para .env
 │   ├── projects/<slug>/            # 1 subpasta por projeto Twygo (XML, specs, pages específicos)
 │   ├── tests/{auth,setup}/         # specs e setup compartilhados
 │   ├── src/                        # Page Objects + fixtures + utils — infra compartilhada
@@ -252,7 +253,7 @@ A branch `project/<slug>` fica preservada como histórico do projeto. Próximo p
 - **Slug de projeto**: lowercase com hífens (ex.: `widgets`, `kit-de-marca`).
 - **Ambiente padrão**: `staging` (`stage10.stage.twygoead.com`). Ver `agent-playwright/config/environment.json`.
 - **Pasta `outputs/`/`output/`**: 100% gerada pelos agentes — **nunca commitar**, está no `.gitignore`.
-- **Credenciais**: sempre em `.env` (gitignored), referenciadas via `${VAR}` em arquivos de config. **Nunca commitar `.env`**.
+- **Credenciais**: sempre em `.env` (gitignored), referenciadas via `${VAR}` em arquivos de config (ex: `agent-playwright/config/environment.json`). **Nunca commitar `.env`**. Cada agente que precisa de credenciais traz seu próprio `.env.example`.
 
 ---
 

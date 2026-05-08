@@ -127,6 +127,61 @@ agent-playwright/
 └── templates/                      # page-object-template.ts, test-template.ts
 ```
 
+### 3.1. Convenção de dados por teste
+
+Cada caso de teste isola seus dados (IDs de ambientes, slugs, listas de
+inputs, paths derivados) num arquivo `*.data.ts` ao lado do spec. Variáveis
+**reutilizadas entre specs do mesmo projeto** ficam em `projects/<slug>/data/`.
+Variáveis **genéricas Twygo** (não acopladas a um projeto) ficam em
+`src/fixtures/`.
+
+```
+projects/<slug>/
+├── tests/features/<suite-slug>/
+│   ├── <test-case>.spec.ts            # spec — sem hardcode
+│   ├── <test-case>.data.ts            # variáveis SÓ deste teste
+│   └── <suite-slug>.shared.data.ts    # opcional — compartilhado pela suíte
+├── data/                              # constants do projeto (orgIds extra, paths)
+│   ├── environments.data.ts
+│   └── content-types.data.ts
+└── ...
+```
+
+Forma do `<test-case>.data.ts`:
+
+```ts
+// projects/creditos-fase-02/tests/features/configurar-indexacao-conteudo-por-ambiente/configurar-a-indexacao-curso-checkbox.data.ts
+export const configurarIndexacaoCursoData = {
+  envId: 36799,
+  alternativeEnvId: 36796,
+  contentAssets: ['text', 'page', 'lesson', 'stampedPdf', 'video', 'files'] as const,
+} as const;
+```
+
+E no spec:
+
+```ts
+import { configurarIndexacaoCursoData as data } from './configurar-a-indexacao-curso-checkbox.data.js';
+
+test('configurar a indexação curso checkbox', async ({ page }) => {
+  await page.goto(`/o/${getOrgId()}/environments/${data.envId}/edit`);
+  // ...
+});
+```
+
+**Por quê**:
+- Specs param de carregar literais opacos (`36799`) — leitor entende a
+  intenção pelo nome (`data.envId`).
+- Mesma variável repetida em N specs vira 1 ponto de mudança quando o
+  ambiente muda.
+- Generator/healer não precisam adivinhar quais constantes são fixture —
+  tudo que estiver em `*.data.ts` é dado, tudo que estiver em `*.spec.ts`
+  é fluxo.
+
+Generator (`playwright-test-generator`) deve emitir `<test-case>.data.ts`
+junto com o `.spec.ts` mesmo que o teste tenha apenas 1 constante — não
+inline. Ver Anti-pattern E em §7.6.
+
 ### Como o orquestrador descobre o projeto ativo
 
 1. Flag `--project <slug>` no orchestrator → seta `process.env.PROJECT`
@@ -379,6 +434,28 @@ introduzam qualquer um deles.
   diz com nome de método/variável. Comentários WHY (por que assim) capturam
   invariantes não-óbvias que somem se removidos. Allure step já narra o
   fluxo — comentário extra é ruído.
+
+### E. NUNCA hardcodar constantes-de-domínio inline no spec
+
+- ❌ `const ENV_ID = 36799; const AVIAO_ENV_ID = 36796;` no topo do `.spec.ts`
+- ❌ `await page.goto('/o/${getOrgId()}/environments/36799/edit');`
+- ✅ Mover para `<test-case>.data.ts` adjacente:
+  ```ts
+  // configurar-a-indexacao-curso-checkbox.data.ts
+  export const data = { envId: 36799, alternativeEnvId: 36796 } as const;
+  ```
+- ✅ Importar no spec: `import { data } from './configurar-a-indexacao-curso-checkbox.data.js'`
+- **Por quê**: viola §3.1 (convenção de dados por teste). IDs e listas
+  hardcoded espalhados pelos specs (a) duplicam quando dois testes
+  compartilham — e divergem em silêncio quando um spec atualiza e o outro
+  não, (b) escondem intenção (leitor vê `36799`, não `envId.aviao`),
+  (c) bagunçam o diff quando um ambiente troca de ID — vira pesca em
+  N arquivos. Mover pra `*.data.ts` resolve os 3.
+- **Exceção**: literais que NÃO são domínio — `await page.waitForTimeout(2000)`
+  é proibido por outra regra; `expect(items).toHaveCount(3)` quando o `3`
+  é a expectativa do próprio cenário (não dado de input). Use bom senso:
+  **se o número/string poderia mudar quando o ambiente Twygo muda, é dado
+  e vai pro `.data.ts`**.
 
 ---
 

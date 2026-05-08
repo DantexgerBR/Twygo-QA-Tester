@@ -115,28 +115,48 @@ Deve aparecer `playwright` na lista.
 
 Skills locais ficam em [`.claude/skills/`](.):
 
+- `configurar-ambiente` — setup operacional (.env, deps, smoke). Use como
+  referência viva quando aparecer "como rodo isso?" ou erro de variável
+  ausente.
 - `webapp-testing` — guia metodológico oficial Anthropic (consultado pelo
   orquestrador como contexto de boas práticas).
 - `twygo-xml-parser` — parser TestLink → JSON.
 - `twygo-test-orchestrator` — orquestra planner/generator/healer.
 - `twygo-exploratory-validator` — agrega findings + cobertura.
 - `twygo-report-generator` — relatórios HTML híbridos.
+- `twygo-recon` — varredura prévia de testsuite (test-ids/labels) pros planners.
 
 Não precisam instalação extra — Claude Code descobre automaticamente
 ao iniciar em `agent-playwright/`.
 
 ## 6. Variáveis de ambiente
 
-Crie `agent-playwright/.env` (gitignored):
-
 ```bash
-TWYGO_STAGING_USER=qa@twygo.com
-TWYGO_STAGING_PASS=<senha do ambiente staging>
-# Para CI / GH MCP:
-GITHUB_TOKEN=<token de PAT com escopo repo>
+cd agent-playwright
+cp .env.example .env
 ```
 
-`config/environment.json` referencia essas variáveis via `${VAR}`.
+Edite `.env` e preencha:
+
+```bash
+TWYGO_STAGING_EMAIL=<email da conta de QA staging>
+TWYGO_STAGING_PASSWORD=<senha staging>
+
+TWYGO_STAGING_WITHOUT_CREDITS_EMAIL=<email da conta "sem créditos">
+TWYGO_STAGING_WITHOUT_CREDITS_PASSWORD=<senha "sem créditos">
+
+# Opcional — só pra CI / GH MCP:
+GITHUB_TOKEN=<PAT com escopo repo>
+```
+
+> `.env` está no `.gitignore` da raiz do monorepo. Nunca commitar.
+> `config/environment.json` carrega esses valores via `${VAR}` (resolvido por
+> `loadEnvironmentConfig()` em `src/utils/environment.ts`). Se a variável
+> faltar, qualquer comando que toque o env (`agent:parse`, `agent:run`,
+> `playwright test`) falha com mensagem explícita apontando o nome.
+
+Para um passo-a-passo guiado (incluindo diagnóstico), use a skill
+[`configurar-ambiente`](skills/configurar-ambiente/SKILL.md).
 
 ## 7. Validar setup
 

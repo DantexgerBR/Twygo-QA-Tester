@@ -29,8 +29,14 @@ git checkout -b project/<slug-do-projeto>     # ex.: project/kit-de-marca
 
 ```bash
 cd agent-playwright
-mkdir -p projects/<slug>/{inputs,specs,tests/features,pages,utils}
+mkdir -p projects/<slug>/{inputs,specs,tests/features,pages,utils,data}
 ```
+
+> **Pasta `data/`**: variáveis específicas do projeto (orgIds de
+> sub-ambientes, paths derivados, listas de fixtures) que são reusadas
+> entre specs do mesmo projeto. Variáveis específicas de **um único** spec
+> ficam num `<test-case>.data.ts` ao lado do spec — não em `data/`. Ver
+> CLAUDE.md §3.1 (convenção de dados por teste).
 
 ## 3. Receber inputs do agente AT
 
@@ -78,10 +84,16 @@ ambiente novo.
 cd agent-playwright
 npm install                                # se primeira vez na máquina
 npx playwright install chromium            # se primeira vez na máquina
+cp .env.example .env                       # se primeira vez na máquina — depois preencher!
 npm run typecheck                          # garantir que tudo compila
 npm run agent:parse -- --project <slug>    # parsear o XML, verificar contagens
 npm run agent:suites -- --project <slug>   # listar as testsuites do projeto
 ```
+
+> **`.env`**: `config/environment.json` referencia `${TWYGO_*}` que vêm de
+> `.env`. Se faltar, `npm run typecheck` ainda passa, mas
+> `npm run agent:parse` lança erro explícito apontando a variável faltante.
+> Para detalhes use a skill `configurar-ambiente`.
 
 > Se houver **só 1 projeto** em `projects/`, a flag `--project` é opcional
 > (auto-detect). Quando há 2+ projetos coexistindo (master cumulativa), é
@@ -212,9 +224,10 @@ Repete do passo 1 com novo slug e novo XML.
 ## Checklist rápido para um novo projeto
 
 - [ ] Branch `project/<slug>` criada a partir do master atualizado
-- [ ] Pasta `projects/<slug>/{inputs,specs,tests/features,pages,utils}/` criada
+- [ ] Pasta `projects/<slug>/{inputs,specs,tests/features,pages,utils,data}/` criada
 - [ ] XML TestLink dropado em `projects/<slug>/inputs/Analise_Teste_<projeto>.xml`
 - [ ] `projects/<slug>/project.config.json` criado (`projectName` + `testAnalysisFile` relativo ao projeto)
+- [ ] `.env` preenchido (a partir de `.env.example` na primeira vez na máquina)
 - [ ] `npm run typecheck` exit 0
 - [ ] `npm run agent:parse -- --project <slug>` lista as suítes esperadas
 - [ ] `npm run agent:suites` mostra os blocos
