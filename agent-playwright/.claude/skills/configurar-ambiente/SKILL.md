@@ -138,7 +138,7 @@ Quando o usuário fala "não tá rodando" sem detalhar:
 # checklist em 1 minuto
 node --version              # 20+?
 ls .env                     # existe?
-grep -c '^TWYGO' .env       # tem 4 vars não-vazias?
+grep -c '^TWYGO_.*=.\+$' .env  # 8 esperado (4 envs × email/senha) ou ≥2 se rodando só staging principal
 ls outputs/.auth/           # storage está lá?
 ls node_modules/.bin/playwright  # deps ok?
 ```

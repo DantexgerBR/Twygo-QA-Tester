@@ -442,9 +442,10 @@ npm run test:debug                                      # debug step-by-step
 ### Pós-execução
 ```bash
 npm run agent:explore                    # consolida findings exploratórios
-npm run agent:report                     # gera relatório (per-suite ou regressivo)
-npm run test:report                      # abre o HTML report do Playwright
+npm run agent:report                     # gera relatório Markdown (per-suite ou regressivo)
 ```
+
+> Saída em `outputs/<slug>/reports/<run>/index.md` + `tests.md` + `exploratory.md` (Markdown estruturado, abre no IDE/GitHub). Em modo regressivo, também `outputs/allure-report/` (Allure HTML built-in com trend). Reporter HTML do Playwright foi removido em 2026-05 — pra debug profundo de uma falha use `npx playwright show-trace <path-do-trace>` (traces continuam em `test-artifacts/`).
 
 ### Limpeza
 ```bash
@@ -463,21 +464,36 @@ Copie o template e preencha:
 cp .env.example .env
 ```
 
-Variáveis obrigatórias (todas em `.env`):
+Variáveis em `.env` (4 envs em `config/environment.json`, cada um com email+senha — preencha só os pares dos projetos que vai rodar):
 
 ```bash
+# --- staging principal Twygo (stage10.stage.twygoead.com — orgId 36602) ---
 TWYGO_STAGING_EMAIL=<email da conta de QA staging>
 TWYGO_STAGING_PASSWORD=<senha staging>
 
-# Para specs de bloqueio "sem créditos" (ver CLAUDE.md §7.5):
+# --- staging "sem créditos de IA" (eduapi.stage.twygoead.com — orgId 36912) ---
+# Secundário do staging principal, pra specs de bloqueio quando saldo zerado.
+# Ver CLAUDE.md §7.5.
 TWYGO_STAGING_WITHOUT_CREDITS_EMAIL=<email da conta zerada>
 TWYGO_STAGING_WITHOUT_CREDITS_PASSWORD=<senha da conta zerada>
+
+# --- staging do projeto Widgets (widgets.stage.twygoead.com — orgId 36988) ---
+# Específico do projeto widgets — só preencha se for rodar essa suíte.
+TWYGO_STAGING_WIDGETS_EMAIL=<email>
+TWYGO_STAGING_WIDGETS_PASSWORD=<senha>
+
+# --- staging "widgets desabilitado" (widgetsdisabled.stage.twygoead.com — orgId 36989) ---
+# Secundário do widgets, simulando módulo desligado por feature flag.
+TWYGO_STAGING_WIDGETS_DISABLED_EMAIL=<email>
+TWYGO_STAGING_WIDGETS_DISABLED_PASSWORD=<senha>
 
 # Opcionais:
 EXPLORATORY_STRICT=1     # promove findings exploratórios (axe, console errors) a falhas
 LOG_LEVEL=debug          # output verbose dos scripts
 REGRESSION=true          # ativa reporter Allure (geralmente setado pelo agent:regression)
 ```
+
+> **Qual env é usado em cada projeto:** lido de `projects/<slug>/project.config.json` campo `environment`. O `globalSetup` faz login no env principal e detecta o secundário pelo nome (ex: principal `staging-widgets` → procura `staging-widgets-disabled`).
 
 `config/environment.json` referencia essas variáveis via `${VAR}` e
 `src/utils/environment.ts#loadEnvironmentConfig()` resolve no boot. `.env`
@@ -498,12 +514,12 @@ está no `.gitignore` da raiz do monorepo — nunca commitar.
 
 ```bash
 curl -sI https://<host-staging>/users/login | head -3   # 5xx? ambiente fora
-grep -c '^TWYGO_.*=.\+$' .env                            # 4? .env completo
+grep -c '^TWYGO_.*=.\+$' .env                            # 8 esperado (4 envs × email/senha) ou ≥2 se rodando só projeto principal
 ```
 
 Se `curl` deu **5xx**: ambiente Twygo fora — **não mexa em código**, espere
-voltar. Se `grep` deu **<4**: `.env` incompleto — `cp .env.example .env` e
-preencha (skill `configurar-ambiente`).
+voltar. Se `grep` deu valor menor que o esperado: `.env` incompleto —
+`cp .env.example .env` e preencha (skill `configurar-ambiente`).
 
 Se ambos OK, storageState pode estar corrompido — apaga e re-roda:
 

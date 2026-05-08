@@ -85,11 +85,11 @@ npm run clean                          # Apaga outputs/ gerados
 
 Definidas em `agent-playwright/.env` (gitignored):
 
-- `TWYGO_STAGING_USER`, `TWYGO_STAGING_PASS` — credenciais resolvidas via
+- `TWYGO_STAGING_EMAIL`, `TWYGO_STAGING_PASSWORD` (e os pares `_WITHOUT_CREDITS_*`, `_WIDGETS_*`, `_WIDGETS_DISABLED_*`) — credenciais resolvidas via
   `${VAR}` em `config/environment.json`.
 - `EXPLORATORY_STRICT=1` — promove findings exploratórios `error` a falhas
   do teste (use em CI quando quiser zero tolerância a console errors / 5xx).
-- `REGRESSION=true` — ativa reporter Allure em vez do HTML do Playwright.
+- `REGRESSION=true` — ativa reporter Allure (HTML built-in com trend histórico). Reporter HTML do Playwright foi removido em 2026-05; saída padrão é Markdown em `outputs/<slug>/reports/<run>/`.
 - `LOG_LEVEL=debug` — output verbose dos scripts.
 
 ## 7. Argumentos do orquestrador (`npm run agent:run`)

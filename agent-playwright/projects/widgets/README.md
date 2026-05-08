@@ -1,12 +1,21 @@
 # Widgets — Projeto Twygo
 
-Pasta dedicada ao projeto **Widgets** (painéis de usuários). Contém todos
+Pasta dedicada ao projeto **Widgets** (Painéis/Modos de uso). Contém todos
 os artefatos específicos deste projeto: XML do agente AT, planos do
 planner, specs gerados, Page Objects e test-IDs específicos.
 
-> **Status atual: 🚧 Aguardando XML do agente AT.**
-> A estrutura está pronta. Falta apenas depositar o XML em `inputs/` e
-> ajustar `project.config.json` se o nome do arquivo divergir.
+> **Ambiente:** este projeto roda contra `widgets.stage.twygoead.com`
+> (orgId 36988), env `staging-widgets` em `config/environment.json` —
+> não no `staging` principal Twygo. O `project.config.json` desta pasta
+> declara `"environment": "staging-widgets"`. Specs de bloqueio por
+> feature flag usam o env secundário `staging-widgets-disabled`
+> (`widgetsdisabled.stage.twygoead.com`, orgId 36989). Antes de rodar,
+> confira que `.env` tem os 2 pares `TWYGO_STAGING_WIDGETS_*` preenchidos
+> (ver [.env.example](../../.env.example)).
+>
+> **Status:** specs gerados pra "Listagem de painéis" (8) e "Ativar /
+> Inativar painel" (5). Demais 20 testsuites do XML aguardando geração
+> via planner+generator interativo.
 
 ---
 

@@ -160,8 +160,13 @@ Skills locais ficam em [`.claude/skills/`](.):
 - `twygo-xml-parser` — parser TestLink → JSON.
 - `twygo-test-orchestrator` — orquestra planner/generator/healer.
 - `twygo-exploratory-validator` — agrega findings + cobertura.
-- `twygo-report-generator` — relatórios HTML híbridos.
+- `twygo-report-generator` — relatórios Markdown estruturados (per-suite
+  e regressivo); em modo regressivo dispara também o Allure CLI (HTML
+  built-in com trend histórico).
 - `twygo-recon` — varredura prévia de testsuite (test-ids/labels) pros planners.
+- `fechar-modais-twygo` — como tratar modais oportunistas (NPS Sofia,
+  sessão duplicada, popups de feature) que aparecem por cima e bloqueiam
+  cliques.
 
 Não precisam instalação extra — Claude Code descobre automaticamente
 ao iniciar em `agent-playwright/`.
@@ -173,14 +178,28 @@ cd agent-playwright
 cp .env.example .env
 ```
 
-Edite `.env` e preencha:
+Edite `.env` e preencha (4 envs em `config/environment.json` — preencha
+só os pares dos projetos que você vai rodar):
 
 ```bash
+# --- staging principal Twygo (stage10.stage.twygoead.com — orgId 36602) ---
 TWYGO_STAGING_EMAIL=<email da conta de QA staging>
 TWYGO_STAGING_PASSWORD=<senha staging>
 
-TWYGO_STAGING_WITHOUT_CREDITS_EMAIL=<email da conta "sem créditos">
-TWYGO_STAGING_WITHOUT_CREDITS_PASSWORD=<senha "sem créditos">
+# --- staging "sem créditos de IA" (eduapi.stage.twygoead.com — orgId 36912) ---
+# Secundário do staging principal. Specs de bloqueio por créditos zerados.
+TWYGO_STAGING_WITHOUT_CREDITS_EMAIL=<email da conta zerada>
+TWYGO_STAGING_WITHOUT_CREDITS_PASSWORD=<senha da conta zerada>
+
+# --- staging do projeto Widgets (widgets.stage.twygoead.com — orgId 36988) ---
+# Específico do projeto widgets — só preencha se for rodar essa suíte.
+TWYGO_STAGING_WIDGETS_EMAIL=<email>
+TWYGO_STAGING_WIDGETS_PASSWORD=<senha>
+
+# --- staging "widgets desabilitado" (widgetsdisabled.stage.twygoead.com — orgId 36989) ---
+# Secundário do widgets, simulando módulo desligado por feature flag.
+TWYGO_STAGING_WIDGETS_DISABLED_EMAIL=<email>
+TWYGO_STAGING_WIDGETS_DISABLED_PASSWORD=<senha>
 
 # Opcional — só pra CI / GH MCP:
 GITHUB_TOKEN=<PAT com escopo repo>

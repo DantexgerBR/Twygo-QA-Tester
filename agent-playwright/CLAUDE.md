@@ -116,11 +116,11 @@ agent-playwright/
 │   │   ├── test-results.json           # JSON reporter Playwright
 │   │   ├── exploratory-findings.json   # agregação (twygo-exploratory-validator)
 │   │   ├── exploratory/                # findings por teste
-│   │   ├── reports/<runId>/            # HTML estruturado
+│   │   ├── playwright-summary.md       # resumo da última run (sobrescrito)
+│   │   ├── reports/<runId>/            # Markdown estruturado (index.md + tests.md + exploratory.md + JSONs)
 │   │   ├── allure-results/             # modo regressivo
-│   │   ├── allure-report/              # Allure CLI
-│   │   ├── html-report/                # Playwright HTML
-│   │   └── test-artifacts/             # screenshots, traces
+│   │   ├── allure-report/              # Allure CLI (HTML built-in com trend)
+│   │   └── test-artifacts/             # screenshots, traces, error-context.md
 │   └── _all/                       # quando PROJECT_ALL=true (regressivo cumulativo)
 │
 ├── .claude/
@@ -376,26 +376,52 @@ Erros comuns que custaram horas em sessões anteriores. Generator/healer/planner
   | Entrada Super Admin | `/admin` | `superAdminPage.openSuperAdmin()` |
   | Tabela de preços (todas) | `/admin/subscription_plans` | `superAdminPage.openSubscriptionPlans()` — na lista, identificar tabela com coluna "Ativo" = Sim e clicar Editar |
   | Editar contrato vigente da org | `/admin/edit_sys_subscription_settings/{orgId}` | `superAdminPage.openEditContract(orgId)` |
-- **orgIds em `environment.json`**:
-  - `staging.orgId = 36602` (`stage10.stage.twygoead.com`)
-  - `staging-without-credits.orgId = 36912` (`eduapi.stage.twygoead.com`)
+- **Ambientes em `environment.json` (4 envs registrados):**
+
+  | Env | Host | orgId | Papel |
+  |---|---|---|---|
+  | `staging` | `stage10.stage.twygoead.com` | 36602 | Principal Twygo (creditos-fase-02 e demais projetos) |
+  | `staging-without-credits` | `eduapi.stage.twygoead.com` | 36912 | Secundário do staging — org com saldo IA zerado (specs de bloqueio por créditos) |
+  | `staging-widgets` | `widgets.stage.twygoead.com` | 36988 | Específico do projeto **widgets** (Painéis/Modos de uso) |
+  | `staging-widgets-disabled` | `widgetsdisabled.stage.twygoead.com` | 36989 | Secundário do widgets — módulo Widgets desligado por feature flag (specs de bloqueio por flag) |
+
+  Cada `projects/<slug>/project.config.json` declara qual env usar via campo
+  `environment`. Specs do widgets apontam pra `staging-widgets`; demais
+  projetos pra `staging`. Credenciais vão pro `.env` (ver SETUP.md §6),
+  resolvidas via `${VAR}` em `environment.json` por
+  `loadEnvironmentConfig()` (`src/utils/environment.ts`).
 - **Tabela de preços é COMPARTILHADA**: alterar a tabela ativa afeta TODAS as organizações daquele banco. Se um teste muda a tabela ativa, faça o **revert ao final** (idealmente via `test.afterEach`/`test.afterAll`). Tests que apenas leem (asserções) não precisam de revert.
 - Padrões de prosa Super Admin estão em `.claude/prose-patterns.md` seção 3.5 — generator deve consultar antes de marcar `test.fixme` por "requer Super Admin".
 
-### Cenários "sem saldo de créditos de IA" (organização zerada/negativa)
-- Ambiente principal `staging` (`stage10.stage.twygoead.com`) tem créditos sobrando — não dá pra zerar sem afetar outras suítes.
-- Para testes de bloqueio de funcionalidades (RN: organização sem saldo) use o ambiente secundário **`staging-without-credits`** (`eduapi.stage.twygoead.com`, login `eduardo.schmidt@twygo.com`). Já está em `config/environment.json`.
-- `globalSetup` detecta automaticamente qualquer chave terminando em `-without-credits` e gera storage adicional em `outputs/.auth/storage-without-credits.json`.
-- Specs que precisam dele importam o caminho e plugam via `test.use`:
-  ```ts
-  import { SECONDARY_STORAGE_PATH } from '../../../../../tests/setup/global-setup.js';
-  import { getEnvByName } from '../../../../../src/utils/environment.js';
-  test.use({
-    storageState: SECONDARY_STORAGE_PATH,
-    baseURL: getEnvByName('staging-without-credits').baseUrl,
-  });
-  ```
-- Não invente outras organizações pra "esvaziar saldo" — sempre use o env secundário convencionado.
+### Cenários "bloqueio por flag/saldo" (env secundário)
+
+A convenção do `globalSetup` cobre 2 famílias de bloqueio por env secundário:
+
+| Família | Env secundário | Quando usar |
+|---|---|---|
+| **Saldo de IA zerado** | `staging-without-credits` | Specs que validam o que acontece quando a org não tem créditos pra IA (UI de bloqueio, mensagem, dispatch de evento) |
+| **Módulo desligado** | `staging-widgets-disabled` (e futuros `*-disabled`) | Specs que validam UI quando feature flag/contrato está OFF (ex: aba não aparece, redirect, banner) |
+
+**Como o `globalSetup` decide qual env secundário logar:**
+
+1. Match direto pelo principal: `<principal>-without-credits` ou `<principal>-disabled`. Ex: principal `staging-widgets` → procura `staging-widgets-disabled` em `environment.json`.
+2. Fallback: primeiro env diferente do principal que termina em qualquer dos sufixos `-without-credits`, `-disabled`, `-widgets-disabled`.
+
+Sem ambos, sem secundário (specs que precisam dele falham com "storage não encontrado" — mas o storage é gerado em `outputs/.auth/storage-without-credits.json`, fixo, indep. de qual sufixo casou).
+
+**Como specs consomem o env secundário:**
+
+```ts
+import { SECONDARY_STORAGE_PATH } from '../../../../../tests/setup/global-setup.js';
+import { getEnvByName } from '../../../../../src/utils/environment.js';
+
+test.use({
+  storageState: SECONDARY_STORAGE_PATH,
+  baseURL: getEnvByName('staging-widgets-disabled').baseUrl,  // ou 'staging-without-credits'
+});
+```
+
+Não invente outras organizações pra "simular bloqueio" — sempre use o env secundário convencionado. Se aparecer um novo cenário (ex: "org sem feature X"), adicione um env `staging-X-disabled` em `environment.json` + `.env.example` + `.env`.
 
 ---
 
