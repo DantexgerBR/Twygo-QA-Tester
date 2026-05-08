@@ -7,14 +7,12 @@
 import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js';
 import * as allure from 'allure-js-commons';
 import { PaineisListPage } from '../../../pages/PaineisListPage.js';
+import { persistenciaEstadoAtivoReloadData as data } from './persistencia-estado-ativo-reload.data.js';
 
 test.use({ viewport: { width: 1920, height: 1080 } });
 
 test.describe('Ativar / Inativar painel', () => {
-  // "Painel 30" é desassociado (validado live em 2026-05-06: toggle imediato
-  // sem modal). Se virar associado no futuro, este TC quebra com modal —
-  // healer deve trocar para outro painel desassociado e atualizar o nome.
-  const PAINEL = 'Painel 30';
+  const PAINEL = data.panelName;
   let estadoInicial: boolean;
 
   test.afterEach(async ({ page }) => {

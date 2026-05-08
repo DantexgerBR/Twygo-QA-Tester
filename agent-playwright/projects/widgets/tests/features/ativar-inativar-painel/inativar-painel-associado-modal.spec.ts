@@ -10,6 +10,7 @@ import { resolve } from 'node:path';
 import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js';
 import * as allure from 'allure-js-commons';
 import { PaineisListPage } from '../../../pages/PaineisListPage.js';
+import { inativarPainelAssociadoModalData as data } from './inativar-painel-associado-modal.data.js';
 
 test.use({ viewport: { width: 1920, height: 1080 } });
 
@@ -17,11 +18,6 @@ test.use({ viewport: { width: 1920, height: 1080 } });
 // global-setup. beforeAll/afterAll abrem context próprio (fora do `page`
 // fixture do test) e precisam de path absoluto resolvido a partir do cwd.
 const STORAGE_STATE = resolve(process.cwd(), 'outputs/.auth/storage.json');
-
-// REVISAR: ids hardcoded — 70077 (Colaborador), 70078 (Aluno) são fixos da
-// org 36988 (staging). Mover para `project.config.json` quando outras suítes
-// também precisarem desse seed semântico.
-const MENU_IDS_TO_ASSOCIATE = [70077, 70078] as const;
 
 test.describe('Ativar / Inativar painel', () => {
   let panelName: string;
@@ -36,7 +32,7 @@ test.describe('Ativar / Inativar painel', () => {
     try {
       const paineis = new PaineisListPage(page);
       await paineis.createPanel({ name: panelName });
-      for (const useModeId of MENU_IDS_TO_ASSOCIATE) {
+      for (const { id: useModeId } of data.useModes) {
         await paineis.associatePanelToMenu(panelName, useModeId);
       }
     } finally {
@@ -56,7 +52,7 @@ test.describe('Ativar / Inativar painel', () => {
     const page = await ctx.newPage();
     try {
       const paineis = new PaineisListPage(page);
-      for (const useModeId of MENU_IDS_TO_ASSOCIATE) {
+      for (const { id: useModeId } of data.useModes) {
         await paineis.disassociatePanelFromMenu_safe(panelName, useModeId);
       }
       await paineis.goToList();
@@ -101,12 +97,9 @@ test.describe('Ativar / Inativar painel', () => {
         );
         // O body lista cada menu vinculado — asserimos que ambos os useModes
         // que associamos no beforeAll aparecem por nome.
-        await expect(paineis.getInactivationBlockedModalBody()).toContainText(
-          'Colaborador',
-        );
-        await expect(paineis.getInactivationBlockedModalBody()).toContainText(
-          'Aluno',
-        );
+        for (const { label } of data.useModes) {
+          await expect(paineis.getInactivationBlockedModalBody()).toContainText(label);
+        }
       },
     );
 
