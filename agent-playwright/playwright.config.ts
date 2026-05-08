@@ -126,8 +126,14 @@ export default defineConfig({
         }],
       ]
     : [
+        // Sem reporter `html` — alinhado com a decisão de Markdown em
+        // chore/agentes-qa-overhaul. O resumo da última run vai pra
+        // `outputs/<slug>/playwright-summary.md` (gerado pelo
+        // twygo-report-generator) e o detalhamento timestamp-versionado em
+        // `outputs/<slug>/reports/<slug>_<ts>/{index,tests,exploratory}.md`.
+        // Pra debug profundo de step específico, use o trace de cada falha
+        // (em test-artifacts/) com `npx playwright show-trace <path>`.
         ['list'],
-        ['html', { outputFolder: `${outputBase}/html-report`, open: 'never' }],
         ['json', { outputFile: `${outputBase}/test-results.json` }],
       ],
   outputDir: `${outputBase}/test-artifacts`,

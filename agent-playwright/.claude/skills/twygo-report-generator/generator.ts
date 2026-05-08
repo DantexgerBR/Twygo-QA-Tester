@@ -1,13 +1,13 @@
 import { readFileSync, writeFileSync, existsSync, copyFileSync } from 'node:fs';
-import { join, basename, relative } from 'node:path';
+import { resolve, join, basename, relative } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { parseArgs } from 'node:util';
 import { createLogger } from '../../../src/utils/logger.js';
+import { FILES } from '../../../src/utils/constants.js';
 import {
   getOutputDir,
   getOutputPath,
   getProjectConfigPath,
-  loadEnvironmentConfig,
 } from '../../../src/utils/environment.js';
 import { ensureDir, slugify } from '../../../src/utils/helpers.js';
 import type {
@@ -1313,11 +1313,15 @@ async function main(): Promise<void> {
   const cfg = loadJson<ProjectConfig>(getProjectConfigPath());
   if (!cfg) throw new Error('Config ausente: projects/<slug>/project.config.json');
 
-  // Bug fix (regra 3 do CLAUDE.md raiz): usar o resolver canônico, não
-  // loadJson cru. Sem isso, o bloco "Pronto para registro de bug" vazava
-  // os placeholders literais (${TWYGO_*}) em vez das credenciais expandidas.
-  const envMap = loadEnvironmentConfig() as EnvironmentMap;
-  const envEntry = envMap[cfg.environment];
+  // IMPORTANTE: lemos o environment.json CRU (sem expandir ${VAR}) de propósito.
+  // O bloco "Pronto para registro de bug" do tests.md mostra Login/Senha pra
+  // colar em Jira/GitHub/Linear; mostrar a senha real expandida vazaria
+  // credencial em ticket público. Usuário pediu explicitamente em 2026-05-08
+  // ("preciso que rode com os itens da env, não com esses [valores reais]").
+  // Outros consumidores (global-setup, playwright.config) seguem usando
+  // `loadEnvironmentConfig()` que expande — só este caso é proposital cru.
+  const envMap = loadJson<EnvironmentMap>(resolve(process.cwd(), FILES.environment));
+  const envEntry = envMap?.[cfg.environment];
   if (!envEntry) {
     log.warn(`Environment "${cfg.environment}" ausente em environment.json — campos URL/Login/Senha do bug-block ficarão como "—".`);
   }
@@ -1442,6 +1446,46 @@ async function main(): Promise<void> {
   // Sem `<meta refresh>` (não existe em MD); IDE/GitHub renderizam o link direto.
   const pointerContent = `# Relatório mais recente — ${folderPrefix}\n\n**[Abrir → \`${folderName}/index.md\`](${folderName}/index.md)**\n\n_Gerado em ${new Date(generatedAt).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}._\n`;
   writeFileSync(join(reportsRoot, latestPointerName), pointerContent);
+
+  // playwright-summary.md na raiz de outputs/<slug>/ — substitui o html-report
+  // do Playwright (reporter built-in foi removido em chore/agentes-qa-overhaul).
+  // Resumo da ÚLTIMA run, sem timestamp no caminho (sobrescrito a cada execução).
+  // Tem 2 papéis: (1) ponto fixo pra ferramentas que esperam um arquivo previsível,
+  // (2) acesso 1-click ao último resultado sem ter que navegar pra reports/<ts>/.
+  const summaryLines: string[] = [];
+  summaryLines.push(`# Resumo Playwright — ${cfg.projectName}`);
+  summaryLines.push('');
+  summaryLines.push(`**Última run** (${args.mode}) · ${new Date(generatedAt).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}`);
+  summaryLines.push('');
+  summaryLines.push(`| Total | ✅ Aprovados | ❌ Falhas | ⊘ Ignorados | Duração |`);
+  summaryLines.push(`|---:|---:|---:|---:|---:|`);
+  summaryLines.push(`| ${testsSummary.total} | ${testsSummary.passed} | ${testsSummary.failed} | ${testsSummary.skipped} | ${(testsSummary.durationMs / 1000).toFixed(1)}s |`);
+  summaryLines.push('');
+  summaryLines.push(`> **Escopo:** ${scopeLabel}`);
+  summaryLines.push(`> **Ambiente:** \`${cfg.environment}\` · **Browsers:** ${cfg.browsers.join(', ')}`);
+  summaryLines.push('');
+  summaryLines.push(`## Resultados`);
+  summaryLines.push('');
+  if (tests.length === 0) {
+    summaryLines.push(`_Nenhum teste executado._`);
+  } else {
+    summaryLines.push(`| Status | Testsuite | Caso | Duração | Resumo |`);
+    summaryLines.push(`|:---:|---|---|---:|---|`);
+    for (const t of tests) {
+      const statusEmoji = STATUS_EMOJI[t.status] ?? '·';
+      const summary = t.status !== 'passed' ? failureOrSkipSummary(t) : '—';
+      summaryLines.push(`| ${statusEmoji} | ${mdCell(t.testsuite)} | ${mdCell(t.testcase)} | ${(t.durationMs / 1000).toFixed(2)}s | ${mdCell(summary)} |`);
+    }
+  }
+  summaryLines.push('');
+  summaryLines.push(`## Onde encontrar mais`);
+  summaryLines.push('');
+  summaryLines.push(`- 📋 [Detalhamento desta run](reports/${folderName}/index.md) — KPIs por testsuite, links pra cases e findings exploratórios`);
+  summaryLines.push(`- 🔍 [Casos de teste detalhados](reports/${folderName}/tests.md) — passos, evidências, bug-report pronto`);
+  summaryLines.push(`- 🐛 [Validação exploratória](reports/${folderName}/exploratory.md) — console errors, axe, HTTP, cobertura`);
+  summaryLines.push(`- 📦 Traces de cada falha em \`test-artifacts/\` — abrir com \`npx playwright show-trace <path>\``);
+  summaryLines.push('');
+  writeFileSync(getOutputPath('playwright-summary.md'), summaryLines.join('\n'));
 
   log.info(`Relatório gerado → ${reportDir}/index.md`);
   log.info(
