@@ -118,6 +118,9 @@ Skills locais ficam em [`.claude/skills/`](.):
 - `configurar-ambiente` — setup operacional (.env, deps, smoke). Use como
   referência viva quando aparecer "como rodo isso?" ou erro de variável
   ausente.
+- `debugar-smoke-login` — checklist de 1min de diagnóstico quando o smoke
+  falha com timeout no `LoginPage` (ambiente fora vs `.env` vs layout vs
+  storage). Use ANTES de mexer em código.
 - `webapp-testing` — guia metodológico oficial Anthropic (consultado pelo
   orquestrador como contexto de boas práticas).
 - `twygo-xml-parser` — parser TestLink → JSON.

@@ -477,26 +477,29 @@ está no `.gitignore` da raiz do monorepo — nunca commitar.
 ## Troubleshooting comum
 
 ### `Smoke test falhou — não vou prosseguir com planner/execução`
-storageState corrompido ou ambiente Twygo fora do ar. Force relogin apagando o storage:
+
+**Antes de mexer em qualquer coisa**, rode o checklist de 1min em
+[.claude/skills/debugar-smoke-login/SKILL.md](.claude/skills/debugar-smoke-login/SKILL.md):
 
 ```bash
-# Linux / macOS / Git Bash
-rm -rf outputs/.auth
-
-# Windows PowerShell
-Remove-Item -Recurse -Force outputs/.auth
-
-# Windows CMD
-rmdir /s /q outputs\.auth
+curl -sI https://<host-staging>/users/login | head -3   # 5xx? ambiente fora
+grep -c '^TWYGO_.*=.\+$' .env                            # 4? .env completo
 ```
 
-E rode novamente:
+Se `curl` deu **5xx**: ambiente Twygo fora — **não mexa em código**, espere
+voltar. Se `grep` deu **<4**: `.env` incompleto — `cp .env.example .env` e
+preencha (skill `configurar-ambiente`).
+
+Se ambos OK, storageState pode estar corrompido — apaga e re-roda:
 
 ```bash
+rm -rf outputs/.auth   # Linux/macOS/Git Bash
+# Remove-Item -Recurse -Force outputs/.auth   # Windows PowerShell
+# rmdir /s /q outputs\.auth                   # Windows CMD
 npm run agent:smoke
 ```
 
-Se ainda falhar, confira que a baseURL do staging está acessível e que as credenciais em `.env` estão corretas.
+Outras causas (layout mudou, etc) cobertas no skill `debugar-smoke-login`.
 
 ### `Cannot find module 'allure-js-commons'`
 ```bash

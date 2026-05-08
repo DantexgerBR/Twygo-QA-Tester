@@ -128,6 +128,7 @@ mexer**:
 | `net::ERR_NAME_NOT_RESOLVED` | sem internet ou DNS bloqueando staging | confirma rede / VPN |
 | `Login falhou` na page | senha errada, conta bloqueada | confirma credenciais com QA Lead |
 | `Executable doesn't exist` | Chromium não instalado | volta passo 3 |
+| `TimeoutError ... waiting for getByRole('textbox', { name: 'Login' })` | ambiente fora **OU** layout mudou **OU** storage corrompido | rode skill [`debugar-smoke-login`](../debugar-smoke-login/SKILL.md) — checklist de 1min cobre as 4 causas-raiz típicas |
 
 ## Diagnóstico rápido (cheat sheet)
 
