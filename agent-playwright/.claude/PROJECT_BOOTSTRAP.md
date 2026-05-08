@@ -143,7 +143,7 @@ npm run agent:run -- --project <slug> --suite "[Kit de marca] QA 2.1 - Kit de ma
 
 > Se `projects/` tem só 1 projeto, `--project` é opcional (auto-detect).
 
-Resultado: `outputs/<slug>/reports/{slug-suite}_{timestamp}/index.html`.
+Resultado: `outputs/<slug>/reports/{slug-suite}_{timestamp}/index.md` (renderiza no GitHub/IDE).
 
 Se a geração precisar do plugin oficial Playwright (planner/generator/healer),
 use o Claude Code interativo dentro de `agent-playwright/`:

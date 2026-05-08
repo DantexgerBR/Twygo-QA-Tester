@@ -75,7 +75,7 @@ Pegue um nome literal da lista do passo 4 e rode:
 npm run agent:run -- --project widgets --suite "<nome literal da suíte>"
 ```
 
-Saída: `outputs/widgets/reports/{slug-suite}_{timestamp}/index.html`.
+Saída: `outputs/widgets/reports/{slug-suite}_{timestamp}/index.md`.
 
 ### 7. Healing após mudança de UI
 

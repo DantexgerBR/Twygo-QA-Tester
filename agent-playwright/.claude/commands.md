@@ -27,8 +27,8 @@ npm run agent:run -- --suite "[Kit de marca] QA 2.1 - ..."
 ```
 
 Resultado:
-- `outputs/reports/{slug-suite}_{timestamp}/index.html` (relatório estruturado).
-- `outputs/reports/latest-suite-{slug}.html` (atalho para a última run).
+- `outputs/reports/{slug-suite}_{timestamp}/index.md` (relatório Markdown estruturado).
+- `outputs/reports/latest-suite-{slug}.md` (atalho para a última run).
 
 ## 3. Fluxo regressivo (fim de projeto / CI)
 
@@ -46,8 +46,8 @@ npm run agent:parse \
 ```
 
 Resultado:
-- `outputs/reports/regression_{timestamp}/index.html` (HTML estruturado).
-- `outputs/allure-report/` (Allure com trend, publicado em GH Pages pelo
+- `outputs/reports/regression_{timestamp}/index.md` (Markdown estruturado).
+- `outputs/allure-report/` (Allure HTML built-in com trend, publicado em GH Pages pelo
   workflow [`.github/workflows/regression.yml`](../../.github/workflows/regression.yml)).
 
 ## 4. Healing após falha (interativo)

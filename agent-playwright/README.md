@@ -221,8 +221,8 @@ npm run agent:run -- --project widgets --suite "Listagem de painéis"
 Pre-flight + Playwright filtrado por suite + validador exploratório + relatório. Saída:
 
 ```
-outputs/widgets/reports/listagem-de-paineis_{timestamp}/index.html
-outputs/reports/latest-suite-listagem-de-paineis.html
+outputs/widgets/reports/listagem-de-paineis_{timestamp}/index.md
+outputs/reports/latest-suite-listagem-de-paineis.md
 ```
 
 Se algum teste quebrar por seletor após mudança de UI, use **healing** (ver [seção dedicada](#healing-teste-quebrou-depois-de-mudança-de-ui)).
@@ -283,14 +283,14 @@ Claude carrega o `CLAUDE.md` + skills locais e segue as 9 fases canônicas (pars
 ### O que esperar de saída
 
 ```
-outputs/reports/{slug-suite}_{timestamp}/index.html
-outputs/reports/latest-suite-{slug}.html       (atalho pra última run)
+outputs/reports/{slug-suite}_{timestamp}/index.md
+outputs/reports/latest-suite-{slug}.md       (atalho pra última run)
 ```
 
-Abra o `index.html` no navegador pra ver:
+Abra o `index.md` no IDE/GitHub pra ver:
 - ✅ Casos passados / ❌ falhados
-- 📷 Screenshots e traces das falhas
-- 🔍 Findings exploratórios (console errors, axe-core, HTTP 4xx/5xx)
+- 📷 Screenshots inline e link pro trace nas falhas
+- 🔍 Findings exploratórios (console errors, axe-core, HTTP 4xx/5xx) em [`exploratory.md`](#)
 
 ---
 
@@ -306,8 +306,8 @@ npm run agent:regression   # roda tudo + Allure CLI
 > Internamente equivale a: `npm run agent:parse && REGRESSION=true npm run agent:run -- --regression && npm run agent:explore && npm run agent:report -- --regression`.
 
 Saída:
-- `outputs/allure-report/index.html` — relatório executivo Allure (com tendência histórica em CI/GH Pages)
-- `outputs/reports/regression_{timestamp}/` — HTML estruturado por suíte
+- `outputs/allure-report/index.html` — relatório executivo Allure (HTML built-in, com tendência histórica em CI/GH Pages)
+- `outputs/reports/regression_{timestamp}/` — Markdown estruturado por suíte (`index.md` + `tests.md` + `exploratory.md` + JSONs)
 
 > Em CI, o workflow `.github/workflows/regression.yml` roda automaticamente em PR para `main`.
 
@@ -570,6 +570,6 @@ Acabou o setup? Faça este ciclo curto pra confirmar que tudo funciona:
 1. `npm run agent:smoke` — confirma que login + ambiente estão OK
 2. `npm run agent:suites` — lista as testsuites do projeto atual
 3. `npm run agent:run -- --suite "<um nome da lista>"` — roda 1 suíte
-4. Abra `outputs/reports/<slug>_<ts>/index.html` no navegador e confira o relatório
+4. Abra `outputs/reports/<slug>_<ts>/index.md` no IDE/GitHub e confira o relatório
 
 Se isso passou, você está pronto pro fluxo dia-a-dia.

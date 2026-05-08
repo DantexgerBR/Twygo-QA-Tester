@@ -152,7 +152,7 @@ npm run agent:suites -- --project widgets   # listar testsuites
 npm run agent:run -- --project widgets --suite "<nome literal da suíte>"
 ```
 
-Saída: `agent-playwright/outputs/widgets/reports/{slug-suite}_{timestamp}/index.html`.
+Saída: `agent-playwright/outputs/widgets/reports/{slug-suite}_{timestamp}/index.md`.
 
 > Se houver só 1 projeto em `projects/`, a flag `--project` é opcional (auto-detect).
 
@@ -168,7 +168,7 @@ npm run clean
 npm run agent:regression
 ```
 
-Saída: `outputs/allure-report/index.html` (executivo) + HTML estruturado por suíte.
+Saída: `outputs/allure-report/index.html` (executivo Allure, HTML built-in) + Markdown estruturado por suíte (`outputs/reports/<slug>_<ts>/index.md`).
 
 ### 5. Encerramento
 
