@@ -91,15 +91,26 @@ export class PaineisListPage {
     await this.page.locator('#menu a[name="settings-main-menu"]').click();
     await this.page.locator('#menu a#navigation-menu').click();
     await this.page.waitForURL(/\/use_modes/);
+    // O React/Chakra pinta `aria-selected=true` na tab ativa em 2 tempos
+    // (URL muda antes da re-renderização). Aguardar o atributo evita race
+    // com asserções `.toHaveAttribute('aria-selected', 'true')` no spec.
+    await this.page
+      .getByRole('tab', { name: 'Modos de uso', selected: true })
+      .waitFor({ timeout: 15_000 });
   }
 
   /**
    * Atalho: navega direto para a rota com `?tab=panels-tab`. Usado por
    * todos os TCs que não testam o caminho de navegação em si.
+   *
+   * Aguarda só a visibilidade da tab — não o `aria-selected=true`. Specs
+   * que exigem o estado selected fazem assertion explícita; aqui o waitFor
+   * sem `selected: true` evita timeout de 30s+ enquanto o React pinta o
+   * atributo (data carrega em paralelo, ~2 tempos de render).
    */
   async goToList(): Promise<void> {
     await this.page.goto(`/o/${getOrgId()}/use_modes?tab=panels-tab`);
-    await this.page.getByRole('tab', { name: 'Painéis', selected: true }).waitFor();
+    await this.page.getByRole('tab', { name: 'Painéis' }).waitFor();
   }
 
   // ---------- Container / cabeçalho ----------
