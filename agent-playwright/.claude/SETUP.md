@@ -64,21 +64,55 @@ Dentro do Claude Code:
 
 Deve aparecer `playwright` na lista de MCPs conectados.
 
-### MCPs opcionais
+### 3.1. Chrome DevTools MCP (opt-in)
 
-Para ativar **Chrome DevTools MCP** (sob demanda — debug profundo de Web
-Vitals, performance traces, etc.):
+Use quando o time precisa de **debug profundo** que vai além do que o
+Playwright MCP padrão expõe:
+
+- Web Vitals (LCP, FID, CLS) numa tela específica
+- Performance traces detalhados (CPU/network) durante um spec lento
+- Memory profiling pra investigar leak suspeito
 
 ```bash
 claude mcp add chrome-devtools --scope project -- npx chrome-devtools-mcp@latest
 ```
 
-Para ativar **GitHub MCP** (CI / abrir issues automatizadas):
+Após instalar, valide com `/mcp` dentro do Claude Code — `chrome-devtools`
+deve aparecer ativo. As ferramentas ficam disponíveis pelos prefixos
+`mcp__chrome-devtools__*` quando você quer usar manualmente, ou via menção
+ao agent (ex: "use o chrome-devtools pra capturar Web Vitals da tela de
+configuração de indexação").
+
+Não é carregado por padrão pelos 3 subagents oficiais — se quiser que o
+healer/planner use, mencione explicitamente na invocação.
+
+### 3.2. GitHub MCP (opt-in)
+
+Use quando você quer:
+
+- **Healer abre PR automaticamente** após aceitar correção (fluxo opt-in
+  da Etapa 8.5 do `twygo-test-orchestrator`).
+- CI abrir issue automaticamente quando regressivo falha.
+- Buscar contexto de PRs/issues durante geração de teste.
 
 ```bash
 claude mcp add github --scope project
-# requer GITHUB_TOKEN no ambiente
 ```
+
+Requer `GITHUB_TOKEN` (PAT com escopo `repo`) no ambiente — adicione em
+`.env`:
+
+```env
+GITHUB_TOKEN=<seu PAT>
+```
+
+Após instalar, valide com `/mcp`. Para o fluxo healer→PR, ver
+[`.claude/skills/twygo-test-orchestrator/SKILL.md`](skills/twygo-test-orchestrator/SKILL.md)
+Etapa 8.5.
+
+> **Atenção**: o GitHub MCP é opt-in justamente pra evitar PRs acidentais
+> em sessões interativas. Se ele estiver ativo e o healer rodar, o
+> orquestrador vai oferecer abrir PR — aprovação fica com o QA.
 
 ## 4. Plugin oficial Playwright (planner/generator/healer)
 

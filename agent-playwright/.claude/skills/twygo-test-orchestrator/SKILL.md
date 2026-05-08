@@ -164,6 +164,58 @@ Se houve falhas que parecem **mudança de UI** (não bug funcional):
      **nunca** muda o que o teste valida).
 3. Apresentar diff ao QA para aprovação antes de aplicar.
 
+### Etapa 8.5 — Post-heal: abrir PR (opt-in via GitHub MCP)
+
+Disparada **só** quando (a) Etapa 8 aceitou correções E (b) o GitHub MCP
+está ativo (ver [SETUP.md §3.2](../../SETUP.md)). Se o MCP `github` não
+estiver em `/mcp`, pula silenciosamente — não bloquear.
+
+1. Detectar que o heal modificou arquivos: `git status -s tests/ src/pages/ projects/`.
+   Se vazio, encerrar (não havia o que aplicar).
+2. Determinar branch alvo:
+   - Se branch atual é `master`: criar `fix/heal-<slug-suite>-<YYYYMMDD-HHmm>`.
+   - Se branch atual é `project/<slug>` ou `fix/*`: commitar nela mesma.
+3. Commit dos arquivos modificados:
+   ```bash
+   git add tests/ src/pages/ projects/<slug>/
+   git commit -m "chore(heal): conserta seletor/timing em <slug-suite>
+
+   Healer aplicou correções minimais (seletor, espera, asserção).
+   Intenção dos testes preservada — XML do AT não foi alterado.
+
+   Refs: <link pro relatório que expôs a falha>"
+   ```
+4. Push: `git push -u origin <branch>`.
+5. Abrir PR via GitHub MCP (`mcp__github__create_pull_request` ou similar):
+   - Título: `[heal] <slug-suite> — conserta seletor/timing pós-mudança UI`
+   - Body com:
+     - Lista de specs alterados (caminho + 1 linha de resumo da mudança)
+     - Link pro relatório que mostrou a falha original
+     - Checklist: "Healer só corrige seletor/timing/asserção (regra dura
+       #11 do CLAUDE.md). Reviewer confirma que a intenção do teste
+       não mudou."
+6. Retornar ao QA: URL do PR + branch + 1 linha de resumo.
+
+**Trigger condicional** (pseudo-lógica que o orchestrator implementa):
+
+```
+if (etapa8.aplicouCorrecoes && mcpAtivo('github')) {
+  rodarEtapa85();
+} else if (etapa8.aplicouCorrecoes) {
+  loggar("PR não aberto — GitHub MCP não está ativo. " +
+         "Para ativar: ver SETUP.md §3.2.");
+}
+```
+
+**Não disparar etapa 8.5 quando**:
+- Modificações fora de `tests/`, `src/pages/`, `projects/` (heal só toca
+  esses três caminhos por construção).
+- Working tree tem mudanças não-heal misturadas (typecheck mexido,
+  Page Object reescrito por outra razão) — pedir ao QA pra commitar
+  separado primeiro.
+- A branch atual é `master` E o repo está em modo "branch protegida" — o
+  push falha; pedir ao QA pra criar branch manualmente.
+
 ## Modos de uso
 
 ### Modo interativo (per-suite, dev local)
@@ -214,6 +266,13 @@ outputs/exploratory/*.json                   # da fixture
 outputs/exploratory-findings.json            # do validator
 outputs/reports/{slug-suite}_{timestamp}/    # do report-generator (per-suite)
 outputs/allure-report/                       # do Allure CLI (regressivo)
+```
+
+E quando a Etapa 8.5 dispara (heal aceito + GitHub MCP ativo):
+
+```
+fix/heal-<slug-suite>-<timestamp>            # branch nova (se vinha de master)
+PR aberto em github.com/Twygo/twygo-agents-qa  # URL retornada ao QA
 ```
 
 ## Regras

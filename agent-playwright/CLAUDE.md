@@ -272,10 +272,12 @@ política para prosa ambígua e cenários fora do escopo.
 | MCP | Quando usar |
 |---|---|
 | **`playwright-test`** (`npx playwright run-test-mcp-server`) | **Padrão** — usado pelos 3 subagents oficiais de test (Fases 3/4/7). Expõe `browser_*`, `planner_*`, `generator_*`, `test_*`, `browser_generate_locator` |
-| **`chrome-devtools`** ([ChromeDevTools/chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp)) | Opt-in — debug profundo (Web Vitals, traces) |
-| **`github`** ([github/github-mcp-server](https://github.com/github/github-mcp-server)) | Opt-in — CI/healer abrindo issues + PRs |
+| **`chrome-devtools`** ([ChromeDevTools/chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp)) | Opt-in — debug profundo (Web Vitals, performance traces, memory). Ativação: [SETUP.md §3.1](.claude/SETUP.md) |
+| **`github`** ([github/github-mcp-server](https://github.com/github/github-mcp-server)) | Opt-in — healer abre PR pós-correção (Etapa 8.5 do orchestrator), CI abre issue em falha. Ativação: [SETUP.md §3.2](.claude/SETUP.md) |
 
-> O `.mcp.json` é gerado por `npx playwright init-agents --loop claude` no SETUP. Não editar manualmente.
+> O `.mcp.json` é gerado por `npx playwright init-agents --loop claude` no
+> SETUP. Não editar manualmente — para sincronizar com upstream, use a
+> skill [`atualizar-agents-oficiais`](.claude/skills/atualizar-agents-oficiais/SKILL.md).
 
 ### 6.2. Subagents Claude Code para Playwright (`.claude/agents/`)
 
@@ -298,9 +300,10 @@ Definidos por `npx playwright init-agents --loop claude` (oficial Microsoft). S�
 | Skill | Fase | Papel |
 |---|---|---|
 | **`twygo-xml-parser`** | 2 | TestLink XML → JSON estruturado |
-| **`twygo-test-orchestrator`** | 3, 4, 5, 7 | Orquestra planner/generator/healer com contexto Twygo. Modos `--suite` e `--regression` |
+| **`twygo-test-orchestrator`** | 3, 4, 5, 7, 8.5 | Orquestra planner/generator/healer com contexto Twygo. Modos `--suite` e `--regression`. Etapa 8.5 abre PR via GitHub MCP (opt-in) |
 | **`twygo-exploratory-validator`** | 5.5 | Agrega findings + cobertura + exporter Allure |
 | **`twygo-report-generator`** | 6 | HTML híbrido per-suite + delega Allure CLI no regressivo |
+| **`atualizar-agents-oficiais`** | manutenção | Re-roda `npx playwright init-agents --loop=claude` e mostra diff dos 3 subagents oficiais pra QA aprovar antes de aceitar updates upstream |
 
 ### 6.5. Bibliotecas npm
 

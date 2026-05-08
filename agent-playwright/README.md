@@ -335,6 +335,16 @@ Você revisa, aprova, commita.
 
 > **Healer NUNCA muda intenção do teste** — só seletor, timing ou asserção. Para mudar o que o teste valida, o XML do agente AT precisa ser atualizado primeiro.
 
+### Auto-PR pós-heal (opt-in)
+
+Se você ativou o **GitHub MCP** ([SETUP.md §3.2](.claude/SETUP.md)), o orquestrador oferece abrir um PR automaticamente após você aprovar as correções do healer. Fluxo:
+
+1. Healer aplicou correções e você aprovou o diff.
+2. Orquestrador detecta MCP `github` ativo → cria branch `fix/heal-<slug>-<timestamp>` (se você estava em `master`), commita, push, abre PR.
+3. Você recebe a URL do PR no chat — review humano continua seu.
+
+Sem o GitHub MCP ativo, a Etapa 8.5 é pulada silenciosamente — fluxo manual segue funcionando como sempre. Detalhes em [twygo-test-orchestrator SKILL.md](.claude/skills/twygo-test-orchestrator/SKILL.md) Etapa 8.5.
+
 ---
 
 ## Estrutura de pastas
