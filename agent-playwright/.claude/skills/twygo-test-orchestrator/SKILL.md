@@ -43,23 +43,7 @@ Para cada `<testcase>` no escopo:
 
 1. Carregar do JSON parseado: `name`, `summary`, `preconditions`, `importance`,
    `executionType`, `steps[]`.
-2. Invocar o subagent **`playwright-test-planner`** (definido em `.claude/agents/`, MCP `playwright-test`) com este contexto:
-   ```
-   Você está testando a plataforma Twygo (módulo: <nome da testsuite>).
-   Caso de teste: <nome do testcase>
-   Resumo: <summary>
-   Pré-condições: <preconditions>
-   
-   Passos a automatizar:
-   1. AÇÃO: <step.actions> | RESULTADO ESPERADO: <step.expectedResults>
-   2. AÇÃO: ...
-   
-   Convenções obrigatórias (ver CLAUDE.md seção 5):
-   - Tradução de prosa PT-BR → Playwright conforme padrões documentados.
-   - Preferir getByTestId; se não houver data-testid no DOM, sugerir adicioná-lo.
-   - Nunca waitForTimeout.
-   - Annotations Allure obrigatórias (ver Etapa 4).
-   ```
+2. Invocar o subagent **`playwright-test-planner`** (definido em `.claude/agents/`, MCP `playwright-test`) com o template canônico — **ver [prompts.md](prompts.md) seção "Planner — Etapa 2"** para o template completo + contexto adicional (prose-patterns, recon, Page Objects existentes) que deve ser carregado junto.
 3. Validar que o plano contempla **todos** os steps do XML — não pode pular.
 4. Se o planner reportar ambiguidade ou impossibilidade, marcar como
    `// REVISAR` e prosseguir (não chutar).
@@ -163,6 +147,30 @@ Se houve falhas que parecem **mudança de UI** (não bug funcional):
    - O healer propõe correção minimal (apenas seletor/espera/asserção,
      **nunca** muda o que o teste valida).
 3. Apresentar diff ao QA para aprovação antes de aplicar.
+
+### Etapa 8.1 — Validar diff do heal (gate estático)
+
+**Disparada sempre** que Etapa 8 produziu correções aceitas pelo QA, antes
+de commitar/aplicar. Invoca a skill [`validar-heal-diff`](../validar-heal-diff/SKILL.md)
+com:
+
+- Lista de arquivos modificados (em `tests/`, `src/pages/`, `projects/`)
+- Diff completo (`git diff --no-color --unified=0`)
+
+A skill classifica cada hunk como `passed` / `needs_review` / `blocked` e
+retorna veredito agregado:
+
+| Veredito | Ação do orquestrador |
+|---|---|
+| `passed` | Segue pra Etapa 8.5 ou commit local |
+| `needs_review` | Mostra hunks suspeitos ao QA, pede confirmação por hunk; se QA rejeitar qualquer, escala pra `blocked` |
+| `blocked` | Reverte (`git checkout -- <arquivos>`), apresenta relatório com hunks bloqueados, instrui QA a atualizar XML do AT (caminho legítimo pra mudar intenção do teste) |
+
+Esta etapa **enforce a regra dura #11** ("healer só toca seletor/timing/
+asserção, nunca intenção") de forma estática — em vez de depender só do
+prompt do healer respeitar a regra. Bloqueios típicos: assertion polarity
+flip (`toBeVisible` → `toBeHidden`), mudança de título de `test()` ou
+`test.describe()`, reorder de steps, adição/remoção de `test.fixme(true,)`.
 
 ### Etapa 8.5 — Post-heal: abrir PR (opt-in via GitHub MCP)
 

@@ -304,6 +304,9 @@ Definidos por `npx playwright init-agents --loop claude` (oficial Microsoft). S�
 | **`twygo-exploratory-validator`** | 5.5 | Agrega findings + cobertura + exporter Allure |
 | **`twygo-report-generator`** | 6 | HTML híbrido per-suite + delega Allure CLI no regressivo |
 | **`atualizar-agents-oficiais`** | manutenção | Re-roda `npx playwright init-agents --loop=claude` e mostra diff dos 3 subagents oficiais pra QA aprovar antes de aceitar updates upstream |
+| **`validar-heal-diff`** | 8.1 | Gate estático sobre o diff do healer. Bloqueia mudanças que indicam drift de intenção (assertion polarity flip, title change, step reorder, fixme add/remove). Enforca regra dura #11 |
+| **`roadmap-recon-cache`** | design | Especificação não-implementada — propõe migrar recon de `inputs/` (git) pra `outputs/<slug>/recon-cache/` (regenerável + TTL) |
+| **`roadmap-agent-metrics`** | design | Especificação não-implementada — orchestrator emite `metrics.json` por execução; skill nova agrega trend (typecheckFirstPassRate, fixmeRate, healBlockedRate, etc) |
 
 ### 6.5. Bibliotecas npm
 
