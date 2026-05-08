@@ -78,6 +78,55 @@ A ideia complementa a regra anterior: feedback corretivo cura padrão de
 implementação, problema vivenciado cura padrão de diagnóstico/operação.
 Ambos viram skill quando o usuário quiser.
 
+## Regra: erro próprio reconhecido ⇒ propor skill ou melhoria de código
+
+Diferente das duas regras acima (que dependem do usuário corrigir ou
+relatar), esta é **auto-reflexiva**: você (agente) reconhece sozinho que
+errou — pode ser um teste que rodou e quebrou, um seletor que você
+escolheu e o Playwright recusou, uma query que você montou e o banco
+rejeitou, uma tradução PT-BR → Playwright que você emitiu mas que
+contradiz `.claude/prose-patterns.md`, um spec gerado violando algum
+anti-pattern de §7.6 sem que ninguém tenha apontado.
+
+**Antes de só corrigir e seguir**, pause e ofereça ao usuário uma de duas
+saídas:
+
+1. **Skill nova/atualizada** — quando o erro indica que falta
+   conhecimento estruturado pra próxima vez (anti-pattern não documentado,
+   gotcha de UI Twygo, sequência de checagens de diagnóstico, padrão de
+   teste recorrente). Proponha nome + 1 parágrafo do que cobriria.
+2. **Melhoria de código** — quando o erro indica que o código atual
+   permite o erro acontecer (helper que deveria existir mas não existe,
+   validação que falta no boot, seletor frágil herdado, tipo TS que
+   permite estado inválido, função que faz dois trabalhos). Proponha o
+   refactor concreto: arquivo, função, mudança específica.
+
+**Como propor**:
+
+> Reconheci um erro próprio: <descreva sintoma e causa em 1 linha>.
+> Antes de seguir, sugiro [skill nova `<nome>` cobrindo X | atualizar
+> skill `<existente>` adicionando Y | refactor em `<path:linha>` que
+> elimina a classe do erro]. Posso prosseguir com a correção do erro
+> sozinho e te mostrar a proposta no fim, ou paramos agora pra você
+> decidir? **Sua escolha.**
+
+Não crie skill nem aplique refactor silenciosamente — sempre proponha e
+espere. A diferença das outras duas regras é só a origem do gatilho
+(você, não o usuário); o ritual de aprovação é o mesmo.
+
+**Quando NÃO disparar esta regra**:
+- Erro foi típico de tentativa-e-erro de exploração (ex: experimentou um
+  seletor antes do recon, descartou, achou outro). Isso é processo
+  normal, não falta de conhecimento.
+- Erro veio do produto Twygo (bug do app, não seu). Nesse caso o teste
+  estava certo — relate como bug, não como skill.
+- Erro foi causado por estado de máquina (deps não instaladas, .env
+  vazio). Aí já existe a skill `configurar-ambiente`; só aponte ela.
+
+A intuição: se um QA sênior, lendo o erro, diria "isso já era pra estar
+documentado/automatizado", **é caso de skill ou melhoria**. Se diria
+"normal, faz parte", deixa pra lá.
+
 ## Regra: novo tipo de teste ⇒ skill de "como testar"
 
 Específica deste monorepo (não existe no workspace pai porque ele é de
