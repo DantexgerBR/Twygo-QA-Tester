@@ -1,5 +1,6 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 import { getOrgId } from '../../../src/utils/environment.js';
+import { dismissCommonModals } from '../../../src/utils/modals.js';
 
 /**
  * Page Object da listagem de Painéis (módulo Widgets).
@@ -91,6 +92,7 @@ export class PaineisListPage {
     await this.page.locator('#menu a[name="settings-main-menu"]').click();
     await this.page.locator('#menu a#navigation-menu').click();
     await this.page.waitForURL(/\/use_modes/);
+    await dismissCommonModals(this.page);
     // O React/Chakra pinta `aria-selected=true` na tab ativa em 2 tempos
     // (URL muda antes da re-renderização). Aguardar o atributo evita race
     // com asserções `.toHaveAttribute('aria-selected', 'true')` no spec.
@@ -110,6 +112,11 @@ export class PaineisListPage {
    */
   async goToList(): Promise<void> {
     await this.page.goto(`/o/${getOrgId()}/use_modes?tab=panels-tab`);
+    // NPS Sofia + outros modais oportunistas — fechar antes de qualquer
+    // ação na listagem. Sem isso, click no toggle/edit cai no overlay
+    // do dialog (regra dura: NUNCA `force:true` pra resolver isso, sempre
+    // dismiss explícito). Ver skill `fechar-modais-twygo`.
+    await dismissCommonModals(this.page);
     await this.page.getByRole('tab', { name: 'Painéis' }).waitFor();
   }
 

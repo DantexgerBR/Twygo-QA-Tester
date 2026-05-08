@@ -30,8 +30,17 @@ test-results/
 .playwright-mcp/
 
 # ===== Outputs gerados pelo agente Playwright =====
-# Toda a pasta outputs/ é regenerada (parser, executor, validator, report, allure)
-agent-playwright/outputs/
+# Outputs SÃO commitados (decisão 2026-05-08): histórico de execuções
+# acessível direto no git facilita PR review e compartilhamento de
+# resultados sem ter que clonar+rodar.
+# Exceções: storage de auth (cookies sensíveis) + binários grandes (traces,
+# vídeos, allure raw) ficam fora.
+agent-playwright/outputs/.auth/
+agent-playwright/outputs/**/test-artifacts/**/*.zip
+agent-playwright/outputs/**/test-artifacts/**/*.webm
+agent-playwright/outputs/**/allure-results/
+agent-playwright/outputs/**/allure-report/
+agent-playwright/outputs/**/html-report/
 
 # ===== Env / segredos =====
 .env

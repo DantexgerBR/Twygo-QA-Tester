@@ -1,0 +1,29 @@
+{
+  "runId": "listagem-de-paineis_20260508-151305",
+  "scope": "Apenas testsuite contendo \"Listagem de painéis\"",
+  "tests": {
+    "total": 8,
+    "passed": 1,
+    "failed": 7,
+    "skipped": 0,
+    "durationMs": 272919
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 1,
+    "tests": 8,
+    "outOfScope": {
+      "errors": 11,
+      "warnings": 22,
+      "info": 0
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

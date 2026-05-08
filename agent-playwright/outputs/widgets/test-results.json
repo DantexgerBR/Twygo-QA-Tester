@@ -1,0 +1,997 @@
+{
+  "config": {
+    "configFile": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/playwright.config.ts",
+    "rootDir": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/tests/setup/global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/outputs/widgets/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "tests/auth/**/*.spec.ts",
+          "projects/widgets/tests/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/widgets/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects/widgets/tests/features/listagem-de-paineis/acessar-listagem-paineis-menu.spec.ts",
+      "file": "projects/widgets/tests/features/listagem-de-paineis/acessar-listagem-paineis-menu.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Listagem de painéis",
+          "file": "projects/widgets/tests/features/listagem-de-paineis/acessar-listagem-paineis-menu.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Acessar a listagem de Painéis a partir do Menu",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 41496,
+                      "error": {
+                        "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#menu a[name=\"settings-main-menu\"]')\u001b[22m\n\u001b[2m    - locator resolved to <a name=\"settings-main-menu\">…</a>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-wl0d9u\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-wl0d9u\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    57 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-wl0d9u\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n",
+                        "stack": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#menu a[name=\"settings-main-menu\"]')\u001b[22m\n\u001b[2m    - locator resolved to <a name=\"settings-main-menu\">…</a>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-wl0d9u\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-wl0d9u\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    57 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-wl0d9u\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\n    at PaineisListPage.clickMenuLink (/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/pages/PaineisListPage.ts:92:67)\n    at /home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/listagem-de-paineis/acessar-listagem-paineis-menu.spec.ts:22:21",
+                        "location": {
+                          "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/pages/PaineisListPage.ts",
+                          "column": 67,
+                          "line": 92
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39mprojects/widgets/pages/PaineisListPage.ts:92\n\n  90 |    */\n  91 |   async clickMenuLink(): Promise<void> {\n> 92 |     await this.page.locator('#menu a[name=\"settings-main-menu\"]').click();\n     |                                                                   ^\n  93 |     await this.page.locator('#menu a#navigation-menu').click();\n  94 |     await this.page.waitForURL(/\\/use_modes/);\n  95 |     await dismissCommonModals(this.page);"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/pages/PaineisListPage.ts",
+                            "column": 67,
+                            "line": 92
+                          },
+                          "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#menu a[name=\"settings-main-menu\"]')\u001b[22m\n\u001b[2m    - locator resolved to <a name=\"settings-main-menu\">…</a>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-wl0d9u\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-wl0d9u\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    57 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-wl0d9u\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\n\n   at projects/widgets/pages/PaineisListPage.ts:92\n\n  90 |    */\n  91 |   async clickMenuLink(): Promise<void> {\n> 92 |     await this.page.locator('#menu a[name=\"settings-main-menu\"]').click();\n     |                                                                   ^\n  93 |     await this.page.locator('#menu a#navigation-menu').click();\n  94 |     await this.page.waitForURL(/\\/use_modes/);\n  95 |     await dismissCommonModals(this.page);\n    at PaineisListPage.clickMenuLink (/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/pages/PaineisListPage.ts:92:67)\n    at /home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/listagem-de-paineis/acessar-listagem-paineis-menu.spec.ts:22:21"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Clicar no link 'Menu' da sidebar lateral",
+                          "duration": 39579,
+                          "error": {
+                            "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#menu a[name=\"settings-main-menu\"]')\u001b[22m\n\u001b[2m    - locator resolved to <a name=\"settings-main-menu\">…</a>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-wl0d9u\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-wl0d9u\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    57 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-wl0d9u\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n",
+                            "stack": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#menu a[name=\"settings-main-menu\"]')\u001b[22m\n\u001b[2m    - locator resolved to <a name=\"settings-main-menu\">…</a>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-wl0d9u\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-wl0d9u\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    57 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-wl0d9u\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\n    at PaineisListPage.clickMenuLink (/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/pages/PaineisListPage.ts:92:67)\n    at /home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/listagem-de-paineis/acessar-listagem-paineis-menu.spec.ts:22:21",
+                            "location": {
+                              "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/pages/PaineisListPage.ts",
+                              "column": 67,
+                              "line": 92
+                            },
+                            "snippet": "\u001b[90m   at \u001b[39mprojects/widgets/pages/PaineisListPage.ts:92\n\n  90 |    */\n  91 |   async clickMenuLink(): Promise<void> {\n> 92 |     await this.page.locator('#menu a[name=\"settings-main-menu\"]').click();\n     |                                                                   ^\n  93 |     await this.page.locator('#menu a#navigation-menu').click();\n  94 |     await this.page.waitForURL(/\\/use_modes/);\n  95 |     await dismissCommonModals(this.page);"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-05-08T18:26:10.442Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gV2lkZ2V0cyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6Ikxpc3RhZ2VtIGRlIHBhaW7DqWlzIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJBY2Vzc2FyIGEgbGlzdGFnZW0gZGUgUGFpbsOpaXMgYSBwYXJ0aXIgZG8gTWVudSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImV4ZWN1dGlvblR5cGUiLCJ2YWx1ZSI6ImF1dG9tYXRlZCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/outputs/widgets/test-artifacts/projects-widgets-tests-fea-ff427-de-Painéis-a-partir-do-Menu-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/outputs/widgets/test-artifacts/projects-widgets-tests-fea-ff427-de-Painéis-a-partir-do-Menu-chromium/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/outputs/widgets/test-artifacts/projects-widgets-tests-fea-ff427-de-Painéis-a-partir-do-Menu-chromium/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/pages/PaineisListPage.ts",
+                        "column": 67,
+                        "line": 92
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "537a95be7cda906e5f12-9e99b67aa63d2ff43955",
+              "file": "projects/widgets/tests/features/listagem-de-paineis/acessar-listagem-paineis-menu.spec.ts",
+              "line": 9,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects/widgets/tests/features/listagem-de-paineis/acessibilidade-teclado.spec.ts",
+      "file": "projects/widgets/tests/features/listagem-de-paineis/acessibilidade-teclado.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Listagem de painéis",
+          "file": "projects/widgets/tests/features/listagem-de-paineis/acessibilidade-teclado.spec.ts",
+          "line": 11,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar acessibilidade por teclado (TAB / setas / ENTER / ESC)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 52034,
+                      "error": {
+                        "message": "TimeoutError: locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('tab', { name: 'Painéis' }) to be visible\u001b[22m\n",
+                        "stack": "TimeoutError: locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('tab', { name: 'Painéis' }) to be visible\u001b[22m\n\n    at PaineisListPage.goToList (/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/pages/PaineisListPage.ts:120:59)\n    at /home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/listagem-de-paineis/acessibilidade-teclado.spec.ts:26:7",
+                        "location": {
+                          "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/pages/PaineisListPage.ts",
+                          "column": 59,
+                          "line": 120
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39mprojects/widgets/pages/PaineisListPage.ts:120\n\n  118 |     // dismiss explícito). Ver skill `fechar-modais-twygo`.\n  119 |     await dismissCommonModals(this.page);\n> 120 |     await this.page.getByRole('tab', { name: 'Painéis' }).waitFor();\n      |                                                           ^\n  121 |   }\n  122 |\n  123 |   // ---------- Container / cabeçalho ----------"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/pages/PaineisListPage.ts",
+                            "column": 59,
+                            "line": 120
+                          },
+                          "message": "TimeoutError: locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('tab', { name: 'Painéis' }) to be visible\u001b[22m\n\n\n   at projects/widgets/pages/PaineisListPage.ts:120\n\n  118 |     // dismiss explícito). Ver skill `fechar-modais-twygo`.\n  119 |     await dismissCommonModals(this.page);\n> 120 |     await this.page.getByRole('tab', { name: 'Painéis' }).waitFor();\n      |                                                           ^\n  121 |   }\n  122 |\n  123 |   // ---------- Container / cabeçalho ----------\n    at PaineisListPage.goToList (/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/pages/PaineisListPage.ts:120:59)\n    at /home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/listagem-de-paineis/acessibilidade-teclado.spec.ts:26:7"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar a listagem de Painéis",
+                          "duration": 40339,
+                          "error": {
+                            "message": "TimeoutError: locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('tab', { name: 'Painéis' }) to be visible\u001b[22m\n",
+                            "stack": "TimeoutError: locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('tab', { name: 'Painéis' }) to be visible\u001b[22m\n\n    at PaineisListPage.goToList (/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/pages/PaineisListPage.ts:120:59)\n    at /home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/listagem-de-paineis/acessibilidade-teclado.spec.ts:26:7",
+                            "location": {
+                              "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/pages/PaineisListPage.ts",
+                              "column": 59,
+                              "line": 120
+                            },
+                            "snippet": "\u001b[90m   at \u001b[39mprojects/widgets/pages/PaineisListPage.ts:120\n\n  118 |     // dismiss explícito). Ver skill `fechar-modais-twygo`.\n  119 |     await dismissCommonModals(this.page);\n> 120 |     await this.page.getByRole('tab', { name: 'Painéis' }).waitFor();\n      |                                                           ^\n  121 |   }\n  122 |\n  123 |   // ---------- Container / cabeçalho ----------"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-05-08T18:26:10.429Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gV2lkZ2V0cyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6Ikxpc3RhZ2VtIGRlIHBhaW7DqWlzIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGFjZXNzaWJpbGlkYWRlIHBvciB0ZWNsYWRvIChUQUIgLyBzZXRhcyAvIEVOVEVSIC8gRVNDKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJtaW5vciJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImV4ZWN1dGlvblR5cGUiLCJ2YWx1ZSI6ImF1dG9tYXRlZCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/outputs/widgets/test-artifacts/projects-widgets-tests-fea-b00fe-eclado-TAB-setas-ENTER-ESC--chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/outputs/widgets/test-artifacts/projects-widgets-tests-fea-b00fe-eclado-TAB-setas-ENTER-ESC--chromium/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/outputs/widgets/test-artifacts/projects-widgets-tests-fea-b00fe-eclado-TAB-setas-ENTER-ESC--chromium/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/pages/PaineisListPage.ts",
+                        "column": 59,
+                        "line": 120
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "f0f0b73362599909214c-2c35ade56a478e205c8a",
+              "file": "projects/widgets/tests/features/listagem-de-paineis/acessibilidade-teclado.spec.ts",
+              "line": 12,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects/widgets/tests/features/listagem-de-paineis/alternar-lista-cards.spec.ts",
+      "file": "projects/widgets/tests/features/listagem-de-paineis/alternar-lista-cards.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Listagem de painéis",
+          "file": "projects/widgets/tests/features/listagem-de-paineis/alternar-lista-cards.spec.ts",
+          "line": 14,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Alternar entre visualização em lista e cards",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "failed",
+                      "duration": 42568,
+                      "error": {
+                        "message": "TimeoutError: locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('tab', { name: 'Painéis' }) to be visible\u001b[22m\n",
+                        "stack": "TimeoutError: locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('tab', { name: 'Painéis' }) to be visible\u001b[22m\n\n    at PaineisListPage.goToList (/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/pages/PaineisListPage.ts:120:59)\n    at /home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/listagem-de-paineis/alternar-lista-cards.spec.ts:27:9",
+                        "location": {
+                          "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/pages/PaineisListPage.ts",
+                          "column": 59,
+                          "line": 120
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39mprojects/widgets/pages/PaineisListPage.ts:120\n\n  118 |     // dismiss explícito). Ver skill `fechar-modais-twygo`.\n  119 |     await dismissCommonModals(this.page);\n> 120 |     await this.page.getByRole('tab', { name: 'Painéis' }).waitFor();\n      |                                                           ^\n  121 |   }\n  122 |\n  123 |   // ---------- Container / cabeçalho ----------"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/pages/PaineisListPage.ts",
+                            "column": 59,
+                            "line": 120
+                          },
+                          "message": "TimeoutError: locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('tab', { name: 'Painéis' }) to be visible\u001b[22m\n\n\n   at projects/widgets/pages/PaineisListPage.ts:120\n\n  118 |     // dismiss explícito). Ver skill `fechar-modais-twygo`.\n  119 |     await dismissCommonModals(this.page);\n> 120 |     await this.page.getByRole('tab', { name: 'Painéis' }).waitFor();\n      |                                                           ^\n  121 |   }\n  122 |\n  123 |   // ---------- Container / cabeçalho ----------\n    at PaineisListPage.goToList (/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/pages/PaineisListPage.ts:120:59)\n    at /home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/listagem-de-paineis/alternar-lista-cards.spec.ts:27:9"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar a listagem (default em 1920x1080 é 'Lista')",
+                          "duration": 40679,
+                          "error": {
+                            "message": "TimeoutError: locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('tab', { name: 'Painéis' }) to be visible\u001b[22m\n",
+                            "stack": "TimeoutError: locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('tab', { name: 'Painéis' }) to be visible\u001b[22m\n\n    at PaineisListPage.goToList (/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/pages/PaineisListPage.ts:120:59)\n    at /home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/listagem-de-paineis/alternar-lista-cards.spec.ts:27:9",
+                            "location": {
+                              "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/pages/PaineisListPage.ts",
+                              "column": 59,
+                              "line": 120
+                            },
+                            "snippet": "\u001b[90m   at \u001b[39mprojects/widgets/pages/PaineisListPage.ts:120\n\n  118 |     // dismiss explícito). Ver skill `fechar-modais-twygo`.\n  119 |     await dismissCommonModals(this.page);\n> 120 |     await this.page.getByRole('tab', { name: 'Painéis' }).waitFor();\n      |                                                           ^\n  121 |   }\n  122 |\n  123 |   // ---------- Container / cabeçalho ----------"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-05-08T18:26:10.438Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gV2lkZ2V0cyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6Ikxpc3RhZ2VtIGRlIHBhaW7DqWlzIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJBbHRlcm5hciBlbnRyZSB2aXN1YWxpemHDp8OjbyBlbSBsaXN0YSBlIGNhcmRzIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJub3JtYWwifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImV4ZWN1dGlvblR5cGUiLCJ2YWx1ZSI6ImF1dG9tYXRlZCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/outputs/widgets/test-artifacts/projects-widgets-tests-fea-ee775-sualização-em-lista-e-cards-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/outputs/widgets/test-artifacts/projects-widgets-tests-fea-ee775-sualização-em-lista-e-cards-chromium/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/outputs/widgets/test-artifacts/projects-widgets-tests-fea-ee775-sualização-em-lista-e-cards-chromium/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/pages/PaineisListPage.ts",
+                        "column": 59,
+                        "line": 120
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "9752503a19c14c2e8a87-354a7a9193fc0b5d443e",
+              "file": "projects/widgets/tests/features/listagem-de-paineis/alternar-lista-cards.spec.ts",
+              "line": 15,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects/widgets/tests/features/listagem-de-paineis/feature-flag-desabilitada.spec.ts",
+      "file": "projects/widgets/tests/features/listagem-de-paineis/feature-flag-desabilitada.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Listagem de painéis",
+          "file": "projects/widgets/tests/features/listagem-de-paineis/feature-flag-desabilitada.spec.ts",
+          "line": 19,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Acessar listagem com a feature flag desabilitada",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 22105,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('tab', { name: 'Modos de uso' })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('tab', { name: 'Modos de uso' })\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('tab', { name: 'Modos de uso' })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('tab', { name: 'Modos de uso' })\u001b[22m\n\n    at /home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/listagem-de-paineis/feature-flag-desabilitada.spec.ts:36:48",
+                        "location": {
+                          "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/listagem-de-paineis/feature-flag-desabilitada.spec.ts",
+                          "column": 48,
+                          "line": 36
+                        },
+                        "snippet": "  34 |     await allure.step('1. Acessar /use_modes e verificar tabs', async () => {\n  35 |       await page.goto(`/o/${disabledOrgId}/use_modes`);\n> 36 |       await expect(paineis.getModosDeUsoTab()).toBeVisible();\n     |                                                ^\n  37 |     });\n  38 |\n  39 |     await allure.step("
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/listagem-de-paineis/feature-flag-desabilitada.spec.ts",
+                            "column": 48,
+                            "line": 36
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('tab', { name: 'Modos de uso' })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('tab', { name: 'Modos de uso' })\u001b[22m\n\n\n  34 |     await allure.step('1. Acessar /use_modes e verificar tabs', async () => {\n  35 |       await page.goto(`/o/${disabledOrgId}/use_modes`);\n> 36 |       await expect(paineis.getModosDeUsoTab()).toBeVisible();\n     |                                                ^\n  37 |     });\n  38 |\n  39 |     await allure.step(\n    at /home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/listagem-de-paineis/feature-flag-desabilitada.spec.ts:36:48"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar /use_modes e verificar tabs",
+                          "duration": 20430,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('tab', { name: 'Modos de uso' })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('tab', { name: 'Modos de uso' })\u001b[22m\n",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('tab', { name: 'Modos de uso' })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('tab', { name: 'Modos de uso' })\u001b[22m\n\n    at /home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/listagem-de-paineis/feature-flag-desabilitada.spec.ts:36:48",
+                            "location": {
+                              "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/listagem-de-paineis/feature-flag-desabilitada.spec.ts",
+                              "column": 48,
+                              "line": 36
+                            },
+                            "snippet": "  34 |     await allure.step('1. Acessar /use_modes e verificar tabs', async () => {\n  35 |       await page.goto(`/o/${disabledOrgId}/use_modes`);\n> 36 |       await expect(paineis.getModosDeUsoTab()).toBeVisible();\n     |                                                ^\n  37 |     });\n  38 |\n  39 |     await allure.step("
+                          }
+                        }
+                      ],
+                      "startTime": "2026-05-08T18:26:10.457Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gV2lkZ2V0cyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6Ikxpc3RhZ2VtIGRlIHBhaW7DqWlzIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJBY2Vzc2FyIGxpc3RhZ2VtIGNvbSBhIGZlYXR1cmUgZmxhZyBkZXNhYmlsaXRhZGEifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImV4ZWN1dGlvblR5cGUiLCJ2YWx1ZSI6ImF1dG9tYXRlZCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/outputs/widgets/test-artifacts/projects-widgets-tests-fea-0c79e-a-feature-flag-desabilitada-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/outputs/widgets/test-artifacts/projects-widgets-tests-fea-0c79e-a-feature-flag-desabilitada-chromium/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/outputs/widgets/test-artifacts/projects-widgets-tests-fea-0c79e-a-feature-flag-desabilitada-chromium/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/listagem-de-paineis/feature-flag-desabilitada.spec.ts",
+                        "column": 48,
+                        "line": 36
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "e7577eb2368af9888486-4435652272ede2895311",
+              "file": "projects/widgets/tests/features/listagem-de-paineis/feature-flag-desabilitada.spec.ts",
+              "line": 25,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects/widgets/tests/features/listagem-de-paineis/ordenar-colunas.spec.ts",
+      "file": "projects/widgets/tests/features/listagem-de-paineis/ordenar-colunas.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Listagem de painéis",
+          "file": "projects/widgets/tests/features/listagem-de-paineis/ordenar-colunas.spec.ts",
+          "line": 16,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Ordenar listagem por cada coluna",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 12410,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar a listagem em modo 'Lista' e capturar ordem default",
+                          "duration": 7376
+                        },
+                        {
+                          "title": "2. Ordenar por 'Nome' ascendente",
+                          "duration": 401
+                        },
+                        {
+                          "title": "3. Ordenar por 'Nome' descendente",
+                          "duration": 561
+                        },
+                        {
+                          "title": "4. Ordenar por 'Data de criação' ascendente",
+                          "duration": 521
+                        },
+                        {
+                          "title": "5. Ordenar por 'Data de criação' descendente",
+                          "duration": 508
+                        },
+                        {
+                          "title": "6. Ordenar por 'Ativo' ascendente",
+                          "duration": 577
+                        },
+                        {
+                          "title": "7. Ordenar por 'Ativo' descendente",
+                          "duration": 597
+                        }
+                      ],
+                      "startTime": "2026-05-08T18:26:33.666Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gV2lkZ2V0cyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6Ikxpc3RhZ2VtIGRlIHBhaW7DqWlzIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJPcmRlbmFyIGxpc3RhZ2VtIHBvciBjYWRhIGNvbHVuYSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJub3JtYWwifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImV4ZWN1dGlvblR5cGUiLCJ2YWx1ZSI6ImF1dG9tYXRlZCJ9XX19"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "119cc9edf85fde3642a3-27a810eefcdb13f64bf0",
+              "file": "projects/widgets/tests/features/listagem-de-paineis/ordenar-colunas.spec.ts",
+              "line": 17,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects/widgets/tests/features/listagem-de-paineis/paginacao-listagem.spec.ts",
+      "file": "projects/widgets/tests/features/listagem-de-paineis/paginacao-listagem.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Listagem de painéis",
+          "file": "projects/widgets/tests/features/listagem-de-paineis/paginacao-listagem.spec.ts",
+          "line": 11,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Paginação da listagem com volume de painéis",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 9345,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar a listagem e verificar paginação visível com botão '1' ativo",
+                          "duration": 6502
+                        },
+                        {
+                          "title": "2. Avançar para a próxima página",
+                          "duration": 552
+                        },
+                        {
+                          "title": "3. Voltar para a página anterior",
+                          "duration": 450
+                        }
+                      ],
+                      "startTime": "2026-05-08T18:26:46.142Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gV2lkZ2V0cyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6Ikxpc3RhZ2VtIGRlIHBhaW7DqWlzIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJQYWdpbmHDp8OjbyBkYSBsaXN0YWdlbSBjb20gdm9sdW1lIGRlIHBhaW7DqWlzIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJub3JtYWwifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImV4ZWN1dGlvblR5cGUiLCJ2YWx1ZSI6ImF1dG9tYXRlZCJ9XX19"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0f9b5d9d997a4b4fc6e1-7d0ad82987362004a4df",
+              "file": "projects/widgets/tests/features/listagem-de-paineis/paginacao-listagem.spec.ts",
+              "line": 12,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects/widgets/tests/features/listagem-de-paineis/validar-colunas-lista.spec.ts",
+      "file": "projects/widgets/tests/features/listagem-de-paineis/validar-colunas-lista.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Listagem de painéis",
+          "file": "projects/widgets/tests/features/listagem-de-paineis/validar-colunas-lista.spec.ts",
+          "line": 16,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar colunas exibidas na visualização em lista",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9430,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar a listagem de Painéis em modo 'Lista'",
+                          "duration": 7079
+                        },
+                        {
+                          "title": "2. Verificar colunas obrigatórias",
+                          "duration": 81
+                        },
+                        {
+                          "title": "3. Verificar checkbox 'Ativo' na primeira linha",
+                          "duration": 16
+                        },
+                        {
+                          "title": "4. Verificar ícones de ação (editar/duplicar/excluir) na primeira linha",
+                          "duration": 54
+                        }
+                      ],
+                      "startTime": "2026-05-08T18:26:53.199Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gV2lkZ2V0cyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6Ikxpc3RhZ2VtIGRlIHBhaW7DqWlzIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGNvbHVuYXMgZXhpYmlkYXMgbmEgdmlzdWFsaXphw6fDo28gZW0gbGlzdGEifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImV4ZWN1dGlvblR5cGUiLCJ2YWx1ZSI6ImF1dG9tYXRlZCJ9XX19"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "09b91cb849a69b1efcc0-e3fc5dfddab63d9f4979",
+              "file": "projects/widgets/tests/features/listagem-de-paineis/validar-colunas-lista.spec.ts",
+              "line": 17,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects/widgets/tests/features/listagem-de-paineis/validar-componentes-obrigatorios.spec.ts",
+      "file": "projects/widgets/tests/features/listagem-de-paineis/validar-componentes-obrigatorios.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Listagem de painéis",
+          "file": "projects/widgets/tests/features/listagem-de-paineis/validar-componentes-obrigatorios.spec.ts",
+          "line": 12,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar componentes obrigatórios da listagem de painéis",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 9644,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar a listagem de Painéis",
+                          "duration": 7414
+                        },
+                        {
+                          "title": "2. Verificar botão '+ Adicionar' visível",
+                          "duration": 27
+                        },
+                        {
+                          "title": "3. Verificar botão 'Filtro' visível",
+                          "duration": 22
+                        },
+                        {
+                          "title": "4. Verificar campo de busca visível",
+                          "duration": 21
+                        },
+                        {
+                          "title": "5. Verificar grid de cards renderiza com pelo menos 1 painel",
+                          "duration": 34
+                        }
+                      ],
+                      "startTime": "2026-05-08T18:26:54.114Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gV2lkZ2V0cyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6Ikxpc3RhZ2VtIGRlIHBhaW7DqWlzIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGNvbXBvbmVudGVzIG9icmlnYXTDs3Jpb3MgZGEgbGlzdGFnZW0gZGUgcGFpbsOpaXMifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImV4ZWN1dGlvblR5cGUiLCJ2YWx1ZSI6ImF1dG9tYXRlZCJ9XX19"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d7c6b665fa02f2a29ca9-ca92192d82581dd18d99",
+              "file": "projects/widgets/tests/features/listagem-de-paineis/validar-componentes-obrigatorios.spec.ts",
+              "line": 13,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-05-08T18:26:09.606Z",
+    "duration": 54287.577,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}
