@@ -1,11 +1,30 @@
 {
   "suite": "Ativar / Inativar painel",
-  "test": "Ativar um painel previamente inativo",
-  "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/ativar-inativar-painel/ativar-painel-inativo.spec.ts",
-  "workerIndex": 0,
-  "startedAt": "2026-05-11T20:42:20.113Z",
-  "finishedAt": "2026-05-11T20:42:29.962Z",
+  "test": "Tentar inativar painel associado a modos de uso exibe modal de bloqueio",
+  "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/ativar-inativar-painel/inativar-painel-associado-modal.spec.ts",
+  "workerIndex": 1,
+  "startedAt": "2026-05-11T20:42:34.135Z",
+  "finishedAt": "2026-05-11T20:42:52.905Z",
   "findings": [
+    {
+      "kind": "http_error",
+      "severity": "error",
+      "url": "https://widgets.stage.twygoead.com/api/v1/o/36988/panels/802670/linked_menus",
+      "message": "HTTP 500 em GET https://widgets.stage.twygoead.com/api/v1/o/36988/panels/802670/linked_menus",
+      "detail": {
+        "status": 500,
+        "method": "GET",
+        "resourceType": "xhr"
+      },
+      "inScope": false
+    },
+    {
+      "kind": "console_error",
+      "severity": "error",
+      "url": "https://widgets.stage.twygoead.com/o/36988/use_modes?tab=panels-tab",
+      "message": "Failed to load resource: the server responded with a status of 500 ()",
+      "inScope": false
+    },
     {
       "kind": "a11y_violation",
       "severity": "error",
@@ -26,9 +45,9 @@
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-allowed-attr?application=playwright",
         "affectedNodes": 1,
         "firstNodeTarget": [
-          "#popover-trigger-\\:r3\\:"
+          "#popover-trigger-\\:r7\\:"
         ],
-        "firstNodeHtml": "<div id=\"popover-trigger-:r3:\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"popover-content-:r3:\" class=\"css-tz0gqg\">"
+        "firstNodeHtml": "<div id=\"popover-trigger-:r7:\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"popover-content-:r7:\" class=\"css-tz0gqg\">"
       },
       "inScope": false
     },
@@ -139,9 +158,9 @@
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/label?application=playwright",
         "affectedNodes": 25,
         "firstNodeTarget": [
-          "#panel-situation-802672"
+          "#panel-situation-802670"
         ],
-        "firstNodeHtml": "<input class=\"chakra-switch__input\" type=\"checkbox\" id=\"panel-situation-802672\" value=\"\" checked=\"\" style=\"border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; width: 1px; margin: -1px; padding: "
+        "firstNodeHtml": "<input class=\"chakra-switch__input\" type=\"checkbox\" id=\"panel-situation-802670\" value=\"\" style=\"border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; width: 1px; margin: -1px; padding: 0px; overfl"
       },
       "inScope": false
     },
@@ -160,7 +179,7 @@
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
         "affectedNodes": 6,
         "firstNodeTarget": [
-          ".chakra-portal:nth-child(36) > div[aria-label=\"Notifications-top\"][aria-live=\"polite\"][role=\"region\"]"
+          ".chakra-portal:nth-child(34) > div[aria-label=\"Notifications-top\"][aria-live=\"polite\"][role=\"region\"]"
         ],
         "firstNodeHtml": "<div role=\"region\" aria-live=\"polite\" aria-label=\"Notifications-top\" id=\"chakra-toast-manager...\" style=\"position: fixed; z-i...\">"
       },
@@ -277,8 +296,8 @@
   "coverage": [
     {
       "url": "https://widgets.stage.twygoead.com/o/36988/use_modes?tab=panels-tab",
-      "totalInteractive": 156,
-      "visibleInteractive": 81,
+      "totalInteractive": 153,
+      "visibleInteractive": 78,
       "samples": [
         {
           "role": "link",

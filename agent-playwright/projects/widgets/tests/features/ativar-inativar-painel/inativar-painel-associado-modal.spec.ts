@@ -19,8 +19,9 @@ test.use({ viewport: { width: 1920, height: 1080 } });
 // fixture do test) e precisam de path absoluto resolvido a partir do cwd.
 const STORAGE_STATE = resolve(process.cwd(), 'outputs/.auth/storage.json');
 
-// BLOCKED-BY-PRODUCT-BUG: bug no servidor twyg-app em
-// `app/models/use_mode_item.rb#title_for` (commit 6461dbf499, 06/05/2026):
+// FAILING-BY-PRODUCT-BUG: este teste FALHA porque há bug no servidor
+// twyg-app em `app/models/use_mode_item.rb#title_for` (commit 6461dbf499,
+// 06/05/2026):
 //
 //   def title_for(locale)
 //     use_mode_item_translations.blank? ?
@@ -35,9 +36,10 @@ const STORAGE_STATE = resolve(process.cwd(), 'outputs/.auth/storage.json');
 // /api/v1/o/{org}/panels/{id}/linked_menus retorna 500 em ~21ms Rails runtime
 // (confirmado via trace 2026-05-11: x-runtime: 0.021308).
 //
-// Sintoma: ao clicar no switch "Ativo?" do painel já associado, a UI chama
-// /linked_menus → 500 → trata como "sem menus vinculados" → inativa direto
-// sem mostrar o modal "Painel em uso".
+// Sintoma observável: ao clicar no switch "Ativo?" do painel já associado,
+// a UI chama /linked_menus → 500 → trata como "sem menus vinculados" →
+// inativa direto sem mostrar o modal "Painel em uso". A asserção
+// `expect(modal).toBeVisible()` no Step 2 falha por timeout.
 //
 // Cobertura confirmada via traces — o agente faz a parte dele certo:
 //   POST /panels                                       → 201
@@ -47,13 +49,14 @@ const STORAGE_STATE = resolve(process.cwd(), 'outputs/.auth/storage.json');
 //   PATCH /use_modes/70078/use_mode_itens/bulk_update  → 200
 //   GET  /panels/{id}/linked_menus                     → 500  ← BUG produto
 //
-// Usamos `test.describe.fixme` (não `test.fixme` inline) pra pular também o
-// beforeAll/afterAll — caso contrário a cada run o agente criaria+associaria
-// o painel só pra abortar antes do body, poluindo o tenant à toa.
+// Fix sugerido upstream: `&.title` no find, OU criar translation pt-BR
+// no POST de use_mode_itens. Quando corrigido, este teste passa
+// automaticamente sem mudança no código (era pra ser assim desde o começo).
 //
-// Reabrir (trocar `.fixme` por `()`) quando o bug for corrigido upstream
-// (sugestão: `&.title` no find, ou criar translation pt-BR no POST).
-test.describe.fixme('Ativar / Inativar painel', () => {
+// NÃO marcado com `test.describe.fixme` por opção deliberada — bug de
+// produto deve falhar vermelho pra ficar visível no relatório do dev.
+// Ver Anti-pattern F em CLAUDE.md §7.6.
+test.describe('Ativar / Inativar painel', () => {
   let panelName: string;
 
   test.beforeAll(async ({ browser }, testInfo) => {

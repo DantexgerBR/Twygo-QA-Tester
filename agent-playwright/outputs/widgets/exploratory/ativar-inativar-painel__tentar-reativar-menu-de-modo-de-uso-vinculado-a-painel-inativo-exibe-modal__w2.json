@@ -2,9 +2,9 @@
   "suite": "Ativar / Inativar painel",
   "test": "Tentar reativar menu de modo de uso vinculado a painel inativo exibe modal",
   "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/ativar-inativar-painel/reativar-modo-uso-painel-inativo.spec.ts",
-  "workerIndex": 3,
-  "startedAt": "2026-05-11T18:34:35.367Z",
-  "finishedAt": "2026-05-11T18:34:35.668Z",
+  "workerIndex": 2,
+  "startedAt": "2026-05-11T20:42:37.596Z",
+  "finishedAt": "2026-05-11T20:42:37.955Z",
   "findings": [
     {
       "kind": "a11y_violation",

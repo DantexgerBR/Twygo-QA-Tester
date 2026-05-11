@@ -1,16 +1,16 @@
 {
   "suite": "Ativar / Inativar painel",
-  "test": "Verificar persistência do estado Ativo após reload",
-  "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/ativar-inativar-painel/persistencia-estado-ativo-reload.spec.ts",
+  "test": "Inativar um painel não associado a nenhum modo de uso",
+  "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/ativar-inativar-painel/inativar-painel-nao-associado.spec.ts",
   "workerIndex": 2,
-  "startedAt": "2026-05-11T18:34:35.367Z",
-  "finishedAt": "2026-05-11T18:34:56.007Z",
+  "startedAt": "2026-05-11T20:42:13.562Z",
+  "finishedAt": "2026-05-11T20:42:28.088Z",
   "findings": [
     {
       "kind": "http_error",
       "severity": "error",
-      "url": "https://widgets.stage.twygoead.com/api/v1/o/36988/panels/801944/linked_menus",
-      "message": "HTTP 500 em GET https://widgets.stage.twygoead.com/api/v1/o/36988/panels/801944/linked_menus",
+      "url": "https://widgets.stage.twygoead.com/api/v1/o/36988/panels/802671/linked_menus",
+      "message": "HTTP 500 em GET https://widgets.stage.twygoead.com/api/v1/o/36988/panels/802671/linked_menus",
       "detail": {
         "status": 500,
         "method": "GET",
@@ -45,9 +45,9 @@
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-allowed-attr?application=playwright",
         "affectedNodes": 1,
         "firstNodeTarget": [
-          "#popover-trigger-\\:rd\\:"
+          "#popover-trigger-\\:rb\\:"
         ],
-        "firstNodeHtml": "<div id=\"popover-trigger-:rd:\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"popover-content-:rd:\" class=\"css-tz0gqg\">"
+        "firstNodeHtml": "<div id=\"popover-trigger-:rb:\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"popover-content-:rb:\" class=\"css-tz0gqg\">"
       },
       "inScope": false
     },
@@ -72,7 +72,7 @@
           "RGAA-3.2.1"
         ],
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
-        "affectedNodes": 16,
+        "affectedNodes": 20,
         "firstNodeTarget": [
           ".top-user-name__infor > .name"
         ],
@@ -158,9 +158,9 @@
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/label?application=playwright",
         "affectedNodes": 25,
         "firstNodeTarget": [
-          "#panel-situation-803075"
+          "#panel-situation-802672"
         ],
-        "firstNodeHtml": "<input class=\"chakra-switch__input\" type=\"checkbox\" id=\"panel-situation-803075\" value=\"\" checked=\"\" style=\"border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; width: 1px; margin: -1px; padding: "
+        "firstNodeHtml": "<input class=\"chakra-switch__input\" type=\"checkbox\" id=\"panel-situation-802672\" value=\"\" style=\"border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; width: 1px; margin: -1px; padding: 0px; overfl"
       },
       "inScope": false
     },
@@ -179,7 +179,7 @@
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
         "affectedNodes": 6,
         "firstNodeTarget": [
-          ".chakra-portal:nth-child(34) > div[aria-label=\"Notifications-top\"][aria-live=\"polite\"][role=\"region\"]"
+          ".chakra-portal:nth-child(36) > div[aria-label=\"Notifications-top\"][aria-live=\"polite\"][role=\"region\"]"
         ],
         "firstNodeHtml": "<div role=\"region\" aria-live=\"polite\" aria-label=\"Notifications-top\" id=\"chakra-toast-manager...\" style=\"position: fixed; z-i...\">"
       },
@@ -253,7 +253,7 @@
           "RGAA-9.2.1"
         ],
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=playwright",
-        "affectedNodes": 32,
+        "affectedNodes": 33,
         "firstNodeTarget": [
           "#mobile-logo > img[alt=\"Logo - widgets [36988]\"][title=\"Logo - widgets [36988]\"]"
         ],
@@ -296,8 +296,8 @@
   "coverage": [
     {
       "url": "https://widgets.stage.twygoead.com/o/36988/use_modes?tab=panels-tab",
-      "totalInteractive": 152,
-      "visibleInteractive": 77,
+      "totalInteractive": 153,
+      "visibleInteractive": 78,
       "samples": [
         {
           "role": "link",

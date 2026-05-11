@@ -427,7 +427,7 @@ Não invente outras organizações pra "simular bloqueio" — sempre use o env s
 
 ## 7.6. Anti-patterns do output do generator (proibidos em specs gerados)
 
-Estes 4 anti-patterns foram observados em specs gerados anteriormente e
+Estes 6 anti-patterns foram observados em specs gerados anteriormente e
 violam regras do próprio CLAUDE.md. O `twygo-test-orchestrator` deve passá-los
 explicitamente ao `playwright-test-generator` antes de cada geração (ver
 SKILL.md do orchestrator, Etapa 4). Healer deve recusar correções que
@@ -503,6 +503,43 @@ introduzam qualquer um deles.
   é a expectativa do próprio cenário (não dado de input). Use bom senso:
   **se o número/string poderia mudar quando o ambiente Twygo muda, é dado
   e vai pro `.data.ts`**.
+
+### F. NUNCA usar `fixme` pra esconder bug de produto
+
+- ❌ `test.describe.fixme('...', () => { /* BLOCKED-BY-PRODUCT-BUG */ })`
+- ❌ `test.fixme(true, 'API retorna 500 quando ...')`
+- ✅ Deixar o teste rodar e falhar com a asserção que deveria passar; documentar
+  a causa raiz em comentário no topo do arquivo (sintoma observável + arquivo/linha
+  do bug no servidor + fix sugerido). Quando o dev corrigir, o teste passa
+  automaticamente sem mudança no spec.
+- **Por quê**: skip esconde bug do relatório. Dev olha o vermelho, lê o
+  comentário acima da `test.describe`, sabe o que arrumar — esse é o ciclo
+  inteiro de feedback automatizado. `fixme` quebra esse loop: o spec fica
+  amarelo silencioso, o bug nunca aparece no painel, e a pessoa que abriu
+  o PR não tem como saber que tem teste cobrindo o caso.
+- **Quando usar `fixme` (legítimo)**:
+  - **Spec/XML desatualizado** — XML descreve fluxo que não existe mais na UI;
+    destinatário é AT/QA Lead (revisar XML), não dev de produto. Ex: TC4 de
+    `ativar-inativar-painel/reativar-modo-uso-painel-inativo.spec.ts`.
+  - **Seed ausente** — cenário composto requer dados que não estão no env
+    (ex: "Painel X inativo + menu Y vinculado"). Destinatário é QA Lead
+    (criar seed), não dev de produto.
+  - **Dependência externa fora** — feature flag desligada num env onde
+    deveria estar ligada; destinatário é DevOps/infra.
+  - **Bloqueio temporário declarado pelo time** — "vamos cobrir isso na
+    sprint X"; deve ter ticket linkado.
+- **Matriz de decisão**:
+
+  | Sintoma | Destinatário do sinal | Mecanismo correto |
+  |---|---|---|
+  | Bug no servidor (500, 404 indevido, NoMethodError) | Dev de produto | ✅ falha vermelha + comentário causa raiz |
+  | UI mudou e XML não acompanhou | AT / QA Lead | ✅ `fixme` com mensagem "XML desatualizado" |
+  | Seed faltando | QA Lead | ✅ `fixme` com mensagem "seed ausente: <especificação>" |
+  | Feature flag off num env errado | DevOps | ✅ `fixme` com mensagem + ticket |
+  | "Vou voltar nisso depois" sem causa raiz identificada | — | ❌ NÃO commitar. Investigue antes |
+
+- **Exceção real**: nenhuma — toda exceção cai em uma das 4 categorias
+  "fixme legítimo" acima. Se não bate em nenhuma, é Anti-pattern F.
 
 ---
 

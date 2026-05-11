@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-11T20:43:18.867Z",
+  "generatedAt": "2026-05-11T19:55:21.258Z",
   "summary": {
     "errors": 0,
     "warnings": 0,
@@ -7,7 +7,7 @@
     "testsuites": 1,
     "tests": 5,
     "outOfScope": {
-      "errors": 32,
+      "errors": 31,
       "warnings": 14,
       "info": 4
     },
@@ -31,8 +31,8 @@
       "coverage": [
         {
           "url": "https://widgets.stage.twygoead.com/o/36988/use_modes?tab=panels-tab",
-          "totalInteractive": 156,
-          "visibleInteractive": 81,
+          "totalInteractive": 155,
+          "visibleInteractive": 80,
           "samples": [
             {
               "role": "link",
@@ -145,14 +145,14 @@
       ],
       "outOfScope": {
         "totals": {
-          "errors": 32,
+          "errors": 31,
           "warnings": 14,
           "info": 4
         },
         "byKind": {
           "a11y_violation": 44,
-          "http_error": 3,
-          "console_error": 3
+          "console_error": 3,
+          "http_error": 2
         },
         "findings": [
           {
@@ -288,9 +288,9 @@
               "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/label?application=playwright",
               "affectedNodes": 25,
               "firstNodeTarget": [
-                "#panel-situation-802672"
+                "#panel-situation-802644"
               ],
-              "firstNodeHtml": "<input class=\"chakra-switch__input\" type=\"checkbox\" id=\"panel-situation-802672\" value=\"\" checked=\"\" style=\"border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; width: 1px; margin: -1px; padding: "
+              "firstNodeHtml": "<input class=\"chakra-switch__input\" type=\"checkbox\" id=\"panel-situation-802644\" value=\"\" checked=\"\" style=\"border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; width: 1px; margin: -1px; padding: "
             },
             "inScope": false
           },
@@ -309,7 +309,7 @@
               "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
               "affectedNodes": 6,
               "firstNodeTarget": [
-                ".chakra-portal:nth-child(36) > div[aria-label=\"Notifications-top\"][aria-live=\"polite\"][role=\"region\"]"
+                ".chakra-portal:nth-child(34) > div[aria-label=\"Notifications-top\"][aria-live=\"polite\"][role=\"region\"]"
               ],
               "firstNodeHtml": "<div role=\"region\" aria-live=\"polite\" aria-label=\"Notifications-top\" id=\"chakra-toast-manager...\" style=\"position: fixed; z-i...\">"
             },
@@ -423,10 +423,17 @@
             "inScope": false
           },
           {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/use_modes?tab=panels-tab",
+            "message": "Framing 'https://www.recaptcha.net/' violates the following report-only Content Security Policy directive: \"frame-ancestors 'self'\". The violation has been logged, but no further action has been taken.\n",
+            "inScope": false
+          },
+          {
             "kind": "http_error",
             "severity": "error",
-            "url": "https://widgets.stage.twygoead.com/api/v1/o/36988/panels/802671/linked_menus",
-            "message": "HTTP 500 em GET https://widgets.stage.twygoead.com/api/v1/o/36988/panels/802671/linked_menus",
+            "url": "https://widgets.stage.twygoead.com/api/v1/o/36988/panels/802642/linked_menus",
+            "message": "HTTP 500 em GET https://widgets.stage.twygoead.com/api/v1/o/36988/panels/802642/linked_menus",
             "detail": {
               "status": 500,
               "method": "GET",
@@ -574,9 +581,9 @@
               "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/label?application=playwright",
               "affectedNodes": 25,
               "firstNodeTarget": [
-                "#panel-situation-802672"
+                "#panel-situation-802644"
               ],
-              "firstNodeHtml": "<input class=\"chakra-switch__input\" type=\"checkbox\" id=\"panel-situation-802672\" value=\"\" style=\"border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; width: 1px; margin: -1px; padding: 0px; overfl"
+              "firstNodeHtml": "<input class=\"chakra-switch__input\" type=\"checkbox\" id=\"panel-situation-802644\" value=\"\" style=\"border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; width: 1px; margin: -1px; padding: 0px; overfl"
             },
             "inScope": false
           },
@@ -595,7 +602,7 @@
               "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
               "affectedNodes": 6,
               "firstNodeTarget": [
-                ".chakra-portal:nth-child(36) > div[aria-label=\"Notifications-top\"][aria-live=\"polite\"][role=\"region\"]"
+                ".chakra-portal:nth-child(34) > div[aria-label=\"Notifications-top\"][aria-live=\"polite\"][role=\"region\"]"
               ],
               "firstNodeHtml": "<div role=\"region\" aria-live=\"polite\" aria-label=\"Notifications-top\" id=\"chakra-toast-manager...\" style=\"position: fixed; z-i...\">"
             },
@@ -711,8 +718,8 @@
           {
             "kind": "http_error",
             "severity": "error",
-            "url": "https://widgets.stage.twygoead.com/api/v1/o/36988/panels/802670/linked_menus",
-            "message": "HTTP 500 em GET https://widgets.stage.twygoead.com/api/v1/o/36988/panels/802670/linked_menus",
+            "url": "https://widgets.stage.twygoead.com/api/v1/o/36988/panels/802643/linked_menus",
+            "message": "HTTP 500 em GET https://widgets.stage.twygoead.com/api/v1/o/36988/panels/802643/linked_menus",
             "detail": {
               "status": 500,
               "method": "GET",
@@ -747,9 +754,9 @@
               "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-allowed-attr?application=playwright",
               "affectedNodes": 1,
               "firstNodeTarget": [
-                "#popover-trigger-\\:r7\\:"
+                "#popover-trigger-\\:r5\\:"
               ],
-              "firstNodeHtml": "<div id=\"popover-trigger-:r7:\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"popover-content-:r7:\" class=\"css-tz0gqg\">"
+              "firstNodeHtml": "<div id=\"popover-trigger-:r5:\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"popover-content-:r5:\" class=\"css-tz0gqg\">"
             },
             "inScope": false
           },
@@ -860,9 +867,9 @@
               "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/label?application=playwright",
               "affectedNodes": 25,
               "firstNodeTarget": [
-                "#panel-situation-802670"
+                "#panel-situation-802643"
               ],
-              "firstNodeHtml": "<input class=\"chakra-switch__input\" type=\"checkbox\" id=\"panel-situation-802670\" value=\"\" style=\"border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; width: 1px; margin: -1px; padding: 0px; overfl"
+              "firstNodeHtml": "<input class=\"chakra-switch__input\" type=\"checkbox\" id=\"panel-situation-802643\" value=\"\" style=\"border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; width: 1px; margin: -1px; padding: 0px; overfl"
             },
             "inScope": false
           },
@@ -1095,25 +1102,6 @@
             "inScope": false
           },
           {
-            "kind": "http_error",
-            "severity": "error",
-            "url": "https://widgets.stage.twygoead.com/api/v1/o/36988/panels/802669/linked_menus",
-            "message": "HTTP 500 em GET https://widgets.stage.twygoead.com/api/v1/o/36988/panels/802669/linked_menus",
-            "detail": {
-              "status": 500,
-              "method": "GET",
-              "resourceType": "xhr"
-            },
-            "inScope": false
-          },
-          {
-            "kind": "console_error",
-            "severity": "error",
-            "url": "https://widgets.stage.twygoead.com/o/36988/use_modes?tab=panels-tab",
-            "message": "Failed to load resource: the server responded with a status of 500 ()",
-            "inScope": false
-          },
-          {
             "kind": "a11y_violation",
             "severity": "error",
             "url": "https://widgets.stage.twygoead.com/o/36988/use_modes?tab=panels-tab",
@@ -1133,9 +1121,9 @@
               "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-allowed-attr?application=playwright",
               "affectedNodes": 1,
               "firstNodeTarget": [
-                "#popover-trigger-\\:rb\\:"
+                "#popover-trigger-\\:r7\\:"
               ],
-              "firstNodeHtml": "<div id=\"popover-trigger-:rb:\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"popover-content-:rb:\" class=\"css-tz0gqg\">"
+              "firstNodeHtml": "<div id=\"popover-trigger-:r7:\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"popover-content-:r7:\" class=\"css-tz0gqg\">"
             },
             "inScope": false
           },
@@ -1246,9 +1234,9 @@
               "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/label?application=playwright",
               "affectedNodes": 25,
               "firstNodeTarget": [
-                "#panel-situation-802672"
+                "#panel-situation-802642"
               ],
-              "firstNodeHtml": "<input class=\"chakra-switch__input\" type=\"checkbox\" id=\"panel-situation-802672\" value=\"\" style=\"border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; width: 1px; margin: -1px; padding: 0px; overfl"
+              "firstNodeHtml": "<input class=\"chakra-switch__input\" type=\"checkbox\" id=\"panel-situation-802642\" value=\"\" checked=\"\" style=\"border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; width: 1px; margin: -1px; padding: "
             },
             "inScope": false
           },

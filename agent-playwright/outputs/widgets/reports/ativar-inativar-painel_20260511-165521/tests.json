@@ -93,7 +93,7 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 10020,
+                      "duration": 11635,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
@@ -101,14 +101,14 @@
                       "steps": [
                         {
                           "title": "1. Acessar a aba \"Painéis\" e verificar que o painel está inativo",
-                          "duration": 7157
+                          "duration": 8198
                         },
                         {
-                          "title": "2. Clicar no switch \"Ativo\" da linha \"Painel QA Teste TC2 w0-1778532118438\"",
-                          "duration": 815
+                          "title": "2. Clicar no switch \"Ativo\" da linha \"Painel QA Teste TC2 w0-1778529235347\"",
+                          "duration": 810
                         }
                       ],
-                      "startTime": "2026-05-11T20:41:58.381Z",
+                      "startTime": "2026-05-11T19:53:55.289Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -180,7 +180,7 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "failed",
-                      "duration": 19405,
+                      "duration": 20013,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.chakra-modal__content').filter({ has: locator('[data-test-id=\"panel-in-use-modal-confirm\"]') })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.chakra-modal__content').filter({ has: locator('[data-test-id=\"panel-in-use-modal-confirm\"]') })\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.chakra-modal__content').filter({ has: locator('[data-test-id=\"panel-in-use-modal-confirm\"]') })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.chakra-modal__content').filter({ has: locator('[data-test-id=\"panel-in-use-modal-confirm\"]') })\u001b[22m\n\n    at /home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/ativar-inativar-painel/inativar-painel-associado-modal.spec.ts:131:61",
@@ -207,11 +207,11 @@
                       "steps": [
                         {
                           "title": "1. Acessar a aba \"Painéis\" com o painel vinculado ativo",
-                          "duration": 6944
+                          "duration": 7548
                         },
                         {
-                          "title": "2. Clicar no switch \"Ativo\" da linha \"Painel Vinculado TC3 w1-1778532118462\" e verificar modal \"Painel em uso\"",
-                          "duration": 10074,
+                          "title": "2. Clicar no switch \"Ativo\" da linha \"Painel Vinculado TC3 w1-1778529235400\" e verificar modal \"Painel em uso\"",
+                          "duration": 10079,
                           "error": {
                             "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.chakra-modal__content').filter({ has: locator('[data-test-id=\"panel-in-use-modal-confirm\"]') })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.chakra-modal__content').filter({ has: locator('[data-test-id=\"panel-in-use-modal-confirm\"]') })\u001b[22m\n",
                             "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.chakra-modal__content').filter({ has: locator('[data-test-id=\"panel-in-use-modal-confirm\"]') })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.chakra-modal__content').filter({ has: locator('[data-test-id=\"panel-in-use-modal-confirm\"]') })\u001b[22m\n\n    at /home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/ativar-inativar-painel/inativar-painel-associado-modal.spec.ts:131:61",
@@ -224,7 +224,7 @@
                           }
                         }
                       ],
-                      "startTime": "2026-05-11T20:41:58.399Z",
+                      "startTime": "2026-05-11T19:53:55.317Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -326,7 +326,7 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 14697,
+                      "duration": 16587,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
@@ -334,18 +334,18 @@
                       "steps": [
                         {
                           "title": "1. Acessar a aba \"Painéis\" no Menu",
-                          "duration": 7378
+                          "duration": 8452
                         },
                         {
-                          "title": "2. Clicar no switch \"Ativo\" da linha \"Painel QA Teste TC1 w2-1778532118462\"",
-                          "duration": 827
+                          "title": "2. Clicar no switch \"Ativo\" da linha \"Painel QA Teste TC1 w2-1778529235371\"",
+                          "duration": 1129
                         },
                         {
                           "title": "3. Recarregar a página e verificar que o estado inativo persiste",
-                          "duration": 4275
+                          "duration": 4523
                         }
                       ],
-                      "startTime": "2026-05-11T20:41:58.404Z",
+                      "startTime": "2026-05-11T19:53:55.302Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -398,12 +398,12 @@
         {
           "title": "Ativar / Inativar painel",
           "file": "projects/widgets/tests/features/ativar-inativar-painel/persistencia-estado-ativo-reload.spec.ts",
-          "line": 18,
+          "line": 14,
           "column": 6,
           "specs": [
             {
               "title": "Verificar persistência do estado Ativo após reload",
-              "ok": true,
+              "ok": false,
               "tags": [],
               "tests": [
                 {
@@ -416,27 +416,48 @@
                     {
                       "workerIndex": 3,
                       "parallelIndex": 3,
-                      "status": "passed",
-                      "duration": 15461,
-                      "errors": [],
+                      "status": "failed",
+                      "duration": 24302,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('tbody tr').filter({ has: locator('td:first-child p').filter({ hasText: 'Painel 30' }) })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('tbody tr').filter({ has: locator('td:first-child p').filter({ hasText: 'Painel 30' }) })\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('tbody tr').filter({ has: locator('td:first-child p').filter({ hasText: 'Painel 30' }) })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('tbody tr').filter({ has: locator('td:first-child p').filter({ hasText: 'Painel 30' }) })\u001b[22m\n\n    at /home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/ativar-inativar-painel/persistencia-estado-ativo-reload.spec.ts:45:50",
+                        "location": {
+                          "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/ativar-inativar-painel/persistencia-estado-ativo-reload.spec.ts",
+                          "column": 50,
+                          "line": 45
+                        },
+                        "snippet": "  43 |     await allure.step('1. Acessar a aba \"Painéis\" e capturar estado inicial', async () => {\n  44 |       await paineis.goToList();\n> 45 |       await expect(paineis.getRowByName(PAINEL)).toBeVisible();\n     |                                                  ^\n  46 |       estadoInicial = await paineis.getActiveStateByName(PAINEL);\n  47 |     });\n  48 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/ativar-inativar-painel/persistencia-estado-ativo-reload.spec.ts",
+                            "column": 50,
+                            "line": 45
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('tbody tr').filter({ has: locator('td:first-child p').filter({ hasText: 'Painel 30' }) })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('tbody tr').filter({ has: locator('td:first-child p').filter({ hasText: 'Painel 30' }) })\u001b[22m\n\n\n  43 |     await allure.step('1. Acessar a aba \"Painéis\" e capturar estado inicial', async () => {\n  44 |       await paineis.goToList();\n> 45 |       await expect(paineis.getRowByName(PAINEL)).toBeVisible();\n     |                                                  ^\n  46 |       estadoInicial = await paineis.getActiveStateByName(PAINEL);\n  47 |     });\n  48 |\n    at /home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/ativar-inativar-painel/persistencia-estado-ativo-reload.spec.ts:45:50"
+                        }
+                      ],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
                       "steps": [
                         {
                           "title": "1. Acessar a aba \"Painéis\" e capturar estado inicial",
-                          "duration": 7582
-                        },
-                        {
-                          "title": "2. Alternar o switch \"Ativo\" de \"Painel QA Teste TC5 w3-1778532118439\" para o estado oposto",
-                          "duration": 861
-                        },
-                        {
-                          "title": "3. Recarregar a página e verificar que o novo estado persiste",
-                          "duration": 4709
+                          "duration": 21340,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('tbody tr').filter({ has: locator('td:first-child p').filter({ hasText: 'Painel 30' }) })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('tbody tr').filter({ has: locator('td:first-child p').filter({ hasText: 'Painel 30' }) })\u001b[22m\n",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('tbody tr').filter({ has: locator('td:first-child p').filter({ hasText: 'Painel 30' }) })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('tbody tr').filter({ has: locator('td:first-child p').filter({ hasText: 'Painel 30' }) })\u001b[22m\n\n    at /home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/ativar-inativar-painel/persistencia-estado-ativo-reload.spec.ts:45:50",
+                            "location": {
+                              "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/ativar-inativar-painel/persistencia-estado-ativo-reload.spec.ts",
+                              "column": 50,
+                              "line": 45
+                            },
+                            "snippet": "  43 |     await allure.step('1. Acessar a aba \"Painéis\" e capturar estado inicial', async () => {\n  44 |       await paineis.goToList();\n> 45 |       await expect(paineis.getRowByName(PAINEL)).toBeVisible();\n     |                                                  ^\n  46 |       estadoInicial = await paineis.getActiveStateByName(PAINEL);\n  47 |     });\n  48 |"
+                          }
                         }
                       ],
-                      "startTime": "2026-05-11T20:41:58.382Z",
+                      "startTime": "2026-05-11T19:53:55.271Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -463,16 +484,36 @@
                           "name": "Allure Metadata (metadata)",
                           "contentType": "application/vnd.allure.message+json",
                           "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImV4ZWN1dGlvblR5cGUiLCJ2YWx1ZSI6ImF1dG9tYXRlZCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/outputs/widgets/test-artifacts/projects-widgets-tests-fea-9043e-do-estado-Ativo-após-reload-chromium/test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/outputs/widgets/test-artifacts/projects-widgets-tests-fea-9043e-do-estado-Ativo-após-reload-chromium/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/outputs/widgets/test-artifacts/projects-widgets-tests-fea-9043e-do-estado-Ativo-após-reload-chromium/trace.zip"
                         }
-                      ]
+                      ],
+                      "errorLocation": {
+                        "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/ativar-inativar-painel/persistencia-estado-ativo-reload.spec.ts",
+                        "column": 50,
+                        "line": 45
+                      }
                     }
                   ],
-                  "status": "expected"
+                  "status": "unexpected"
                 }
               ],
               "id": "4ae1a1df64986a191326-2bdf661a69acf6fb6053",
               "file": "projects/widgets/tests/features/ativar-inativar-painel/persistencia-estado-ativo-reload.spec.ts",
-              "line": 45,
+              "line": 32,
               "column": 3
             }
           ]
@@ -515,15 +556,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
+                      "workerIndex": 4,
+                      "parallelIndex": 3,
                       "status": "skipped",
-                      "duration": 497,
+                      "duration": 595,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-11T20:42:37.495Z",
+                      "startTime": "2026-05-11T19:54:21.165Z",
                       "annotations": [
                         {
                           "type": "fixme",
@@ -553,11 +594,11 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-05-11T20:41:57.607Z",
-    "duration": 80811.869,
-    "expected": 3,
+    "startTime": "2026-05-11T19:53:54.448Z",
+    "duration": 86457.825,
+    "expected": 2,
     "skipped": 1,
-    "unexpected": 1,
+    "unexpected": 2,
     "flaky": 0
   }
 }
