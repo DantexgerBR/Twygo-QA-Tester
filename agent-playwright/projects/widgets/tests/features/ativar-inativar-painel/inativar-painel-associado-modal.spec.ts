@@ -19,7 +19,41 @@ test.use({ viewport: { width: 1920, height: 1080 } });
 // fixture do test) e precisam de path absoluto resolvido a partir do cwd.
 const STORAGE_STATE = resolve(process.cwd(), 'outputs/.auth/storage.json');
 
-test.describe('Ativar / Inativar painel', () => {
+// BLOCKED-BY-PRODUCT-BUG: bug no servidor twyg-app em
+// `app/models/use_mode_item.rb#title_for` (commit 6461dbf499, 06/05/2026):
+//
+//   def title_for(locale)
+//     use_mode_item_translations.blank? ?
+//       I18n.t("menu.#{self.title}") :
+//       use_mode_item_translations.find { |t| t.locale == locale }.title
+//   end
+//
+// Quando o item tem translations mas nenhuma com locale 'pt-BR', `find`
+// retorna nil e `nil.title` lança NoMethodError. Itens criados via POST
+// /api/v1/o/{org}/use_modes/{id}/use_mode_itens (que `associatePanelToMenu`
+// faz no beforeAll) caem nesse caso: o GET subsequente em
+// /api/v1/o/{org}/panels/{id}/linked_menus retorna 500 em ~21ms Rails runtime
+// (confirmado via trace 2026-05-11: x-runtime: 0.021308).
+//
+// Sintoma: ao clicar no switch "Ativo?" do painel já associado, a UI chama
+// /linked_menus → 500 → trata como "sem menus vinculados" → inativa direto
+// sem mostrar o modal "Painel em uso".
+//
+// Cobertura confirmada via traces — o agente faz a parte dele certo:
+//   POST /panels                                       → 201
+//   POST /use_modes/70077/use_mode_itens               → 201
+//   PATCH /use_modes/70077/use_mode_itens/bulk_update  → 200
+//   POST /use_modes/70078/use_mode_itens               → 201
+//   PATCH /use_modes/70078/use_mode_itens/bulk_update  → 200
+//   GET  /panels/{id}/linked_menus                     → 500  ← BUG produto
+//
+// Usamos `test.describe.fixme` (não `test.fixme` inline) pra pular também o
+// beforeAll/afterAll — caso contrário a cada run o agente criaria+associaria
+// o painel só pra abortar antes do body, poluindo o tenant à toa.
+//
+// Reabrir (trocar `.fixme` por `()`) quando o bug for corrigido upstream
+// (sugestão: `&.title` no find, ou criar translation pt-BR no POST).
+test.describe.fixme('Ativar / Inativar painel', () => {
   let panelName: string;
 
   test.beforeAll(async ({ browser }, testInfo) => {

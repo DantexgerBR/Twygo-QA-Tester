@@ -27,7 +27,7 @@ Screenshot típico mostra: a página alvo carregada **com um overlay escuro** + 
 
 ### Onde plugar
 
-**1. Em métodos de Page Object que iniciam navegação:**
+**1. Em métodos de Page Object que iniciam navegação (`goto` ou click em link de nav):**
 
 ```ts
 // projects/widgets/pages/PaineisListPage.ts
@@ -46,7 +46,42 @@ async clickMenuLink(): Promise<void> {
 }
 ```
 
-**2. Em `test.beforeEach()` quando o spec é especialmente sensível:**
+**2. Em métodos que abrem um form (`openXForm`) — *obrigatório* desde 2026-05-11:**
+
+```ts
+async openNewPanelForm(): Promise<void> {
+  await this.page.goto(`/o/${getOrgId()}/panels/new`);
+  await dismissCommonModals(this.page);    // ← antes do waitFor do input
+  await this.getNewPanelNameInput().waitFor();
+}
+```
+
+**3. Em métodos que disparam submit de form (`submitXForm`) — *defesa em profundidade*:**
+
+```ts
+async submitNewPanelForm(): Promise<void> {
+  await dismissCommonModals(this.page);    // ← imediatamente antes do click
+  await this.getNewPanelSaveButton().click();
+  await this.page.waitForURL(/\/panels\/\d+\/edit/);
+}
+```
+
+NPS Sofia pode aparecer por *inactivity* SEGUNDOS depois do `goto` — entre o `fill` do nome e o click no Salvar dá tempo do modal renderizar. Dismiss na entrada (open) e na saída (submit) cobre o intervalo.
+
+**4. Em métodos que clicam em controles sensíveis a interceptação (toggle/switch/checkbox em listagem):**
+
+```ts
+async toggleActiveByName(name: string): Promise<void> {
+  const before = await this.getActiveStateByName(name);
+  await dismissCommonModals(this.page);    // ← antes do click no switch
+  await this.getRowActiveSwitchLabelByName(name).click();
+  // ... polling de toggle/modal ...
+}
+```
+
+Sem isso, o click cai no overlay do NPS e o polling subsequente nunca vê toggled NEM modal de bloqueio — termina em `pending` (sintoma típico: "aguardando toggle ou modal após click no switch de '...'").
+
+**5. Em `test.beforeEach()` quando o spec é especialmente sensível:**
 
 ```ts
 test.beforeEach(async ({ page }) => {
@@ -55,7 +90,7 @@ test.beforeEach(async ({ page }) => {
 });
 ```
 
-**3. NÃO chame em loop dentro do mesmo test** — o helper é idempotente (sem nada visível, retorna em ~50ms), mas se você está chamando 5x você provavelmente tá lutando com outro problema.
+**6. NÃO chame em loop dentro do mesmo test** — o helper é idempotente (sem nada visível, retorna em ~50ms), mas se você está chamando 5x você provavelmente tá lutando com outro problema.
 
 ## Anti-patterns
 
@@ -78,6 +113,10 @@ Se um spec ainda falha por modal e o screenshot mostra dialog **diferente** dos 
 Modal NPS Sofia foi **a causa principal de 7 das 8 falhas** na primeira rodada da suíte "Listagem de painéis" do projeto widgets (2026-05-08). Aparecia logo após login e capturava todos os clicks de navegação.
 
 Antes desta skill: cada spec resolvia individualmente (alguns specs do creditos-fase-02 chamavam `dismissCommonModals` manualmente, outros não chamavam). Agora a regra é: **plugar no Page Object da feature** — assim todos os specs herdam.
+
+**Segunda rodada (2026-05-11, suíte "Ativar / Inativar painel"):** o `goToList()` já tinha o dismiss, mas `openNewPanelForm()`, `submitNewPanelForm()`, `associatePanelToMenu()` e `toggleActiveByName()` **não tinham**. Resultado: 3 das 4 falhas críticas explodiram no `beforeAll` → `createPanel()` com o stack trace canônico (`chakra-modal__content-container … intercepts pointer events` em `[data-test-id="panel-form-save-button"]`); a 4ª caiu no polling de `toggleActiveByName` ("aguardando toggle ou modal após click no switch") quando o NPS reapareceu por inactivity entre `goToList` e o click no switch.
+
+**Regra derivada (item 2-4 da seção "Onde plugar"):** o dismiss não é só "após nav". É também **antes de qualquer submit de form** e **antes de qualquer click em controle interativo de listagem** (switch/toggle/action icon). Repetir é barato; esquecer é caro.
 
 ## Anti-pattern relacionado (CLAUDE.md §7.6)
 

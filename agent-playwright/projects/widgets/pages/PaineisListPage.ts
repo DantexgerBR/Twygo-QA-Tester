@@ -488,6 +488,10 @@ export class PaineisListPage {
    */
   async toggleActiveByName(name: string): Promise<void> {
     const before = await this.getActiveStateByName(name);
+    // NPS pode reaparecer por inactivity entre `goToList` (que já dismiss-a)
+    // e o click no switch. Sem isso o click cai no overlay e o polling
+    // termina em "pending" (nem toggled nem modal de bloqueio aparecem).
+    await dismissCommonModals(this.page);
     await this.getRowActiveSwitchLabelByName(name).click();
     // Aguarda either: state mudou (caso normal) OU modal de bloqueio apareceu.
     // Polling baseado em condição (regra dura #1).
@@ -646,6 +650,11 @@ export class PaineisListPage {
    */
   async openNewPanelForm(): Promise<void> {
     await this.page.goto(`/o/${getOrgId()}/panels/new`);
+    // NPS Sofia (e outros oportunistas) pode renderizar no chakra-portal
+    // por cima do form e interceptar o click no Salvar (`panel-form-save-button`).
+    // Sem este dismiss, `submitNewPanelForm` quebra com "subtree intercepts
+    // pointer events". Ver skill `fechar-modais-twygo`.
+    await dismissCommonModals(this.page);
     // Aguarda input do nome estar interagível antes de retornar — evita race
     // com hidratação tardia do React/Chakra (form usa Chakra UI).
     await this.getNewPanelNameInput().waitFor();
@@ -690,6 +699,10 @@ export class PaineisListPage {
    * live 2026-05-06).
    */
   async submitNewPanelForm(): Promise<void> {
+    // Defesa em profundidade: NPS pode aparecer por inactivity entre o
+    // open (fill) e o submit. Repetimos o dismiss imediatamente antes do
+    // click — o helper é idempotente (~50ms quando não há nada visível).
+    await dismissCommonModals(this.page);
     await this.getNewPanelSaveButton().click();
     await this.page.waitForURL(/\/panels\/\d+\/edit/);
   }
@@ -825,6 +838,9 @@ export class PaineisListPage {
     await this.page.goto(
       `/o/${getOrgId()}/use_modes/${useModeId}/use_mode_itens/new`,
     );
+    // Mesmo motivo de openNewPanelForm: NPS pode interceptar o submit
+    // (`#use-model-submit`) via chakra-portal. Ver skill `fechar-modais-twygo`.
+    await dismissCommonModals(this.page);
     await this.getMenuItemNameInput().waitFor();
     await this.getMenuItemNameInput().fill(finalItemName);
     await this.getMenuItemPageModelSelect().selectOption('user_panels');
@@ -842,10 +858,19 @@ export class PaineisListPage {
     await this.page.waitForURL(
       new RegExp(`/use_modes/${useModeId}/edit\\?tab=items`),
     );
-    // Click no Salvar do menu edit comita ordem/flags (descoberto live: o
-    // POST do form do item já persiste, mas a UI do menu edit espera um
-    // segundo Salvar para encerrar o fluxo limpo).
-    await this.getMenuItemSubmitButton().click();
+    // Click no Salvar do menu edit comita ordem/flags (PATCH bulk_update).
+    // CRÍTICO: esperar a resposta — sem isso o request fica em flight e o
+    // `ctx.close()` do `beforeAll` aborta (status -1), deixando a associação
+    // em estado parcial. Sintoma observado: `GET /panels/{id}/linked_menus`
+    // depois retorna 500 e a UI inativa o painel direto sem modal de bloqueio.
+    await Promise.all([
+      this.page.waitForResponse(
+        (r) =>
+          r.url().includes(`/use_modes/${useModeId}/use_mode_itens/bulk_update`) &&
+          r.request().method() === 'PATCH',
+      ),
+      this.getMenuItemSubmitButton().click(),
+    ]);
   }
 
   /**
@@ -868,7 +893,18 @@ export class PaineisListPage {
     await this.getMenuItemDeleteConfirmButton().waitFor();
     await this.getMenuItemDeleteConfirmButton().click();
     await expect(row).toHaveCount(0, { timeout: 10_000 });
-    await this.getMenuItemSubmitButton().click();
+    // Mesma armadilha do `associatePanelToMenu`: o click final dispara um
+    // PATCH `bulk_update` async. Sem esperar a resposta, `ctx.close()` do
+    // afterAll aborta o request e a desassociação fica parcial — gerando
+    // estado órfão que polui o tenant entre runs.
+    await Promise.all([
+      this.page.waitForResponse(
+        (r) =>
+          r.url().includes(`/use_modes/${useModeId}/use_mode_itens/bulk_update`) &&
+          r.request().method() === 'PATCH',
+      ),
+      this.getMenuItemSubmitButton().click(),
+    ]);
   }
 
   /**
