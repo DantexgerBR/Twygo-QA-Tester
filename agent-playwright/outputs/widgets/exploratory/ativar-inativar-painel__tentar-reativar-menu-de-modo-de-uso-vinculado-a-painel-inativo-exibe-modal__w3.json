@@ -1,0 +1,118 @@
+{
+  "suite": "Ativar / Inativar painel",
+  "test": "Tentar reativar menu de modo de uso vinculado a painel inativo exibe modal",
+  "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/ativar-inativar-painel/reativar-modo-uso-painel-inativo.spec.ts",
+  "workerIndex": 3,
+  "startedAt": "2026-05-11T18:34:35.367Z",
+  "finishedAt": "2026-05-11T18:34:35.668Z",
+  "findings": [
+    {
+      "kind": "a11y_violation",
+      "severity": "error",
+      "url": "about:blank",
+      "message": "[a11y/document-title] Documents must have <title> element to aid in navigation",
+      "detail": {
+        "ruleId": "document-title",
+        "impact": "serious",
+        "tags": [
+          "cat.text-alternatives",
+          "wcag2a",
+          "wcag242",
+          "TTv5",
+          "TT12.a",
+          "EN-301-549",
+          "EN-9.2.4.2",
+          "ACT",
+          "RGAAv4",
+          "RGAA-8.5.1"
+        ],
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/document-title?application=playwright",
+        "affectedNodes": 1,
+        "firstNodeTarget": [
+          "html"
+        ],
+        "firstNodeHtml": "<html><head></head><body></body></html>"
+      },
+      "inScope": false
+    },
+    {
+      "kind": "a11y_violation",
+      "severity": "error",
+      "url": "about:blank",
+      "message": "[a11y/html-has-lang] <html> element must have a lang attribute",
+      "detail": {
+        "ruleId": "html-has-lang",
+        "impact": "serious",
+        "tags": [
+          "cat.language",
+          "wcag2a",
+          "wcag311",
+          "TTv5",
+          "TT11.a",
+          "EN-301-549",
+          "EN-9.3.1.1",
+          "ACT",
+          "RGAAv4",
+          "RGAA-8.3.1"
+        ],
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/html-has-lang?application=playwright",
+        "affectedNodes": 1,
+        "firstNodeTarget": [
+          "html"
+        ],
+        "firstNodeHtml": "<html><head></head><body></body></html>"
+      },
+      "inScope": false
+    },
+    {
+      "kind": "a11y_violation",
+      "severity": "warn",
+      "url": "about:blank",
+      "message": "[a11y/landmark-one-main] Document should have one main landmark",
+      "detail": {
+        "ruleId": "landmark-one-main",
+        "impact": "moderate",
+        "tags": [
+          "cat.semantics",
+          "best-practice"
+        ],
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-one-main?application=playwright",
+        "affectedNodes": 1,
+        "firstNodeTarget": [
+          "html"
+        ],
+        "firstNodeHtml": "<html><head></head><body></body></html>"
+      },
+      "inScope": false
+    },
+    {
+      "kind": "a11y_violation",
+      "severity": "warn",
+      "url": "about:blank",
+      "message": "[a11y/page-has-heading-one] Page should contain a level-one heading",
+      "detail": {
+        "ruleId": "page-has-heading-one",
+        "impact": "moderate",
+        "tags": [
+          "cat.semantics",
+          "best-practice"
+        ],
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/page-has-heading-one?application=playwright",
+        "affectedNodes": 1,
+        "firstNodeTarget": [
+          "html"
+        ],
+        "firstNodeHtml": "<html><head></head><body></body></html>"
+      },
+      "inScope": false
+    }
+  ],
+  "coverage": [
+    {
+      "url": "about:blank",
+      "totalInteractive": 0,
+      "visibleInteractive": 0,
+      "samples": []
+    }
+  ]
+}

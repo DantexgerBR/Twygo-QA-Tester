@@ -1,11 +1,30 @@
 {
-  "suite": "Listagem de painéis",
-  "test": "Ordenar listagem por cada coluna",
-  "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/listagem-de-paineis/ordenar-colunas.spec.ts",
-  "workerIndex": 4,
-  "startedAt": "2026-05-08T18:26:33.815Z",
-  "finishedAt": "2026-05-08T18:26:46.071Z",
+  "suite": "Ativar / Inativar painel",
+  "test": "Inativar um painel não associado a nenhum modo de uso",
+  "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/ativar-inativar-painel/inativar-painel-nao-associado.spec.ts",
+  "workerIndex": 1,
+  "startedAt": "2026-05-11T18:34:49.067Z",
+  "finishedAt": "2026-05-11T18:35:02.837Z",
   "findings": [
+    {
+      "kind": "http_error",
+      "severity": "error",
+      "url": "https://widgets.stage.twygoead.com/api/v1/o/36988/panels/803075/linked_menus",
+      "message": "HTTP 500 em GET https://widgets.stage.twygoead.com/api/v1/o/36988/panels/803075/linked_menus",
+      "detail": {
+        "status": 500,
+        "method": "GET",
+        "resourceType": "xhr"
+      },
+      "inScope": false
+    },
+    {
+      "kind": "console_error",
+      "severity": "error",
+      "url": "https://widgets.stage.twygoead.com/o/36988/use_modes?tab=panels-tab",
+      "message": "Failed to load resource: the server responded with a status of 500 ()",
+      "inScope": false
+    },
     {
       "kind": "a11y_violation",
       "severity": "error",
@@ -26,40 +45,9 @@
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-allowed-attr?application=playwright",
         "affectedNodes": 1,
         "firstNodeTarget": [
-          "#popover-trigger-\\:r5\\:"
+          "#popover-trigger-\\:rb\\:"
         ],
-        "firstNodeHtml": "<div id=\"popover-trigger-:r5:\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"popover-content-:r5:\" class=\"css-tz0gqg\">"
-      },
-      "inScope": false
-    },
-    {
-      "kind": "a11y_violation",
-      "severity": "error",
-      "url": "https://widgets.stage.twygoead.com/o/36988/use_modes?tab=panels-tab",
-      "message": "[a11y/button-name] Buttons must have discernible text",
-      "detail": {
-        "ruleId": "button-name",
-        "impact": "critical",
-        "tags": [
-          "cat.name-role-value",
-          "wcag2a",
-          "wcag412",
-          "section508",
-          "section508.22.a",
-          "TTv5",
-          "TT6.a",
-          "EN-301-549",
-          "EN-9.4.1.2",
-          "ACT",
-          "RGAAv4",
-          "RGAA-11.9.1"
-        ],
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/button-name?application=playwright",
-        "affectedNodes": 1,
-        "firstNodeTarget": [
-          "#open-filter"
-        ],
-        "firstNodeHtml": "<button type=\"button\" class=\"chakra-button css-1py8e62\" id=\"open-filter\">"
+        "firstNodeHtml": "<div id=\"popover-trigger-:rb:\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"popover-content-:rb:\" class=\"css-tz0gqg\">"
       },
       "inScope": false
     },
@@ -84,7 +72,7 @@
           "RGAA-3.2.1"
         ],
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
-        "affectedNodes": 20,
+        "affectedNodes": 16,
         "firstNodeTarget": [
           ".top-user-name__infor > .name"
         ],
@@ -170,9 +158,9 @@
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/label?application=playwright",
         "affectedNodes": 25,
         "firstNodeTarget": [
-          "#panel-situation-801915"
+          "#panel-situation-803075"
         ],
-        "firstNodeHtml": "<input class=\"chakra-switch__input\" type=\"checkbox\" id=\"panel-situation-801915\" value=\"\" checked=\"\" style=\"border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; width: 1px; margin: -1px; padding: "
+        "firstNodeHtml": "<input class=\"chakra-switch__input\" type=\"checkbox\" id=\"panel-situation-803075\" value=\"\" style=\"border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; width: 1px; margin: -1px; padding: 0px; overfl"
       },
       "inScope": false
     },
@@ -191,7 +179,7 @@
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
         "affectedNodes": 6,
         "firstNodeTarget": [
-          ".chakra-portal:nth-child(34) > div[aria-label=\"Notifications-top\"][aria-live=\"polite\"][role=\"region\"]"
+          ".chakra-portal:nth-child(36) > div[aria-label=\"Notifications-top\"][aria-live=\"polite\"][role=\"region\"]"
         ],
         "firstNodeHtml": "<div role=\"region\" aria-live=\"polite\" aria-label=\"Notifications-top\" id=\"chakra-toast-manager...\" style=\"position: fixed; z-i...\">"
       },
@@ -265,7 +253,7 @@
           "RGAA-9.2.1"
         ],
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=playwright",
-        "affectedNodes": 33,
+        "affectedNodes": 32,
         "firstNodeTarget": [
           "#mobile-logo > img[alt=\"Logo - widgets [36988]\"][title=\"Logo - widgets [36988]\"]"
         ],
@@ -308,8 +296,8 @@
   "coverage": [
     {
       "url": "https://widgets.stage.twygoead.com/o/36988/use_modes?tab=panels-tab",
-      "totalInteractive": 152,
-      "visibleInteractive": 77,
+      "totalInteractive": 149,
+      "visibleInteractive": 74,
       "samples": [
         {
           "role": "link",

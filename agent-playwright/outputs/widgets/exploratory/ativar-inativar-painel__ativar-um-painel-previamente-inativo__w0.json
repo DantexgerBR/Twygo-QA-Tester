@@ -1,10 +1,10 @@
 {
-  "suite": "Listagem de painéis",
-  "test": "Validar colunas exibidas na visualização em lista",
-  "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/listagem-de-paineis/validar-colunas-lista.spec.ts",
-  "workerIndex": 5,
-  "startedAt": "2026-05-08T18:26:53.384Z",
-  "finishedAt": "2026-05-08T18:27:02.615Z",
+  "suite": "Ativar / Inativar painel",
+  "test": "Ativar um painel previamente inativo",
+  "file": "/home/joao/Documentos/twygo/twygo-agents-qa/agent-playwright/projects/widgets/tests/features/ativar-inativar-painel/ativar-painel-inativo.spec.ts",
+  "workerIndex": 0,
+  "startedAt": "2026-05-11T18:34:54.474Z",
+  "finishedAt": "2026-05-11T18:35:03.664Z",
   "findings": [
     {
       "kind": "a11y_violation",
@@ -26,40 +26,9 @@
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-allowed-attr?application=playwright",
         "affectedNodes": 1,
         "firstNodeTarget": [
-          "#popover-trigger-\\:r5\\:"
+          "#popover-trigger-\\:r7\\:"
         ],
-        "firstNodeHtml": "<div id=\"popover-trigger-:r5:\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"popover-content-:r5:\" class=\"css-tz0gqg\">"
-      },
-      "inScope": false
-    },
-    {
-      "kind": "a11y_violation",
-      "severity": "error",
-      "url": "https://widgets.stage.twygoead.com/o/36988/use_modes?tab=panels-tab",
-      "message": "[a11y/button-name] Buttons must have discernible text",
-      "detail": {
-        "ruleId": "button-name",
-        "impact": "critical",
-        "tags": [
-          "cat.name-role-value",
-          "wcag2a",
-          "wcag412",
-          "section508",
-          "section508.22.a",
-          "TTv5",
-          "TT6.a",
-          "EN-301-549",
-          "EN-9.4.1.2",
-          "ACT",
-          "RGAAv4",
-          "RGAA-11.9.1"
-        ],
-        "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/button-name?application=playwright",
-        "affectedNodes": 1,
-        "firstNodeTarget": [
-          "#open-filter"
-        ],
-        "firstNodeHtml": "<button type=\"button\" class=\"chakra-button css-1py8e62\" id=\"open-filter\">"
+        "firstNodeHtml": "<div id=\"popover-trigger-:r7:\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"popover-content-:r7:\" class=\"css-tz0gqg\">"
       },
       "inScope": false
     },
@@ -84,7 +53,7 @@
           "RGAA-3.2.1"
         ],
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
-        "affectedNodes": 20,
+        "affectedNodes": 16,
         "firstNodeTarget": [
           ".top-user-name__infor > .name"
         ],
@@ -170,9 +139,9 @@
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/label?application=playwright",
         "affectedNodes": 25,
         "firstNodeTarget": [
-          "#panel-situation-802408"
+          "#panel-situation-803075"
         ],
-        "firstNodeHtml": "<input class=\"chakra-switch__input\" type=\"checkbox\" id=\"panel-situation-802408\" value=\"\" checked=\"\" style=\"border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; width: 1px; margin: -1px; padding: "
+        "firstNodeHtml": "<input class=\"chakra-switch__input\" type=\"checkbox\" id=\"panel-situation-803075\" value=\"\" style=\"border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; width: 1px; margin: -1px; padding: 0px; overfl"
       },
       "inScope": false
     },
@@ -265,7 +234,7 @@
           "RGAA-9.2.1"
         ],
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=playwright",
-        "affectedNodes": 33,
+        "affectedNodes": 32,
         "firstNodeTarget": [
           "#mobile-logo > img[alt=\"Logo - widgets [36988]\"][title=\"Logo - widgets [36988]\"]"
         ],

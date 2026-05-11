@@ -1,30 +1,27 @@
 # Resumo Playwright — Widgets
 
-**Última run** (per-suite) · 08/05/2026, 15:27:04
+**Última run** (per-suite) · 11/05/2026, 15:35:12
 
 | Total | ✅ Aprovados | ❌ Falhas | ⊘ Ignorados | Duração |
 |---:|---:|---:|---:|---:|
-| 8 | 4 | 4 | 0 | 199.0s |
+| 5 | 3 | 0 | 2 | 44.6s |
 
-> **Escopo:** Apenas testsuite contendo "Listagem de painéis"
+> **Escopo:** Apenas testsuite contendo "Ativar / Inativar painel"
 > **Ambiente:** `staging-widgets` · **Browsers:** chromium
 
 ## Resultados
 
 | Status | Testsuite | Caso | Duração | Resumo |
 |:---:|---|---|---:|---|
-| ❌ | Listagem de painéis | Acessar a listagem de Painéis a partir do Menu | 41.50s | Não foi possível clicar o elemento — ele não ficou disponível em 30s (locator: locator('#menu a[name="settings-main-menu"]')). |
-| ❌ | Listagem de painéis | Validar acessibilidade por teclado (TAB / setas / ENTER / ESC) | 52.03s | TimeoutError: locator.waitFor: Timeout 30000ms exceeded. |
-| ❌ | Listagem de painéis | Alternar entre visualização em lista e cards | 42.57s | TimeoutError: locator.waitFor: Timeout 30000ms exceeded. |
-| ❌ | Listagem de painéis | Acessar listagem com a feature flag desabilitada | 22.11s | O elemento esperado não apareceu na tela (locator: getByRole('tab', { name: 'Modos de uso' })). |
-| ✅ | Listagem de painéis | Ordenar listagem por cada coluna | 12.41s | — |
-| ✅ | Listagem de painéis | Paginação da listagem com volume de painéis | 9.35s | — |
-| ✅ | Listagem de painéis | Validar colunas exibidas na visualização em lista | 9.43s | — |
-| ✅ | Listagem de painéis | Validar componentes obrigatórios da listagem de painéis | 9.64s | — |
+| ✅ | Ativar / Inativar painel | Ativar um painel previamente inativo | 9.34s | — |
+| ⊘ | Ativar / Inativar painel | Tentar inativar painel associado a modos de uso exibe modal de bloqueio | 0.00s | Caso ignorado pelo Playwright sem justificativa registrada (test.skip/fixme sem mensagem). |
+| ✅ | Ativar / Inativar painel | Inativar um painel não associado a nenhum modo de uso | 13.91s | — |
+| ✅ | Ativar / Inativar painel | Verificar persistência do estado Ativo após reload | 20.87s | — |
+| ⊘ | Ativar / Inativar painel | Tentar reativar menu de modo de uso vinculado a painel inativo exibe modal | 0.48s | Marcado para revisão (test.fixme): requer (1) "Painel QA Teste" inativo + (2) menu de modo de uso vinculado a esse painel (campo "Modelo de página") e inativo. Cenário não reproduzível no seed atual (sem Painel QA Teste; menus seedados não têm vínculo conhecido com painéis inativos). Selectors do modal e da row do menu específico a confirmar live quando seed existir. |
 
 ## Onde encontrar mais
 
-- 📋 [Detalhamento desta run](reports/listagem-de-paineis_20260508-152704/index.md) — KPIs por testsuite, links pra cases e findings exploratórios
-- 🔍 [Casos de teste detalhados](reports/listagem-de-paineis_20260508-152704/tests.md) — passos, evidências, bug-report pronto
-- 🐛 [Validação exploratória](reports/listagem-de-paineis_20260508-152704/exploratory.md) — console errors, axe, HTTP, cobertura
+- 📋 [Detalhamento desta run](reports/ativar-inativar-painel_20260511-153512/index.md) — KPIs por testsuite, links pra cases e findings exploratórios
+- 🔍 [Casos de teste detalhados](reports/ativar-inativar-painel_20260511-153512/tests.md) — passos, evidências, bug-report pronto
+- 🐛 [Validação exploratória](reports/ativar-inativar-painel_20260511-153512/exploratory.md) — console errors, axe, HTTP, cobertura
 - 📦 Traces de cada falha em `test-artifacts/` — abrir com `npx playwright show-trace <path>`
