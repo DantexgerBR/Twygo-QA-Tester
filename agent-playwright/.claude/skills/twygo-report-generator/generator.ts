@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync, existsSync, copyFileSync } from 'node:fs';
-import { resolve, join, basename, relative } from 'node:path';
+import { resolve, join, basename, relative, dirname } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { parseArgs } from 'node:util';
 import { createLogger } from '../../../src/utils/logger.js';
@@ -517,6 +517,32 @@ function indexTestCasesByName(parsed: ParsedAnalysis): Map<string, ParsedTestCas
   return m;
 }
 
+/**
+ * Mapeia `testcase.name.trim()` → label `TC<n>` (n = índice 1-based dentro
+ * da testsuite no XML, ordem de declaração `<testsuite>...<testcase>`).
+ * Usado pelo `formatTcTitle` para prefixar o título do TC no relatório.
+ */
+function indexTcNumbersByName(parsed: ParsedAnalysis): Map<string, string> {
+  const m = new Map<string, string>();
+  const allSuites = flattenSuitesFromXml(parsed.rootSuite);
+  for (const suite of allSuites) {
+    suite.testCases.forEach((tc, idx) => {
+      const key = tc.name.trim();
+      if (!m.has(key)) m.set(key, `TC${idx + 1}`);
+    });
+  }
+  return m;
+}
+
+/**
+ * Formata `TC<n> · <name>` se houver TC#, ou `<name>` como fallback.
+ * Usado em index.md, tests.md e playwright-summary.md para prefixar TC#.
+ */
+function formatTcTitle(name: string, tcNumbers: Map<string, string>): string {
+  const tc = tcNumbers.get(name.trim());
+  return tc ? `${tc} · ${name}` : name;
+}
+
 function xmlSuiteOrder(parsed: ParsedAnalysis | null): string[] {
   if (!parsed) return [];
   const all = flattenSuitesFromXml(parsed.rootSuite);
@@ -575,6 +601,7 @@ function renderIndexMd(args: {
   exploratoryByTestsuite: Map<string, ExploratorySuite>;
   failedTests: FlatTest[];
   xmlByName: Map<string, ParsedTestCase>;
+  tcNumbers: Map<string, string>;
   runId: string;
 }): string {
   const t = args.testsSummary;
@@ -601,7 +628,7 @@ function renderIndexMd(args: {
       const sev = xml ? severityLabel(xml.importance) : '';
       const failedStep = ft.failedStepIndex !== null ? ft.steps[ft.failedStepIndex] : null;
       const rawErr = failedStep?.errorMessage ?? ft.errorMessage ?? '';
-      lines.push(`> - ${sev} [${ft.testcase}](tests.md#${slugify(ft.testcase)}) — ${playwrightHumanSummary(stripAnsi(rawErr))}`);
+      lines.push(`> - ${sev} [${formatTcTitle(ft.testcase, args.tcNumbers)}](tests.md#${slugify(ft.testcase)}) — ${playwrightHumanSummary(stripAnsi(rawErr))}`);
     }
     if (args.failedTests.length > 8) {
       lines.push(`> - …e mais ${args.failedTests.length - 8} caso(s). Veja [Casos de teste](tests.md).`);
@@ -671,23 +698,111 @@ function renderIndexMd(args: {
 
 // ─── MD render — tests.md ───────────────────────────────────────────────────
 
+/**
+ * Determina o test-folder canônico do TC — a pasta `<test-id>-chromium/`
+ * gerada pelo Playwright. Usado por `archiveAttachments` pra consolidar
+ * todos os arquivos do mesmo TC numa única subpasta dentro do report.
+ */
+function canonicalTestFolder(attachments: FlatTest['attachments']): string | undefined {
+  for (const att of attachments) {
+    if (!att.path) continue;
+    const segs = att.path.split(/[\\/]/);
+    for (let i = segs.length - 1; i >= 0; i--) {
+      if (/-(chromium|firefox|webkit)(-?\d*)?$/.test(segs[i])) {
+        return segs[i];
+      }
+    }
+  }
+  return undefined;
+}
+
+/**
+ * Copia os attachments para `<reportDir>/artifacts/<test-folder>/` e
+ * re-escreve `attachment.path` para apontar pra cópia. Sem isso, runs
+ * subsequentes do mesmo projeto sobrescrevem `outputs/<slug>/test-artifacts/`
+ * e o relatório fica com links quebrados.
+ *
+ * Tolerante a arquivos faltantes (warn + skip).
+ */
+function archiveAttachments(tests: FlatTest[], reportDir: string): void {
+  const archiveRoot = join(reportDir, 'artifacts');
+  let copied = 0;
+  let skipped = 0;
+  for (const t of tests) {
+    const canonical = canonicalTestFolder(t.attachments);
+    const newAttachments: typeof t.attachments = [];
+    for (const att of t.attachments) {
+      if (!att.path) continue;
+      if (!existsSync(att.path)) {
+        skipped++;
+        continue;
+      }
+      const destFolder = canonical ?? basename(dirname(att.path));
+      const destDir = join(archiveRoot, destFolder);
+      ensureDir(destDir);
+      const destPath = join(destDir, basename(att.path));
+      try {
+        copyFileSync(att.path, destPath);
+        newAttachments.push({ name: att.name, path: destPath, contentType: att.contentType });
+        copied++;
+      } catch (err) {
+        log.warn(`Falha ao arquivar ${att.path} → ${destPath}: ${(err as Error).message}`);
+        newAttachments.push(att);
+        skipped++;
+      }
+    }
+    t.attachments = newAttachments;
+  }
+  if (copied + skipped > 0) {
+    log.info(`Attachments arquivados em ${archiveRoot}: ${copied} copiados, ${skipped} ausentes/falha.`);
+  }
+}
+
 function renderEvidenceMd(t: FlatTest, reportDir: string): string {
   const screenshots = t.attachments.filter((a) => a.contentType === 'image/png');
   const errorCtx = t.attachments.find((a) => a.name === 'error-context');
   const trace = t.attachments.find((a) => a.contentType === 'application/zip');
-  if (screenshots.length === 0 && !errorCtx && !trace) {
+  const videos = t.attachments.filter((a) => a.contentType?.startsWith('video/'));
+  if (screenshots.length === 0 && !errorCtx && !trace && videos.length === 0) {
     return '_Sem evidências anexadas._';
   }
+  // Path relativo ao tests.md (no reportDir) — usado em links/imagens MD.
   const relPath = (p: string) => relative(reportDir, p).replace(/\\/g, '/');
+  // Path relativo ao cwd da invocação (raiz do agent-playwright) — usado em
+  // bloco bash do trace para que o comando funcione direto no terminal.
+  const cwdPath = (p: string) => relative(process.cwd(), p).replace(/\\/g, '/');
   const lines: string[] = [];
+
+  // Header com a pasta do TC — orienta o leitor a navegar todos os artifacts
+  // do mesmo caso em um lugar só.
+  const anyPath = (screenshots[0] ?? trace ?? errorCtx ?? videos[0])?.path;
+  if (anyPath) {
+    const folderRel = relPath(dirname(anyPath));
+    lines.push(`📁 _Pasta:_ [\`${folderRel}/\`](${folderRel}/)`);
+  }
+
   for (const ss of screenshots) {
-    lines.push(`![${ss.name}](${relPath(ss.path)})`);
+    const file = basename(ss.path);
+    const r = relPath(ss.path);
+    lines.push(`- 📸 **Screenshot${ss.name ? ` (${ss.name})` : ''}** — [\`${file}\`](${r})\n\n  ![](${r})`);
   }
   if (trace) {
-    lines.push(`- 📦 [Trace do Playwright (${basename(trace.path)})](${relPath(trace.path)}) — abra com \`npx playwright show-trace\``);
+    const file = basename(trace.path);
+    const r = relPath(trace.path);
+    const cwd = cwdPath(trace.path);
+    lines.push(
+      `- 📦 **Trace** — [\`${file}\`](${r})\n\n  \`\`\`bash\n  npx playwright show-trace ${cwd}\n  \`\`\``,
+    );
+  }
+  for (const v of videos) {
+    const file = basename(v.path);
+    const r = relPath(v.path);
+    lines.push(`- 🎥 **Vídeo** — [\`${file}\`](${r})`);
   }
   if (errorCtx) {
-    lines.push(`- 📄 [Snapshot do DOM no momento da falha (\`error-context.md\`)](${relPath(errorCtx.path)})`);
+    const file = basename(errorCtx.path);
+    const r = relPath(errorCtx.path);
+    lines.push(`- 📄 **DOM no momento da falha** — [\`${file}\`](${r})`);
   }
   return lines.join('\n\n');
 }
@@ -1003,6 +1118,7 @@ function renderTestsMd(args: {
   byTestsuite: Map<string, FlatTest[]>;
   projectName: string;
   xmlByName: Map<string, ParsedTestCase>;
+  tcNumbers: Map<string, string>;
   runId: string;
   reportDir: string;
   envEntry: EnvironmentEntry | undefined;
@@ -1032,7 +1148,7 @@ function renderTestsMd(args: {
       const xml = args.xmlByName.get(t.testcase.trim());
       const sev = xml ? severityLabel(xml.importance) : '';
       const anchorId = slugify(t.testcase);
-      lines.push(`### ${statusLabel(t.status)} · ${t.testcase} ${sev ? `· ${sev}` : ''}`);
+      lines.push(`### ${statusLabel(t.status)} · ${formatTcTitle(t.testcase, args.tcNumbers)} ${sev ? `· ${sev}` : ''}`);
       lines.push('');
       lines.push(`<a id="${anchorId}"></a>_Arquivo:_ \`${t.fileLabel}\` · _Duração:_ ${(t.durationMs / 1000).toFixed(2)}s · _Browser:_ ${t.project}`);
       lines.push('');
@@ -1333,6 +1449,7 @@ async function main(): Promise<void> {
   const exploratoryReport = loadJson<ExploratoryReport>(getOutputPath('exploratory-findings.json'));
   const parsedAnalysis = loadJson<ParsedAnalysis>(getOutputPath('test-analysis.parsed.json'));
   const xmlByName = parsedAnalysis ? indexTestCasesByName(parsedAnalysis) : new Map<string, ParsedTestCase>();
+  const tcNumbers = parsedAnalysis ? indexTcNumbersByName(parsedAnalysis) : new Map<string, string>();
   if (!parsedAnalysis) {
     log.warn('outputs/<slug>/test-analysis.parsed.json ausente — tests.md não terá metadata do XML (steps, summary, preconditions).');
   }
@@ -1363,6 +1480,12 @@ async function main(): Promise<void> {
   const reportsRoot = getOutputDir('reports');
   const reportDir = join(reportsRoot, folderName);
   ensureDir(reportDir);
+
+  // Arquiva test-artifacts (screenshot, trace, video, error-context) dentro
+  // do report folder antes de qualquer render — assim links no tests.md
+  // sobrevivem a runs subsequentes do mesmo projeto que zeram o
+  // outputs/<slug>/test-artifacts/ compartilhado. Mutates `tests[i].attachments`.
+  archiveAttachments(tests, reportDir);
 
   const xmlOrder = xmlSuiteOrder(parsedAnalysis);
   const byTestsuite = reorderByXml(groupByTestsuite(tests), xmlOrder);
@@ -1406,6 +1529,7 @@ async function main(): Promise<void> {
       exploratoryByTestsuite,
       failedTests,
       xmlByName,
+      tcNumbers,
       runId: folderName,
     }),
   );
@@ -1415,6 +1539,7 @@ async function main(): Promise<void> {
       byTestsuite,
       projectName: cfg.projectName,
       xmlByName,
+      tcNumbers,
       runId: folderName,
       reportDir,
       envEntry,
@@ -1474,7 +1599,7 @@ async function main(): Promise<void> {
     for (const t of tests) {
       const statusEmoji = STATUS_EMOJI[t.status] ?? '·';
       const summary = t.status !== 'passed' ? failureOrSkipSummary(t) : '—';
-      summaryLines.push(`| ${statusEmoji} | ${mdCell(t.testsuite)} | ${mdCell(t.testcase)} | ${(t.durationMs / 1000).toFixed(2)}s | ${mdCell(summary)} |`);
+      summaryLines.push(`| ${statusEmoji} | ${mdCell(t.testsuite)} | ${mdCell(formatTcTitle(t.testcase, tcNumbers))} | ${(t.durationMs / 1000).toFixed(2)}s | ${mdCell(summary)} |`);
     }
   }
   summaryLines.push('');
