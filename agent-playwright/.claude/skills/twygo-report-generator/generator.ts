@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync, existsSync, copyFileSync } from 'node:fs';
-import { resolve, join, basename, relative } from 'node:path';
+import { resolve, join, basename, dirname, relative } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { parseArgs } from 'node:util';
 import { createLogger } from '../../../src/utils/logger.js';
@@ -675,13 +675,22 @@ function renderEvidenceMd(t: FlatTest, reportDir: string): string {
   const screenshots = t.attachments.filter((a) => a.contentType === 'image/png');
   const errorCtx = t.attachments.find((a) => a.name === 'error-context');
   const trace = t.attachments.find((a) => a.contentType === 'application/zip');
-  if (screenshots.length === 0 && !errorCtx && !trace) {
+  // Vídeos: dois arquivos por execução (video.webm + video-1.webm), o último
+  // costuma ser placeholder de ~2KB; ordenamos pelo tamanho real do basename
+  // pra que o vídeo principal apareça primeiro no relatório.
+  const videos = t.attachments
+    .filter((a) => a.contentType === 'video/webm' || /\.webm$/i.test(a.path))
+    .sort((a, b) => basename(a.path).length - basename(b.path).length);
+  if (screenshots.length === 0 && !errorCtx && !trace && videos.length === 0) {
     return '_Sem evidências anexadas._';
   }
   const relPath = (p: string) => relative(reportDir, p).replace(/\\/g, '/');
   const lines: string[] = [];
   for (const ss of screenshots) {
     lines.push(`![${ss.name}](${relPath(ss.path)})`);
+  }
+  for (const v of videos) {
+    lines.push(`- 🎬 [Vídeo da execução (${basename(v.path)})](${relPath(v.path)})`);
   }
   if (trace) {
     lines.push(`- 📦 [Trace do Playwright (${basename(trace.path)})](${relPath(trace.path)}) — abra com \`npx playwright show-trace\``);
@@ -864,6 +873,8 @@ function renderBugReportBlockMd(
   for (const a of t.attachments) {
     if (a.contentType === 'image/png') {
       evidences.push(`- Screenshot capturado pelo Playwright (${a.name}): ${relPath(a.path)}`);
+    } else if (a.contentType === 'video/webm' || /\.webm$/i.test(a.path)) {
+      evidences.push(`- Vídeo da execução (${basename(a.path)}): ${relPath(a.path)}`);
     } else if (a.contentType === 'application/zip') {
       evidences.push(`- Trace completo do Playwright (.zip) — \`npx playwright show-trace\`: ${relPath(a.path)}`);
     } else if (a.name === 'error-context') {
@@ -997,6 +1008,31 @@ function renderTestcaseDetailPanelMd(
     lines.push(`</details>`);
   }
   return lines.join('\n');
+}
+
+/**
+ * Copia os attachments dos testes (screenshots, traces, videos, error-context)
+ * para `<reportDir>/artifacts/<test-folder>/` e atualiza `t.attachments[i].path`
+ * para o destino arquivado. Garante que cada report fique self-contained e
+ * sobreviva ao próximo `cleanRunArtifacts()` do orchestrator.
+ *
+ * Subfolder por teste = basename do dirname original do attachment, que o
+ * Playwright já nomeia uniqueificado por test+browser (ex.:
+ * `projects-widgets-tests-fea-59657-...-chromium`).
+ */
+function archiveAttachments(tests: FlatTest[], reportDir: string): void {
+  const artifactsRoot = join(reportDir, 'artifacts');
+  for (const t of tests) {
+    for (const a of t.attachments) {
+      if (!existsSync(a.path)) continue;
+      const subfolder = basename(dirname(a.path));
+      const destDir = join(artifactsRoot, subfolder);
+      ensureDir(destDir);
+      const destPath = join(destDir, basename(a.path));
+      copyFileSync(a.path, destPath);
+      a.path = destPath;
+    }
+  }
 }
 
 function renderTestsMd(args: {
@@ -1364,6 +1400,11 @@ async function main(): Promise<void> {
   const reportDir = join(reportsRoot, folderName);
   ensureDir(reportDir);
 
+  // Arquiva attachments dentro do reportDir ANTES de renderizar tests.md, pra
+  // que os links relativos apontem pra dentro do report (self-contained) — e o
+  // próximo cleanRunArtifacts() do orchestrator não esvazia as evidências.
+  archiveAttachments(tests, reportDir);
+
   const xmlOrder = xmlSuiteOrder(parsedAnalysis);
   const byTestsuite = reorderByXml(groupByTestsuite(tests), xmlOrder);
   if (xmlOrder.length > 0) {
@@ -1483,7 +1524,7 @@ async function main(): Promise<void> {
   summaryLines.push(`- 📋 [Detalhamento desta run](reports/${folderName}/index.md) — KPIs por testsuite, links pra cases e findings exploratórios`);
   summaryLines.push(`- 🔍 [Casos de teste detalhados](reports/${folderName}/tests.md) — passos, evidências, bug-report pronto`);
   summaryLines.push(`- 🐛 [Validação exploratória](reports/${folderName}/exploratory.md) — console errors, axe, HTTP, cobertura`);
-  summaryLines.push(`- 📦 Traces de cada falha em \`test-artifacts/\` — abrir com \`npx playwright show-trace <path>\``);
+  summaryLines.push(`- 📦 Traces de cada falha em \`reports/${folderName}/artifacts/\` (self-contained) — abrir com \`npx playwright show-trace <path>\``);
   summaryLines.push('');
   writeFileSync(getOutputPath('playwright-summary.md'), summaryLines.join('\n'));
 

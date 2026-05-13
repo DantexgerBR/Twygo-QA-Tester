@@ -11,7 +11,7 @@
   },
   "performance": {
     "enableTracing": true,
-    "enableVideo": false
+    "enableVideo": true
   },
   "codeGeneration": {
     "pagesDir": "pages",

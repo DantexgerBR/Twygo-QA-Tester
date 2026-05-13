@@ -1,0 +1,33 @@
+// Testsuite: Adicionar widgets
+// TC1 — Abrir drawer de widgets disponíveis.
+
+import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js';
+import * as allure from 'allure-js-commons';
+import { PainelFormPage } from '../../../pages/PainelFormPage.js';
+import { abrirDrawerData as data } from './abrir-drawer-widgets.data.js';
+
+test.use({ viewport: { width: 1920, height: 1080 } });
+
+test.describe('Adicionar widgets', () => {
+  test('Abrir drawer de widgets disponíveis', async ({ page }) => {
+    await allure.epic('Twygo - Widgets');
+    await allure.feature('Adicionar widgets');
+    await allure.story('Abrir drawer de widgets disponíveis');
+    await allure.severity('critical');
+    await allure.label('executionType', 'manual');
+
+    const painelForm = new PainelFormPage(page);
+
+    await allure.step('Pré-condição: criar painel e abrir Layouts', async () => {
+      await painelForm.goToNew();
+      await painelForm.createPanel(data.panelName);
+      await painelForm.getLayoutsTab().click();
+      await expect(painelForm.getAddWidgetButton()).toBeVisible();
+    });
+
+    await allure.step('1. Clicar em Adicionar widget', async () => {
+      await painelForm.openWidgetDrawer();
+      await expect(painelForm.getWidgetDrawer()).toBeVisible();
+    });
+  });
+});

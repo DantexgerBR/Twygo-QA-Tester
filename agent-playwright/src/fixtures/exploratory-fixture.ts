@@ -1,4 +1,5 @@
 import { test as base, expect } from '@playwright/test';
+import * as allure from 'allure-js-commons';
 import { existsSync, readFileSync } from 'node:fs';
 import {
   ExploratoryCollector,
@@ -49,8 +50,11 @@ function loadProbeConfig(): ProbeConfig {
   return cachedConfig;
 }
 
+export type StepFn = <T>(name: string, body: () => Promise<T>) => Promise<T>;
+
 type ExploratoryFixtures = {
   exploratory: ExploratoryCollector;
+  step: StepFn;
 };
 
 /**
@@ -127,6 +131,29 @@ export const test = base.extend<ExploratoryFixtures>({
     },
     { auto: true },
   ],
+  // Substitui `allure.step` capturando screenshot ao final de cada step XML.
+  // Sem isso, `screenshot: 'on'` do Playwright só captura test-finished (pós-cleanup);
+  // evidência por step exige snapshot no instante da validação.
+  step: async ({ page }, use, testInfo) => {
+    let stepIndex = 0;
+    const fn: StepFn = async (name, body) => {
+      stepIndex += 1;
+      let result!: Awaited<ReturnType<typeof body>>;
+      await allure.step(name, async () => {
+        result = await body();
+        const safe = name.replace(/[^a-zA-Z0-9_-]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60);
+        const attachmentName = `step-${String(stepIndex).padStart(2, '0')}-${safe}`;
+        const filePath = testInfo.outputPath(`${attachmentName}.png`);
+        // path → grava no disk; o report-generator filtra attachments com path
+        // (descarta body-only que o JSON reporter marca hasPath:false).
+        const buffer = await page.screenshot({ path: filePath, fullPage: false });
+        await allure.attachment(`${attachmentName}.png`, buffer, 'image/png');
+        await testInfo.attach(attachmentName, { path: filePath, contentType: 'image/png' });
+      });
+      return result;
+    };
+    await use(fn);
+  },
 });
 
 export { expect };

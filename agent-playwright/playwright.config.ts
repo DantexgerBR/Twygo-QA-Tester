@@ -142,9 +142,14 @@ export default defineConfig({
     headless: projectConfig.headless,
     actionTimeout: env.timeout,
     navigationTimeout: env.timeout,
-    trace: projectConfig.performance.enableTracing ? 'retain-on-failure' : 'off',
-    video: projectConfig.performance.enableVideo ? 'retain-on-failure' : 'off',
-    screenshot: projectConfig.reporting.screenshotsOnFailure ? 'only-on-failure' : 'off',
+    // Captura de evidência: sempre-on em sucesso E falha (regra dura 9.1 do
+    // CLAUDE.md — relatório precisa de prova por TC, não só quando quebra).
+    // Para desligar num projeto específico, basta `enableTracing: false` /
+    // `enableVideo: false` / `screenshotsOnFailure: false` em
+    // `projects/<slug>/project.config.json`.
+    trace: projectConfig.performance.enableTracing ? 'on' : 'off',
+    video: projectConfig.performance.enableVideo ? 'on' : 'retain-on-failure',
+    screenshot: projectConfig.reporting.screenshotsOnFailure ? 'on' : 'off',
     viewport: { width: 1280, height: 720 },
     ignoreHTTPSErrors: true,
     locale: 'pt-BR',

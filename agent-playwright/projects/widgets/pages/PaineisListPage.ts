@@ -436,17 +436,18 @@ export class PaineisListPage {
   // ---------- Linhas por NOME (suite Ativar / Inativar painel) ----------
 
   /**
-   * Retorna a `<tr>` da listagem em modo Lista que contém um `<p>{name}</p>`
-   * na primeira coluna. Usa filter+has para evitar dependência de índice
-   * (ordem da listagem muda com sort/paginação). Nomes de painéis são únicos
-   * no contexto do XML (TC1 fala em "Painel QA Teste", TC3 em "Painel
-   * Vinculado") — o filtro por texto exato é seguro.
+   * Retorna a `<tr>` da listagem em modo Lista cujo `<p>` da primeira coluna
+   * tem texto EXATAMENTE igual a `name`. Match exato via regex é obrigatório:
+   * `hasText: string` faz substring match, então buscar "Painel X" também
+   * casaria a linha "Painel X (cópia)" — quebra strict-mode na suite
+   * Duplicar painéis. Regex com `^...$` força match exato.
    * REVISAR: aguardando data-test-id "paineis-list-row-{paineId}".
    */
   getRowByName(name: string): Locator {
+    const exactRe = new RegExp(`^${escapeRegex(name)}$`);
     return this.page
       .locator('tbody tr')
-      .filter({ has: this.page.locator('td:first-child p', { hasText: name }) });
+      .filter({ has: this.page.locator('td:first-child p', { hasText: exactRe }) });
   }
 
   /**
@@ -466,6 +467,11 @@ export class PaineisListPage {
    * `{name}`. Necessário porque o input é hidden (clip 1×1 px) — click
    * direto no input falha em actionability. O `<label class="chakra-switch">`
    * captura o click e dispara o toggle do input via DOM.
+   *
+   * NOTA: tentei trocar pra `.chakra-switch__track` (alinhar com fluxo manual
+   * via Jam 12/05/2026), mas o track não passou no actionability check do
+   * Playwright em headless — TC1/TC2/TC5 falhavam com toggle 'pending'.
+   * O label-wrapper funciona consistente — mantido.
    */
   getRowActiveSwitchLabelByName(name: string): Locator {
     return this.getRowByName(name).locator('label.chakra-switch');
@@ -855,22 +861,34 @@ export class PaineisListPage {
     // suffix `-option-0` em qualquer combobox aberto.
     await this.page.locator('[id^="react-select-"][id$="-option-0"]').first().click();
     await this.getMenuItemSubmitButton().click();
+    // Produto pode exibir modal "Modelo de página duplicado" se o useMode já
+    // tem outro item usando page_model="user_panels" (cenário típico quando
+    // TC3 e TC4 rodam na mesma suite, OU quando o env acumulou orphans de
+    // execuções anteriores). Aceitamos clicando no botão de confirmação.
+    // Selector: button id prefix `duplicated-page-` (confirmado via Jam
+    // 12/05/2026), MAS o modal pode ter X-close + Salvar com o mesmo
+    // prefix — filtra por texto "Salvar" pra não dismissar sem confirmar.
+    // Timeout 5s — headed mode renderiza mais devagar que headless.
+    const duplicateConfirmBtn = this.page
+      .locator('[id^="duplicated-page-"]')
+      .filter({ hasText: /^salvar$/i });
+    try {
+      await duplicateConfirmBtn.first().waitFor({ state: 'visible', timeout: 5_000 });
+      await duplicateConfirmBtn.first().click();
+    } catch {
+      // Sem modal de duplicação — redirect direto. No-op intencional.
+    }
     await this.page.waitForURL(
       new RegExp(`/use_modes/${useModeId}/edit\\?tab=items`),
     );
-    // Click no Salvar do menu edit comita ordem/flags (PATCH bulk_update).
-    // CRÍTICO: esperar a resposta — sem isso o request fica em flight e o
-    // `ctx.close()` do `beforeAll` aborta (status -1), deixando a associação
-    // em estado parcial. Sintoma observado: `GET /panels/{id}/linked_menus`
-    // depois retorna 500 e a UI inativa o painel direto sem modal de bloqueio.
-    await Promise.all([
-      this.page.waitForResponse(
-        (r) =>
-          r.url().includes(`/use_modes/${useModeId}/use_mode_itens/bulk_update`) &&
-          r.request().method() === 'PATCH',
-      ),
-      this.getMenuItemSubmitButton().click(),
-    ]);
+    // NOTA (12/05/2026): aqui antigamente havia um segundo `getMenuItemSubmitButton().click()`
+    // (Salvar no editor) com waitForResponse do bulk_update — tentativa de
+    // workaround pro bug `GET /panels/{id}/linked_menus 500` do TC3. Trace
+    // de 12/05/2026 mostrou que o workaround não funciona (500 acontece
+    // mesmo após o save), e o save extra estava DIFERENCIANDO o fluxo
+    // automatizado do manual descrito pelo QA Lead — que faz apenas um
+    // Salvar único (após o toggle de menu, não logo após a criação).
+    // Removido pra alinhar com o fluxo manual validado.
   }
 
   /**
@@ -1023,5 +1041,79 @@ export class PaineisListPage {
    */
   getMenuItemDeleteConfirmButton(): Locator {
     return this.page.locator('#modal-delete-confirm');
+  }
+
+  // ---------- Editor sub-tab Menu (TC4) — switch de ativação por item ----------
+
+  /**
+   * Label clicável (chakra-switch) do switch de ativação do item de menu
+   * na sub-tab Menu do editor. Cada row tem 1 `label.chakra-switch` que
+   * envolve `input#menu-enabled-{menuId}`. Ancoramos pela row (truncated
+   * name) — não precisamos do menuId numérico. Mantemos label (não track)
+   * pelo mesmo motivo de getRowActiveSwitchLabelByName.
+   *
+   * Mesmo gotcha de §7.5: input Chakra é `clip: rect(0,0,0,0); width: 1px`,
+   * click direto no input trava por actionability — sempre o label.
+   */
+  getMenuItemActiveSwitchLabel(itemName: string): Locator {
+    return this.getMenuItemRowByName(itemName).locator('label.chakra-switch');
+  }
+
+  getMenuItemActiveSwitchInput(itemName: string): Locator {
+    return this.getMenuItemRowByName(itemName).locator('input[type="checkbox"]');
+  }
+
+  /**
+   * Toast Chakra de bloqueio ao tentar RE-ATIVAR menu vinculado a painel
+   * inativo (TC4). Confirmado via Jam recording de QA 12/05/2026: id estável
+   * `toast-inactive-panel` no elemento (`#toast-inactive-panel`). Fallback
+   * pra filter por texto caso o id mude no futuro.
+   */
+  getPanelInactiveToast(): Locator {
+    return this.page.locator('#toast-inactive-panel').first();
+  }
+
+  /**
+   * Inativa o item de menu cujo nome (truncado p/ 25 chars no backend) é
+   * `itemName` no useMode `useModeId`. Idempotente: no-op se já inativo.
+   * Pré-condição: caller já chamou `associatePanelToMenu` antes.
+   *
+   * Usado como SEED do TC4 (pré-condição "menu inativo"). Inativar nunca
+   * dispara modal — o bloqueio é só ao RE-ATIVAR com painel vinculado inativo.
+   */
+  async ensureMenuItemInactive(useModeId: number, itemName: string): Promise<void> {
+    await this.page.goto(`/o/${getOrgId()}/use_modes/${useModeId}/edit?tab=items`);
+    await dismissCommonModals(this.page);
+    const input = this.getMenuItemActiveSwitchInput(itemName);
+    await input.waitFor({ state: 'attached' });
+    const isActive = await input.isChecked();
+    if (!isActive) return;
+    await this.getMenuItemActiveSwitchLabel(itemName).click();
+    await expect(input).not.toBeChecked();
+    // Persist obrigatório — sub-tab Menu não auto-salva. Click no Salvar
+    // dispara PATCH bulk_update; sem aguardar a resposta, ctx.close() do
+    // beforeAll aborta o request e o toggle reverte ao recarregar a página.
+    await Promise.all([
+      this.page.waitForResponse(
+        (r) =>
+          r.url().includes(`/use_modes/${useModeId}/use_mode_itens/bulk_update`) &&
+          r.request().method() === 'PATCH',
+      ),
+      this.getMenuItemSubmitButton().click(),
+    ]);
+    // Verificação dura: recarregar a página e re-asseverar que o switch
+    // realmente persistiu como off. Se bulk_update aceitou 200 mas o backend
+    // não reflete (cache, flag não incluída no payload, ou bug), aqui sabemos
+    // — em vez de descobrir só na próxima operação que depende dessa state.
+    await this.page.reload();
+    const inputAfterReload = this.getMenuItemActiveSwitchInput(itemName);
+    await inputAfterReload.waitFor({ state: 'attached' });
+    await expect(inputAfterReload).not.toBeChecked();
+    // Aguarda network estabilizar. Comparação Jam manual × automação (12/05/2026)
+    // mostrou que a operação manual passou ~30s entre Salvar do menu e click
+    // no toggle do painel, enquanto o agent (sem espera) ia direto e o backend
+    // ainda não tinha propagado o estado — `GET /panels/{id}/linked_menus`
+    // retornava 500 e `change_status` 422. Network idle dá tempo de propagar.
+    await this.page.waitForLoadState('networkidle');
   }
 }

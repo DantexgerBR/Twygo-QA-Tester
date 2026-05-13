@@ -1,0 +1,11 @@
+{
+  "runId": "ativar-inativar-painel_20260512-221150",
+  "mode": "per-suite",
+  "suiteFilter": "Ativar / Inativar painel",
+  "projectName": "Widgets",
+  "environment": "staging-widgets",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-13T01:11:50.969Z"
+}
