@@ -16,6 +16,7 @@
  */
 import { test, expect } from '../../src/fixtures/exploratory-fixture.js';
 import * as allure from 'allure-js-commons';
+import { safeGoto } from '../../src/utils/modals.js';
 
 test.describe('Smoke — Infra Twygo', () => {
   test('Login global aceita storageState e landing pós-login carrega', async ({ page }) => {
@@ -26,7 +27,10 @@ test.describe('Smoke — Infra Twygo', () => {
 
     await allure.step('Acessar landing pós-login (`/play?menu_id=play`)', async () => {
       // Twygo redireciona pós-login para /play?menu_id=play (CLAUDE.md §7.5).
-      await page.goto('/play?menu_id=play');
+      // safeGoto: domcontentloaded + dismissCommonModals — NPS Sofia bloqueia
+      // o evento `load` de firar se ainda não foi respondida. Regra dura
+      // do CLAUDE.md raiz §"page.goto + dismissCommonModals".
+      await safeGoto(page, '/play?menu_id=play');
     });
 
     await allure.step('Sessão é aceita — não cai em /users/login', async () => {

@@ -159,6 +159,87 @@ report-generator) e não **padrões de teste**. O resultado é que cada
 spec novo redescobre seletores e cenários do zero. A regra acima é o que
 fecha o gap.
 
+## Regra: `page.goto` + `dismissCommonModals` ⇒ obrigatório pareados
+
+Aplica em **agent-playwright** (extrapola pra agent-db/agent-at se algum
+fluxo navegar via Playwright). Vale pra todo Page Object e fixture.
+
+**Sintoma**: spec esgota 30s em `page.goto(...)` mesmo com Twygo carregado
+visivelmente. NPS Sofia, banner "Continuar mesmo assim", "Modelo de página
+duplicado" e outros modais oportunistas aparecem DURANTE o load e BLOQUEIAM
+o evento `load` de firar. O default do Playwright é esperar `load` —
+modal trava o ciclo.
+
+**Regra dura**:
+
+1. **NUNCA chamar `page.goto(url)` direto** em Page Objects Twygo.
+   Sempre usar `safeGoto(page, url)` exportado de
+   `agent-playwright/src/utils/modals.ts`.
+2. `safeGoto` faz `goto({ waitUntil: 'domcontentloaded' })` + roda
+   `dismissCommonModals(page)` imediatamente após. App segue carregando
+   em background sem travar o spec.
+3. Caso o spec **precise** do modal NPS aparecer (test da própria
+   pesquisa NPS): use `safeGoto(page, url, { dismiss: false })`.
+4. Tests em `tests/auth/` que validam fluxo de login: podem usar
+   `page.goto` direto, NPS não aparece antes do login completar.
+5. **Quando adicionar um modal novo** descoberto live (ex: "Modelo de
+   página duplicado" foi adicionado 2026-05-13), **atualizar**
+   `dismissCommonModals` em `modals.ts` E a §7.5 do
+   `agent-playwright/CLAUDE.md`. Skill `fechar-modais-twygo` documenta
+   o padrão.
+
+**Por que esta regra é meta-monorepo e não só agent-playwright**: a
+combinação `goto + dismiss` é tão fundamental que precisa estar visível
+em qualquer agente novo que faça automação web em Twygo. agent-db não
+faz UI, mas se alguém criar `agent-cypress` ou `agent-puppeteer` no
+futuro, deve herdar esta regra.
+
+**Caso real do monorepo (2026-05-13)**: TC da listagem de painéis falhou
+porque `goToList()` chamava `page.goto(...)` simples. NPS Sofia abriu
+durante o load → load nunca completou → 30s timeout. `dismissCommonModals`
+nunca rodou porque era a linha SEGUINTE ao goto que falhou. Fix: trocar
+por `safeGoto`. Skill `debugar-via-network-e-console` cobre o lado de
+diagnóstico — esta regra cobre o lado de prevenção.
+
+## Regra: diagnóstico de bug/erro ⇒ Network + Console primeiro
+
+Sintoma de "click não fez nada", "form não submete", "spec falha esperando
+state mudar", "modal não abre", "tela mostra dado antigo" — **NUNCA chutar
+causa antes de olhar Network + Console**.
+
+Custo de checar Network: 5 segundos. Custo de NÃO checar: horas chutando
+hipótese errada. Caso real do monorepo (2026-05-13): TC1/2/4 de widgets
+falharam por backend retornar `422 "Descrição não pode ficar vazio(a)"`
+em `PATCH /panels/:id/change_status`. Frontend engolia 422 silencioso.
+1h gasta investigando seletor/timing/viewport antes do payload Network
+aparecer e o diagnóstico cair em 5s.
+
+**Ritual obrigatório quando o sintoma aparece** (em qualquer sub-agente):
+
+1. Abre DevTools — tab Network filtra Fetch/XHR, tab Console filtra Error/Warning.
+2. Reproduz a ação (click humano OR replay do spec). Olha o que saiu na Network.
+3. **Sem request** → frontend não disparou handler. Diagnóstico: locator/event/overlay.
+4. **2xx mas UI não atualizou** → response shape mudou ou state mgmt quebrado.
+5. **4xx/5xx** → backend rejeitou. Lê o body. Mensagem geralmente é PT-BR útil.
+6. **Pending sem completar** → backend travou OU ctx fechou antes (net::ERR_ABORTED).
+7. Só agora formula hipótese.
+
+Cada sub-agente tem ferramenta pra esse ritual:
+
+- **agent-playwright**: fixture exploratória já grava HTTP 4xx/5xx em
+  `outputs/<slug>/exploratory-findings.json`. CHECAR esse arquivo é parte
+  do diagnóstico antes de mexer no spec. Em debug live, use chrome-devtools-mcp
+  (`list_network_requests`, `list_console_messages`). Detalhe em
+  [agent-playwright/.claude/skills/debugar-via-network-e-console/SKILL.md](agent-playwright/.claude/skills/debugar-via-network-e-console/SKILL.md).
+- **agent-db**: bug de query? Log SQL primeiro. Sem isso vira chute.
+- **agent-at**: erro na análise XML? Valida XML cru antes de inferir bug no parser.
+
+Quando uma regressão de UI Twygo for diagnosticada **só** porque alguém
+abriu Network, é sinal de que essa regra valeu a economia. Quando alguém
+gastar 30min sem abrir Network, é sinal de que essa regra foi ignorada —
+documenta o caso na skill `debugar-via-network-e-console` (atualiza
+tabela de "Gotchas conhecidos via Network").
+
 ## Não duplicar — tudo é por sub-agente
 
 - **Não criar arquivos na raiz** além deste `CLAUDE.md` e o `README.md`. A

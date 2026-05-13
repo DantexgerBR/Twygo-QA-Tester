@@ -423,6 +423,14 @@ test.use({
 
 Não invente outras organizações pra "simular bloqueio" — sempre use o env secundário convencionado. Se aparecer um novo cenário (ex: "org sem feature X"), adicione um env `staging-X-disabled` em `environment.json` + `.env.example` + `.env`.
 
+### Modal "Modelo de página duplicado" (form de item de menu)
+
+- Form `/o/{orgId}/use_modes/{useModeId}/use_mode_itens/new` valida client-side a unicidade do `page_model` dentro do useMode. Quando o useMode já tem outro item com o mesmo modelo (ex.: dois `user_panels`), o click em Salvar dispara modal `role="dialog"` com header literal "Modelo de página duplicado" e body "Esta página já foi adicionada na lista de menus deste modo de uso. Deseja adicioná-la novamente?".
+- Botão "Salvar" do modal confirma a duplicação e prossegue o POST → redirect normal. "Cancelar" mantém na rota /new.
+- Validado live 2026-05-13 em `staging-widgets` useMode 70077 via chrome-devtools-mcp.
+- `PaineisListPage.associatePanelToMenu` faz race-handle: após click no Salvar, espera 3s pelo modal; se aparecer, clica Salvar do modal e segue; se não, prossegue redirect normal. Getters: `getDuplicatePageModelModal()` / `getDuplicatePageModelConfirmButton()`.
+- Implicação: tenants compartilhados entre testes podem ter seed manual ainda usando `page_model=user_panels` (ex.: TC5 deste suite depende do item 365759 em useMode 70077). Não delete esses items em cleanup sem confirmar.
+
 ---
 
 ## 7.6. Anti-patterns do output do generator (proibidos em specs gerados)

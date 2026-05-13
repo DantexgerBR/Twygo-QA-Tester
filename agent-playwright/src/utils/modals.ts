@@ -36,6 +36,57 @@ import type { Page, Locator } from '@playwright/test';
  *
  * Documentação adicional na skill `fechar-modais-twygo`.
  */
+/**
+ * Navegação segura: `page.goto` com `waitUntil: 'domcontentloaded'` (não o
+ * default `load`) + `dismissCommonModals` imediatamente após. NPS Sofia
+ * aparece DURANTE o load do app e BLOQUEIA o evento `load` de firar — o
+ * `page.goto` default esgota 30s mesmo com modal visível. Com `domcontentloaded`
+ * retornamos cedo, dismiss limpa o modal, app continua carregando em
+ * background sem travar o spec.
+ *
+ * **Regra dura**: TODO `page.goto` em Page Objects Twygo deve passar pelo
+ * `safeGoto` — exceto em testes específicos do fluxo de login (auth/).
+ * Documentado no CLAUDE.md raiz do monorepo.
+ *
+ * Quando NÃO usar:
+ *  - Spec testando o próprio NPS modal (precisa que ele apareça e não seja
+ *    dismissado)
+ *  - Tests da pasta `tests/auth/` que validam o fluxo de login
+ *  - Navegações dentro do mesmo Page Object onde o modal já foi tratado
+ *    no Page Object anterior (raro — geralmente é mais seguro chamar de novo)
+ */
+export async function safeGoto(
+  page: Page,
+  url: string,
+  opts: { dismiss?: boolean; timeout?: number } = {},
+): Promise<void> {
+  const dismiss = opts.dismiss ?? true;
+  const timeout = opts.timeout ?? 30_000;
+  try {
+    await page.goto(url, { waitUntil: 'domcontentloaded', timeout });
+  } catch (err) {
+    const msg = (err as Error).message ?? '';
+    // Flakiness comum em VPN/wifi instável: rede muda durante a navegação
+    // (ERR_NETWORK_CHANGED), conexão é resetada, ou DNS pisca. 1 retry após
+    // pequeno backoff resolve o caso transitório sem mascarar falha real
+    // (segunda tentativa também propaga o erro se persistir). NÃO usar
+    // page.waitForTimeout (regra dura #1) — setTimeout do node é fora do
+    // domínio Playwright e não conta como wait suspeito.
+    const isRetriable =
+      /net::ERR_(NETWORK_CHANGED|FAILED|TIMED_OUT|CONNECTION_RESET)/i.test(msg) ||
+      /Timeout \d+ms exceeded/i.test(msg);
+    if (isRetriable) {
+      await new Promise((r) => setTimeout(r, 1500));
+      await page.goto(url, { waitUntil: 'domcontentloaded', timeout });
+    } else {
+      throw err;
+    }
+  }
+  if (dismiss) {
+    await dismissCommonModals(page);
+  }
+}
+
 export async function dismissCommonModals(
   page: Page,
   opts: { maxAttempts?: number } = {},

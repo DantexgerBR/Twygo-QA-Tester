@@ -112,7 +112,12 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: 4,
+  // Regressão usa 1 worker pra evitar saturação do tenant staging (criação
+  // simultânea de painéis por múltiplos workers fazia listagem demorar >60s
+  // pra carregar → tab "Painéis" timeout. Per-suite continua com 4 workers
+  // pra rapidez no dia-a-dia. Detectado via env REGRESSION (settado pelo
+  // orchestrator no modo --regression).
+  workers: process.env.REGRESSION === 'true' ? 1 : 4,
   timeout: 120_000,
   globalSetup: './tests/setup/global-setup.ts',
   reporter: process.env.REGRESSION === 'true'

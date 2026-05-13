@@ -24,6 +24,7 @@ type Args = {
   regression: boolean;
   noExplore: boolean;
   noReport: boolean;
+  noTriage: boolean;
   list: boolean;
   noPreflight: boolean;
   smokeOnly: boolean;
@@ -38,6 +39,7 @@ function parseFlags(): Args {
       regression: { type: 'boolean', default: false },
       'no-explore': { type: 'boolean', default: false },
       'no-report': { type: 'boolean', default: false },
+      'no-triage': { type: 'boolean', default: false },
       list: { type: 'boolean', default: false },
       'no-preflight': { type: 'boolean', default: false },
       'smoke-only': { type: 'boolean', default: false },
@@ -52,6 +54,7 @@ function parseFlags(): Args {
     regression: Boolean(values.regression),
     noExplore: Boolean(values['no-explore']),
     noReport: Boolean(values['no-report']),
+    noTriage: Boolean(values['no-triage']),
     list: Boolean(values.list),
     noPreflight: Boolean(values['no-preflight']),
     smokeOnly: Boolean(values['smoke-only']),
@@ -211,6 +214,16 @@ async function chainReport(suites: ParsedTestSuite[], regression: boolean): Prom
   return runShell('npx', args);
 }
 
+async function chainTriage(suites: ParsedTestSuite[], regression: boolean): Promise<number> {
+  const args = ['tsx', '.claude/skills/twygo-triage-report/generator.ts'];
+  if (regression) {
+    args.push('--regression');
+  } else if (suites.length === 1) {
+    args.push('--suite', suites[0].name);
+  }
+  return runShell('npx', args);
+}
+
 function listSuites(parsed: ParsedAnalysis): void {
   const all = flattenSuites(parsed.rootSuite);
   log.info(`Total: ${all.length} testsuite(s) com testcases.`);
@@ -284,6 +297,12 @@ async function main(): Promise<void> {
     log.info('=== Fase 6: Relatório ===');
     const reportExit = await chainReport(suites, args.regression);
     if (reportExit !== 0) log.warn(`Relatório exit ${reportExit}`);
+  }
+
+  if (!args.noTriage) {
+    log.info('=== Fase 6.5: Triage Report (lista dúvidas pra QA) ===');
+    const triageExit = await chainTriage(suites, args.regression);
+    if (triageExit !== 0) log.warn(`Triage exit ${triageExit}`);
   }
 
   process.exit(playwrightExit);
