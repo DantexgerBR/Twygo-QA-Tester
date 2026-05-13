@@ -7,7 +7,6 @@ import * as allure from 'allure-js-commons';
 
 test.describe('Beta / Launch', () => {
   test('Bloqueio de contrato na tela de edição de painel sem funcionalidade habilitada', async ({
-    page,
     step,
   }) => {
     test.fixme(

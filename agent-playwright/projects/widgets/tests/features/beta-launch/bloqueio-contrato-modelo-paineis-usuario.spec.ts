@@ -7,7 +7,6 @@ import * as allure from 'allure-js-commons';
 
 test.describe('Beta / Launch', () => {
   test("Bloqueio de contrato no modelo 'Painéis do usuário' do modo de uso", async ({
-    page,
     step,
   }) => {
     test.fixme(

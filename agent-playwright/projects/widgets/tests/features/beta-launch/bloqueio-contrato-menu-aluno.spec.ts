@@ -6,7 +6,7 @@ import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js
 import * as allure from 'allure-js-commons';
 
 test.describe('Beta / Launch', () => {
-  test('Bloqueio de contrato no menu do aluno', async ({ page, step }) => {
+  test('Bloqueio de contrato no menu do aluno', async ({ step }) => {
     test.fixme(
       true,
       "seed duplo ausente: (1) org sem 'Gestão de Painéis' no contrato; (2) credencial de perfil Aluno (ver dashboard-visao-do-aluno/_README.md). Spec valida que menu Painéis não aparece pro aluno quando contrato bloqueia.",
