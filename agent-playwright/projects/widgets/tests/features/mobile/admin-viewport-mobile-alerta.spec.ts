@@ -9,12 +9,17 @@
 import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js';
 import * as allure from 'allure-js-commons';
 import { PainelFormPage } from '../../../pages/PainelFormPage.js';
+import { cleanupPanel } from '../../../utils/test-cleanup.js';
 import { adminViewportMobileAlertaData as data } from './admin-viewport-mobile-alerta.data.js';
 
 // Viewport admin mobile típico: 414x896
 test.use({ viewport: { width: 414, height: 896 } });
 
 test.describe('Mobile', () => {
+  test.afterAll(async ({ browser }) => {
+    await cleanupPanel(browser, data.panelName);
+  });
+
   test('Acesso do Admin pelo viewport Mobile - exibição do alerta', async ({ page, step }) => {
     await allure.epic('Twygo - Widgets');
     await allure.feature('Mobile');
