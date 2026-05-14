@@ -4,11 +4,16 @@
 import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js';
 import * as allure from 'allure-js-commons';
 import { PainelFormPage } from '../../../pages/PainelFormPage.js';
+import { cleanupPanel } from '../../../utils/test-cleanup.js';
 import { adicionarNovaAbaData as data } from './adicionar-nova-aba-criar.data.js';
 
 test.use({ viewport: { width: 1920, height: 1080 } });
 
 test.describe('Adicionar/editar aba', () => {
+  test.afterAll(async ({ browser }) => {
+    await cleanupPanel(browser, data.panelName);
+  });
+
   test("Adicionar nova aba via opção 'Criar nova aba'", async ({ page }) => {
     await allure.epic('Twygo - Widgets');
     await allure.feature('Adicionar/editar aba');

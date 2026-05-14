@@ -4,11 +4,16 @@
 import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js';
 import * as allure from 'allure-js-commons';
 import { PainelFormPage } from '../../../pages/PainelFormPage.js';
+import { cleanupPanel } from '../../../utils/test-cleanup.js';
 import { limiteNomeAbaData as data } from './validar-limite-nome-aba-255.data.js';
 
 test.use({ viewport: { width: 1920, height: 1080 } });
 
 test.describe('Adicionar/editar aba', () => {
+  test.afterAll(async ({ browser }) => {
+    await cleanupPanel(browser, data.panelName);
+  });
+
   test("Validar 255 caracteres para o 'Nome da aba'", async ({ page }) => {
     await allure.epic('Twygo - Widgets');
     await allure.feature('Adicionar/editar aba');

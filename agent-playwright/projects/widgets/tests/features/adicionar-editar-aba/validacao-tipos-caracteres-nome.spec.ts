@@ -4,11 +4,18 @@
 import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js';
 import * as allure from 'allure-js-commons';
 import { PainelFormPage } from '../../../pages/PainelFormPage.js';
+import { cleanupPanel } from '../../../utils/test-cleanup.js';
 import { validacaoTiposCaracteresData as data } from './validacao-tipos-caracteres-nome.data.js';
 
 test.use({ viewport: { width: 1920, height: 1080 } });
 
 test.describe('Adicionar/editar aba', () => {
+  test.afterAll(async ({ browser }) => {
+    // Spec salva painel com Nome = data.specialCharsName (Save bem-sucedido
+    // redireciona /panels/{id}/edit). Painel orfanado se não limpar.
+    await cleanupPanel(browser, data.specialCharsName);
+  });
+
   test('Validar tipos de caracteres aceitos no campo Nome', async ({ page }) => {
     await allure.epic('Twygo - Widgets');
     await allure.feature('Adicionar/editar aba');

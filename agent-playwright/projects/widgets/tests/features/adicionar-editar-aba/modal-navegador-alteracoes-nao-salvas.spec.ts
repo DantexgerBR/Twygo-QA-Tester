@@ -7,11 +7,18 @@
 import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js';
 import * as allure from 'allure-js-commons';
 import { PainelFormPage } from '../../../pages/PainelFormPage.js';
-import { getOrgId } from '../../../../../src/utils/environment.js';
+import { cleanupPanel } from '../../../utils/test-cleanup.js';
 
 test.use({ viewport: { width: 1920, height: 1080 } });
 
 test.describe('Adicionar/editar aba', () => {
+  let createdPanelName: string | undefined;
+
+  // Contexto fresco — handler `beforeunload` da page do test não vaza aqui.
+  test.afterAll(async ({ browser }) => {
+    await cleanupPanel(browser, createdPanelName);
+  });
+
   test('Modal de confirmação do navegador ao sair com alterações não salvas', async ({ page }) => {
     await allure.epic('Twygo - Widgets');
     await allure.feature('Adicionar/editar aba');
@@ -37,7 +44,8 @@ test.describe('Adicionar/editar aba', () => {
     try {
       await allure.step('Pré-condição: criar painel salvo', async () => {
         await painelForm.goToNew();
-        panelId = await painelForm.createPanel(`Painel TC17 ${Date.now()}`);
+        createdPanelName = `Painel TC17 ${Date.now()}`;
+        panelId = await painelForm.createPanel(createdPanelName);
       });
 
       await allure.step('Pré-condição: ir para Layouts e criar dirty state (renomear "Nova aba" sem salvar layout)', async () => {
@@ -74,13 +82,10 @@ test.describe('Adicionar/editar aba', () => {
           .toBe('beforeunload');
       });
     } finally {
-      // Cleanup: navegar fora aceita o beforeunload (handler segue dismiss-ando,
-      // mas o painel órfão é tolerável — será limpo manualmente se preciso).
-      // Sem deleção via UI porque o handler dismiss intercepta navegação.
-      if (panelId) {
-        // eslint-disable-next-line no-console -- diagnóstico
-        console.warn(`[TC17 cleanup] Painel ${panelId} criado e deixado órfão. URL: /o/${getOrgId()}/panels/${panelId}/edit`);
-      }
+      // Cleanup pós-test acontece no test.afterAll — contexto fresco não
+      // herda o handler `beforeunload` instalado nesta page, então a
+      // remoção via UI funciona normalmente.
+      void panelId;
     }
   });
 });
