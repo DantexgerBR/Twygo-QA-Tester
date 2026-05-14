@@ -9,6 +9,7 @@ import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js
 import * as allure from 'allure-js-commons';
 import { PainelFormPage } from '../../../pages/PainelFormPage.js';
 import { voltarStepImportacaoData as data } from './voltar-step-importacao.data.js';
+import { importarAbasSharedData as shared } from './importar-abas.shared.data.js';
 
 test.use({ viewport: { width: 1920, height: 1080 } });
 
@@ -25,7 +26,7 @@ test.describe('Importar abas', () => {
     // 1. Pré-condição: criar painel; abrir Layouts; abrir modal e ir pro step 2 de importar
     await step('1. Criar painel, abrir Layouts e navegar até o step 2 de "Importar de outro painel"', async () => {
       await painelForm.goToNew();
-      const panelId = await painelForm.createPanel(data.panelName);
+      const panelId = await painelForm.createPanel(data.panelName, shared.panelDescription);
       await painelForm.goToEdit(panelId, 'layouts');
 
       await painelForm.getAddTabButton().click();

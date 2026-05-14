@@ -17,6 +17,7 @@ import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js
 import * as allure from 'allure-js-commons';
 import { PainelFormPage } from '../../../pages/PainelFormPage.js';
 import { selecionarCategoriaImportacaoData as data } from './selecionar-categoria-importacao.data.js';
+import { importarAbasSharedData as shared } from './importar-abas.shared.data.js';
 
 test.use({ viewport: { width: 1920, height: 1080 } });
 
@@ -33,7 +34,7 @@ test.describe('Importar abas', () => {
     // 1. Pré-condição: criar Painel Origem com Aba X (2 widgets); abrir modal de importar do Painel Destino e selecionar Aba X
     await step('1. Setup — Painel Origem + Painel Destino + Aba X selecionada no modal', async () => {
       await painelForm.goToNew();
-      const sourcePanelId = await painelForm.createPanel(data.sourcePanelName);
+      const sourcePanelId = await painelForm.createPanel(data.sourcePanelName, shared.panelDescription);
       await painelForm.goToEdit(sourcePanelId, 'layouts');
       const sairBtn = page.getByRole('button', { name: 'Sair sem salvar' });
       if (await sairBtn.isVisible().catch(() => false)) {
@@ -51,7 +52,7 @@ test.describe('Importar abas', () => {
       await painelForm.waitForToastsToClear();
 
       await painelForm.goToNew();
-      const destPanelId = await painelForm.createPanel(data.destPanelName);
+      const destPanelId = await painelForm.createPanel(data.destPanelName, shared.panelDescription);
       await painelForm.goToEdit(destPanelId, 'layouts');
       const sairBtn2 = page.getByRole('button', { name: 'Sair sem salvar' });
       if (await sairBtn2.isVisible().catch(() => false)) {

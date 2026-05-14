@@ -15,6 +15,7 @@ import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js
 import * as allure from 'allure-js-commons';
 import { PainelFormPage } from '../../../pages/PainelFormPage.js';
 import { importarPainelSemAbasData as data } from './importar-painel-sem-abas.data.js';
+import { importarAbasSharedData as shared } from './importar-abas.shared.data.js';
 
 test.use({ viewport: { width: 1920, height: 1080 } });
 
@@ -36,14 +37,14 @@ test.describe('Importar abas', () => {
     // Cenário planejado para quando o fixme for removido — código fica preparado
     await step('1. Criar Painel Vazio sem abas explícitas (se possível) e Painel Destino', async () => {
       await painelForm.goToNew();
-      await painelForm.createPanel(data.emptyPanelName);
+      await painelForm.createPanel(data.emptyPanelName, shared.panelDescription);
 
       // Aqui o produto criaria implicitamente a aba 'Nova aba'. Quando o
       // bloqueio for resolvido, a expectativa real (estado sem aba) precisa
       // de seed externo ou flag específica.
 
       await painelForm.goToNew();
-      const destPanelId = await painelForm.createPanel(data.destPanelName);
+      const destPanelId = await painelForm.createPanel(data.destPanelName, shared.panelDescription);
       await painelForm.goToEdit(destPanelId, 'layouts');
     });
 

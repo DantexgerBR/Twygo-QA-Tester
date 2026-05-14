@@ -5,6 +5,7 @@ import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js
 import * as allure from 'allure-js-commons';
 import { PainelFormPage } from '../../../pages/PainelFormPage.js';
 import { acessarFluxoImportarPainelData as data } from './acessar-fluxo-importar-painel.data.js';
+import { importarAbasSharedData as shared } from './importar-abas.shared.data.js';
 
 test.use({ viewport: { width: 1920, height: 1080 } });
 
@@ -21,7 +22,7 @@ test.describe('Importar abas', () => {
     // 1. Pré-condição: criar Painel Destino e abrir tab Layouts
     await step('1. Criar Painel Destino e abrir tab Layouts', async () => {
       await painelForm.goToNew();
-      const panelId = await painelForm.createPanel(data.destPanelName);
+      const panelId = await painelForm.createPanel(data.destPanelName, shared.panelDescription);
       // goToEdit com tab=layouts evita o dialog "Sair e salvar" do Chakra
       await painelForm.goToEdit(panelId, 'layouts');
 

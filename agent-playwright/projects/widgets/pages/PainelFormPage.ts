@@ -48,6 +48,17 @@ export class PainelFormPage {
     const suffix = tab === 'layouts' ? '?tab=layouts' : '';
     await this.page.goto(`/o/${getOrgId()}/panels/${panelId}/edit${suffix}`);
     await dismissCommonModals(this.page);
+    // App ignora `?tab=layouts` no load inicial — tab Identificação sempre
+    // renderiza selected. Sem click explícito, `tabs-navigation-add-button`
+    // e `widgets-grid-*` não montam. Validado live 2026-05-13 via Playwright MCP.
+    if (tab === 'layouts') {
+      const layoutsTab = this.getLayoutsTab();
+      await layoutsTab.waitFor();
+      const selected = await layoutsTab.getAttribute('aria-selected');
+      if (selected !== 'true') {
+        await layoutsTab.click();
+      }
+    }
   }
 
   // ---------- Aba Identificação ----------

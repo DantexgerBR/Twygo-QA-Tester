@@ -68,6 +68,17 @@ type ExploratoryFixtures = {
 export const test = base.extend<ExploratoryFixtures>({
   exploratory: [
     async ({ page }, use, testInfo) => {
+      // Bloqueia chat widget HubSpot — iframe `hubspot-messages-iframe-container`
+      // tem `z-index: 1000000` e intercepta pointer events de botões legítimos
+      // do app (ex.: "Salvar Layout", botões de modal de import). Skill
+      // `debugar-chat-widget-hubspot` documenta o padrão. Route block global
+      // é estratégia recomendada pra suítes regressivas/CI — testes E2E não
+      // validam o widget; suíte específica do chat pode opt-out via
+      // `await page.unroute(...)` se necessário.
+      await page.route(/.*\.(hubspot\.com|hs-scripts\.com|hsforms\.com|hubapi\.com)\b.*/, (route) =>
+        route.abort('blockedbyclient'),
+      );
+
       const config = loadProbeConfig();
       const collector = new ExploratoryCollector(config);
       collector.attach(page);

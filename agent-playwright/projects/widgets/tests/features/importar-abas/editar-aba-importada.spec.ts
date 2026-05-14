@@ -12,6 +12,7 @@ import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js
 import * as allure from 'allure-js-commons';
 import { PainelFormPage } from '../../../pages/PainelFormPage.js';
 import { editarAbaImportadaData as data } from './editar-aba-importada.data.js';
+import { importarAbasSharedData as shared } from './importar-abas.shared.data.js';
 
 test.use({ viewport: { width: 1920, height: 1080 } });
 
@@ -28,7 +29,7 @@ test.describe('Importar abas', () => {
     // 1. Pré-condição: replicar happy path do TC 1.6 para ter Painel Destino com 'Aba Importada'
     await step('1. Setup — Painel Origem + Painel Destino + importar Aba X como "Aba Importada"', async () => {
       await painelForm.goToNew();
-      const sourcePanelId = await painelForm.createPanel(data.sourcePanelName);
+      const sourcePanelId = await painelForm.createPanel(data.sourcePanelName, shared.panelDescription);
       await painelForm.goToEdit(sourcePanelId, 'layouts');
       const sairBtn = page.getByRole('button', { name: 'Sair sem salvar' });
       if (await sairBtn.isVisible().catch(() => false)) {
@@ -47,7 +48,7 @@ test.describe('Importar abas', () => {
 
       // Painel Destino + importar Aba X como 'Aba Importada'
       await painelForm.goToNew();
-      const destPanelId = await painelForm.createPanel(data.destPanelName);
+      const destPanelId = await painelForm.createPanel(data.destPanelName, shared.panelDescription);
       await painelForm.goToEdit(destPanelId, 'layouts');
       const sairBtn2 = page.getByRole('button', { name: 'Sair sem salvar' });
       if (await sairBtn2.isVisible().catch(() => false)) {
