@@ -67,9 +67,7 @@ test.describe('Importar abas', () => {
       await tabSelect.locator('input[role="combobox"]').click();
       await page.getByRole('option', { name: `${data.tabXName} 2 Widgets` }).click();
 
-      const nomeInput = page
-        .getByTestId('import-tab-modal-tab-name-input')
-        .getByPlaceholder('Digite o nome da aba');
+      const nomeInput = painelForm.getImportTabNameInput();
       await nomeInput.fill(data.importedTabName);
 
       await page.getByTestId('import-tab-modal-import-button').click();

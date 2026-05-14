@@ -75,8 +75,7 @@ test.describe('Importar abas', () => {
 
     // 2. Verificar dropdown Categoria visível com opção padrão Aprendizagem (value='0')
     await step("2. Verificar dropdown 'Categoria' visível com 'Aprendizagem' selecionado por padrão", async () => {
-      const modal = painelForm.getAddTabModal();
-      const categoriaSelect = modal.getByRole('combobox');
+      const categoriaSelect = painelForm.getImportCategorySelect();
 
       await expect(categoriaSelect).toBeVisible();
       await expect(categoriaSelect).toHaveValue('0');
@@ -88,8 +87,7 @@ test.describe('Importar abas', () => {
 
     // 3. Verificar que dropdown tem APENAS 1 opção (Aprendizagem) — env atual
     await step("3. Verificar quantidade de opções disponíveis (REVISAR ao adicionar categorias)", async () => {
-      const modal = painelForm.getAddTabModal();
-      const categoriaSelect = modal.getByRole('combobox');
+      const categoriaSelect = painelForm.getImportCategorySelect();
 
       // REVISAR: env staging-widgets tem apenas 'Aprendizagem' hoje.
       // Quando produto adicionar novas categorias, ajustar este `toHaveCount`

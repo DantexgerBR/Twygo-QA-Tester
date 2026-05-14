@@ -6,8 +6,9 @@
 // para satisfazer a UI, mas os widgets NÃO são gravados no servidor. O fluxo funciona
 // dentro da mesma sessão browser por estado local. Ver feedback_panel_layout_save_no_persist.md.
 //
-// SELETORES CONFIRMADOS LIVE (2026-05-13, herdados do TC 1.3):
-// - 'Nome da nova aba' input: getByTestId('import-tab-modal-tab-name-input').getByPlaceholder('Digite o nome da aba')
+// SELETORES CONFIRMADOS LIVE (2026-05-14 via chrome-devtools-mcp):
+// - 'Nome da nova aba' input: getByTestId('import-tab-modal-tab-name-input')
+//   (data-test-id está no <input>; encadear .getByPlaceholder() falha — void element)
 // - maxLength=255 enforçado client-side via atributo HTML
 
 import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js';
@@ -91,9 +92,7 @@ test.describe('Importar abas', () => {
 
     // 3. Verificar campo 'Nome da nova aba' tem value auto-preenchido com 'Aba X'
     await step('3. Verificar auto-preenchimento de "Nome da nova aba" com nome original (Aba X)', async () => {
-      const nomeInput = page
-        .getByTestId('import-tab-modal-tab-name-input')
-        .getByPlaceholder('Digite o nome da aba');
+      const nomeInput = painelForm.getImportTabNameInput();
 
       await expect(nomeInput).toBeVisible();
       await expect(nomeInput).toHaveValue(data.tabXName);
@@ -101,9 +100,7 @@ test.describe('Importar abas', () => {
 
     // 4. Limpar e preencher com novo nome — verificar aceitação da edição
     await step('4. Limpar campo e preencher com novo nome "Aba Importada"', async () => {
-      const nomeInput = page
-        .getByTestId('import-tab-modal-tab-name-input')
-        .getByPlaceholder('Digite o nome da aba');
+      const nomeInput = painelForm.getImportTabNameInput();
 
       await nomeInput.fill(data.newTabName);
       await expect(nomeInput).toHaveValue(data.newTabName);
@@ -111,9 +108,7 @@ test.describe('Importar abas', () => {
 
     // 5. Tentar preencher 256 chars — verificar maxLength=255 enforçado client-side
     await step('5. Tentar preencher 256 chars e validar limite de 255 (maxLength HTML)', async () => {
-      const nomeInput = page
-        .getByTestId('import-tab-modal-tab-name-input')
-        .getByPlaceholder('Digite o nome da aba');
+      const nomeInput = painelForm.getImportTabNameInput();
 
       // Browser trunca automaticamente ao maxLength quando fill excede o limite
       await nomeInput.fill(data.name256Chars);
