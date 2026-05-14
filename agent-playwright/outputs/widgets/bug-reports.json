@@ -1,123 +1,16 @@
 {
-  "generatedAt": "2026-05-14T11:25:31.293Z",
+  "generatedAt": "2026-05-14T18:49:50.620Z",
   "project": "widgets",
-  "totalRed": 4,
+  "totalRed": 2,
   "reports": [
     {
-      "id": "importar-abas__auto-preencher-nome-da-nova-aba-com-nome-original-e-validar-limite-de-255-caracteres",
-      "title": "Auto-preencher 'Nome da nova aba' com nome original e validar limite de 255 caracteres — Error: expect(locator).toBeVisible() failed",
-      "testsuite": "Importar abas",
-      "testcase": "Auto-preencher 'Nome da nova aba' com nome original e validar limite de 255 caracteres",
-      "file": "projects/widgets/tests/features/importar-abas/auto-preencher-nome-aba-importada.spec.ts",
+      "id": "dashboard-visao-do-aluno__exibicao-de-um-widget-por-aba",
+      "title": "Exibição de um widget por aba — TimeoutError: locator.click: Timeout 30000ms exceeded.",
+      "testsuite": "Dashboard - Visão do aluno",
+      "testcase": "Exibição de um widget por aba",
+      "file": "projects/widgets/tests/features/dashboard-visao-do-aluno/exibir-widget-por-aba.spec.ts",
       "status": "failed",
-      "durationMs": 45477,
-      "categoriaSugerida": "inconclusivo",
-      "categoriaConfianca": "baixa",
-      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
-      "severity": "media",
-      "severityRevisar": true,
-      "environment": {
-        "name": "staging-widgets",
-        "baseUrl": "https://widgets.stage.twygoead.com/",
-        "orgId": "36988",
-        "browser": "chromium",
-        "user": "claude@teste.com"
-      },
-      "buildCommit": "d6a17ed",
-      "generatedAt": "2026-05-14T11:25:31.293Z",
-      "reproSteps": [
-        {
-          "n": 1,
-          "action": "1. Criar Painel Origem com Aba X seedada e abrir modal de importar do Painel Destino",
-          "status": "passed",
-          "errorAtStep": false
-        },
-        {
-          "n": 2,
-          "action": "2. Verificar preview exibido e botão \"Importar aba\" habilitado",
-          "status": "passed",
-          "errorAtStep": false
-        },
-        {
-          "n": 3,
-          "action": "3. Verificar auto-preenchimento de \"Nome da nova aba\" com nome original (Aba X)",
-          "status": "failed",
-          "errorAtStep": true
-        }
-      ],
-      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
-      "observed": "Error: expect(locator).toBeVisible() failed\n\nLocator: getByTestId('import-tab-modal-tab-name-input').getByPlaceholder('Digite o nome da aba')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 10000ms\n  - waiting for getByTestId('import-tab-modal-tab-name-input').getByPlaceholder('Digite o nome da aba')\n",
-      "errorLocation": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\auto-preencher-nome-aba-importada.spec.ts:98:31",
-      "network": [
-        {
-          "method": "GET",
-          "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
-          "status": 500,
-          "inScope": false
-        },
-        {
-          "method": "GET",
-          "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
-          "status": 500,
-          "inScope": false
-        }
-      ],
-      "console": [],
-      "attachments": [
-        {
-          "name": "step-01-1-Criar-Painel-Origem-com-Aba-X-seedada-e-abrir-modal-de-imp",
-          "relPath": "test-artifacts/projects-widgets-tests-fea-03512-ar-limite-de-255-caracteres-chromium/attachments/step-01-1-Criar-Painel-Origem-com-Aba-X-seedada-e-abrir-modal-de-imp-712f6f7df7e1110fa34e77f72e432b16bc184816.png"
-        },
-        {
-          "name": "step-02-2-Verificar-preview-exibido-e-bot-o-Importar-aba-habilitado",
-          "relPath": "test-artifacts/projects-widgets-tests-fea-03512-ar-limite-de-255-caracteres-chromium/attachments/step-02-2-Verificar-preview-exibido-e-bot-o-Importar-aba-habilitado-d9988d8cda6c7af845cded86b287c0a00a0873bc.png"
-        },
-        {
-          "name": "screenshot",
-          "relPath": "test-artifacts/projects-widgets-tests-fea-03512-ar-limite-de-255-caracteres-chromium/test-failed-1.png"
-        },
-        {
-          "name": "video",
-          "relPath": "test-artifacts/projects-widgets-tests-fea-03512-ar-limite-de-255-caracteres-chromium/video-1.webm"
-        },
-        {
-          "name": "video",
-          "relPath": "test-artifacts/projects-widgets-tests-fea-03512-ar-limite-de-255-caracteres-chromium/video.webm"
-        },
-        {
-          "name": "error-context",
-          "relPath": "test-artifacts/projects-widgets-tests-fea-03512-ar-limite-de-255-caracteres-chromium/error-context.md"
-        },
-        {
-          "name": "trace",
-          "relPath": "test-artifacts/projects-widgets-tests-fea-03512-ar-limite-de-255-caracteres-chromium/trace.zip"
-        }
-      ],
-      "taxaReproducao": "1/1 nesta execução",
-      "taxaRevisar": true,
-      "regressao": "desconhecida",
-      "regressaoRevisar": true,
-      "impacto": "desconhecido",
-      "impactoRevisar": true,
-      "isolamento": {
-        "outroUsuario": null,
-        "outraOrg": null,
-        "revisar": true
-      },
-      "workaround": null,
-      "ids": {
-        "orgId": "36988",
-        "userId": null
-      }
-    },
-    {
-      "id": "importar-abas__editar-aba-importada",
-      "title": "Editar aba importada — TimeoutError: locator.fill: Timeout 30000ms exceeded.",
-      "testsuite": "Importar abas",
-      "testcase": "Editar aba importada",
-      "file": "projects/widgets/tests/features/importar-abas/editar-aba-importada.spec.ts",
-      "status": "failed",
-      "durationMs": 70716,
+      "durationMs": 37305,
       "categoriaSugerida": "spec-fragil",
       "categoriaConfianca": "media",
       "categoriaJustificativa": "Timeout sem HTTP error — possível wait/seletor frágil. Confirmar via chrome-mcp",
@@ -130,36 +23,36 @@
         "browser": "chromium",
         "user": "claude@teste.com"
       },
-      "buildCommit": "d6a17ed",
-      "generatedAt": "2026-05-14T11:25:31.293Z",
+      "buildCommit": "167fabe",
+      "generatedAt": "2026-05-14T18:49:50.620Z",
       "reproSteps": [
         {
           "n": 1,
-          "action": "1. Setup — Painel Origem + Painel Destino + importar Aba X como \"Aba Importada\"",
+          "action": "1. Switch para perfil Aluno via popover",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "2. Clicar no item de menu \"Item Painel WPA w1-1778784497809\"",
           "status": "failed",
           "errorAtStep": true
         }
       ],
       "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
-      "observed": "TimeoutError: locator.fill: Timeout 30000ms exceeded.\nCall log:\n  - waiting for getByTestId('import-tab-modal-tab-name-input').getByPlaceholder('Digite o nome da aba')\n",
-      "errorLocation": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\editar-aba-importada.spec.ts:73:23",
+      "observed": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for getByRole('link', { name: 'Item Painel WPA w1-1778784497809' })\n",
+      "errorLocation": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\dashboard-visao-do-aluno\\exibir-widget-por-aba.spec.ts:99:67",
       "network": [
         {
           "method": "GET",
-          "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
-          "status": 500,
+          "url": "https://widgets.stage.twygoead.com/api/v1/o/36988/beta_test/get_active_beta_test_notification?feature_name=estudio_de_criacao&with_notification_history=true",
+          "status": 400,
           "inScope": false
         },
         {
           "method": "GET",
-          "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
-          "status": 500,
-          "inScope": false
-        },
-        {
-          "method": "GET",
-          "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
-          "status": 500,
+          "url": "https://widgets.stage.twygoead.com/api/v1/o/36988/beta_test/get_active_beta_test_notification?feature_name=agente_suporte_ia&with_notification_history=true",
+          "status": 400,
           "inScope": false
         }
       ],
@@ -167,23 +60,39 @@
       "attachments": [
         {
           "name": "screenshot",
-          "relPath": "test-artifacts/projects-widgets-tests-fea-fbe87-r-abas-Editar-aba-importada-chromium/test-failed-1.png"
+          "relPath": "test-artifacts/projects-widgets-tests-fea-f04e2-ibição-de-um-widget-por-aba-chromium/test-finished-1.png"
+        },
+        {
+          "name": "step-01-1-Switch-para-perfil-Aluno-via-popover",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-f04e2-ibição-de-um-widget-por-aba-chromium/attachments/step-01-1-Switch-para-perfil-Aluno-via-popover-c29e484928b10238ea7a42c4cb7e8ed25233eb3d.png"
+        },
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-f04e2-ibição-de-um-widget-por-aba-chromium/test-failed-2.png"
         },
         {
           "name": "video",
-          "relPath": "test-artifacts/projects-widgets-tests-fea-fbe87-r-abas-Editar-aba-importada-chromium/video-1.webm"
+          "relPath": "test-artifacts/projects-widgets-tests-fea-f04e2-ibição-de-um-widget-por-aba-chromium/video-1.webm"
         },
         {
           "name": "video",
-          "relPath": "test-artifacts/projects-widgets-tests-fea-fbe87-r-abas-Editar-aba-importada-chromium/video.webm"
+          "relPath": "test-artifacts/projects-widgets-tests-fea-f04e2-ibição-de-um-widget-por-aba-chromium/video.webm"
         },
         {
           "name": "error-context",
-          "relPath": "test-artifacts/projects-widgets-tests-fea-fbe87-r-abas-Editar-aba-importada-chromium/error-context.md"
+          "relPath": "test-artifacts/projects-widgets-tests-fea-f04e2-ibição-de-um-widget-por-aba-chromium/error-context.md"
+        },
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-f04e2-ibição-de-um-widget-por-aba-chromium/test-failed-3.png"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-f04e2-ibição-de-um-widget-por-aba-chromium/error-context.md"
         },
         {
           "name": "trace",
-          "relPath": "test-artifacts/projects-widgets-tests-fea-fbe87-r-abas-Editar-aba-importada-chromium/trace.zip"
+          "relPath": "test-artifacts/projects-widgets-tests-fea-f04e2-ibição-de-um-widget-por-aba-chromium/trace.zip"
         }
       ],
       "taxaReproducao": "1/1 nesta execução",
@@ -204,16 +113,16 @@
       }
     },
     {
-      "id": "importar-abas__selecionar-categoria-na-importacao",
-      "title": "Selecionar Categoria na importação — Error: expect(locator).toBeVisible() failed",
-      "testsuite": "Importar abas",
-      "testcase": "Selecionar Categoria na importação",
-      "file": "projects/widgets/tests/features/importar-abas/selecionar-categoria-importacao.spec.ts",
+      "id": "dashboard-visao-do-aluno__renderizacao-de-widget-configurado-com-titulo-e-icone-customizados",
+      "title": "Renderização de widget configurado com título e ícone customizados — TimeoutError: locator.click: Timeout 30000ms exceeded.",
+      "testsuite": "Dashboard - Visão do aluno",
+      "testcase": "Renderização de widget configurado com título e ícone customizados",
+      "file": "projects/widgets/tests/features/dashboard-visao-do-aluno/widget-customizacoes-aplicadas.spec.ts",
       "status": "failed",
-      "durationMs": 33219,
+      "durationMs": 37326,
       "categoriaSugerida": "spec-fragil",
-      "categoriaConfianca": "alta",
-      "categoriaJustificativa": "Locator bate em N elementos — seletor não-único",
+      "categoriaConfianca": "media",
+      "categoriaJustificativa": "Timeout sem HTTP error — possível wait/seletor frágil. Confirmar via chrome-mcp",
       "severity": "baixa",
       "severityRevisar": true,
       "environment": {
@@ -223,171 +132,76 @@
         "browser": "chromium",
         "user": "claude@teste.com"
       },
-      "buildCommit": "d6a17ed",
-      "generatedAt": "2026-05-14T11:25:31.293Z",
+      "buildCommit": "167fabe",
+      "generatedAt": "2026-05-14T18:49:50.620Z",
       "reproSteps": [
         {
           "n": 1,
-          "action": "1. Setup — Painel Origem + Painel Destino + Aba X selecionada no modal",
+          "action": "1. Switch para perfil Aluno via popover",
           "status": "passed",
           "errorAtStep": false
         },
         {
           "n": 2,
-          "action": "2. Verificar dropdown 'Categoria' visível com 'Aprendizagem' selecionado por padrão",
+          "action": "2. Clicar no item de menu \"Item Painel WC w0-1778784508756\"",
           "status": "failed",
           "errorAtStep": true
         }
       ],
       "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
-      "observed": "Error: expect(locator).toBeVisible() failed\n\nLocator: getByRole('dialog').filter({ hasText: 'Adicionar nova aba' }).getByRole('combobox')\nExpected: visible\nError: strict mode violation: getByRole('dialog').filter({ hasText: 'Adicionar nova aba' }).getByRole('combobox') resolved to 3 elements:\n    1) <input value=\"\" type=\"text\" tabindex=\"0\" role=\"combobox\" autocorrect=\"off\" autocomplete=\"off\" spellcheck=\"false\" aria-haspopup=\"true\" autocapitalize=\"none\" aria-expanded=\"false\" aria-autocomplete=\"list\" aria-activedescendant=\"\" id=\"react-select-3-input\" class=\"select-field__input\"/> aka locator('#react-select-3-input')\n    2) <input class=\"\" value=\"\" type=\"text\" tabindex=\"0\" role=\"combobox\" autocorrect=\"off\" autocomplete=\"off\" spellcheck=\"false\" aria-haspopup=\"true\" autocapitalize=\"none\" aria-e …[+370 chars]",
-      "errorLocation": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\selecionar-categoria-importacao.spec.ts:81:37",
+      "observed": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for getByRole('link', { name: 'Item Painel WC w0-1778784508756' })\n",
+      "errorLocation": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\dashboard-visao-do-aluno\\widget-customizacoes-aplicadas.spec.ts:94:67",
       "network": [
         {
           "method": "GET",
-          "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
-          "status": 500,
+          "url": "https://widgets.stage.twygoead.com/api/v1/o/36988/beta_test/get_active_beta_test_notification?feature_name=agente_suporte_ia&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://widgets.stage.twygoead.com/api/v1/o/36988/beta_test/get_active_beta_test_notification?feature_name=estudio_de_criacao&with_notification_history=true",
+          "status": 400,
           "inScope": false
         }
       ],
       "console": [],
       "attachments": [
         {
-          "name": "step-01-1-Setup-Painel-Origem-Painel-Destino-Aba-X-selecionada-no-mo",
-          "relPath": "test-artifacts/projects-widgets-tests-fea-98f94-nar-Categoria-na-importação-chromium/attachments/step-01-1-Setup-Painel-Origem-Painel-Destino-Aba-X-selecionada-no-mo-765f072bf8ffb730b8dea1002f1d39b1997886f2.png"
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-acd6f-título-e-ícone-customizados-chromium/test-finished-1.png"
+        },
+        {
+          "name": "step-01-1-Switch-para-perfil-Aluno-via-popover",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-acd6f-título-e-ícone-customizados-chromium/attachments/step-01-1-Switch-para-perfil-Aluno-via-popover-33918a65697780b2f5c89988f0cde7db36b6e14d.png"
         },
         {
           "name": "screenshot",
-          "relPath": "test-artifacts/projects-widgets-tests-fea-98f94-nar-Categoria-na-importação-chromium/test-failed-1.png"
+          "relPath": "test-artifacts/projects-widgets-tests-fea-acd6f-título-e-ícone-customizados-chromium/test-failed-2.png"
         },
         {
           "name": "video",
-          "relPath": "test-artifacts/projects-widgets-tests-fea-98f94-nar-Categoria-na-importação-chromium/video-1.webm"
+          "relPath": "test-artifacts/projects-widgets-tests-fea-acd6f-título-e-ícone-customizados-chromium/video-1.webm"
         },
         {
           "name": "video",
-          "relPath": "test-artifacts/projects-widgets-tests-fea-98f94-nar-Categoria-na-importação-chromium/video.webm"
+          "relPath": "test-artifacts/projects-widgets-tests-fea-acd6f-título-e-ícone-customizados-chromium/video.webm"
         },
         {
           "name": "error-context",
-          "relPath": "test-artifacts/projects-widgets-tests-fea-98f94-nar-Categoria-na-importação-chromium/error-context.md"
-        },
-        {
-          "name": "trace",
-          "relPath": "test-artifacts/projects-widgets-tests-fea-98f94-nar-Categoria-na-importação-chromium/trace.zip"
-        }
-      ],
-      "taxaReproducao": "1/1 nesta execução",
-      "taxaRevisar": true,
-      "regressao": "desconhecida",
-      "regressaoRevisar": true,
-      "impacto": "desconhecido",
-      "impactoRevisar": true,
-      "isolamento": {
-        "outroUsuario": null,
-        "outraOrg": null,
-        "revisar": true
-      },
-      "workaround": null,
-      "ids": {
-        "orgId": "36988",
-        "userId": null
-      }
-    },
-    {
-      "id": "importar-abas__visualizar-preview-da-aba-selecionada",
-      "title": "Visualizar preview da aba selecionada — Error: expect(locator).toBeVisible() failed",
-      "testsuite": "Importar abas",
-      "testcase": "Visualizar preview da aba selecionada",
-      "file": "projects/widgets/tests/features/importar-abas/visualizar-preview-aba.spec.ts",
-      "status": "failed",
-      "durationMs": 39670,
-      "categoriaSugerida": "spec-fragil",
-      "categoriaConfianca": "alta",
-      "categoriaJustificativa": "Locator bate em N elementos — seletor não-único",
-      "severity": "baixa",
-      "severityRevisar": true,
-      "environment": {
-        "name": "staging-widgets",
-        "baseUrl": "https://widgets.stage.twygoead.com/",
-        "orgId": "36988",
-        "browser": "chromium",
-        "user": "claude@teste.com"
-      },
-      "buildCommit": "d6a17ed",
-      "generatedAt": "2026-05-14T11:25:31.293Z",
-      "reproSteps": [
-        {
-          "n": 1,
-          "action": "1. Criar Painel Origem com Aba X e Aba Y seedadas",
-          "status": "passed",
-          "errorAtStep": false
-        },
-        {
-          "n": 2,
-          "action": "2. Criar Painel Destino e selecionar Painel Origem no modal de importar aba",
-          "status": "passed",
-          "errorAtStep": false
-        },
-        {
-          "n": 3,
-          "action": "3. Selecionar Aba X e verificar preview da aba no modal",
-          "status": "failed",
-          "errorAtStep": true
-        }
-      ],
-      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
-      "observed": "Error: expect(locator).toBeVisible() failed\n\nLocator: getByRole('dialog').filter({ hasText: 'Adicionar nova aba' }).getByText('Aba X', { exact: true })\nExpected: visible\nError: strict mode violation: getByRole('dialog').filter({ hasText: 'Adicionar nova aba' }).getByText('Aba X', { exact: true }) resolved to 2 elements:\n    1) <p class=\"chakra-text css-qqfgvy\">Aba X</p> aka getByTestId('import-tab-modal-tab-select').getByText('Aba X', { exact: true })\n    2) <p class=\"chakra-text css-qqfgvy\">Aba X</p> aka getByText('Aba X').nth(2)\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 10000ms\n  - waiting for getByRole('dialog').filter({ hasText: 'Adicionar nova aba' }).getByText('Aba X', { exact: true })\n",
-      "errorLocation": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\visualizar-preview-aba.spec.ts:116:69",
-      "network": [
-        {
-          "method": "GET",
-          "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
-          "status": 500,
-          "inScope": false
-        },
-        {
-          "method": "GET",
-          "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
-          "status": 500,
-          "inScope": false
-        },
-        {
-          "method": "GET",
-          "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
-          "status": 500,
-          "inScope": false
-        }
-      ],
-      "console": [],
-      "attachments": [
-        {
-          "name": "step-01-1-Criar-Painel-Origem-com-Aba-X-e-Aba-Y-seedadas",
-          "relPath": "test-artifacts/projects-widgets-tests-fea-42643--preview-da-aba-selecionada-chromium/attachments/step-01-1-Criar-Painel-Origem-com-Aba-X-e-Aba-Y-seedadas-86d52b526bb5d5e84b520db10ff4cd945f17d469.png"
-        },
-        {
-          "name": "step-02-2-Criar-Painel-Destino-e-selecionar-Painel-Origem-no-modal-d",
-          "relPath": "test-artifacts/projects-widgets-tests-fea-42643--preview-da-aba-selecionada-chromium/attachments/step-02-2-Criar-Painel-Destino-e-selecionar-Painel-Origem-no-modal-d-d4c0391ead71bf586c82a96838bc87296b3dc912.png"
+          "relPath": "test-artifacts/projects-widgets-tests-fea-acd6f-título-e-ícone-customizados-chromium/error-context.md"
         },
         {
           "name": "screenshot",
-          "relPath": "test-artifacts/projects-widgets-tests-fea-42643--preview-da-aba-selecionada-chromium/test-failed-1.png"
-        },
-        {
-          "name": "video",
-          "relPath": "test-artifacts/projects-widgets-tests-fea-42643--preview-da-aba-selecionada-chromium/video-1.webm"
-        },
-        {
-          "name": "video",
-          "relPath": "test-artifacts/projects-widgets-tests-fea-42643--preview-da-aba-selecionada-chromium/video.webm"
+          "relPath": "test-artifacts/projects-widgets-tests-fea-acd6f-título-e-ícone-customizados-chromium/test-failed-3.png"
         },
         {
           "name": "error-context",
-          "relPath": "test-artifacts/projects-widgets-tests-fea-42643--preview-da-aba-selecionada-chromium/error-context.md"
+          "relPath": "test-artifacts/projects-widgets-tests-fea-acd6f-título-e-ícone-customizados-chromium/error-context.md"
         },
         {
           "name": "trace",
-          "relPath": "test-artifacts/projects-widgets-tests-fea-42643--preview-da-aba-selecionada-chromium/trace.zip"
+          "relPath": "test-artifacts/projects-widgets-tests-fea-acd6f-título-e-ícone-customizados-chromium/trace.zip"
         }
       ],
       "taxaReproducao": "1/1 nesta execução",
