@@ -1,9 +1,11 @@
 // spec: projects/widgets/specs/modo-de-uso-paineis-do-usuario-plan.md
 // seed: tests/seed.spec.ts
 
-// TC 1.1 — usa painel 'Painel Aluno' existente no env staging-widgets
-// (evita orphan pollution). Cleanup via disassociatePanelFromMenu_safe
-// no afterEach.
+// TC 1.1 — resolve dinamicamente o primeiro painel ATIVO disponível no
+// dropdown de Espaço. Antes hardcodava 'Painel Aluno', mas o painel não
+// existia no env staging-widgets (validação chrome-mcp 2026-05-14). Agora
+// asserção é por invariante: "ao menos 1 painel ativo listado". Cleanup
+// via disassociatePanelFromMenu_safe no afterEach, com o nome capturado.
 
 import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js';
 import * as allure from 'allure-js-commons';
@@ -16,11 +18,18 @@ test.use({ viewport: { width: 1920, height: 1080 } });
 
 test.describe('Modo de uso - Painéis do usuário', () => {
   let itemName: string;
+  let selectedPanelName: string | undefined;
 
   test.afterEach(async ({ page }) => {
     if (itemName) {
       const paineis = new PaineisListPage(page);
-      await paineis.disassociatePanelFromMenu_safe(data.panelName, data.useModeId, itemName);
+      // panelName usado só pra logs internos quando itemName é passado.
+      // Fallback descritivo se o capture não rodou (falha antes do step 4).
+      await paineis.disassociatePanelFromMenu_safe(
+        selectedPanelName ?? '(painel não capturado)',
+        data.useModeId,
+        itemName,
+      );
     }
   });
 
@@ -57,13 +66,14 @@ test.describe('Modo de uso - Painéis do usuário', () => {
       await expect(paineis.getMenuItemPanelChooser()).toBeVisible();
     });
 
-    await step("4. Escolher 'Painel Aluno' no campo Espaço e salvar", async () => {
-      // Abrir dropdown e filtrar pelo nome
+    await step('4. Escolher primeiro painel disponível no campo Espaço e salvar', async () => {
+      // Abrir dropdown SEM filtrar — pegamos o primeiro painel ativo disponível.
+      // Asserção por invariante: o app expõe ao menos 1 painel ativo no listbox.
       await paineis.getMenuItemPanelChooser().click();
-      await paineis.getMenuItemPanelChooserInput().fill(data.panelName);
 
-      // Selecionar primeira opção visível (filtrada)
       const firstOption = page.locator('[id^="react-select-"][id$="-option-0"]').first();
+      await firstOption.waitFor({ state: 'visible' });
+      selectedPanelName = (await firstOption.textContent())?.trim() || undefined;
       await firstOption.click();
 
       await paineis.getMenuItemSubmitButton().click();

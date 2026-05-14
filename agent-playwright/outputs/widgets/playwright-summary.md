@@ -1,33 +1,25 @@
 # Resumo Playwright — Widgets
 
-**Última run** (per-suite) · 14/05/2026, 11:09:59
+**Última run** (per-suite) · 14/05/2026, 13:08:56
 
 | Total | ✅ Aprovados | ❌ Falhas | ⊘ Ignorados | Duração |
 |---:|---:|---:|---:|---:|
-| 11 | 10 | 1 | 0 | 847.5s |
+| 3 | 2 | 0 | 1 | 58.7s |
 
-> **Escopo:** Apenas testsuite contendo "Layout das abas"
+> **Escopo:** Apenas testsuite contendo "Modo de uso - Painéis do usuário"
 > **Ambiente:** `staging-widgets` · **Browsers:** chromium
 
 ## Resultados
 
 | Status | Testsuite | Caso | Duração | Resumo |
 |:---:|---|---|---:|---|
-| ✅ | Layout das abas | TC11 · Validar acessibilidade por teclado aba 'Layout' | 81.68s | — |
-| ✅ | Layout das abas | TC5 · Ativar switch 'Permitir reorganizar widgets' e mover widget | 83.33s | — |
-| ✅ | Layout das abas | TC9 · Cancelar edição com alterações não salvas | 90.24s | — |
-| ✅ | Layout das abas | TC7 · Estado vazio da aba sem widgets | 80.65s | — |
-| ❌ | Layout das abas | TC8 · Salvar layout pela barra de rodapé | 84.35s | Error: expect(locator).toHaveCount(expected) failed |
-| ✅ | Layout das abas | TC6 · Switch desativado: tentar arrastar widget | 67.36s | — |
-| ✅ | Layout das abas | TC10 · Toolbar permanece fixa ao rolar a área de layout | 108.76s | — |
-| ✅ | Layout das abas | TC3 · Trocar visualização para Mobile (360) e validar alerta | 79.31s | — |
-| ✅ | Layout das abas | TC2 · Trocar visualização para Tablet (768) e validar alerta | 49.25s | — |
-| ✅ | Layout das abas | TC1 · Validar barra de ferramentas fixa no topo da área de layout | 67.95s | — |
-| ✅ | Layout das abas | TC4 · Voltar para visualização Desktop após Tablet/Mobile | 54.61s | — |
+| ✅ | Modo de uso - Painéis do usuário | TC2 · Listar painéis disponíveis no campo 'Espaço' | 19.50s | — |
+| ⊘ | Modo de uso - Painéis do usuário | TC3 · Não permitir reabilitar menu inativado quando 'Espaço' do 'Painel do usuário' inativo | 1.13s | Marcado para revisão (test.fixme): seed ausente: TC depende de painel inativo COM menu vinculado, mas o backend dispara 500 (title_for#NoMethodError em GET /panels/{id}/linked_menus) impedindo PATCH /change_status. Bug bloqueia ensureInactive() apenas em sessão automatizada (user 'Claude Agents'); manual passa. Ver bug_title_for_linked_menus.md. |
+| ✅ | Modo de uso - Painéis do usuário | TC1 · Selecionar 'Painéis do usuário' como modelo de página no modo de uso | 38.11s | — |
 
 ## Onde encontrar mais
 
-- 📋 [Detalhamento desta run](reports/layout-das-abas_20260514-110959/index.md) — KPIs por testsuite, links pra cases e findings exploratórios
-- 🔍 [Casos de teste detalhados](reports/layout-das-abas_20260514-110959/tests.md) — passos, evidências, bug-report pronto
-- 🐛 [Validação exploratória](reports/layout-das-abas_20260514-110959/exploratory.md) — console errors, axe, HTTP, cobertura
-- 📦 Traces de cada falha em `reports/layout-das-abas_20260514-110959/artifacts/` (self-contained) — abrir com `npx playwright show-trace <path>`
+- 📋 [Detalhamento desta run](reports/modo-de-uso-paineis-do-usuario_20260514-130856/index.md) — KPIs por testsuite, links pra cases e findings exploratórios
+- 🔍 [Casos de teste detalhados](reports/modo-de-uso-paineis-do-usuario_20260514-130856/tests.md) — passos, evidências, bug-report pronto
+- 🐛 [Validação exploratória](reports/modo-de-uso-paineis-do-usuario_20260514-130856/exploratory.md) — console errors, axe, HTTP, cobertura
+- 📦 Traces de cada falha em `reports/modo-de-uso-paineis-do-usuario_20260514-130856/artifacts/` (self-contained) — abrir com `npx playwright show-trace <path>`
