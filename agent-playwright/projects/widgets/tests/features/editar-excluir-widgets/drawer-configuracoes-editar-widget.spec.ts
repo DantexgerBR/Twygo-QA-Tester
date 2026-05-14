@@ -5,6 +5,7 @@ import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js
 import * as allure from 'allure-js-commons';
 import { PainelFormPage } from '../../../pages/PainelFormPage.js';
 import { drawerConfiguracoesEditarWidgetData as data } from './drawer-configuracoes-editar-widget.data.js';
+import { editarExcluirWidgetsSharedData as shared } from './editar-excluir-widgets.shared.data.js';
 
 test.use({ viewport: { width: 1920, height: 1080 } });
 
@@ -20,7 +21,7 @@ test.describe('Editar/Excluir widgets', () => {
 
     await step('1. Criar painel e adicionar widget alvo na aba Layouts', async () => {
       await painelForm.goToNew();
-      const panelId = await painelForm.createPanel(data.panelName);
+      const panelId = await painelForm.createPanel(data.panelName, shared.panelDescription);
       await painelForm.getLayoutsTab().click();
       await painelForm.openWidgetDrawer();
       await painelForm.addWidget(data.widgetId);
