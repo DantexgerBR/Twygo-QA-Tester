@@ -1,7 +1,7 @@
 ---
 name: twygo-report-generator
-description: Gera relatório Markdown estruturado por execução em outputs/reports/{slug}_{timestamp}/ (index.md + tests.md + exploratory.md + JSONs). Em modo regressivo, dispara também o Allure CLI para o relatório executivo com trend histórico (Allure mantém HTML — built-in). v3.1 adiciona auto-detect — se rodado sem flag mas test-results.json tem 1 única testsuite, promove pra per-suite com slug correto (evita pasta all-suites enganosa).
-version: 3.1.0
+description: Gera relatório Markdown estruturado por execução em outputs/reports/{slug}_{timestamp}/ (index.md + tests.md + exploratory.md + JSONs). Em modo regressivo, dispara também o Allure CLI para o relatório executivo com trend histórico (Allure mantém HTML — built-in). v3.1 adiciona auto-detect — se rodado sem flag mas test-results.json tem 1 única testsuite, promove pra per-suite com slug correto (evita pasta all-suites enganosa). v3.2 adiciona rotação automática — mantém só o latest por prefix em `outputs/<slug>/reports/`, move anteriores pra `outputs-archive/<slug>/reports/` (gitignored).
+version: 3.2.0
 ---
 
 # twygo-report-generator
@@ -62,6 +62,36 @@ o test-results.
 ├── tests.json              ← Cópia de outputs/test-results.json (Playwright JSON)
 └── exploratory.json        ← Cópia de outputs/exploratory-findings.json
 ```
+
+## Rotação automática de reports (v3.2)
+
+Após gerar o reportDir + atalhos, o generator chama `rotateReports()`
+(`rotator.ts`) que:
+
+1. Lista todos os subdirs `<prefix>_<YYYYMMDD-HHMMSS>/` em
+   `outputs/<slug>/reports/`.
+2. Agrupa por `<prefix>` (tudo antes do timestamp final).
+3. Para cada prefix, mantém o de timestamp maior. Move os outros para
+   `outputs-archive/<slug>/reports/` (gitignored).
+
+**Resultado**: git só tem 1 reportDir por prefix (latest); histórico fica
+local em `outputs-archive/` para análise/audit. Sem perda — `rename()`
+no mesmo volume é instantâneo, ocupa o mesmo disco.
+
+**Política**:
+- 1 latest por prefix (per-suite + regression + all-suites)
+- Atalhos `latest-*.md` ficam intactos na raiz `reports/`
+- Bug-reports/exploratory por testcase NÃO rotacionam (mantêm padrão
+  "latest sobrescreve por TC")
+
+**Migração inicial** (rodar 1× ao adotar a feature):
+
+```bash
+PROJECT=widgets npx tsx .claude/skills/twygo-report-generator/rotator.ts
+```
+
+Output: lista kept (1 por prefix) + archived (vão pra `outputs-archive/`).
+Subsequente: ocorre auto a cada `npm run agent:report`.
 
 ## Atalhos `latest-*.md` na raiz de `outputs/reports/`
 

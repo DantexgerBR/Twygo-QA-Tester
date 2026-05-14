@@ -3,6 +3,7 @@ import { resolve, join, basename, dirname, relative } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { parseArgs } from 'node:util';
 import { createLogger } from '../../../src/utils/logger.js';
+import { rotateReports } from './rotator.js';
 import { FILES } from '../../../src/utils/constants.js';
 import {
   getOutputDir,
@@ -1734,6 +1735,22 @@ async function main(): Promise<void> {
 
   if (args.mode === 'regression') {
     runAllureGenerate();
+  }
+
+  // Rotaciona reports antigos: mantém apenas o latest por prefixo em
+  // outputs/<slug>/reports/, move os anteriores para outputs-archive/<slug>/reports/
+  // (gitignored). Garante que git só tenha a última execução por suite
+  // enquanto preserva histórico local pra análise/audit.
+  const projectRoot = dirname(reportsRoot);
+  const projectSlug = basename(projectRoot);
+  const archiveRoot = resolve(process.cwd(), 'outputs-archive', projectSlug);
+  try {
+    const rot = rotateReports(projectRoot, archiveRoot);
+    if (rot.archived.length > 0) {
+      log.info(`Reports rotacionados: ${rot.archived.length} arquivado(s) em outputs-archive/${projectSlug}/reports/`);
+    }
+  } catch (err) {
+    log.warn(`Falha rotação reports: ${(err as Error).message}`);
   }
 }
 

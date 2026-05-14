@@ -28,6 +28,12 @@ outputs/**/allure-report/
 # - outputs/**/triage-report.md  (decisão QA)
 # - outputs/**/bug-reports.json  +  outputs/**/bug-reports/  (bug-reports gerados)
 
+# Histórico local de reports antigos: rotacionados automaticamente pelo
+# report-generator pós-run. Mantém runs anteriores localmente pra análise/audit
+# enquanto git fica só com latest por prefixo (`outputs/<slug>/reports/<prefix>_<ts>/`).
+# Cleanup via `rm -rf outputs-archive/` quando histórico não interessar mais.
+outputs-archive/
+
 playwright-report/
 test-results/
 .playwright/
