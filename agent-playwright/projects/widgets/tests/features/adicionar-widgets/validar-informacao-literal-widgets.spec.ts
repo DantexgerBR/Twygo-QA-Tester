@@ -4,12 +4,17 @@
 import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js';
 import * as allure from 'allure-js-commons';
 import { PainelFormPage } from '../../../pages/PainelFormPage.js';
+import { cleanupPanel } from '../../../utils/test-cleanup.js';
 import { informacaoLiteralData as data } from './validar-informacao-literal-widgets.data.js';
 import { adicionarWidgetsSharedData as shared } from './adicionar-widgets.shared.data.js';
 
 test.use({ viewport: { width: 1920, height: 1080 } });
 
 test.describe('Adicionar widgets', () => {
+  test.afterAll(async ({ browser }) => {
+    await cleanupPanel(browser, data.panelName);
+  });
+
   test('Validar informação literal dos widgets', async ({ page }) => {
     await allure.epic('Twygo - Widgets');
     await allure.feature('Adicionar widgets');
