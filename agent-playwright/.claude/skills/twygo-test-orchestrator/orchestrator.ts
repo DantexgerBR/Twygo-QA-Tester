@@ -23,6 +23,7 @@ type Args = {
   all: boolean;
   regression: boolean;
   noExplore: boolean;
+  noBugReports: boolean;
   noReport: boolean;
   noTriage: boolean;
   list: boolean;
@@ -38,6 +39,7 @@ function parseFlags(): Args {
       all: { type: 'boolean', default: false },
       regression: { type: 'boolean', default: false },
       'no-explore': { type: 'boolean', default: false },
+      'no-bug-reports': { type: 'boolean', default: false },
       'no-report': { type: 'boolean', default: false },
       'no-triage': { type: 'boolean', default: false },
       list: { type: 'boolean', default: false },
@@ -53,6 +55,7 @@ function parseFlags(): Args {
     all: Boolean(values.all) || Boolean(values.regression),
     regression: Boolean(values.regression),
     noExplore: Boolean(values['no-explore']),
+    noBugReports: Boolean(values['no-bug-reports']),
     noReport: Boolean(values['no-report']),
     noTriage: Boolean(values['no-triage']),
     list: Boolean(values.list),
@@ -204,6 +207,13 @@ async function chainExplore(): Promise<number> {
   ]);
 }
 
+async function chainBugReports(): Promise<number> {
+  return runShell('npx', [
+    'tsx',
+    '.claude/skills/gerar-bug-report-de-tc-red/generator.ts',
+  ]);
+}
+
 async function chainReport(suites: ParsedTestSuite[], regression: boolean): Promise<number> {
   const args = ['tsx', '.claude/skills/twygo-report-generator/generator.ts'];
   if (regression) {
@@ -291,6 +301,12 @@ async function main(): Promise<void> {
     log.info('=== Fase 5.5: Validação Exploratória ===');
     const exploreExit = await chainExplore();
     if (exploreExit !== 0) log.warn(`Validador exploratório exit ${exploreExit}`);
+  }
+
+  if (!args.noBugReports) {
+    log.info('=== Fase 5.7: Bug Reports prontos pra task ===');
+    const bugExit = await chainBugReports();
+    if (bugExit !== 0) log.warn(`Bug-reports generator exit ${bugExit}`);
   }
 
   if (!args.noReport) {

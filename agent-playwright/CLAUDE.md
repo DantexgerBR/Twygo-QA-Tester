@@ -234,7 +234,8 @@ Dois modos:
 | 4. Generate | **generator** (plugin Playwright) + Playwright MCP | Spec `.spec.ts` + Page Objects + annotations Allure |
 | 5. Execute | Playwright (com `--grep` per-suite ou tudo regressivo) | Roda + grava findings exploratórios via fixture |
 | 5.5. Validate | `twygo-exploratory-validator` | Agrega findings em `exploratory-findings.json` |
-| 6. Report | `twygo-report-generator` | HTML per-suite OU per-suite + Allure (regressivo) |
+| 5.7. **Bug-reports** *(novo)* | `gerar-bug-report-de-tc-red` | Para cada TC red, monta registro estruturado (Network/Console + reprodução + categoria + severity) pronto pra virar task. Output em `outputs/<slug>/bug-reports/`. Roda antes do report-generator pra ele consumir o bundle |
+| 6. Report | `twygo-report-generator` | HTML per-suite OU per-suite + Allure (regressivo). Renderiza seção "Bug Reports prontos" no `index.md` linkando os MDs por TC + arquiva `bug-reports/` dentro do reportDir (self-contained) |
 | 7. Heal (opcional) | **healer** (plugin Playwright) | Conserta seletor/timing/asserção após mudança de UI |
 
 **Annotations Allure obrigatórias** (Fase 4) derivadas do XML:
@@ -303,6 +304,7 @@ Definidos por `npx playwright init-agents --loop claude` (oficial Microsoft). S�
 | **`twygo-test-orchestrator`** | 3, 4, 5, 7, 8.5 | Orquestra planner/generator/healer com contexto Twygo. Modos `--suite` e `--regression`. Etapa 8.5 abre PR via GitHub MCP (opt-in) |
 | **`twygo-exploratory-validator`** | 5.5 | Agrega findings + cobertura + exporter Allure |
 | **`twygo-report-generator`** | 6 | HTML híbrido per-suite + delega Allure CLI no regressivo |
+| **`gerar-bug-report-de-tc-red`** | 5.7 | Para cada TC red (failed/timedOut sem fixme), monta bug-report pronto pra task: Network/Console da fixture exploratória + steps/erro/attachments do Playwright + categoria sugerida (bug-produto/spec-fragil/modal-nao-tratado/flakiness/inconclusivo) com confiança. Grava `outputs/<slug>/bug-reports.json` + 1 MD por TC em `bug-reports/<id>.md`. Consumido por `twygo-report-generator` (Fase 6) que renderiza seção no `index.md`. Rodar isolado via `npm run agent:bug-reports` |
 | **`atualizar-agents-oficiais`** | manutenção | Re-roda `npx playwright init-agents --loop=claude` e mostra diff dos 3 subagents oficiais pra QA aprovar antes de aceitar updates upstream |
 | **`validar-heal-diff`** | 8.1 | Gate estático sobre o diff do healer. Bloqueia mudanças que indicam drift de intenção (assertion polarity flip, title change, step reorder, fixme add/remove). Enforca regra dura #11 |
 | **`roadmap-recon-cache`** | design | Especificação não-implementada — propõe migrar recon de `inputs/` (git) pra `outputs/<slug>/recon-cache/` (regenerável + TTL) |

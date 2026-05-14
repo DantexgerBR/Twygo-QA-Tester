@@ -163,6 +163,24 @@ type ExploratoryReport = {
   testsuites: ExploratorySuite[];
 };
 
+type BugReportEntry = {
+  id: string;
+  testsuite: string;
+  testcase: string;
+  status: 'failed' | 'timedOut';
+  categoriaSugerida: 'bug-produto' | 'spec-fragil' | 'modal-nao-tratado' | 'flakiness' | 'inconclusivo';
+  categoriaConfianca: 'alta' | 'media' | 'baixa';
+  categoriaJustificativa: string;
+  severity: 'alta' | 'media' | 'baixa';
+};
+
+type BugReportsBundle = {
+  generatedAt: string;
+  project: string;
+  totalRed: number;
+  reports: BugReportEntry[];
+};
+
 const PROBE_PT: Record<string, string> = {
   hoverTooltips: 'Hover em tooltips',
   keyboardNav: 'Navegação por teclado',
@@ -603,6 +621,7 @@ function renderIndexMd(args: {
   xmlByName: Map<string, ParsedTestCase>;
   tcNumbers: Map<string, string>;
   runId: string;
+  bugReports: BugReportEntry[];
 }): string {
   const t = args.testsSummary;
   const e = args.exploratorySummary;
@@ -676,10 +695,35 @@ function renderIndexMd(args: {
   }
   lines.push('');
 
+  if (args.bugReports.length > 0) {
+    lines.push(`## Bug Reports prontos pra task`);
+    lines.push('');
+    lines.push(`_${args.bugReports.length} TC(s) red transformados em registro estruturado pronto pra virar issue. Campos \`[REVISAR]\` precisam de validação humana antes da abertura da task._`);
+    lines.push('');
+    const counts = new Map<string, number>();
+    for (const b of args.bugReports) counts.set(b.categoriaSugerida, (counts.get(b.categoriaSugerida) ?? 0) + 1);
+    const breakdown = Array.from(counts.entries()).map(([k, v]) => `**${v}** ${k}`).join(' · ');
+    lines.push(`**Distribuição**: ${breakdown}`);
+    lines.push('');
+    lines.push(`| TC | Categoria | Confiança | Severity | Justificativa |`);
+    lines.push(`|---|---|---|---|---|`);
+    for (const b of args.bugReports) {
+      const icon = b.categoriaSugerida === 'bug-produto' ? '🐛' : b.categoriaSugerida === 'spec-fragil' ? '🧪' : b.categoriaSugerida === 'modal-nao-tratado' ? '🪟' : b.categoriaSugerida === 'flakiness' ? '🌀' : '❓';
+      const tcLabel = formatTcTitle(b.testcase, args.tcNumbers);
+      lines.push(`| [${mdCell(tcLabel)}](bug-reports/${b.id}.md) | ${icon} ${b.categoriaSugerida} | ${b.categoriaConfianca} | ${b.severity} | ${mdCell(b.categoriaJustificativa)} |`);
+    }
+    lines.push('');
+    lines.push(`> Dados brutos: [\`bug-reports.json\`](bug-reports.json)`);
+    lines.push('');
+  }
+
   lines.push(`## Onde ir agora`);
   lines.push('');
   lines.push(`- 📋 [Casos de teste detalhados](tests.md)`);
   lines.push(`- 🐛 [Validação exploratória](exploratory.md)`);
+  if (args.bugReports.length > 0) {
+    lines.push(`- 📝 [Bug Reports prontos](#bug-reports-prontos-pra-task) (${args.bugReports.length})`);
+  }
   if (args.mode === 'regression') {
     lines.push(`- 📊 [Allure (regressivo, com trend histórico)](../../allure-report/index.html) — relatório executivo HTML built-in do Allure`);
   }
@@ -690,6 +734,9 @@ function renderIndexMd(args: {
   lines.push(`- [\`summary.json\`](summary.json) — totais agregados`);
   lines.push(`- [\`tests.json\`](tests.json) — Playwright JSON reporter`);
   lines.push(`- [\`exploratory.json\`](exploratory.json) — findings exploratórios`);
+  if (args.bugReports.length > 0) {
+    lines.push(`- [\`bug-reports.json\`](bug-reports.json) — registros estruturados pra task`);
+  }
   lines.push(`- [\`run_context.json\`](run_context.json) — projectName, environment, browsers, mode, timestamp`);
   lines.push('');
 
@@ -1504,6 +1551,42 @@ async function main(): Promise<void> {
   }
   const failedTests = tests.filter((t) => t.status !== 'passed' && t.status !== 'skipped');
 
+  // Bug-reports (Fase 5.7): lê o bundle gerado por `gerar-bug-report-de-tc-red`,
+  // filtra pelas testsuites ativas no scope desta run e arquiva os MDs +
+  // bundle.json dentro do reportDir (self-contained, mesmo padrão do
+  // archiveAttachments).
+  const bugReportsBundle = loadJson<BugReportsBundle>(getOutputPath('bug-reports.json'));
+  const activeSuiteNames = new Set(Array.from(byTestsuite.keys()).map((s) => s.toLowerCase()));
+  const bugReports = (bugReportsBundle?.reports ?? []).filter((b) =>
+    activeSuiteNames.has(b.testsuite.toLowerCase()),
+  );
+  if (bugReports.length > 0) {
+    const bugReportsSrcDir = getOutputDir('bug-reports');
+    const bugReportsDestDir = join(reportDir, 'bug-reports');
+    ensureDir(bugReportsDestDir);
+    let copiedMd = 0;
+    let missingMd = 0;
+    for (const b of bugReports) {
+      const srcMd = join(bugReportsSrcDir, `${b.id}.md`);
+      if (existsSync(srcMd)) {
+        copyFileSync(srcMd, join(bugReportsDestDir, `${b.id}.md`));
+        copiedMd++;
+      } else {
+        missingMd++;
+      }
+    }
+    const filteredBundle = {
+      generatedAt: bugReportsBundle?.generatedAt ?? new Date().toISOString(),
+      project: bugReportsBundle?.project ?? cfg.projectName,
+      totalRed: bugReports.length,
+      reports: bugReports,
+    };
+    writeFileSync(join(reportDir, 'bug-reports.json'), JSON.stringify(filteredBundle, null, 2), 'utf-8');
+    log.info(`Bug-reports arquivados: ${copiedMd} MD(s)${missingMd > 0 ? ` (${missingMd} ausente(s))` : ''}`);
+  } else if (!bugReportsBundle) {
+    log.warn('outputs/<slug>/bug-reports.json ausente — rode `npm run agent:bug-reports` pra gerar antes do report, ou use --no-bug-reports no orchestrator.');
+  }
+
   const filteredExploratory = exploratoryReport
     ? args.mode === 'per-suite' && args.suite
       ? exploratoryReport.testsuites.filter((s) => s.testsuiteName.includes(args.suite!))
@@ -1540,6 +1623,7 @@ async function main(): Promise<void> {
       xmlByName,
       tcNumbers,
       runId: folderName,
+      bugReports,
     }),
   );
   writeFileSync(
