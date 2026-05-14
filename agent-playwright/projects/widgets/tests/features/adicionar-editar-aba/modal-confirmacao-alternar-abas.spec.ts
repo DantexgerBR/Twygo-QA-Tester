@@ -8,10 +8,17 @@
 import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js';
 import * as allure from 'allure-js-commons';
 import { PainelFormPage } from '../../../pages/PainelFormPage.js';
+import { cleanupPanel } from '../../../utils/test-cleanup.js';
 
 test.use({ viewport: { width: 1920, height: 1080 } });
 
 test.describe('Adicionar/editar aba', () => {
+  let createdPanelName: string | undefined;
+
+  test.afterAll(async ({ browser }) => {
+    await cleanupPanel(browser, createdPanelName);
+  });
+
   test('Modal padrão de confirmação ao alternar abas com alterações não salvas', async ({ page }) => {
     await allure.epic('Twygo - Widgets');
     await allure.feature('Adicionar/editar aba');
@@ -23,8 +30,9 @@ test.describe('Adicionar/editar aba', () => {
 
     await allure.step('Pré-condição: criar painel salvo + entrar na tela de edição', async () => {
       await painelForm.goToNew();
+      createdPanelName = `Painel TC16 ${Date.now()}`;
       // createPanel já redireciona pra /panels/{id}/edit (Identificação ativa).
-      await painelForm.createPanel(`Painel TC16 ${Date.now()}`);
+      await painelForm.createPanel(createdPanelName);
     });
 
     await allure.step('Pré-condição: criar alteração não salva no Nome (estado dirty)', async () => {

@@ -14,12 +14,17 @@
 import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js';
 import * as allure from 'allure-js-commons';
 import { PainelFormPage } from '../../../pages/PainelFormPage.js';
+import { cleanupPanels } from '../../../utils/test-cleanup.js';
 import { importarPainelSemAbasData as data } from './importar-painel-sem-abas.data.js';
 import { importarAbasSharedData as shared } from './importar-abas.shared.data.js';
 
 test.use({ viewport: { width: 1920, height: 1080 } });
 
 test.describe('Importar abas', () => {
+  test.afterAll(async ({ browser }) => {
+    await cleanupPanels(browser, [data.emptyPanelName, data.destPanelName]);
+  });
+
   test('Importar aba com painel sem abas disponíveis', async ({ page, step }) => {
     test.fixme(
       true,

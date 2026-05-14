@@ -13,11 +13,27 @@ import * as allure from 'allure-js-commons';
 import { PaineisListPage } from '../../../pages/PaineisListPage.js';
 import { dismissCommonModals } from '../../../../../src/utils/modals.js';
 import { getOrgId } from '../../../../../src/utils/environment.js';
+import { cleanupPanelWithMenuItem } from '../../../utils/test-cleanup.js';
 import { naoReabilitarMenuPainelInativoData as data } from './nao-reabilitar-menu-painel-inativo.data.js';
 
 test.use({ viewport: { width: 1920, height: 1080 } });
 
 test.describe('Modo de uso - Painéis do usuário', () => {
+  let createdPanelName: string | undefined;
+  let createdItemName: string | undefined;
+
+  // Cleanup de respaldo — roda mesmo se test crash antes do bloco final
+  // de revert do step 4. Quando fixme estiver ativo, panelName fica
+  // undefined e o helper vira no-op silencioso.
+  test.afterAll(async ({ browser }) => {
+    await cleanupPanelWithMenuItem(
+      browser,
+      createdPanelName,
+      data.useModeId,
+      createdItemName,
+    );
+  });
+
   test(
     "Não permitir reabilitar menu inativado quando 'Espaço' do 'Painel do usuário' inativo",
     async ({ page, step }) => {
@@ -35,8 +51,10 @@ test.describe('Modo de uso - Painéis do usuário', () => {
       await allure.label('executionType', 'manual');
 
       const paineis = new PaineisListPage(page);
-      const panelName = `Painel ReabTc3 ${Date.now()}`;
-      const itemName = `Item ${panelName}`.slice(0, 25);
+      createdPanelName = `Painel ReabTc3 ${Date.now()}`;
+      createdItemName = `Item ${createdPanelName}`.slice(0, 25);
+      const panelName = createdPanelName;
+      const itemName = createdItemName;
 
       // Pré-condição (seed via UI — espelha TC4 da suite Ativar/Inativar)
       await step('1. Seed — criar painel + associar a menu + inativar menu + inativar painel', async () => {

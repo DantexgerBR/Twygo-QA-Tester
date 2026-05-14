@@ -1,0 +1,1589 @@
+{
+  "config": {
+    "configFile": "D:\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "D:/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "D:\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/twygo-agents-qa/agent-playwright/outputs/widgets/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "D:/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "tests/auth/**/*.spec.ts",
+          "projects/widgets/tests/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/widgets/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\widgets\\tests\\features\\importar-abas\\acessar-fluxo-importar-painel.spec.ts",
+      "file": "projects/widgets/tests/features/importar-abas/acessar-fluxo-importar-painel.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Importar abas",
+          "file": "projects/widgets/tests/features/importar-abas/acessar-fluxo-importar-painel.spec.ts",
+          "line": 11,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Acessar o fluxo de Importar de outro painel",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 25591,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('tabs-navigation-add-button')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('tabs-navigation-add-button')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\acessar-fluxo-importar-painel.spec.ts:29:50\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18",
+                        "location": {
+                          "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\acessar-fluxo-importar-painel.spec.ts",
+                          "column": 50,
+                          "line": 29
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 27 |\u001b[39m\n \u001b[90m 28 |\u001b[39m       \u001b[36mawait\u001b[39m expect(painelForm\u001b[33m.\u001b[39mgetLayoutsTab())\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 29 |\u001b[39m       \u001b[36mawait\u001b[39m expect(painelForm\u001b[33m.\u001b[39mgetAddTabButton())\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 30 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 31 |\u001b[39m\n \u001b[90m 32 |\u001b[39m     \u001b[90m// 2. Clicar em 'Adicionar aba' — verificar modal step 1 abre com título, subtítulo e opções\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\acessar-fluxo-importar-painel.spec.ts",
+                            "column": 50,
+                            "line": 29
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('tabs-navigation-add-button')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n\n  27 |\n  28 |       await expect(painelForm.getLayoutsTab()).toBeVisible();\n> 29 |       await expect(painelForm.getAddTabButton()).toBeVisible();\n     |                                                  ^\n  30 |     });\n  31 |\n  32 |     // 2. Clicar em 'Adicionar aba' — verificar modal step 1 abre com título, subtítulo e opções\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\acessar-fluxo-importar-painel.spec.ts:29:50\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Criar Painel Destino e abrir tab Layouts",
+                          "duration": 23564,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('tabs-navigation-add-button')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('tabs-navigation-add-button')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\acessar-fluxo-importar-painel.spec.ts:29:50\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18",
+                            "location": {
+                              "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\acessar-fluxo-importar-painel.spec.ts",
+                              "column": 50,
+                              "line": 29
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 27 |\u001b[39m\n \u001b[90m 28 |\u001b[39m       \u001b[36mawait\u001b[39m expect(painelForm\u001b[33m.\u001b[39mgetLayoutsTab())\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 29 |\u001b[39m       \u001b[36mawait\u001b[39m expect(painelForm\u001b[33m.\u001b[39mgetAddTabButton())\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 30 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 31 |\u001b[39m\n \u001b[90m 32 |\u001b[39m     \u001b[90m// 2. Clicar em 'Adicionar aba' — verificar modal step 1 abre com título, subtítulo e opções\u001b[39m\u001b[0m"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-05-14T02:30:47.656Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gV2lkZ2V0cyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkltcG9ydGFyIGFiYXMifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJBY2Vzc2FyIG8gZmx1eG8gZGUgSW1wb3J0YXIgZGUgb3V0cm8gcGFpbmVsIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImV4ZWN1dGlvblR5cGUiLCJ2YWx1ZSI6Im1hbnVhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-cfe25-de-Importar-de-outro-painel-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-cfe25-de-Importar-de-outro-painel-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-cfe25-de-Importar-de-outro-painel-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-cfe25-de-Importar-de-outro-painel-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-cfe25-de-Importar-de-outro-painel-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\acessar-fluxo-importar-painel.spec.ts",
+                        "column": 50,
+                        "line": 29
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "c6f95cc7ee9c4ce001ef-70d7fdda00181613bf6a",
+              "file": "projects/widgets/tests/features/importar-abas/acessar-fluxo-importar-painel.spec.ts",
+              "line": 12,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\widgets\\tests\\features\\importar-abas\\auto-preencher-nome-aba-importada.spec.ts",
+      "file": "projects/widgets/tests/features/importar-abas/auto-preencher-nome-aba-importada.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Importar abas",
+          "file": "projects/widgets/tests/features/importar-abas/auto-preencher-nome-aba-importada.spec.ts",
+          "line": 20,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Auto-preencher 'Nome da nova aba' com nome original e validar limite de 255 caracteres",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 46692,
+                      "error": {
+                        "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n",
+                        "stack": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n    at PainelFormPage.addTab (D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts:203:34)\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\auto-preencher-nome-aba-importada.spec.ts:47:24\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18",
+                        "location": {
+                          "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts",
+                          "column": 34,
+                          "line": 203
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39mprojects\\widgets\\pages\\PainelFormPage.ts:203\n\n\u001b[0m \u001b[90m 201 |\u001b[39m \u001b[90m   */\u001b[39m\n \u001b[90m 202 |\u001b[39m   \u001b[36masync\u001b[39m addTab(tabName\u001b[33m:\u001b[39m string)\u001b[33m:\u001b[39m \u001b[33mPromise\u001b[39m\u001b[33m<\u001b[39m\u001b[36mvoid\u001b[39m\u001b[33m>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 203 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetAddTabButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 204 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateNewTabOption()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 205 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateTabNameInput()\u001b[33m.\u001b[39mfill(tabName)\u001b[33m;\u001b[39m\n \u001b[90m 206 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateTabSubmitButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts",
+                            "column": 34,
+                            "line": 203
+                          },
+                          "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n\n   at projects\\widgets\\pages\\PainelFormPage.ts:203\n\n  201 |    */\n  202 |   async addTab(tabName: string): Promise<void> {\n> 203 |     await this.getAddTabButton().click();\n      |                                  ^\n  204 |     await this.getCreateNewTabOption().click();\n  205 |     await this.getCreateTabNameInput().fill(tabName);\n  206 |     await this.getCreateTabSubmitButton().click();\n    at PainelFormPage.addTab (D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts:203:34)\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\auto-preencher-nome-aba-importada.spec.ts:47:24\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Criar Painel Origem com Aba X seedada e abrir modal de importar do Painel Destino",
+                          "duration": 44111,
+                          "error": {
+                            "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n",
+                            "stack": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n    at PainelFormPage.addTab (D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts:203:34)\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\auto-preencher-nome-aba-importada.spec.ts:47:24\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18",
+                            "location": {
+                              "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts",
+                              "column": 34,
+                              "line": 203
+                            },
+                            "snippet": "\u001b[90m   at \u001b[39mprojects\\widgets\\pages\\PainelFormPage.ts:203\n\n\u001b[0m \u001b[90m 201 |\u001b[39m \u001b[90m   */\u001b[39m\n \u001b[90m 202 |\u001b[39m   \u001b[36masync\u001b[39m addTab(tabName\u001b[33m:\u001b[39m string)\u001b[33m:\u001b[39m \u001b[33mPromise\u001b[39m\u001b[33m<\u001b[39m\u001b[36mvoid\u001b[39m\u001b[33m>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 203 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetAddTabButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 204 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateNewTabOption()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 205 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateTabNameInput()\u001b[33m.\u001b[39mfill(tabName)\u001b[33m;\u001b[39m\n \u001b[90m 206 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateTabSubmitButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[0m"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-05-14T02:30:47.695Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gV2lkZ2V0cyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkltcG9ydGFyIGFiYXMifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJBdXRvLXByZWVuY2hlciAnTm9tZSBkYSBub3ZhIGFiYScgY29tIG5vbWUgb3JpZ2luYWwgZSB2YWxpZGFyIGxpbWl0ZSBkZSAyNTUgY2FyYWN0ZXJlcyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImV4ZWN1dGlvblR5cGUiLCJ2YWx1ZSI6Im1hbnVhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-03512-ar-limite-de-255-caracteres-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-03512-ar-limite-de-255-caracteres-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-03512-ar-limite-de-255-caracteres-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-03512-ar-limite-de-255-caracteres-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-03512-ar-limite-de-255-caracteres-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts",
+                        "column": 34,
+                        "line": 203
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "8755c3b407adee4a6062-1a610add4562c1604a16",
+              "file": "projects/widgets/tests/features/importar-abas/auto-preencher-nome-aba-importada.spec.ts",
+              "line": 21,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\widgets\\tests\\features\\importar-abas\\cancelar-importacao.spec.ts",
+      "file": "projects/widgets/tests/features/importar-abas/cancelar-importacao.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Importar abas",
+          "file": "projects/widgets/tests/features/importar-abas/cancelar-importacao.spec.ts",
+          "line": 15,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Cancelar importação",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "failed",
+                      "duration": 46861,
+                      "error": {
+                        "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n",
+                        "stack": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\cancelar-importacao.spec.ts:34:42\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18",
+                        "location": {
+                          "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\cancelar-importacao.spec.ts",
+                          "column": 42,
+                          "line": 34
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 32 |\u001b[39m       \u001b[36mawait\u001b[39m painelForm\u001b[33m.\u001b[39mgoToEdit(panelId\u001b[33m,\u001b[39m \u001b[32m'layouts'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 33 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 34 |\u001b[39m       \u001b[36mawait\u001b[39m painelForm\u001b[33m.\u001b[39mgetAddTabButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 35 |\u001b[39m       \u001b[36mawait\u001b[39m painelForm\u001b[33m.\u001b[39mgetImportTabOption()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 36 |\u001b[39m\n \u001b[90m 37 |\u001b[39m       \u001b[36mconst\u001b[39m modal \u001b[33m=\u001b[39m painelForm\u001b[33m.\u001b[39mgetAddTabModal()\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\cancelar-importacao.spec.ts",
+                            "column": 42,
+                            "line": 34
+                          },
+                          "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n\n  32 |       await painelForm.goToEdit(panelId, 'layouts');\n  33 |\n> 34 |       await painelForm.getAddTabButton().click();\n     |                                          ^\n  35 |       await painelForm.getImportTabOption().click();\n  36 |\n  37 |       const modal = painelForm.getAddTabModal();\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\cancelar-importacao.spec.ts:34:42\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Criar painel, abrir Layouts e ir até o step 2 do modal de importar",
+                          "duration": 44263,
+                          "error": {
+                            "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n",
+                            "stack": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\cancelar-importacao.spec.ts:34:42\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18",
+                            "location": {
+                              "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\cancelar-importacao.spec.ts",
+                              "column": 42,
+                              "line": 34
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 32 |\u001b[39m       \u001b[36mawait\u001b[39m painelForm\u001b[33m.\u001b[39mgoToEdit(panelId\u001b[33m,\u001b[39m \u001b[32m'layouts'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 33 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 34 |\u001b[39m       \u001b[36mawait\u001b[39m painelForm\u001b[33m.\u001b[39mgetAddTabButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 35 |\u001b[39m       \u001b[36mawait\u001b[39m painelForm\u001b[33m.\u001b[39mgetImportTabOption()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 36 |\u001b[39m\n \u001b[90m 37 |\u001b[39m       \u001b[36mconst\u001b[39m modal \u001b[33m=\u001b[39m painelForm\u001b[33m.\u001b[39mgetAddTabModal()\u001b[33m;\u001b[39m\u001b[0m"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-05-14T02:30:47.647Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gV2lkZ2V0cyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkltcG9ydGFyIGFiYXMifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJDYW5jZWxhciBpbXBvcnRhw6fDo28ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJub3JtYWwifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImV4ZWN1dGlvblR5cGUiLCJ2YWx1ZSI6Im1hbnVhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-52090-ar-abas-Cancelar-importação-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-52090-ar-abas-Cancelar-importação-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-52090-ar-abas-Cancelar-importação-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-52090-ar-abas-Cancelar-importação-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-52090-ar-abas-Cancelar-importação-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\cancelar-importacao.spec.ts",
+                        "column": 42,
+                        "line": 34
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "63c846f1f392293ad66a-60cb6a8d420cdd9b2284",
+              "file": "projects/widgets/tests/features/importar-abas/cancelar-importacao.spec.ts",
+              "line": 16,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\widgets\\tests\\features\\importar-abas\\editar-aba-importada.spec.ts",
+      "file": "projects/widgets/tests/features/importar-abas/editar-aba-importada.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Importar abas",
+          "file": "projects/widgets/tests/features/importar-abas/editar-aba-importada.spec.ts",
+          "line": 18,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Editar aba importada",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 46681,
+                      "error": {
+                        "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n",
+                        "stack": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n    at PainelFormPage.addTab (D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts:203:34)\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\editar-aba-importada.spec.ts:39:24\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18",
+                        "location": {
+                          "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts",
+                          "column": 34,
+                          "line": 203
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39mprojects\\widgets\\pages\\PainelFormPage.ts:203\n\n\u001b[0m \u001b[90m 201 |\u001b[39m \u001b[90m   */\u001b[39m\n \u001b[90m 202 |\u001b[39m   \u001b[36masync\u001b[39m addTab(tabName\u001b[33m:\u001b[39m string)\u001b[33m:\u001b[39m \u001b[33mPromise\u001b[39m\u001b[33m<\u001b[39m\u001b[36mvoid\u001b[39m\u001b[33m>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 203 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetAddTabButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 204 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateNewTabOption()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 205 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateTabNameInput()\u001b[33m.\u001b[39mfill(tabName)\u001b[33m;\u001b[39m\n \u001b[90m 206 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateTabSubmitButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts",
+                            "column": 34,
+                            "line": 203
+                          },
+                          "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n\n   at projects\\widgets\\pages\\PainelFormPage.ts:203\n\n  201 |    */\n  202 |   async addTab(tabName: string): Promise<void> {\n> 203 |     await this.getAddTabButton().click();\n      |                                  ^\n  204 |     await this.getCreateNewTabOption().click();\n  205 |     await this.getCreateTabNameInput().fill(tabName);\n  206 |     await this.getCreateTabSubmitButton().click();\n    at PainelFormPage.addTab (D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts:203:34)\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\editar-aba-importada.spec.ts:39:24\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Setup — Painel Origem + Painel Destino + importar Aba X como \"Aba Importada\"",
+                          "duration": 44137,
+                          "error": {
+                            "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n",
+                            "stack": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n    at PainelFormPage.addTab (D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts:203:34)\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\editar-aba-importada.spec.ts:39:24\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18",
+                            "location": {
+                              "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts",
+                              "column": 34,
+                              "line": 203
+                            },
+                            "snippet": "\u001b[90m   at \u001b[39mprojects\\widgets\\pages\\PainelFormPage.ts:203\n\n\u001b[0m \u001b[90m 201 |\u001b[39m \u001b[90m   */\u001b[39m\n \u001b[90m 202 |\u001b[39m   \u001b[36masync\u001b[39m addTab(tabName\u001b[33m:\u001b[39m string)\u001b[33m:\u001b[39m \u001b[33mPromise\u001b[39m\u001b[33m<\u001b[39m\u001b[36mvoid\u001b[39m\u001b[33m>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 203 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetAddTabButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 204 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateNewTabOption()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 205 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateTabNameInput()\u001b[33m.\u001b[39mfill(tabName)\u001b[33m;\u001b[39m\n \u001b[90m 206 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateTabSubmitButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[0m"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-05-14T02:30:47.693Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gV2lkZ2V0cyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkltcG9ydGFyIGFiYXMifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJFZGl0YXIgYWJhIGltcG9ydGFkYSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJub3JtYWwifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImV4ZWN1dGlvblR5cGUiLCJ2YWx1ZSI6Im1hbnVhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-fbe87-r-abas-Editar-aba-importada-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-fbe87-r-abas-Editar-aba-importada-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-fbe87-r-abas-Editar-aba-importada-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-fbe87-r-abas-Editar-aba-importada-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-fbe87-r-abas-Editar-aba-importada-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts",
+                        "column": 34,
+                        "line": 203
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "62d954d54c470700453b-8e57320f41951bf0d16a",
+              "file": "projects/widgets/tests/features/importar-abas/editar-aba-importada.spec.ts",
+              "line": 19,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\widgets\\tests\\features\\importar-abas\\importar-aba-happy-path.spec.ts",
+      "file": "projects/widgets/tests/features/importar-abas/importar-aba-happy-path.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Importar abas",
+          "file": "projects/widgets/tests/features/importar-abas/importar-aba-happy-path.spec.ts",
+          "line": 16,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Importar aba (happy path)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 41472,
+                      "error": {
+                        "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n",
+                        "stack": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n    at PainelFormPage.addTab (D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts:203:34)\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\importar-aba-happy-path.spec.ts:38:24\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18",
+                        "location": {
+                          "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts",
+                          "column": 34,
+                          "line": 203
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39mprojects\\widgets\\pages\\PainelFormPage.ts:203\n\n\u001b[0m \u001b[90m 201 |\u001b[39m \u001b[90m   */\u001b[39m\n \u001b[90m 202 |\u001b[39m   \u001b[36masync\u001b[39m addTab(tabName\u001b[33m:\u001b[39m string)\u001b[33m:\u001b[39m \u001b[33mPromise\u001b[39m\u001b[33m<\u001b[39m\u001b[36mvoid\u001b[39m\u001b[33m>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 203 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetAddTabButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 204 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateNewTabOption()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 205 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateTabNameInput()\u001b[33m.\u001b[39mfill(tabName)\u001b[33m;\u001b[39m\n \u001b[90m 206 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateTabSubmitButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts",
+                            "column": 34,
+                            "line": 203
+                          },
+                          "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n\n   at projects\\widgets\\pages\\PainelFormPage.ts:203\n\n  201 |    */\n  202 |   async addTab(tabName: string): Promise<void> {\n> 203 |     await this.getAddTabButton().click();\n      |                                  ^\n  204 |     await this.getCreateNewTabOption().click();\n  205 |     await this.getCreateTabNameInput().fill(tabName);\n  206 |     await this.getCreateTabSubmitButton().click();\n    at PainelFormPage.addTab (D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts:203:34)\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\importar-aba-happy-path.spec.ts:38:24\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Setup — Painel Origem + Aba X + Painel Destino + modal step 2 preenchido",
+                          "duration": 39497,
+                          "error": {
+                            "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n",
+                            "stack": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n    at PainelFormPage.addTab (D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts:203:34)\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\importar-aba-happy-path.spec.ts:38:24\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18",
+                            "location": {
+                              "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts",
+                              "column": 34,
+                              "line": 203
+                            },
+                            "snippet": "\u001b[90m   at \u001b[39mprojects\\widgets\\pages\\PainelFormPage.ts:203\n\n\u001b[0m \u001b[90m 201 |\u001b[39m \u001b[90m   */\u001b[39m\n \u001b[90m 202 |\u001b[39m   \u001b[36masync\u001b[39m addTab(tabName\u001b[33m:\u001b[39m string)\u001b[33m:\u001b[39m \u001b[33mPromise\u001b[39m\u001b[33m<\u001b[39m\u001b[36mvoid\u001b[39m\u001b[33m>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 203 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetAddTabButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 204 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateNewTabOption()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 205 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateTabNameInput()\u001b[33m.\u001b[39mfill(tabName)\u001b[33m;\u001b[39m\n \u001b[90m 206 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateTabSubmitButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[0m"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-05-14T02:31:14.539Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gV2lkZ2V0cyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkltcG9ydGFyIGFiYXMifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJJbXBvcnRhciBhYmEgKGhhcHB5IHBhdGgpIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImV4ZWN1dGlvblR5cGUiLCJ2YWx1ZSI6ImF1dG9tYXRlZCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-97d34-as-Importar-aba-happy-path--chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-97d34-as-Importar-aba-happy-path--chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-97d34-as-Importar-aba-happy-path--chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-97d34-as-Importar-aba-happy-path--chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-97d34-as-Importar-aba-happy-path--chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts",
+                        "column": 34,
+                        "line": 203
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "3ddc0b2fde7808c0a2d3-f8279a4a38353a91002e",
+              "file": "projects/widgets/tests/features/importar-abas/importar-aba-happy-path.spec.ts",
+              "line": 17,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\widgets\\tests\\features\\importar-abas\\importar-painel-sem-abas.spec.ts",
+      "file": "projects/widgets/tests/features/importar-abas/importar-painel-sem-abas.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Importar abas",
+          "file": "projects/widgets/tests/features/importar-abas/importar-painel-sem-abas.spec.ts",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Importar aba com painel sem abas disponíveis",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "Spec/XML desatualizado: o env staging-widgets não permite painel \"sem abas\" — todo painel já é criado com a aba padrão \"Nova aba\". A aba padrão não aparece como opção no dropdown \"Aba disponível\", então o react-select mostra \"Nenhuma aba encontrada\" para qualquer painel recém-criado. Destinatário: AT/QA Lead — confirmar com produto se este estado é equivalente de \"sem abas\" ou se existe outro estado possível (ver feedback_panel_layout_save_no_persist.md também).",
+                      "location": {
+                        "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\importar-painel-sem-abas.spec.ts",
+                        "line": 23,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 3,
+                      "status": "skipped",
+                      "duration": 624,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-14T02:31:35.770Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "Spec/XML desatualizado: o env staging-widgets não permite painel \"sem abas\" — todo painel já é criado com a aba padrão \"Nova aba\". A aba padrão não aparece como opção no dropdown \"Aba disponível\", então o react-select mostra \"Nenhuma aba encontrada\" para qualquer painel recém-criado. Destinatário: AT/QA Lead — confirmar com produto se este estado é equivalente de \"sem abas\" ou se existe outro estado possível (ver feedback_panel_layout_save_no_persist.md também).",
+                          "location": {
+                            "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\importar-painel-sem-abas.spec.ts",
+                            "line": 23,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-7e252-painel-sem-abas-disponíveis-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-7e252-painel-sem-abas-disponíveis-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-7e252-painel-sem-abas-disponíveis-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-7e252-painel-sem-abas-disponíveis-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "10d3ee3f623c7bf4ec92-cb34481c23b29e9ca124",
+              "file": "projects/widgets/tests/features/importar-abas/importar-painel-sem-abas.spec.ts",
+              "line": 22,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\widgets\\tests\\features\\importar-abas\\selecionar-categoria-importacao.spec.ts",
+      "file": "projects/widgets/tests/features/importar-abas/selecionar-categoria-importacao.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Importar abas",
+          "file": "projects/widgets/tests/features/importar-abas/selecionar-categoria-importacao.spec.ts",
+          "line": 23,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Selecionar Categoria na importação",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 42645,
+                      "error": {
+                        "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n",
+                        "stack": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n    at PainelFormPage.addTab (D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts:203:34)\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\selecionar-categoria-importacao.spec.ts:44:24\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18",
+                        "location": {
+                          "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts",
+                          "column": 34,
+                          "line": 203
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39mprojects\\widgets\\pages\\PainelFormPage.ts:203\n\n\u001b[0m \u001b[90m 201 |\u001b[39m \u001b[90m   */\u001b[39m\n \u001b[90m 202 |\u001b[39m   \u001b[36masync\u001b[39m addTab(tabName\u001b[33m:\u001b[39m string)\u001b[33m:\u001b[39m \u001b[33mPromise\u001b[39m\u001b[33m<\u001b[39m\u001b[36mvoid\u001b[39m\u001b[33m>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 203 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetAddTabButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 204 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateNewTabOption()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 205 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateTabNameInput()\u001b[33m.\u001b[39mfill(tabName)\u001b[33m;\u001b[39m\n \u001b[90m 206 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateTabSubmitButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts",
+                            "column": 34,
+                            "line": 203
+                          },
+                          "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n\n   at projects\\widgets\\pages\\PainelFormPage.ts:203\n\n  201 |    */\n  202 |   async addTab(tabName: string): Promise<void> {\n> 203 |     await this.getAddTabButton().click();\n      |                                  ^\n  204 |     await this.getCreateNewTabOption().click();\n  205 |     await this.getCreateTabNameInput().fill(tabName);\n  206 |     await this.getCreateTabSubmitButton().click();\n    at PainelFormPage.addTab (D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts:203:34)\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\selecionar-categoria-importacao.spec.ts:44:24\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Setup — Painel Origem + Painel Destino + Aba X selecionada no modal",
+                          "duration": 40262,
+                          "error": {
+                            "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n",
+                            "stack": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n    at PainelFormPage.addTab (D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts:203:34)\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\selecionar-categoria-importacao.spec.ts:44:24\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18",
+                            "location": {
+                              "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts",
+                              "column": 34,
+                              "line": 203
+                            },
+                            "snippet": "\u001b[90m   at \u001b[39mprojects\\widgets\\pages\\PainelFormPage.ts:203\n\n\u001b[0m \u001b[90m 201 |\u001b[39m \u001b[90m   */\u001b[39m\n \u001b[90m 202 |\u001b[39m   \u001b[36masync\u001b[39m addTab(tabName\u001b[33m:\u001b[39m string)\u001b[33m:\u001b[39m \u001b[33mPromise\u001b[39m\u001b[33m<\u001b[39m\u001b[36mvoid\u001b[39m\u001b[33m>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 203 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetAddTabButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 204 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateNewTabOption()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 205 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateTabNameInput()\u001b[33m.\u001b[39mfill(tabName)\u001b[33m;\u001b[39m\n \u001b[90m 206 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateTabSubmitButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[0m"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-05-14T02:31:35.772Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gV2lkZ2V0cyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkltcG9ydGFyIGFiYXMifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJTZWxlY2lvbmFyIENhdGVnb3JpYSBuYSBpbXBvcnRhw6fDo28ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJub3JtYWwifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImV4ZWN1dGlvblR5cGUiLCJ2YWx1ZSI6Im1hbnVhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-98f94-nar-Categoria-na-importação-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-98f94-nar-Categoria-na-importação-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-98f94-nar-Categoria-na-importação-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-98f94-nar-Categoria-na-importação-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-98f94-nar-Categoria-na-importação-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts",
+                        "column": 34,
+                        "line": 203
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "3e36095d54dfb6e0427b-c02194096c79b37705d3",
+              "file": "projects/widgets/tests/features/importar-abas/selecionar-categoria-importacao.spec.ts",
+              "line": 24,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\widgets\\tests\\features\\importar-abas\\selecionar-painel-origem-listar-abas.spec.ts",
+      "file": "projects/widgets/tests/features/importar-abas/selecionar-painel-origem-listar-abas.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Importar abas",
+          "file": "projects/widgets/tests/features/importar-abas/selecionar-painel-origem-listar-abas.spec.ts",
+          "line": 17,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Selecionar painel de origem e listar abas disponíveis",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 2,
+                      "status": "failed",
+                      "duration": 42858,
+                      "error": {
+                        "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n",
+                        "stack": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n    at PainelFormPage.addTab (D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts:203:34)\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\selecionar-painel-origem-listar-abas.spec.ts:41:24\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18",
+                        "location": {
+                          "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts",
+                          "column": 34,
+                          "line": 203
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39mprojects\\widgets\\pages\\PainelFormPage.ts:203\n\n\u001b[0m \u001b[90m 201 |\u001b[39m \u001b[90m   */\u001b[39m\n \u001b[90m 202 |\u001b[39m   \u001b[36masync\u001b[39m addTab(tabName\u001b[33m:\u001b[39m string)\u001b[33m:\u001b[39m \u001b[33mPromise\u001b[39m\u001b[33m<\u001b[39m\u001b[36mvoid\u001b[39m\u001b[33m>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 203 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetAddTabButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 204 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateNewTabOption()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 205 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateTabNameInput()\u001b[33m.\u001b[39mfill(tabName)\u001b[33m;\u001b[39m\n \u001b[90m 206 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateTabSubmitButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts",
+                            "column": 34,
+                            "line": 203
+                          },
+                          "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n\n   at projects\\widgets\\pages\\PainelFormPage.ts:203\n\n  201 |    */\n  202 |   async addTab(tabName: string): Promise<void> {\n> 203 |     await this.getAddTabButton().click();\n      |                                  ^\n  204 |     await this.getCreateNewTabOption().click();\n  205 |     await this.getCreateTabNameInput().fill(tabName);\n  206 |     await this.getCreateTabSubmitButton().click();\n    at PainelFormPage.addTab (D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts:203:34)\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\selecionar-painel-origem-listar-abas.spec.ts:41:24\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Criar Painel Origem com Aba X e Aba Y seedadas",
+                          "duration": 40511,
+                          "error": {
+                            "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n",
+                            "stack": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n    at PainelFormPage.addTab (D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts:203:34)\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\selecionar-painel-origem-listar-abas.spec.ts:41:24\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18",
+                            "location": {
+                              "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts",
+                              "column": 34,
+                              "line": 203
+                            },
+                            "snippet": "\u001b[90m   at \u001b[39mprojects\\widgets\\pages\\PainelFormPage.ts:203\n\n\u001b[0m \u001b[90m 201 |\u001b[39m \u001b[90m   */\u001b[39m\n \u001b[90m 202 |\u001b[39m   \u001b[36masync\u001b[39m addTab(tabName\u001b[33m:\u001b[39m string)\u001b[33m:\u001b[39m \u001b[33mPromise\u001b[39m\u001b[33m<\u001b[39m\u001b[36mvoid\u001b[39m\u001b[33m>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 203 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetAddTabButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 204 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateNewTabOption()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 205 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateTabNameInput()\u001b[33m.\u001b[39mfill(tabName)\u001b[33m;\u001b[39m\n \u001b[90m 206 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateTabSubmitButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[0m"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-05-14T02:31:35.888Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gV2lkZ2V0cyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkltcG9ydGFyIGFiYXMifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJTZWxlY2lvbmFyIHBhaW5lbCBkZSBvcmlnZW0gZSBsaXN0YXIgYWJhcyBkaXNwb27DrXZlaXMifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImV4ZWN1dGlvblR5cGUiLCJ2YWx1ZSI6Im1hbnVhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-2e450-m-e-listar-abas-disponíveis-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-2e450-m-e-listar-abas-disponíveis-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-2e450-m-e-listar-abas-disponíveis-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-2e450-m-e-listar-abas-disponíveis-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-2e450-m-e-listar-abas-disponíveis-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts",
+                        "column": 34,
+                        "line": 203
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "53a6e19ea380423fa4de-dfa09bd350b3482c011a",
+              "file": "projects/widgets/tests/features/importar-abas/selecionar-painel-origem-listar-abas.spec.ts",
+              "line": 18,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\widgets\\tests\\features\\importar-abas\\tentar-importar-sem-painel.spec.ts",
+      "file": "projects/widgets/tests/features/importar-abas/tentar-importar-sem-painel.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Importar abas",
+          "file": "projects/widgets/tests/features/importar-abas/tentar-importar-sem-painel.spec.ts",
+          "line": 14,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Tentar importar sem selecionar painel de origem",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 42159,
+                      "error": {
+                        "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n",
+                        "stack": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\tentar-importar-sem-painel.spec.ts:30:42\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18",
+                        "location": {
+                          "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\tentar-importar-sem-painel.spec.ts",
+                          "column": 42,
+                          "line": 30
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 28 |\u001b[39m       \u001b[36mawait\u001b[39m painelForm\u001b[33m.\u001b[39mgoToEdit(panelId\u001b[33m,\u001b[39m \u001b[32m'layouts'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 29 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 30 |\u001b[39m       \u001b[36mawait\u001b[39m painelForm\u001b[33m.\u001b[39mgetAddTabButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 31 |\u001b[39m       \u001b[36mawait\u001b[39m painelForm\u001b[33m.\u001b[39mgetImportTabOption()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 32 |\u001b[39m\n \u001b[90m 33 |\u001b[39m       \u001b[36mconst\u001b[39m modal \u001b[33m=\u001b[39m painelForm\u001b[33m.\u001b[39mgetAddTabModal()\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\tentar-importar-sem-painel.spec.ts",
+                            "column": 42,
+                            "line": 30
+                          },
+                          "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n\n  28 |       await painelForm.goToEdit(panelId, 'layouts');\n  29 |\n> 30 |       await painelForm.getAddTabButton().click();\n     |                                          ^\n  31 |       await painelForm.getImportTabOption().click();\n  32 |\n  33 |       const modal = painelForm.getAddTabModal();\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\tentar-importar-sem-painel.spec.ts:30:42\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Criar painel e abrir modal step 2 de importar (sem seleção)",
+                          "duration": 39967,
+                          "error": {
+                            "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n",
+                            "stack": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\tentar-importar-sem-painel.spec.ts:30:42\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18",
+                            "location": {
+                              "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\tentar-importar-sem-painel.spec.ts",
+                              "column": 42,
+                              "line": 30
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 28 |\u001b[39m       \u001b[36mawait\u001b[39m painelForm\u001b[33m.\u001b[39mgoToEdit(panelId\u001b[33m,\u001b[39m \u001b[32m'layouts'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 29 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 30 |\u001b[39m       \u001b[36mawait\u001b[39m painelForm\u001b[33m.\u001b[39mgetAddTabButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 31 |\u001b[39m       \u001b[36mawait\u001b[39m painelForm\u001b[33m.\u001b[39mgetImportTabOption()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 32 |\u001b[39m\n \u001b[90m 33 |\u001b[39m       \u001b[36mconst\u001b[39m modal \u001b[33m=\u001b[39m painelForm\u001b[33m.\u001b[39mgetAddTabModal()\u001b[33m;\u001b[39m\u001b[0m"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-05-14T02:31:36.623Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gV2lkZ2V0cyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkltcG9ydGFyIGFiYXMifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJUZW50YXIgaW1wb3J0YXIgc2VtIHNlbGVjaW9uYXIgcGFpbmVsIGRlIG9yaWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJub3JtYWwifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImV4ZWN1dGlvblR5cGUiLCJ2YWx1ZSI6Im1hbnVhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-9f900-selecionar-painel-de-origem-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-9f900-selecionar-painel-de-origem-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-9f900-selecionar-painel-de-origem-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-9f900-selecionar-painel-de-origem-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-9f900-selecionar-painel-de-origem-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\tentar-importar-sem-painel.spec.ts",
+                        "column": 42,
+                        "line": 30
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d0bc6fc469e9a7a31b67-f4dc77dbd8ac53f10aee",
+              "file": "projects/widgets/tests/features/importar-abas/tentar-importar-sem-painel.spec.ts",
+              "line": 15,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\widgets\\tests\\features\\importar-abas\\visualizar-preview-aba.spec.ts",
+      "file": "projects/widgets/tests/features/importar-abas/visualizar-preview-aba.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Importar abas",
+          "file": "projects/widgets/tests/features/importar-abas/visualizar-preview-aba.spec.ts",
+          "line": 22,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Visualizar preview da aba selecionada",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 41988,
+                      "error": {
+                        "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n",
+                        "stack": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n    at PainelFormPage.addTab (D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts:203:34)\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\visualizar-preview-aba.spec.ts:46:24\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18",
+                        "location": {
+                          "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts",
+                          "column": 34,
+                          "line": 203
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39mprojects\\widgets\\pages\\PainelFormPage.ts:203\n\n\u001b[0m \u001b[90m 201 |\u001b[39m \u001b[90m   */\u001b[39m\n \u001b[90m 202 |\u001b[39m   \u001b[36masync\u001b[39m addTab(tabName\u001b[33m:\u001b[39m string)\u001b[33m:\u001b[39m \u001b[33mPromise\u001b[39m\u001b[33m<\u001b[39m\u001b[36mvoid\u001b[39m\u001b[33m>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 203 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetAddTabButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 204 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateNewTabOption()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 205 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateTabNameInput()\u001b[33m.\u001b[39mfill(tabName)\u001b[33m;\u001b[39m\n \u001b[90m 206 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateTabSubmitButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts",
+                            "column": 34,
+                            "line": 203
+                          },
+                          "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n\n   at projects\\widgets\\pages\\PainelFormPage.ts:203\n\n  201 |    */\n  202 |   async addTab(tabName: string): Promise<void> {\n> 203 |     await this.getAddTabButton().click();\n      |                                  ^\n  204 |     await this.getCreateNewTabOption().click();\n  205 |     await this.getCreateTabNameInput().fill(tabName);\n  206 |     await this.getCreateTabSubmitButton().click();\n    at PainelFormPage.addTab (D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts:203:34)\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\visualizar-preview-aba.spec.ts:46:24\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Criar Painel Origem com Aba X e Aba Y seedadas",
+                          "duration": 40000,
+                          "error": {
+                            "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n",
+                            "stack": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n    at PainelFormPage.addTab (D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts:203:34)\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\visualizar-preview-aba.spec.ts:46:24\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18",
+                            "location": {
+                              "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts",
+                              "column": 34,
+                              "line": 203
+                            },
+                            "snippet": "\u001b[90m   at \u001b[39mprojects\\widgets\\pages\\PainelFormPage.ts:203\n\n\u001b[0m \u001b[90m 201 |\u001b[39m \u001b[90m   */\u001b[39m\n \u001b[90m 202 |\u001b[39m   \u001b[36masync\u001b[39m addTab(tabName\u001b[33m:\u001b[39m string)\u001b[33m:\u001b[39m \u001b[33mPromise\u001b[39m\u001b[33m<\u001b[39m\u001b[36mvoid\u001b[39m\u001b[33m>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 203 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetAddTabButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 204 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateNewTabOption()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 205 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateTabNameInput()\u001b[33m.\u001b[39mfill(tabName)\u001b[33m;\u001b[39m\n \u001b[90m 206 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetCreateTabSubmitButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[0m"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-05-14T02:31:57.300Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gV2lkZ2V0cyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkltcG9ydGFyIGFiYXMifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWaXN1YWxpemFyIHByZXZpZXcgZGEgYWJhIHNlbGVjaW9uYWRhIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImV4ZWN1dGlvblR5cGUiLCJ2YWx1ZSI6Im1hbnVhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-42643--preview-da-aba-selecionada-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-42643--preview-da-aba-selecionada-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-42643--preview-da-aba-selecionada-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-42643--preview-da-aba-selecionada-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-42643--preview-da-aba-selecionada-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts",
+                        "column": 34,
+                        "line": 203
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0defa3b4762ce5e9dd84-297213a70530a73d3bc5",
+              "file": "projects/widgets/tests/features/importar-abas/visualizar-preview-aba.spec.ts",
+              "line": 23,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\widgets\\tests\\features\\importar-abas\\voltar-step-importacao.spec.ts",
+      "file": "projects/widgets/tests/features/importar-abas/voltar-step-importacao.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Importar abas",
+          "file": "projects/widgets/tests/features/importar-abas/voltar-step-importacao.spec.ts",
+          "line": 15,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Voltar do step de importação para a seleção de tipo",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 41540,
+                      "error": {
+                        "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n",
+                        "stack": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\voltar-step-importacao.spec.ts:31:42\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18",
+                        "location": {
+                          "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\voltar-step-importacao.spec.ts",
+                          "column": 42,
+                          "line": 31
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 29 |\u001b[39m       \u001b[36mawait\u001b[39m painelForm\u001b[33m.\u001b[39mgoToEdit(panelId\u001b[33m,\u001b[39m \u001b[32m'layouts'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 30 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 31 |\u001b[39m       \u001b[36mawait\u001b[39m painelForm\u001b[33m.\u001b[39mgetAddTabButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 32 |\u001b[39m       \u001b[36mawait\u001b[39m painelForm\u001b[33m.\u001b[39mgetImportTabOption()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 33 |\u001b[39m\n \u001b[90m 34 |\u001b[39m       \u001b[36mconst\u001b[39m modal \u001b[33m=\u001b[39m painelForm\u001b[33m.\u001b[39mgetAddTabModal()\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\voltar-step-importacao.spec.ts",
+                            "column": 42,
+                            "line": 31
+                          },
+                          "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n\n  29 |       await painelForm.goToEdit(panelId, 'layouts');\n  30 |\n> 31 |       await painelForm.getAddTabButton().click();\n     |                                          ^\n  32 |       await painelForm.getImportTabOption().click();\n  33 |\n  34 |       const modal = painelForm.getAddTabModal();\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\voltar-step-importacao.spec.ts:31:42\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Criar painel, abrir Layouts e navegar até o step 2 de \"Importar de outro painel\"",
+                          "duration": 39574,
+                          "error": {
+                            "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n",
+                            "stack": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('tabs-navigation-add-button')\u001b[22m\n\n    at D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\voltar-step-importacao.spec.ts:31:42\n    at D:\\twygo-agents-qa\\agent-playwright\\src\\fixtures\\exploratory-fixture.ts:143:18",
+                            "location": {
+                              "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\voltar-step-importacao.spec.ts",
+                              "column": 42,
+                              "line": 31
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 29 |\u001b[39m       \u001b[36mawait\u001b[39m painelForm\u001b[33m.\u001b[39mgoToEdit(panelId\u001b[33m,\u001b[39m \u001b[32m'layouts'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 30 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 31 |\u001b[39m       \u001b[36mawait\u001b[39m painelForm\u001b[33m.\u001b[39mgetAddTabButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 32 |\u001b[39m       \u001b[36mawait\u001b[39m painelForm\u001b[33m.\u001b[39mgetImportTabOption()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 33 |\u001b[39m\n \u001b[90m 34 |\u001b[39m       \u001b[36mconst\u001b[39m modal \u001b[33m=\u001b[39m painelForm\u001b[33m.\u001b[39mgetAddTabModal()\u001b[33m;\u001b[39m\u001b[0m"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-05-14T02:32:19.773Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gV2lkZ2V0cyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkltcG9ydGFyIGFiYXMifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWb2x0YXIgZG8gc3RlcCBkZSBpbXBvcnRhw6fDo28gcGFyYSBhIHNlbGXDp8OjbyBkZSB0aXBvIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJub3JtYWwifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImV4ZWN1dGlvblR5cGUiLCJ2YWx1ZSI6Im1hbnVhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-fbd59-ação-para-a-seleção-de-tipo-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-fbd59-ação-para-a-seleção-de-tipo-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-fbd59-ação-para-a-seleção-de-tipo-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-fbd59-ação-para-a-seleção-de-tipo-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\twygo-agents-qa\\agent-playwright\\outputs\\widgets\\test-artifacts\\projects-widgets-tests-fea-fbd59-ação-para-a-seleção-de-tipo-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\voltar-step-importacao.spec.ts",
+                        "column": 42,
+                        "line": 31
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "fef9c83e4d5f6b8f379e-d7bcc082da8de2910fd8",
+              "file": "projects/widgets/tests/features/importar-abas/voltar-step-importacao.spec.ts",
+              "line": 16,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-05-14T02:30:43.605Z",
+    "duration": 138407.307,
+    "expected": 0,
+    "skipped": 1,
+    "unexpected": 10,
+    "flaky": 0
+  }
+}

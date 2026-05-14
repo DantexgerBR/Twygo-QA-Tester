@@ -1,0 +1,451 @@
+{
+  "generatedAt": "2026-05-14T02:45:24.199Z",
+  "project": "widgets",
+  "totalRed": 6,
+  "reports": [
+    {
+      "id": "importar-abas__auto-preencher-nome-da-nova-aba-com-nome-original-e-validar-limite-de-255-caracteres",
+      "title": "Auto-preencher 'Nome da nova aba' com nome original e validar limite de 255 caracteres — TimeoutError: locator.click: Timeout 30000ms exceeded.",
+      "testsuite": "Importar abas",
+      "testcase": "Auto-preencher 'Nome da nova aba' com nome original e validar limite de 255 caracteres",
+      "file": "projects/widgets/tests/features/importar-abas/auto-preencher-nome-aba-importada.spec.ts",
+      "status": "failed",
+      "durationMs": 47791,
+      "categoriaSugerida": "modal-nao-tratado",
+      "categoriaConfianca": "alta",
+      "categoriaJustificativa": "Click interceptado — overlay/modal por cima do alvo",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-widgets",
+        "baseUrl": "https://widgets.stage.twygoead.com/",
+        "orgId": "36988",
+        "browser": "chromium",
+        "user": "claude@teste.com"
+      },
+      "buildCommit": "72ab290",
+      "generatedAt": "2026-05-14T02:45:24.199Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Criar Painel Origem com Aba X seedada e abrir modal de importar do Painel Destino",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('[data-test-id=\"panel-layout-save-button\"]')\n    - locator resolved to <button type=\"button\" class=\"chakra-button css-vda7qx\" data-test-id=\"panel-layout-save-button\">Salvar Layout</button>\n  - attempting click action\n    2 × waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <div data-status=\"success\" class=\"chakra-alert__desc css-161kwbg\" id=\"toast-widget-added-toast-description\">Widget adicionado com sucesso</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\n    - retrying click action\n    - waiting 20ms\n    2 × waiting for element to be visible, enabled  …[+1754 chars]",
+      "errorLocation": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\auto-preencher-nome-aba-importada.spec.ts:54:46",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-03512-ar-limite-de-255-caracteres-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-03512-ar-limite-de-255-caracteres-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-03512-ar-limite-de-255-caracteres-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-03512-ar-limite-de-255-caracteres-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-03512-ar-limite-de-255-caracteres-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "36988",
+        "userId": null
+      }
+    },
+    {
+      "id": "importar-abas__editar-aba-importada",
+      "title": "Editar aba importada — TimeoutError: locator.click: Timeout 30000ms exceeded.",
+      "testsuite": "Importar abas",
+      "testcase": "Editar aba importada",
+      "file": "projects/widgets/tests/features/importar-abas/editar-aba-importada.spec.ts",
+      "status": "failed",
+      "durationMs": 47243,
+      "categoriaSugerida": "modal-nao-tratado",
+      "categoriaConfianca": "alta",
+      "categoriaJustificativa": "Click interceptado — overlay/modal por cima do alvo",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-widgets",
+        "baseUrl": "https://widgets.stage.twygoead.com/",
+        "orgId": "36988",
+        "browser": "chromium",
+        "user": "claude@teste.com"
+      },
+      "buildCommit": "72ab290",
+      "generatedAt": "2026-05-14T02:45:24.199Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Setup — Painel Origem + Painel Destino + importar Aba X como \"Aba Importada\"",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('[data-test-id=\"panel-layout-save-button\"]')\n    - locator resolved to <button type=\"button\" class=\"chakra-button css-vda7qx\" data-test-id=\"panel-layout-save-button\">Salvar Layout</button>\n  - attempting click action\n    2 × waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <div data-status=\"success\" class=\"chakra-alert__desc css-161kwbg\" id=\"toast-widget-added-toast-description\">Widget adicionado com sucesso</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\n    - retrying click action\n    - waiting 20ms\n    2 × waiting for element to be visible, enabled  …[+1754 chars]",
+      "errorLocation": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\editar-aba-importada.spec.ts:46:46",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-fbe87-r-abas-Editar-aba-importada-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-fbe87-r-abas-Editar-aba-importada-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-fbe87-r-abas-Editar-aba-importada-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-fbe87-r-abas-Editar-aba-importada-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-fbe87-r-abas-Editar-aba-importada-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "36988",
+        "userId": null
+      }
+    },
+    {
+      "id": "importar-abas__importar-aba-happy-path",
+      "title": "Importar aba (happy path) — TimeoutError: locator.click: Timeout 30000ms exceeded.",
+      "testsuite": "Importar abas",
+      "testcase": "Importar aba (happy path)",
+      "file": "projects/widgets/tests/features/importar-abas/importar-aba-happy-path.spec.ts",
+      "status": "failed",
+      "durationMs": 46181,
+      "categoriaSugerida": "modal-nao-tratado",
+      "categoriaConfianca": "alta",
+      "categoriaJustificativa": "Click interceptado — overlay/modal por cima do alvo",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-widgets",
+        "baseUrl": "https://widgets.stage.twygoead.com/",
+        "orgId": "36988",
+        "browser": "chromium",
+        "user": "claude@teste.com"
+      },
+      "buildCommit": "72ab290",
+      "generatedAt": "2026-05-14T02:45:24.199Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Setup — Painel Origem + Aba X + Painel Destino + modal step 2 preenchido",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('[data-test-id=\"panel-layout-save-button\"]')\n    - locator resolved to <button type=\"button\" class=\"chakra-button css-vda7qx\" data-test-id=\"panel-layout-save-button\">Salvar Layout</button>\n  - attempting click action\n    2 × waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <div data-status=\"success\" class=\"chakra-alert__desc css-161kwbg\" id=\"toast-widget-added-toast-description\">Widget adicionado com sucesso</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\n    - retrying click action\n    - waiting 20ms\n    2 × waiting for element to be visible, enabled  …[+1754 chars]",
+      "errorLocation": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\importar-aba-happy-path.spec.ts:45:46",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-97d34-as-Importar-aba-happy-path--chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-97d34-as-Importar-aba-happy-path--chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-97d34-as-Importar-aba-happy-path--chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-97d34-as-Importar-aba-happy-path--chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-97d34-as-Importar-aba-happy-path--chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "36988",
+        "userId": null
+      }
+    },
+    {
+      "id": "importar-abas__selecionar-categoria-na-importacao",
+      "title": "Selecionar Categoria na importação — TimeoutError: locator.click: Timeout 30000ms exceeded.",
+      "testsuite": "Importar abas",
+      "testcase": "Selecionar Categoria na importação",
+      "file": "projects/widgets/tests/features/importar-abas/selecionar-categoria-importacao.spec.ts",
+      "status": "failed",
+      "durationMs": 45956,
+      "categoriaSugerida": "modal-nao-tratado",
+      "categoriaConfianca": "alta",
+      "categoriaJustificativa": "Click interceptado — overlay/modal por cima do alvo",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-widgets",
+        "baseUrl": "https://widgets.stage.twygoead.com/",
+        "orgId": "36988",
+        "browser": "chromium",
+        "user": "claude@teste.com"
+      },
+      "buildCommit": "72ab290",
+      "generatedAt": "2026-05-14T02:45:24.199Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Setup — Painel Origem + Painel Destino + Aba X selecionada no modal",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('[data-test-id=\"panel-layout-save-button\"]')\n    - locator resolved to <button type=\"button\" class=\"chakra-button css-vda7qx\" data-test-id=\"panel-layout-save-button\">Salvar Layout</button>\n  - attempting click action\n    2 × waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <div data-status=\"success\" class=\"chakra-alert__desc css-161kwbg\" id=\"toast-widget-added-toast-description\">Widget adicionado com sucesso</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\n    - retrying click action\n    - waiting 20ms\n    2 × waiting for element to be visible, enabled  …[+1754 chars]",
+      "errorLocation": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\selecionar-categoria-importacao.spec.ts:51:46",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-98f94-nar-Categoria-na-importação-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-98f94-nar-Categoria-na-importação-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-98f94-nar-Categoria-na-importação-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-98f94-nar-Categoria-na-importação-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-98f94-nar-Categoria-na-importação-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "36988",
+        "userId": null
+      }
+    },
+    {
+      "id": "importar-abas__selecionar-painel-de-origem-e-listar-abas-disponiveis",
+      "title": "Selecionar painel de origem e listar abas disponíveis — TimeoutError: locator.click: Timeout 30000ms exceeded.",
+      "testsuite": "Importar abas",
+      "testcase": "Selecionar painel de origem e listar abas disponíveis",
+      "file": "projects/widgets/tests/features/importar-abas/selecionar-painel-origem-listar-abas.spec.ts",
+      "status": "failed",
+      "durationMs": 45830,
+      "categoriaSugerida": "modal-nao-tratado",
+      "categoriaConfianca": "alta",
+      "categoriaJustificativa": "Click interceptado — overlay/modal por cima do alvo",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-widgets",
+        "baseUrl": "https://widgets.stage.twygoead.com/",
+        "orgId": "36988",
+        "browser": "chromium",
+        "user": "claude@teste.com"
+      },
+      "buildCommit": "72ab290",
+      "generatedAt": "2026-05-14T02:45:24.199Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Criar Painel Origem com Aba X e Aba Y seedadas",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('[data-test-id=\"panel-layout-save-button\"]')\n    - locator resolved to <button type=\"button\" class=\"chakra-button css-vda7qx\" data-test-id=\"panel-layout-save-button\">Salvar Layout</button>\n  - attempting click action\n    2 × waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <div data-status=\"success\" class=\"chakra-alert__desc css-161kwbg\" id=\"toast-widget-added-toast-description\">Widget adicionado com sucesso</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\n    - retrying click action\n    - waiting 20ms\n    2 × waiting for element to be visible, enabled  …[+1754 chars]",
+      "errorLocation": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\selecionar-painel-origem-listar-abas.spec.ts:48:46",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-2e450-m-e-listar-abas-disponíveis-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-2e450-m-e-listar-abas-disponíveis-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-2e450-m-e-listar-abas-disponíveis-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-2e450-m-e-listar-abas-disponíveis-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-2e450-m-e-listar-abas-disponíveis-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "36988",
+        "userId": null
+      }
+    },
+    {
+      "id": "importar-abas__visualizar-preview-da-aba-selecionada",
+      "title": "Visualizar preview da aba selecionada — TimeoutError: locator.click: Timeout 30000ms exceeded.",
+      "testsuite": "Importar abas",
+      "testcase": "Visualizar preview da aba selecionada",
+      "file": "projects/widgets/tests/features/importar-abas/visualizar-preview-aba.spec.ts",
+      "status": "failed",
+      "durationMs": 45740,
+      "categoriaSugerida": "modal-nao-tratado",
+      "categoriaConfianca": "alta",
+      "categoriaJustificativa": "Click interceptado — overlay/modal por cima do alvo",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-widgets",
+        "baseUrl": "https://widgets.stage.twygoead.com/",
+        "orgId": "36988",
+        "browser": "chromium",
+        "user": "claude@teste.com"
+      },
+      "buildCommit": "72ab290",
+      "generatedAt": "2026-05-14T02:45:24.199Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Criar Painel Origem com Aba X e Aba Y seedadas",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('[data-test-id=\"panel-layout-save-button\"]')\n    - locator resolved to <button type=\"button\" class=\"chakra-button css-vda7qx\" data-test-id=\"panel-layout-save-button\">Salvar Layout</button>\n  - attempting click action\n    2 × waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <div data-status=\"success\" class=\"chakra-alert__desc css-161kwbg\" id=\"toast-widget-added-toast-description\">Widget adicionado com sucesso</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\n    - retrying click action\n    - waiting 20ms\n    2 × waiting for element to be visible, enabled  …[+1754 chars]",
+      "errorLocation": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\visualizar-preview-aba.spec.ts:53:46",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-42643--preview-da-aba-selecionada-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-42643--preview-da-aba-selecionada-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-42643--preview-da-aba-selecionada-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-42643--preview-da-aba-selecionada-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-42643--preview-da-aba-selecionada-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "36988",
+        "userId": null
+      }
+    }
+  ]
+}

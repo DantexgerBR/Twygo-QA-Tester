@@ -1,7 +1,7 @@
 ---
 name: criar-spec-resiliente-twygo
-description: Princípios pra generator/healer emitir specs Playwright Twygo que não viram flaky. Cobre asserção por invariante (não por count exato do seed), timeouts explícitos pós-hydration de SPA Chakra/React, retry transparente de rede via safeGoto, e independência de ordem de cards/rows. Use sempre que gerar/corrigir spec novo OU ao revisar spec existente que falhou e quer entender se é falha real ou só fragilidade do código de teste.
-version: 1.0.0
+description: Princípios pra generator/healer emitir specs Playwright Twygo que não viram flaky. Cobre asserção por invariante (não por count exato do seed), timeouts explícitos pós-hydration de SPA Chakra/React, retry transparente de rede via safeGoto, independência de ordem de cards/rows, e localização correta de testId em void elements + escopo pra evitar strict-mode violations. Use sempre que gerar/corrigir spec novo OU ao revisar spec existente que falhou e quer entender se é falha real ou só fragilidade do código de teste.
+version: 1.1.0
 ---
 
 # criar-spec-resiliente-twygo
@@ -34,6 +34,17 @@ Resumo dos 3 casos vivos:
 Lição: dos 3, só F1 é spec realmente errado; F2 e F3 são padrões de
 fragilidade evitáveis. Generator/healer devem nunca emitir esses padrões
 de novo.
+
+Run live 2026-05-14 da suíte **Importar abas** (mesmo projeto): 4 testes
+falharam, **0 bugs de produto**. 100% spec errado/frágil. Todos 4 cabem
+no Princípio 6 abaixo.
+
+| Caso | Sintoma Playwright | Reprodução chrome-mcp | Causa real | Categoria |
+|---|---|---|---|---|
+| **F1** Auto-preencher nome | `getByTestId('X').getByPlaceholder('Y')` → element(s) not found | ✅ input renderiza, value="Aba X" | testId no `<input>` (void); encadear `.getByPlaceholder` falha | **testId em void element** |
+| **F2** Editar aba | `fill: Timeout 30s` no mesmo seletor encadeado | ✅ input acessível | Mesma causa de F1 | **testId em void element** |
+| **F3** Categoria | `modal.getByRole('combobox')` → strict 3 elements | ✅ 2 react-select + 1 `<select>` HTML no modal | Locator amplo demais | **Escopo amplo: strict-mode** |
+| **F4** Preview Aba X | `modal.getByText('Aba X')` → strict 2 elements | ✅ label tab-select + preview "Nome:" | Texto duplicado entre label e preview | **Escopo amplo: strict-mode** |
 
 ## Princípio 1 — Não acoplar a count exato do seed
 
@@ -208,6 +219,97 @@ await expect(paineis.getRow(0)).toContainText(nomeUnico);
 Regra: **se você precisa de "1ª linha", primeiro filtre/pesquise** pra
 garantir que essa 1ª linha é determinística.
 
+## Princípio 6 — testId em void element não tem descendente; escopar pra evitar strict-mode
+
+Twygo frequentemente coloca `data-test-id` **diretamente no `<input>` /
+`<button>`** (void elements / leaf elements), não num wrapper externo.
+Encadear `.getByPlaceholder()` / `.getByText()` em cima desse testId quebra
+porque o elemento não tem descendentes — Playwright procura DENTRO do
+elemento e não acha nada → `element(s) not found`.
+
+Caso real (suite "Importar abas" widgets, 2026-05-14 via chrome-devtools-mcp):
+
+```html
+<input data-test-id="import-tab-modal-tab-name-input"
+       placeholder="Digite o nome da aba"
+       maxlength="255"
+       value="Aba X">
+```
+
+❌ **Ruim** (4 specs da suite falharam por isso):
+
+```ts
+const nomeInput = page
+  .getByTestId('import-tab-modal-tab-name-input')
+  .getByPlaceholder('Digite o nome da aba');  // void element: 0 descendants
+// → Error: element(s) not found (10s timeout)
+```
+
+✅ **Bom** (testId resolve direto pro input):
+
+```ts
+const nomeInput = page.getByTestId('import-tab-modal-tab-name-input');
+```
+
+**Como detectar antes de gerar o spec**: ao validar o seletor via DOM
+live, verifique se o elemento com testId é o próprio target (`<input>`,
+`<button>`, `<img>`, `<select>`) ou um wrapper (`<div>`, `<span>`).
+Regra:
+
+- testId em `<input>` / `<button>` / `<img>` / `<select>` → **uso direto**
+- testId em `<div>` / `<section>` / wrapper → **pode encadear** com
+  descendant locator
+
+### Sub-padrão — escopar pra evitar strict-mode em locators amplos
+
+`getByRole('combobox')` / `getByText('Aba X')` no escopo do **modal
+inteiro** frequentemente matcha múltiplos elementos quando o modal tem:
+
+1. React-select inputs (renderizados como `<input role="combobox">`)
+2. HTML `<select>` nativo (role implícito "combobox")
+3. Label do dropdown selecionado + preview com mesmo texto
+
+❌ **Ruim** (cai em strict mode: 3 comboboxes no mesmo modal):
+
+```ts
+const modal = page.getByRole('dialog').filter({ hasText: 'Adicionar nova aba' });
+const categoriaSelect = modal.getByRole('combobox');
+// → strict mode violation: resolved to 3 elements
+```
+
+✅ **Bom** (locator único e específico):
+
+```ts
+// Categoria é <select> HTML — único <select> no modal
+const categoriaSelect = modal.locator('select');
+```
+
+❌ **Ruim** (texto duplicado entre label e preview):
+
+```ts
+await expect(modal.getByText('Aba X', { exact: true })).toBeVisible();
+// → strict mode violation: 2 elements (label do tab-select + preview "Nome:")
+```
+
+✅ **Bom** (escopar via helper que isola o bloco preview):
+
+```ts
+getImportPreviewBlock(): Locator {
+  return this.getAddTabModal()
+    .locator('div')
+    .filter({ has: this.page.getByText('Preview da aba') })
+    .last();
+}
+// Spec:
+const preview = painelForm.getImportPreviewBlock();
+await expect(preview.getByText('Aba X', { exact: true })).toBeVisible();
+```
+
+**Heurística**: se `getByRole(...)` ou `getByText(...)` está escopado a
+um modal/section grande, conte mentalmente quantos elementos podem
+matchar. ≥2 → quebrar em locator mais específico ou criar helper de
+sub-bloco no Page Object.
+
 ## Tabela "Sintoma → Causa → Fix"
 
 | Sintoma | Causa | Fix |
@@ -217,6 +319,9 @@ garantir que essa 1ª linha é determinística.
 | `net::ERR_NETWORK_CHANGED` no `goto` | Conexão mudou durante navegação | Garantir que goto vai pelo Page Object → safeGoto retenta sozinho (Princípio 3) |
 | Spec verde local, vermelho CI quando seed troca | Asserção amarrada a texto/count específico do seed | Reescrever como invariante (Princípio 4) |
 | `getRow(0)` retorna painel "errado" em tenant compartilhado | Outro teste/usuário criou painel depois; ordem é `created_at DESC` | Filtrar/pesquisar por nome único antes de pegar `getRow(0)` (Princípio 5) |
+| `getByTestId('X').getByPlaceholder('Y')` → `element(s) not found` | testId está no próprio `<input>` (void element, 0 descendants) | Uso direto: `getByTestId('X')` (Princípio 6) |
+| `modal.getByRole('combobox')` → strict mode `resolved to 3 elements` | Modal tem react-select inputs + HTML `<select>` (todos role combobox) | `modal.locator('select')` ou helper específico (Princípio 6 sub-padrão) |
+| `modal.getByText('Aba X')` → strict mode `resolved to 2 elements` | Mesmo texto em label do dropdown + preview | Helper de sub-bloco no Page Object pra escopar (Princípio 6 sub-padrão) |
 
 ## Anti-patterns que generator NÃO deve emitir
 
@@ -229,6 +334,10 @@ garantir que essa 1ª linha é determinística.
 - ❌ Loop manual de retry em volta de `page.goto`
 - ❌ `getRow(0)` sem filtrar/pesquisar antes em tenant compartilhado
 - ❌ `expect(toast).toHaveText('exact phrase')` (use `toContainText`)
+- ❌ `getByTestId('X').getByPlaceholder/getByText(...)` quando o elemento
+  com testId é `<input>` / `<button>` / `<select>` (void/leaf elements)
+- ❌ `modal.getByRole('combobox')` / `modal.getByText('X')` sem garantir
+  que matcha 1 elemento único (verificar via DOM live antes de gerar)
 
 ## Checklist pré-merge de spec novo
 
@@ -246,6 +355,12 @@ for "sim", aplique o fix correspondente:
 5. **Existe `expect(...).toHaveText('literal-do-seed')` ou
    `getByText('literal-do-seed')`?** → trocar por `toContainText` ou
    por texto que o próprio teste criou.
+6. **Existe `getByTestId('X').getByPlaceholder/getByText(...)` onde o
+   elemento `X` é `<input>` / `<button>` / `<select>`?** → uso direto
+   `getByTestId('X')` (Princípio 6).
+7. **Existe `modal.getByRole('combobox')` ou `modal.getByText('X')`
+   em escopo amplo?** → verificar via DOM live quantos elementos
+   matcham; se ≥2, criar helper de sub-bloco no Page Object.
 
 ## Skills relacionadas
 

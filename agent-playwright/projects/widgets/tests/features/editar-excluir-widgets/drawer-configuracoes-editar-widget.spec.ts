@@ -4,12 +4,17 @@
 import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js';
 import * as allure from 'allure-js-commons';
 import { PainelFormPage } from '../../../pages/PainelFormPage.js';
+import { cleanupPanel } from '../../../utils/test-cleanup.js';
 import { drawerConfiguracoesEditarWidgetData as data } from './drawer-configuracoes-editar-widget.data.js';
 import { editarExcluirWidgetsSharedData as shared } from './editar-excluir-widgets.shared.data.js';
 
 test.use({ viewport: { width: 1920, height: 1080 } });
 
 test.describe('Editar/Excluir widgets', () => {
+  test.afterAll(async ({ browser }) => {
+    await cleanupPanel(browser, data.panelName);
+  });
+
   test("Drawer de configurações ao 'Editar' Widget", async ({ page, step }) => {
     await allure.epic('Twygo - Widgets');
     await allure.feature('Editar/Excluir widgets');

@@ -1,0 +1,29 @@
+{
+  "runId": "importar-abas_20260514-082531",
+  "scope": "Apenas testsuite contendo \"Importar abas\"",
+  "tests": {
+    "total": 11,
+    "passed": 6,
+    "failed": 4,
+    "skipped": 1,
+    "durationMs": 324431
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 1,
+    "tests": 11,
+    "outOfScope": {
+      "errors": 135,
+      "warnings": 36,
+      "info": 0
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

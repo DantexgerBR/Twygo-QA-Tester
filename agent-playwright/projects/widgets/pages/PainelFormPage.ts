@@ -217,6 +217,40 @@ export class PainelFormPage {
     await expect(this.page.getByText(tabName, { exact: true })).toBeVisible();
   }
 
+  // ---------- Step 2 — Importar aba de outro painel ----------
+
+  /**
+   * Input "Nome da nova aba" do modal Importar. O `data-test-id` está
+   * NO PRÓPRIO <input>, não em wrapper — `<input>` é void element, não tem
+   * descendentes. Por isso encadear `.getByPlaceholder()` (como o spec antigo
+   * fazia) falha com "element(s) not found". Confirmado via DOM live (2026-05-14).
+   */
+  getImportTabNameInput(): Locator {
+    return this.page.getByTestId('import-tab-modal-tab-name-input');
+  }
+
+  /**
+   * Dropdown Categoria do modal Importar. Renderizado como `<select>` HTML
+   * nativo, sem `data-test-id`. Usar `getByRole('combobox')` escopado ao modal
+   * cai em strict-mode (matcha 2 react-select inputs do step "panel/tab"
+   * + 1 select HTML). `locator('select')` resolve unicamente.
+   */
+  getImportCategorySelect(): Locator {
+    return this.getAddTabModal().locator('select');
+  }
+
+  /**
+   * Bloco preview da aba selecionada no modal Importar. Identificado pelo
+   * `<p>Preview da aba</p>` (sem testId estável). Útil pra escopar asserts
+   * "Aba X" que existem em 2 lugares no modal — label do tab-select + preview.
+   */
+  getImportPreviewBlock(): Locator {
+    return this.getAddTabModal()
+      .locator('div')
+      .filter({ has: this.page.getByText('Preview da aba') })
+      .last();
+  }
+
   // ---------- Salvar Layout ----------
 
   getSaveLayoutButton(): Locator {

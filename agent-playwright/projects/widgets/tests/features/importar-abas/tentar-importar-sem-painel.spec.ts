@@ -7,12 +7,17 @@
 import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js';
 import * as allure from 'allure-js-commons';
 import { PainelFormPage } from '../../../pages/PainelFormPage.js';
+import { cleanupPanel } from '../../../utils/test-cleanup.js';
 import { tentarImportarSemPainelData as data } from './tentar-importar-sem-painel.data.js';
 import { importarAbasSharedData as shared } from './importar-abas.shared.data.js';
 
 test.use({ viewport: { width: 1920, height: 1080 } });
 
 test.describe('Importar abas', () => {
+  test.afterAll(async ({ browser }) => {
+    await cleanupPanel(browser, data.panelName);
+  });
+
   test('Tentar importar sem selecionar painel de origem', async ({ page, step }) => {
     await allure.epic('Twygo - Widgets');
     await allure.feature('Importar abas');

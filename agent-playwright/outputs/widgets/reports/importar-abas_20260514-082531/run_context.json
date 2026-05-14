@@ -1,0 +1,11 @@
+{
+  "runId": "importar-abas_20260514-082531",
+  "mode": "per-suite",
+  "suiteFilter": "Importar abas",
+  "projectName": "Widgets",
+  "environment": "staging-widgets",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-14T11:25:31.988Z"
+}

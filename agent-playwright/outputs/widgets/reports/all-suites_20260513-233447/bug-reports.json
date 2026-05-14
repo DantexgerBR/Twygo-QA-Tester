@@ -1,0 +1,747 @@
+{
+  "generatedAt": "2026-05-14T02:34:47.109Z",
+  "project": "widgets",
+  "totalRed": 10,
+  "reports": [
+    {
+      "id": "importar-abas__acessar-o-fluxo-de-importar-de-outro-painel",
+      "title": "Acessar o fluxo de Importar de outro painel — Error: expect(locator).toBeVisible() failed",
+      "testsuite": "Importar abas",
+      "testcase": "Acessar o fluxo de Importar de outro painel",
+      "file": "projects/widgets/tests/features/importar-abas/acessar-fluxo-importar-painel.spec.ts",
+      "status": "failed",
+      "durationMs": 25591,
+      "categoriaSugerida": "inconclusivo",
+      "categoriaConfianca": "baixa",
+      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
+      "severity": "media",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-widgets",
+        "baseUrl": "https://widgets.stage.twygoead.com/",
+        "orgId": "36988",
+        "browser": "chromium",
+        "user": "claude@teste.com"
+      },
+      "buildCommit": "5585714",
+      "generatedAt": "2026-05-14T02:34:47.109Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Criar Painel Destino e abrir tab Layouts",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: expect(locator).toBeVisible() failed\n\nLocator: getByTestId('tabs-navigation-add-button')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 10000ms\n  - waiting for getByTestId('tabs-navigation-add-button')\n",
+      "errorLocation": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\acessar-fluxo-importar-painel.spec.ts:29:50",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-cfe25-de-Importar-de-outro-painel-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-cfe25-de-Importar-de-outro-painel-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-cfe25-de-Importar-de-outro-painel-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-cfe25-de-Importar-de-outro-painel-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-cfe25-de-Importar-de-outro-painel-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "36988",
+        "userId": null
+      }
+    },
+    {
+      "id": "importar-abas__auto-preencher-nome-da-nova-aba-com-nome-original-e-validar-limite-de-255-caracteres",
+      "title": "Auto-preencher 'Nome da nova aba' com nome original e validar limite de 255 caracteres — TimeoutError: locator.click: Timeout 30000ms exceeded.",
+      "testsuite": "Importar abas",
+      "testcase": "Auto-preencher 'Nome da nova aba' com nome original e validar limite de 255 caracteres",
+      "file": "projects/widgets/tests/features/importar-abas/auto-preencher-nome-aba-importada.spec.ts",
+      "status": "failed",
+      "durationMs": 46692,
+      "categoriaSugerida": "spec-fragil",
+      "categoriaConfianca": "media",
+      "categoriaJustificativa": "Timeout sem HTTP error — possível wait/seletor frágil. Confirmar via chrome-mcp",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-widgets",
+        "baseUrl": "https://widgets.stage.twygoead.com/",
+        "orgId": "36988",
+        "browser": "chromium",
+        "user": "claude@teste.com"
+      },
+      "buildCommit": "5585714",
+      "generatedAt": "2026-05-14T02:34:47.109Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Criar Painel Origem com Aba X seedada e abrir modal de importar do Painel Destino",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for getByTestId('tabs-navigation-add-button')\n",
+      "errorLocation": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts:203:34",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-03512-ar-limite-de-255-caracteres-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-03512-ar-limite-de-255-caracteres-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-03512-ar-limite-de-255-caracteres-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-03512-ar-limite-de-255-caracteres-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-03512-ar-limite-de-255-caracteres-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "36988",
+        "userId": null
+      }
+    },
+    {
+      "id": "importar-abas__cancelar-importacao",
+      "title": "Cancelar importação — TimeoutError: locator.click: Timeout 30000ms exceeded.",
+      "testsuite": "Importar abas",
+      "testcase": "Cancelar importação",
+      "file": "projects/widgets/tests/features/importar-abas/cancelar-importacao.spec.ts",
+      "status": "failed",
+      "durationMs": 46861,
+      "categoriaSugerida": "spec-fragil",
+      "categoriaConfianca": "media",
+      "categoriaJustificativa": "Timeout sem HTTP error — possível wait/seletor frágil. Confirmar via chrome-mcp",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-widgets",
+        "baseUrl": "https://widgets.stage.twygoead.com/",
+        "orgId": "36988",
+        "browser": "chromium",
+        "user": "claude@teste.com"
+      },
+      "buildCommit": "5585714",
+      "generatedAt": "2026-05-14T02:34:47.109Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Criar painel, abrir Layouts e ir até o step 2 do modal de importar",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for getByTestId('tabs-navigation-add-button')\n",
+      "errorLocation": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\cancelar-importacao.spec.ts:34:42",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-52090-ar-abas-Cancelar-importação-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-52090-ar-abas-Cancelar-importação-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-52090-ar-abas-Cancelar-importação-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-52090-ar-abas-Cancelar-importação-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-52090-ar-abas-Cancelar-importação-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "36988",
+        "userId": null
+      }
+    },
+    {
+      "id": "importar-abas__editar-aba-importada",
+      "title": "Editar aba importada — TimeoutError: locator.click: Timeout 30000ms exceeded.",
+      "testsuite": "Importar abas",
+      "testcase": "Editar aba importada",
+      "file": "projects/widgets/tests/features/importar-abas/editar-aba-importada.spec.ts",
+      "status": "failed",
+      "durationMs": 46681,
+      "categoriaSugerida": "spec-fragil",
+      "categoriaConfianca": "media",
+      "categoriaJustificativa": "Timeout sem HTTP error — possível wait/seletor frágil. Confirmar via chrome-mcp",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-widgets",
+        "baseUrl": "https://widgets.stage.twygoead.com/",
+        "orgId": "36988",
+        "browser": "chromium",
+        "user": "claude@teste.com"
+      },
+      "buildCommit": "5585714",
+      "generatedAt": "2026-05-14T02:34:47.109Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Setup — Painel Origem + Painel Destino + importar Aba X como \"Aba Importada\"",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for getByTestId('tabs-navigation-add-button')\n",
+      "errorLocation": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts:203:34",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-fbe87-r-abas-Editar-aba-importada-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-fbe87-r-abas-Editar-aba-importada-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-fbe87-r-abas-Editar-aba-importada-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-fbe87-r-abas-Editar-aba-importada-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-fbe87-r-abas-Editar-aba-importada-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "36988",
+        "userId": null
+      }
+    },
+    {
+      "id": "importar-abas__importar-aba-happy-path",
+      "title": "Importar aba (happy path) — TimeoutError: locator.click: Timeout 30000ms exceeded.",
+      "testsuite": "Importar abas",
+      "testcase": "Importar aba (happy path)",
+      "file": "projects/widgets/tests/features/importar-abas/importar-aba-happy-path.spec.ts",
+      "status": "failed",
+      "durationMs": 41472,
+      "categoriaSugerida": "spec-fragil",
+      "categoriaConfianca": "media",
+      "categoriaJustificativa": "Timeout sem HTTP error — possível wait/seletor frágil. Confirmar via chrome-mcp",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-widgets",
+        "baseUrl": "https://widgets.stage.twygoead.com/",
+        "orgId": "36988",
+        "browser": "chromium",
+        "user": "claude@teste.com"
+      },
+      "buildCommit": "5585714",
+      "generatedAt": "2026-05-14T02:34:47.109Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Setup — Painel Origem + Aba X + Painel Destino + modal step 2 preenchido",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for getByTestId('tabs-navigation-add-button')\n",
+      "errorLocation": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts:203:34",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-97d34-as-Importar-aba-happy-path--chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-97d34-as-Importar-aba-happy-path--chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-97d34-as-Importar-aba-happy-path--chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-97d34-as-Importar-aba-happy-path--chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-97d34-as-Importar-aba-happy-path--chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "36988",
+        "userId": null
+      }
+    },
+    {
+      "id": "importar-abas__selecionar-categoria-na-importacao",
+      "title": "Selecionar Categoria na importação — TimeoutError: locator.click: Timeout 30000ms exceeded.",
+      "testsuite": "Importar abas",
+      "testcase": "Selecionar Categoria na importação",
+      "file": "projects/widgets/tests/features/importar-abas/selecionar-categoria-importacao.spec.ts",
+      "status": "failed",
+      "durationMs": 42645,
+      "categoriaSugerida": "spec-fragil",
+      "categoriaConfianca": "media",
+      "categoriaJustificativa": "Timeout sem HTTP error — possível wait/seletor frágil. Confirmar via chrome-mcp",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-widgets",
+        "baseUrl": "https://widgets.stage.twygoead.com/",
+        "orgId": "36988",
+        "browser": "chromium",
+        "user": "claude@teste.com"
+      },
+      "buildCommit": "5585714",
+      "generatedAt": "2026-05-14T02:34:47.109Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Setup — Painel Origem + Painel Destino + Aba X selecionada no modal",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for getByTestId('tabs-navigation-add-button')\n",
+      "errorLocation": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts:203:34",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-98f94-nar-Categoria-na-importação-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-98f94-nar-Categoria-na-importação-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-98f94-nar-Categoria-na-importação-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-98f94-nar-Categoria-na-importação-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-98f94-nar-Categoria-na-importação-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "36988",
+        "userId": null
+      }
+    },
+    {
+      "id": "importar-abas__selecionar-painel-de-origem-e-listar-abas-disponiveis",
+      "title": "Selecionar painel de origem e listar abas disponíveis — TimeoutError: locator.click: Timeout 30000ms exceeded.",
+      "testsuite": "Importar abas",
+      "testcase": "Selecionar painel de origem e listar abas disponíveis",
+      "file": "projects/widgets/tests/features/importar-abas/selecionar-painel-origem-listar-abas.spec.ts",
+      "status": "failed",
+      "durationMs": 42858,
+      "categoriaSugerida": "spec-fragil",
+      "categoriaConfianca": "media",
+      "categoriaJustificativa": "Timeout sem HTTP error — possível wait/seletor frágil. Confirmar via chrome-mcp",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-widgets",
+        "baseUrl": "https://widgets.stage.twygoead.com/",
+        "orgId": "36988",
+        "browser": "chromium",
+        "user": "claude@teste.com"
+      },
+      "buildCommit": "5585714",
+      "generatedAt": "2026-05-14T02:34:47.109Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Criar Painel Origem com Aba X e Aba Y seedadas",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for getByTestId('tabs-navigation-add-button')\n",
+      "errorLocation": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts:203:34",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-2e450-m-e-listar-abas-disponíveis-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-2e450-m-e-listar-abas-disponíveis-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-2e450-m-e-listar-abas-disponíveis-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-2e450-m-e-listar-abas-disponíveis-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-2e450-m-e-listar-abas-disponíveis-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "36988",
+        "userId": null
+      }
+    },
+    {
+      "id": "importar-abas__tentar-importar-sem-selecionar-painel-de-origem",
+      "title": "Tentar importar sem selecionar painel de origem — TimeoutError: locator.click: Timeout 30000ms exceeded.",
+      "testsuite": "Importar abas",
+      "testcase": "Tentar importar sem selecionar painel de origem",
+      "file": "projects/widgets/tests/features/importar-abas/tentar-importar-sem-painel.spec.ts",
+      "status": "failed",
+      "durationMs": 42159,
+      "categoriaSugerida": "spec-fragil",
+      "categoriaConfianca": "media",
+      "categoriaJustificativa": "Timeout sem HTTP error — possível wait/seletor frágil. Confirmar via chrome-mcp",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-widgets",
+        "baseUrl": "https://widgets.stage.twygoead.com/",
+        "orgId": "36988",
+        "browser": "chromium",
+        "user": "claude@teste.com"
+      },
+      "buildCommit": "5585714",
+      "generatedAt": "2026-05-14T02:34:47.109Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Criar painel e abrir modal step 2 de importar (sem seleção)",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for getByTestId('tabs-navigation-add-button')\n",
+      "errorLocation": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\tentar-importar-sem-painel.spec.ts:30:42",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-9f900-selecionar-painel-de-origem-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-9f900-selecionar-painel-de-origem-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-9f900-selecionar-painel-de-origem-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-9f900-selecionar-painel-de-origem-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-9f900-selecionar-painel-de-origem-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "36988",
+        "userId": null
+      }
+    },
+    {
+      "id": "importar-abas__visualizar-preview-da-aba-selecionada",
+      "title": "Visualizar preview da aba selecionada — TimeoutError: locator.click: Timeout 30000ms exceeded.",
+      "testsuite": "Importar abas",
+      "testcase": "Visualizar preview da aba selecionada",
+      "file": "projects/widgets/tests/features/importar-abas/visualizar-preview-aba.spec.ts",
+      "status": "failed",
+      "durationMs": 41988,
+      "categoriaSugerida": "spec-fragil",
+      "categoriaConfianca": "media",
+      "categoriaJustificativa": "Timeout sem HTTP error — possível wait/seletor frágil. Confirmar via chrome-mcp",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-widgets",
+        "baseUrl": "https://widgets.stage.twygoead.com/",
+        "orgId": "36988",
+        "browser": "chromium",
+        "user": "claude@teste.com"
+      },
+      "buildCommit": "5585714",
+      "generatedAt": "2026-05-14T02:34:47.109Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Criar Painel Origem com Aba X e Aba Y seedadas",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for getByTestId('tabs-navigation-add-button')\n",
+      "errorLocation": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts:203:34",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-42643--preview-da-aba-selecionada-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-42643--preview-da-aba-selecionada-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-42643--preview-da-aba-selecionada-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-42643--preview-da-aba-selecionada-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-42643--preview-da-aba-selecionada-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "36988",
+        "userId": null
+      }
+    },
+    {
+      "id": "importar-abas__voltar-do-step-de-importacao-para-a-selecao-de-tipo",
+      "title": "Voltar do step de importação para a seleção de tipo — TimeoutError: locator.click: Timeout 30000ms exceeded.",
+      "testsuite": "Importar abas",
+      "testcase": "Voltar do step de importação para a seleção de tipo",
+      "file": "projects/widgets/tests/features/importar-abas/voltar-step-importacao.spec.ts",
+      "status": "failed",
+      "durationMs": 41540,
+      "categoriaSugerida": "spec-fragil",
+      "categoriaConfianca": "media",
+      "categoriaJustificativa": "Timeout sem HTTP error — possível wait/seletor frágil. Confirmar via chrome-mcp",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-widgets",
+        "baseUrl": "https://widgets.stage.twygoead.com/",
+        "orgId": "36988",
+        "browser": "chromium",
+        "user": "claude@teste.com"
+      },
+      "buildCommit": "5585714",
+      "generatedAt": "2026-05-14T02:34:47.109Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Criar painel, abrir Layouts e navegar até o step 2 de \"Importar de outro painel\"",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for getByTestId('tabs-navigation-add-button')\n",
+      "errorLocation": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\voltar-step-importacao.spec.ts:31:42",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-fbd59-ação-para-a-seleção-de-tipo-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-fbd59-ação-para-a-seleção-de-tipo-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-fbd59-ação-para-a-seleção-de-tipo-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-fbd59-ação-para-a-seleção-de-tipo-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-fbd59-ação-para-a-seleção-de-tipo-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "36988",
+        "userId": null
+      }
+    }
+  ]
+}
