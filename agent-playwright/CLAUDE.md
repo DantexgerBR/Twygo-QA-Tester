@@ -343,6 +343,7 @@ Definidos por `npx playwright init-agents --loop claude` (oficial Microsoft). S�
 | **`gerar-bug-report-de-tc-red`** | 5.7 | Para cada TC red (failed/timedOut sem fixme), monta bug-report pronto pra task: Network/Console da fixture exploratória + steps/erro/attachments do Playwright + categoria sugerida (bug-produto/spec-fragil/modal-nao-tratado/flakiness/inconclusivo) com confiança. Grava `outputs/<slug>/bug-reports.json` + 1 MD por TC em `bug-reports/<id>.md`. Consumido por `twygo-report-generator` (Fase 6) que renderiza seção no `index.md`. Rodar isolado via `npm run agent:bug-reports` |
 | **`atualizar-agents-oficiais`** | manutenção | Re-roda `npx playwright init-agents --loop=claude` e mostra diff dos 3 subagents oficiais pra QA aprovar antes de aceitar updates upstream |
 | **`validar-heal-diff`** | 8.1 | Gate estático sobre o diff do healer. Bloqueia mudanças que indicam drift de intenção (assertion polarity flip, title change, step reorder, fixme add/remove). Enforca regra dura #11 |
+| **`limpar-dados-de-teste-twygo`** | 3, 4, 7 | Template canônico de `afterAll`/`afterEach` em specs que criam/alteram estado persistente (painel, item de menu, toggle, contrato). Catálogo de variants `*_safe` no POM + ordem de cleanup com dependência (filho antes de pai) + anti-patterns. Enforca Anti-pattern G do §7.6 |
 | **`roadmap-recon-cache`** | design | Especificação não-implementada — propõe migrar recon de `inputs/` (git) pra `outputs/<slug>/recon-cache/` (regenerável + TTL) |
 | **`roadmap-agent-metrics`** | design | Especificação não-implementada — orchestrator emite `metrics.json` por execução; skill nova agrega trend (typecheckFirstPassRate, fixmeRate, healBlockedRate, etc) |
 
@@ -586,6 +587,39 @@ introduzam qualquer um deles.
 
 - **Exceção real**: nenhuma — toda exceção cai em uma das 4 categorias
   "fixme legítimo" acima. Se não bate em nenhuma, é Anti-pattern F.
+
+### G. NUNCA criar/alterar estado persistente sem `afterAll` que limpa
+
+- ❌ Spec chama `createPanel`, `associatePanelToMenu`, `toggleActiveByName`
+  (em estado pré-existente que não vai ser recriado), `addWidget` em painel
+  pré-existente, ou edita Super Admin sem `test.afterAll` revertendo.
+- ❌ `try { await paineis.deletePanelByName(name); } catch {}` inline no `afterAll`.
+- ❌ `await page` (do test, já fechada) usado em `afterAll` — sempre criar
+  contexto fresco via `browser.newContext({ storageState })`.
+- ❌ Nome literal de recurso (`'Painel Teste'`) — sempre worker-isolated
+  (`Painel TC2 w${testInfo.workerIndex}-${Date.now()}`).
+- ✅ `test.afterAll` com contexto fresco + variant `*_safe` do POM
+  (`deletePanelByNameSafe`, `disassociatePanelFromMenu_safe`).
+- ✅ Quando há dependência (menu vinculado → painel), ORDEM: filho antes
+  de pai. Desassociar menu **antes** de deletar painel — senão produto
+  bloqueia delete com modal "Painel em uso".
+- ✅ Toggle reversível (suite muda switch de painel pré-existente):
+  `afterAll` reverte toggle com check de idempotência (`isChecked()`).
+- **Por quê**: org compartilhada entre runs. Sem cleanup, env acumula
+  orphans cumulativamente. Pior: orphan menu items disparam toast
+  genérico "Não foi possível inativar o painel" pra TODOS os painéis da
+  org enquanto o orphan existir (`bug_title_for_linked_menus`). Suítes
+  verdes na primeira run viram red no dia seguinte por contaminação.
+- **Como aplicar**: ler skill [`limpar-dados-de-teste-twygo`](.claude/skills/limpar-dados-de-teste-twygo/SKILL.md)
+  ANTES de gerar/aprovar spec novo. Generator deve seguir checklist da
+  skill; healer deve recusar PR sem cleanup pareado.
+- **Catálogo de variants `*_safe` existentes**: `deletePanelByNameSafe`
+  (`PaineisListPage.ts:786`), `disassociatePanelFromMenu_safe`
+  (`PaineisListPage.ts:933`). Criar nova quando demandado seguindo
+  protocolo da skill.
+- **Exceção**: testes 100% read-only (apenas leem listagem/colunas) e
+  testes que mockam request via `page.route` sem hitar backend não
+  precisam cleanup. Em dúvida, assumir que precisa.
 
 ---
 
