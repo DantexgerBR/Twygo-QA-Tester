@@ -451,6 +451,49 @@ export class PainelFormPage {
   }
 
   /**
+   * Customiza um widget já presente no grid (título + ícone).
+   * `currentTitle` é o título atual do widget (default ou anterior).
+   * `opts.newTitle` substitui o título exibido para o aluno.
+   * `opts.iconName` é o nome do ícone material (ex: 'star', 'pie_chart').
+   * Se `opts.showTitle` ou `opts.showIcon` for false, desliga o switch correspondente.
+   */
+  async customizeWidget(
+    currentTitle: string,
+    opts: { newTitle?: string; iconName?: string; showTitle?: boolean; showIcon?: boolean },
+  ): Promise<void> {
+    await this.openWidgetSettings(currentTitle);
+    if (opts.showTitle !== undefined) {
+      await this.setSwitch(this.getWidgetSettingsNameSwitch(), opts.showTitle);
+    }
+    if (opts.newTitle !== undefined) {
+      await this.setSwitch(this.getWidgetSettingsNameSwitch(), true);
+      await this.getWidgetSettingsNameInput().fill(opts.newTitle);
+    }
+    if (opts.showIcon !== undefined) {
+      await this.setSwitch(this.getWidgetSettingsIconSwitch(), opts.showIcon);
+    }
+    if (opts.iconName !== undefined) {
+      await this.setSwitch(this.getWidgetSettingsIconSwitch(), true);
+      await this.getWidgetSettingsIconOption(opts.iconName).click();
+    }
+    await this.getWidgetSettingsSaveButton().click();
+    await this.getWidgetSettingsDrawer().waitFor({ state: 'hidden' });
+  }
+
+  /**
+   * Salva o layout do painel (botão "Salvar Layout"). Espera toast de
+   * sucesso (best-effort) e qualquer toast pendente sumir.
+   */
+  async saveLayout(): Promise<void> {
+    await this.waitForToastsToClear();
+    await this.getSaveLayoutButton().click();
+    await this.getToast('Layout salvo')
+      .waitFor({ state: 'visible', timeout: 10_000 })
+      .catch(() => undefined);
+    await this.waitForToastsToClear();
+  }
+
+  /**
    * Toast Chakra de sucesso. Sem data-test-id; matching por texto.
    * Usa `.first()` porque toasts adicionais ("Widget adicionado", "Layout salvo")
    * podem coexistir e o filtro por texto sozinho viola strict-mode.
