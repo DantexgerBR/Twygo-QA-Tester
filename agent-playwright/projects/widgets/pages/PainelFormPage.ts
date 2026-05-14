@@ -34,18 +34,29 @@ import { safeGoto } from '../../../src/utils/modals.js';
  *     `create-tab-modal-create-button` (este último disabled até preencher Nome).
  */
 export class PainelFormPage {
-  constructor(private readonly page: Page) {}
+  /**
+   * `orgIdOverride` — opcional; quando ausente usa `getOrgId()` do project.
+   * Usado por specs de ambientes adicionais (skill `testar-ambientes-adicionais-twygo`).
+   */
+  constructor(
+    private readonly page: Page,
+    private readonly orgIdOverride?: string,
+  ) {}
+
+  private orgId(): string {
+    return this.orgIdOverride ?? getOrgId();
+  }
 
   // ---------- Navegação ----------
 
   async goToNew(): Promise<void> {
-    await safeGoto(this.page, `/o/${getOrgId()}/panels/new`);
+    await safeGoto(this.page, `/o/${this.orgId()}/panels/new`);
     await this.getIdentificacaoTab().waitFor();
   }
 
   async goToEdit(panelId: number, tab: 'identificacao' | 'layouts' = 'identificacao'): Promise<void> {
     const suffix = tab === 'layouts' ? '?tab=layouts' : '';
-    await safeGoto(this.page, `/o/${getOrgId()}/panels/${panelId}/edit${suffix}`);
+    await safeGoto(this.page, `/o/${this.orgId()}/panels/${panelId}/edit${suffix}`);
     // App ignora `?tab=layouts` no load inicial — tab Identificação sempre
     // renderiza selected. Sem click explícito, `tabs-navigation-add-button`
     // e `widgets-grid-*` não montam. Validado live 2026-05-13 via Playwright MCP.

@@ -1,16 +1,24 @@
 # Ambientes adicionais
 
 Os 3 TCs validam funcionalidade de Painéis em **ambientes adicionais**
-(multi-tenant — uma org pode ter "ambientes adicionais" além do principal):
+(multi-tenant — org adicional pareada à principal, contrato compartilhado,
+feature flag por env):
 
-1. Funcionalidade disponível em ambiente adicional
-2. Isolamento de dados (painéis do principal não aparecem no adicional)
-3. Modo de uso configurado em ambiente adicional usa painel local
+1. **Funcionalidade de Painéis em ambiente adicional** — aba 'Painéis' aparece + listagem carrega no env adicional.
+2. **Painéis criados no principal não aparecem no adicional** — isolamento de dados (R1).
+3. **Modo de uso no adicional usa painel local** — dropdown 'Espaço' do form de item de menu lista painel criado no adicional.
 
-**Bloqueio**: nenhum dos 4 envs configurados (`staging`, `staging-without-credits`,
-`staging-widgets`, `staging-widgets-disabled`) representa um ambiente
-adicional dentro de uma org existente. A infraestrutura de "ambiente
-adicional" não está mapeada no agente.
+## Infraestrutura
 
-Specs com `test.fixme(true, ...)` aguardando DevOps configurar env
-adicional OU QA Lead confirmar caminho de criação de ambiente.
+- **Env adicional**: `staging-widgets-aditional` (host `adicionalwidgets.stage.twygoead.com`, orgId 37002), pareado a `staging-widgets` (36988).
+- **Storage**: `outputs/.auth/storage-aditional.json` — gerado automaticamente por `global-setup.ts` ao detectar env com sufixo `-aditional`.
+- **POM**: `PaineisListPage`/`PainelFormPage` aceitam `orgIdOverride` opcional no constructor — permite reuso completo dos POMs em specs de env adicional.
+
+## Padrões
+
+Skill canônica: [`testar-ambientes-adicionais-twygo`](../../../../.claude/skills/testar-ambientes-adicionais-twygo/SKILL.md).
+
+## Notas
+
+- **TC2** cria painel no principal + valida ausência no adicional + cleanup no principal (`afterAll` com 2 contextos).
+- **TC3** descobre `useModeId` dinamicamente no adicional via `goToModosDeUso` + scrape de href — não hardcoda valor (env adicional pode ter useModes distintos dos do principal).

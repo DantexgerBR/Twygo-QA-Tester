@@ -54,5 +54,19 @@
       "subscriptionPlansPath": "/admin/subscription_plans",
       "editContractPath": "/admin/edit_sys_subscription_settings/36989"
     }
+  },
+  "staging-widgets-aditional": {
+    "baseUrl": "https://adicionalwidgets.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_STAGING_WIDGETS_ADITIONAL_EMAIL}",
+      "password": "${TWYGO_STAGING_WIDGETS_ADITIONAL_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "37002",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/36988"
+    }
   }
 }

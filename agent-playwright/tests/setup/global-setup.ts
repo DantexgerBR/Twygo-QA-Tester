@@ -25,6 +25,19 @@ const STORAGE_TTL_MS = 30 * 60 * 1000; // 30 min — re-login se mais antigo
  */
 export const SECONDARY_STORAGE_PATH = resolve(process.cwd(), 'outputs/.auth/storage-without-credits.json');
 
+/**
+ * Storage do ambiente ADICIONAL (multi-tenant) — pareado ao env principal
+ * via sufixo `-aditional`. Diferente do SECONDARY (bloqueio), o adicional
+ * é uma org separada que compartilha contrato/planos com a principal
+ * (config via /admin/edit_sys_subscription_settings/{principalOrgId}).
+ *
+ * Detalhamento em [skill testar-ambientes-adicionais-twygo].
+ *
+ * Specs consomem via:
+ *   test.use({ storageState: ADITIONAL_STORAGE_PATH, baseURL: aditionalEnv.baseUrl });
+ */
+export const ADITIONAL_STORAGE_PATH = resolve(process.cwd(), 'outputs/.auth/storage-aditional.json');
+
 type EnvConfig = Record<string, { baseUrl: string; credentials: { email: string; password: string }; timeout: number }>;
 
 function isStorageFreshAt(path: string): boolean {
@@ -127,6 +140,19 @@ async function globalSetup(_config: FullConfig): Promise<void> {
       await loginAndPersist(secondaryEnvName, envConfig[secondaryEnvName]!, SECONDARY_STORAGE_PATH);
     } catch (e) {
       log.warn(`Falha ao preparar storage secundário "${secondaryEnvName}": ${(e as Error).message}. Specs que dependem dele serão pulados.`);
+    }
+  }
+
+  // Login adicional: env multi-tenant "extra" pareado ao principal via sufixo
+  // `-aditional`. Diferente do secundário, NÃO é cenário de bloqueio — é uma
+  // org distinta que compartilha contrato com o principal. Specs consomem
+  // via ADITIONAL_STORAGE_PATH + baseURL do env adicional.
+  const aditionalEnvName = `${principal}-aditional`;
+  if (aditionalEnvName in envConfig) {
+    try {
+      await loginAndPersist(aditionalEnvName, envConfig[aditionalEnvName]!, ADITIONAL_STORAGE_PATH);
+    } catch (e) {
+      log.warn(`Falha ao preparar storage adicional "${aditionalEnvName}": ${(e as Error).message}. Specs que dependem dele serão pulados.`);
     }
   }
 }

@@ -50,7 +50,21 @@ import { dismissCommonModals } from '../../../src/utils/modals.js';
 const escapeRegex = (s: string): string => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 export class PaineisListPage {
-  constructor(private readonly page: Page) {}
+  /**
+   * `orgIdOverride` — opcional. Quando ausente, POM usa `getOrgId()` (org do
+   * env principal do project.config). Quando presente, força paths `/o/{X}/...`
+   * com o orgId fornecido — usado por specs de ambientes adicionais (env
+   * multi-tenant pareado) que precisam navegar em outra org sem trocar o
+   * project.config. Ver skill `testar-ambientes-adicionais-twygo`.
+   */
+  constructor(
+    private readonly page: Page,
+    private readonly orgIdOverride?: string,
+  ) {}
+
+  private orgId(): string {
+    return this.orgIdOverride ?? getOrgId();
+  }
 
   // ---------- Navegação ----------
 
@@ -72,8 +86,8 @@ export class PaineisListPage {
    * iniciam em about:blank.
    */
   async openAdminContext(): Promise<void> {
-    if (!this.page.url().includes(`/o/${getOrgId()}/`)) {
-      await this.page.goto(`/o/${getOrgId()}/dashboard`);
+    if (!this.page.url().includes(`/o/${this.orgId()}/`)) {
+      await this.page.goto(`/o/${this.orgId()}/dashboard`);
     }
   }
 
@@ -111,7 +125,7 @@ export class PaineisListPage {
    * atributo (data carrega em paralelo, ~2 tempos de render).
    */
   async goToList(): Promise<void> {
-    await this.page.goto(`/o/${getOrgId()}/use_modes?tab=panels-tab`);
+    await this.page.goto(`/o/${this.orgId()}/use_modes?tab=panels-tab`);
     // NPS Sofia + outros modais oportunistas — fechar antes de qualquer
     // ação na listagem. Sem isso, click no toggle/edit cai no overlay
     // do dialog (regra dura: NUNCA `force:true` pra resolver isso, sempre
@@ -619,7 +633,7 @@ export class PaineisListPage {
    * Usado pelo TC4 que opera fora da listagem de Painéis.
    */
   async goToModosDeUso(): Promise<void> {
-    await this.page.goto(`/o/${getOrgId()}/use_modes?tab=list-tab`);
+    await this.page.goto(`/o/${this.orgId()}/use_modes?tab=list-tab`);
     await this.page
       .getByRole('tab', { name: 'Modos de uso', selected: true })
       .waitFor();
@@ -655,7 +669,7 @@ export class PaineisListPage {
    * da listagem.
    */
   async openNewPanelForm(): Promise<void> {
-    await this.page.goto(`/o/${getOrgId()}/panels/new`);
+    await this.page.goto(`/o/${this.orgId()}/panels/new`);
     // NPS Sofia (e outros oportunistas) pode renderizar no chakra-portal
     // por cima do form e interceptar o click no Salvar (`panel-form-save-button`).
     // Sem este dismiss, `submitNewPanelForm` quebra com "subtree intercepts
@@ -842,7 +856,7 @@ export class PaineisListPage {
   ): Promise<void> {
     const finalItemName = itemName ?? `Item ${panelName}`;
     await this.page.goto(
-      `/o/${getOrgId()}/use_modes/${useModeId}/use_mode_itens/new`,
+      `/o/${this.orgId()}/use_modes/${useModeId}/use_mode_itens/new`,
     );
     // Mesmo motivo de openNewPanelForm: NPS pode interceptar o submit
     // (`#use-model-submit`) via chakra-portal. Ver skill `fechar-modais-twygo`.
@@ -903,7 +917,7 @@ export class PaineisListPage {
   ): Promise<void> {
     const finalItemName = itemName ?? `Item ${panelName}`;
     await this.page.goto(
-      `/o/${getOrgId()}/use_modes/${useModeId}/edit?tab=items`,
+      `/o/${this.orgId()}/use_modes/${useModeId}/edit?tab=items`,
     );
     const row = this.getMenuItemRowByName(finalItemName);
     await row.waitFor();
@@ -938,7 +952,7 @@ export class PaineisListPage {
     const finalItemName = itemName ?? `Item ${panelName}`;
     try {
       await this.page.goto(
-        `/o/${getOrgId()}/use_modes/${useModeId}/edit?tab=items`,
+        `/o/${this.orgId()}/use_modes/${useModeId}/edit?tab=items`,
       );
       const row = this.getMenuItemRowByName(finalItemName);
       const exists = (await row.count()) > 0;
@@ -1082,7 +1096,7 @@ export class PaineisListPage {
    * dispara modal — o bloqueio é só ao RE-ATIVAR com painel vinculado inativo.
    */
   async ensureMenuItemInactive(useModeId: number, itemName: string): Promise<void> {
-    await this.page.goto(`/o/${getOrgId()}/use_modes/${useModeId}/edit?tab=items`);
+    await this.page.goto(`/o/${this.orgId()}/use_modes/${useModeId}/edit?tab=items`);
     await dismissCommonModals(this.page);
     const input = this.getMenuItemActiveSwitchInput(itemName);
     await input.waitFor({ state: 'attached' });
