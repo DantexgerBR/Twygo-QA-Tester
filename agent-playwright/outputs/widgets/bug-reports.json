@@ -1,0 +1,322 @@
+{
+  "generatedAt": "2026-05-14T12:56:29.019Z",
+  "project": "widgets",
+  "totalRed": 3,
+  "reports": [
+    {
+      "id": "layout-das-abas__cancelar-edicao-com-alteracoes-nao-salvas",
+      "title": "Cancelar edição com alterações não salvas — TimeoutError: locator.click: Timeout 30000ms exceeded.",
+      "testsuite": "Layout das abas",
+      "testcase": "Cancelar edição com alterações não salvas",
+      "file": "projects/widgets/tests/features/layout-das-abas/cancelar-edicao-com-alteracoes.spec.ts",
+      "status": "failed",
+      "durationMs": 228761,
+      "categoriaSugerida": "spec-fragil",
+      "categoriaConfianca": "media",
+      "categoriaJustificativa": "Timeout sem HTTP error — possível wait/seletor frágil. Confirmar via chrome-mcp",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-widgets",
+        "baseUrl": "https://widgets.stage.twygoead.com/",
+        "orgId": "36988",
+        "browser": "chromium",
+        "user": "claude@teste.com"
+      },
+      "buildCommit": "3eafe19",
+      "generatedAt": "2026-05-14T12:56:29.019Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Setup — painel com 1 widget criando alteração não salva",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "2. Clicar 'Cancelar' e capturar beforeunload dialog nativo (dismiss)",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for getByTestId('panel-layout-cancel-button')\n    - locator resolved to <button type=\"button\" class=\"chakra-button css-7vf75e\" data-test-id=\"panel-layout-cancel-button\">Cancelar</button>\n  - attempting click action\n    - waiting for element to be visible, enabled and stable\n    - element is visible, enabled and stable\n    - scrolling into view if needed\n    - done scrolling\n    - performing click action\n",
+      "errorLocation": "C:\\Claude\\Widgets\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\layout-das-abas\\cancelar-edicao-com-alteracoes.spec.ts:49:60",
+      "network": [
+        {
+          "method": "GET",
+          "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
+          "status": 500,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
+          "status": 500,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
+          "status": 500,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
+          "status": 500,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
+          "status": 500,
+          "inScope": false
+        }
+      ],
+      "console": [],
+      "attachments": [
+        {
+          "name": "step-01-1-Setup-painel-com-1-widget-criando-altera-o-n-o-salva",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-c08c6-o-com-alterações-não-salvas-chromium/attachments/step-01-1-Setup-painel-com-1-widget-criando-altera-o-n-o-salva-c37524779dd363f6f1bb2933982cb80abeabefe9.png"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-c08c6-o-com-alterações-não-salvas-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-c08c6-o-com-alterações-não-salvas-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "36988",
+        "userId": null
+      }
+    },
+    {
+      "id": "layout-das-abas__salvar-layout-pela-barra-de-rodape",
+      "title": "Salvar layout pela barra de rodapé — Error: expect(locator).toHaveCount(expected) failed",
+      "testsuite": "Layout das abas",
+      "testcase": "Salvar layout pela barra de rodapé",
+      "file": "projects/widgets/tests/features/layout-das-abas/salvar-layout-rodape.spec.ts",
+      "status": "failed",
+      "durationMs": 81083,
+      "categoriaSugerida": "spec-fragil",
+      "categoriaConfianca": "alta",
+      "categoriaJustificativa": "Locator bate em N elementos — seletor não-único",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-widgets",
+        "baseUrl": "https://widgets.stage.twygoead.com/",
+        "orgId": "36988",
+        "browser": "chromium",
+        "user": "claude@teste.com"
+      },
+      "buildCommit": "3eafe19",
+      "generatedAt": "2026-05-14T12:56:29.019Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Setup — painel com 1 widget adicionado, toast limpo",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "2. Clicar 'Salvar Layout' (force:true por causa do iframe HubSpot)",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 3,
+          "action": "3. Recarregar página e validar persistência do layout",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: expect(locator).toHaveCount(expected) failed\n\nLocator:  locator('[data-test-id^=\"widgets-grid-item-\"]')\nExpected: 1\nReceived: 0\nTimeout:  10000ms\n\nCall log:\n  - Expect \"toHaveCount\" with timeout 10000ms\n  - waiting for locator('[data-test-id^=\"widgets-grid-item-\"]')\n    13 × locator resolved to 0 elements\n       - unexpected value \"0\"\n",
+      "errorLocation": "C:\\Claude\\Widgets\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\layout-das-abas\\salvar-layout-rodape.spec.ts:63:47",
+      "network": [
+        {
+          "method": "GET",
+          "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
+          "status": 500,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
+          "status": 500,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
+          "status": 500,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
+          "status": 500,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
+          "status": 500,
+          "inScope": false
+        }
+      ],
+      "console": [],
+      "attachments": [
+        {
+          "name": "step-01-1-Setup-painel-com-1-widget-adicionado-toast-limpo",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-7f9ad-layout-pela-barra-de-rodapé-chromium/attachments/step-01-1-Setup-painel-com-1-widget-adicionado-toast-limpo-68c2e37049641ec93f05f7e3d15be82af529d0e6.png"
+        },
+        {
+          "name": "step-02-2-Clicar-Salvar-Layout-force-true-por-causa-do-iframe-HubSpo",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-7f9ad-layout-pela-barra-de-rodapé-chromium/attachments/step-02-2-Clicar-Salvar-Layout-force-true-por-causa-do-iframe-HubSpo-d9416e17614abec6b27fbc41bc26a3c649220219.png"
+        },
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-7f9ad-layout-pela-barra-de-rodapé-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-7f9ad-layout-pela-barra-de-rodapé-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-7f9ad-layout-pela-barra-de-rodapé-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-7f9ad-layout-pela-barra-de-rodapé-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-7f9ad-layout-pela-barra-de-rodapé-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "36988",
+        "userId": null
+      }
+    },
+    {
+      "id": "layout-das-abas__toolbar-permanece-fixa-ao-rolar-a-area-de-layout",
+      "title": "Toolbar permanece fixa ao rolar a área de layout — TimeoutError: page.goto: Timeout 30000ms exceeded.",
+      "testsuite": "Layout das abas",
+      "testcase": "Toolbar permanece fixa ao rolar a área de layout",
+      "file": "projects/widgets/tests/features/layout-das-abas/toolbar-sticky-rolar.spec.ts",
+      "status": "failed",
+      "durationMs": 38797,
+      "categoriaSugerida": "spec-fragil",
+      "categoriaConfianca": "media",
+      "categoriaJustificativa": "Timeout sem HTTP error — possível wait/seletor frágil. Confirmar via chrome-mcp",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-widgets",
+        "baseUrl": "https://widgets.stage.twygoead.com/",
+        "orgId": "36988",
+        "browser": "chromium",
+        "user": "claude@teste.com"
+      },
+      "buildCommit": "3eafe19",
+      "generatedAt": "2026-05-14T12:56:29.019Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Setup — painel com 4 widgets para gerar altura suficiente pra scroll",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "TimeoutError: page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"https://widgets.stage.twygoead.com/o/36988/panels/new\", waiting until \"load\"\n",
+      "errorLocation": "C:\\Claude\\Widgets\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\pages\\PainelFormPage.ts:42:21",
+      "network": [
+        {
+          "method": "GET",
+          "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
+          "status": 500,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
+          "status": 500,
+          "inScope": false
+        }
+      ],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-960fe-a-ao-rolar-a-área-de-layout-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-960fe-a-ao-rolar-a-área-de-layout-chromium/video.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-960fe-a-ao-rolar-a-área-de-layout-chromium/video-1.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-960fe-a-ao-rolar-a-área-de-layout-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-960fe-a-ao-rolar-a-área-de-layout-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "36988",
+        "userId": null
+      }
+    }
+  ]
+}

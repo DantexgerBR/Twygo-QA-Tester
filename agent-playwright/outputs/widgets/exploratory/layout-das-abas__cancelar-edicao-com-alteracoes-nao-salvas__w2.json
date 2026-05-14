@@ -1,0 +1,141 @@
+{
+  "suite": "Layout das abas",
+  "test": "Cancelar edição com alterações não salvas",
+  "file": "C:\\Claude\\Widgets\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\layout-das-abas\\cancelar-edicao-com-alteracoes.spec.ts",
+  "workerIndex": 2,
+  "startedAt": "2026-05-14T12:51:28.451Z",
+  "finishedAt": "2026-05-14T12:55:22.921Z",
+  "findings": [
+    {
+      "kind": "console_error",
+      "severity": "error",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+      "message": "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+      "inScope": false
+    },
+    {
+      "kind": "http_error",
+      "severity": "error",
+      "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
+      "message": "HTTP 500 em GET https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
+      "detail": {
+        "status": 500,
+        "method": "GET",
+        "resourceType": "xhr"
+      },
+      "inScope": false
+    },
+    {
+      "kind": "console_error",
+      "severity": "error",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+      "message": "Failed to load resource: the server responded with a status of 500 ()",
+      "inScope": false
+    },
+    {
+      "kind": "http_error",
+      "severity": "error",
+      "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
+      "message": "HTTP 500 em GET https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
+      "detail": {
+        "status": 500,
+        "method": "GET",
+        "resourceType": "xhr"
+      },
+      "inScope": false
+    },
+    {
+      "kind": "console_error",
+      "severity": "error",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+      "message": "Failed to load resource: the server responded with a status of 500 ()",
+      "inScope": false
+    },
+    {
+      "kind": "console_error",
+      "severity": "error",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803496/edit",
+      "message": "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+      "inScope": false
+    },
+    {
+      "kind": "console_error",
+      "severity": "error",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803496/edit",
+      "message": "Socket error: ServerError: Internal server error.",
+      "inScope": false
+    },
+    {
+      "kind": "http_error",
+      "severity": "error",
+      "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
+      "message": "HTTP 500 em GET https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
+      "detail": {
+        "status": 500,
+        "method": "GET",
+        "resourceType": "xhr"
+      },
+      "inScope": false
+    },
+    {
+      "kind": "console_error",
+      "severity": "error",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803496/edit",
+      "message": "Failed to load resource: the server responded with a status of 500 ()",
+      "inScope": false
+    },
+    {
+      "kind": "console_error",
+      "severity": "error",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803496/edit?tab=layouts",
+      "message": "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+      "inScope": false
+    },
+    {
+      "kind": "console_error",
+      "severity": "error",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803496/edit?tab=layouts",
+      "message": "Socket error: ServerError: Internal server error.",
+      "inScope": false
+    },
+    {
+      "kind": "http_error",
+      "severity": "error",
+      "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
+      "message": "HTTP 500 em GET https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
+      "detail": {
+        "status": 500,
+        "method": "GET",
+        "resourceType": "xhr"
+      },
+      "inScope": false
+    },
+    {
+      "kind": "console_error",
+      "severity": "error",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803496/edit?tab=layouts",
+      "message": "Failed to load resource: the server responded with a status of 500 ()",
+      "inScope": false
+    },
+    {
+      "kind": "http_error",
+      "severity": "error",
+      "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
+      "message": "HTTP 500 em GET https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
+      "detail": {
+        "status": 500,
+        "method": "GET",
+        "resourceType": "xhr"
+      },
+      "inScope": false
+    },
+    {
+      "kind": "console_error",
+      "severity": "error",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803496/edit?tab=layouts",
+      "message": "Failed to load resource: the server responded with a status of 500 ()",
+      "inScope": false
+    }
+  ],
+  "coverage": []
+}

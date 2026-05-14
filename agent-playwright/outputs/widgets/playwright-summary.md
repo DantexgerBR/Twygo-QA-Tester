@@ -1,27 +1,33 @@
 # Resumo Playwright — Widgets
 
-**Última run** (per-suite) · 12/05/2026, 22:11:50
+**Última run** (all-suites) · 14/05/2026, 09:56:39
 
 | Total | ✅ Aprovados | ❌ Falhas | ⊘ Ignorados | Duração |
 |---:|---:|---:|---:|---:|
-| 5 | 0 | 4 | 1 | 43.6s |
+| 11 | 8 | 3 | 0 | 889.4s |
 
-> **Escopo:** Apenas testsuite contendo "Ativar / Inativar painel"
+> **Escopo:** Todas as testsuites (modo padrão)
 > **Ambiente:** `staging-widgets` · **Browsers:** chromium
 
 ## Resultados
 
 | Status | Testsuite | Caso | Duração | Resumo |
 |:---:|---|---|---:|---|
-| ❌ | Ativar / Inativar painel | Ativar um painel previamente inativo | 0.00s | Error: aguardando toggle ou modal após click no switch de "Painel Ativar TC2 w0-1778634638418" |
-| ❌ | Ativar / Inativar painel | Inativar um painel não associado a nenhum modo de uso | 12.78s | Error: aguardando toggle ou modal após click no switch de "Painel Inativar TC1 w1-1778634638397" |
-| ❌ | Ativar / Inativar painel | Tentar inativar painel associado a um ou mais modos de uso | 18.32s | O elemento esperado não apareceu na tela (locator: locator('.chakra-modal__content').filter({ has: locator('[data-test-id="panel-in-use-modal-confirm"]') })). |
-| ⊘ | Ativar / Inativar painel | Tentar reativar modo de uso vinculado a um painel inativo | 0.62s | Marcado para revisão (test.fixme): Bloqueado por bug env-específico no staging-widgets (org 36988): GET /panels/{id}/linked_menus retorna 500 (NoMethodError em use_mode_item.rb#title_for, mesma raiz do TC3) APENAS na sessão automatizada como user "Claude Agents", causando PATCH /panels/{id}/change_status → 422 e falha em ensureInactive() do seed. Fluxo manual passa no mesmo env via Jam: jam.dev/c/89dc08fe-9048-4701-a018-9b34c1ddcc80. Infra do spec (POM helpers, beforeAll completo, asserção #toast-inactive-panel) está pronta — quando o backend fixar title_for, remover este fixme destrava o teste sem mais mudanças. |
-| ❌ | Ativar / Inativar painel | Verificar persistência do estado Ativo após reload | 11.92s | Error: aguardando toggle ou modal após click no switch de "Painel Persistencia TC5 w4-1778634665234" |
+| ✅ | Layout das abas | TC11 · Validar acessibilidade por teclado aba 'Layout' | 85.25s | — |
+| ✅ | Layout das abas | TC5 · Ativar switch 'Permitir reorganizar widgets' e mover widget | 82.20s | — |
+| ❌ | Layout das abas | TC9 · Cancelar edição com alterações não salvas | 228.76s | Não foi possível clicar o elemento — ele não ficou disponível em 30s (locator: getByTestId('panel-layout-cancel-button')). |
+| ✅ | Layout das abas | TC7 · Estado vazio da aba sem widgets | 86.47s | — |
+| ❌ | Layout das abas | TC8 · Salvar layout pela barra de rodapé | 81.08s | Error: expect(locator).toHaveCount(expected) failed |
+| ✅ | Layout das abas | TC6 · Switch desativado: tentar arrastar widget | 60.83s | — |
+| ❌ | Layout das abas | TC10 · Toolbar permanece fixa ao rolar a área de layout | 38.80s | TimeoutError: page.goto: Timeout 30000ms exceeded. |
+| ✅ | Layout das abas | TC3 · Trocar visualização para Mobile (360) e validar alerta | 63.12s | — |
+| ✅ | Layout das abas | TC2 · Trocar visualização para Tablet (768) e validar alerta | 65.00s | — |
+| ✅ | Layout das abas | TC1 · Validar barra de ferramentas fixa no topo da área de layout | 55.85s | — |
+| ✅ | Layout das abas | TC4 · Voltar para visualização Desktop após Tablet/Mobile | 42.01s | — |
 
 ## Onde encontrar mais
 
-- 📋 [Detalhamento desta run](reports/ativar-inativar-painel_20260512-221150/index.md) — KPIs por testsuite, links pra cases e findings exploratórios
-- 🔍 [Casos de teste detalhados](reports/ativar-inativar-painel_20260512-221150/tests.md) — passos, evidências, bug-report pronto
-- 🐛 [Validação exploratória](reports/ativar-inativar-painel_20260512-221150/exploratory.md) — console errors, axe, HTTP, cobertura
-- 📦 Traces de cada falha em `reports/ativar-inativar-painel_20260512-221150/artifacts/` (self-contained) — abrir com `npx playwright show-trace <path>`
+- 📋 [Detalhamento desta run](reports/all-suites_20260514-095639/index.md) — KPIs por testsuite, links pra cases e findings exploratórios
+- 🔍 [Casos de teste detalhados](reports/all-suites_20260514-095639/tests.md) — passos, evidências, bug-report pronto
+- 🐛 [Validação exploratória](reports/all-suites_20260514-095639/exploratory.md) — console errors, axe, HTTP, cobertura
+- 📦 Traces de cada falha em `reports/all-suites_20260514-095639/artifacts/` (self-contained) — abrir com `npx playwright show-trace <path>`

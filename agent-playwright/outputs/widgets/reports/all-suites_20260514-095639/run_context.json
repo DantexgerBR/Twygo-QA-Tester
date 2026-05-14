@@ -1,0 +1,11 @@
+{
+  "runId": "all-suites_20260514-095639",
+  "mode": "all-suites",
+  "suiteFilter": null,
+  "projectName": "Widgets",
+  "environment": "staging-widgets",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-14T12:56:39.612Z"
+}
