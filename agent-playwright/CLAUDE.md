@@ -250,6 +250,42 @@ Dois modos:
 de severidade `error` (console error, page error, HTTP 5xx, axe critical) a
 falhas explícitas. Default: informativos.
 
+### 4.1. Evidências commitáveis vs intermediários gitignored
+
+Fluxo de fases produz dois grupos de artefatos com tratamento git distinto:
+
+| Grupo | Onde fica | Git | Quem consome |
+|---|---|---|---|
+| **Intermediários** (Fases 5/5.5) | `outputs/<slug>/test-artifacts/` · `outputs/<slug>/exploratory/` · `outputs/<slug>/exploratory-findings.json` · `outputs/<slug>/test-results.json` · `outputs/<slug>/playwright-summary.md` | **gitignored** (`outputs/**/<paths>`) | Input do report-generator (Fase 6). Não versionar |
+| **Report self-contained** (Fase 6) | `outputs/<slug>/reports/<slug>_<ts>/` (com sub-`artifacts/` + `bug-reports/` + `index.md` + `tests.md` + `exploratory.md` + `*.json`) | **commitado** (`outputs/**/reports/` NÃO está no gitignore) | QAs auxiliares analisando run histórica |
+| **Decisão QA** | `outputs/<slug>/triage-report.md` · `outputs/<slug>/bug-reports.json` · `outputs/<slug>/bug-reports/` | **commitado** | Próxima rodada do agente lê triage; bug-reports viram task |
+
+**Por quê dois grupos**: report-generator copia attachments (screenshots step, `test-finished-*.png`, `trace.zip`, `video.webm`, `error-context.md`) para `<reportDir>/artifacts/<test-folder>/` durante render. ReportDir vira self-contained — QA auxiliar abre 1 pasta e tem TUDO (sumário, detalhe por teste, exploratórios agregados, bug-reports, artifacts). Originais em `test-artifacts/` ficam duplicados → gitignored sem perda. Ver memory `feedback_archive_artifacts_in_report`.
+
+### 4.2. Pré-condição: rodar `agent:report` após `playwright test` standalone
+
+Se você rodou via **orquestrador** (`npm run agent:suite -- --suite <slug>` ou `agent:regression`), Fase 6 (`twygo-report-generator`) executa auto — reportDir gerado, evidências commitáveis.
+
+Se você rodou **`npx playwright test` direto** (smoke/debug), o reportDir NÃO existe. Para gerar manualmente:
+
+```bash
+PROJECT=<slug> npm run agent:report
+```
+
+Consome `outputs/<slug>/test-results.json` (+ `exploratory-findings.json` se a fixture exploratória gravou) e produz `outputs/<slug>/reports/<slug>_<ts>/`. **Sem esse passo, evidências ficam locais e não vão pro git** — outros QAs não conseguem analisar a run.
+
+Regra dura: **toda run que vai virar commit precisa passar pelo report-generator**. Se rodar Playwright direto pra commitar resultados, lembre de rodar `agent:report` antes do `git add`.
+
+### 4.3. Windows: `core.longpaths`
+
+Paths gerados pelo report-generator (combinando slug do projeto + run-id + test-folder PT-BR transliterado + step name + SHA hash) excedem `MAX_PATH=260` do Windows. Habilitar uma vez por máquina:
+
+```bash
+git config --global core.longpaths true
+```
+
+Sem isso, `git add outputs/<slug>/reports/` falha com `Filename too long`. Detalhe em skill `debugar-filename-too-long-windows`.
+
 ---
 
 ## 5. Tradução de Prosa TestLink → Playwright
