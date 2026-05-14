@@ -62,7 +62,7 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 - 📦 **Trace** — [`trace.zip`](artifacts/projects-widgets-tests-fea-f5690-ade-por-teclado-aba-Layout--chromium/trace.zip)
 
   ```bash
-  npx playwright show-trace outputs/widgets/reports/all-suites_20260514-102442/artifacts/projects-widgets-tests-fea-f5690-ade-por-teclado-aba-Layout--chromium/trace.zip
+  npx playwright show-trace outputs/widgets/reports/layout-das-abas_20260514-110959/artifacts/projects-widgets-tests-fea-f5690-ade-por-teclado-aba-Layout--chromium/trace.zip
   ```
 
 - 🎥 **Vídeo** — [`video.webm`](artifacts/projects-widgets-tests-fea-f5690-ade-por-teclado-aba-Layout--chromium/video.webm)
@@ -121,7 +121,7 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 - 📦 **Trace** — [`trace.zip`](artifacts/projects-widgets-tests-fea-66a07-izar-widgets-e-mover-widget-chromium/trace.zip)
 
   ```bash
-  npx playwright show-trace outputs/widgets/reports/all-suites_20260514-102442/artifacts/projects-widgets-tests-fea-66a07-izar-widgets-e-mover-widget-chromium/trace.zip
+  npx playwright show-trace outputs/widgets/reports/layout-das-abas_20260514-110959/artifacts/projects-widgets-tests-fea-66a07-izar-widgets-e-mover-widget-chromium/trace.zip
   ```
 
 - 🎥 **Vídeo** — [`video.webm`](artifacts/projects-widgets-tests-fea-66a07-izar-widgets-e-mover-widget-chromium/video.webm)
@@ -180,7 +180,7 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 - 📦 **Trace** — [`trace.zip`](artifacts/projects-widgets-tests-fea-c08c6-o-com-alterações-não-salvas-chromium/trace.zip)
 
   ```bash
-  npx playwright show-trace outputs/widgets/reports/all-suites_20260514-102442/artifacts/projects-widgets-tests-fea-c08c6-o-com-alterações-não-salvas-chromium/trace.zip
+  npx playwright show-trace outputs/widgets/reports/layout-das-abas_20260514-110959/artifacts/projects-widgets-tests-fea-c08c6-o-com-alterações-não-salvas-chromium/trace.zip
   ```
 
 - 🎥 **Vídeo** — [`video.webm`](artifacts/projects-widgets-tests-fea-c08c6-o-com-alterações-não-salvas-chromium/video.webm)
@@ -239,7 +239,7 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 - 📦 **Trace** — [`trace.zip`](artifacts/projects-widgets-tests-fea-e27f8-do-vazio-da-aba-sem-widgets-chromium/trace.zip)
 
   ```bash
-  npx playwright show-trace outputs/widgets/reports/all-suites_20260514-102442/artifacts/projects-widgets-tests-fea-e27f8-do-vazio-da-aba-sem-widgets-chromium/trace.zip
+  npx playwright show-trace outputs/widgets/reports/layout-das-abas_20260514-110959/artifacts/projects-widgets-tests-fea-e27f8-do-vazio-da-aba-sem-widgets-chromium/trace.zip
   ```
 
 - 🎥 **Vídeo** — [`video.webm`](artifacts/projects-widgets-tests-fea-e27f8-do-vazio-da-aba-sem-widgets-chromium/video.webm)
@@ -297,7 +297,7 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 - 📦 **Trace** — [`trace.zip`](artifacts/projects-widgets-tests-fea-7f9ad-layout-pela-barra-de-rodapé-chromium/trace.zip)
 
   ```bash
-  npx playwright show-trace outputs/widgets/reports/all-suites_20260514-102442/artifacts/projects-widgets-tests-fea-7f9ad-layout-pela-barra-de-rodapé-chromium/trace.zip
+  npx playwright show-trace outputs/widgets/reports/layout-das-abas_20260514-110959/artifacts/projects-widgets-tests-fea-7f9ad-layout-pela-barra-de-rodapé-chromium/trace.zip
   ```
 
 - 🎥 **Vídeo** — [`video.webm`](artifacts/projects-widgets-tests-fea-7f9ad-layout-pela-barra-de-rodapé-chromium/video.webm)
@@ -329,7 +329,7 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 | Senha | ${TWYGO_STAGING_WIDGETS_PASSWORD} |
 | orgId | 36988 |
 | Outros | Browser: chromium |
-| Outros | runId: all-suites_20260514-102442 |
+| Outros | runId: layout-das-abas_20260514-110959 |
 | Outros | Duração até a falha: 84.35s |
 | Outros | Step impactado: 3. 3. Recarregar página e validar persistência do layout |
 
@@ -368,7 +368,7 @@ Informações
 - ID do ambiente (orgId): 36988
 - Outros:
   - Browser: chromium
-  - runId: all-suites_20260514-102442
+  - runId: layout-das-abas_20260514-110959
   - Duração até a falha: 84.35s
   - Step impactado: 3. 3. Recarregar página e validar persistência do layout
 
@@ -382,7 +382,7 @@ Evidências
 - Trace completo do Playwright (.zip) — `npx playwright show-trace`: artifacts/projects-widgets-tests-fea-7f9ad-layout-pela-barra-de-rodapé-chromium/trace.zip
 
 Execução
-- runId: all-suites_20260514-102442
+- runId: layout-das-abas_20260514-110959
 - environment.json: staging-widgets
 - testsuite: Layout das abas
 - testcase: Salvar layout pela barra de rodapé
@@ -462,7 +462,7 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 - 📦 **Trace** — [`trace.zip`](artifacts/projects-widgets-tests-fea-c08e5-vado-tentar-arrastar-widget-chromium/trace.zip)
 
   ```bash
-  npx playwright show-trace outputs/widgets/reports/all-suites_20260514-102442/artifacts/projects-widgets-tests-fea-c08e5-vado-tentar-arrastar-widget-chromium/trace.zip
+  npx playwright show-trace outputs/widgets/reports/layout-das-abas_20260514-110959/artifacts/projects-widgets-tests-fea-c08e5-vado-tentar-arrastar-widget-chromium/trace.zip
   ```
 
 - 🎥 **Vídeo** — [`video.webm`](artifacts/projects-widgets-tests-fea-c08e5-vado-tentar-arrastar-widget-chromium/video.webm)
@@ -521,7 +521,7 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 - 📦 **Trace** — [`trace.zip`](artifacts/projects-widgets-tests-fea-960fe-a-ao-rolar-a-área-de-layout-chromium/trace.zip)
 
   ```bash
-  npx playwright show-trace outputs/widgets/reports/all-suites_20260514-102442/artifacts/projects-widgets-tests-fea-960fe-a-ao-rolar-a-área-de-layout-chromium/trace.zip
+  npx playwright show-trace outputs/widgets/reports/layout-das-abas_20260514-110959/artifacts/projects-widgets-tests-fea-960fe-a-ao-rolar-a-área-de-layout-chromium/trace.zip
   ```
 
 - 🎥 **Vídeo** — [`video.webm`](artifacts/projects-widgets-tests-fea-960fe-a-ao-rolar-a-área-de-layout-chromium/video.webm)
@@ -580,7 +580,7 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 - 📦 **Trace** — [`trace.zip`](artifacts/projects-widgets-tests-fea-32f8d-Mobile-360-e-validar-alerta-chromium/trace.zip)
 
   ```bash
-  npx playwright show-trace outputs/widgets/reports/all-suites_20260514-102442/artifacts/projects-widgets-tests-fea-32f8d-Mobile-360-e-validar-alerta-chromium/trace.zip
+  npx playwright show-trace outputs/widgets/reports/layout-das-abas_20260514-110959/artifacts/projects-widgets-tests-fea-32f8d-Mobile-360-e-validar-alerta-chromium/trace.zip
   ```
 
 - 🎥 **Vídeo** — [`video.webm`](artifacts/projects-widgets-tests-fea-32f8d-Mobile-360-e-validar-alerta-chromium/video.webm)
@@ -639,7 +639,7 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 - 📦 **Trace** — [`trace.zip`](artifacts/projects-widgets-tests-fea-06fd1-Tablet-768-e-validar-alerta-chromium/trace.zip)
 
   ```bash
-  npx playwright show-trace outputs/widgets/reports/all-suites_20260514-102442/artifacts/projects-widgets-tests-fea-06fd1-Tablet-768-e-validar-alerta-chromium/trace.zip
+  npx playwright show-trace outputs/widgets/reports/layout-das-abas_20260514-110959/artifacts/projects-widgets-tests-fea-06fd1-Tablet-768-e-validar-alerta-chromium/trace.zip
   ```
 
 - 🎥 **Vídeo** — [`video.webm`](artifacts/projects-widgets-tests-fea-06fd1-Tablet-768-e-validar-alerta-chromium/video.webm)
@@ -693,7 +693,7 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 - 📦 **Trace** — [`trace.zip`](artifacts/projects-widgets-tests-fea-99416-a-no-topo-da-área-de-layout-chromium/trace.zip)
 
   ```bash
-  npx playwright show-trace outputs/widgets/reports/all-suites_20260514-102442/artifacts/projects-widgets-tests-fea-99416-a-no-topo-da-área-de-layout-chromium/trace.zip
+  npx playwright show-trace outputs/widgets/reports/layout-das-abas_20260514-110959/artifacts/projects-widgets-tests-fea-99416-a-no-topo-da-área-de-layout-chromium/trace.zip
   ```
 
 - 🎥 **Vídeo** — [`video.webm`](artifacts/projects-widgets-tests-fea-99416-a-no-topo-da-área-de-layout-chromium/video.webm)
@@ -757,7 +757,7 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 - 📦 **Trace** — [`trace.zip`](artifacts/projects-widgets-tests-fea-0fd86--Desktop-após-Tablet-Mobile-chromium/trace.zip)
 
   ```bash
-  npx playwright show-trace outputs/widgets/reports/all-suites_20260514-102442/artifacts/projects-widgets-tests-fea-0fd86--Desktop-após-Tablet-Mobile-chromium/trace.zip
+  npx playwright show-trace outputs/widgets/reports/layout-das-abas_20260514-110959/artifacts/projects-widgets-tests-fea-0fd86--Desktop-após-Tablet-Mobile-chromium/trace.zip
   ```
 
 - 🎥 **Vídeo** — [`video.webm`](artifacts/projects-widgets-tests-fea-0fd86--Desktop-após-Tablet-Mobile-chromium/video.webm)

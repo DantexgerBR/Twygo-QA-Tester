@@ -1512,6 +1512,23 @@ async function main(): Promise<void> {
   }
 
   const allTests = flatten(playwrightReport.suites);
+
+  // Auto-detect: se modo default 'all-suites' foi inferido por ausência de flag
+  // (CLI standalone via `npm run agent:report`) mas o test-results.json contém
+  // só 1 testsuite distinta, promove pra modo per-suite com o nome detectado.
+  // Cobre o caso de filtrar Playwright via `npx playwright test <path>` e
+  // depois rodar agent:report direto, sem orchestrator. Flag explícita
+  // (--suite ou --regression) sempre tem prioridade.
+  if (args.mode === 'all-suites') {
+    const distinctTestsuites = new Set(allTests.map((t) => t.testsuite));
+    if (distinctTestsuites.size === 1) {
+      const sole = distinctTestsuites.values().next().value as string;
+      log.info(`Auto-detect: única testsuite "${sole}" no test-results.json — promovendo modo all-suites → per-suite.`);
+      args.mode = 'per-suite';
+      args.suite = sole;
+    }
+  }
+
   let tests = allTests;
   let scopeLabel: string;
   let folderPrefix: string;

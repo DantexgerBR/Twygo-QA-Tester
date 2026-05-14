@@ -1,12 +1,12 @@
 # Resumo Playwright — Widgets
 
-**Última run** (all-suites) · 14/05/2026, 10:24:42
+**Última run** (per-suite) · 14/05/2026, 11:09:59
 
 | Total | ✅ Aprovados | ❌ Falhas | ⊘ Ignorados | Duração |
 |---:|---:|---:|---:|---:|
 | 11 | 10 | 1 | 0 | 847.5s |
 
-> **Escopo:** Todas as testsuites (modo padrão)
+> **Escopo:** Apenas testsuite contendo "Layout das abas"
 > **Ambiente:** `staging-widgets` · **Browsers:** chromium
 
 ## Resultados
@@ -27,7 +27,7 @@
 
 ## Onde encontrar mais
 
-- 📋 [Detalhamento desta run](reports/all-suites_20260514-102442/index.md) — KPIs por testsuite, links pra cases e findings exploratórios
-- 🔍 [Casos de teste detalhados](reports/all-suites_20260514-102442/tests.md) — passos, evidências, bug-report pronto
-- 🐛 [Validação exploratória](reports/all-suites_20260514-102442/exploratory.md) — console errors, axe, HTTP, cobertura
-- 📦 Traces de cada falha em `reports/all-suites_20260514-102442/artifacts/` (self-contained) — abrir com `npx playwright show-trace <path>`
+- 📋 [Detalhamento desta run](reports/layout-das-abas_20260514-110959/index.md) — KPIs por testsuite, links pra cases e findings exploratórios
+- 🔍 [Casos de teste detalhados](reports/layout-das-abas_20260514-110959/tests.md) — passos, evidências, bug-report pronto
+- 🐛 [Validação exploratória](reports/layout-das-abas_20260514-110959/exploratory.md) — console errors, axe, HTTP, cobertura
+- 📦 Traces de cada falha em `reports/layout-das-abas_20260514-110959/artifacts/` (self-contained) — abrir com `npx playwright show-trace <path>`

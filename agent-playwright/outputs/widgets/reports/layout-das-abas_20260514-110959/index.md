@@ -1,8 +1,8 @@
 # Relatório de Execução — Twygo QA
 
-**Projeto:** Widgets · **Ambiente:** `staging-widgets` · **Browsers:** chromium · **Gerado em:** 14/05/2026, 10:24:42
+**Projeto:** Widgets · **Ambiente:** `staging-widgets` · **Browsers:** chromium · **Gerado em:** 14/05/2026, 11:09:59
 
-> **Escopo:** Todas as testsuites (modo padrão)
+> **Escopo:** Apenas testsuite contendo "Layout das abas"
 
 > ❌ **1 caso(s) com falha precisam de atenção (1 crítico)**
 >
@@ -18,7 +18,7 @@
 
 | ❌ Erros | ⚠️ Avisos | ℹ️ Informativos | Testsuites c/ findings |
 |---:|---:|---:|---:|
-| 0 | 0 | 0 | 2 |
+| 0 | 0 | 0 | 1 |
 
 ## Por testsuite
 
