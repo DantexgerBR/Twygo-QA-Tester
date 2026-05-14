@@ -1116,4 +1116,157 @@ export class PaineisListPage {
     // retornava 500 e `change_status` 422. Network idle dá tempo de propagar.
     await this.page.waitForLoadState('networkidle');
   }
+
+  // ---------- Pesquisa client-side (testsuite Pesquisa e Filtros) ----------
+  // Re-explorado live 2026-05-13 na org 36988:
+  // - Input de pesquisa tem id estável `#play-interest-search` e placeholder
+  //   "Pesquise por nome ou descrição" (já usado em getSearchInput()).
+  // - Search é client-side: digitar filtra a tabela imediatamente; limpar
+  //   (`fill('')`) restaura a listagem. NÃO há botão "X" para clear — só o
+  //   ícone lupa decorativo dentro do `chakra-input__left-element`.
+  // - Empty state pós-search: o produto injeta uma `<tr><td colspan="5">
+  //   <div class="...">Não há dados para exibir</div></td></tr>` no tbody.
+
+  /**
+   * Preenche o input de pesquisa com `term`. Search é client-side
+   * (re-confirmado live 2026-05-13) — não dispara request, filtra em
+   * memória. Caller deve usar `expect.poll` ou `waitFor` em locator de
+   * resultado para sincronizar, não waitForTimeout.
+   */
+  async searchPanels(term: string): Promise<void> {
+    await this.getSearchInput().fill(term);
+  }
+
+  /**
+   * Limpa o input de pesquisa (volta a listagem completa). Como NÃO existe
+   * botão "X" para clear, usamos `fill('')` — comportamento idêntico a
+   * apagar manualmente o conteúdo.
+   */
+  async clearSearch(): Promise<void> {
+    await this.getSearchInput().fill('');
+  }
+
+  /**
+   * Estado vazio "Não há dados para exibir" renderizado COMO LINHA da tabela
+   * após search sem matches. Ancoramos no `<div>` dentro de `tbody td` com
+   * `colspan` para distinguir do empty state da org sem painéis (que renderiza
+   * em outro contexto — ver `getEmptyStateText`).
+   * REVISAR: aguardando data-test-id "paineis-list-empty-state-no-results".
+   */
+  getEmptyStateNoResults(): Locator {
+    return this.page.locator('tbody td[colspan]', { hasText: 'Não há dados para exibir' });
+  }
+
+  // ---------- Filtros (drawer Lista de filtros + Filtro rápido) ----------
+  // Re-explorado live 2026-05-13. Ver SKILL testar-filtro-drawer-twygo.
+
+  /**
+   * Botão "Limpar filtro" (singular) que aparece no topo da listagem quando
+   * há filtro ativo. Texto literal "Limpar filtro" precedido do ícone
+   * `filter_alt_off`. REVISAR: aguardando data-test-id.
+   */
+  getClearFilterButton(): Locator {
+    return this.page.locator('#clear-filter');
+  }
+
+  /**
+   * Click em "Limpar filtro" — remove filtro ativo. Idempotente: só clica
+   * se o botão estiver visível. Aguarda o botão desaparecer (condition-based).
+   */
+  async clearFilter(): Promise<void> {
+    const clearBtn = this.getClearFilterButton();
+    if (await clearBtn.isVisible().catch(() => false)) {
+      await clearBtn.click();
+      await expect(clearBtn).toHaveCount(0, { timeout: 5_000 });
+    }
+  }
+
+  /**
+   * Aplica um filtro padrão do drawer "Lista de filtros". Click no label
+   * wrapper (input Chakra é hidden clip 1×1). Pós-condição: #clear-filter visível.
+   */
+  async applyDefaultFilter(name: 'Painéis ativos' | 'Painéis inativos'): Promise<void> {
+    await this.getFilterButton().click();
+    await dismissCommonModals(this.page);
+    const radioId = name === 'Painéis ativos' ? '#default-filters-0' : '#default-filters-1';
+    await this.page.locator(`label.chakra-radio:has(${radioId})`).click();
+    await this.page.locator('#list-filter-apply').click();
+    await expect(this.getClearFilterButton()).toBeVisible({ timeout: 10_000 });
+  }
+
+  /**
+   * Aplica filtro por coluna via fluxo Novo do drawer. Detalhamento dos
+   * controles por coluna na skill `testar-filtro-drawer-twygo`.
+   */
+  async applyColumnFilter(opts: {
+    column: 'Nome' | 'Descrição' | 'Ativo' | 'Data de criação';
+    value?: string;
+    dateFrom?: string;
+    dateTo?: string;
+  }): Promise<void> {
+    await this.getFilterButton().click();
+    await dismissCommonModals(this.page);
+    await this.page.locator('.chakra-modal__content').getByText('Novo', { exact: true }).click();
+    await this.page.locator('#menu-button-plus-options-filters').click();
+    // Click NA LABEL do menuitem (não no `[role=menuitem]` direto) — descoberto
+    // 2026-05-11 durante exploração; menuitem-button fecha o menu sem togglar.
+    await this.page
+      .locator('[role="menuitem"]', { hasText: this.menuItemTextForColumn(opts.column) })
+      .locator('label.chakra-checkbox')
+      .click();
+
+    switch (opts.column) {
+      case 'Nome': {
+        if (!opts.value) throw new Error("applyColumnFilter('Nome'): value é obrigatório");
+        await this.page.locator('#option_name').click();
+        await this.page.locator('#option_name input[role="combobox"]').fill(opts.value);
+        await this.page
+          .locator('[id^="react-select-"][id$="-option-0"]')
+          .first()
+          .click();
+        break;
+      }
+      case 'Descrição': {
+        if (!opts.value) throw new Error("applyColumnFilter('Descrição'): value é obrigatório");
+        // ID duplicado entre `<div>` lupa e `<input>` real — prefixar com `input`.
+        await this.page.locator('input#option_description').fill(opts.value);
+        break;
+      }
+      case 'Ativo': {
+        if (!opts.value) throw new Error("applyColumnFilter('Ativo'): value é obrigatório");
+        const inputId = opts.value === 'Sim' ? '#option_is_active-true' : '#option_is_active-false';
+        await this.page.locator(`label.chakra-checkbox:has(${inputId})`).click();
+        break;
+      }
+      case 'Data de criação': {
+        if (!opts.dateFrom || !opts.dateTo) {
+          throw new Error("applyColumnFilter('Data de criação'): dateFrom e dateTo são obrigatórios");
+        }
+        await this.page.locator('#option_created_at-from').fill(opts.dateFrom);
+        await this.page.locator('#option_created_at-to').fill(opts.dateTo);
+        break;
+      }
+    }
+
+    await this.page.locator('#form-filter-apply').click();
+    await expect(this.getClearFilterButton()).toBeVisible({ timeout: 10_000 });
+  }
+
+  private menuItemTextForColumn(column: 'Nome' | 'Descrição' | 'Ativo' | 'Data de criação'): RegExp {
+    if (column === 'Ativo') return /^Ativo\?$/;
+    return new RegExp(`^${escapeRegex(column)}$`);
+  }
+
+  /**
+   * Retorna o nome do primeiro painel da 1ª linha. Prefere `data-item-name`
+   * (estável, mirror do backend); cai pro `td:first-child p` se ausente.
+   */
+  async getFirstPanelName(): Promise<string> {
+    const firstRow = this.page.locator('tbody tr[data-item-name]').first();
+    await firstRow.waitFor({ timeout: 10_000 });
+    const fromAttr = await firstRow.getAttribute('data-item-name');
+    if (fromAttr && fromAttr.trim().length > 0) return fromAttr;
+    const fromText = await firstRow.locator('td:first-child p').textContent();
+    return (fromText ?? '').trim();
+  }
 }

@@ -1124,31 +1124,6 @@ function renderTestcaseDetailPanelMd(
   return lines.join('\n');
 }
 
-/**
- * Copia os attachments dos testes (screenshots, traces, videos, error-context)
- * para `<reportDir>/artifacts/<test-folder>/` e atualiza `t.attachments[i].path`
- * para o destino arquivado. Garante que cada report fique self-contained e
- * sobreviva ao próximo `cleanRunArtifacts()` do orchestrator.
- *
- * Subfolder por teste = basename do dirname original do attachment, que o
- * Playwright já nomeia uniqueificado por test+browser (ex.:
- * `projects-widgets-tests-fea-59657-...-chromium`).
- */
-function archiveAttachments(tests: FlatTest[], reportDir: string): void {
-  const artifactsRoot = join(reportDir, 'artifacts');
-  for (const t of tests) {
-    for (const a of t.attachments) {
-      if (!existsSync(a.path)) continue;
-      const subfolder = basename(dirname(a.path));
-      const destDir = join(artifactsRoot, subfolder);
-      ensureDir(destDir);
-      const destPath = join(destDir, basename(a.path));
-      copyFileSync(a.path, destPath);
-      a.path = destPath;
-    }
-  }
-}
-
 function renderTestsMd(args: {
   byTestsuite: Map<string, FlatTest[]>;
   projectName: string;

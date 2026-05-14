@@ -95,7 +95,9 @@ export class PainelFormPage {
       await this.getDescricaoEditor().fill(descricao);
     }
     await this.getSaveButton().click();
-    await this.page.waitForURL(/\/panels\/\d+\/edit/);
+    // Save backend pode esticar >30s sob load paralelo; bump pra 60s evita
+    // flakiness intermitente em rodadas full-suite (ver bug 32872141).
+    await this.page.waitForURL(/\/panels\/\d+\/edit/, { timeout: 60_000 });
     const match = this.page.url().match(/\/panels\/(\d+)\/edit/);
     if (!match) throw new Error(`Não conseguiu extrair panelId da URL: ${this.page.url()}`);
     return Number(match[1]);
