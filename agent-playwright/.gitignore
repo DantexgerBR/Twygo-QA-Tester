@@ -8,6 +8,22 @@ outputs/test-report.html
 outputs/html-report/
 outputs/test-artifacts/
 
+# outputs/<slug>/ — gerados por execução (qualquer projeto)
+outputs/.auth/
+outputs/**/test-artifacts/
+outputs/**/exploratory/
+outputs/**/exploratory-findings.json
+outputs/**/playwright-summary.md
+outputs/**/test-results.json
+outputs/**/test-analysis.parsed.json
+outputs/**/reports/
+outputs/**/allure-results/
+outputs/**/allure-report/
+# preservar decisão QA (não gerada por execução):
+!outputs/**/triage-report.md
+!outputs/**/bug-reports.json
+!outputs/**/bug-reports/
+
 playwright-report/
 test-results/
 .playwright/
