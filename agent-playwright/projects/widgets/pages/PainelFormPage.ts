@@ -1,6 +1,6 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 import { getOrgId } from '../../../src/utils/environment.js';
-import { dismissCommonModals } from '../../../src/utils/modals.js';
+import { safeGoto } from '../../../src/utils/modals.js';
 
 /**
  * Page Object do formulário de criação/edição de Painel (módulo Widgets).
@@ -39,15 +39,13 @@ export class PainelFormPage {
   // ---------- Navegação ----------
 
   async goToNew(): Promise<void> {
-    await this.page.goto(`/o/${getOrgId()}/panels/new`);
-    await dismissCommonModals(this.page);
+    await safeGoto(this.page, `/o/${getOrgId()}/panels/new`);
     await this.getIdentificacaoTab().waitFor();
   }
 
   async goToEdit(panelId: number, tab: 'identificacao' | 'layouts' = 'identificacao'): Promise<void> {
     const suffix = tab === 'layouts' ? '?tab=layouts' : '';
-    await this.page.goto(`/o/${getOrgId()}/panels/${panelId}/edit${suffix}`);
-    await dismissCommonModals(this.page);
+    await safeGoto(this.page, `/o/${getOrgId()}/panels/${panelId}/edit${suffix}`);
     // App ignora `?tab=layouts` no load inicial — tab Identificação sempre
     // renderiza selected. Sem click explícito, `tabs-navigation-add-button`
     // e `widgets-grid-*` não montam. Validado live 2026-05-13 via Playwright MCP.
