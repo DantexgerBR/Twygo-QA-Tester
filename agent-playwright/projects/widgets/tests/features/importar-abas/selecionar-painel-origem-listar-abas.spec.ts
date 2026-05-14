@@ -10,12 +10,17 @@
 import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js';
 import * as allure from 'allure-js-commons';
 import { PainelFormPage } from '../../../pages/PainelFormPage.js';
+import { cleanupPanels } from '../../../utils/test-cleanup.js';
 import { selecionarPainelOrigemListarAbasData as data } from './selecionar-painel-origem-listar-abas.data.js';
 import { importarAbasSharedData as shared } from './importar-abas.shared.data.js';
 
 test.use({ viewport: { width: 1920, height: 1080 } });
 
 test.describe('Importar abas', () => {
+  test.afterAll(async ({ browser }) => {
+    await cleanupPanels(browser, [data.sourcePanelName, data.destPanelName]);
+  });
+
   test('Selecionar painel de origem e listar abas disponíveis', async ({ page, step }) => {
     await allure.epic('Twygo - Widgets');
     await allure.feature('Importar abas');
