@@ -53,13 +53,13 @@ test.describe('Importar abas', () => {
       await painelForm.getImportTabOption().click();
 
       const panelSelect = page.getByTestId('import-tab-modal-panel-select');
-      await panelSelect.locator('input').fill(data.emptyPanelName);
+      await panelSelect.locator('input[role="combobox"]').fill(data.emptyPanelName);
       await page.getByRole('option', { name: data.emptyPanelName }).click();
     });
 
     await step("3. Verificar mensagem 'Nenhuma aba encontrada' no dropdown 'Aba disponível'", async () => {
       const tabSelect = page.getByTestId('import-tab-modal-tab-select');
-      await tabSelect.locator('input').click();
+      await tabSelect.locator('input[role="combobox"]').click();
 
       // react-select mostra esta mensagem quando não há opções
       await expect(page.getByText('Nenhuma aba encontrada')).toBeVisible();

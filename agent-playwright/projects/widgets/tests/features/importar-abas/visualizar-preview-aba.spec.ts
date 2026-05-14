@@ -90,7 +90,7 @@ test.describe('Importar abas', () => {
 
       // Selecionar o Painel Origem no react-select
       const panelSelect = page.getByTestId('import-tab-modal-panel-select');
-      await panelSelect.locator('input').fill(data.sourcePanelName);
+      await panelSelect.locator('input[role="combobox"]').fill(data.sourcePanelName);
       await page.getByRole('option', { name: data.sourcePanelName }).click();
 
       // Campo 'Aba disponível*' deve aparecer após seleção do painel
@@ -105,7 +105,7 @@ test.describe('Importar abas', () => {
 
       // Abrir dropdown e selecionar "Aba X 2 Widgets"
       // Formato "Aba X 2 Widgets" confirmado live em 2026-05-12/13
-      await tabSelect.locator('input').click();
+      await tabSelect.locator('input[role="combobox"]').click();
       await page.getByRole('option', { name: `${data.tabXName} 2 Widgets` }).click();
 
       // Área de preview — sem data-test-id; identificada pelo heading "Preview da aba"

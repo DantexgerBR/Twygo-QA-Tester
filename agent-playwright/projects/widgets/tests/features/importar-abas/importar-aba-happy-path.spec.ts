@@ -60,13 +60,13 @@ test.describe('Importar abas', () => {
 
       // Selecionar Painel Origem no react-select
       const panelSelect = page.getByTestId('import-tab-modal-panel-select');
-      await panelSelect.locator('input').fill(data.sourcePanelName);
+      await panelSelect.locator('input[role="combobox"]').fill(data.sourcePanelName);
       await page.getByRole('option', { name: data.sourcePanelName }).click();
 
       // Selecionar Aba X no react-select de abas disponíveis
       const tabSelect = page.getByTestId('import-tab-modal-tab-select');
       await expect(tabSelect).toBeVisible();
-      await tabSelect.locator('input').click();
+      await tabSelect.locator('input[role="combobox"]').click();
       await page.getByRole('option', { name: `${data.tabXName} 2 Widgets` }).click();
 
       // Editar nome da nova aba para "Aba Importada"

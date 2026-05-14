@@ -97,7 +97,7 @@ test.describe('Importar abas', () => {
       const panelSelect = page.getByTestId('import-tab-modal-panel-select');
 
       // Digitar o nome do painel no input do react-select para filtrar as opções
-      await panelSelect.locator('input').fill(data.sourcePanelName);
+      await panelSelect.locator('input[role="combobox"]').fill(data.sourcePanelName);
 
       // Clicar na opção com o nome real do painel (react-select mostra nomes reais ao filtrar)
       await page.getByRole('option', { name: data.sourcePanelName }).click();
@@ -113,7 +113,7 @@ test.describe('Importar abas', () => {
       const tabSelect = page.getByTestId('import-tab-modal-tab-select');
 
       // Clicar no input do react-select para abrir o dropdown de abas
-      await tabSelect.locator('input').click();
+      await tabSelect.locator('input[role="combobox"]').click();
 
       // Formato confirmado live 2026-05-12: "Aba X 2 Widgets" e "Aba Y 3 Widgets"
       await expect(page.getByRole('option', { name: `${data.tabXName} 2 Widgets` })).toBeVisible();

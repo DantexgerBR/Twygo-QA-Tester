@@ -69,13 +69,13 @@ test.describe('Importar abas', () => {
 
       // Selecionar Painel Origem
       const panelSelect = page.getByTestId('import-tab-modal-panel-select');
-      await panelSelect.locator('input').fill(data.sourcePanelName);
+      await panelSelect.locator('input[role="combobox"]').fill(data.sourcePanelName);
       await page.getByRole('option', { name: data.sourcePanelName }).click();
 
       // Selecionar Aba X (formato "Aba X 2 Widgets" confirmado live)
       const tabSelect = page.getByTestId('import-tab-modal-tab-select');
       await expect(tabSelect).toBeVisible();
-      await tabSelect.locator('input').click();
+      await tabSelect.locator('input[role="combobox"]').click();
       await page.getByRole('option', { name: `${data.tabXName} 2 Widgets` }).click();
     });
 
