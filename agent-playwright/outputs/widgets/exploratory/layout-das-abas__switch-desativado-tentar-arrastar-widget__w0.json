@@ -3,8 +3,8 @@
   "test": "Switch desativado: tentar arrastar widget",
   "file": "C:\\Claude\\Widgets\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\layout-das-abas\\switch-desativado-tentar-arrastar.spec.ts",
   "workerIndex": 0,
-  "startedAt": "2026-05-14T12:52:54.945Z",
-  "finishedAt": "2026-05-14T12:53:53.558Z",
+  "startedAt": "2026-05-14T13:21:45.583Z",
+  "finishedAt": "2026-05-14T13:22:50.818Z",
   "findings": [
     {
       "kind": "console_error",
@@ -16,41 +16,15 @@
     {
       "kind": "console_error",
       "severity": "error",
-      "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
-      "message": "Socket error: ServerError: Internal server error.",
-      "inScope": false
-    },
-    {
-      "kind": "http_error",
-      "severity": "error",
-      "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
-      "message": "HTTP 500 em GET https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
-      "detail": {
-        "status": 500,
-        "method": "GET",
-        "resourceType": "xhr"
-      },
-      "inScope": false
-    },
-    {
-      "kind": "console_error",
-      "severity": "error",
-      "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
-      "message": "Failed to load resource: the server responded with a status of 500 ()",
-      "inScope": false
-    },
-    {
-      "kind": "console_error",
-      "severity": "error",
-      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803500/edit",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803525/edit",
       "message": "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector",
       "inScope": false
     },
     {
       "kind": "console_error",
       "severity": "error",
-      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803500/edit",
-      "message": "Socket error: ServerError: Internal server error.",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803525/edit",
+      "message": "Framing 'https://www.recaptcha.net/' violates the following report-only Content Security Policy directive: \"frame-ancestors 'self'\". The violation has been logged, but no further action has been taken.\n",
       "inScope": false
     },
     {
@@ -68,28 +42,40 @@
     {
       "kind": "console_error",
       "severity": "error",
-      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803500/edit",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803525/edit",
+      "message": "Failed to load resource: the server responded with a status of 500 ()",
+      "inScope": false
+    },
+    {
+      "kind": "http_error",
+      "severity": "error",
+      "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
+      "message": "HTTP 500 em GET https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
+      "detail": {
+        "status": 500,
+        "method": "GET",
+        "resourceType": "xhr"
+      },
+      "inScope": false
+    },
+    {
+      "kind": "console_error",
+      "severity": "error",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803525/edit",
       "message": "Failed to load resource: the server responded with a status of 500 ()",
       "inScope": false
     },
     {
       "kind": "console_error",
       "severity": "error",
-      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803500/edit?tab=layouts",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803525/edit?tab=layouts",
       "message": "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector",
       "inScope": false
     },
     {
       "kind": "console_error",
       "severity": "error",
-      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803500/edit?tab=layouts",
-      "message": "Socket error: ServerError: Internal server error.",
-      "inScope": false
-    },
-    {
-      "kind": "console_error",
-      "severity": "error",
-      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803500/edit?tab=layouts",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803525/edit?tab=layouts",
       "message": "Socket error: ServerError: Internal server error.",
       "inScope": false
     },
@@ -108,33 +94,14 @@
     {
       "kind": "console_error",
       "severity": "error",
-      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803500/edit?tab=layouts",
-      "message": "Failed to load resource: the server responded with a status of 500 ()",
-      "inScope": false
-    },
-    {
-      "kind": "http_error",
-      "severity": "error",
-      "url": "https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
-      "message": "HTTP 500 em GET https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25",
-      "detail": {
-        "status": 500,
-        "method": "GET",
-        "resourceType": "xhr"
-      },
-      "inScope": false
-    },
-    {
-      "kind": "console_error",
-      "severity": "error",
-      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803500/edit?tab=layouts",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803525/edit?tab=layouts",
       "message": "Failed to load resource: the server responded with a status of 500 ()",
       "inScope": false
     },
     {
       "kind": "a11y_violation",
       "severity": "error",
-      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803500/edit?tab=layouts",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803525/edit?tab=layouts",
       "message": "[a11y/aria-allowed-attr] Elements must only use supported ARIA attributes",
       "detail": {
         "ruleId": "aria-allowed-attr",
@@ -151,16 +118,16 @@
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-allowed-attr?application=playwright",
         "affectedNodes": 1,
         "firstNodeTarget": [
-          "#popover-trigger-\\:r9\\:"
+          "#popover-trigger-\\:r5\\:"
         ],
-        "firstNodeHtml": "<div id=\"popover-trigger-:r9:\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"popover-content-:r9:\" class=\"css-tz0gqg\">"
+        "firstNodeHtml": "<div id=\"popover-trigger-:r5:\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"popover-content-:r5:\" class=\"css-tz0gqg\">"
       },
       "inScope": false
     },
     {
       "kind": "a11y_violation",
       "severity": "error",
-      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803500/edit?tab=layouts",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803525/edit?tab=layouts",
       "message": "[a11y/aria-progressbar-name] ARIA progressbar nodes must have an accessible name",
       "detail": {
         "ruleId": "aria-progressbar-name",
@@ -186,7 +153,7 @@
     {
       "kind": "a11y_violation",
       "severity": "error",
-      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803500/edit?tab=layouts",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803525/edit?tab=layouts",
       "message": "[a11y/color-contrast] Elements must meet minimum color contrast ratio thresholds",
       "detail": {
         "ruleId": "color-contrast",
@@ -215,7 +182,7 @@
     {
       "kind": "a11y_violation",
       "severity": "error",
-      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803500/edit?tab=layouts",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803525/edit?tab=layouts",
       "message": "[a11y/image-alt] Images must have alternative text",
       "detail": {
         "ruleId": "image-alt",
@@ -247,7 +214,7 @@
     {
       "kind": "a11y_violation",
       "severity": "error",
-      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803500/edit?tab=layouts",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803525/edit?tab=layouts",
       "message": "[a11y/label] Form elements must have labels",
       "detail": {
         "ruleId": "label",
@@ -278,7 +245,7 @@
     {
       "kind": "a11y_violation",
       "severity": "warn",
-      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803500/edit?tab=layouts",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803525/edit?tab=layouts",
       "message": "[a11y/landmark-one-main] Document should have one main landmark",
       "detail": {
         "ruleId": "landmark-one-main",
@@ -299,7 +266,7 @@
     {
       "kind": "a11y_violation",
       "severity": "warn",
-      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803500/edit?tab=layouts",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803525/edit?tab=layouts",
       "message": "[a11y/landmark-unique] Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
       "detail": {
         "ruleId": "landmark-unique",
@@ -311,7 +278,7 @@
         "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
         "affectedNodes": 6,
         "firstNodeTarget": [
-          ".chakra-portal:nth-child(27) > div[aria-label=\"Notifications-top\"][role=\"region\"][aria-live=\"polite\"]"
+          ".chakra-portal:nth-child(29) > div[aria-label=\"Notifications-top\"][role=\"region\"][aria-live=\"polite\"]"
         ],
         "firstNodeHtml": "<div role=\"region\" aria-live=\"polite\" aria-label=\"Notifications-top\" id=\"chakra-toast-manager...\" style=\"position: fixed; z-i...\">"
       },
@@ -320,7 +287,7 @@
     {
       "kind": "a11y_violation",
       "severity": "error",
-      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803500/edit?tab=layouts",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803525/edit?tab=layouts",
       "message": "[a11y/list] <ul> and <ol> must only directly contain <li>, <script> or <template> elements",
       "detail": {
         "ruleId": "list",
@@ -346,7 +313,7 @@
     {
       "kind": "a11y_violation",
       "severity": "warn",
-      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803500/edit?tab=layouts",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803525/edit?tab=layouts",
       "message": "[a11y/meta-viewport] Zooming and scaling must not be disabled",
       "detail": {
         "ruleId": "meta-viewport",
@@ -373,7 +340,7 @@
     {
       "kind": "a11y_violation",
       "severity": "warn",
-      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803500/edit?tab=layouts",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803525/edit?tab=layouts",
       "message": "[a11y/page-has-heading-one] Page should contain a level-one heading",
       "detail": {
         "ruleId": "page-has-heading-one",
@@ -394,7 +361,7 @@
     {
       "kind": "a11y_violation",
       "severity": "warn",
-      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803500/edit?tab=layouts",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803525/edit?tab=layouts",
       "message": "[a11y/region] All page content should be contained by landmarks",
       "detail": {
         "ruleId": "region",
@@ -417,7 +384,7 @@
   ],
   "coverage": [
     {
-      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803500/edit?tab=layouts",
+      "url": "https://widgets.stage.twygoead.com/o/36988/panels/803525/edit?tab=layouts",
       "totalInteractive": 132,
       "visibleInteractive": 55,
       "samples": [

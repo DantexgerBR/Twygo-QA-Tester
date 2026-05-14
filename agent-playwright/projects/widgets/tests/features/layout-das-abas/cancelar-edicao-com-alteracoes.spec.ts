@@ -40,16 +40,15 @@ test.describe('Layout das abas', () => {
     });
 
     await step("2. Clicar 'Cancelar' e capturar beforeunload dialog nativo (dismiss)", async () => {
-      // Registrar handler antes do click + criar promise pro evento
-      const dialogPromise = page.waitForEvent('dialog');
-      page.once('dialog', () => {
+      // Dialog beforeunload NATIVO bloqueia o click() até ser resolvido. Handler
+      // precisa chamar dismiss() *dentro* dele — não basta marcar boolean e
+      // dismissar depois. Validado live via chrome-devtools-mcp 2026-05-14.
+      page.on('dialog', async (dialog) => {
         dialogTriggered = true;
+        await dialog.dismiss();
       });
 
       await page.getByTestId('panel-layout-cancel-button').click();
-
-      const dialog = await dialogPromise;
-      await dialog.dismiss();
 
       // URL permanece após dismiss (não navegou)
       await expect(page).toHaveURL(/\/panels\/\d+\/edit\?tab=layouts/);
