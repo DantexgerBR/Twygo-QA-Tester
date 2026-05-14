@@ -1,0 +1,481 @@
+{
+  "generatedAt": "2026-05-14T02:47:55.285Z",
+  "project": "widgets",
+  "totalRed": 6,
+  "reports": [
+    {
+      "id": "importar-abas__auto-preencher-nome-da-nova-aba-com-nome-original-e-validar-limite-de-255-caracteres",
+      "title": "Auto-preencher 'Nome da nova aba' com nome original e validar limite de 255 caracteres — Error: locator.fill: Error: strict mode violation: getByTestId('import-tab-modal",
+      "testsuite": "Importar abas",
+      "testcase": "Auto-preencher 'Nome da nova aba' com nome original e validar limite de 255 caracteres",
+      "file": "projects/widgets/tests/features/importar-abas/auto-preencher-nome-aba-importada.spec.ts",
+      "status": "failed",
+      "durationMs": 33657,
+      "categoriaSugerida": "spec-fragil",
+      "categoriaConfianca": "alta",
+      "categoriaJustificativa": "Locator bate em N elementos — seletor não-único",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-widgets",
+        "baseUrl": "https://widgets.stage.twygoead.com/",
+        "orgId": "36988",
+        "browser": "chromium",
+        "user": "claude@teste.com"
+      },
+      "buildCommit": "72ab290",
+      "generatedAt": "2026-05-14T02:47:55.285Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Criar Painel Origem com Aba X seedada e abrir modal de importar do Painel Destino",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: locator.fill: Error: strict mode violation: getByTestId('import-tab-modal-panel-select').locator('input') resolved to 2 elements:\n    1) <input value=\"\" type=\"text\" tabindex=\"0\" role=\"combobox\" autocorrect=\"off\" autocomplete=\"off\" spellcheck=\"false\" aria-haspopup=\"true\" autocapitalize=\"none\" aria-expanded=\"false\" aria-autocomplete=\"list\" aria-activedescendant=\"\" id=\"react-select-3-input\" class=\"select-field__input\" aria-describedby=\"react-select-3-placeholder\"/> aka locator('#react-select-3-input')\n    2) <input value=\"\" type=\"hidden\" name=\"import-tab-panel-select\"/> aka locator('input[name=\"import-tab-panel-select\"]')\n\nCall log:\n  - waiting for getByTestId('import-tab-modal-panel-select').locator('input')\n",
+      "errorLocation": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\auto-preencher-nome-aba-importada.spec.ts:72:42",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-03512-ar-limite-de-255-caracteres-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-03512-ar-limite-de-255-caracteres-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-03512-ar-limite-de-255-caracteres-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-03512-ar-limite-de-255-caracteres-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-03512-ar-limite-de-255-caracteres-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "36988",
+        "userId": null
+      }
+    },
+    {
+      "id": "importar-abas__editar-aba-importada",
+      "title": "Editar aba importada — Error: locator.fill: Error: strict mode violation: getByTestId('import-tab-modal",
+      "testsuite": "Importar abas",
+      "testcase": "Editar aba importada",
+      "file": "projects/widgets/tests/features/importar-abas/editar-aba-importada.spec.ts",
+      "status": "failed",
+      "durationMs": 33433,
+      "categoriaSugerida": "spec-fragil",
+      "categoriaConfianca": "alta",
+      "categoriaJustificativa": "Locator bate em N elementos — seletor não-único",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-widgets",
+        "baseUrl": "https://widgets.stage.twygoead.com/",
+        "orgId": "36988",
+        "browser": "chromium",
+        "user": "claude@teste.com"
+      },
+      "buildCommit": "72ab290",
+      "generatedAt": "2026-05-14T02:47:55.285Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Setup — Painel Origem + Painel Destino + importar Aba X como \"Aba Importada\"",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: locator.fill: Error: strict mode violation: getByTestId('import-tab-modal-panel-select').locator('input') resolved to 2 elements:\n    1) <input value=\"\" type=\"text\" tabindex=\"0\" role=\"combobox\" autocorrect=\"off\" autocomplete=\"off\" spellcheck=\"false\" aria-haspopup=\"true\" autocapitalize=\"none\" aria-expanded=\"false\" aria-autocomplete=\"list\" aria-activedescendant=\"\" id=\"react-select-3-input\" class=\"select-field__input\" aria-describedby=\"react-select-3-placeholder\"/> aka locator('#react-select-3-input')\n    2) <input value=\"\" type=\"hidden\" name=\"import-tab-panel-select\"/> aka locator('input[name=\"import-tab-panel-select\"]')\n\nCall log:\n  - waiting for getByTestId('import-tab-modal-panel-select').locator('input')\n",
+      "errorLocation": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\editar-aba-importada.spec.ts:63:42",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-fbe87-r-abas-Editar-aba-importada-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-fbe87-r-abas-Editar-aba-importada-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-fbe87-r-abas-Editar-aba-importada-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-fbe87-r-abas-Editar-aba-importada-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-fbe87-r-abas-Editar-aba-importada-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "36988",
+        "userId": null
+      }
+    },
+    {
+      "id": "importar-abas__importar-aba-happy-path",
+      "title": "Importar aba (happy path) — Error: locator.fill: Error: strict mode violation: getByTestId('import-tab-modal",
+      "testsuite": "Importar abas",
+      "testcase": "Importar aba (happy path)",
+      "file": "projects/widgets/tests/features/importar-abas/importar-aba-happy-path.spec.ts",
+      "status": "failed",
+      "durationMs": 33320,
+      "categoriaSugerida": "spec-fragil",
+      "categoriaConfianca": "alta",
+      "categoriaJustificativa": "Locator bate em N elementos — seletor não-único",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-widgets",
+        "baseUrl": "https://widgets.stage.twygoead.com/",
+        "orgId": "36988",
+        "browser": "chromium",
+        "user": "claude@teste.com"
+      },
+      "buildCommit": "72ab290",
+      "generatedAt": "2026-05-14T02:47:55.285Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Setup — Painel Origem + Aba X + Painel Destino + modal step 2 preenchido",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: locator.fill: Error: strict mode violation: getByTestId('import-tab-modal-panel-select').locator('input') resolved to 2 elements:\n    1) <input value=\"\" type=\"text\" tabindex=\"0\" role=\"combobox\" autocorrect=\"off\" autocomplete=\"off\" spellcheck=\"false\" aria-haspopup=\"true\" autocapitalize=\"none\" aria-expanded=\"false\" aria-autocomplete=\"list\" aria-activedescendant=\"\" id=\"react-select-3-input\" class=\"select-field__input\" aria-describedby=\"react-select-3-placeholder\"/> aka locator('#react-select-3-input')\n    2) <input value=\"\" type=\"hidden\" name=\"import-tab-panel-select\"/> aka locator('input[name=\"import-tab-panel-select\"]')\n\nCall log:\n  - waiting for getByTestId('import-tab-modal-panel-select').locator('input')\n",
+      "errorLocation": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\importar-aba-happy-path.spec.ts:63:42",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-97d34-as-Importar-aba-happy-path--chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-97d34-as-Importar-aba-happy-path--chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-97d34-as-Importar-aba-happy-path--chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-97d34-as-Importar-aba-happy-path--chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-97d34-as-Importar-aba-happy-path--chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "36988",
+        "userId": null
+      }
+    },
+    {
+      "id": "importar-abas__selecionar-categoria-na-importacao",
+      "title": "Selecionar Categoria na importação — Error: locator.fill: Error: strict mode violation: getByTestId('import-tab-modal",
+      "testsuite": "Importar abas",
+      "testcase": "Selecionar Categoria na importação",
+      "file": "projects/widgets/tests/features/importar-abas/selecionar-categoria-importacao.spec.ts",
+      "status": "failed",
+      "durationMs": 34628,
+      "categoriaSugerida": "spec-fragil",
+      "categoriaConfianca": "alta",
+      "categoriaJustificativa": "Locator bate em N elementos — seletor não-único",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-widgets",
+        "baseUrl": "https://widgets.stage.twygoead.com/",
+        "orgId": "36988",
+        "browser": "chromium",
+        "user": "claude@teste.com"
+      },
+      "buildCommit": "72ab290",
+      "generatedAt": "2026-05-14T02:47:55.285Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Setup — Painel Origem + Painel Destino + Aba X selecionada no modal",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: locator.fill: Error: strict mode violation: getByTestId('import-tab-modal-panel-select').locator('input') resolved to 2 elements:\n    1) <input value=\"\" type=\"text\" tabindex=\"0\" role=\"combobox\" autocorrect=\"off\" autocomplete=\"off\" spellcheck=\"false\" aria-haspopup=\"true\" autocapitalize=\"none\" aria-expanded=\"false\" aria-autocomplete=\"list\" aria-activedescendant=\"\" id=\"react-select-3-input\" class=\"select-field__input\" aria-describedby=\"react-select-3-placeholder\"/> aka locator('#react-select-3-input')\n    2) <input value=\"\" type=\"hidden\" name=\"import-tab-panel-select\"/> aka locator('input[name=\"import-tab-panel-select\"]')\n\nCall log:\n  - waiting for getByTestId('import-tab-modal-panel-select').locator('input')\n",
+      "errorLocation": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\selecionar-categoria-importacao.spec.ts:67:42",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-98f94-nar-Categoria-na-importação-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-98f94-nar-Categoria-na-importação-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-98f94-nar-Categoria-na-importação-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-98f94-nar-Categoria-na-importação-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-98f94-nar-Categoria-na-importação-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "36988",
+        "userId": null
+      }
+    },
+    {
+      "id": "importar-abas__selecionar-painel-de-origem-e-listar-abas-disponiveis",
+      "title": "Selecionar painel de origem e listar abas disponíveis — Error: locator.fill: Error: strict mode violation: getByTestId('import-tab-modal",
+      "testsuite": "Importar abas",
+      "testcase": "Selecionar painel de origem e listar abas disponíveis",
+      "file": "projects/widgets/tests/features/importar-abas/selecionar-painel-origem-listar-abas.spec.ts",
+      "status": "failed",
+      "durationMs": 40225,
+      "categoriaSugerida": "spec-fragil",
+      "categoriaConfianca": "alta",
+      "categoriaJustificativa": "Locator bate em N elementos — seletor não-único",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-widgets",
+        "baseUrl": "https://widgets.stage.twygoead.com/",
+        "orgId": "36988",
+        "browser": "chromium",
+        "user": "claude@teste.com"
+      },
+      "buildCommit": "72ab290",
+      "generatedAt": "2026-05-14T02:47:55.285Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Criar Painel Origem com Aba X e Aba Y seedadas",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "2. Criar Painel Destino e abrir modal \"Importar de outro painel\" (step 2)",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 3,
+          "action": "3. Selecionar painel de origem e verificar campo \"Aba disponível\" aparece",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: locator.fill: Error: strict mode violation: getByTestId('import-tab-modal-panel-select').locator('input') resolved to 2 elements:\n    1) <input value=\"\" type=\"text\" tabindex=\"0\" role=\"combobox\" autocorrect=\"off\" autocomplete=\"off\" spellcheck=\"false\" aria-haspopup=\"true\" autocapitalize=\"none\" aria-expanded=\"false\" aria-autocomplete=\"list\" aria-activedescendant=\"\" id=\"react-select-3-input\" class=\"select-field__input\" aria-describedby=\"react-select-3-placeholder\"/> aka locator('#react-select-3-input')\n    2) <input value=\"\" type=\"hidden\" name=\"import-tab-panel-select\"/> aka locator('input[name=\"import-tab-panel-select\"]')\n\nCall log:\n  - waiting for getByTestId('import-tab-modal-panel-select').locator('input')\n",
+      "errorLocation": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\selecionar-painel-origem-listar-abas.spec.ts:100:42",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "step-01-1-Criar-Painel-Origem-com-Aba-X-e-Aba-Y-seedadas",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-2e450-m-e-listar-abas-disponíveis-chromium/attachments/step-01-1-Criar-Painel-Origem-com-Aba-X-e-Aba-Y-seedadas-f8336e7d09ebe3246ccf68cc087fe03ddbfcec5e.png"
+        },
+        {
+          "name": "step-02-2-Criar-Painel-Destino-e-abrir-modal-Importar-de-outro-paine",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-2e450-m-e-listar-abas-disponíveis-chromium/attachments/step-02-2-Criar-Painel-Destino-e-abrir-modal-Importar-de-outro-paine-a579784e1eb3059e0c139507e352b1ff765e0338.png"
+        },
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-2e450-m-e-listar-abas-disponíveis-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-2e450-m-e-listar-abas-disponíveis-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-2e450-m-e-listar-abas-disponíveis-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-2e450-m-e-listar-abas-disponíveis-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-2e450-m-e-listar-abas-disponíveis-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "36988",
+        "userId": null
+      }
+    },
+    {
+      "id": "importar-abas__visualizar-preview-da-aba-selecionada",
+      "title": "Visualizar preview da aba selecionada — Error: locator.fill: Error: strict mode violation: getByTestId('import-tab-modal",
+      "testsuite": "Importar abas",
+      "testcase": "Visualizar preview da aba selecionada",
+      "file": "projects/widgets/tests/features/importar-abas/visualizar-preview-aba.spec.ts",
+      "status": "failed",
+      "durationMs": 37973,
+      "categoriaSugerida": "spec-fragil",
+      "categoriaConfianca": "alta",
+      "categoriaJustificativa": "Locator bate em N elementos — seletor não-único",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-widgets",
+        "baseUrl": "https://widgets.stage.twygoead.com/",
+        "orgId": "36988",
+        "browser": "chromium",
+        "user": "claude@teste.com"
+      },
+      "buildCommit": "72ab290",
+      "generatedAt": "2026-05-14T02:47:55.285Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Criar Painel Origem com Aba X e Aba Y seedadas",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "2. Criar Painel Destino e selecionar Painel Origem no modal de importar aba",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: locator.fill: Error: strict mode violation: getByTestId('import-tab-modal-panel-select').locator('input') resolved to 2 elements:\n    1) <input value=\"\" type=\"text\" tabindex=\"0\" role=\"combobox\" autocorrect=\"off\" autocomplete=\"off\" spellcheck=\"false\" aria-haspopup=\"true\" autocapitalize=\"none\" aria-expanded=\"false\" aria-autocomplete=\"list\" aria-activedescendant=\"\" id=\"react-select-3-input\" class=\"select-field__input\" aria-describedby=\"react-select-3-placeholder\"/> aka locator('#react-select-3-input')\n    2) <input value=\"\" type=\"hidden\" name=\"import-tab-panel-select\"/> aka locator('input[name=\"import-tab-panel-select\"]')\n\nCall log:\n  - waiting for getByTestId('import-tab-modal-panel-select').locator('input')\n",
+      "errorLocation": "D:\\twygo-agents-qa\\agent-playwright\\projects\\widgets\\tests\\features\\importar-abas\\visualizar-preview-aba.spec.ts:93:42",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "step-01-1-Criar-Painel-Origem-com-Aba-X-e-Aba-Y-seedadas",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-42643--preview-da-aba-selecionada-chromium/attachments/step-01-1-Criar-Painel-Origem-com-Aba-X-e-Aba-Y-seedadas-86d52b526bb5d5e84b520db10ff4cd945f17d469.png"
+        },
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-42643--preview-da-aba-selecionada-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-42643--preview-da-aba-selecionada-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-42643--preview-da-aba-selecionada-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-42643--preview-da-aba-selecionada-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-widgets-tests-fea-42643--preview-da-aba-selecionada-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "36988",
+        "userId": null
+      }
+    }
+  ]
+}

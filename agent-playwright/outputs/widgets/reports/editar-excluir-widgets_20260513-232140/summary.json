@@ -1,0 +1,29 @@
+{
+  "runId": "editar-excluir-widgets_20260513-232140",
+  "scope": "Apenas testsuite contendo \"Editar/Excluir widgets\"",
+  "tests": {
+    "total": 6,
+    "passed": 5,
+    "failed": 1,
+    "skipped": 0,
+    "durationMs": 159436
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 1,
+    "tests": 6,
+    "outOfScope": {
+      "errors": 109,
+      "warnings": 19,
+      "info": 0
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

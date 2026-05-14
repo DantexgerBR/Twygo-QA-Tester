@@ -9,6 +9,11 @@ outputs/html-report/
 outputs/test-artifacts/
 
 # outputs/<slug>/ — gerados por execução (qualquer projeto)
+#
+# Regra geral: ignorar artefatos crus da run (intermediários), preservar
+# o RELATÓRIO PROCESSADO em outputs/<slug>/reports/<slug>_<ts>/ pra QAs
+# auxiliares analisarem (report-generator copia artifacts pra dentro do
+# reportDir tornando-o self-contained — feedback_archive_artifacts_in_report).
 outputs/.auth/
 outputs/**/test-artifacts/
 outputs/**/exploratory/
@@ -16,13 +21,12 @@ outputs/**/exploratory-findings.json
 outputs/**/playwright-summary.md
 outputs/**/test-results.json
 outputs/**/test-analysis.parsed.json
-outputs/**/reports/
 outputs/**/allure-results/
 outputs/**/allure-report/
-# preservar decisão QA (não gerada por execução):
-!outputs/**/triage-report.md
-!outputs/**/bug-reports.json
-!outputs/**/bug-reports/
+# NÃO ignorar (gerados mas devem ser versionados):
+# - outputs/**/reports/      (Markdown self-contained com cópia dos artifacts)
+# - outputs/**/triage-report.md  (decisão QA)
+# - outputs/**/bug-reports.json  +  outputs/**/bug-reports/  (bug-reports gerados)
 
 playwright-report/
 test-results/
