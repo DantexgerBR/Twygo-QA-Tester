@@ -1,12 +1,12 @@
-# Triage Report — Widgets — 2026-05-14 18:36
+# Triage Report — Widgets — 2026-05-15 09:59
 
-**Escopo**: Testsuite: Ambientes adicionais · **Ambiente**: `staging-widgets`
+**Escopo**: Testsuite: Feature flag · **Ambiente**: `staging-widgets`
 
 ## Sumário
 
 | Total | ✅ Passed | ❌ Failed | ⊘ Skipped | Findings exploratórios |
 |---:|---:|---:|---:|---|
-| 3 | 3 | 0 | 0 | 0 erros · 0 warnings · 0 info |
+| 5 | 2 | 0 | 3 | 0 erros · 0 warnings · 0 info |
 
 > **Janela única de revisão.** Marque ☑ em UMA categoria por item.
 > Notas em PT-BR. Commit este arquivo após triagem.
@@ -20,6 +20,17 @@ Suite rodou limpa. Revise apenas a seção de exploratórios e skips abaixo (se 
 
 ---
 
+## ⊘ Skips legítimos pra revalidação periódica
+
+> Items com `test.fixme` + reason. Se o motivo já não vale (seed criado, bug corrigido), abrir e re-rodar. Ver skill `debugar-bug-produto-stale`.
+
+| TC | Tipo | Motivo |
+|---|---|---|
+| Feature flag habilitada com painéis criados - menu do aluno acessível | fixme | seed ausente: requer credencial de perfil Aluno. Ver dashboard-visao-do-aluno/_README.md. |
+| Menu marcado como 'Padrão' com flag desabilitada | fixme | seed ausente: requer menu marcado como 'Padrão' + transição flag on→off no mesmo env. Mesmo bloqueio de transicao-flag-on-off-com-paineis.spec.ts. |
+| Transição: flag habilitada -> desabilitada com painéis aplicados | fixme | seed ausente: requer painel + menu vinculado pré-criados na org 36989 (staging-widgets-disabled) E perfil Aluno via ProfileSwitcher. Toggle de flag em si já está destravado por testar-feature-flag-twy |
+
+---
 
 ## 🐛 Findings exploratórios não-fatais (informativo)
 

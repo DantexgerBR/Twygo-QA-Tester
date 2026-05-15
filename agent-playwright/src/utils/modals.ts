@@ -89,9 +89,25 @@ export async function safeGoto(
 
 export async function dismissCommonModals(
   page: Page,
-  opts: { maxAttempts?: number } = {},
+  opts: { maxAttempts?: number; initialWaitMs?: number } = {},
 ): Promise<void> {
   const maxAttempts = opts.maxAttempts ?? 3;
+  // NPS Sofia frequentemente aparece DEPOIS do `domcontentloaded` mas
+  // antes do `load` event (gatilho assíncrono pós-hydration). Sem janela
+  // inicial de espera, `isVisible()` retorna `false` enquanto o modal
+  // ainda está sendo montado, o loop sai cedo, e o spec falha logo
+  // depois com "elemento principal não visível". Damos uma janela curta
+  // (default 1500ms) tentando capturar o trigger do NPS via `waitFor`
+  // antes de cair no isVisible determinístico.
+  const initialWaitMs = opts.initialWaitMs ?? 1500;
+
+  if (initialWaitMs > 0) {
+    await page
+      .getByRole('button', { name: /Pergunte depois/i })
+      .first()
+      .waitFor({ state: 'visible', timeout: initialWaitMs })
+      .catch(() => null);
+  }
 
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
     let clickedAny = false;

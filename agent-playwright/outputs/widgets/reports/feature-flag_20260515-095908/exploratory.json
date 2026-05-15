@@ -1,0 +1,1594 @@
+{
+  "generatedAt": "2026-05-15T12:59:07.793Z",
+  "summary": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 2,
+    "tests": 6,
+    "outOfScope": {
+      "errors": 32,
+      "warnings": 21,
+      "info": 3
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  },
+  "testsuites": [
+    {
+      "testsuiteName": "Feature flag",
+      "totals": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "byKind": {},
+      "findings": [],
+      "coverage": [
+        {
+          "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+          "totalInteractive": 130,
+          "visibleInteractive": 66,
+          "samples": [
+            {
+              "role": "link",
+              "name": "dashboard-menu"
+            },
+            {
+              "role": "link",
+              "name": "new_contents-menu"
+            },
+            {
+              "role": "link",
+              "name": "shared_events-menu"
+            },
+            {
+              "role": "link",
+              "name": "records-menu"
+            },
+            {
+              "role": "link",
+              "name": "certificates-menu"
+            },
+            {
+              "role": "link",
+              "name": "users-menu"
+            },
+            {
+              "role": "link",
+              "name": "companies-menu"
+            },
+            {
+              "role": "link",
+              "name": "question_lists-menu"
+            },
+            {
+              "role": "link",
+              "name": "communities-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization_chart-menu"
+            },
+            {
+              "role": "link",
+              "name": "roles-menu"
+            },
+            {
+              "role": "link",
+              "name": "competencies-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "visualize_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization-name-menu"
+            },
+            {
+              "role": "link",
+              "name": "navigation-name-menu"
+            },
+            {
+              "role": "link",
+              "name": "integrations-menu"
+            },
+            {
+              "role": "link",
+              "name": "autopilot-menu"
+            },
+            {
+              "role": "link",
+              "name": "game-rules-menu"
+            },
+            {
+              "role": "link",
+              "name": "comunication-menu"
+            },
+            {
+              "role": "link",
+              "name": "payments-menu"
+            },
+            {
+              "role": "link",
+              "name": "subscription-plans-menu"
+            }
+          ]
+        },
+        {
+          "url": "about:blank",
+          "totalInteractive": 0,
+          "visibleInteractive": 0,
+          "samples": []
+        }
+      ],
+      "outOfScope": {
+        "totals": {
+          "errors": 24,
+          "warnings": 16,
+          "info": 2
+        },
+        "byKind": {
+          "console_error": 6,
+          "a11y_violation": 36
+        },
+        "findings": [
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "[a11y/aria-allowed-attr] Elements must only use supported ARIA attributes",
+            "detail": {
+              "ruleId": "aria-allowed-attr",
+              "impact": "critical",
+              "tags": [
+                "cat.aria",
+                "wcag2a",
+                "wcag412",
+                "EN-301-549",
+                "EN-9.4.1.2",
+                "RGAAv4",
+                "RGAA-7.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-allowed-attr?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "#popover-trigger-\\:r7\\:"
+              ],
+              "firstNodeHtml": "<div id=\"popover-trigger-:r7:\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"popover-content-:r7:\" class=\"css-tz0gqg\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "[a11y/color-contrast] Elements must meet minimum color contrast ratio thresholds",
+            "detail": {
+              "ruleId": "color-contrast",
+              "impact": "serious",
+              "tags": [
+                "cat.color",
+                "wcag2aa",
+                "wcag143",
+                "TTv5",
+                "TT13.c",
+                "EN-301-549",
+                "EN-9.1.4.3",
+                "ACT",
+                "RGAAv4",
+                "RGAA-3.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
+              "affectedNodes": 34,
+              "firstNodeTarget": [
+                ".top-user-name__infor > .name"
+              ],
+              "firstNodeHtml": "<span class=\"name\">\nClaude Agents\n</span>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "info",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "[a11y/empty-table-header] Table header text should not be empty",
+            "detail": {
+              "ruleId": "empty-table-header",
+              "impact": "minor",
+              "tags": [
+                "cat.name-role-value",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/empty-table-header?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                ".css-8lx8ui"
+              ],
+              "firstNodeHtml": "<th class=\"css-8lx8ui\"></th>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "[a11y/image-alt] Images must have alternative text",
+            "detail": {
+              "ruleId": "image-alt",
+              "impact": "critical",
+              "tags": [
+                "cat.text-alternatives",
+                "wcag2a",
+                "wcag111",
+                "section508",
+                "section508.22.a",
+                "TTv5",
+                "TT7.a",
+                "TT7.b",
+                "EN-301-549",
+                "EN-9.1.1.1",
+                "ACT",
+                "RGAAv4",
+                "RGAA-1.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/image-alt?application=playwright",
+              "affectedNodes": 3,
+              "firstNodeTarget": [
+                "#mobile-close-menu > img"
+              ],
+              "firstNodeHtml": "<img src=\"/assets/svg/mobile-close-menu.svg\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "[a11y/label] Form elements must have labels",
+            "detail": {
+              "ruleId": "label",
+              "impact": "critical",
+              "tags": [
+                "cat.forms",
+                "wcag2a",
+                "wcag412",
+                "section508",
+                "section508.22.n",
+                "TTv5",
+                "TT5.c",
+                "EN-301-549",
+                "EN-9.4.1.2",
+                "ACT",
+                "RGAAv4",
+                "RGAA-11.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/label?application=playwright",
+              "affectedNodes": 2,
+              "firstNodeTarget": [
+                "#radio-\\:r2h\\:"
+              ],
+              "firstNodeHtml": "<input class=\"chakra-radio__input\" id=\"radio-:r2h:\" type=\"radio\" value=\"\" style=\"border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; whi"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "[a11y/landmark-one-main] Document should have one main landmark",
+            "detail": {
+              "ruleId": "landmark-one-main",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-one-main?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html lang=\"en\" xml:lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\" class=\"wf-materialicons-n4-inactive wf-materialsymbolsoutlined-n4-inactive wf-inactive\" data-theme=\"light\" style=\"color-scheme: light"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "[a11y/landmark-unique] Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+            "detail": {
+              "ruleId": "landmark-unique",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
+              "affectedNodes": 6,
+              "firstNodeTarget": [
+                ".chakra-portal:nth-child(29) > div[aria-label=\"Notifications-top\"][role=\"region\"][aria-live=\"polite\"]"
+              ],
+              "firstNodeHtml": "<div role=\"region\" aria-live=\"polite\" aria-label=\"Notifications-top\" id=\"chakra-toast-manager...\" style=\"position: fixed; z-i...\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "[a11y/list] <ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+            "detail": {
+              "ruleId": "list",
+              "impact": "serious",
+              "tags": [
+                "cat.structure",
+                "wcag2a",
+                "wcag131",
+                "EN-301-549",
+                "EN-9.1.3.1",
+                "RGAAv4",
+                "RGAA-9.3.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/list?application=playwright",
+              "affectedNodes": 2,
+              "firstNodeTarget": [
+                ".mobile-user-menu > .menu-main"
+              ],
+              "firstNodeHtml": "<ul class=\"menu-main\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "[a11y/meta-viewport] Zooming and scaling must not be disabled",
+            "detail": {
+              "ruleId": "meta-viewport",
+              "impact": "moderate",
+              "tags": [
+                "cat.sensory-and-visual-cues",
+                "wcag2aa",
+                "wcag144",
+                "EN-301-549",
+                "EN-9.1.4.4",
+                "ACT",
+                "RGAAv4",
+                "RGAA-10.4.2"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/meta-viewport?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "meta[name=\"viewport\"]"
+              ],
+              "firstNodeHtml": "<meta content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui\" name=\"viewport\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "[a11y/page-has-heading-one] Page should contain a level-one heading",
+            "detail": {
+              "ruleId": "page-has-heading-one",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/page-has-heading-one?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html lang=\"en\" xml:lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\" class=\"wf-materialicons-n4-inactive wf-materialsymbolsoutlined-n4-inactive wf-inactive\" data-theme=\"light\" style=\"color-scheme: light"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "[a11y/region] All page content should be contained by landmarks",
+            "detail": {
+              "ruleId": "region",
+              "impact": "moderate",
+              "tags": [
+                "cat.keyboard",
+                "best-practice",
+                "RGAAv4",
+                "RGAA-9.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=playwright",
+              "affectedNodes": 45,
+              "firstNodeTarget": [
+                "#mobile-logo > img"
+              ],
+              "firstNodeHtml": "<img title=\"Logo - widgets-disabled [36989]\" alt=\"Logo - widgets-disabled [36989]\" style=\"height: 50px; align: center\" src=\"https://cdn-stage.twygo.com/uploads/organizations_36989_medium_logo_17780815"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "[a11y/select-name] Select element must have an accessible name",
+            "detail": {
+              "ruleId": "select-name",
+              "impact": "critical",
+              "tags": [
+                "cat.forms",
+                "wcag2a",
+                "wcag412",
+                "section508",
+                "section508.22.n",
+                "TTv5",
+                "TT5.c",
+                "EN-301-549",
+                "EN-9.4.1.2",
+                "ACT",
+                "RGAAv4",
+                "RGAA-11.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/select-name?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "#select_pages"
+              ],
+              "firstNodeHtml": "<select id=\"select_pages\" class=\"chakra-select css-1gq5ikj\"><option value=\"25\" id=\"id_select_25\">25 por página </option><option value=\"50\" id=\"id_select_50\">50 por página </option><option value=\"100\" "
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "about:blank",
+            "message": "[a11y/document-title] Documents must have <title> element to aid in navigation",
+            "detail": {
+              "ruleId": "document-title",
+              "impact": "serious",
+              "tags": [
+                "cat.text-alternatives",
+                "wcag2a",
+                "wcag242",
+                "TTv5",
+                "TT12.a",
+                "EN-301-549",
+                "EN-9.2.4.2",
+                "ACT",
+                "RGAAv4",
+                "RGAA-8.5.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/document-title?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html><head></head><body></body></html>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "about:blank",
+            "message": "[a11y/html-has-lang] <html> element must have a lang attribute",
+            "detail": {
+              "ruleId": "html-has-lang",
+              "impact": "serious",
+              "tags": [
+                "cat.language",
+                "wcag2a",
+                "wcag311",
+                "TTv5",
+                "TT11.a",
+                "EN-301-549",
+                "EN-9.3.1.1",
+                "ACT",
+                "RGAAv4",
+                "RGAA-8.3.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/html-has-lang?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html><head></head><body></body></html>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "about:blank",
+            "message": "[a11y/landmark-one-main] Document should have one main landmark",
+            "detail": {
+              "ruleId": "landmark-one-main",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-one-main?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html><head></head><body></body></html>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "about:blank",
+            "message": "[a11y/page-has-heading-one] Page should contain a level-one heading",
+            "detail": {
+              "ruleId": "page-has-heading-one",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/page-has-heading-one?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html><head></head><body></body></html>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "about:blank",
+            "message": "[a11y/document-title] Documents must have <title> element to aid in navigation",
+            "detail": {
+              "ruleId": "document-title",
+              "impact": "serious",
+              "tags": [
+                "cat.text-alternatives",
+                "wcag2a",
+                "wcag242",
+                "TTv5",
+                "TT12.a",
+                "EN-301-549",
+                "EN-9.2.4.2",
+                "ACT",
+                "RGAAv4",
+                "RGAA-8.5.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/document-title?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html><head></head><body></body></html>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "about:blank",
+            "message": "[a11y/html-has-lang] <html> element must have a lang attribute",
+            "detail": {
+              "ruleId": "html-has-lang",
+              "impact": "serious",
+              "tags": [
+                "cat.language",
+                "wcag2a",
+                "wcag311",
+                "TTv5",
+                "TT11.a",
+                "EN-301-549",
+                "EN-9.3.1.1",
+                "ACT",
+                "RGAAv4",
+                "RGAA-8.3.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/html-has-lang?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html><head></head><body></body></html>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "about:blank",
+            "message": "[a11y/landmark-one-main] Document should have one main landmark",
+            "detail": {
+              "ruleId": "landmark-one-main",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-one-main?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html><head></head><body></body></html>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "about:blank",
+            "message": "[a11y/page-has-heading-one] Page should contain a level-one heading",
+            "detail": {
+              "ruleId": "page-has-heading-one",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/page-has-heading-one?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html><head></head><body></body></html>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "[a11y/aria-allowed-attr] Elements must only use supported ARIA attributes",
+            "detail": {
+              "ruleId": "aria-allowed-attr",
+              "impact": "critical",
+              "tags": [
+                "cat.aria",
+                "wcag2a",
+                "wcag412",
+                "EN-301-549",
+                "EN-9.4.1.2",
+                "RGAAv4",
+                "RGAA-7.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-allowed-attr?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "#popover-trigger-\\:r7\\:"
+              ],
+              "firstNodeHtml": "<div id=\"popover-trigger-:r7:\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"popover-content-:r7:\" class=\"css-tz0gqg\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "[a11y/color-contrast] Elements must meet minimum color contrast ratio thresholds",
+            "detail": {
+              "ruleId": "color-contrast",
+              "impact": "serious",
+              "tags": [
+                "cat.color",
+                "wcag2aa",
+                "wcag143",
+                "TTv5",
+                "TT13.c",
+                "EN-301-549",
+                "EN-9.1.4.3",
+                "ACT",
+                "RGAAv4",
+                "RGAA-3.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
+              "affectedNodes": 34,
+              "firstNodeTarget": [
+                ".top-user-name__infor > .name"
+              ],
+              "firstNodeHtml": "<span class=\"name\">\nClaude Agents\n</span>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "info",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "[a11y/empty-table-header] Table header text should not be empty",
+            "detail": {
+              "ruleId": "empty-table-header",
+              "impact": "minor",
+              "tags": [
+                "cat.name-role-value",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/empty-table-header?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                ".css-8lx8ui"
+              ],
+              "firstNodeHtml": "<th class=\"css-8lx8ui\"></th>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "[a11y/image-alt] Images must have alternative text",
+            "detail": {
+              "ruleId": "image-alt",
+              "impact": "critical",
+              "tags": [
+                "cat.text-alternatives",
+                "wcag2a",
+                "wcag111",
+                "section508",
+                "section508.22.a",
+                "TTv5",
+                "TT7.a",
+                "TT7.b",
+                "EN-301-549",
+                "EN-9.1.1.1",
+                "ACT",
+                "RGAAv4",
+                "RGAA-1.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/image-alt?application=playwright",
+              "affectedNodes": 3,
+              "firstNodeTarget": [
+                "#mobile-close-menu > img"
+              ],
+              "firstNodeHtml": "<img src=\"/assets/svg/mobile-close-menu.svg\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "[a11y/label] Form elements must have labels",
+            "detail": {
+              "ruleId": "label",
+              "impact": "critical",
+              "tags": [
+                "cat.forms",
+                "wcag2a",
+                "wcag412",
+                "section508",
+                "section508.22.n",
+                "TTv5",
+                "TT5.c",
+                "EN-301-549",
+                "EN-9.4.1.2",
+                "ACT",
+                "RGAAv4",
+                "RGAA-11.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/label?application=playwright",
+              "affectedNodes": 2,
+              "firstNodeTarget": [
+                "#radio-\\:r2h\\:"
+              ],
+              "firstNodeHtml": "<input class=\"chakra-radio__input\" id=\"radio-:r2h:\" type=\"radio\" value=\"\" style=\"border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; whi"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "[a11y/landmark-one-main] Document should have one main landmark",
+            "detail": {
+              "ruleId": "landmark-one-main",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-one-main?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html lang=\"en\" xml:lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\" class=\"wf-materialsymbolsoutlined-n4-active wf-materialicons-n4-inactive wf-active\" data-theme=\"light\" style=\"color-scheme: light;\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "[a11y/landmark-unique] Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+            "detail": {
+              "ruleId": "landmark-unique",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
+              "affectedNodes": 6,
+              "firstNodeTarget": [
+                ".chakra-portal:nth-child(29) > div[aria-label=\"Notifications-top\"][role=\"region\"][aria-live=\"polite\"]"
+              ],
+              "firstNodeHtml": "<div role=\"region\" aria-live=\"polite\" aria-label=\"Notifications-top\" id=\"chakra-toast-manager...\" style=\"position: fixed; z-i...\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "[a11y/list] <ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+            "detail": {
+              "ruleId": "list",
+              "impact": "serious",
+              "tags": [
+                "cat.structure",
+                "wcag2a",
+                "wcag131",
+                "EN-301-549",
+                "EN-9.1.3.1",
+                "RGAAv4",
+                "RGAA-9.3.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/list?application=playwright",
+              "affectedNodes": 2,
+              "firstNodeTarget": [
+                ".mobile-user-menu > .menu-main"
+              ],
+              "firstNodeHtml": "<ul class=\"menu-main\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "[a11y/meta-viewport] Zooming and scaling must not be disabled",
+            "detail": {
+              "ruleId": "meta-viewport",
+              "impact": "moderate",
+              "tags": [
+                "cat.sensory-and-visual-cues",
+                "wcag2aa",
+                "wcag144",
+                "EN-301-549",
+                "EN-9.1.4.4",
+                "ACT",
+                "RGAAv4",
+                "RGAA-10.4.2"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/meta-viewport?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "meta[name=\"viewport\"]"
+              ],
+              "firstNodeHtml": "<meta content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui\" name=\"viewport\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "[a11y/page-has-heading-one] Page should contain a level-one heading",
+            "detail": {
+              "ruleId": "page-has-heading-one",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/page-has-heading-one?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html lang=\"en\" xml:lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\" class=\"wf-materialsymbolsoutlined-n4-active wf-materialicons-n4-inactive wf-active\" data-theme=\"light\" style=\"color-scheme: light;\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "[a11y/region] All page content should be contained by landmarks",
+            "detail": {
+              "ruleId": "region",
+              "impact": "moderate",
+              "tags": [
+                "cat.keyboard",
+                "best-practice",
+                "RGAAv4",
+                "RGAA-9.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=playwright",
+              "affectedNodes": 47,
+              "firstNodeTarget": [
+                "#mobile-logo > img"
+              ],
+              "firstNodeHtml": "<img title=\"Logo - widgets-disabled [36989]\" alt=\"Logo - widgets-disabled [36989]\" style=\"height: 50px; align: center\" src=\"https://cdn-stage.twygo.com/uploads/organizations_36989_medium_logo_17780815"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "[a11y/select-name] Select element must have an accessible name",
+            "detail": {
+              "ruleId": "select-name",
+              "impact": "critical",
+              "tags": [
+                "cat.forms",
+                "wcag2a",
+                "wcag412",
+                "section508",
+                "section508.22.n",
+                "TTv5",
+                "TT5.c",
+                "EN-301-549",
+                "EN-9.4.1.2",
+                "ACT",
+                "RGAAv4",
+                "RGAA-11.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/select-name?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "#select_pages"
+              ],
+              "firstNodeHtml": "<select id=\"select_pages\" class=\"chakra-select css-1gq5ikj\"><option value=\"25\" id=\"id_select_25\">25 por página </option><option value=\"50\" id=\"id_select_50\">50 por página </option><option value=\"100\" "
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "about:blank",
+            "message": "[a11y/document-title] Documents must have <title> element to aid in navigation",
+            "detail": {
+              "ruleId": "document-title",
+              "impact": "serious",
+              "tags": [
+                "cat.text-alternatives",
+                "wcag2a",
+                "wcag242",
+                "TTv5",
+                "TT12.a",
+                "EN-301-549",
+                "EN-9.2.4.2",
+                "ACT",
+                "RGAAv4",
+                "RGAA-8.5.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/document-title?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html><head></head><body></body></html>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "about:blank",
+            "message": "[a11y/html-has-lang] <html> element must have a lang attribute",
+            "detail": {
+              "ruleId": "html-has-lang",
+              "impact": "serious",
+              "tags": [
+                "cat.language",
+                "wcag2a",
+                "wcag311",
+                "TTv5",
+                "TT11.a",
+                "EN-301-549",
+                "EN-9.3.1.1",
+                "ACT",
+                "RGAAv4",
+                "RGAA-8.3.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/html-has-lang?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html><head></head><body></body></html>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "about:blank",
+            "message": "[a11y/landmark-one-main] Document should have one main landmark",
+            "detail": {
+              "ruleId": "landmark-one-main",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-one-main?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html><head></head><body></body></html>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "about:blank",
+            "message": "[a11y/page-has-heading-one] Page should contain a level-one heading",
+            "detail": {
+              "ruleId": "page-has-heading-one",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/page-has-heading-one?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html><head></head><body></body></html>"
+            },
+            "inScope": false
+          }
+        ]
+      },
+      "activeProbes": {
+        "totals": {
+          "errors": 0,
+          "warnings": 0,
+          "info": 0
+        },
+        "byProbe": {},
+        "findings": []
+      }
+    },
+    {
+      "testsuiteName": "Listagem de painéis",
+      "totals": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "byKind": {},
+      "findings": [],
+      "coverage": [
+        {
+          "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes?tab=panels-tab",
+          "totalInteractive": 125,
+          "visibleInteractive": 49,
+          "samples": [
+            {
+              "role": "link",
+              "name": "dashboard-menu"
+            },
+            {
+              "role": "link",
+              "name": "new_contents-menu"
+            },
+            {
+              "role": "link",
+              "name": "shared_events-menu"
+            },
+            {
+              "role": "link",
+              "name": "records-menu"
+            },
+            {
+              "role": "link",
+              "name": "certificates-menu"
+            },
+            {
+              "role": "link",
+              "name": "users-menu"
+            },
+            {
+              "role": "link",
+              "name": "companies-menu"
+            },
+            {
+              "role": "link",
+              "name": "question_lists-menu"
+            },
+            {
+              "role": "link",
+              "name": "communities-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization_chart-menu"
+            },
+            {
+              "role": "link",
+              "name": "roles-menu"
+            },
+            {
+              "role": "link",
+              "name": "competencies-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "visualize_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization-name-menu"
+            },
+            {
+              "role": "link",
+              "name": "navigation-name-menu"
+            },
+            {
+              "role": "link",
+              "name": "integrations-menu"
+            },
+            {
+              "role": "link",
+              "name": "autopilot-menu"
+            },
+            {
+              "role": "link",
+              "name": "game-rules-menu"
+            },
+            {
+              "role": "link",
+              "name": "comunication-menu"
+            },
+            {
+              "role": "link",
+              "name": "payments-menu"
+            },
+            {
+              "role": "link",
+              "name": "subscription-plans-menu"
+            }
+          ]
+        }
+      ],
+      "outOfScope": {
+        "totals": {
+          "errors": 8,
+          "warnings": 5,
+          "info": 1
+        },
+        "byKind": {
+          "console_error": 2,
+          "a11y_violation": 12
+        },
+        "findings": [
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes",
+            "message": "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes?tab=panels-tab",
+            "message": "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes?tab=panels-tab",
+            "message": "[a11y/aria-allowed-attr] Elements must only use supported ARIA attributes",
+            "detail": {
+              "ruleId": "aria-allowed-attr",
+              "impact": "critical",
+              "tags": [
+                "cat.aria",
+                "wcag2a",
+                "wcag412",
+                "EN-301-549",
+                "EN-9.4.1.2",
+                "RGAAv4",
+                "RGAA-7.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-allowed-attr?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "#popover-trigger-\\:r3\\:"
+              ],
+              "firstNodeHtml": "<div id=\"popover-trigger-:r3:\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"popover-content-:r3:\" class=\"css-tz0gqg\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes?tab=panels-tab",
+            "message": "[a11y/color-contrast] Elements must meet minimum color contrast ratio thresholds",
+            "detail": {
+              "ruleId": "color-contrast",
+              "impact": "serious",
+              "tags": [
+                "cat.color",
+                "wcag2aa",
+                "wcag143",
+                "TTv5",
+                "TT13.c",
+                "EN-301-549",
+                "EN-9.1.4.3",
+                "ACT",
+                "RGAAv4",
+                "RGAA-3.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
+              "affectedNodes": 19,
+              "firstNodeTarget": [
+                ".top-user-name__infor > .name"
+              ],
+              "firstNodeHtml": "<span class=\"name\">\nClaude Agents\n</span>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "info",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes?tab=panels-tab",
+            "message": "[a11y/empty-table-header] Table header text should not be empty",
+            "detail": {
+              "ruleId": "empty-table-header",
+              "impact": "minor",
+              "tags": [
+                "cat.name-role-value",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/empty-table-header?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                ".css-8lx8ui"
+              ],
+              "firstNodeHtml": "<th class=\"css-8lx8ui\"></th>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes?tab=panels-tab",
+            "message": "[a11y/image-alt] Images must have alternative text",
+            "detail": {
+              "ruleId": "image-alt",
+              "impact": "critical",
+              "tags": [
+                "cat.text-alternatives",
+                "wcag2a",
+                "wcag111",
+                "section508",
+                "section508.22.a",
+                "TTv5",
+                "TT7.a",
+                "TT7.b",
+                "EN-301-549",
+                "EN-9.1.1.1",
+                "ACT",
+                "RGAAv4",
+                "RGAA-1.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/image-alt?application=playwright",
+              "affectedNodes": 3,
+              "firstNodeTarget": [
+                "#mobile-close-menu > img"
+              ],
+              "firstNodeHtml": "<img src=\"/assets/svg/mobile-close-menu.svg\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes?tab=panels-tab",
+            "message": "[a11y/label] Form elements must have labels",
+            "detail": {
+              "ruleId": "label",
+              "impact": "critical",
+              "tags": [
+                "cat.forms",
+                "wcag2a",
+                "wcag412",
+                "section508",
+                "section508.22.n",
+                "TTv5",
+                "TT5.c",
+                "EN-301-549",
+                "EN-9.4.1.2",
+                "ACT",
+                "RGAAv4",
+                "RGAA-11.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/label?application=playwright",
+              "affectedNodes": 2,
+              "firstNodeTarget": [
+                "#radio-\\:r2h\\:"
+              ],
+              "firstNodeHtml": "<input class=\"chakra-radio__input\" id=\"radio-:r2h:\" type=\"radio\" value=\"\" style=\"border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; whi"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes?tab=panels-tab",
+            "message": "[a11y/landmark-one-main] Document should have one main landmark",
+            "detail": {
+              "ruleId": "landmark-one-main",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-one-main?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html lang=\"en\" xml:lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\" class=\"wf-materialicons-n4-inactive wf-materialsymbolsoutlined-n4-inactive wf-inactive\" data-theme=\"light\" style=\"color-scheme: light"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes?tab=panels-tab",
+            "message": "[a11y/landmark-unique] Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+            "detail": {
+              "ruleId": "landmark-unique",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
+              "affectedNodes": 6,
+              "firstNodeTarget": [
+                ".chakra-portal:nth-child(29) > div[aria-label=\"Notifications-top\"][role=\"region\"][aria-live=\"polite\"]"
+              ],
+              "firstNodeHtml": "<div role=\"region\" aria-live=\"polite\" aria-label=\"Notifications-top\" id=\"chakra-toast-manager...\" style=\"position: fixed; z-i...\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes?tab=panels-tab",
+            "message": "[a11y/list] <ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+            "detail": {
+              "ruleId": "list",
+              "impact": "serious",
+              "tags": [
+                "cat.structure",
+                "wcag2a",
+                "wcag131",
+                "EN-301-549",
+                "EN-9.1.3.1",
+                "RGAAv4",
+                "RGAA-9.3.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/list?application=playwright",
+              "affectedNodes": 2,
+              "firstNodeTarget": [
+                ".mobile-user-menu > .menu-main"
+              ],
+              "firstNodeHtml": "<ul class=\"menu-main\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes?tab=panels-tab",
+            "message": "[a11y/meta-viewport] Zooming and scaling must not be disabled",
+            "detail": {
+              "ruleId": "meta-viewport",
+              "impact": "moderate",
+              "tags": [
+                "cat.sensory-and-visual-cues",
+                "wcag2aa",
+                "wcag144",
+                "EN-301-549",
+                "EN-9.1.4.4",
+                "ACT",
+                "RGAAv4",
+                "RGAA-10.4.2"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/meta-viewport?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "meta[name=\"viewport\"]"
+              ],
+              "firstNodeHtml": "<meta content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui\" name=\"viewport\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes?tab=panels-tab",
+            "message": "[a11y/page-has-heading-one] Page should contain a level-one heading",
+            "detail": {
+              "ruleId": "page-has-heading-one",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/page-has-heading-one?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html lang=\"en\" xml:lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\" class=\"wf-materialicons-n4-inactive wf-materialsymbolsoutlined-n4-inactive wf-inactive\" data-theme=\"light\" style=\"color-scheme: light"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes?tab=panels-tab",
+            "message": "[a11y/region] All page content should be contained by landmarks",
+            "detail": {
+              "ruleId": "region",
+              "impact": "moderate",
+              "tags": [
+                "cat.keyboard",
+                "best-practice",
+                "RGAAv4",
+                "RGAA-9.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=playwright",
+              "affectedNodes": 33,
+              "firstNodeTarget": [
+                "#mobile-logo > img"
+              ],
+              "firstNodeHtml": "<img title=\"Logo - widgets-disabled [36989]\" alt=\"Logo - widgets-disabled [36989]\" style=\"height: 50px; align: center\" src=\"https://cdn-stage.twygo.com/uploads/organizations_36989_medium_logo_17780815"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgetsdisabled.stage.twygoead.com/o/36989/use_modes?tab=panels-tab",
+            "message": "[a11y/select-name] Select element must have an accessible name",
+            "detail": {
+              "ruleId": "select-name",
+              "impact": "critical",
+              "tags": [
+                "cat.forms",
+                "wcag2a",
+                "wcag412",
+                "section508",
+                "section508.22.n",
+                "TTv5",
+                "TT5.c",
+                "EN-301-549",
+                "EN-9.4.1.2",
+                "ACT",
+                "RGAAv4",
+                "RGAA-11.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/select-name?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "#select_pages"
+              ],
+              "firstNodeHtml": "<select id=\"select_pages\" class=\"chakra-select css-1gq5ikj\"><option value=\"25\" id=\"id_select_25\">25 por página </option><option value=\"50\" id=\"id_select_50\">50 por página </option><option value=\"100\" "
+            },
+            "inScope": false
+          }
+        ]
+      },
+      "activeProbes": {
+        "totals": {
+          "errors": 0,
+          "warnings": 0,
+          "info": 0
+        },
+        "byProbe": {},
+        "findings": []
+      }
+    }
+  ]
+}

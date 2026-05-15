@@ -1,0 +1,11 @@
+{
+  "runId": "feature-flag_20260515-095908",
+  "mode": "per-suite",
+  "suiteFilter": "Feature flag",
+  "projectName": "Widgets",
+  "environment": "staging-widgets",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-15T12:59:08.996Z"
+}

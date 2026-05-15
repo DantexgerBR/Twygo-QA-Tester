@@ -12,6 +12,7 @@
 import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js';
 import * as allure from 'allure-js-commons';
 import { getEnvByName } from '../../../../../src/utils/environment.js';
+import { safeGoto } from '../../../../../src/utils/modals.js';
 import { SECONDARY_STORAGE_PATH } from '../../../../../tests/setup/global-setup.js';
 import { PaineisListPage } from '../../../pages/PaineisListPage.js';
 
@@ -37,7 +38,7 @@ test.describe('Feature flag', () => {
     const paineis = new PaineisListPage(page);
 
     await step('1. Acessar /use_modes no env com flag desabilitada', async () => {
-      await page.goto(`/o/${disabledOrgId}/use_modes`);
+      await safeGoto(page, `/o/${disabledOrgId}/use_modes`);
       await expect(paineis.getModosDeUsoTab()).toBeVisible();
     });
 

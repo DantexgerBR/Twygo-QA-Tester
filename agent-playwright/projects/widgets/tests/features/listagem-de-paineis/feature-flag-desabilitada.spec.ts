@@ -10,6 +10,7 @@
 import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js';
 import * as allure from 'allure-js-commons';
 import { getEnvByName } from '../../../../../src/utils/environment.js';
+import { safeGoto } from '../../../../../src/utils/modals.js';
 import { SECONDARY_STORAGE_PATH } from '../../../../../tests/setup/global-setup.js';
 import { PaineisListPage } from '../../../pages/PaineisListPage.js';
 
@@ -32,7 +33,7 @@ test.describe('Listagem de painéis', () => {
     const paineis = new PaineisListPage(page);
 
     await allure.step('1. Acessar /use_modes e verificar tabs', async () => {
-      await page.goto(`/o/${disabledOrgId}/use_modes`);
+      await safeGoto(page, `/o/${disabledOrgId}/use_modes`);
       await expect(paineis.getModosDeUsoTab()).toBeVisible();
     });
 
@@ -46,7 +47,7 @@ test.describe('Listagem de painéis', () => {
     await allure.step(
       "3. Acessar URL direta do tab Painéis e verificar que a aba continua hidden",
       async () => {
-        await page.goto(`/o/${disabledOrgId}/use_modes?tab=panels-tab`);
+        await safeGoto(page, `/o/${disabledOrgId}/use_modes?tab=panels-tab`);
         // REVISAR: XML diz que a UI deve mostrar "página não existe", mas o
         // comportamento real (re-explorado 2026-05-06) é silencioso — o app
         // simplesmente renderiza o tabpanel default ("Modos de uso") sem
