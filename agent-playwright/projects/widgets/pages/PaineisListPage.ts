@@ -861,6 +861,22 @@ export class PaineisListPage {
     // Mesmo motivo de openNewPanelForm: NPS pode interceptar o submit
     // (`#use-model-submit`) via chakra-portal. Ver skill `fechar-modais-twygo`.
     await dismissCommonModals(this.page);
+    // Plan/contract toggle (skill `alterar-funcionalidade-contrato-twygo`)
+    // tem cache TTL no Twygo — option `user_panels` pode demorar segundos
+    // pra aparecer no select. Reload + refill até option disponível.
+    await expect(async () => {
+      const hasOption = await this.page.evaluate(() => {
+        const sel = document.getElementById('page_model') as HTMLSelectElement | null;
+        if (!sel) return false;
+        return Array.from(sel.options).some((o) => o.value === 'user_panels');
+      });
+      if (!hasOption) {
+        await this.page.reload({ waitUntil: 'domcontentloaded' });
+        await dismissCommonModals(this.page);
+        throw new Error('option user_panels ainda não disponível (cache plan)');
+      }
+    }).toPass({ timeout: 60_000, intervals: [3_000, 5_000, 8_000] });
+    // Refill nome após potencial reload(s).
     await this.getMenuItemNameInput().waitFor();
     await this.getMenuItemNameInput().fill(finalItemName);
     await this.getMenuItemPageModelSelect().selectOption('user_panels');
@@ -1075,6 +1091,110 @@ export class PaineisListPage {
 
   getMenuItemActiveSwitchInput(itemName: string): Locator {
     return this.getMenuItemRowByName(itemName).locator('input[type="checkbox"]');
+  }
+
+  /**
+   * Radio "Página inicial" da row do item. Twygo permite UM item por
+   * useMode marcado como página padrão (radio com mesmo name agrupado).
+   * Clicar no label seleciona o item; após save (bulk_update), passa a
+   * ser a landing page do perfil daquele useMode.
+   *
+   * Estrutura: col 3 (4a coluna) com `label.chakra-radio` envolvendo
+   * `input.chakra-radio__input[type="radio"]`. Clicar no LABEL (input
+   * é `clip:rect(0,0,0,0)` Chakra, click direto trava actionability).
+   *
+   * Validado live 2026-05-15 em useMode 70081 (Aluno @ 36989).
+   */
+  getMenuItemHomepageRadioLabel(itemName: string): Locator {
+    return this.getMenuItemRowByName(itemName).locator('label.chakra-radio');
+  }
+
+  /**
+   * Marca o item como página inicial (padrão) + salva via bulk_update.
+   * Idempotente: se já é padrão, no-op no save (mas radio é click-safe).
+   */
+  async setMenuItemAsHomepage(useModeId: number, itemName: string): Promise<void> {
+    await this.page.goto(
+      `/o/${this.orgId()}/use_modes/${useModeId}/edit?tab=items`,
+    );
+    await dismissCommonModals(this.page);
+    const radio = this.getMenuItemHomepageRadioLabel(itemName);
+    await radio.waitFor({ state: 'visible', timeout: 10_000 });
+    await radio.click();
+    await Promise.all([
+      this.page.waitForResponse(
+        (r) =>
+          r.url().includes(`/use_modes/${useModeId}/use_mode_itens/bulk_update`) &&
+          r.request().method() === 'PATCH',
+        { timeout: 15_000 },
+      ),
+      this.getMenuItemSubmitButton().click(),
+    ]);
+  }
+
+  // ---------- Cleanup preemptive de items órfãos (TC3/TC4) ----------
+
+  /**
+   * Rows de items de menu cujo `data-item-name` ou nome visível começa com
+   * `prefix`. Tenant compartilhado (`widgetsdisabled`) acumula órfãos
+   * entre runs — `deleteOrphanMenuItemsByPrefix` usa este locator pra
+   * limpar antes de cada spec.
+   */
+  getMenuItemRowsByPrefix(prefix: string): Locator {
+    const truncated = prefix.slice(0, 25);
+    const prefixRe = new RegExp(`^${escapeRegex(truncated)}`);
+    return this.page
+      .locator('tbody tr')
+      .filter({ has: this.page.locator('td:nth-child(2) p', { hasText: prefixRe }) });
+  }
+
+  /**
+   * Deleta TODOS os items de menu do `useModeId` cujo nome começa com
+   * `prefix`. Cleanup preemptive para specs em tenant compartilhado.
+   *
+   * Sequência por item:
+   *  1. Click no ícone Delete da row
+   *  2. Confirma modal `#modal-delete-confirm`
+   *  3. Aguarda row sumir do DOM
+   *
+   * Após deletar todos, faz UM save final (`PATCH bulk_update`) — sem
+   * isso, a desassociação fica pendente e ctx.close() do afterAll a
+   * descarta. Validado live 2026-05-15.
+   */
+  async deleteOrphanMenuItemsByPrefix(useModeId: number, prefix: string): Promise<number> {
+    await this.page.goto(
+      `/o/${this.orgId()}/use_modes/${useModeId}/edit?tab=items`,
+    );
+    await dismissCommonModals(this.page);
+
+    let deleted = 0;
+    let safetyLimit = 50;
+    while (safetyLimit-- > 0) {
+      const rows = this.getMenuItemRowsByPrefix(prefix);
+      const count = await rows.count();
+      if (count === 0) break;
+      const first = rows.first();
+      await first
+        .locator('span.material-symbols-outlined', { hasText: /^Delete$/ })
+        .click();
+      await this.getMenuItemDeleteConfirmButton().waitFor({ state: 'visible', timeout: 5_000 });
+      await this.getMenuItemDeleteConfirmButton().click();
+      await first.waitFor({ state: 'detached', timeout: 10_000 }).catch(() => null);
+      deleted++;
+    }
+
+    if (deleted > 0) {
+      await Promise.all([
+        this.page.waitForResponse(
+          (r) =>
+            r.url().includes(`/use_modes/${useModeId}/use_mode_itens/bulk_update`) &&
+            r.request().method() === 'PATCH',
+          { timeout: 15_000 },
+        ),
+        this.getMenuItemSubmitButton().click(),
+      ]);
+    }
+    return deleted;
   }
 
   /**

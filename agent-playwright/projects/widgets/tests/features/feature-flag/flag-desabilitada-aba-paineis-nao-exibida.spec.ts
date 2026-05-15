@@ -13,16 +13,34 @@ import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js
 import * as allure from 'allure-js-commons';
 import { getEnvByName } from '../../../../../src/utils/environment.js';
 import { safeGoto } from '../../../../../src/utils/modals.js';
+import { ensureFlipperActor } from '../../../../../src/utils/flipperFlag.js';
 import { SECONDARY_STORAGE_PATH } from '../../../../../tests/setup/global-setup.js';
 import { PaineisListPage } from '../../../pages/PaineisListPage.js';
 
 const disabledEnv = getEnvByName('staging-widgets-disabled');
-const disabledOrgId = disabledEnv.orgId;
+const disabledOrgId = disabledEnv.orgId!;
+const FLAG = 'paineis_do_usuario_beta_test';
+const ACTOR = `Organization;${disabledOrgId}`;
 
 test.describe('Feature flag', () => {
   test.use({
     storageState: SECONDARY_STORAGE_PATH,
     baseURL: disabledEnv.baseUrl,
+  });
+
+  // TCs vizinhos togglam flag — força OFF no setup pra isolar.
+  let revertFlag: () => Promise<void> = async () => {};
+  test.beforeAll(async ({ browser }) => {
+    revertFlag = await ensureFlipperActor(browser, {
+      envName: 'staging-widgets-disabled',
+      storageStatePath: SECONDARY_STORAGE_PATH,
+      flag: FLAG,
+      actor: ACTOR,
+      enabled: false,
+    });
+  });
+  test.afterAll(async () => {
+    await revertFlag();
   });
 
   test("Feature flag desabilitada - aba 'Painéis' não é exibida para Admin", async ({
@@ -37,13 +55,13 @@ test.describe('Feature flag', () => {
 
     const paineis = new PaineisListPage(page);
 
-    await step('1. Acessar /use_modes no env com flag desabilitada', async () => {
-      await safeGoto(page, `/o/${disabledOrgId}/use_modes`);
-      await expect(paineis.getModosDeUsoTab()).toBeVisible();
-    });
-
-    await step("2. Verificar que a aba 'Painéis' NÃO aparece (R1 — ocultação total)", async () => {
-      await expect(paineis.getPaineisTab()).toHaveCount(0);
+    // Cache server-side da flag tem TTL — toPass com reload cobre propagação.
+    await step('1+2. Acessar /use_modes + aba Painéis ausente', async () => {
+      await expect(async () => {
+        await safeGoto(page, `/o/${disabledOrgId}/use_modes`);
+        await expect(paineis.getModosDeUsoTab()).toBeVisible({ timeout: 5_000 });
+        await expect(paineis.getPaineisTab()).toHaveCount(0, { timeout: 5_000 });
+      }).toPass({ timeout: 90_000, intervals: [3_000, 5_000, 8_000] });
     });
   });
 });

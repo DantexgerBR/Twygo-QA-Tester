@@ -1,21 +1,21 @@
 # [spec-fragil] Feature flag desabilitada - aba 'Painéis' não é exibida para Admin
 
 > _Categoria confiança: **alta** — Locator bate em N elementos — seletor não-único_
-> _Gerado em 2026-05-15T12:56:12.487Z · commit 718b219_
+> _Gerado em 2026-05-15T16:02:22.762Z · commit f0907b3_
 
 ## Identificação
 - **Suite**: Feature flag
 - **TC**: Feature flag desabilitada - aba 'Painéis' não é exibida para Admin
 - **Spec**: `projects/widgets/tests/features/feature-flag/flag-desabilitada-aba-paineis-nao-exibida.spec.ts`
 - **Erro em**: `D:\twygo-agents-qa\agent-playwright\projects\widgets\tests\features\feature-flag\flag-desabilitada-aba-paineis-nao-exibida.spec.ts:46:45`
-- **Status**: failed (17091ms)
+- **Status**: failed (16160ms)
 
 ## Ambiente
 - **Env**: staging-widgets (`https://widgets.stage.twygoead.com/`)
 - **OrgId**: 36988
 - **Usuário**: claude@teste.com
 - **Browser**: chromium
-- **Build/commit**: 718b219
+- **Build/commit**: f0907b3
 
 ## Reprodução
 - **Pré-condições**: storageState pré-logado em `outputs/.auth/storage.json`, perfil Administrador.

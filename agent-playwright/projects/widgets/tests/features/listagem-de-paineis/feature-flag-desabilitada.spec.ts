@@ -11,16 +11,36 @@ import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js
 import * as allure from 'allure-js-commons';
 import { getEnvByName } from '../../../../../src/utils/environment.js';
 import { safeGoto } from '../../../../../src/utils/modals.js';
+import { ensureFlipperActor } from '../../../../../src/utils/flipperFlag.js';
 import { SECONDARY_STORAGE_PATH } from '../../../../../tests/setup/global-setup.js';
 import { PaineisListPage } from '../../../pages/PaineisListPage.js';
 
 const disabledEnv = getEnvByName('staging-widgets-disabled');
-const disabledOrgId = disabledEnv.orgId;
+const disabledOrgId = disabledEnv.orgId!;
+const FLAG = 'paineis_do_usuario_beta_test';
+const ACTOR = `Organization;${disabledOrgId}`;
 
 test.describe('Listagem de painéis', () => {
   test.use({
     storageState: SECONDARY_STORAGE_PATH,
     baseURL: disabledEnv.baseUrl,
+  });
+
+  // Specs Feature flag em outras suites togglam flag em paralelo (TC3/TC4
+  // de "Feature flag"). Garante flag OFF no setup desse spec e restaura
+  // estado original no teardown — não assume estado nativo do env.
+  let revertFlag: () => Promise<void> = async () => {};
+  test.beforeAll(async ({ browser }) => {
+    revertFlag = await ensureFlipperActor(browser, {
+      envName: 'staging-widgets-disabled',
+      storageStatePath: SECONDARY_STORAGE_PATH,
+      flag: FLAG,
+      actor: ACTOR,
+      enabled: false,
+    });
+  });
+  test.afterAll(async () => {
+    await revertFlag();
   });
 
   test('Acessar listagem com a feature flag desabilitada', async ({ page }) => {
@@ -32,29 +52,29 @@ test.describe('Listagem de painéis', () => {
 
     const paineis = new PaineisListPage(page);
 
-    await allure.step('1. Acessar /use_modes e verificar tabs', async () => {
-      await safeGoto(page, `/o/${disabledOrgId}/use_modes`);
-      await expect(paineis.getModosDeUsoTab()).toBeVisible();
+    // expect.toPass com goto+reload em cada attempt porque specs Feature
+    // flag (TC3/TC4) togglam flag em paralelo — pode estar ON
+    // temporariamente. Beforeall garante OFF inicial mas paralelismo
+    // re-ativa. Cache server-side também tem TTL.
+    await allure.step('1+2. Acessar /use_modes e confirmar aba Painéis ausente', async () => {
+      await expect(async () => {
+        await safeGoto(page, `/o/${disabledOrgId}/use_modes`);
+        await expect(paineis.getModosDeUsoTab()).toBeVisible({ timeout: 5_000 });
+        await expect(paineis.getPaineisTab()).toHaveCount(0, { timeout: 5_000 });
+      }).toPass({ timeout: 120_000, intervals: [3_000, 5_000, 10_000] });
     });
 
     await allure.step(
-      "2. Verificar que a tab 'Painéis' não aparece com a flag off",
+      "3. URL direta `?tab=panels-tab` continua silenciosa (fallback Modos de uso)",
       async () => {
-        await expect(paineis.getPaineisTab()).toHaveCount(0);
-      },
-    );
-
-    await allure.step(
-      "3. Acessar URL direta do tab Painéis e verificar que a aba continua hidden",
-      async () => {
-        await safeGoto(page, `/o/${disabledOrgId}/use_modes?tab=panels-tab`);
-        // REVISAR: XML diz que a UI deve mostrar "página não existe", mas o
-        // comportamento real (re-explorado 2026-05-06) é silencioso — o app
-        // simplesmente renderiza o tabpanel default ("Modos de uso") sem
-        // mensagem de erro. Asserção fiel: a aba Painéis continua ausente
-        // mesmo após direct-navigate.
-        await expect(paineis.getPaineisTab()).toHaveCount(0);
-        await expect(paineis.getModosDeUsoTab()).toBeVisible();
+        await expect(async () => {
+          await safeGoto(page, `/o/${disabledOrgId}/use_modes?tab=panels-tab`);
+          // REVISAR: XML diz UI deve mostrar "página não existe", mas o
+          // comportamento real (re-explorado 2026-05-06) é silencioso —
+          // app renderiza tabpanel default sem mensagem de erro.
+          await expect(paineis.getPaineisTab()).toHaveCount(0, { timeout: 5_000 });
+          await expect(paineis.getModosDeUsoTab()).toBeVisible({ timeout: 5_000 });
+        }).toPass({ timeout: 120_000, intervals: [3_000, 5_000, 10_000] });
       },
     );
   });

@@ -1,25 +1,39 @@
 // spec: testsuite XML
 // seed: tests/seed.spec.ts
 //
-// TC de transição flag ON → OFF com painéis APLICADOS na visão Aluno.
+// TC — Transição flag ON → OFF com painéis (item não-padrão) aplicados.
 //
-// Bloqueio atual: requer (a) painel + associação menu já criados na
-// org `staging-widgets-disabled` (36989), (b) verificação na visão
-// Aluno via ProfileSwitcher.switchToViaUrl('Aluno').
+// Setup técnico VALIDADO via skills (`testar-feature-flag-twygo` +
+// `alterar-funcionalidade-contrato-twygo`): ensureContractFeature +
+// ensureFlipperActor + criar painel + associar ao useMode Aluno +
+// switch via ProfileSwitcher. TC `flag-habilitada-menu-aluno-acessivel`
+// roda essa mesma cadeia com sucesso.
 //
-// O TOGGLE da flag em runtime já está destravado via skill
-// `testar-feature-flag-twygo` (ensureFlipperActor) — falta apenas o
-// SEED de dados (painel + menu) persistente nesse env.
+// Bloqueio: cache server-side do Twygo. Após `ensureFlipperActor
+// enabled:false` (revert), a sidebar Aluno continua exibindo links
+// `/panel_viewer/` por janela que pode exceder 60-180s. Combinação:
+//   - test.timeout = 120_000 (playwright.config) → cap teto
+//   - expect.toPass externo + page.reload() em cada attempt
+//   - `getByRole('tab', { name: 'Painéis' }).waitFor()` interno do
+//     `paineis.goToList()` tem default 30s → primeira tentativa dentro
+//     do toPass já come 30s de orçamento
+//
+// Resultado: cache pode atinge >60s e a janela de retry restante
+// (~30-60s dentro do test) não cobre. TC vira flaky.
 //
 // Caminho pra destravar:
-//  1. QA Lead prepara seed: criar painel "Painel TC visão aluno" + menu
-//     vinculado no useMode Aluno do staging-widgets-disabled (orgId 36989).
-//  2. Trocar test.fixme por implementação:
-//     - beforeAll: ensureFlipperActor enabled:true (flag ON)
-//     - step 1: switchToViaUrl('Aluno') → expect menu Painéis visível
-//     - step 2: revertFlag (flag OFF) → recarregar visão aluno
-//                → expect menu Painéis ausente
-//     - afterAll: revertFlag (restaura estado original)
+//  - Endpoint admin do Twygo para invalidar cache de flag/plan
+//    on-demand (PR de produto), ou
+//  - Estender `test.timeout` específico desse TC pra 300_000 +
+//    estender internal waitFor de `paineis.goToList` pra 120_000.
+//    Custo: TC pode rodar 5min em pior caso.
+//
+// TCs que NÃO dependem do "menu some" SOB cache passam:
+//  - flag-desabilitada-aba-paineis-nao-exibida ✓
+//  - flag-habilitada-menu-aluno-acessivel ✓ (caminho positivo)
+//  - menu-padrao-com-flag-desabilitada ✓ (assert redirect, não count=0)
+//  - transicao-flag-off-on ✓
+//  - listagem-de-paineis/feature-flag-desabilitada ✓
 
 import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js';
 import * as allure from 'allure-js-commons';
@@ -28,7 +42,7 @@ test.describe('Feature flag', () => {
   test('Transição: flag habilitada -> desabilitada com painéis aplicados', async ({ step }) => {
     test.fixme(
       true,
-      'seed ausente: requer painel + menu vinculado pré-criados na org 36989 (staging-widgets-disabled) E perfil Aluno via ProfileSwitcher. Toggle de flag em si já está destravado por testar-feature-flag-twygo — pendência é APENAS o seed de dados persistente.',
+      'cache server-side Twygo > test.timeout: após revert flag, sidebar Aluno mantém links /panel_viewer/ por janela maior que 120s; toPass+reload não cobre. Setup funciona (testar-feature-flag-twygo + alterar-funcionalidade-contrato-twygo). Destravar: endpoint admin pra invalidate cache OU estender test.timeout pra 300s.',
     );
 
     await allure.epic('Twygo - Widgets');

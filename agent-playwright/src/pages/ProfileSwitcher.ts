@@ -21,7 +21,21 @@ const PROFILE_LINK_CLASS: Record<ProfileName, string> = {
  * nem storageState secundário. Ver skill `.claude/skills/trocar-perfil-twygo/SKILL.md`.
  */
 export class ProfileSwitcher {
-  constructor(private readonly page: Page) {}
+  /**
+   * `orgIdOverride`: orgId pra montar paths `/o/<X>/...` em vez do
+   * `getOrgId()` global (env principal do project.config). Use em specs
+   * que rodam em env secundário (ex `staging-widgets-disabled` com
+   * orgId 36989) — sem override, switchToViaUrl('Administrador') vai
+   * pra orgId do principal, cai em 404/redirect cross-tenant.
+   */
+  constructor(
+    private readonly page: Page,
+    private readonly orgIdOverride?: string,
+  ) {}
+
+  private getOrg(): string {
+    return this.orgIdOverride ?? getOrgId();
+  }
 
   private trigger(): Locator {
     return this.page.locator('button.menu-target');
@@ -77,7 +91,7 @@ export class ProfileSwitcher {
     if (profile === 'Aluno') {
       await this.page.goto('/dashboard_students', { waitUntil: 'domcontentloaded' });
     } else if (profile === 'Administrador') {
-      await this.page.goto(`/o/${getOrgId()}/events?tab=events&profile=admin`, {
+      await this.page.goto(`/o/${this.getOrg()}/events?tab=events&profile=admin`, {
         waitUntil: 'domcontentloaded',
       });
     } else {

@@ -11,6 +11,7 @@ import * as allure from 'allure-js-commons';
 import { getEnvByName } from '../../../../../src/utils/environment.js';
 import { safeGoto } from '../../../../../src/utils/modals.js';
 import { ensureFlipperActor } from '../../../../../src/utils/flipperFlag.js';
+import { ensureContractFeature } from '../../../../../src/utils/contractFeature.js';
 import { SECONDARY_STORAGE_PATH } from '../../../../../tests/setup/global-setup.js';
 import { PaineisListPage } from '../../../pages/PaineisListPage.js';
 
@@ -18,6 +19,7 @@ const disabledEnv = getEnvByName('staging-widgets-disabled');
 const disabledOrgId = disabledEnv.orgId!;
 const FLAG = 'paineis_do_usuario_beta_test';
 const ACTOR = `Organization;${disabledOrgId}`;
+const CONTRACT_FEATURE = 'user_panels';
 
 test.describe('Feature flag', () => {
   test.use({
@@ -26,9 +28,11 @@ test.describe('Feature flag', () => {
   });
 
   let revertFlag: () => Promise<void> = async () => {};
+  let revertContract: () => Promise<void> = async () => {};
 
   test.afterAll(async () => {
     await revertFlag();
+    await revertContract();
   });
 
   test('Transição: flag desabilitada -> habilitada', async ({ page, browser, step }) => {
@@ -40,10 +44,35 @@ test.describe('Feature flag', () => {
 
     const paineis = new PaineisListPage(page);
 
+    await step('0. Setup: contrato ON (plan), flag OFF (estado inicial do TC)', async () => {
+      // Plan/contract precisa estar ON pra aba Painéis aparecer quando flag for ativada.
+      // TCs vizinhos podem ter revertido pra OFF — força ON aqui, revert depois.
+      revertContract = await ensureContractFeature(browser, {
+        envName: 'staging-widgets-disabled',
+        storageStatePath: SECONDARY_STORAGE_PATH,
+        orgId: disabledOrgId,
+        feature: CONTRACT_FEATURE,
+        enabled: true,
+      });
+      // Força flag OFF — TCs vizinhos podem ter deixado ON (cache server-side
+      // pode persistir alguns segundos após revert do TC anterior).
+      await ensureFlipperActor(browser, {
+        envName: 'staging-widgets-disabled',
+        storageStatePath: SECONDARY_STORAGE_PATH,
+        flag: FLAG,
+        actor: ACTOR,
+        enabled: false,
+      });
+    });
+
     await step('1. Estado inicial: flag off, aba Painéis oculta', async () => {
-      await safeGoto(page, `/o/${disabledOrgId}/use_modes`);
-      await expect(paineis.getModosDeUsoTab()).toBeVisible();
-      await expect(paineis.getPaineisTab()).toHaveCount(0);
+      // Cache server-side da flag tem TTL — espera propagação do OFF antes
+      // de assertar count 0.
+      await expect(async () => {
+        await safeGoto(page, `/o/${disabledOrgId}/use_modes`);
+        await expect(paineis.getModosDeUsoTab()).toBeVisible({ timeout: 5_000 });
+        await expect(paineis.getPaineisTab()).toHaveCount(0, { timeout: 5_000 });
+      }).toPass({ timeout: 60_000, intervals: [3_000, 5_000, 8_000] });
     });
 
     await step('2. Habilitar flag para a org via Flipper Admin', async () => {

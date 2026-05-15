@@ -1,4 +1,4 @@
-# Triage Report — Widgets — 2026-05-15 09:59
+# Triage Report — Widgets — 2026-05-15 13:10
 
 **Escopo**: Testsuite: Feature flag · **Ambiente**: `staging-widgets`
 
@@ -6,7 +6,7 @@
 
 | Total | ✅ Passed | ❌ Failed | ⊘ Skipped | Findings exploratórios |
 |---:|---:|---:|---:|---|
-| 5 | 2 | 0 | 3 | 0 erros · 0 warnings · 0 info |
+| 5 | 4 | 0 | 1 | 0 erros · 0 warnings · 0 info |
 
 > **Janela única de revisão.** Marque ☑ em UMA categoria por item.
 > Notas em PT-BR. Commit este arquivo após triagem.
@@ -26,9 +26,7 @@ Suite rodou limpa. Revise apenas a seção de exploratórios e skips abaixo (se 
 
 | TC | Tipo | Motivo |
 |---|---|---|
-| Feature flag habilitada com painéis criados - menu do aluno acessível | fixme | seed ausente: requer credencial de perfil Aluno. Ver dashboard-visao-do-aluno/_README.md. |
-| Menu marcado como 'Padrão' com flag desabilitada | fixme | seed ausente: requer menu marcado como 'Padrão' + transição flag on→off no mesmo env. Mesmo bloqueio de transicao-flag-on-off-com-paineis.spec.ts. |
-| Transição: flag habilitada -> desabilitada com painéis aplicados | fixme | seed ausente: requer painel + menu vinculado pré-criados na org 36989 (staging-widgets-disabled) E perfil Aluno via ProfileSwitcher. Toggle de flag em si já está destravado por testar-feature-flag-twy |
+| Transição: flag habilitada -> desabilitada com painéis aplicados | fixme | cache server-side Twygo > test.timeout: após revert flag, sidebar Aluno mantém links /panel_viewer/ por janela maior que 120s; toPass+reload não cobre. Setup funciona (testar-feature-flag-twygo + alte |
 
 ---
 

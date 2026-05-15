@@ -1,21 +1,21 @@
 # [spec-fragil] Acessar listagem com a feature flag desabilitada
 
 > _Categoria confiança: **alta** — Locator bate em N elementos — seletor não-único_
-> _Gerado em 2026-05-15T12:56:12.487Z · commit 718b219_
+> _Gerado em 2026-05-15T14:47:46.738Z · commit f0907b3_
 
 ## Identificação
 - **Suite**: Listagem de painéis
 - **TC**: Acessar listagem com a feature flag desabilitada
 - **Spec**: `projects/widgets/tests/features/listagem-de-paineis/feature-flag-desabilitada.spec.ts`
 - **Erro em**: `D:\twygo-agents-qa\agent-playwright\projects\widgets\tests\features\listagem-de-paineis\feature-flag-desabilitada.spec.ts:43:47`
-- **Status**: failed (16909ms)
+- **Status**: failed (17225ms)
 
 ## Ambiente
 - **Env**: staging-widgets (`https://widgets.stage.twygoead.com/`)
 - **OrgId**: 36988
 - **Usuário**: claude@teste.com
 - **Browser**: chromium
-- **Build/commit**: 718b219
+- **Build/commit**: f0907b3
 
 ## Reprodução
 - **Pré-condições**: storageState pré-logado em `outputs/.auth/storage.json`, perfil Administrador.
