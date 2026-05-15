@@ -1,0 +1,12 @@
+{
+  "runId": "trial_20260515-162548",
+  "scope": "Apenas testsuite contendo \"Trial\"",
+  "tests": {
+    "total": 4,
+    "passed": 2,
+    "failed": 2,
+    "skipped": 0,
+    "durationMs": 293326
+  },
+  "exploratory": null
+}
