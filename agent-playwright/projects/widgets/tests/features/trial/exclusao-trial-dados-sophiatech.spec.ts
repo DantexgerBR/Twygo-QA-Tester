@@ -20,7 +20,16 @@ test.describe('Trial', () => {
     storageState: { cookies: [], origins: [] },
   });
 
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page }, testInfo) => {
+    // Annotations consumidas pelo `twygo-report-generator` pra mostrar
+    // a Trial real no bug-report (em vez do env principal staging-widgets).
+    testInfo.annotations.push(
+      { type: 'baseURL', description: TRIAL.url },
+      { type: 'orgId', description: String(TRIAL.orgId) },
+      { type: 'emailRef', description: '${TWYGO_TRIAL_AGENTSQA_OTHER_EMAIL} (Trial widgets / legacy-reuse)' },
+      { type: 'passwordRef', description: '${TWYGO_TRIAL_AGENTSQA_OTHER_PASSWORD}' },
+      { type: 'envLabel', description: 'trial-agentsqa-other (Trial widgets)' },
+    );
     await page.goto('/users/login');
     await page.getByRole('textbox', { name: 'Login' }).fill(TRIAL.email);
     await page.getByRole('textbox', { name: 'Senha' }).fill(TRIAL.password);

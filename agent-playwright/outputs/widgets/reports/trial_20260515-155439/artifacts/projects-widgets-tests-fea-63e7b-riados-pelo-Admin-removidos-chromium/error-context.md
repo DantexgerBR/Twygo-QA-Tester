@@ -7,21 +7,21 @@
 # Test info
 
 - Name: projects\widgets\tests\features\trial\exclusao-trial-dados-admin.spec.ts >> Trial >> Exclusão de trial: dados criados pelo Admin removidos
-- Location: projects\widgets\tests\features\trial\exclusao-trial-dados-admin.spec.ts:32:3
+- Location: projects\widgets\tests\features\trial\exclusao-trial-dados-admin.spec.ts:42:3
 
 # Error details
 
 ```
 Error: expect(locator).toHaveCount(expected) failed
 
-Locator:  locator('tbody tr[data-item-name="Painel do Admin Trial w2-1778869943667"]')
+Locator:  locator('tbody tr[data-item-name="Painel do Admin Trial w2-1778871179238"]')
 Expected: 0
 Received: 1
 Timeout:  60000ms
 
 Call log:
   - Expect "toHaveCount" with timeout 60000ms
-  - waiting for locator('tbody tr[data-item-name="Painel do Admin Trial w2-1778869943667"]')
+  - waiting for locator('tbody tr[data-item-name="Painel do Admin Trial w2-1778871179238"]')
     63 × locator resolved to 1 element
        - unexpected value "1"
 
@@ -313,9 +313,9 @@ Call log:
                       - img [ref=e317]
                   - columnheader [ref=e319]
               - rowgroup [ref=e320]:
-                - row "Painel do Admin Trial w2-1778869943667 15/05/2026 edit content_copy delete" [ref=e321]:
-                  - cell "Painel do Admin Trial w2-1778869943667" [ref=e322]:
-                    - paragraph [ref=e323]: Painel do Admin Trial w2-1778869943667
+                - row "Painel do Admin Trial w2-1778871179238 15/05/2026 edit content_copy delete" [ref=e321]:
+                  - cell "Painel do Admin Trial w2-1778871179238" [ref=e322]:
+                    - paragraph [ref=e323]: Painel do Admin Trial w2-1778871179238
                   - cell [ref=e324]
                   - cell "15/05/2026" [ref=e325]
                   - cell [ref=e326]:
@@ -325,11 +325,11 @@ Call log:
                       - generic [ref=e336] [cursor=pointer]: edit
                       - generic [ref=e339] [cursor=pointer]: content_copy
                       - generic [ref=e342] [cursor=pointer]: delete
-                - row "Painel do Admin Trial w2-1778868040225 15/05/2026 edit content_copy delete" [ref=e343]:
-                  - cell "Painel do Admin Trial w2-1778868040225" [ref=e344]:
-                    - paragraph [ref=e345]: Painel do Admin Trial w2-1778868040225
-                  - cell [ref=e346]:
-                    - paragraph [ref=e347]
+                - row "Dashboard Dashboard do usuário 15/05/2026 edit content_copy delete" [ref=e343]:
+                  - cell "Dashboard" [ref=e344]:
+                    - paragraph [ref=e345]: Dashboard
+                  - cell "Dashboard do usuário" [ref=e346]:
+                    - paragraph [ref=e347]: Dashboard do usuário
                   - cell "15/05/2026" [ref=e348]
                   - cell [ref=e349]:
                     - checkbox [checked] [ref=e351]
@@ -338,9 +338,9 @@ Call log:
                       - generic [ref=e359] [cursor=pointer]: edit
                       - generic [ref=e362] [cursor=pointer]: content_copy
                       - generic [ref=e365] [cursor=pointer]: delete
-                - row "Painel do Admin Trial w0-1778867868567 15/05/2026 edit content_copy delete" [ref=e366]:
-                  - cell "Painel do Admin Trial w0-1778867868567" [ref=e367]:
-                    - paragraph [ref=e368]: Painel do Admin Trial w0-1778867868567
+                - row "Painel do Admin Trial w2-1778869943667 15/05/2026 edit content_copy delete" [ref=e366]:
+                  - cell "Painel do Admin Trial w2-1778869943667" [ref=e367]:
+                    - paragraph [ref=e368]: Painel do Admin Trial w2-1778869943667
                   - cell [ref=e369]
                   - cell "15/05/2026" [ref=e370]
                   - cell [ref=e371]:
@@ -350,29 +350,47 @@ Call log:
                       - generic [ref=e381] [cursor=pointer]: edit
                       - generic [ref=e384] [cursor=pointer]: content_copy
                       - generic [ref=e387] [cursor=pointer]: delete
-            - generic [ref=e389]:
-              - generic [ref=e390]:
-                - button "keyboard_double_arrow_left" [disabled] [ref=e391]:
-                  - generic [ref=e392]: keyboard_double_arrow_left
-                - button "chevron_left" [disabled] [ref=e393]:
-                  - generic [ref=e394]: chevron_left
-                - button "1" [ref=e395] [cursor=pointer]
-                - button "chevron_right" [disabled] [ref=e396]:
-                  - generic [ref=e397]: chevron_right
-              - generic [ref=e398]:
-                - combobox [ref=e399]:
+                - row "Painel do Admin Trial w2-1778868040225 15/05/2026 edit content_copy delete" [ref=e388]:
+                  - cell "Painel do Admin Trial w2-1778868040225" [ref=e389]:
+                    - paragraph [ref=e390]: Painel do Admin Trial w2-1778868040225
+                  - cell [ref=e391]:
+                    - paragraph [ref=e392]
+                  - cell "15/05/2026" [ref=e393]
+                  - cell [ref=e394]:
+                    - checkbox [checked] [ref=e396]
+                  - cell "edit content_copy delete" [ref=e399]:
+                    - generic [ref=e401]:
+                      - generic [ref=e404] [cursor=pointer]: edit
+                      - generic [ref=e407] [cursor=pointer]: content_copy
+                      - generic [ref=e410] [cursor=pointer]: delete
+                - row "Painel do Admin Trial w0-1778867868567 15/05/2026 edit content_copy delete" [ref=e411]:
+                  - cell "Painel do Admin Trial w0-1778867868567" [ref=e412]:
+                    - paragraph [ref=e413]: Painel do Admin Trial w0-1778867868567
+                  - cell [ref=e414]
+                  - cell "15/05/2026" [ref=e415]
+                  - cell [ref=e416]:
+                    - checkbox [checked] [ref=e418]
+                  - cell "edit content_copy delete" [ref=e421]:
+                    - generic [ref=e423]:
+                      - generic [ref=e426] [cursor=pointer]: edit
+                      - generic [ref=e429] [cursor=pointer]: content_copy
+                      - generic [ref=e432] [cursor=pointer]: delete
+            - generic [ref=e434]:
+              - generic [ref=e435]:
+                - button "keyboard_double_arrow_left" [disabled] [ref=e436]:
+                  - generic [ref=e437]: keyboard_double_arrow_left
+                - button "chevron_left" [disabled] [ref=e438]:
+                  - generic [ref=e439]: chevron_left
+                - button "1" [ref=e440] [cursor=pointer]
+                - button "chevron_right" [disabled] [ref=e441]:
+                  - generic [ref=e442]: chevron_right
+              - generic [ref=e443]:
+                - combobox [ref=e444]:
                   - option "25 por página" [selected]
                   - option "50 por página"
                   - option "100 por página"
                 - generic:
                   - img
-  - generic:
-    - region "Notifications-top"
-    - region "Notifications-top-left"
-    - region "Notifications-top-right"
-    - region "Notifications-bottom-left"
-    - region "Notifications-bottom"
-    - region "Notifications-bottom-right"
   - generic:
     - region "Notifications-top"
     - region "Notifications-top-left"
@@ -420,68 +438,78 @@ Call log:
   19 |     storageState: { cookies: [], origins: [] },
   20 |   });
   21 | 
-  22 |   test.beforeEach(async ({ page }) => {
-  23 |     await page.goto('/users/login');
-  24 |     await page.getByRole('textbox', { name: 'Login' }).fill(TRIAL.email);
-  25 |     await page.getByRole('textbox', { name: 'Senha' }).fill(TRIAL.password);
-  26 |     await page.getByRole('button', { name: 'Entrar' }).click();
-  27 |     await page.waitForURL((url) => !url.pathname.startsWith('/users/login'), {
-  28 |       timeout: 30_000,
-  29 |     });
-  30 |   });
-  31 | 
-  32 |   test('Exclusão de trial: dados criados pelo Admin removidos', async ({ page, step }, testInfo) => {
-  33 |     await allure.epic('Twygo - Widgets');
-  34 |     await allure.feature('Trial');
-  35 |     await allure.story('Exclusão de trial: dados criados pelo Admin removidos');
-  36 |     await allure.severity('normal');
-  37 | 
-  38 |     // PaineisListPage navega via `/o/{orgId}/...`. Sem override, usaria
-  39 |     // getOrgId() (env principal 36988) em vez do orgId da Trial — bug
-  40 |     // latente confirmado no trace 2026-05-15. Padrão herdado da skill
-  41 |     // `testar-ambientes-adicionais-twygo` (constructor orgIdOverride).
-  42 |     const paineis = new PaineisListPage(page, String(TRIAL.orgId));
-  43 |     const sophia = new SophiaWidget(page);
-  44 |     // Nome único por run — bug-produto da exclusão Sophia (opção "Todas
-  45 |     // informações" não remove painéis admin) acumula órfãos entre runs.
-  46 |     // Suffix worker+timestamp isola este test. Ver
-  47 |     // `testar-exclusao-dados-trial-twygo` §"Bug-produto confirmado".
-  48 |     const adminPanelName = `${adminTrialData.adminPanelNameBase} w${testInfo.workerIndex}-${Date.now()}`;
-  49 | 
-  50 |     await step('Pré: Admin cria painel manual', async () => {
-  51 |       await page.goto(`/o/${TRIAL.orgId}/use_modes?tab=panels-tab`);
-  52 |       await dismissCommonModals(page);
-  53 |       await paineis.createPanel({ name: adminPanelName });
-  54 |       // createPanel redireciona pra /panels/{id}/edit — voltar pra listagem para validar.
-  55 |       await page.goto(`/o/${TRIAL.orgId}/use_modes?tab=panels-tab`);
-  56 |       await dismissCommonModals(page);
-  57 |       await paineis.setViewMode('lista');
-  58 |       await expect(paineis.getRowByItemName(adminPanelName)).toBeVisible();
-  59 |     });
-  60 | 
-  61 |     await step('1. Executar rotina de exclusão (Sophia → Excluir informações → Todas informações)', async () => {
-  62 |       await sophia.openDeleteModal();
-  63 |       await sophia.selectOnly('all');
-  64 |       await sophia.confirmDelete();
-  65 |     });
-  66 | 
-  67 |     await step('2. Verificar base após exclusão — painel do Admin removido junto com pré-definidos', async () => {
-  68 |       await page.goto(`/o/${TRIAL.orgId}/use_modes?tab=panels-tab`);
-  69 |       await dismissCommonModals(page);
-  70 |       await paineis.setViewMode('lista');
-  71 |       // BUG-PRODUTO CONFIRMADO (2026-05-15 via Network probe): a request
-  72 |       // `DELETE /api/v1/o/{orgId}/delete_trial_data` é disparada pelo
-  73 |       // backend mas painéis admin sobrevivem. XML diz que deveriam ser
-  74 |       // removidos junto com pré-definidos. Spec vermelho aqui é SINAL
-  75 |       // CORRETO até produto corrigir. Timeout 60s mantido como cinto de
-  76 |       // segurança (caso comportamento mude pra async no futuro).
-  77 |       // Ver skill `testar-exclusao-dados-trial-twygo` §"Bug-produto confirmado".
-> 78 |       await expect(paineis.getRowByItemName(adminPanelName)).toHaveCount(0, {
+  22 |   test.beforeEach(async ({ page }, testInfo) => {
+  23 |     // Annotations consumidas pelo `twygo-report-generator` pra mostrar
+  24 |     // a Trial real no bug-report (em vez do env principal staging-widgets).
+  25 |     // Ver SKILL.md §"Override de env por annotation".
+  26 |     testInfo.annotations.push(
+  27 |       { type: 'baseURL', description: TRIAL.url },
+  28 |       { type: 'orgId', description: String(TRIAL.orgId) },
+  29 |       { type: 'emailRef', description: '${TWYGO_TRIAL_AGENTSQA_OTHER_EMAIL} (Trial widgets / legacy-reuse)' },
+  30 |       { type: 'passwordRef', description: '${TWYGO_TRIAL_AGENTSQA_OTHER_PASSWORD}' },
+  31 |       { type: 'envLabel', description: 'trial-agentsqa-other (Trial widgets)' },
+  32 |     );
+  33 |     await page.goto('/users/login');
+  34 |     await page.getByRole('textbox', { name: 'Login' }).fill(TRIAL.email);
+  35 |     await page.getByRole('textbox', { name: 'Senha' }).fill(TRIAL.password);
+  36 |     await page.getByRole('button', { name: 'Entrar' }).click();
+  37 |     await page.waitForURL((url) => !url.pathname.startsWith('/users/login'), {
+  38 |       timeout: 30_000,
+  39 |     });
+  40 |   });
+  41 | 
+  42 |   test('Exclusão de trial: dados criados pelo Admin removidos', async ({ page, step }, testInfo) => {
+  43 |     await allure.epic('Twygo - Widgets');
+  44 |     await allure.feature('Trial');
+  45 |     await allure.story('Exclusão de trial: dados criados pelo Admin removidos');
+  46 |     await allure.severity('normal');
+  47 | 
+  48 |     // PaineisListPage navega via `/o/{orgId}/...`. Sem override, usaria
+  49 |     // getOrgId() (env principal 36988) em vez do orgId da Trial — bug
+  50 |     // latente confirmado no trace 2026-05-15. Padrão herdado da skill
+  51 |     // `testar-ambientes-adicionais-twygo` (constructor orgIdOverride).
+  52 |     const paineis = new PaineisListPage(page, String(TRIAL.orgId));
+  53 |     const sophia = new SophiaWidget(page);
+  54 |     // Nome único por run — bug-produto da exclusão Sophia (opção "Todas
+  55 |     // informações" não remove painéis admin) acumula órfãos entre runs.
+  56 |     // Suffix worker+timestamp isola este test. Ver
+  57 |     // `testar-exclusao-dados-trial-twygo` §"Bug-produto confirmado".
+  58 |     const adminPanelName = `${adminTrialData.adminPanelNameBase} w${testInfo.workerIndex}-${Date.now()}`;
+  59 | 
+  60 |     await step('Pré: Admin cria painel manual', async () => {
+  61 |       await page.goto(`/o/${TRIAL.orgId}/use_modes?tab=panels-tab`);
+  62 |       await dismissCommonModals(page);
+  63 |       await paineis.createPanel({ name: adminPanelName });
+  64 |       // createPanel redireciona pra /panels/{id}/edit — voltar pra listagem para validar.
+  65 |       await page.goto(`/o/${TRIAL.orgId}/use_modes?tab=panels-tab`);
+  66 |       await dismissCommonModals(page);
+  67 |       await paineis.setViewMode('lista');
+  68 |       await expect(paineis.getRowByItemName(adminPanelName)).toBeVisible();
+  69 |     });
+  70 | 
+  71 |     await step('1. Executar rotina de exclusão (Sophia → Excluir informações → Todas informações)', async () => {
+  72 |       await sophia.openDeleteModal();
+  73 |       await sophia.selectOnly('all');
+  74 |       await sophia.confirmDelete();
+  75 |     });
+  76 | 
+  77 |     await step('2. Verificar base após exclusão — painel do Admin removido junto com pré-definidos', async () => {
+  78 |       await page.goto(`/o/${TRIAL.orgId}/use_modes?tab=panels-tab`);
+  79 |       await dismissCommonModals(page);
+  80 |       await paineis.setViewMode('lista');
+  81 |       // BUG-PRODUTO CONFIRMADO (2026-05-15 via Network probe): a request
+  82 |       // `DELETE /api/v1/o/{orgId}/delete_trial_data` é disparada pelo
+  83 |       // backend mas painéis admin sobrevivem. XML diz que deveriam ser
+  84 |       // removidos junto com pré-definidos. Spec vermelho aqui é SINAL
+  85 |       // CORRETO até produto corrigir. Timeout 60s mantido como cinto de
+  86 |       // segurança (caso comportamento mude pra async no futuro).
+  87 |       // Ver skill `testar-exclusao-dados-trial-twygo` §"Bug-produto confirmado".
+> 88 |       await expect(paineis.getRowByItemName(adminPanelName)).toHaveCount(0, {
      |                                                              ^ Error: expect(locator).toHaveCount(expected) failed
-  79 |         timeout: 60_000,
-  80 |       });
-  81 |     });
-  82 |   });
-  83 | });
-  84 | 
+  89 |         timeout: 60_000,
+  90 |       });
+  91 |     });
+  92 |   });
+  93 | });
+  94 | 
 ```

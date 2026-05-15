@@ -1,25 +1,25 @@
 # Relatório de Execução — Twygo QA
 
-**Projeto:** Widgets · **Ambiente:** `staging-widgets` · **Browsers:** chromium · **Gerado em:** 15/05/2026, 15:34:12
+**Projeto:** Widgets · **Ambiente:** `staging-widgets` · **Browsers:** chromium · **Gerado em:** 15/05/2026, 15:54:39
 
 > **Escopo:** Apenas testsuite contendo "Trial"
 
 > ❌ **2 caso(s) com falha precisam de atenção (2 críticos)**
 >
 > - 🔴 Crítico [TC4 · Exclusão de trial: dados criados pelo Admin removidos](tests.md#exclusao-de-trial-dados-criados-pelo-admin-removidos) — Error: expect(locator).toHaveCount(expected) failed
-> - 🔴 Crítico [TC3 · Exclusão de trial: dados pré-definidos da SophiaTech removidos](tests.md#exclusao-de-trial-dados-pre-definidos-da-sophiatech-removidos) — Error: Após exclusão de pré-definidos, contagem de painéis deve diminuir (inicial=2, final=3).
+> - 🔴 Crítico [TC3 · Exclusão de trial: dados pré-definidos da SophiaTech removidos](tests.md#exclusao-de-trial-dados-pre-definidos-da-sophiatech-removidos) — Error: Após exclusão de pré-definidos, contagem de painéis deve diminuir (inicial=4, final=5).
 
 ## Casos de teste (XML)
 
 | Total | ✅ Aprovados | ❌ Falhas | ⊘ Ignorados | Duração |
 |---:|---:|---:|---:|---:|
-| 4 | 0 | 2 | 2 | 200.4s |
+| 4 | 0 | 2 | 2 | 188.8s |
 
 ## Por testsuite
 
 | Testsuite | Total | Distribuição (✅/❌/⊘) | %Pass | ❌ | ⊘ | Findings | Tempo |
 |---|---:|---|---:|---:|---:|---|---:|
-| **Trial** | 4 | `[✗✗✗✗✗✗✗✗✗✗⊘⊘⊘⊘⊘⊘⊘⊘⊘⊘]` 0/2/2 | 0% | 2 | 2 | — | 200.4s |
+| **Trial** | 4 | `[✗✗✗✗✗✗✗✗✗✗⊘⊘⊘⊘⊘⊘⊘⊘⊘⊘]` 0/2/2 | 0% | 2 | 2 | — | 188.8s |
 
 ## Onde ir agora
 

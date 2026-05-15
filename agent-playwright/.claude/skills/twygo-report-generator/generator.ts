@@ -101,6 +101,19 @@ type FlatTest = {
   attachments: Array<{ name: string; path: string; contentType: string }>;
   steps: FlatStep[];
   failedStepIndex: number | null;
+  /**
+   * Annotations cruas do test (`test.info().annotations` no spec). Usado
+   * pra extrair overrides de ambiente quando o spec roda contra um env
+   * diferente do principal do `project.config.json` — ex: specs Trial
+   * que usam `test.use({ baseURL: TRIAL.url })`. Convenções de tipos
+   * lidos pelo bug-block:
+   *   - `baseURL`: URL real consumida pelo spec
+   *   - `orgId`: orgId real (pode diferir do env principal)
+   *   - `emailRef` / `passwordRef`: literais pra mostrar no bug-report
+   *     (formato livre — ex: "${TWYGO_TRIAL_AGENTSQA_OTHER_EMAIL}")
+   *   - `envLabel`: nome amigável (ex: "trial-agentsqa-other (Trial widgets)")
+   */
+  annotations: Array<{ type: string; description?: string }>;
 };
 
 type ExploratoryFinding = {
@@ -488,6 +501,7 @@ function flatten(suites: PlaywrightSuite[]): FlatTest[] {
             .map((a) => ({ name: a.name, path: a.path, contentType: a.contentType })),
           steps,
           failedStepIndex: failedIdx >= 0 ? failedIdx : null,
+          annotations: allAnn.map((a) => ({ type: a.type, description: a.description })),
         });
       }
     }
@@ -1006,8 +1020,25 @@ function renderBugReportBlockMd(
     || xml?.steps.map((s) => `${s.stepNumber}. ${s.expectedResults}`).join(' | ')
     || '—';
 
-  const failureUrl = inferFailureUrl(t, envEntry?.baseUrl);
+  // Override do env principal via annotations do spec. Aplica quando o
+  // spec usa `test.use({ baseURL: ... })` apontando pra env diferente
+  // (ex: Trial). Sem annotations, mantém comportamento legado
+  // (env principal do project.config.json). Ver §"Override de env por
+  // annotation" na SKILL.md.
+  const annBaseUrl = t.annotations.find((a) => a.type === 'baseURL')?.description?.trim();
+  const annOrgId = t.annotations.find((a) => a.type === 'orgId')?.description?.trim();
+  const annEmailRef = t.annotations.find((a) => a.type === 'emailRef')?.description?.trim();
+  const annPasswordRef = t.annotations.find((a) => a.type === 'passwordRef')?.description?.trim();
+  const annEnvLabel = t.annotations.find((a) => a.type === 'envLabel')?.description?.trim();
+
+  const effectiveBaseUrl = annBaseUrl ?? envEntry?.baseUrl;
+  const effectiveEmail = annEmailRef ?? envEntry?.credentials.email ?? '—';
+  const effectivePassword = annPasswordRef ?? envEntry?.credentials.password ?? '—';
+  const effectiveEnvLabel = annEnvLabel ?? envName;
+
+  const failureUrl = inferFailureUrl(t, effectiveBaseUrl);
   const ids = extractIdsFromUrl(failureUrl);
+  if (annOrgId && !ids.orgId) ids.orgId = annOrgId;
   if (!ids.orgId || !ids.envId) {
     const errCtx = t.attachments.find((a) => a.name === 'error-context');
     let fullText = t.errorMessage || '';
@@ -1023,6 +1054,7 @@ function renderBugReportBlockMd(
       if (m) ids.envId = m[1];
     }
   }
+  if (annOrgId) ids.orgId = annOrgId;
   const others: string[] = [];
   if (ids.envId) others.push(`envId interno (rota /ai_consumption_analysis/{envId}): ${ids.envId}`);
   others.push(`Browser: ${t.project}`);
@@ -1059,8 +1091,8 @@ ${summary}
 
 Informações
 - URL: ${failureUrl}
-- Login: ${envEntry?.credentials.email ?? '—'}
-- Senha: ${envEntry?.credentials.password ?? '—'}
+- Login: ${effectiveEmail}
+- Senha: ${effectivePassword}
 - ID do ambiente (orgId): ${ids.orgId ?? '—'}
 - Outros:
 ${others.map((o) => `  - ${o}`).join('\n')}
@@ -1070,7 +1102,7 @@ ${evidenceLines}
 
 Execução
 - runId: ${runId}
-- environment.json: ${envName}
+- environment.json: ${effectiveEnvLabel}
 - testsuite: ${t.testsuite}
 - testcase: ${t.testcase}
 `;
@@ -1092,9 +1124,10 @@ Execução
   lines.push(`| Campo | Valor |`);
   lines.push(`|---|---|`);
   lines.push(`| URL | \`${failureUrl}\` |`);
-  lines.push(`| Login | ${envEntry?.credentials.email ?? '—'} |`);
-  lines.push(`| Senha | ${envEntry?.credentials.password ?? '—'} |`);
+  lines.push(`| Login | ${effectiveEmail} |`);
+  lines.push(`| Senha | ${effectivePassword} |`);
   lines.push(`| orgId | ${ids.orgId ?? '—'} |`);
+  if (annEnvLabel) lines.push(`| Env (override via annotation) | \`${annEnvLabel}\` |`);
   for (const o of others) lines.push(`| Outros | ${mdCell(o)} |`);
   lines.push('');
   lines.push(`**Evidências:**`);

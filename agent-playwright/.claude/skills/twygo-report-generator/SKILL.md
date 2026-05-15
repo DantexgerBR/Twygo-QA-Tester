@@ -1,10 +1,41 @@
 ---
 name: twygo-report-generator
-description: Gera relatório Markdown estruturado por execução em outputs/reports/{slug}_{timestamp}/ (index.md + tests.md + exploratory.md + JSONs). Em modo regressivo, dispara também o Allure CLI para o relatório executivo com trend histórico (Allure mantém HTML — built-in). v3.1 adiciona auto-detect — se rodado sem flag mas test-results.json tem 1 única testsuite, promove pra per-suite com slug correto (evita pasta all-suites enganosa). v3.2 adiciona rotação automática — mantém só o latest por prefix em `outputs/<slug>/reports/`, move anteriores pra `outputs-archive/<slug>/reports/` (gitignored).
-version: 3.2.0
+description: Gera relatório Markdown estruturado por execução em outputs/reports/{slug}_{timestamp}/ (index.md + tests.md + exploratory.md + JSONs). Em modo regressivo, dispara também o Allure CLI para o relatório executivo com trend histórico (Allure mantém HTML — built-in). v3.1 adiciona auto-detect — se rodado sem flag mas test-results.json tem 1 única testsuite, promove pra per-suite com slug correto (evita pasta all-suites enganosa). v3.2 adiciona rotação automática — mantém só o latest por prefix em `outputs/<slug>/reports/`, move anteriores pra `outputs-archive/<slug>/reports/` (gitignored). v3.3 adiciona suporte a override de env por annotation — bug-report do TC usa URL/Login/Senha/orgId da Trial real quando o spec emite `testInfo.annotations.push({type: 'baseURL'|'orgId'|'emailRef'|'passwordRef'|'envLabel', description: ...})`, em vez de mostrar sempre o env principal do project.config.json.
+version: 3.3.0
 ---
 
 # twygo-report-generator
+
+## Override de env por annotation (v3.3+)
+
+Specs que rodam contra um env diferente do principal do `project.config.json`
+(ex: Trial via `test.use({ baseURL: TRIAL.url })`) devem emitir annotations
+no `beforeEach` pra o bug-report mostrar a Trial real, não o env principal:
+
+```ts
+test.beforeEach(async ({ page }, testInfo) => {
+  testInfo.annotations.push(
+    { type: 'baseURL', description: TRIAL.url },
+    { type: 'orgId', description: String(TRIAL.orgId) },
+    { type: 'emailRef', description: '${TWYGO_TRIAL_AGENTSQA_OTHER_EMAIL} (Trial widgets)' },
+    { type: 'passwordRef', description: '${TWYGO_TRIAL_AGENTSQA_OTHER_PASSWORD}' },
+    { type: 'envLabel', description: 'trial-agentsqa-other (Trial widgets)' },
+  );
+  // ... login ...
+});
+```
+
+| Annotation type | Efeito no bug-report |
+|---|---|
+| `baseURL` | Substitui `envEntry.baseUrl` no campo "URL". Também é usado pelo `inferFailureUrl` quando há path relativo na falha |
+| `orgId` | Substitui o `orgId` extraído da URL no campo "orgId" |
+| `emailRef` | Texto literal exibido em "Login" (formato livre — geralmente referência a env var, ex: `${TWYGO_..._EMAIL}`) |
+| `passwordRef` | Idem em "Senha" |
+| `envLabel` | Substitui o nome em "Execução → environment.json". Aparece também numa linha extra "Env (override via annotation)" pra deixar claro que foi override |
+
+Sem annotations, o comportamento legado prevalece (lê env principal). Compatível com specs antigos sem alteração.
+
+**Caso real (2026-05-15)**: bug-report do TC4 da suite Trial mostrava `URL: widgets.stage.twygoead.com` mesmo quando o spec rodava contra `trialagentsqa5.stage.twygoead.com`. Confundia QA — parecia que o spec não usava a Trial. Annotations corrigem.
 
 ## Quando usar
 

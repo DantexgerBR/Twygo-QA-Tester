@@ -10,7 +10,7 @@ _4 caso(s) — 0 aprovado(s), 2 falha(s), 2 ignorado(s)_
 
 ### ⊘ Ignorado · TC2 · Criação de trial via API com painéis pré-definidos · 🔴 Crítico
 
-<a id="criacao-de-trial-via-api-com-paineis-pre-definidos"></a>_Arquivo:_ `criacao-trial-api-paineis-predefinidos.spec.ts` · _Duração:_ 1.69s · _Browser:_ chromium
+<a id="criacao-de-trial-via-api-com-paineis-pre-definidos"></a>_Arquivo:_ `criacao-trial-api-paineis-predefinidos.spec.ts` · _Duração:_ 1.41s · _Browser:_ chromium
 
 > **⊘ Por que foi ignorado:** Marcado para revisão (test.fixme): Override do XML: criação de trial via API substituída por wizard `/new/register/steps` (TC1) executado pelo playbook `provisionar-trial-projeto-twygo`. Decisão time QA Twygo 2026-05-15: API endpoint `external_onboarding` fica fora do escopo Playwright até existir API test suite dedicada (sem prazo).
 
@@ -48,7 +48,7 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 - 📦 **Trace** — [`trace.zip`](artifacts/projects-widgets-tests-fea-c77b9-I-com-painéis-pré-definidos-chromium/trace.zip)
 
   ```bash
-  npx playwright show-trace outputs/widgets/reports/trial_20260515-153412/artifacts/projects-widgets-tests-fea-c77b9-I-com-painéis-pré-definidos-chromium/trace.zip
+  npx playwright show-trace outputs/widgets/reports/trial_20260515-155439/artifacts/projects-widgets-tests-fea-c77b9-I-com-painéis-pré-definidos-chromium/trace.zip
   ```
 
 - 🎥 **Vídeo** — [`video.webm`](artifacts/projects-widgets-tests-fea-c77b9-I-com-painéis-pré-definidos-chromium/video.webm)
@@ -74,7 +74,7 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 
 ### ⊘ Ignorado · TC1 · Criação de trial via URL com painéis pré-definidos · 🔴 Crítico
 
-<a id="criacao-de-trial-via-url-com-paineis-pre-definidos"></a>_Arquivo:_ `criacao-trial-url-paineis-predefinidos.spec.ts` · _Duração:_ 1.75s · _Browser:_ chromium
+<a id="criacao-de-trial-via-url-com-paineis-pre-definidos"></a>_Arquivo:_ `criacao-trial-url-paineis-predefinidos.spec.ts` · _Duração:_ 1.40s · _Browser:_ chromium
 
 > **⊘ Por que foi ignorado:** Marcado para revisão (test.fixme): Coberto pelo playbook `provisionar-trial-projeto-twygo` (manual+Claude via /new/register/steps). O playbook (passos 1-8) é o equivalente automatizado-assistido deste TC: (1) DB update em organization_icps.icp5, (3) wizard de criação via URL, (5) executor confirma URL pós-unlock, (6-7) flags+contrato, (8) gravação em data/trial-env.json. As asserções deste TC ("Trial criado com sucesso", "painéis pré-definidos aparecem na lista", "menu acessível como aluno") são validadas como side-effects do playbook.
 
@@ -112,7 +112,7 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 - 📦 **Trace** — [`trace.zip`](artifacts/projects-widgets-tests-fea-3d5d6-L-com-painéis-pré-definidos-chromium/trace.zip)
 
   ```bash
-  npx playwright show-trace outputs/widgets/reports/trial_20260515-153412/artifacts/projects-widgets-tests-fea-3d5d6-L-com-painéis-pré-definidos-chromium/trace.zip
+  npx playwright show-trace outputs/widgets/reports/trial_20260515-155439/artifacts/projects-widgets-tests-fea-3d5d6-L-com-painéis-pré-definidos-chromium/trace.zip
   ```
 
 - 🎥 **Vídeo** — [`video.webm`](artifacts/projects-widgets-tests-fea-3d5d6-L-com-painéis-pré-definidos-chromium/video.webm)
@@ -138,7 +138,7 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 
 ### ❌ Falhou · TC4 · Exclusão de trial: dados criados pelo Admin removidos · 🔴 Crítico
 
-<a id="exclusao-de-trial-dados-criados-pelo-admin-removidos"></a>_Arquivo:_ `exclusao-trial-dados-admin.spec.ts` · _Duração:_ 111.32s · _Browser:_ chromium
+<a id="exclusao-de-trial-dados-criados-pelo-admin-removidos"></a>_Arquivo:_ `exclusao-trial-dados-admin.spec.ts` · _Duração:_ 105.14s · _Browser:_ chromium
 
 > **❌ Por que falhou:** Error: expect(locator).toHaveCount(expected) failed
 > _Step impactado:_ **2. Verificar base após exclusão — painel do Admin removido junto com pré-definidos**
@@ -157,9 +157,9 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 
 | # | Ação do passo | Resultado esperado | Status | Notas | Duração |
 |---|---|---|:---:|---|---:|
-| — | _Pré-condição:_ Pré: Admin cria painel manual | — | ✅ | — | 27.54s |
-| 1 | Executar a rotina de exclusão do trial | Rotina executa | ✅ | — | 1.34s |
-| 2 | Verificar a base após exclusão | Painel 'Painel do Admin Trial' (criado manualmente) também é removido junto com pré-definidos | ❌ | Error: expect(locator).toHaveCount(expected) failed | 66.53s |
+| — | _Pré-condição:_ Pré: Admin cria painel manual | — | ✅ | — | 24.98s |
+| 1 | Executar a rotina de exclusão do trial | Rotina executa | ✅ | — | 1.23s |
+| 2 | Verificar a base após exclusão | Painel 'Painel do Admin Trial' (criado manualmente) também é removido junto com pré-definidos | ❌ | Error: expect(locator).toHaveCount(expected) failed | 66.04s |
 
 **Evidências:**
 
@@ -184,7 +184,7 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 - 📦 **Trace** — [`trace.zip`](artifacts/projects-widgets-tests-fea-63e7b-riados-pelo-Admin-removidos-chromium/trace.zip)
 
   ```bash
-  npx playwright show-trace outputs/widgets/reports/trial_20260515-153412/artifacts/projects-widgets-tests-fea-63e7b-riados-pelo-Admin-removidos-chromium/trace.zip
+  npx playwright show-trace outputs/widgets/reports/trial_20260515-155439/artifacts/projects-widgets-tests-fea-63e7b-riados-pelo-Admin-removidos-chromium/trace.zip
   ```
 
 - 🎥 **Vídeo** — [`video.webm`](artifacts/projects-widgets-tests-fea-63e7b-riados-pelo-Admin-removidos-chromium/video.webm)
@@ -210,13 +210,14 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 
 | Campo | Valor |
 |---|---|
-| URL | `https://widgets.stage.twygoead.com/` |
-| Login | ${TWYGO_STAGING_WIDGETS_EMAIL} |
-| Senha | ${TWYGO_STAGING_WIDGETS_PASSWORD} |
+| URL | `https://trialagentsqa5.stage.twygoead.com/` |
+| Login | ${TWYGO_TRIAL_AGENTSQA_OTHER_EMAIL} (Trial widgets / legacy-reuse) |
+| Senha | ${TWYGO_TRIAL_AGENTSQA_OTHER_PASSWORD} |
 | orgId | 36981 |
+| Env (override via annotation) | `trial-agentsqa-other (Trial widgets)` |
 | Outros | Browser: chromium |
-| Outros | runId: trial_20260515-153412 |
-| Outros | Duração até a falha: 111.32s |
+| Outros | runId: trial_20260515-155439 |
+| Outros | Duração até a falha: 105.14s |
 | Outros | Step impactado: 3. 2. Verificar base após exclusão — painel do Admin removido junto com pré-definidos |
 
 **Evidências:**
@@ -247,14 +248,14 @@ Comportamento atual
 Error: expect(locator).toHaveCount(expected) failed
 
 Informações
-- URL: https://widgets.stage.twygoead.com/
-- Login: ${TWYGO_STAGING_WIDGETS_EMAIL}
-- Senha: ${TWYGO_STAGING_WIDGETS_PASSWORD}
+- URL: https://trialagentsqa5.stage.twygoead.com/
+- Login: ${TWYGO_TRIAL_AGENTSQA_OTHER_EMAIL} (Trial widgets / legacy-reuse)
+- Senha: ${TWYGO_TRIAL_AGENTSQA_OTHER_PASSWORD}
 - ID do ambiente (orgId): 36981
 - Outros:
   - Browser: chromium
-  - runId: trial_20260515-153412
-  - Duração até a falha: 111.32s
+  - runId: trial_20260515-155439
+  - Duração até a falha: 105.14s
   - Step impactado: 3. 2. Verificar base após exclusão — painel do Admin removido junto com pré-definidos
 
 Evidências
@@ -267,8 +268,8 @@ Evidências
 - Trace completo do Playwright (.zip) — `npx playwright show-trace`: artifacts/projects-widgets-tests-fea-63e7b-riados-pelo-Admin-removidos-chromium/trace.zip
 
 Execução
-- runId: trial_20260515-153412
-- environment.json: staging-widgets
+- runId: trial_20260515-155439
+- environment.json: trial-agentsqa-other (Trial widgets)
 - testsuite: Trial
 - testcase: Exclusão de trial: dados criados pelo Admin removidos
 
@@ -281,14 +282,14 @@ Execução
 ```
 Error: expect(locator).toHaveCount(expected) failed
 
-Locator:  locator('tbody tr[data-item-name="Painel do Admin Trial w2-1778869943667"]')
+Locator:  locator('tbody tr[data-item-name="Painel do Admin Trial w2-1778871179238"]')
 Expected: 0
 Received: 1
 Timeout:  60000ms
 
 Call log:
   - Expect "toHaveCount" with timeout 60000ms
-  - waiting for locator('tbody tr[data-item-name="Painel do Admin Trial w2-1778869943667"]')
+  - waiting for locator('tbody tr[data-item-name="Painel do Admin Trial w2-1778871179238"]')
     63 × locator resolved to 1 element
        - unexpected value "1"
 
@@ -300,9 +301,9 @@ Call log:
 
 ### ❌ Falhou · TC3 · Exclusão de trial: dados pré-definidos da SophiaTech removidos · 🔴 Crítico
 
-<a id="exclusao-de-trial-dados-pre-definidos-da-sophiatech-removidos"></a>_Arquivo:_ `exclusao-trial-dados-sophiatech.spec.ts` · _Duração:_ 85.62s · _Browser:_ chromium
+<a id="exclusao-de-trial-dados-pre-definidos-da-sophiatech-removidos"></a>_Arquivo:_ `exclusao-trial-dados-sophiatech.spec.ts` · _Duração:_ 80.80s · _Browser:_ chromium
 
-> **❌ Por que falhou:** Error: Após exclusão de pré-definidos, contagem de painéis deve diminuir (inicial=2, final=3).
+> **❌ Por que falhou:** Error: Após exclusão de pré-definidos, contagem de painéis deve diminuir (inicial=4, final=5).
 > _Step impactado:_ **2. Verificar base após exclusão — registros SophiaTech removidos**
 
 **Sumário (objetivo do caso):** Validar limpeza completa na exclusão do trial.
@@ -319,9 +320,9 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 
 | # | Ação do passo | Resultado esperado | Status | Notas | Duração |
 |---|---|---|:---:|---|---:|
-| — | _Pré-condição:_ Pré: contar painéis pré-definidos atuais | — | ✅ | — | 6.98s |
-| 1 | Executar a rotina de exclusão do trial | Rotina executa | ✅ | — | 1.37s |
-| 2 | Verificar a base de dados após exclusão | Todos os registros pré-definidos da SophiaTech (painéis, abas, widgets) são removidos da organização-trial | ❌ | Error: Após exclusão de pré-definidos, contagem de painéis deve diminuir (inicial=2, final=3). | 60.01s |
+| — | _Pré-condição:_ Pré: contar painéis pré-definidos atuais | — | ✅ | — | 6.27s |
+| 1 | Executar a rotina de exclusão do trial | Rotina executa | ✅ | — | 1.40s |
+| 2 | Verificar a base de dados após exclusão | Todos os registros pré-definidos da SophiaTech (painéis, abas, widgets) são removidos da organização-trial | ❌ | Error: Após exclusão de pré-definidos, contagem de painéis deve diminuir (inicial=4, final=5). | 60.01s |
 
 **Evidências:**
 
@@ -346,7 +347,7 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 - 📦 **Trace** — [`trace.zip`](artifacts/projects-widgets-tests-fea-eaa8f-dos-da-SophiaTech-removidos-chromium/trace.zip)
 
   ```bash
-  npx playwright show-trace outputs/widgets/reports/trial_20260515-153412/artifacts/projects-widgets-tests-fea-eaa8f-dos-da-SophiaTech-removidos-chromium/trace.zip
+  npx playwright show-trace outputs/widgets/reports/trial_20260515-155439/artifacts/projects-widgets-tests-fea-eaa8f-dos-da-SophiaTech-removidos-chromium/trace.zip
   ```
 
 - 🎥 **Vídeo** — [`video.webm`](artifacts/projects-widgets-tests-fea-eaa8f-dos-da-SophiaTech-removidos-chromium/video.webm)
@@ -357,7 +358,7 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 
 #### 🐛 Pronto para registro de bug
 
-**Descrição do BUG:** [Crítico] Exclusão de trial: dados pré-definidos da SophiaTech removidos — Error: Após exclusão de pré-definidos, contagem de painéis deve diminuir (inicial=2, final=3).
+**Descrição do BUG:** [Crítico] Exclusão de trial: dados pré-definidos da SophiaTech removidos — Error: Após exclusão de pré-definidos, contagem de painéis deve diminuir (inicial=4, final=5).
 
 **Passo a passo para reprodução:**
 1. Pré: Trial criado e populado com painéis e abas
@@ -366,19 +367,20 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 
 **Comportamento esperado:** 1. Rotina executa | 2. Todos os registros pré-definidos da SophiaTech (painéis, abas, widgets) são removidos da organização-trial
 
-**Comportamento atual:** Error: Após exclusão de pré-definidos, contagem de painéis deve diminuir (inicial=2, final=3).
+**Comportamento atual:** Error: Após exclusão de pré-definidos, contagem de painéis deve diminuir (inicial=4, final=5).
 
 **Informações:**
 
 | Campo | Valor |
 |---|---|
-| URL | `https://widgets.stage.twygoead.com/` |
-| Login | ${TWYGO_STAGING_WIDGETS_EMAIL} |
-| Senha | ${TWYGO_STAGING_WIDGETS_PASSWORD} |
+| URL | `https://trialagentsqa5.stage.twygoead.com/` |
+| Login | ${TWYGO_TRIAL_AGENTSQA_OTHER_EMAIL} (Trial widgets / legacy-reuse) |
+| Senha | ${TWYGO_TRIAL_AGENTSQA_OTHER_PASSWORD} |
 | orgId | 36981 |
+| Env (override via annotation) | `trial-agentsqa-other (Trial widgets)` |
 | Outros | Browser: chromium |
-| Outros | runId: trial_20260515-153412 |
-| Outros | Duração até a falha: 85.62s |
+| Outros | runId: trial_20260515-155439 |
+| Outros | Duração até a falha: 80.80s |
 | Outros | Step impactado: 3. 2. Verificar base após exclusão — registros SophiaTech removidos |
 
 **Evidências:**
@@ -395,7 +397,7 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 
 ```
 Descrição do BUG
-[Crítico] Exclusão de trial: dados pré-definidos da SophiaTech removidos — Error: Após exclusão de pré-definidos, contagem de painéis deve diminuir (inicial=2, final=3).
+[Crítico] Exclusão de trial: dados pré-definidos da SophiaTech removidos — Error: Após exclusão de pré-definidos, contagem de painéis deve diminuir (inicial=4, final=5).
 
 Passo a passo para reprodução
   Pré: Trial criado e populado com painéis e abas
@@ -406,17 +408,17 @@ Comportamento esperado
 1. Rotina executa | 2. Todos os registros pré-definidos da SophiaTech (painéis, abas, widgets) são removidos da organização-trial
 
 Comportamento atual
-Error: Após exclusão de pré-definidos, contagem de painéis deve diminuir (inicial=2, final=3).
+Error: Após exclusão de pré-definidos, contagem de painéis deve diminuir (inicial=4, final=5).
 
 Informações
-- URL: https://widgets.stage.twygoead.com/
-- Login: ${TWYGO_STAGING_WIDGETS_EMAIL}
-- Senha: ${TWYGO_STAGING_WIDGETS_PASSWORD}
+- URL: https://trialagentsqa5.stage.twygoead.com/
+- Login: ${TWYGO_TRIAL_AGENTSQA_OTHER_EMAIL} (Trial widgets / legacy-reuse)
+- Senha: ${TWYGO_TRIAL_AGENTSQA_OTHER_PASSWORD}
 - ID do ambiente (orgId): 36981
 - Outros:
   - Browser: chromium
-  - runId: trial_20260515-153412
-  - Duração até a falha: 85.62s
+  - runId: trial_20260515-155439
+  - Duração até a falha: 80.80s
   - Step impactado: 3. 2. Verificar base após exclusão — registros SophiaTech removidos
 
 Evidências
@@ -429,8 +431,8 @@ Evidências
 - Trace completo do Playwright (.zip) — `npx playwright show-trace`: artifacts/projects-widgets-tests-fea-eaa8f-dos-da-SophiaTech-removidos-chromium/trace.zip
 
 Execução
-- runId: trial_20260515-153412
-- environment.json: staging-widgets
+- runId: trial_20260515-155439
+- environment.json: trial-agentsqa-other (Trial widgets)
 - testsuite: Trial
 - testcase: Exclusão de trial: dados pré-definidos da SophiaTech removidos
 
@@ -441,12 +443,12 @@ Execução
 <details><summary>🔧 Stack trace técnica completa (para desenvolvedor)</summary>
 
 ```
-Error: Após exclusão de pré-definidos, contagem de painéis deve diminuir (inicial=2, final=3).
+Error: Após exclusão de pré-definidos, contagem de painéis deve diminuir (inicial=4, final=5).
 
 expect(received).toBeLessThan(expected)
 
-Expected: < 2
-Received:   3
+Expected: < 4
+Received:   5
 
 Call Log:
 - Timeout 60000ms exceeded while waiting on the predicate
