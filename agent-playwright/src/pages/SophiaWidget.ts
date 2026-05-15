@@ -157,6 +157,13 @@ export class SophiaWidget {
   async confirmDelete(): Promise<void> {
     await this.getConfirmDeleteButton().click();
     await this.getDeleteModal().waitFor({ state: 'hidden', timeout: 60_000 });
+    // Backend processa a exclusão como job assíncrono: o endpoint
+    // `/api/v1/o/{orgId}/trial_deletion_progress` controla o progresso e
+    // a UI continua pollando depois do modal fechar. Esperar networkidle
+    // pra dar tempo do job completar antes do caller verificar lista.
+    // Validado via chrome-devtools-mcp 2026-05-15 — sem isso, asserções
+    // imediatas após confirmDelete encontram dados ainda no DB.
+    await this.page.waitForLoadState('networkidle', { timeout: 60_000 });
   }
 
   async cancelDelete(): Promise<void> {

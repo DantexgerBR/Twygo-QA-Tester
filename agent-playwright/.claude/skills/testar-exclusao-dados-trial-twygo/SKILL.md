@@ -1,7 +1,7 @@
 ---
 name: testar-exclusao-dados-trial-twygo
 description: Como testar o fluxo "Excluir informações" do widget Sophia em orgs Trial Twygo — ícone Sophia (canto inferior esquerdo) → popover → "Excluir informações" → modal com 4 opções de exclusão (SophiaTech / Admin / Usuários / Tudo) → Excluir. Spec único por projeto rodando contra 1 Trial dedicada (ICP "Outros", provisionada via `provisionar-trial-projeto-twygo`). Cada projeto tem sua própria Trial porque a exclusão zera o env — não há como compartilhar entre projetos. Use sempre que um projeto Twygo precisar validar reset/exclusão de dados em org Trial — repete-se em quase todo projeto porque trial é o ciclo de vida típico do produto.
-version: 1.2.0
+version: 1.3.0
 ---
 
 # testar-exclusao-dados-trial-twygo
@@ -161,6 +161,57 @@ export class SophiaWidget {
 índice|seletor`. Generator decide se mapeia por índice (frágil se ordem dos
 checkboxes mudar) ou por filtro de texto (preferível). Use seletor de texto
 da tabela acima.
+
+## Gotcha crítico — exclusão é JOB ASSÍNCRONO
+
+Validado live via chrome-devtools-mcp em 2026-05-15: a exclusão **não é
+síncrona**. Após click no botão "Excluir" do modal:
+
+1. Modal fecha imediatamente.
+2. Backend agenda um job de exclusão e responde 2xx.
+3. UI **continua pollando** o endpoint `/api/v1/o/{orgId}/trial_deletion_progress`
+   pra mostrar progresso.
+4. **Listagens (painéis, cursos, usuários, etc.) só refletem o resultado
+   após o job completar** — varia com volume de dados (8s wall-clock em
+   Trial pequena, pode ser bem maior).
+
+**Implicação no spec**: o assert imediato após `confirmDelete()` encontra
+dados ainda na DB. Sintoma típico — Playwright vermelho `toHaveCount(0)
+received 1` ou `received 5` em runs com painéis admin pré-criados.
+
+**Padrão canônico no `confirmDelete()` (SophiaWidget POM)**:
+
+```ts
+async confirmDelete(): Promise<void> {
+  await this.getConfirmDeleteButton().click();
+  await this.getDeleteModal().waitFor({ state: 'hidden', timeout: 60_000 });
+  // Espera o polling do trial_deletion_progress estabilizar.
+  await this.page.waitForLoadState('networkidle', { timeout: 60_000 });
+}
+```
+
+**Padrão canônico no spec — asserção pós-exclusão**:
+
+```ts
+// Default timeout do toHaveCount é 5s — insuficiente. Use 60s + invariante.
+await expect(paineis.getRowByName(panelName)).toHaveCount(0, {
+  timeout: 60_000,
+});
+
+// OU pra invariantes mais complexas (contagem relativa): expect().toPass:
+await expect(async () => {
+  await page.reload();
+  const finalCount = await paineis.getRowCount();
+  expect(finalCount).toBeLessThan(initialCount);
+}).toPass({ timeout: 60_000 });
+```
+
+**Anti-pattern (cometi e corrigi neste fluxo)**:
+
+- ❌ Aceitar vermelho como "bug-produto" sem auditar via MCP. Era spec
+  frágil (timing async), não bug. Caso real: TC4 sessão 2026-05-15.
+  Fluxo correto é a skill [[comparar-chrome-mcp-vs-playwright]] —
+  reproduzir via MCP **antes** de categorizar.
 
 ## Estrutura do spec — 1 Trial por projeto
 

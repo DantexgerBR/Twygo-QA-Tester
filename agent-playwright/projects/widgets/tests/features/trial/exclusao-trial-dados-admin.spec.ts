@@ -59,7 +59,13 @@ test.describe('Trial', () => {
       await page.goto(`/o/${TRIAL.orgId}/use_modes?tab=panels-tab`);
       await dismissCommonModals(page);
       await paineis.setViewMode('lista');
-      await expect(paineis.getRowByName(adminTrialData.adminPanelName)).toHaveCount(0);
+      // Timeout 60s: backend processa exclusão como job async (endpoint
+      // `trial_deletion_progress` polling). Default 10s é insuficiente —
+      // chrome-devtools-mcp validou que UI atualiza em ~8s wall-clock,
+      // mas pode variar com volume de dados.
+      await expect(paineis.getRowByName(adminTrialData.adminPanelName)).toHaveCount(0, {
+        timeout: 60_000,
+      });
     });
   });
 });

@@ -65,14 +65,19 @@ test.describe('Trial', () => {
     });
 
     await step('2. Verificar base após exclusão — registros SophiaTech removidos', async () => {
-      await page.goto(`/o/${TRIAL.orgId}/use_modes?tab=panels-tab`);
-      await dismissCommonModals(page);
-      await paineis.setViewMode('lista');
-      const finalCount = await paineis.getRowCount();
-      expect(
-        finalCount,
-        `Após exclusão de pré-definidos, contagem de painéis deve diminuir (inicial=${initialCount}, final=${finalCount}).`,
-      ).toBeLessThan(initialCount);
+      // Backend processa exclusão como job async (endpoint
+      // `trial_deletion_progress` polling). Aguardar invariante "contagem
+      // diminuiu" com timeout 60s — default 10s é insuficiente.
+      await expect(async () => {
+        await page.goto(`/o/${TRIAL.orgId}/use_modes?tab=panels-tab`);
+        await dismissCommonModals(page);
+        await paineis.setViewMode('lista');
+        const finalCount = await paineis.getRowCount();
+        expect(
+          finalCount,
+          `Após exclusão de pré-definidos, contagem de painéis deve diminuir (inicial=${initialCount}, final=${finalCount}).`,
+        ).toBeLessThan(initialCount);
+      }).toPass({ timeout: 60_000 });
     });
   });
 });
