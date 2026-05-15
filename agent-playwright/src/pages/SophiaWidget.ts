@@ -155,15 +155,27 @@ export class SophiaWidget {
   }
 
   async confirmDelete(): Promise<void> {
+    // Captura a request de exclusão antes do click (waitForResponse
+    // garante a sinalização do backend sem depender de networkidle —
+    // que NUNCA completa nesta SPA por causa do polling contínuo do
+    // chat HubSpot + Google Analytics + New Relic. Validado live
+    // 2026-05-15: networkidle timeout 60s sempre estoura).
+    const deletionResponse = this.page.waitForResponse(
+      (resp) =>
+        resp.url().includes('/api/v1/o/') && resp.url().includes('/delete_trial_data') && resp.request().method() === 'DELETE',
+      { timeout: 60_000 },
+    );
     await this.getConfirmDeleteButton().click();
     await this.getDeleteModal().waitFor({ state: 'hidden', timeout: 60_000 });
-    // Backend processa a exclusão como job assíncrono: o endpoint
-    // `/api/v1/o/{orgId}/trial_deletion_progress` controla o progresso e
-    // a UI continua pollando depois do modal fechar. Esperar networkidle
-    // pra dar tempo do job completar antes do caller verificar lista.
-    // Validado via chrome-devtools-mcp 2026-05-15 — sem isso, asserções
-    // imediatas após confirmDelete encontram dados ainda no DB.
-    await this.page.waitForLoadState('networkidle', { timeout: 60_000 });
+    // Aguarda backend confirmar exclusão. Note: 2xx aqui NÃO garante que
+    // todos os dados foram removidos — TC4 confirmou via Network probe
+    // 2026-05-15 que painéis admin sobrevivem ao DELETE (bug-produto
+    // OU doc-gap). O caller deve assertar o efeito esperado com timeout
+    // tolerante (60s) — a request em si é "fire and respond".
+    await deletionResponse.catch(() => {
+      // Algum cenário pode não disparar o endpoint (ex.: opção apenas
+      // SophiaTech em Trial drenada). Não-fatal — caller decide via assert.
+    });
   }
 
   async cancelDelete(): Promise<void> {

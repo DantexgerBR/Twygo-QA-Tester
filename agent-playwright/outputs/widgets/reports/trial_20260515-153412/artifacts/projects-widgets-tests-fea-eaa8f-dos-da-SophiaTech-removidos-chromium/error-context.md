@@ -6,25 +6,21 @@
 
 # Test info
 
-- Name: projects\widgets\tests\features\trial\exclusao-trial-dados-admin.spec.ts >> Trial >> Exclusão de trial: dados criados pelo Admin removidos
-- Location: projects\widgets\tests\features\trial\exclusao-trial-dados-admin.spec.ts:32:3
+- Name: projects\widgets\tests\features\trial\exclusao-trial-dados-sophiatech.spec.ts >> Trial >> Exclusão de trial: dados pré-definidos da SophiaTech removidos
+- Location: projects\widgets\tests\features\trial\exclusao-trial-dados-sophiatech.spec.ts:33:3
 
 # Error details
 
 ```
-Error: expect(locator).toHaveCount(expected) failed
+Error: Após exclusão de pré-definidos, contagem de painéis deve diminuir (inicial=2, final=3).
 
-Locator:  locator('tbody tr[data-item-name="Painel do Admin Trial w2-1778868040225"]')
-Expected: 0
-Received: 1
-Timeout:  60000ms
+expect(received).toBeLessThan(expected)
 
-Call log:
-  - Expect "toHaveCount" with timeout 60000ms
-  - waiting for locator('tbody tr[data-item-name="Painel do Admin Trial w2-1778868040225"]')
-    63 × locator resolved to 1 element
-       - unexpected value "1"
+Expected: < 2
+Received:   3
 
+Call Log:
+- Timeout 60000ms exceeded while waiting on the predicate
 ```
 
 # Page snapshot
@@ -313,23 +309,23 @@ Call log:
                       - img [ref=e317]
                   - columnheader [ref=e319]
               - rowgroup [ref=e320]:
-                - row "Painel do Admin Trial w2-1778868040225 15/05/2026 edit content_copy delete" [ref=e321]:
-                  - cell "Painel do Admin Trial w2-1778868040225" [ref=e322]:
-                    - paragraph [ref=e323]: Painel do Admin Trial w2-1778868040225
-                  - cell [ref=e324]:
-                    - paragraph [ref=e325]
-                  - cell "15/05/2026" [ref=e326]
-                  - cell [ref=e327]:
-                    - checkbox [checked] [ref=e329]
-                  - cell "edit content_copy delete" [ref=e332]:
-                    - generic [ref=e334]:
-                      - generic [ref=e337] [cursor=pointer]: edit
-                      - generic [ref=e340] [cursor=pointer]: content_copy
-                      - generic [ref=e343] [cursor=pointer]: delete
-                - row "Painel do Admin Trial w0-1778867868567 15/05/2026 edit content_copy delete" [ref=e344]:
-                  - cell "Painel do Admin Trial w0-1778867868567" [ref=e345]:
-                    - paragraph [ref=e346]: Painel do Admin Trial w0-1778867868567
-                  - cell [ref=e347]
+                - row "Painel do Admin Trial w2-1778869943667 15/05/2026 edit content_copy delete" [ref=e321]:
+                  - cell "Painel do Admin Trial w2-1778869943667" [ref=e322]:
+                    - paragraph [ref=e323]: Painel do Admin Trial w2-1778869943667
+                  - cell [ref=e324]
+                  - cell "15/05/2026" [ref=e325]
+                  - cell [ref=e326]:
+                    - checkbox [checked] [ref=e328]
+                  - cell "edit content_copy delete" [ref=e331]:
+                    - generic [ref=e333]:
+                      - generic [ref=e336] [cursor=pointer]: edit
+                      - generic [ref=e339] [cursor=pointer]: content_copy
+                      - generic [ref=e342] [cursor=pointer]: delete
+                - row "Painel do Admin Trial w2-1778868040225 15/05/2026 edit content_copy delete" [ref=e343]:
+                  - cell "Painel do Admin Trial w2-1778868040225" [ref=e344]:
+                    - paragraph [ref=e345]: Painel do Admin Trial w2-1778868040225
+                  - cell [ref=e346]:
+                    - paragraph [ref=e347]
                   - cell "15/05/2026" [ref=e348]
                   - cell [ref=e349]:
                     - checkbox [checked] [ref=e351]
@@ -338,17 +334,29 @@ Call log:
                       - generic [ref=e359] [cursor=pointer]: edit
                       - generic [ref=e362] [cursor=pointer]: content_copy
                       - generic [ref=e365] [cursor=pointer]: delete
-            - generic [ref=e367]:
-              - generic [ref=e368]:
-                - button "keyboard_double_arrow_left" [disabled] [ref=e369]:
-                  - generic [ref=e370]: keyboard_double_arrow_left
-                - button "chevron_left" [disabled] [ref=e371]:
-                  - generic [ref=e372]: chevron_left
-                - button "1" [ref=e373] [cursor=pointer]
-                - button "chevron_right" [disabled] [ref=e374]:
-                  - generic [ref=e375]: chevron_right
-              - generic [ref=e376]:
-                - combobox [ref=e377]:
+                - row "Painel do Admin Trial w0-1778867868567 15/05/2026 edit content_copy delete" [ref=e366]:
+                  - cell "Painel do Admin Trial w0-1778867868567" [ref=e367]:
+                    - paragraph [ref=e368]: Painel do Admin Trial w0-1778867868567
+                  - cell [ref=e369]
+                  - cell "15/05/2026" [ref=e370]
+                  - cell [ref=e371]:
+                    - checkbox [checked] [ref=e373]
+                  - cell "edit content_copy delete" [ref=e376]:
+                    - generic [ref=e378]:
+                      - generic [ref=e381] [cursor=pointer]: edit
+                      - generic [ref=e384] [cursor=pointer]: content_copy
+                      - generic [ref=e387] [cursor=pointer]: delete
+            - generic [ref=e389]:
+              - generic [ref=e390]:
+                - button "keyboard_double_arrow_left" [disabled] [ref=e391]:
+                  - generic [ref=e392]: keyboard_double_arrow_left
+                - button "chevron_left" [disabled] [ref=e393]:
+                  - generic [ref=e394]: chevron_left
+                - button "1" [ref=e395] [cursor=pointer]
+                - button "chevron_right" [disabled] [ref=e396]:
+                  - generic [ref=e397]: chevron_right
+              - generic [ref=e398]:
+                - combobox [ref=e399]:
                   - option "25 por página" [selected]
                   - option "50 por página"
                   - option "100 por página"
@@ -380,85 +388,91 @@ Call log:
 # Test source
 
 ```ts
-  1  | // spec: testsuite XML "Trial" → testcase "Exclusão de trial: dados criados pelo Admin removidos"
+  1  | // spec: testsuite XML "Trial" → testcase "Exclusão de trial: dados pré-definidos da SophiaTech removidos"
   2  | // seed: tests/seed.spec.ts
   3  | //
-  4  | // Destrutivo: marca opção "Todas informações (pré-definidas e criadas pelos
-  5  | // administradores)" — zera o tenant inteiro. Após esta run, o env (orgId 36981
-  6  | // / trial-agentsqa-other) precisa ser re-provisionado — ver skill
-  7  | // `provisionar-trial-projeto-twygo`.
-  8  | 
-  9  | import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js';
-  10 | import * as allure from 'allure-js-commons';
-  11 | import { SophiaWidget } from '../../../../../src/pages/SophiaWidget.js';
-  12 | import { PaineisListPage } from '../../../pages/PaineisListPage.js';
-  13 | import { dismissCommonModals } from '../../../../../src/utils/modals.js';
-  14 | import { TRIAL, adminTrialData } from './exclusao-trial-dados-admin.data.js';
-  15 | 
-  16 | test.describe('Trial', () => {
-  17 |   test.use({
-  18 |     baseURL: TRIAL.url,
-  19 |     storageState: { cookies: [], origins: [] },
-  20 |   });
-  21 | 
-  22 |   test.beforeEach(async ({ page }) => {
-  23 |     await page.goto('/users/login');
-  24 |     await page.getByRole('textbox', { name: 'Login' }).fill(TRIAL.email);
-  25 |     await page.getByRole('textbox', { name: 'Senha' }).fill(TRIAL.password);
-  26 |     await page.getByRole('button', { name: 'Entrar' }).click();
-  27 |     await page.waitForURL((url) => !url.pathname.startsWith('/users/login'), {
-  28 |       timeout: 30_000,
-  29 |     });
-  30 |   });
-  31 | 
-  32 |   test('Exclusão de trial: dados criados pelo Admin removidos', async ({ page, step }, testInfo) => {
-  33 |     await allure.epic('Twygo - Widgets');
-  34 |     await allure.feature('Trial');
-  35 |     await allure.story('Exclusão de trial: dados criados pelo Admin removidos');
-  36 |     await allure.severity('normal');
-  37 | 
-  38 |     const paineis = new PaineisListPage(page);
-  39 |     const sophia = new SophiaWidget(page);
-  40 |     // Nome único por run — bug-produto da exclusão Sophia (opção "Todas
-  41 |     // informações" não remove painéis admin) acumula órfãos entre runs.
-  42 |     // Suffix worker+timestamp isola este test. Ver
-  43 |     // `testar-exclusao-dados-trial-twygo` §"Bug-produto confirmado".
-  44 |     const adminPanelName = `${adminTrialData.adminPanelNameBase} w${testInfo.workerIndex}-${Date.now()}`;
-  45 | 
-  46 |     await step('Pré: Admin cria painel manual', async () => {
-  47 |       await page.goto(`/o/${TRIAL.orgId}/use_modes?tab=panels-tab`);
-  48 |       await dismissCommonModals(page);
-  49 |       await paineis.createPanel({ name: adminPanelName });
-  50 |       // createPanel redireciona pra /panels/{id}/edit — voltar pra listagem para validar.
-  51 |       await page.goto(`/o/${TRIAL.orgId}/use_modes?tab=panels-tab`);
-  52 |       await dismissCommonModals(page);
-  53 |       await paineis.setViewMode('lista');
-  54 |       await expect(paineis.getRowByItemName(adminPanelName)).toBeVisible();
-  55 |     });
-  56 | 
-  57 |     await step('1. Executar rotina de exclusão (Sophia → Excluir informações → Todas informações)', async () => {
-  58 |       await sophia.openDeleteModal();
-  59 |       await sophia.selectOnly('all');
-  60 |       await sophia.confirmDelete();
+  4  | // Destrutivo: zera dados pré-definidos da Trial. Após esta run, o env
+  5  | // (orgId 36981 / trial-agentsqa-other) precisa ser re-provisionado para
+  6  | // novas execuções — ver skill `provisionar-trial-projeto-twygo`.
+  7  | 
+  8  | import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js';
+  9  | import * as allure from 'allure-js-commons';
+  10 | import { SophiaWidget } from '../../../../../src/pages/SophiaWidget.js';
+  11 | import { PaineisListPage } from '../../../pages/PaineisListPage.js';
+  12 | import { dismissCommonModals } from '../../../../../src/utils/modals.js';
+  13 | import { TRIAL } from './exclusao-trial-dados-sophiatech.data.js';
+  14 | 
+  15 | test.describe('Trial', () => {
+  16 |   // Login explícito autorizado para Trial — globalSetup cobre só env principal/secundário
+  17 |   // do projeto. Ver `testar-exclusao-dados-trial-twygo` §"Storage state da Trial".
+  18 |   test.use({
+  19 |     baseURL: TRIAL.url,
+  20 |     storageState: { cookies: [], origins: [] },
+  21 |   });
+  22 | 
+  23 |   test.beforeEach(async ({ page }) => {
+  24 |     await page.goto('/users/login');
+  25 |     await page.getByRole('textbox', { name: 'Login' }).fill(TRIAL.email);
+  26 |     await page.getByRole('textbox', { name: 'Senha' }).fill(TRIAL.password);
+  27 |     await page.getByRole('button', { name: 'Entrar' }).click();
+  28 |     await page.waitForURL((url) => !url.pathname.startsWith('/users/login'), {
+  29 |       timeout: 30_000,
+  30 |     });
+  31 |   });
+  32 | 
+  33 |   test('Exclusão de trial: dados pré-definidos da SophiaTech removidos', async ({
+  34 |     page,
+  35 |     step,
+  36 |   }) => {
+  37 |     await allure.epic('Twygo - Widgets');
+  38 |     await allure.feature('Trial');
+  39 |     await allure.story('Exclusão de trial: dados pré-definidos da SophiaTech removidos');
+  40 |     await allure.severity('critical');
+  41 | 
+  42 |     // orgIdOverride: navega na Trial (36981), não no env principal (36988).
+  43 |     // Ver skill `testar-ambientes-adicionais-twygo` § "POM com orgIdOverride".
+  44 |     const paineis = new PaineisListPage(page, String(TRIAL.orgId));
+  45 |     const sophia = new SophiaWidget(page);
+  46 | 
+  47 |     let initialCount = 0;
+  48 | 
+  49 |     await step('Pré: contar painéis pré-definidos atuais', async () => {
+  50 |       await page.goto(`/o/${TRIAL.orgId}/use_modes?tab=panels-tab`);
+  51 |       await dismissCommonModals(page);
+  52 |       await paineis.setViewMode('lista');
+  53 |       // `getRowCount` conta a row "Não há dados para exibir" como 1 — usar
+  54 |       // o getter de empty-state pra detectar Trial drenada antes de seguir.
+  55 |       const isEmpty = (await paineis.getEmptyStateText().count()) > 0;
+  56 |       initialCount = isEmpty ? 0 : await paineis.getRowCount();
+  57 |       test.skip(
+  58 |         initialCount === 0,
+  59 |         'Trial sem painéis pré-definidos — re-provisione via `provisionar-trial-projeto-twygo`.',
+  60 |       );
   61 |     });
   62 | 
-  63 |     await step('2. Verificar base após exclusão — painel do Admin removido junto com pré-definidos', async () => {
-  64 |       await page.goto(`/o/${TRIAL.orgId}/use_modes?tab=panels-tab`);
-  65 |       await dismissCommonModals(page);
-  66 |       await paineis.setViewMode('lista');
-  67 |       // BUG-PRODUTO CONFIRMADO (2026-05-15 via Network probe): a request
-  68 |       // `DELETE /api/v1/o/{orgId}/delete_trial_data` é disparada pelo
-  69 |       // backend mas painéis admin sobrevivem. XML diz que deveriam ser
-  70 |       // removidos junto com pré-definidos. Spec vermelho aqui é SINAL
-  71 |       // CORRETO até produto corrigir. Timeout 60s mantido como cinto de
-  72 |       // segurança (caso comportamento mude pra async no futuro).
-  73 |       // Ver skill `testar-exclusao-dados-trial-twygo` §"Bug-produto confirmado".
-> 74 |       await expect(paineis.getRowByItemName(adminPanelName)).toHaveCount(0, {
-     |                                                              ^ Error: expect(locator).toHaveCount(expected) failed
-  75 |         timeout: 60_000,
-  76 |       });
-  77 |     });
-  78 |   });
-  79 | });
-  80 | 
+  63 |     await step('1. Executar rotina de exclusão (Sophia → Excluir informações → SophiaTech)', async () => {
+  64 |       await sophia.openDeleteModal();
+  65 |       await sophia.selectOnly('sophiatech');
+  66 |       await sophia.confirmDelete();
+  67 |     });
+  68 | 
+  69 |     await step('2. Verificar base após exclusão — registros SophiaTech removidos', async () => {
+  70 |       // Backend processa exclusão como job async (endpoint
+  71 |       // `trial_deletion_progress` polling). Aguardar invariante "contagem
+  72 |       // diminuiu" com timeout 60s — default 10s é insuficiente.
+  73 |       await expect(async () => {
+  74 |         await page.goto(`/o/${TRIAL.orgId}/use_modes?tab=panels-tab`);
+  75 |         await dismissCommonModals(page);
+  76 |         await paineis.setViewMode('lista');
+  77 |         const finalCount = await paineis.getRowCount();
+  78 |         expect(
+  79 |           finalCount,
+  80 |           `Após exclusão de pré-definidos, contagem de painéis deve diminuir (inicial=${initialCount}, final=${finalCount}).`,
+  81 |         ).toBeLessThan(initialCount);
+> 82 |       }).toPass({ timeout: 60_000 });
+     |          ^ Error: Após exclusão de pré-definidos, contagem de painéis deve diminuir (inicial=2, final=3).
+  83 |     });
+  84 |   });
+  85 | });
+  86 | 
 ```

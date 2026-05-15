@@ -1,5 +1,5 @@
 {
-  "runId": "trial_20260515-150219",
+  "runId": "trial_20260515-153412",
   "mode": "per-suite",
   "suiteFilter": "Trial",
   "projectName": "Widgets",
@@ -7,5 +7,5 @@
   "browsers": [
     "chromium"
   ],
-  "generatedAt": "2026-05-15T18:02:19.216Z"
+  "generatedAt": "2026-05-15T18:34:12.662Z"
 }

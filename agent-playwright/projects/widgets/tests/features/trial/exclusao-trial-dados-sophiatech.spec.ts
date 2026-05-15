@@ -39,7 +39,9 @@ test.describe('Trial', () => {
     await allure.story('Exclusão de trial: dados pré-definidos da SophiaTech removidos');
     await allure.severity('critical');
 
-    const paineis = new PaineisListPage(page);
+    // orgIdOverride: navega na Trial (36981), não no env principal (36988).
+    // Ver skill `testar-ambientes-adicionais-twygo` § "POM com orgIdOverride".
+    const paineis = new PaineisListPage(page, String(TRIAL.orgId));
     const sophia = new SophiaWidget(page);
 
     let initialCount = 0;

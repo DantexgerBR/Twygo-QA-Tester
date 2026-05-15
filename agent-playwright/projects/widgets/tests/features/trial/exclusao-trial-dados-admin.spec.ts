@@ -35,7 +35,11 @@ test.describe('Trial', () => {
     await allure.story('Exclusão de trial: dados criados pelo Admin removidos');
     await allure.severity('normal');
 
-    const paineis = new PaineisListPage(page);
+    // PaineisListPage navega via `/o/{orgId}/...`. Sem override, usaria
+    // getOrgId() (env principal 36988) em vez do orgId da Trial — bug
+    // latente confirmado no trace 2026-05-15. Padrão herdado da skill
+    // `testar-ambientes-adicionais-twygo` (constructor orgIdOverride).
+    const paineis = new PaineisListPage(page, String(TRIAL.orgId));
     const sophia = new SophiaWidget(page);
     // Nome único por run — bug-produto da exclusão Sophia (opção "Todas
     // informações" não remove painéis admin) acumula órfãos entre runs.
