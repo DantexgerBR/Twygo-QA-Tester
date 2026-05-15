@@ -27,10 +27,15 @@ export const TRIAL = {
 
 export const adminTrialData = {
   /**
-   * Nome do painel criado manualmente como pré-condição. XML usa "Painel do
-   * Admin Trial" literal — preservado pra paridade com a documentação do TC,
-   * sem worker suffix porque a exclusão zera o tenant inteiro (`afterAll`
-   * não precisa cleanup — o teste em si é o cleanup).
+   * Nome base do painel criado como pré-condição. Spec adiciona suffix único
+   * (workerIndex+timestamp) em runtime pra evitar strict-mode violation
+   * quando há orfãos de runs anteriores acumulados na Trial. XML usa "Painel
+   * do Admin Trial" literal — preservamos como prefixo.
+   *
+   * Histórico (2026-05-15): teste original usava nome literal sem suffix.
+   * Confirmamos via Network/Console que o bug-produto da exclusão Sophia
+   * "Todas informações" deixa painéis admin órfãos cumulativos, gerando
+   * strict-mode violation na pré-condição. Suffix único isola cada run.
    */
-  adminPanelName: 'Painel do Admin Trial',
+  adminPanelNameBase: 'Painel do Admin Trial',
 } as const;

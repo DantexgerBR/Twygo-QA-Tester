@@ -25,10 +25,10 @@ re-provisionado via skill (passos 1-8 completos).
 
 | Spec | TC do XML | Status |
 |---|---|---|
-| `criacao-trial-url-paineis-predefinidos.spec.ts` | TC1 | `fixme` — não destravado nesta iteração (cobertura virá em sessão dedicada) |
-| `criacao-trial-api-paineis-predefinidos.spec.ts` | TC2 | `fixme` permanente — teste de API, `executionType: manual` |
-| `exclusao-trial-dados-sophiatech.spec.ts` | TC3 | ✅ ativo — marca opção "Todas as informações pré-definidas da SophiaTech", asserta delta na contagem de painéis |
-| `exclusao-trial-dados-admin.spec.ts` | TC4 | ✅ ativo — cria "Painel do Admin Trial", marca "Todas informações (pré + admin)", asserta painel removido |
+| `criacao-trial-url-paineis-predefinidos.spec.ts` | TC1 | `fixme` — **coberto pelo playbook** `provisionar-trial-projeto-twygo` (manual+Claude). As asserções do TC ("Trial criado", "painéis pré-definidos aparecem", "menu aluno") são side-effects validados pelo executor durante os passos 5/7 do playbook |
+| `criacao-trial-api-paineis-predefinidos.spec.ts` | TC2 | `fixme` permanente — **override do XML 2026-05-15**: criação via API descartada, cobertura via wizard `/new/register/steps` (TC1 + playbook). API endpoint `external_onboarding` out-of-scope Playwright |
+| `exclusao-trial-dados-sophiatech.spec.ts` | TC3 | ✅ ativo — marca opção "Todas as informações pré-definidas da SophiaTech", asserta delta na contagem de painéis (timeout 60s p/ job async) |
+| `exclusao-trial-dados-admin.spec.ts` | TC4 | ✅ ativo — cria "Painel do Admin Trial", marca "Todas informações (pré + admin)", asserta painel removido (timeout 60s p/ job async) |
 
 ## Ordem de execução
 

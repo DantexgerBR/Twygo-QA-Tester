@@ -1,7 +1,7 @@
 ---
 name: testar-exclusao-dados-trial-twygo
 description: Como testar o fluxo "Excluir informações" do widget Sophia em orgs Trial Twygo — ícone Sophia (canto inferior esquerdo) → popover → "Excluir informações" → modal com 4 opções de exclusão (SophiaTech / Admin / Usuários / Tudo) → Excluir. Spec único por projeto rodando contra 1 Trial dedicada (ICP "Outros", provisionada via `provisionar-trial-projeto-twygo`). Cada projeto tem sua própria Trial porque a exclusão zera o env — não há como compartilhar entre projetos. Use sempre que um projeto Twygo precisar validar reset/exclusão de dados em org Trial — repete-se em quase todo projeto porque trial é o ciclo de vida típico do produto.
-version: 1.3.0
+version: 1.4.0
 ---
 
 # testar-exclusao-dados-trial-twygo
@@ -162,56 +162,56 @@ export class SophiaWidget {
 checkboxes mudar) ou por filtro de texto (preferível). Use seletor de texto
 da tabela acima.
 
-## Gotcha crítico — exclusão é JOB ASSÍNCRONO
+## Bug-produto confirmado — opção "Todas informações" NÃO remove painéis admin
 
-Validado live via chrome-devtools-mcp em 2026-05-15: a exclusão **não é
-síncrona**. Após click no botão "Excluir" do modal:
+Validado live via Playwright Network probe em 2026-05-15:
 
-1. Modal fecha imediatamente.
-2. Backend agenda um job de exclusão e responde 2xx.
-3. UI **continua pollando** o endpoint `/api/v1/o/{orgId}/trial_deletion_progress`
-   pra mostrar progresso.
-4. **Listagens (painéis, cursos, usuários, etc.) só refletem o resultado
-   após o job completar** — varia com volume de dados (8s wall-clock em
-   Trial pequena, pode ser bem maior).
+1. Click no botão "Excluir" do modal dispara `DELETE /api/v1/o/{orgId}/delete_trial_data`.
+2. Backend responde 2xx.
+3. **Painéis administrativos sobrevivem intactos** — request chega no backend mas não cascade-deleta painéis. Confirmado com 7→7 painéis após `DELETE` + 15s wait, sem job em `/api/v1/o/{orgId}/trial_deletion_progress` (retorna `{"progress":null}`).
+4. XML do XMind diz que TC4 espera "Painel do Admin Trial removido junto com pré-definidos". Comportamento atual do produto diverge — **bug-produto OU doc-gap**.
 
-**Implicação no spec**: o assert imediato após `confirmDelete()` encontra
-dados ainda na DB. Sintoma típico — Playwright vermelho `toHaveCount(0)
-received 1` ou `received 5` em runs com painéis admin pré-criados.
+**Implicações nos specs**:
 
-**Padrão canônico no `confirmDelete()` (SophiaWidget POM)**:
+- TC4 vermelho com `toHaveCount(0) received 1` é **sinal correto** até produto corrigir.
+- Acúmulo de painéis órfãos entre runs (cada TC4 cria 1 painel não removido). **Nome do painel deve ser único por run** (workerIndex + timestamp) pra evitar strict-mode violation na pré-condição.
+- Limpeza manual ocasional necessária via row-delete (delete button da linha). Skill `limpar-dados-de-teste-twygo` aplicável.
+
+### Distinção do `.click()` JS programático
+
+Outro gotcha descoberto na mesma sessão de audit:
+
+- **Playwright `.click()` (via CDP)**: dispara evento físico — backend recebe a request.
+- **`.click()` JS programático no DOM** (`element.click()` em `page.evaluate`): React handlers do botão "Excluir" do modal Sophia **NÃO respondem**. Sem request disparada. Pode parecer que "limpou" porque a UI faz update otimista no estado local, mas o backend nunca foi chamado.
+
+Em audits via chrome-devtools-mcp, **prefira `mcp__chrome-devtools__click(uid)`** (CDP físico) sobre `evaluate` com `.click()`. Caso real desta sessão: meu audit MCP inicial usou `.click()` JS, viu "Trial vazia" (estado otimista), conclui "spec frágil — timing async". Errado — era bug-produto MESMO, e o ambiente só pareceu vazio porque o evento React não foi disparado.
+
+### Padrão no `confirmDelete()` (SophiaWidget POM)
 
 ```ts
 async confirmDelete(): Promise<void> {
   await this.getConfirmDeleteButton().click();
   await this.getDeleteModal().waitFor({ state: 'hidden', timeout: 60_000 });
-  // Espera o polling do trial_deletion_progress estabilizar.
+  // Cinto-de-segurança: networkidle pra dar tempo de qualquer polling
+  // backend completar (mesmo que o bug-produto atual significa que
+  // painéis sobrevivem, outras categorias — cursos, trilhas, usuários —
+  // podem usar fluxo assíncrono no futuro).
   await this.page.waitForLoadState('networkidle', { timeout: 60_000 });
 }
 ```
 
-**Padrão canônico no spec — asserção pós-exclusão**:
+### Padrão no spec — asserção pós-exclusão
 
 ```ts
-// Default timeout do toHaveCount é 5s — insuficiente. Use 60s + invariante.
-await expect(paineis.getRowByName(panelName)).toHaveCount(0, {
+// Default timeout do toHaveCount é 5s — usar 60s como cinto-de-segurança.
+await expect(paineis.getRowByItemName(panelName)).toHaveCount(0, {
   timeout: 60_000,
 });
-
-// OU pra invariantes mais complexas (contagem relativa): expect().toPass:
-await expect(async () => {
-  await page.reload();
-  const finalCount = await paineis.getRowCount();
-  expect(finalCount).toBeLessThan(initialCount);
-}).toPass({ timeout: 60_000 });
 ```
 
-**Anti-pattern (cometi e corrigi neste fluxo)**:
+### Anti-pattern (cometido e corrigido nesta sessão)
 
-- ❌ Aceitar vermelho como "bug-produto" sem auditar via MCP. Era spec
-  frágil (timing async), não bug. Caso real: TC4 sessão 2026-05-15.
-  Fluxo correto é a skill [[comparar-chrome-mcp-vs-playwright]] —
-  reproduzir via MCP **antes** de categorizar.
+- ❌ Aceitar vermelho como "spec frágil" sem **confirmar a request foi disparada** no Network. Inverter veredito sem evidência sólida vira ciclo. Fluxo correto: skill [[comparar-chrome-mcp-vs-playwright]] **+ skill [[debugar-via-network-e-console]]** — confirmar via Network logging do Playwright (`page.on('request', ...)`) que a request realmente chega ao backend. Caso real: 3 inversões de veredito em 1 sessão até olhar Network direto.
 
 ## Estrutura do spec — 1 Trial por projeto
 

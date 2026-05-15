@@ -328,6 +328,21 @@ da org `<id>`"), executor traduz pra SQL apropriado.
 Se executor pedir SQL pronto, Claude pode oferecer template **com
 placeholder de schema** e pedir confirmação antes de aplicar.
 
+## TCs do XML cobertos por este playbook
+
+Em projetos Twygo, o XML TestLink tipicamente inclui 2 TCs de **criação
+de Trial** que mapeam diretamente pra este playbook (não viram specs
+Playwright executáveis):
+
+| TC do XML | Como o playbook cobre |
+|---|---|
+| **"Criação de trial via URL com painéis pré-definidos"** | Passo 3 do playbook executa o wizard `/new/register/steps`. As asserções do TC ("Trial criado", "painéis pré-definidos aparecem na lista", "menu acessível como aluno") são side-effects validados pelo executor nos passos 5 (recebe URL) e 7 (confere flags+contrato). Spec correspondente fica `test.fixme` com `executionType: manual` linkando este playbook. |
+| **"Criação de trial via API com painéis pré-definidos"** | **Override consciente** — não testamos criação via API. Coberta pelo mesmo wizard do TC anterior. Spec correspondente fica `test.fixme` permanente com mensagem documentando o override (decisão time QA 2026-05-15). |
+
+Como resultado, projetos Twygo executam apenas TC3 (Exclusão SophiaTech)
+e TC4 (Exclusão Admin) automatizados; TC1 e TC2 são "manuais
+auto-assistidos" via este playbook.
+
 ## Skills relacionadas
 
 - [[testar-exclusao-dados-trial-twygo]] — consome `trial-env.json`

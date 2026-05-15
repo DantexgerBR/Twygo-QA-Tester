@@ -29,7 +29,7 @@ test.describe('Trial', () => {
     });
   });
 
-  test('Exclusão de trial: dados criados pelo Admin removidos', async ({ page, step }) => {
+  test('Exclusão de trial: dados criados pelo Admin removidos', async ({ page, step }, testInfo) => {
     await allure.epic('Twygo - Widgets');
     await allure.feature('Trial');
     await allure.story('Exclusão de trial: dados criados pelo Admin removidos');
@@ -37,16 +37,21 @@ test.describe('Trial', () => {
 
     const paineis = new PaineisListPage(page);
     const sophia = new SophiaWidget(page);
+    // Nome único por run — bug-produto da exclusão Sophia (opção "Todas
+    // informações" não remove painéis admin) acumula órfãos entre runs.
+    // Suffix worker+timestamp isola este test. Ver
+    // `testar-exclusao-dados-trial-twygo` §"Bug-produto confirmado".
+    const adminPanelName = `${adminTrialData.adminPanelNameBase} w${testInfo.workerIndex}-${Date.now()}`;
 
-    await step('Pré: Admin cria "Painel do Admin Trial"', async () => {
+    await step('Pré: Admin cria painel manual', async () => {
       await page.goto(`/o/${TRIAL.orgId}/use_modes?tab=panels-tab`);
       await dismissCommonModals(page);
-      await paineis.createPanel({ name: adminTrialData.adminPanelName });
+      await paineis.createPanel({ name: adminPanelName });
       // createPanel redireciona pra /panels/{id}/edit — voltar pra listagem para validar.
       await page.goto(`/o/${TRIAL.orgId}/use_modes?tab=panels-tab`);
       await dismissCommonModals(page);
       await paineis.setViewMode('lista');
-      await expect(paineis.getRowByName(adminTrialData.adminPanelName)).toBeVisible();
+      await expect(paineis.getRowByItemName(adminPanelName)).toBeVisible();
     });
 
     await step('1. Executar rotina de exclusão (Sophia → Excluir informações → Todas informações)', async () => {
@@ -59,11 +64,14 @@ test.describe('Trial', () => {
       await page.goto(`/o/${TRIAL.orgId}/use_modes?tab=panels-tab`);
       await dismissCommonModals(page);
       await paineis.setViewMode('lista');
-      // Timeout 60s: backend processa exclusão como job async (endpoint
-      // `trial_deletion_progress` polling). Default 10s é insuficiente —
-      // chrome-devtools-mcp validou que UI atualiza em ~8s wall-clock,
-      // mas pode variar com volume de dados.
-      await expect(paineis.getRowByName(adminTrialData.adminPanelName)).toHaveCount(0, {
+      // BUG-PRODUTO CONFIRMADO (2026-05-15 via Network probe): a request
+      // `DELETE /api/v1/o/{orgId}/delete_trial_data` é disparada pelo
+      // backend mas painéis admin sobrevivem. XML diz que deveriam ser
+      // removidos junto com pré-definidos. Spec vermelho aqui é SINAL
+      // CORRETO até produto corrigir. Timeout 60s mantido como cinto de
+      // segurança (caso comportamento mude pra async no futuro).
+      // Ver skill `testar-exclusao-dados-trial-twygo` §"Bug-produto confirmado".
+      await expect(paineis.getRowByItemName(adminPanelName)).toHaveCount(0, {
         timeout: 60_000,
       });
     });

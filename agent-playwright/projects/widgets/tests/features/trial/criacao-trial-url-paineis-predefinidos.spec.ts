@@ -1,6 +1,8 @@
-// spec: testsuite XML
+// spec: testsuite XML "Trial" → testcase "Criação de trial via URL com painéis pré-definidos"
 // seed: tests/seed.spec.ts
-// FIXME — ver _README.md desta pasta.
+//
+// Coberto pelo playbook `provisionar-trial-projeto-twygo` (manual+Claude).
+// Ver _README.md desta pasta e a skill em `.claude/skills/provisionar-trial-projeto-twygo/`.
 
 import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js';
 import * as allure from 'allure-js-commons';
@@ -9,7 +11,13 @@ test.describe('Trial', () => {
   test('Criação de trial via URL com painéis pré-definidos', async ({ step }) => {
     test.fixme(
       true,
-      'Criação de trial requer setup Super Admin com impacto em estado global. Estratégia de revert/isolamento pendente. Ver _README.md.',
+      'Coberto pelo playbook `provisionar-trial-projeto-twygo` (manual+Claude via /new/register/steps). ' +
+        'O playbook (passos 1-8) é o equivalente automatizado-assistido deste TC: ' +
+        '(1) DB update em organization_icps.icp5, (3) wizard de criação via URL, ' +
+        '(5) executor confirma URL pós-unlock, (6-7) flags+contrato, ' +
+        '(8) gravação em data/trial-env.json. As asserções deste TC ' +
+        '("Trial criado com sucesso", "painéis pré-definidos aparecem na lista", ' +
+        '"menu acessível como aluno") são validadas como side-effects do playbook.',
     );
 
     await allure.epic('Twygo - Widgets');
@@ -17,8 +25,9 @@ test.describe('Trial', () => {
     await allure.story('Criação de trial via URL com painéis pré-definidos');
     await allure.severity('critical');
     await allure.label('executionType', 'manual');
+    await allure.label('coveredBy', 'provisionar-trial-projeto-twygo');
 
-    await step('1. Super Admin cria trial via URL → painéis pré-definidos aparecem', async () => {
+    await step('1. Coberto pelo playbook — ver provisionar-trial-projeto-twygo', async () => {
       expect(true).toBe(true);
     });
   });
