@@ -38,6 +38,15 @@ outputs/**/allure-report/
 # Cleanup via `rm -rf outputs-archive/` quando histórico não interessar mais.
 outputs-archive/
 
+# Arquivos compactados de reports (.rar/.zip/.7z) — usados pra trafegar
+# pasta extraída de uma run pra outra máquina via chat/Slack. Frequentemente
+# excedem o limite de 100MB do GitHub (caso real: layout-das-abas .rar de
+# 168MB rejeitado pelo pre-receive hook). A pasta extraída adjacente já é
+# committed.
+outputs/**/*.rar
+outputs/**/*.zip
+outputs/**/*.7z
+
 playwright-report/
 test-results/
 .playwright/

@@ -68,5 +68,75 @@
       "subscriptionPlansPath": "/admin/subscription_plans",
       "editContractPath": "/admin/edit_sys_subscription_settings/36988"
     }
+  },
+  "trial-agentsqa-employee": {
+    "baseUrl": "https://trialagentsqa1.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_TRIAL_AGENTSQA_EMPLOYEE_EMAIL}",
+      "password": "${TWYGO_TRIAL_AGENTSQA_EMPLOYEE_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "36977",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/36977"
+    }
+  },
+  "trial-agentsqa-coursesale": {
+    "baseUrl": "https://trialagentsqa2.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_TRIAL_AGENTSQA_COURSESALE_EMAIL}",
+      "password": "${TWYGO_TRIAL_AGENTSQA_COURSESALE_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "36978",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/36978"
+    }
+  },
+  "trial-agentsqa-customer": {
+    "baseUrl": "https://trialagentsqa3.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_TRIAL_AGENTSQA_CUSTOMER_EMAIL}",
+      "password": "${TWYGO_TRIAL_AGENTSQA_CUSTOMER_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "36979",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/36979"
+    }
+  },
+  "trial-agentsqa-partner": {
+    "baseUrl": "https://trialagentsqa4.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_TRIAL_AGENTSQA_PARTNER_EMAIL}",
+      "password": "${TWYGO_TRIAL_AGENTSQA_PARTNER_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "36980",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/36980"
+    }
+  },
+  "trial-agentsqa-other": {
+    "baseUrl": "https://trialagentsqa5.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_TRIAL_AGENTSQA_OTHER_EMAIL}",
+      "password": "${TWYGO_TRIAL_AGENTSQA_OTHER_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "36981",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/36981"
+    }
   }
 }

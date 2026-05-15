@@ -1,0 +1,29 @@
+{
+  "runId": "modo-de-uso-paineis-do-usuario_20260514-120942",
+  "scope": "Apenas testsuite contendo \"Modo de uso - Painéis do usuário\"",
+  "tests": {
+    "total": 3,
+    "passed": 0,
+    "failed": 2,
+    "skipped": 1,
+    "durationMs": 65681
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 1,
+    "tests": 30,
+    "outOfScope": {
+      "errors": 372,
+      "warnings": 126,
+      "info": 11
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}
