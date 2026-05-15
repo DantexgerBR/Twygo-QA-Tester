@@ -1,6 +1,10 @@
 node_modules/
 dist/
 
+# Runtime/state files do harness Claude Code — sessionId+pid+lockTime,
+# úteis só durante a sessão local; commit pollute o git com churn diário.
+.claude/scheduled_tasks.lock
+
 outputs/screenshots/
 outputs/traces/
 outputs/test-results.json
