@@ -115,7 +115,7 @@ npm run agent:smoke
 
 Esse comando:
 - Lê `config/environment.json` com placeholders já expandidos
-- Faz login real em `stage10.stage.twygoead.com/users/login`
+- Faz login real no host do env principal (`/users/login`)
 - Grava `outputs/.auth/storage.json`
 - Confirma que o ambiente respondeu
 

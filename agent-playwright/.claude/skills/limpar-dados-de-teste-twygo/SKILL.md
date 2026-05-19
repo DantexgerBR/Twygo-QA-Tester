@@ -1,6 +1,6 @@
 ---
 name: limpar-dados-de-teste-twygo
-description: Todo spec Playwright Twygo que cria/altera estado persistente (painel, item de menu, layout, contrato, toggle) precisa de afterAll/afterEach que limpe via variant *_safe do Page Object. Sem cleanup, runs sucessivos acumulam orphans no env compartilhado (ex: stage10, widgets) e cascateiam falhas em outros testes — toast genérico "Não foi possível inativar o painel" disparado por orphan menu items é o sintoma clássico. Skill define template canônico de cleanup, catálogo de variants *_safe existentes, ordem de operações quando há dependência (desassociar antes de deletar), e anti-patterns. Use sempre que gerar/revisar spec novo que cria estado, ou ao auditar suite legada antes de retrofit.
+description: Todo spec Playwright Twygo que cria/altera estado persistente (painel, item de menu, layout, contrato, toggle) precisa de afterAll/afterEach que limpe via variant *_safe do Page Object. Sem cleanup, runs sucessivos acumulam orphans nos envs compartilhados e cascateiam falhas em outros testes — toast genérico "Não foi possível inativar o painel" disparado por orphan menu items é o sintoma clássico. Skill define template canônico de cleanup, catálogo de variants *_safe existentes, ordem de operações quando há dependência (desassociar antes de deletar), e anti-patterns. Use sempre que gerar/revisar spec novo que cria estado, ou ao auditar suite legada antes de retrofit.
 version: 1.0.0
 ---
 
@@ -10,8 +10,8 @@ version: 1.0.0
 
 Run live 2026-05-14 da suíte **Painéis dos usuários (widgets)**: ~30
 specs com `afterAll` cleanup vs ~56 specs **criando estado e abandonando**.
-Org `staging-widgets` (orgId 36988) virou lixão — `staging` (orgId 36602)
-também. Sintoma vivo no env: dezenas de painéis `Painel TC* w0-17473...`,
+Orgs dos envs `staging-widgets` e `staging` viraram lixão. Sintoma vivo
+nos envs: dezenas de painéis `Painel TC* w0-17473...`,
 `Painel QA Teste` orphan, items de menu apontando pra painéis deletados.
 
 Pior: **orphan menu items cascateiam**. Bug `title_for#NoMethodError`

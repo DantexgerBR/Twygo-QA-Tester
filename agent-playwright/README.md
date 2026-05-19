@@ -464,34 +464,26 @@ Copie o template e preencha:
 cp .env.example .env
 ```
 
-Variáveis em `.env` (4 envs em `config/environment.json`, cada um com email+senha — preencha só os pares dos projetos que vai rodar):
+Variáveis em `.env` — preencha só os pares dos envs/projetos que vai rodar. A
+estrutura canônica (slugs de env, pares de variáveis, sufixos semânticos)
+está em `config/environment.json` versionado; o `.env.example` documenta
+quais variáveis preencher. Valores reais (hosts, orgIds, emails, senhas)
+NUNCA ficam aqui — apenas no `.env` local (gitignored).
 
 ```bash
-# --- staging principal Twygo (stage10.stage.twygoead.com — orgId 36602) ---
-TWYGO_STAGING_EMAIL=<email da conta de QA staging>
-TWYGO_STAGING_PASSWORD=<senha staging>
+# Para CADA env declarado em config/environment.json, defina:
+TWYGO_<ENV_SLUG_UPPER>_HOST=<host real do env>
+TWYGO_<ENV_SLUG_UPPER>_ORG_ID=<orgId numérico do env>
+TWYGO_<ENV_SLUG_UPPER>_EMAIL=<email do user de teste com perfil Admin>
+TWYGO_<ENV_SLUG_UPPER>_PASSWORD=<senha do user>
 
-# --- staging "sem créditos de IA" (eduapi.stage.twygoead.com — orgId 36912) ---
-# Secundário do staging principal, pra specs de bloqueio quando saldo zerado.
-# Ver CLAUDE.md §7.5.
-TWYGO_STAGING_WITHOUT_CREDITS_EMAIL=<email da conta zerada>
-TWYGO_STAGING_WITHOUT_CREDITS_PASSWORD=<senha da conta zerada>
-
-# --- staging do projeto Widgets (widgets.stage.twygoead.com — orgId 36988) ---
-# Específico do projeto widgets — só preencha se for rodar essa suíte.
-TWYGO_STAGING_WIDGETS_EMAIL=<email>
-TWYGO_STAGING_WIDGETS_PASSWORD=<senha>
-
-# --- staging "widgets desabilitado" (widgetsdisabled.stage.twygoead.com — orgId 36989) ---
-# Secundário do widgets, simulando módulo desligado por feature flag.
-TWYGO_STAGING_WIDGETS_DISABLED_EMAIL=<email>
-TWYGO_STAGING_WIDGETS_DISABLED_PASSWORD=<senha>
-
-# Opcionais:
+# Opcionais (globais):
 EXPLORATORY_STRICT=1     # promove findings exploratórios (axe, console errors) a falhas
 LOG_LEVEL=debug          # output verbose dos scripts
 REGRESSION=true          # ativa reporter Allure (geralmente setado pelo agent:regression)
 ```
+
+> Exemplos de slugs de env (sem valores): `staging` (principal), `staging-<projeto>` (principal de um projeto específico), `staging-without-credits` (secundário sem créditos), `<principal>-disabled` (secundário com módulo off). Convenção completa em [`shared/twygo-platform.md §1`](../shared/twygo-platform.md).
 
 > **Qual env é usado em cada projeto:** lido de `projects/<slug>/project.config.json` campo `environment`. O `globalSetup` faz login no env principal e detecta o secundário pelo nome (ex: principal `staging-widgets` → procura `staging-widgets-disabled`).
 

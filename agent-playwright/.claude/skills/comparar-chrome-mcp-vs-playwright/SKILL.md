@@ -94,9 +94,9 @@ Leia o spec. Anote em prosa simples:
 Exemplo (do TC F1 — paginação):
 
 ```
-Pré: storageState staging-widgets, org 36988
+Pré: storageState staging-widgets, org resolvida por getOrgId()
 Steps:
-  1. paineis.goToList() → goto /o/36988/use_modes?tab=panels-tab
+  1. paineis.goToList() → goto /o/{orgId}/use_modes?tab=panels-tab
   2. paineis.getCardCount() → captura count antes
   3. paineis.goToNextPage() → click no botão "2"
   4. paineis.getPageButton(2).waitFor() → espera ativo

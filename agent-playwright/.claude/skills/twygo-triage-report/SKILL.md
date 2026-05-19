@@ -99,7 +99,7 @@ Estrutura do `triage-report.md`:
 - **Status**: failed · **Duração**: 14.7s
 - **Erro**: `Timeout 5000ms exceeded` em `toggleActiveByName` (poll de toggle/modal)
 - **Local**: `PaineisListPage.ts:498`
-- **Última URL observada**: `https://widgets.stage.twygoead.com/o/36988/use_modes?tab=panels-tab`
+- **Última URL observada**: `<baseUrl-do-env>/o/{orgId}/use_modes?tab=panels-tab`
 - **Última tela**: `./test-artifacts/.../test-failed-1.png`
 - **Trace**: `./test-artifacts/.../trace.zip` (abrir com `npx playwright show-trace`)
 

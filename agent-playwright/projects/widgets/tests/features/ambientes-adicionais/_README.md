@@ -10,7 +10,7 @@ feature flag por env):
 
 ## Infraestrutura
 
-- **Env adicional**: `staging-widgets-aditional` (host `adicionalwidgets.stage.twygoead.com`, orgId 37002), pareado a `staging-widgets` (36988).
+- **Env adicional**: `staging-widgets-aditional`, pareado a `staging-widgets` (host/orgId em `.env`).
 - **Storage**: `outputs/.auth/storage-aditional.json` — gerado automaticamente por `global-setup.ts` ao detectar env com sufixo `-aditional`.
 - **POM**: `PaineisListPage`/`PainelFormPage` aceitam `orgIdOverride` opcional no constructor — permite reuso completo dos POMs em specs de env adicional.
 

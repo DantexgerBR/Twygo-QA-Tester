@@ -27,11 +27,13 @@ Pareamento por sufixo: `staging-widgets` (principal) ↔ `staging-widgets-aditio
 
 ## Catálogo de envs adicionais
 
-| Principal | Adicional | orgId principal | orgId adicional |
-|---|---|---|---|
-| `staging-widgets` | `staging-widgets-aditional` | 36988 | 37002 |
+| Principal | Adicional |
+|---|---|
+| `staging-widgets` | `staging-widgets-aditional` |
 
-> Novos pareamentos: adicionar entry com sufixo `-aditional` em `config/environment.json` + credenciais em `.env` (variáveis `TWYGO_<PRINCIPAL>_ADITIONAL_EMAIL`/`_PASSWORD`).
+> orgIds resolvidos em runtime via `getEnvByName(<slug>).orgId` (valores em `.env`).
+
+> Novos pareamentos: adicionar entry com sufixo `-aditional` em `config/environment.json` + credenciais/orgIds em `.env` (variáveis `TWYGO_<PRINCIPAL>_ADITIONAL_*`).
 
 ## Storage state — padrão canônico
 
@@ -73,15 +75,15 @@ Quando presente, força paths `/o/{X}/...` com o orgId fornecido.
 
 ```ts
 // Spec no env adicional:
-const paineis = new PaineisListPage(page, aditionalOrgId);  // 37002
+const paineis = new PaineisListPage(page, aditionalOrgId);  // orgId do adicional
 
-await paineis.goToList();           // GET /o/37002/use_modes?tab=panels-tab
-await paineis.createPanel({ ... }); // POST /o/37002/panels
+await paineis.goToList();           // GET /o/{aditionalOrgId}/use_modes?tab=panels-tab
+await paineis.createPanel({ ... }); // POST /o/{aditionalOrgId}/panels
 ```
 
 Especs no env principal (uso default — sem override):
 ```ts
-const paineis = new PaineisListPage(page);  // usa getOrgId() = 36988
+const paineis = new PaineisListPage(page);  // usa getOrgId() — orgId do env principal
 ```
 
 > **Backward compat**: constructor com 1 arg continua funcionando. Mudança
@@ -116,7 +118,7 @@ import { STORAGE_PATH } from '...'; // ou usar a global padrão via project defa
 test('Painel do principal não aparece no adicional', async ({ browser, step }) => {
   const panelName = `Painel Principal TC2 w${testInfo.workerIndex}-${Date.now()}`;
 
-  // 1. Cria no principal (org 36988, host widgets.stage.*)
+  // 1. Cria no principal (org do env staging-widgets)
   const principalCtx = await browser.newContext({
     storageState: 'outputs/.auth/storage.json',
     baseURL: principal.baseUrl,

@@ -178,32 +178,24 @@ cd agent-playwright
 cp .env.example .env
 ```
 
-Edite `.env` e preencha (4 envs em `config/environment.json` — preencha
-só os pares dos projetos que você vai rodar):
+Edite `.env` e preencha apenas os pares dos envs que você vai rodar. A
+estrutura canônica está em `config/environment.json` (versionado, sem
+valores). O `.env.example` documenta quais variáveis preencher.
 
 ```bash
-# --- staging principal Twygo (stage10.stage.twygoead.com — orgId 36602) ---
-TWYGO_STAGING_EMAIL=<email da conta de QA staging>
-TWYGO_STAGING_PASSWORD=<senha staging>
-
-# --- staging "sem créditos de IA" (eduapi.stage.twygoead.com — orgId 36912) ---
-# Secundário do staging principal. Specs de bloqueio por créditos zerados.
-TWYGO_STAGING_WITHOUT_CREDITS_EMAIL=<email da conta zerada>
-TWYGO_STAGING_WITHOUT_CREDITS_PASSWORD=<senha da conta zerada>
-
-# --- staging do projeto Widgets (widgets.stage.twygoead.com — orgId 36988) ---
-# Específico do projeto widgets — só preencha se for rodar essa suíte.
-TWYGO_STAGING_WIDGETS_EMAIL=<email>
-TWYGO_STAGING_WIDGETS_PASSWORD=<senha>
-
-# --- staging "widgets desabilitado" (widgetsdisabled.stage.twygoead.com — orgId 36989) ---
-# Secundário do widgets, simulando módulo desligado por feature flag.
-TWYGO_STAGING_WIDGETS_DISABLED_EMAIL=<email>
-TWYGO_STAGING_WIDGETS_DISABLED_PASSWORD=<senha>
+# Para CADA env que vai usar, definir o quarteto:
+TWYGO_<ENV_SLUG_UPPER>_HOST=<host real do env>
+TWYGO_<ENV_SLUG_UPPER>_ORG_ID=<orgId numérico>
+TWYGO_<ENV_SLUG_UPPER>_EMAIL=<email do user com perfil Admin>
+TWYGO_<ENV_SLUG_UPPER>_PASSWORD=<senha>
 
 # Opcional — só pra CI / GH MCP:
 GITHUB_TOKEN=<PAT com escopo repo>
 ```
+
+> Slugs de env seguem convenção `staging`, `staging-<projeto>`, sufixos
+> `-without-credits` / `-disabled` / `-trial`. Catálogo em
+> [`shared/twygo-platform.md §1`](../../shared/twygo-platform.md).
 
 > `.env` está no `.gitignore` da raiz do monorepo. Nunca commitar.
 > `config/environment.json` carrega esses valores via `${VAR}` (resolvido por

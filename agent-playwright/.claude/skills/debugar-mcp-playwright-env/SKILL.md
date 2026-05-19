@@ -53,7 +53,7 @@ const ctx = await browser.newContext({
   viewport: { width: 1920, height: 1080 },
 });
 const page = await ctx.newPage();
-await page.goto('/o/36988/use_modes?tab=panels-tab');
+await page.goto(`/o/${getOrgId()}/use_modes?tab=panels-tab`);
 // ... lógica de exploração via locator + evaluate
 await browser.close();
 ```

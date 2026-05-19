@@ -85,7 +85,7 @@ generatedAt: 2026-05-08T14:30:00Z
 suite: Listagem de painéis
 slug: listagem-de-paineis
 ttlHours: 168
-twygoBaseUrl: https://stage10.stage.twygoead.com
+twygoBaseUrl: <baseUrl do env, vem de .env>
 -->
 
 # Recon — Listagem de painéis

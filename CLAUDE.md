@@ -1,10 +1,77 @@
 # CLAUDE.md — twygo-agents-qa
 
-> Vale para os 3 sub-agentes deste monorepo: `agent-at/` (Python — análise
-> de teste), `agent-playwright/` (TypeScript + Playwright — E2E),
-> `agent-db/` (Python — validações em banco). Cada sub-agente é
+> Vale para todos os sub-agentes deste monorepo. Cada sub-agente é
 > autossuficiente e tem seu próprio `CLAUDE.md` técnico — este arquivo
 > traz convenções operacionais que valem em todos.
+>
+> **Agentes ativos**: `agent-at/` (Python — análise de teste),
+> `agent-playwright/` (TypeScript + Playwright — E2E), `agent-db/`
+> (Python — validações em banco; esqueleto).
+>
+> **Agentes planejados** (entram conforme maturidade): `agent-tasks-qa`
+> (quebra de atividades), `agent-api` (validações REST/GraphQL),
+> `agent-pentest` (testes de segurança), `agent-docs-qa` (documentação
+> de usabilidade). Ver §Mapa do ecossistema abaixo.
+
+## Mapa do ecossistema
+
+Os agentes se organizam em **4 categorias** por papel no fluxo de QA:
+
+| Categoria | Agentes | Operação |
+|---|---|---|
+| **Upstream** (produzem para outros) | `agent-tasks-qa` (futuro), `agent-at` | Recebem entrada humana (docs Discovery, Spike, planilhas), produzem artefato canônico para downstream |
+| **Executor primário** (1 por suíte) | `agent-playwright`, `agent-api`, `agent-db`, `agent-pentest` | Cada suíte na AT declara qual é executor. Roda CLI próprio. Pode invocar validadores secundários |
+| **Validador acionável** (modo sub-rotina) | `agent-api`, `agent-db` | Mesmos agentes acima em modo sub-rotina, quando outro executor declara validação secundária. Comunicação por filesystem + CLI |
+| **Produtor de docs de usabilidade** | `agent-docs-qa` (futuro) | Produz documentação para usuário final do produto |
+
+Topologia visual:
+
+```
+            docs (Discovery + Spike)
+                    │
+                    ▼
+            agent-tasks-qa            [V3 — quebra atividades]
+                    │
+                    ▼
+            agent-at                  [canônica = MD; deriva XMind + XML TestLink]
+                    │
+   ┌────────────────┼────────────────┬─────────────────┐
+   ▼                ▼                ▼                 ▼
+agent-playwright agent-api       agent-db        agent-pentest
+(UI E2E)         (REST/GraphQL)  (DB validation) (segurança/OWASP)
+   │                │                │                 │
+   │  (validação secundária via filesystem + CLI)       │
+   └────────►◄──────┴────────────────┘                  │
+        agent-api / agent-db podem ser invocados        │
+        como sub-rotina por executor primário           │
+                                                        │
+   ─────────────────────────────────────────────────────┘
+
+agent-docs-qa   [independente; produz docs de usabilidade do produto;
+                 input/output a definir quando criar]
+```
+
+> **Detalhes do contrato entre agentes**: [CONTRACT.md](CONTRACT.md).
+
+## Contrato AT → consumidores
+
+Tudo o que `agent-at` produz e os demais agentes consomem segue o
+[**CONTRACT.md**](CONTRACT.md) na raiz. Resumo:
+
+- **MD canônico** (`test-analysis.md`) é a **única fonte de verdade**.
+  Vive em `agent-at/projects/<slug>/output/`.
+- **XMind** e **XML TestLink** são **derivados** gerados automaticamente
+  pelo `agent-at` a partir do MD. XMind serve à visualização QA; XML
+  importa no TestLink para fluxo manual.
+- Consumidores (Playwright, [V2] API, DB, Pentest) leem **apenas o MD**.
+- **Edições manuais** são autorizadas **apenas no MD** — XMind e XML são
+  regenerados.
+- **Executor primário** (`playwright`/`api`/`db`/`pentest`) é declarado
+  no frontmatter da suíte no MD. Não aparece no XMind/XML — fluxo manual
+  é agnóstico de agente automatizado.
+
+Quando este CLAUDE.md ou qualquer CLAUDE.md de agente divergir do
+CONTRACT.md, o **CONTRACT.md vence** — abrir PR de alinhamento.
 
 ## Skills primeiro
 
@@ -232,7 +299,7 @@ Cada sub-agente tem ferramenta pra esse ritual:
   (`list_network_requests`, `list_console_messages`). Detalhe em
   [agent-playwright/.claude/skills/debugar-via-network-e-console/SKILL.md](agent-playwright/.claude/skills/debugar-via-network-e-console/SKILL.md).
 - **agent-db**: bug de query? Log SQL primeiro. Sem isso vira chute.
-- **agent-at**: erro na análise XML? Valida XML cru antes de inferir bug no parser.
+- **agent-at**: erro na geração do MD canônico ou nos derivados (XMind/XML)? Valida o `test-analysis.md` cru antes de inferir bug nos geradores de derivados.
 
 Quando uma regressão de UI Twygo for diagnosticada **só** porque alguém
 abriu Network, é sinal de que essa regra valeu a economia. Quando alguém
@@ -240,16 +307,69 @@ gastar 30min sem abrir Network, é sinal de que essa regra foi ignorada —
 documenta o caso na skill `debugar-via-network-e-console` (atualiza
 tabela de "Gotchas conhecidos via Network").
 
+## Anatomia de um agente novo
+
+Quando criar um agente novo do monorepo (ex.: `agent-tasks-qa`, `agent-api`,
+`agent-pentest`), seguir a **estrutura mínima canônica** abaixo. Não
+inventar arquitetura — clonar do `agent-playwright` (referência madura) e
+adaptar à stack escolhida.
+
+```
+agent-<nome>/
+├── CLAUDE.md                       # propósito + princípios + regras duras + skills + comandos
+├── README.md                       # onboarding pra QA novo
+├── .env.example                    # template das vars necessárias
+├── projects/                       # 1 subpasta por projeto Twygo (NUNCA mono-projeto)
+│   └── <slug>/
+│       ├── project.config.json
+│       ├── inputs/                 # do agent-at (test-analysis.md copiado)
+│       └── outputs/                # gerado (gitignored com exceções por agente)
+├── src/                            # infra compartilhada entre projetos (genérico Twygo)
+├── .claude/
+│   └── skills/                     # skills locais do agente
+└── (config/, templates/, scripts/) # conforme stack
+```
+
+**Obrigações por categoria** (ver §Mapa do ecossistema):
+
+| Categoria | O que o agente novo precisa | Onde olhar |
+|---|---|---|
+| **Upstream** | Estrutura `projects/<slug>/{docs,output}/`. Output canônico segue padrão definido pelo CONTRACT.md (MD) ou contrato próprio | `agent-at/` como referência |
+| **Executor primário** | Estrutura `projects/<slug>/{inputs,outputs}/`. Consome `test-analysis.md`. Gera report self-contained em `outputs/<slug>/reports/<runId>/` | `agent-playwright/` como referência |
+| **Validador acionável** | Além de executor primário: aceitar invocação por subprocesso com input path como flag, escrever output em path absoluto fornecido. [V2 do CONTRACT.md] | `agent-db/` (esqueleto) como referência |
+| **Produtor de docs de usabilidade** | Estrutura definida quando `agent-docs-qa` for criado | TBD |
+
+**Checklist mínimo para abrir PR de agente novo**:
+
+- [ ] `CLAUDE.md` com seções: Propósito, Princípios fundamentais, Arquitetura, Fluxo, Skills, Regras duras, Anti-patterns, Comandos, Referências
+- [ ] `README.md` para QA novo (onboarding em ≤ 10 minutos)
+- [ ] `.env.example` com variáveis comentadas
+- [ ] `projects/` existente (mesmo vazia) — para enforçar mono-projeto
+- [ ] Pelo menos 1 skill em `.claude/skills/` (orquestração interna)
+- [ ] Linkar `shared/twygo-platform.md` no CLAUDE.md
+- [ ] Linkar [CONTRACT.md](CONTRACT.md) no CLAUDE.md (se consome AT)
+- [ ] Atualizar este CLAUDE.md raiz movendo o agente de "planejado" para "ativo"
+- [ ] Atualizar tabela do README.md raiz
+- [ ] Atualizar topologia visual desta seção
+
 ## Não duplicar — tudo é por sub-agente
 
-- **Não criar arquivos na raiz** além deste `CLAUDE.md` e o `README.md`. A
-  "regra de isolamento" do README é dura — `package.json`, `playwright.config.ts`,
-  `requirements.txt` etc. ficam dentro de `agent-*/`.
+- **Arquivos na raiz** permitidos: este `CLAUDE.md`, `README.md`,
+  [`CONTRACT.md`](CONTRACT.md) (contrato cross-agente), e `shared/` para
+  documentos de fatos do produto Twygo cross-agente (atualmente
+  [`shared/twygo-platform.md`](shared/twygo-platform.md)). Demais
+  artefatos de agente (`package.json`, `playwright.config.ts`,
+  `requirements.txt`, etc.) ficam dentro de `agent-*/`.
+- **`shared/` é só para fatos do produto Twygo** — URLs, IDs de orgs,
+  comportamentos peculiares que afetam testes de qualquer agente. NÃO é
+  para código compartilhado nem skills. Cada agente continua isolado em
+  termos de runtime/código.
 - **Não compartilhar skill entre sub-agentes** copiando — se duas skills
-  começam a parecer iguais, ou a) o conceito é genérico e vai num doc
-  externo (ou no README raiz), ou b) é só uma coincidência e os dois
-  contextos são diferentes mesmo. Não force.
-- **Não editar `outputs/`/`output/`** — são gerados; estão no `.gitignore`.
+  começam a parecer iguais, ou a) o conceito é genérico e vai em `shared/`
+  ou no CONTRACT.md, ou b) é só uma coincidência e os dois contextos são
+  diferentes mesmo. Não force.
+- **Não editar `outputs/`/`output/`** — são gerados; estão no `.gitignore`
+  (com exceções definidas por agente).
 
 ## Branches por finalidade
 

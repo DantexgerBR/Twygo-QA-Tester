@@ -85,9 +85,9 @@ De `outputs/<slug>/exploratory/<suite-slug>__<test-slug>__w<n>.json`:
 
 De `projects/<slug>/project.config.json` + `config/environment.json`:
 
-- `environment` declarado pelo projeto (ex: `staging-widgets`).
-- `baseUrl` resolvido (`widgets.stage.twygoead.com`).
-- `orgId` do env (ex: `36988`).
+- `environment` declarado pelo projeto (slug do env, ex: `staging-<slug-projeto>`).
+- `baseUrl` resolvido em runtime (vem de `.env`).
+- `orgId` do env (numérico, vem de `.env`).
 - Usuário de teste (email do `.env`, **não senha**).
 - Browser + versão (`projectName` do test-results: `chromium`, `firefox`, `webkit`).
 - Run timestamp (`outputs/<slug>/playwright-summary.md` ou stat do
@@ -148,12 +148,12 @@ abrir N tasks erradas.
       "severity": "alta|media|baixa",
       "severityRevisar": true,
       "environment": {
-        "name": "staging-widgets",
-        "baseUrl": "https://widgets.stage.twygoead.com",
-        "orgId": 36988,
+        "name": "<slug-do-env>",
+        "baseUrl": "<resolvido em runtime>",
+        "orgId": "<resolvido em runtime>",
         "browser": "chromium",
         "browserVersion": "...",
-        "user": "evertongambeta@gmail.com"
+        "user": "<email do .env>"
       },
       "reproSteps": [
         { "n": 1, "action": "Acessar a aba Painéis em Configurações > Menu", "status": "passed" },
@@ -165,7 +165,7 @@ abrir N tasks erradas.
       "network": [
         {
           "method": "PATCH",
-          "url": "/o/36988/panels/123/change_status",
+          "url": "/o/{orgId}/panels/123/change_status",
           "status": 422,
           "responseBody": "Descrição não pode ficar vazio(a)",
           "inScope": true
@@ -230,7 +230,7 @@ abrir N tasks erradas.
 ### Network (in-scope)
 | Método | URL | Status | Body |
 |---|---|---|---|
-| PATCH | /o/36988/panels/123/change_status | **422** | `Descrição não pode ficar vazio(a)` |
+| PATCH | /o/{orgId}/panels/123/change_status | **422** | `Descrição não pode ficar vazio(a)` |
 
 ### Console
 - `error`: ...

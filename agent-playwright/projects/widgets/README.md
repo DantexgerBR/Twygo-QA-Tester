@@ -4,14 +4,14 @@ Pasta dedicada ao projeto **Widgets** (Painéis/Modos de uso). Contém todos
 os artefatos específicos deste projeto: XML do agente AT, planos do
 planner, specs gerados, Page Objects e test-IDs específicos.
 
-> **Ambiente:** este projeto roda contra `widgets.stage.twygoead.com`
-> (orgId 36988), env `staging-widgets` em `config/environment.json` —
-> não no `staging` principal Twygo. O `project.config.json` desta pasta
-> declara `"environment": "staging-widgets"`. Specs de bloqueio por
-> feature flag usam o env secundário `staging-widgets-disabled`
-> (`widgetsdisabled.stage.twygoead.com`, orgId 36989). Antes de rodar,
-> confira que `.env` tem os 2 pares `TWYGO_STAGING_WIDGETS_*` preenchidos
-> (ver [.env.example](../../.env.example)).
+> **Ambiente:** este projeto roda contra o env `staging-widgets`
+> declarado em `config/environment.json` — não no `staging` principal
+> Twygo. O `project.config.json` desta pasta declara
+> `"environment": "staging-widgets"`. Specs de bloqueio por feature flag
+> usam o env secundário `staging-widgets-disabled`. Valores reais (hosts,
+> orgIds) ficam em `.env` (gitignored) — confira que os pares
+> `TWYGO_STAGING_WIDGETS_*` (principal + `-disabled`) estão preenchidos
+> antes de rodar (ver [.env.example](../../.env.example)).
 >
 > **Status:** specs gerados pra "Listagem de painéis" (8) e "Ativar /
 > Inativar painel" (5). Demais 20 testsuites do XML aguardando geração

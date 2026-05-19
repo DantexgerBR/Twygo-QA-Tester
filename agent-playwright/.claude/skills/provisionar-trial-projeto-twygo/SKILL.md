@@ -187,11 +187,11 @@ Decisão é do executor — Claude NÃO escolhe sozinho.
 ```json
 {
   "_generated": "2026-05-15T14:32:01-03:00",
-  "_baseOrgId": 36988,
+  "_baseOrgId": "<orgId do env base, vem de getOrgId() em runtime>",
   "_baseEnvName": "staging-widgets",
   "icp": "other",
-  "url": "https://abc123.stage.twygoead.com/",
-  "email": "qa+widgets-trial@twygo.com",
+  "url": "<url gerada pelo wizard /new/register/steps, ex: https://<slug>.stage.twygoead.com/>",
+  "email": "<email de QA dedicado ao Trial>",
   "passwordEnvVar": "TWYGO_WIDGETS_TRIAL_PASSWORD"
 }
 ```

@@ -411,7 +411,7 @@ Erros comuns que custaram horas em sessões anteriores. Generator/healer/planner
 - A convenção é: `test.describe('<testsuite>', () => { test('<testcase>', ...) })`. O reporter tira o nome da testsuite do `describe` e o nome do testcase do `test()`.
 
 ### Super Admin (`/admin`) — tabela de preços e contratos
-- **Pré-requisito**: usuário do `environment.json` precisa estar logado E em perfil "Administrador". O `globalSetup` cobre o login; o perfil já vem do user evertongambeta@gmail.com / eduardo.schmidt@twygo.com.
+- **Pré-requisito**: usuário do `environment.json` precisa estar logado E em perfil "Administrador". O `globalSetup` cobre o login; o perfil deve estar atribuído ao user de teste declarado no `.env`.
 - **Não trocar perfil pela UI** — basta acessar a rota `/admin` direto. Use `SuperAdminPage` (`src/pages/SuperAdminPage.ts`).
 - **Caminhos canônicos** (validados em 2026-05-05 com o usuário):
   | Operação | Rota direta | Helper |
@@ -419,38 +419,40 @@ Erros comuns que custaram horas em sessões anteriores. Generator/healer/planner
   | Entrada Super Admin | `/admin` | `superAdminPage.openSuperAdmin()` |
   | Tabela de preços (todas) | `/admin/subscription_plans` | `superAdminPage.openSubscriptionPlans()` — na lista, identificar tabela com coluna "Ativo" = Sim e clicar Editar |
   | Editar contrato vigente da org | `/admin/edit_sys_subscription_settings/{orgId}` | `superAdminPage.openEditContract(orgId)` |
-- **Ambientes em `environment.json` (4 envs registrados):**
+- **Ambientes**:
 
-  | Env | Host | orgId | Papel |
-  |---|---|---|---|
-  | `staging` | `stage10.stage.twygoead.com` | 36602 | Principal Twygo (creditos-fase-02 e demais projetos) |
-  | `staging-without-credits` | `eduapi.stage.twygoead.com` | 36912 | Secundário do staging — org com saldo IA zerado (specs de bloqueio por créditos) |
-  | `staging-widgets` | `widgets.stage.twygoead.com` | 36988 | Específico do projeto **widgets** (Painéis/Modos de uso) |
-  | `staging-widgets-disabled` | `widgetsdisabled.stage.twygoead.com` | 36989 | Secundário do widgets — módulo Widgets desligado por feature flag (specs de bloqueio por flag) |
-
-  Cada `projects/<slug>/project.config.json` declara qual env usar via campo
-  `environment`. Specs do widgets apontam pra `staging-widgets`; demais
-  projetos pra `staging`. Credenciais vão pro `.env` (ver SETUP.md §6),
-  resolvidas via `${VAR}` em `environment.json` por
+  Estrutura de envs (slugs, papéis, sufixos semânticos) está documentada
+  em [`shared/twygo-platform.md §1`](../shared/twygo-platform.md). Valores
+  concretos (hosts, orgIds) ficam em `.env` (gitignored), referenciados
+  via `${VAR}` em `config/environment.json` resolvido por
   `loadEnvironmentConfig()` (`src/utils/environment.ts`).
+
+  Cada `projects/<slug>/project.config.json` declara qual env usar via
+  campo `environment`. Para descobrir quais envs estão disponíveis,
+  consulte `config/environment.json` ou rode `getEnvByName()`.
+
 - **Tabela de preços é COMPARTILHADA**: alterar a tabela ativa afeta TODAS as organizações daquele banco. Se um teste muda a tabela ativa, faça o **revert ao final** (idealmente via `test.afterEach`/`test.afterAll`). Tests que apenas leem (asserções) não precisam de revert.
 - Padrões de prosa Super Admin estão em `.claude/prose-patterns.md` seção 3.5 — generator deve consultar antes de marcar `test.fixme` por "requer Super Admin".
 
 ### Cenários "bloqueio por flag/saldo" (env secundário)
 
-A convenção do `globalSetup` cobre 2 famílias de bloqueio por env secundário:
+A convenção do `globalSetup` cobre 2 famílias de bloqueio por env secundário,
+identificadas por sufixo semântico no slug do env:
 
-| Família | Env secundário | Quando usar |
+| Família | Sufixo do env secundário | Quando usar |
 |---|---|---|
-| **Saldo de IA zerado** | `staging-without-credits` | Specs que validam o que acontece quando a org não tem créditos pra IA (UI de bloqueio, mensagem, dispatch de evento) |
-| **Módulo desligado** | `staging-widgets-disabled` (e futuros `*-disabled`) | Specs que validam UI quando feature flag/contrato está OFF (ex: aba não aparece, redirect, banner) |
+| **Saldo de IA zerado** | `-without-credits` | Specs que validam o que acontece quando a org não tem créditos pra IA (UI de bloqueio, mensagem, dispatch de evento) |
+| **Módulo desligado** | `-disabled` (e variantes específicas do projeto) | Specs que validam UI quando feature flag/contrato está OFF (ex: aba não aparece, redirect, banner) |
+
+Catálogo completo de sufixos canônicos em
+[`shared/twygo-platform.md §1.3`](../shared/twygo-platform.md).
 
 **Como o `globalSetup` decide qual env secundário logar:**
 
-1. Match direto pelo principal: `<principal>-without-credits` ou `<principal>-disabled`. Ex: principal `staging-widgets` → procura `staging-widgets-disabled` em `environment.json`.
-2. Fallback: primeiro env diferente do principal que termina em qualquer dos sufixos `-without-credits`, `-disabled`, `-widgets-disabled`.
+1. Match direto pelo principal: `<principal>-without-credits` ou `<principal>-disabled`. Ex: se principal é `staging-<slug>`, procura `staging-<slug>-disabled` em `environment.json`.
+2. Fallback: primeiro env diferente do principal terminando em qualquer dos sufixos canônicos.
 
-Sem ambos, sem secundário (specs que precisam dele falham com "storage não encontrado" — mas o storage é gerado em `outputs/.auth/storage-without-credits.json`, fixo, indep. de qual sufixo casou).
+Sem secundário, specs que precisam dele falham com "storage não encontrado" — mas o storage é gerado em `outputs/.auth/storage-without-credits.json`, fixo, indep. de qual sufixo casou.
 
 **Como specs consomem o env secundário:**
 
@@ -460,19 +462,19 @@ import { getEnvByName } from '../../../../../src/utils/environment.js';
 
 test.use({
   storageState: SECONDARY_STORAGE_PATH,
-  baseURL: getEnvByName('staging-widgets-disabled').baseUrl,  // ou 'staging-without-credits'
+  baseURL: getEnvByName('<slug-do-env-secundario>').baseUrl,
 });
 ```
 
-Não invente outras organizações pra "simular bloqueio" — sempre use o env secundário convencionado. Se aparecer um novo cenário (ex: "org sem feature X"), adicione um env `staging-X-disabled` em `environment.json` + `.env.example` + `.env`.
+Não invente outras organizações pra "simular bloqueio" — sempre use o env secundário convencionado. Se aparecer um cenário novo (ex: "org sem feature X"), adicione um env `<principal>-<sufixo-X>-disabled` em `environment.json` + `.env.example` + `.env`.
 
 ### Modal "Modelo de página duplicado" (form de item de menu)
 
 - Form `/o/{orgId}/use_modes/{useModeId}/use_mode_itens/new` valida client-side a unicidade do `page_model` dentro do useMode. Quando o useMode já tem outro item com o mesmo modelo (ex.: dois `user_panels`), o click em Salvar dispara modal `role="dialog"` com header literal "Modelo de página duplicado" e body "Esta página já foi adicionada na lista de menus deste modo de uso. Deseja adicioná-la novamente?".
 - Botão "Salvar" do modal confirma a duplicação e prossegue o POST → redirect normal. "Cancelar" mantém na rota /new.
-- Validado live 2026-05-13 em `staging-widgets` useMode 70077 via chrome-devtools-mcp.
+- Validado live 2026-05-13 via chrome-devtools-mcp em ambiente de teste com seed duplicada existente.
 - `PaineisListPage.associatePanelToMenu` faz race-handle: após click no Salvar, espera 3s pelo modal; se aparecer, clica Salvar do modal e segue; se não, prossegue redirect normal. Getters: `getDuplicatePageModelModal()` / `getDuplicatePageModelConfirmButton()`.
-- Implicação: tenants compartilhados entre testes podem ter seed manual ainda usando `page_model=user_panels` (ex.: TC5 deste suite depende do item 365759 em useMode 70077). Não delete esses items em cleanup sem confirmar.
+- Implicação: tenants compartilhados entre testes podem ter seed manual ainda usando `page_model=user_panels`. IDs específicos de seed (useMode, item) ficam no `.data.ts` do TC que depende deles; não delete esses items em cleanup sem confirmar.
 
 ---
 
@@ -495,8 +497,8 @@ introduzam qualquer um deles.
   declaram `test.use({ storageState: { cookies: [], origins: [] } })`.
 
 ### B. NUNCA hardcodar URL/orgId/credenciais
-- ❌ `const BASE_URL = 'https://stage10.stage.twygoead.com';`
-- ❌ `await page.goto('/o/36602/ai_consumption_analysis?tab=settings');`
+- ❌ `const BASE_URL = 'https://<host-real>.twygoead.com';`
+- ❌ `await page.goto('/o/<orgId-real>/ai_consumption_analysis?tab=settings');`
 - ✅ Importar de [src/utils/environment.ts](src/utils/environment.ts):
   ```ts
   import { getBaseUrl, getOrgId } from '../../../../../src/utils/environment.js';

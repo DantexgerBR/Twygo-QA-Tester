@@ -28,9 +28,9 @@ Para testes Twygo a única dimensão segura é **Actors** — adicionar/remover
 
 | Flag | Domínio | Envs com flag ON (actor) | Envs com flag OFF |
 |---|---|---|---|
-| `paineis_do_usuario_beta_test` | Widgets / Painéis | `staging-widgets` (36988), `staging` (36602), demais staging principais | `staging-widgets-disabled` (36989) |
+| `paineis_do_usuario_beta_test` | Widgets / Painéis | `staging-widgets`, `staging`, demais staging principais | `staging-widgets-disabled` |
 
-Adicione novas flags aqui quando descobrir.
+Adicione novas flags aqui quando descobrir (apenas slug de env, sem orgId).
 
 ## Pré-condição: user com flag de acesso elevado
 
@@ -108,18 +108,18 @@ na page atual pós-POST.
 ## Mecanismo Flipper Admin UI
 
 Validado live 2026-05-15 em
-`https://widgetsdisabled.stage.twygoead.com/admin/manage/features/paineis_do_usuario_beta_test`:
+`https://<host-do-env-disabled>/admin/manage/features/paineis_do_usuario_beta_test`:
 
 ```
 heading h4 "paineis_do_usuario_beta_test"
 text " Conditionally enabled"
-heading h6 "Enabled for 16 actors"
+heading h6 "Enabled for N actors"
 button "Add an actor"  → revela:
   textbox "MODEL_NAME;ID"  (placeholder literal)
   button "Add Actor"       (exato, diferente do toggle)
   button "Cancel"
-heading h6 "Organization;36988"  + form com button "Remove"
-heading h6 "Organization;36675"  + form com button "Remove"
+heading h6 "Organization;<orgId>"  + form com button "Remove"
+heading h6 "Organization;<orgId>"  + form com button "Remove"
 ... (1 entry por org habilitada)
 ```
 
@@ -140,15 +140,15 @@ Métodos relevantes:
 const flipper = new FlipperAdminPage(page);
 await flipper.gotoFeature('paineis_do_usuario_beta_test');
 
-const isOn = await flipper.isActorEnabled('Organization;36989');  // boolean
+const isOn = await flipper.isActorEnabled('Organization;<orgIdAlvo>');  // boolean
 
 // Idempotentes — retornam true se mudaram estado, false se já estava
-const changed = await flipper.ensureActorEnabled('Organization;36989');
-const changed = await flipper.ensureActorDisabled('Organization;36989');
+const changed = await flipper.ensureActorEnabled('Organization;<orgIdAlvo>');
+const changed = await flipper.ensureActorDisabled('Organization;<orgIdAlvo>');
 
 // Não-idempotentes — usar só se você quer falhar em duplicata
-await flipper.addActor('Organization;36989');
-await flipper.removeActor('Organization;36989');
+await flipper.addActor('Organization;<orgIdAlvo>');
+await flipper.removeActor('Organization;<orgIdAlvo>');
 ```
 
 ### 2. `ensureFlipperActor` (`src/utils/flipperFlag.ts`)
@@ -161,7 +161,7 @@ const revert = await ensureFlipperActor(browser, {
   envName: 'staging-widgets-disabled',
   storageStatePath: SECONDARY_STORAGE_PATH,
   flag: 'paineis_do_usuario_beta_test',
-  actor: 'Organization;36989',
+  actor: 'Organization;<orgIdAlvo>',
   enabled: true,    // ou false
 });
 
@@ -310,7 +310,7 @@ CLAUDE.md aplica: skip esconde bug; reescrever com `ensureFlipperActor`.
 Recon validado 2026-05-15 (chrome-devtools-mcp):
 - URL: `https://widgetsdisabled.stage.twygoead.com/admin/manage/features/paineis_do_usuario_beta_test`
 - User: `claude@teste.com` (com flag elevada)
-- Fluxo end-to-end: Add `Organization;36989` (16→17 actors) → confirma
+- Fluxo end-to-end: Add `Organization;<orgIdAlvo>` (N→N+1 actors) → confirma
   heading visível → Remove (17→16 actors) → confirma heading sumiu
 
 Revalidar quando:

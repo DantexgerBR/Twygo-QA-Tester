@@ -30,7 +30,7 @@ Usuário com acesso `/admin` (flag elevada). Em `staging-widgets-disabled`,
 
 ## Mecanismo UI (validado live 2026-05-15)
 
-Em `https://widgetsdisabled.stage.twygoead.com/admin/edit_sys_subscription_settings/36989`:
+Em `https://<host-do-env-disabled>/admin/edit_sys_subscription_settings/<orgId>`:
 
 ```
 heading "Edição de assinatura"
@@ -111,7 +111,7 @@ Análogo a `ensureFlipperActor`:
 const revert = await ensureContractFeature(browser, {
   envName: 'staging-widgets-disabled',
   storageStatePath: SECONDARY_STORAGE_PATH,
-  orgId: 36989,
+  orgId: getEnvByName('staging-widgets-disabled').orgId,
   feature: 'user_panels',
   enabled: true,
 });
@@ -155,7 +155,6 @@ liga pra evitar inconsistência); flag→contract no teardown.
 
 ## Validação
 
-Recon validado 2026-05-15 em
-`https://widgetsdisabled.stage.twygoead.com/admin/edit_sys_subscription_settings/36989`
-+ contrato Vigente id=27054 (Ilimitado). Toggle `user_panels` ON →
-salvar → reload → persistido `checked=true` ✅. Revert ON→OFF idem.
+Recon validado 2026-05-15 no env `staging-widgets-disabled` com contrato
+Vigente (Ilimitado) ativo. Toggle `user_panels` ON → salvar → reload →
+persistido `checked=true` ✅. Revert ON→OFF idem.

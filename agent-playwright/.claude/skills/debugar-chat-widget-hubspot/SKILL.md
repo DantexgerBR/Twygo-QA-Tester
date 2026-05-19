@@ -124,9 +124,8 @@ teste precisa lidar:
 
 - **Frequência**: HubSpot intercepta em ~5% dos clicks na suíte
   "Editar/Excluir widgets" (1 de 6 testcases, mas reprodutível).
-- **Específico de project**: `widgets.stage.twygoead.com` carrega HubSpot;
-  `eduapi.stage.twygoead.com` (env `staging-without-credits`) também. O
-  staging principal (`stage10`) varia.
+- **Específico de project**: envs `staging-widgets` e
+  `staging-without-credits` carregam HubSpot. O `staging` principal varia.
 - **Botões mais afetados**: "Salvar Layout" (canto superior direito do
   painel form — bbox pode tocar o container HubSpot expandido), "Voltar
   ao topo" se existir.

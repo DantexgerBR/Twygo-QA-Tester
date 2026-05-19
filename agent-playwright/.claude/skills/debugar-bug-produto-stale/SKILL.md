@@ -15,7 +15,7 @@ Sempre que um spec com comentário `// FAILING-BY-PRODUCT-BUG`, `// BLOCKED-BY-P
 Caso real Twygo widgets, 2026-05-11 → 2026-05-13:
 
 - TC3 do `inativar-painel-associado-modal.spec.ts` tinha bloco grande documentando bug Rails: `app/models/use_mode_item.rb#title_for` → NoMethodError → GET /linked_menus 500. Comentário citava commit, runtime e payload — alta confiança.
-- Entre 11/05 e 13/05 o servidor corrigiu silenciosamente. `GET /api/v1/o/36988/panels/801930/linked_menus` passou a responder 200.
+- Entre 11/05 e 13/05 o servidor corrigiu silenciosamente. `GET /api/v1/o/{orgId}/panels/{panelId}/linked_menus` passou a responder 200.
 - O spec continuou red, mas em fase diferente: agora era modal "Modelo de página duplicado" no `beforeAll`.
 - Sem revalidar, o time gastaria tempo cobrando dev de um bug já fechado.
 

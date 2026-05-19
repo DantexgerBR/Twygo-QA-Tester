@@ -1,6 +1,6 @@
 ---
 name: read-docs
-description: Lê e interpreta todos os arquivos da pasta docs/, extraindo requisitos, textos literais, regras de negócio, campos, endpoints e demais informações relevantes para a análise de teste. Gera um arquivo consolidado de requisitos em output/requisitos_extraidos.md.
+description: Lê e interpreta todos os arquivos da pasta projects/<slug>/docs/, extraindo requisitos, textos literais, regras de negócio, campos, endpoints e demais informações relevantes para a análise de teste. Gera um arquivo consolidado intermediário em projects/<slug>/output/requisitos_extraidos.md (input do generate-md-canonical).
 allowed-tools: Read Write Bash Glob Grep
 ---
 
@@ -8,7 +8,15 @@ allowed-tools: Read Write Bash Glob Grep
 
 ## Objetivo
 
-Ler TODOS os arquivos da pasta `docs/` e extrair informações relevantes para a criação de casos de teste. Consolidar tudo em `output/requisitos_extraidos.md`.
+Ler TODOS os arquivos da pasta `projects/<slug>/docs/` e extrair
+informações relevantes para a criação de casos de teste. Consolidar tudo
+em `projects/<slug>/output/requisitos_extraidos.md`.
+
+> **Papel deste arquivo no fluxo v1 do CONTRACT.md**: `requisitos_extraidos.md`
+> é **intermediário** — input da skill `generate-md-canonical`, que produz o
+> MD canônico final (`test-analysis.md`). NÃO é a saída final do agent-at.
+> Pode ficar mais "cru" / verboso — o catálogo do MD canônico extrai dele
+> o que vai pra automação.
 
 ## Tipos de Arquivo Suportados
 

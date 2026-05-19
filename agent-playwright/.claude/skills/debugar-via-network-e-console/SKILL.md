@@ -29,7 +29,7 @@ Caso real Twygo widgets, 2026-05-13:
 - Quando o usuário abriu Network e mandou o payload:
 
   ```
-  PATCH /api/v1/o/36988/panels/803276/change_status
+  PATCH /api/v1/o/{orgId}/panels/{panelId}/change_status
   Status: 422 Unprocessable Content
   Body: {"message":"A validação falhou: Descrição não pode ficar vazio(a)"}
   ```
