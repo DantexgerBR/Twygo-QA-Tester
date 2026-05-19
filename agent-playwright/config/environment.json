@@ -138,5 +138,19 @@
       "subscriptionPlansPath": "/admin/subscription_plans",
       "editContractPath": "/admin/edit_sys_subscription_settings/36981"
     }
+  },
+  "staging-base-de-conhecimento": {
+    "baseUrl": "https://basedeconhecimento.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_STAGING_BASE_DE_CONHECIMENTO_EMAIL}",
+      "password": "${TWYGO_STAGING_BASE_DE_CONHECIMENTO_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "37007",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/37007"
+    }
   }
 }

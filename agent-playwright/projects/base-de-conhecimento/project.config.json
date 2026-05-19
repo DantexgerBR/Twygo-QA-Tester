@@ -1,7 +1,7 @@
 {
   "projectName": "Base de Conhecimento",
   "testAnalysisFile": "inputs/test-analysis.md",
-  "environment": "staging",
+  "environment": "staging-base-de-conhecimento",
   "browsers": ["chromium"],
   "headless": true,
   "reporting": {

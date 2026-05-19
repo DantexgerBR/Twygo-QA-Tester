@@ -36,6 +36,38 @@ pasta `projects/<slug>/docs/`. Ao final, um arquivo
 `projects/<slug>/output/requisitos_extraidos.md` será gerado com todas as
 informações consolidadas (intermediário — input do `generate-md-canonical`).
 
+## Etapa 2.5: Recon visual de protótipo (opcional, RECOMENDADO)
+
+Se o projeto tem **protótipo navegável** (Figma Make / Embed / outros),
+invocar a skill `/recon-visual` para extrair textos literais reais da UI
+(labels, botões, toasts, modais, dropdowns).
+
+```
+/recon-visual --project <slug>
+```
+
+A skill produz `projects/<slug>/output/recon-visual.md` — consumido pelo
+`/generate-md-canonical` para preencher os catálogos do MD canônico
+(`## Textos literais`, `## Modais relevantes`, etc.) sem inferência.
+
+**Escopo desta etapa**: apenas protótipos. **NÃO acessa Stage real** —
+recon de Stage fica para o agent-playwright durante execução
+(skill `twygo-recon`). Razão: ATs podem ser produzidas antes do projeto
+estar em Stage; fonte autoritativa de design é Discovery + protótipo.
+
+**Quando pular**:
+- Nenhum protótipo disponível
+- Protótipo privado e sem link público
+
+Pulando esta etapa, `/generate-md-canonical` marcará `// REVISAR-FIGMA`
+em todos os textos inferidos. **Pular custa horas depois** — recon
+visual aqui economiza retrabalho no agent-playwright.
+
+**Divergência protótipo vs Discovery**: se o protótipo mostra algo
+diferente do que a Discovery descreve, o protótipo é geralmente a fonte
+mais recente. Documentar a divergência e seguir o protótipo, ou
+perguntar ao QA Lead se ambíguo.
+
 ## Etapa 3: Definição da estrutura de suítes
 
 Com base nos requisitos extraídos:

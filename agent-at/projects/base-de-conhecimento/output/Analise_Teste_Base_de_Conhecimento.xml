@@ -1,0 +1,789 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="">  <testsuite name="Listagem básica de repositórios">    <testcase name="Acessar a listagem via menu Aprendizagem">
+      <summary>Validar acesso à listagem de repositórios de conhecimento via menu lateral, conforme R1.</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `habilitar_base_de_conhecimento` ativa na organização do teste
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a URL &#34;/play&#34;</actions>
+          <expectedresults>Dashboard padrão é exibido contendo o menu lateral.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no menu lateral &#34;Aprendizagem&#34;</actions>
+          <expectedresults>Submenu lateral é exibido contendo o item &#34;Base de conhecimento&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Clicar no submenu &#34;Base de conhecimento&#34;</actions>
+          <expectedresults>Sistema redireciona para a listagem e exibe breadcrumb &#34;Aprendizagem &gt; Base de conhecimento&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Aguardar a listagem carregar</actions>
+          <expectedresults>Listagem é renderizada com o componente ListControl.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Validar colunas obrigatórias da listagem">
+      <summary>Validar que a listagem exibe as colunas esperadas (R3, R4).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `habilitar_base_de_conhecimento` ativa na organização do teste
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a URL &#34;/o/{orgId}/knowledge_repositories&#34;</actions>
+          <expectedresults>Listagem é exibida com colunas: &#34;Nome&#34;, &#34;Categoria&#34;, &#34;Classificação&#34;, &#34;Criado em&#34;, &#34;Atualizado em&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar a coluna &#34;Ações&#34; ser exibida</actions>
+          <expectedresults>Cada linha da listagem exibe os botões &#34;Editar&#34; e &#34;Excluir&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Validar botão de criação na listagem">
+      <summary>Validar presença e funcionalidade do botão de criação (R5).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `habilitar_base_de_conhecimento` ativa na organização do teste
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a URL &#34;/o/{orgId}/knowledge_repositories&#34;</actions>
+          <expectedresults>Listagem é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;+ Adicionar&#34;</actions>
+          <expectedresults>Sistema redireciona para a tela de criação de repositório exibindo a aba &#34;Identificação&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Validar empty state quando não há repositórios">
+      <summary>Validar exibição correta da listagem vazia.</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `habilitar_base_de_conhecimento` ativa na organização do teste
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a URL &#34;/o/{orgId}/knowledge_repositories&#34; em uma organização sem repositórios cadastrados</actions>
+          <expectedresults>Listagem exibe o empty state com texto convidando o usuário a criar o primeiro repositório.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Filtros e busca de repositórios">    <testcase name="Buscar repositório por nome">
+      <summary>Validar busca textual por nome do repositório (R7).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `habilitar_base_de_conhecimento` ativa
+Pelo menos 3 repositórios cadastrados com Categorias e Classificações distintas
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a URL &#34;/o/{orgId}/knowledge_repositories&#34;</actions>
+          <expectedresults>Listagem é exibida com múltiplos repositórios.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Preencher o campo &#34;Buscar&#34; com &#34;Repositório TC1&#34;</actions>
+          <expectedresults>Listagem filtra exibindo apenas os repositórios cujo nome contém &#34;Repositório TC1&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Limpar o campo &#34;Buscar&#34;</actions>
+          <expectedresults>Listagem volta a exibir todos os repositórios cadastrados.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Filtrar por Categoria via drawer de filtros">
+      <summary>Validar filtragem por Categoria via drawer (R8).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `habilitar_base_de_conhecimento` ativa
+Pelo menos 3 repositórios cadastrados com Categorias e Classificações distintas
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no botão &#34;Filtrar&#34;</actions>
+          <expectedresults>Drawer &#34;Filtros&#34; é exibido à direita.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Selecionar a opção &#34;Geral&#34; no filtro &#34;Categoria&#34;</actions>
+          <expectedresults>Drawer atualiza o estado do filtro selecionado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Aplicar o filtro</actions>
+          <expectedresults>Drawer fecha. Listagem exibe apenas repositórios da Categoria &#34;Geral&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Combinar filtros de Categoria e Classificação">
+      <summary>Validar combinação de múltiplos filtros (R9).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `habilitar_base_de_conhecimento` ativa
+Pelo menos 3 repositórios cadastrados com Categorias e Classificações distintas
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no botão &#34;Filtrar&#34;</actions>
+          <expectedresults>Drawer &#34;Filtros&#34; é exibido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Selecionar a opção &#34;Geral&#34; no filtro &#34;Categoria&#34;</actions>
+          <expectedresults>Filtro &#34;Categoria&#34; fica selecionado com a opção &#34;Geral&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Selecionar a opção &#34;Interno&#34; no filtro &#34;Classificação&#34;</actions>
+          <expectedresults>Filtro &#34;Classificação&#34; fica selecionado com a opção &#34;Interno&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Aplicar o filtro</actions>
+          <expectedresults>Drawer fecha. Listagem exibe apenas repositórios com Categoria &#34;Geral&#34; E Classificação &#34;Interno&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Limpar todos os filtros aplicados">
+      <summary>Validar limpeza dos filtros (R10).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `habilitar_base_de_conhecimento` ativa
+Pelo menos 3 repositórios cadastrados com Categorias e Classificações distintas
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Aplicar pelo menos 1 filtro de Categoria</actions>
+          <expectedresults>Listagem é filtrada exibindo apenas repositórios da categoria selecionada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;Limpar filtros&#34;</actions>
+          <expectedresults>Listagem volta a exibir todos os repositórios cadastrados sem filtros aplicados.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Extração de dados de repositórios">    <testcase name="Exportar listagem completa">
+      <summary>Validar a extração de dados da listagem (R37, R38).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `habilitar_base_de_conhecimento` ativa
+Pelo menos 1 repositório cadastrado na organização
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a URL &#34;/o/{orgId}/knowledge_repositories&#34;</actions>
+          <expectedresults>Listagem é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;Exportar&#34;</actions>
+          <expectedresults>Sistema inicia o download do arquivo de extração (CSV ou XLSX) contendo os repositórios listados.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Aguardar o download concluir</actions>
+          <expectedresults>Arquivo de extração está disponível no diretório de downloads do browser.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Exportação respeita filtros aplicados">
+      <summary>Validar que a extração respeita os filtros aplicados (R38).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `habilitar_base_de_conhecimento` ativa
+Pelo menos 1 repositório cadastrado na organização
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Aplicar o filtro Categoria &#34;Geral&#34;</actions>
+          <expectedresults>Listagem é filtrada exibindo apenas repositórios da Categoria &#34;Geral&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;Exportar&#34;</actions>
+          <expectedresults>Sistema inicia o download do arquivo de extração.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Aguardar o download concluir</actions>
+          <expectedresults>Arquivo extraído contém apenas os repositórios da Categoria &#34;Geral&#34;, refletindo o filtro aplicado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Criação de repositório - Aba Identificação">    <testcase name="Criar repositório com dados válidos">
+      <summary>Validar criação de repositório (happy path) preenchendo todos os campos obrigatórios da aba Identificação (R11, R12, R13, R14).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `habilitar_base_de_conhecimento` ativa
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a URL &#34;/o/{orgId}/knowledge_repositories&#34;</actions>
+          <expectedresults>Listagem é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;+ Adicionar&#34;</actions>
+          <expectedresults>Sistema redireciona para a tela de criação exibindo a aba &#34;Identificação&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Preencher o campo &#34;Nome&#34; com &#34;Repositório TC1 w{workerIndex}-{timestamp}&#34;</actions>
+          <expectedresults>Campo &#34;Nome&#34; exibe o texto digitado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Preencher o campo &#34;Descrição&#34; com &#34;Repositório de teste automatizado&#34;</actions>
+          <expectedresults>Campo &#34;Descrição&#34; exibe o texto digitado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>5</step_number>
+          <actions>Selecionar &#34;Geral&#34; no dropdown &#34;Categoria&#34;</actions>
+          <expectedresults>Dropdown &#34;Categoria&#34; exibe a opção &#34;Geral&#34; selecionada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>6</step_number>
+          <actions>Selecionar &#34;Interno&#34; no dropdown &#34;Classificação&#34;</actions>
+          <expectedresults>Dropdown &#34;Classificação&#34; exibe a opção &#34;Interno&#34; selecionada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>7</step_number>
+          <actions>Clicar no botão &#34;Salvar&#34;</actions>
+          <expectedresults>Toast exibida: &#34;Repositório criado com sucesso&#34;. Sistema redireciona para a listagem (ou permanece na tela de edição com mensagem de sucesso).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Validar campo Nome obrigatório">
+      <summary>Validar que o campo &#34;Nome&#34; é obrigatório (R15).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `habilitar_base_de_conhecimento` ativa
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a tela de criação de repositório</actions>
+          <expectedresults>Aba &#34;Identificação&#34; é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Preencher o campo &#34;Descrição&#34; com &#34;Teste sem nome&#34;</actions>
+          <expectedresults>Campo &#34;Descrição&#34; exibe o texto digitado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Selecionar &#34;Geral&#34; no dropdown &#34;Categoria&#34;</actions>
+          <expectedresults>Dropdown &#34;Categoria&#34; exibe a opção &#34;Geral&#34; selecionada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Selecionar &#34;Interno&#34; no dropdown &#34;Classificação&#34;</actions>
+          <expectedresults>Dropdown &#34;Classificação&#34; exibe a opção &#34;Interno&#34; selecionada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>5</step_number>
+          <actions>Clicar no botão &#34;Salvar&#34;</actions>
+          <expectedresults>Mensagem de validação exibida: &#34;Nome é obrigatório&#34;. Repositório NÃO é criado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Validar campo Descrição obrigatório">
+      <summary>Validar que o campo &#34;Descrição&#34; é obrigatório (R16).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `habilitar_base_de_conhecimento` ativa
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a tela de criação de repositório</actions>
+          <expectedresults>Aba &#34;Identificação&#34; é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Preencher o campo &#34;Nome&#34; com &#34;Repositório sem descrição&#34;</actions>
+          <expectedresults>Campo &#34;Nome&#34; exibe o texto digitado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Selecionar &#34;Geral&#34; no dropdown &#34;Categoria&#34;</actions>
+          <expectedresults>Dropdown &#34;Categoria&#34; exibe a opção &#34;Geral&#34; selecionada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Selecionar &#34;Interno&#34; no dropdown &#34;Classificação&#34;</actions>
+          <expectedresults>Dropdown &#34;Classificação&#34; exibe a opção &#34;Interno&#34; selecionada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>5</step_number>
+          <actions>Clicar no botão &#34;Salvar&#34;</actions>
+          <expectedresults>Mensagem de validação exibida: &#34;Descrição é obrigatória&#34;. Repositório NÃO é criado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Validar limite de caracteres do campo Nome">
+      <summary>Validar limite máximo de 255 caracteres no campo &#34;Nome&#34;.</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `habilitar_base_de_conhecimento` ativa
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a tela de criação de repositório</actions>
+          <expectedresults>Aba &#34;Identificação&#34; é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Preencher o campo &#34;Nome&#34; com uma string de 256 caracteres</actions>
+          <expectedresults>Campo &#34;Nome&#34; trunca o input em 255 caracteres OU exibe mensagem &#34;Limite de 255 caracteres atingido&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Cancelar criação com alterações pendentes dispara beforeunload">
+      <summary>Validar diálogo nativo de saída com alterações não salvas (R42).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `habilitar_base_de_conhecimento` ativa
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a tela de criação de repositório</actions>
+          <expectedresults>Aba &#34;Identificação&#34; é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Preencher o campo &#34;Nome&#34; com &#34;Teste cancelamento&#34;</actions>
+          <expectedresults>Campo &#34;Nome&#34; exibe o texto digitado e o estado do form fica &#34;sujo&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Clicar no botão &#34;Cancelar&#34;</actions>
+          <expectedresults>Diálogo nativo do browser é exibido perguntando se o usuário deseja sair sem salvar.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Confirmar manter na página no diálogo</actions>
+          <expectedresults>Usuário permanece na tela de criação com os dados preenchidos.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Editar repositório existente">
+      <summary>Validar edição dos dados de um repositório (R43).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `habilitar_base_de_conhecimento` ativa
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a URL &#34;/o/{orgId}/knowledge_repositories&#34;</actions>
+          <expectedresults>Listagem é exibida com repositórios cadastrados.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;Editar&#34; da linha do repositório alvo</actions>
+          <expectedresults>Sistema redireciona para a tela de edição exibindo os dados atuais do repositório.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Atualizar o campo &#34;Nome&#34; para &#34;Repositório TC6 editado&#34;</actions>
+          <expectedresults>Campo &#34;Nome&#34; exibe o texto atualizado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Clicar no botão &#34;Salvar&#34;</actions>
+          <expectedresults>Toast exibida: &#34;Repositório atualizado com sucesso&#34;. Listagem reflete o novo nome.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Fontes de Conhecimento - Upload de documentos">    <testcase name="Upload de arquivo PDF dentro do limite">
+      <summary>Validar upload de PDF (≤ 50 MB) via aba &#34;Fontes de conhecimento&#34; (R17, R18).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `habilitar_base_de_conhecimento` ativa
+Repositório de teste cadastrado no setup do spec (via beforeAll) seguindo a convenção de naming worker-isolated; o spec é responsável por criar e limpar via cleanup-dados
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a tela de edição do repositório de teste</actions>
+          <expectedresults>Aba &#34;Identificação&#34; é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar na aba &#34;Fontes de conhecimento&#34;</actions>
+          <expectedresults>Aba &#34;Fontes de conhecimento&#34; fica selecionada exibindo o componente ListControl de fontes.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Clicar no botão &#34;+ Adicionar fonte&#34;</actions>
+          <expectedresults>Componente de upload é exibido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Fazer upload do arquivo &#34;documento-teste.pdf&#34; (5 MB) no campo de upload</actions>
+          <expectedresults>Toast exibida: &#34;Arquivo enviado com sucesso&#34;. Listagem de fontes atualiza exibindo o arquivo enviado com status &#34;Pendente&#34; ou &#34;Processando&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Upload de arquivo DOCX dentro do limite">
+      <summary>Validar upload de DOCX (R19).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `habilitar_base_de_conhecimento` ativa
+Repositório de teste cadastrado no setup do spec (via beforeAll) seguindo a convenção de naming worker-isolated; o spec é responsável por criar e limpar via cleanup-dados
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Fontes de conhecimento&#34; do repositório de teste</actions>
+          <expectedresults>Aba &#34;Fontes de conhecimento&#34; é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Fazer upload do arquivo &#34;documento-teste.docx&#34; (3 MB) no campo de upload</actions>
+          <expectedresults>Toast exibida: &#34;Arquivo enviado com sucesso&#34;. Listagem atualiza com o DOCX enviado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Tentar upload de arquivo com formato não suportado">
+      <summary>Validar rejeição de tipo inválido (R20).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `habilitar_base_de_conhecimento` ativa
+Repositório de teste cadastrado no setup do spec (via beforeAll) seguindo a convenção de naming worker-isolated; o spec é responsável por criar e limpar via cleanup-dados
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Fontes de conhecimento&#34; do repositório de teste</actions>
+          <expectedresults>Aba &#34;Fontes de conhecimento&#34; é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Fazer upload do arquivo &#34;executavel-teste.exe&#34; no campo de upload</actions>
+          <expectedresults>Toast exibida: &#34;Formato de arquivo não suportado&#34;. Arquivo NÃO é adicionado à listagem.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Tentar upload de arquivo acima do limite de 50 MB">
+      <summary>Validar rejeição de arquivos acima de 50 MB (R21).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `habilitar_base_de_conhecimento` ativa
+Repositório de teste cadastrado no setup do spec (via beforeAll) seguindo a convenção de naming worker-isolated; o spec é responsável por criar e limpar via cleanup-dados
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Fontes de conhecimento&#34; do repositório de teste</actions>
+          <expectedresults>Aba &#34;Fontes de conhecimento&#34; é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Fazer upload do arquivo &#34;documento-grande.pdf&#34; (60 MB) no campo de upload</actions>
+          <expectedresults>Toast exibida: &#34;Arquivo excede o tamanho máximo permitido (50 MB)&#34;. Arquivo NÃO é adicionado à listagem.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Validar exibição dos formatos aceitos no componente de upload">
+      <summary>Validar que o componente de upload exibe os formatos aceitos (R22).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `habilitar_base_de_conhecimento` ativa
+Repositório de teste cadastrado no setup do spec (via beforeAll) seguindo a convenção de naming worker-isolated; o spec é responsável por criar e limpar via cleanup-dados
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Fontes de conhecimento&#34; do repositório de teste</actions>
+          <expectedresults>Aba &#34;Fontes de conhecimento&#34; é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar o texto informativo &#34;DOCX, PPTX, PDF, MP4, MP3 (até 50 MB)&#34; ser exibido</actions>
+          <expectedresults>Texto &#34;DOCX, PPTX, PDF, MP4, MP3 (até 50 MB)&#34; é exibido no componente de upload.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Recursos de Mídia - Upload de imagens">    <testcase name="Upload de arquivo PNG dentro do limite">
+      <summary>Validar upload de PNG (≤ 50 MB) via aba &#34;Recursos de mídia&#34; (R25, R26).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `habilitar_base_de_conhecimento` ativa
+Repositório de teste cadastrado no setup do spec (via beforeAll) seguindo a convenção de naming worker-isolated; o spec é responsável por criar e limpar via cleanup-dados
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a tela de edição do repositório de teste</actions>
+          <expectedresults>Aba &#34;Identificação&#34; é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar na aba &#34;Recursos de mídia&#34;</actions>
+          <expectedresults>Aba &#34;Recursos de mídia&#34; fica selecionada exibindo o componente ListControl de mídias.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Clicar no botão &#34;+ Adicionar mídia&#34;</actions>
+          <expectedresults>Componente de upload é exibido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Fazer upload do arquivo &#34;imagem-teste.png&#34; (2 MB) no campo de upload</actions>
+          <expectedresults>Toast exibida: &#34;Arquivo enviado com sucesso&#34;. Listagem de mídias atualiza exibindo o arquivo enviado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Upload de arquivo JPG dentro do limite">
+      <summary>Validar upload de JPG (R27).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `habilitar_base_de_conhecimento` ativa
+Repositório de teste cadastrado no setup do spec (via beforeAll) seguindo a convenção de naming worker-isolated; o spec é responsável por criar e limpar via cleanup-dados
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Recursos de mídia&#34; do repositório de teste</actions>
+          <expectedresults>Aba &#34;Recursos de mídia&#34; é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Fazer upload do arquivo &#34;imagem-teste.jpg&#34; (4 MB) no campo de upload</actions>
+          <expectedresults>Toast exibida: &#34;Arquivo enviado com sucesso&#34;. Listagem atualiza com a imagem enviada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Tentar upload de arquivo com formato não suportado">
+      <summary>Validar rejeição de tipo inválido (R28).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `habilitar_base_de_conhecimento` ativa
+Repositório de teste cadastrado no setup do spec (via beforeAll) seguindo a convenção de naming worker-isolated; o spec é responsável por criar e limpar via cleanup-dados
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Recursos de mídia&#34; do repositório de teste</actions>
+          <expectedresults>Aba &#34;Recursos de mídia&#34; é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Fazer upload do arquivo &#34;video-teste.mp4&#34; no campo de upload</actions>
+          <expectedresults>Toast exibida: &#34;Formato de arquivo não suportado&#34;. Arquivo NÃO é adicionado à listagem.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Tentar upload de imagem acima do limite de 50 MB">
+      <summary>Validar rejeição de imagens acima de 50 MB (R29).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `habilitar_base_de_conhecimento` ativa
+Repositório de teste cadastrado no setup do spec (via beforeAll) seguindo a convenção de naming worker-isolated; o spec é responsável por criar e limpar via cleanup-dados
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Recursos de mídia&#34; do repositório de teste</actions>
+          <expectedresults>Aba &#34;Recursos de mídia&#34; é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Fazer upload do arquivo &#34;imagem-grande.jpg&#34; (60 MB) no campo de upload</actions>
+          <expectedresults>Toast exibida: &#34;Arquivo excede o tamanho máximo permitido (50 MB)&#34;. Arquivo NÃO é adicionado à listagem.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Validar exibição dos formatos aceitos">
+      <summary>Validar que o componente de upload exibe os formatos aceitos.</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `habilitar_base_de_conhecimento` ativa
+Repositório de teste cadastrado no setup do spec (via beforeAll) seguindo a convenção de naming worker-isolated; o spec é responsável por criar e limpar via cleanup-dados
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Recursos de mídia&#34; do repositório de teste</actions>
+          <expectedresults>Aba &#34;Recursos de mídia&#34; é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar o texto informativo &#34;JPG, JPEG, PNG (até 50 MB)&#34; ser exibido</actions>
+          <expectedresults>Texto &#34;JPG, JPEG, PNG (até 50 MB)&#34; é exibido no componente de upload.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Trial - Cópia e exclusão de base de conhecimento">    <testcase name="Trial criada herda repositórios da organização modelo">
+      <summary>Validar que uma Trial recém-criada recebe a cópia dos repositórios da organização modelo (R39).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `habilitar_base_de_conhecimento` ativa na organização modelo
+Organização modelo possui pelo menos 1 repositório cadastrado com fontes e mídias
+Trial dedicada do projeto provisionada</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a Trial provisionada</actions>
+          <expectedresults>Trial carrega com Dashboard inicial.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Acessar a URL &#34;/o/{trialOrgId}/knowledge_repositories&#34;</actions>
+          <expectedresults>Listagem é exibida contendo os repositórios copiados da organização modelo.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Clicar no botão &#34;Editar&#34; da linha do primeiro repositório</actions>
+          <expectedresults>Tela de edição é exibida com a aba &#34;Fontes de conhecimento&#34; listando os arquivos copiados da organização modelo, e a aba &#34;Recursos de mídia&#34; listando as mídias correspondentes.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Exclusão total via Sophia remove dados de base de conhecimento">
+      <summary>Validar que a exclusão total da Sophia exclui todos os dados de base de conhecimento da Trial (R40).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `habilitar_base_de_conhecimento` ativa na organização modelo
+Organização modelo possui pelo menos 1 repositório cadastrado com fontes e mídias
+Trial dedicada do projeto provisionada</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a Trial provisionada com repositórios criados</actions>
+          <expectedresults>Listagem em &#34;/o/{trialOrgId}/knowledge_repositories&#34; exibe repositórios cadastrados.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no ícone &#34;Sophia&#34; no canto inferior esquerdo</actions>
+          <expectedresults>Popover Sophia é exibido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Clicar em &#34;Excluir informações&#34;</actions>
+          <expectedresults>Modal de exclusão é exibido com 4 opções de granularidade.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Selecionar a opção &#34;Tudo&#34; e confirmar</actions>
+          <expectedresults>Toast exibida: &#34;Exclusão concluída&#34;. Trial é resetada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>5</step_number>
+          <actions>Acessar novamente &#34;/o/{trialOrgId}/knowledge_repositories&#34;</actions>
+          <expectedresults>Listagem fica vazia ou exibe empty state. Nenhum repositório, fonte ou mídia anterior está presente.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Feature flag habilitar_base_de_conhecimento">    <testcase name="Acesso bloqueado com feature flag desabilitada">
+      <summary>Validar que o submenu &#34;Base de conhecimento&#34; não aparece quando a flag está desabilitada (R2).</summary>
+      <preconditions>Ambiente Stage configurado
+Usuário logado como Admin com flag elevada para Flipper-UI
+Feature flag `habilitar_base_de_conhecimento` controlável via Super Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Desabilitar a feature flag `habilitar_base_de_conhecimento` para a organização do teste via Flipper-UI</actions>
+          <expectedresults>Flag fica como &#34;Conditionally enabled&#34; sem actor `Organization;{orgId}`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Acessar a URL &#34;/play&#34;</actions>
+          <expectedresults>Dashboard padrão é exibido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Clicar no menu lateral &#34;Aprendizagem&#34;</actions>
+          <expectedresults>Submenu lateral é exibido SEM o item &#34;Base de conhecimento&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Acesso liberado com feature flag habilitada">
+      <summary>Validar que a funcionalidade fica acessível quando a flag é habilitada (R2).</summary>
+      <preconditions>Ambiente Stage configurado
+Usuário logado como Admin com flag elevada para Flipper-UI
+Feature flag `habilitar_base_de_conhecimento` controlável via Super Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Habilitar a feature flag `habilitar_base_de_conhecimento` para a organização do teste via Flipper-UI</actions>
+          <expectedresults>Flag fica como &#34;Conditionally enabled&#34; com actor `Organization;{orgId}`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Acessar a URL &#34;/play&#34;</actions>
+          <expectedresults>Dashboard padrão é exibido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Clicar no menu lateral &#34;Aprendizagem&#34;</actions>
+          <expectedresults>Submenu lateral é exibido COM o item &#34;Base de conhecimento&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Clicar no submenu &#34;Base de conhecimento&#34;</actions>
+          <expectedresults>Sistema redireciona para a listagem de repositórios de conhecimento.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Transição off → on durante a sessão">
+      <summary>Validar que ativar a flag durante uma sessão libera a funcionalidade após refresh.</summary>
+      <preconditions>Ambiente Stage configurado
+Usuário logado como Admin com flag elevada para Flipper-UI
+Feature flag `habilitar_base_de_conhecimento` controlável via Super Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Iniciar sessão com a flag desabilitada para a organização do teste</actions>
+          <expectedresults>Submenu &#34;Base de conhecimento&#34; NÃO é exibido em &#34;Aprendizagem&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Habilitar a flag `habilitar_base_de_conhecimento` para a organização via Flipper-UI</actions>
+          <expectedresults>Flag fica como &#34;Conditionally enabled&#34; com actor `Organization;{orgId}`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Recarregar a página &#34;/play&#34;</actions>
+          <expectedresults>Dashboard é exibido novamente.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Clicar no menu lateral &#34;Aprendizagem&#34;</actions>
+          <expectedresults>Submenu lateral agora exibe o item &#34;Base de conhecimento&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Ambientes adicionais - Isolamento de repositórios">    <testcase name="Repositórios criados no ambiente principal não aparecem no adicional">
+      <summary>Validar isolamento de dados entre tenants pareados.</summary>
+      <preconditions>Ambiente Stage configurado com env adicional pareado
+Feature flag `habilitar_base_de_conhecimento` ativa em ambas orgs (principal e adicional)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Criar repositório &#34;Repositório TC1 isolamento w{workerIndex}-{timestamp}&#34; no ambiente principal</actions>
+          <expectedresults>Toast exibida: &#34;Repositório criado com sucesso&#34;. Listagem do principal exibe o novo repositório.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Acessar a listagem no ambiente adicional pareado</actions>
+          <expectedresults>Listagem do ambiente adicional NÃO exibe o repositório criado no principal.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Repositórios criados no ambiente adicional não aparecem no principal">
+      <summary>Validar isolamento bidirecional.</summary>
+      <preconditions>Ambiente Stage configurado com env adicional pareado
+Feature flag `habilitar_base_de_conhecimento` ativa em ambas orgs (principal e adicional)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Criar repositório &#34;Repositório TC2 isolamento w{workerIndex}-{timestamp}&#34; no ambiente adicional</actions>
+          <expectedresults>Toast exibida: &#34;Repositório criado com sucesso&#34;. Listagem do adicional exibe o novo repositório.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Acessar a listagem no ambiente principal</actions>
+          <expectedresults>Listagem do ambiente principal NÃO exibe o repositório criado no adicional.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite></testsuite>

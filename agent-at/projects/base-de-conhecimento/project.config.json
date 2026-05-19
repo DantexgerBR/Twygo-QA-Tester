@@ -2,9 +2,14 @@
   "name": "Base de Conhecimento",
   "slug": "base-de-conhecimento",
   "description": "Análise de Teste do projeto 'Base de Conhecimento' da Twygo.",
-  "environment": "staging",
+  "environment": "staging-base-de-conhecimento",
   "envSecondary": null,
-  "sourceDocs": [],
+  "figmaPrototype": "https://www.figma.com/make/CTKjmkXlhOOkHAYeL1r57N/Base-de-conhecimento-final?p=f",
+  "sourceDocs": [
+    "docs/[Discovery] Meu base de conhecimento - v2.docx",
+    "docs/QA-Base_de_Conhecimento.xlsx",
+    "docs/Atividades_Base_de_Conhecimento_Complementada.xlsx"
+  ],
   "contractVersion": "1.0",
   "atVersion": 1
 }

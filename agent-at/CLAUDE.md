@@ -223,6 +223,15 @@ Lê documentação humana e consolida requisitos.
 - **Output**: `projects/<slug>/output/requisitos_extraidos.md` (intermediário/debug)
 - **Não emite** o MD canônico — só extrai matéria-prima
 
+### 5.2.5 `recon-visual` [NOVO em 2026-05-19]
+Reconhecimento visual opt-in via playwright-mcp.
+
+- **Input**: Figma protótipo (URL pública) e/ou env Stage (credenciais via `.env`)
+- **Output**: `projects/<slug>/output/recon-visual.md` (catálogos de textos literais reais)
+- **Quando usar**: SEMPRE que projeto tem Figma ou Stage acessível
+- **MCP usado**: `playwright` (declarado em [`.mcp.json`](../.mcp.json))
+- **Pré-req máquina**: Chrome + Node 20+
+
 ### 5.3 `generate-md-canonical` [NOVO em v1]
 Emite `test-analysis.md` seguindo o schema do [CONTRACT.md §4](../CONTRACT.md).
 
