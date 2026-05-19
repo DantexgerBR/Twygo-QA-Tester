@@ -348,7 +348,7 @@ def cli() -> None:
         print("Uso: python md_canonical_parser.py <test-analysis.md>", file=sys.stderr)
         sys.exit(1)
     data = parse_canonical_md(sys.argv[1])
-    print(json.dumps(data, indent=2, ensure_ascii=False))
+    print(json.dumps(data, indent=2, ensure_ascii=False, default=str))
 
 
 if __name__ == "__main__":

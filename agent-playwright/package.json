@@ -11,7 +11,9 @@
     "test:chromium": "playwright test --project=chromium",
     "test:firefox": "playwright test --project=firefox",
     "test:debug": "playwright test --debug",
-    "agent:parse": "tsx .claude/skills/twygo-xml-parser/parser.ts",
+    "agent:parse": "tsx .claude/skills/twygo-input-parser/dispatcher.ts",
+    "agent:parse-xml": "tsx .claude/skills/twygo-xml-parser/parser.ts",
+    "agent:parse-md": "tsx .claude/skills/twygo-md-parser/parser.ts",
     "agent:suites": "tsx .claude/skills/twygo-test-orchestrator/orchestrator.ts --list",
     "agent:run": "tsx .claude/skills/twygo-test-orchestrator/orchestrator.ts",
     "agent:smoke": "tsx .claude/skills/twygo-test-orchestrator/orchestrator.ts --smoke-only",
@@ -34,7 +36,8 @@
     "fast-xml-parser": "^4.5.0",
     "rimraf": "^6.0.1",
     "tsx": "^4.19.0",
-    "typescript": "^5.7.0"
+    "typescript": "^5.7.0",
+    "yaml": "^2.9.0"
   },
   "engines": {
     "node": ">=20.0.0"
