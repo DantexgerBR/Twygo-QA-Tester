@@ -96,6 +96,28 @@ Invocar a skill `/generate-md-canonical` para emitir
 pelo `agent-playwright` (e agentes futuros). XMind e XML são derivados —
 se o MD estiver errado, todos os derivados ficam errados.
 
+### 5.1 Validação obrigatória antes de prosseguir
+
+Após emitir o MD, **obrigatoriamente** rodar:
+
+```bash
+# 1. Validação estrutural (schema YAML/MD)
+python scripts/md_canonical_parser.py projects/<slug>/output/test-analysis.md > /tmp/parsed.json
+
+# 2. Validação semântica (anti-patterns + catálogos + playbooks)
+python scripts/validate_md_canonical.py projects/<slug>/output/test-analysis.md
+```
+
+- Se o **parser** falhar (`ValueError`): erro de schema. Corrigir e re-rodar.
+- Se o **validador** reportar **erros**: anti-pattern A-H ou catálogo
+  obrigatório faltando. Corrigir e re-rodar.
+- Se houver apenas **warnings**: revisar (geralmente vale corrigir, ex:
+  playbook faltante, seed dependency).
+
+**NÃO prosseguir para Etapa 6 com erros pendentes** — os derivados ficarão
+com os mesmos problemas, e o agent-playwright marcará `// REVISAR` ou
+`test.fixme` durante execução.
+
 ## Etapa 6: Geração dos derivados (paralelo)
 
 Invocar em sequência (não importa ordem entre eles):

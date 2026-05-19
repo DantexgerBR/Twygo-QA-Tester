@@ -59,11 +59,22 @@ from pathlib import Path
 from typing import Any
 
 
+# Mapeamento canônico de prioridade — usado por XMind/TestLink/Allure.
+# Decisão 2026-05-19: 4 valores no MD; critical+high vão pro mesmo
+# priority-1 no XMind (ambos "alto" do ponto de vista do QA manual);
+# Allure preserva granularidade (critical/normal/normal/minor).
 _PRIORITY_MAP = {
-    "critical": 1,
-    "high": 2,
-    "medium": 2,
-    "low": 3,
+    "critical": 1,  # XMind priority-1; TestLink importance 3; Allure critical
+    "high": 1,      # XMind priority-1; TestLink importance 3; Allure normal
+    "medium": 2,    # XMind priority-2; TestLink importance 2; Allure normal
+    "low": 3,       # XMind priority-3; TestLink importance 1; Allure minor
+}
+
+_PRIORITY_TO_ALLURE_SEVERITY = {
+    "critical": "critical",
+    "high": "normal",
+    "medium": "normal",
+    "low": "minor",
 }
 
 
@@ -173,7 +184,15 @@ def _parse_test_case_block(block: str, tc_number_expected: int) -> dict[str, Any
 
     type_m = re.search(r"^\*\*Tipo\*\*:\s*(\w+)\s*$", body, re.MULTILINE)
     if type_m:
-        tc["type"] = type_m.group(1).strip().lower()
+        tc_type = type_m.group(1).strip().lower()
+        # Restrição v1: 'mixed' é reservado para validações secundárias
+        # (V2 do CONTRACT.md). Em v1 só ui/api/db são aceitos.
+        if tc_type == "mixed":
+            raise ValueError(
+                f"TC {tc['title']!r}: type='mixed' não suportado em v1 do CONTRACT.md. "
+                f"Use ui/api/db. 'mixed' fica para V2 (validações secundárias)."
+            )
+        tc["type"] = tc_type
 
     pb_m = re.search(r"^\*\*Playbooks adicionais\*\*:\s*(\[.*?\]|\S.*)$", body, re.MULTILINE)
     if pb_m:
@@ -268,6 +287,15 @@ def _parse_suites(rest: str) -> list[dict[str, Any]]:
             raise ValueError(
                 f"Suíte {suite_fm['suite']!r}: frontmatter sem campo obrigatório 'executor'"
             )
+        # Restrição v1 do CONTRACT.md: apenas executor 'playwright' tem
+        # implementação no orchestrator. api/db/pentest ficam para V2+
+        # quando os agentes correspondentes rodarem standalone.
+        if suite_fm["executor"] != "playwright":
+            raise ValueError(
+                f"Suíte {suite_fm['suite']!r}: executor={suite_fm['executor']!r} "
+                f"não suportado em v1 do CONTRACT.md. Use 'playwright' (único valor aceito). "
+                f"Outros executores (api/db/pentest) serão habilitados no V2."
+            )
 
         # Parsea TCs
         tcs: list[dict[str, Any]] = []
@@ -326,6 +354,11 @@ def priority_to_xmind_marker(priority: str) -> str:
 def priority_to_testlink_importance(priority: str) -> int:
     """Mapeia critical/high/medium/low → 3/2/1 (TestLink importance)."""
     return {1: 3, 2: 2, 3: 1}.get(_PRIORITY_MAP.get(priority.lower(), 2), 2)
+
+
+def priority_to_allure_severity(priority: str) -> str:
+    """Mapeia critical/high/medium/low → critical/normal/normal/minor (Allure)."""
+    return _PRIORITY_TO_ALLURE_SEVERITY.get(priority.lower(), "normal")
 
 
 def preconditions_as_text(preconditions: list[str] | str | None) -> str:

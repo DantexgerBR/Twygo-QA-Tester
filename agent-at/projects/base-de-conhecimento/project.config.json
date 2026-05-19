@@ -1,0 +1,10 @@
+{
+  "name": "Base de Conhecimento",
+  "slug": "base-de-conhecimento",
+  "description": "Análise de Teste do projeto 'Base de Conhecimento' da Twygo.",
+  "environment": "staging",
+  "envSecondary": null,
+  "sourceDocs": [],
+  "contractVersion": "1.0",
+  "atVersion": 1
+}

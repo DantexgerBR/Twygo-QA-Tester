@@ -39,7 +39,7 @@ O script aceita `--template <path>` se precisar trocar o template (raro).
 
 ## Como o gerador funciona
 
-Detalhe em [scripts/md_to_xmind.py](../../../scripts/md_to_xmind.py):
+Detalhe em [scripts/md_to_xmind.py](../../scripts/md_to_xmind.py):
 
 1. Parseia o MD canônico via `md_canonical_parser.py`
 2. Monta dict de tópicos seguindo hierarquia XMind:

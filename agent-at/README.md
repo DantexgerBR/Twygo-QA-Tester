@@ -1,221 +1,215 @@
-# Agente AT — Análise de Teste (Twygo)
+# agent-at — Agente de Análise de Teste (Twygo)
 
-Agente automatizado para criação de cenários e casos de teste em formato **XMind**, prontos para serem exportados como XML TestLink e consumidos pelo [agent-playwright](../agent-playwright/).
+Lê documentação de projetos Twygo (Discovery + Spike + planilha de quebra)
+e gera Análise de Teste (AT) em 3 formatos sincronizados:
 
-> **Quem é o público deste README?** Estagiários, QAs novos no time, ou qualquer pessoa começando a usar o agente. Para detalhes técnicos do fluxo, ver [CLAUDE.md](CLAUDE.md).
+- `test-analysis.md` — **MD canônico** (fonte única de verdade)
+- `Analise_Teste_<Projeto>.xmind` — **derivado** (visualização opcional)
+- `Analise_Teste_<Projeto>.xml` — **derivado** (importação manual no TestLink)
 
----
-
-## Sumário
-
-1. [O que ele faz e quando usar](#o-que-ele-faz-e-quando-usar)
-2. [Pré-requisitos](#pré-requisitos)
-3. [Setup (primeira vez)](#setup-primeira-vez)
-4. [Fluxo de uso para um projeto novo](#fluxo-de-uso-para-um-projeto-novo)
-5. [Estrutura de pastas](#estrutura-de-pastas)
-6. [Comandos disponíveis](#comandos-disponíveis)
-7. [Tipos de projeto suportados](#tipos-de-projeto-suportados)
-8. [Conexão com os outros agentes](#conexão-com-os-outros-agentes)
-9. [Troubleshooting comum](#troubleshooting-comum)
-10. [Onde aprender mais](#onde-aprender-mais)
+> Quem é o público deste README: QA novo, estagiário, ou primeira vez
+> rodando o agent-at. Para detalhes técnicos profundos, ver
+> [`CLAUDE.md`](CLAUDE.md) e [`../CONTRACT.md`](../CONTRACT.md).
 
 ---
 
-## O que ele faz e quando usar
+## Pré-requisitos (uma vez na máquina)
 
-**Em uma frase:** você joga documentação de projeto na pasta `docs/` → o agente lê tudo, extrai requisitos, cria cenários e casos de teste detalhados, e gera um arquivo XMind pronto pra importar no TestLink.
-
-### Use este agente quando:
-- Recebeu um Discovery (.docx) e/ou Spike de um projeto Twygo novo.
-- Recebeu uma planilha "Quebra de atividades" (.xlsx) com os blocos de desenvolvimento.
-- Precisa transformar tudo isso em **casos de teste detalhados o suficiente para automação**.
-
-### NÃO use este agente para:
-- Executar os testes → use [agent-playwright](../agent-playwright/) (UI) ou [agent-db](../agent-db/) (banco — em construção).
-- Editar XMind manualmente (use o XMind Desktop diretamente, não passa por este agente).
-
----
-
-## Pré-requisitos
-
-| Ferramenta | Versão mínima | Onde baixar |
-|---|---|---|
-| **Claude Code CLI** | latest | https://code.claude.com/ |
-| **XMind Desktop** *(para abrir os arquivos gerados)* | qualquer | https://xmind.app/ |
-| **Python 3.x** | 3.10+ | já vem no Claude Code; ou https://python.org/ |
+- **Claude Code CLI**: https://code.claude.com/
+- **Python 3.10+**: https://python.org/
+- **Dependências Python**:
+  ```bash
+  pip install -r agent-at/requirements.txt
+  ```
+  (PyYAML, Jinja2, python-docx, openpyxl)
+- **XMind Desktop** (opcional — só pra visualizar o XMind derivado):
+  https://xmind.app/
 
 ---
 
-## Setup (primeira vez)
+## Minha primeira AT — passo a passo
+
+Vamos supor que chegou o projeto **"Base de Conhecimento"** com Discovery
+e planilha de quebra.
+
+### 1. Criar pasta do projeto
 
 ```bash
 cd agent-at
+mkdir -p projects/base-de-conhecimento/{docs,output}
 ```
 
-### 1. Confirmar que o template existe
+Ou use a estrutura já criada se existir.
 
-O agente reutiliza um template XMind base em todas as gerações. Confirme que existe:
+### 2. Depositar inputs em `docs/`
 
 ```
-template/template.xmind
+agent-at/projects/base-de-conhecimento/docs/
+├── [Discovery] Base de Conhecimento.docx
+├── Quebra de atividades - Base de Conhecimento.xlsx
+└── (opcional: migrations .rb, exemplos API .json)
 ```
 
-Se não existir, peça ao time o arquivo e copie pra esse caminho.
+### 3. Configurar `project.config.json`
 
-### 2. Subir o Claude Code
+```json
+{
+  "name": "Base de Conhecimento",
+  "slug": "base-de-conhecimento",
+  "environment": "staging",
+  "sourceDocs": [
+    "docs/[Discovery] Base de Conhecimento.docx",
+    "docs/Quebra de atividades - Base de Conhecimento.xlsx"
+  ],
+  "contractVersion": "1.0",
+  "atVersion": 1
+}
+```
+
+Se o projeto precisar de env dedicado, trocar `staging` por
+`staging-base-conhecimento` (ou similar — convenção em
+[`../shared/twygo-platform.md §1`](../shared/twygo-platform.md)).
+
+### 4. Rodar `/analyze-test`
 
 ```bash
+cd agent-at
 claude
 ```
-
-O Claude Code carrega automaticamente o `CLAUDE.md` e as skills locais em `.claude/skills/`.
-
----
-
-## Fluxo de uso para um projeto novo
-
-### 1. Depositar a documentação
-
-Coloque **todos** os arquivos de entrada na pasta `docs/`:
-
-```
-docs/
-├── [Discovery] <Nome do Projeto>.docx     # documentação principal (obrigatório)
-├── Quebra de atividades - <Projeto>.xlsx  # planilha de blocos (recomendado)
-└── (arquivos complementares opcionais — migrations .rb, responses .json, etc.)
-```
-
-> **Limpe a pasta entre projetos** — o agente lê tudo que estiver lá.
-
-### 2. Disparar a análise
 
 Dentro do Claude Code:
 
 ```
-/analyze-test
+/analyze-test --project base-de-conhecimento
 ```
 
-A skill orquestra o fluxo completo:
+A skill orquestra 8 fases:
 
-1. Verifica `docs/`, `template/` e `output/`
-2. Lê e interpreta todos os arquivos de `docs/` (via `/read-docs`)
-3. Define estrutura de suítes e casos de teste
-4. Gera o XMind em `output/` (via `/generate-xmind`)
+| Fase | O que faz |
+|---|---|
+| 1. Init | Valida `docs/` e `template.xmind` |
+| 2. `/read-docs` | Lê todos os arquivos de `docs/` → `output/requisitos_extraidos.md` |
+| 3. Plan | Define estrutura de suítes/TCs (apresenta ao usuário pra revisão) |
+| 4. Criação | Detalha TCs seguindo `twygo-qa-conventions` (verbos canônicos) |
+| 5. `/generate-md-canonical` | Emite `output/test-analysis.md` + **valida** com `validate_md_canonical.py` |
+| 6. `/generate-xmind` + `/generate-xml-testlink` | Gera derivados a partir do MD |
+| 7. Validate | Confere que os 3 arquivos batem (contagens de TCs) |
+| 8. Entrega | Resumo + caminhos |
 
-### 3. Resultado
+### 5. Conferir validação
+
+A skill aborta automaticamente se houver **erros**. Saída típica:
 
 ```
-output/
-├── requisitos_extraidos.md       # consolidado de requisitos extraídos da doc
-├── Analise_Teste_<Projeto>.xmind # XMind pronto pra abrir e revisar
-└── generate_xmind.py             # script Python usado na geração
+=== 2 ERRO(S) — bloqueiam entrega da AT ===
+  [ERROR] TC1 (...) passo 1: anti-pattern A (Ação vaga). Ação: 'Verificar a tela'
+  [ERROR] Catálogo '## Modais relevantes' obrigatório mas vazio.
+
+=== 1 WARNING(S) — revisar antes de entregar ===
+  [WARN] Suíte '...': playbook 'flipper' sugerido mas não declarado.
 ```
 
-### 4. Revisar e ajustar
+Erros → corrigir + re-validar. Warnings → revisar caso a caso
+(geralmente vale corrigir, especialmente playbook faltante).
 
-Abra o `.xmind` no XMind Desktop, revise cobertura, peça ajustes ao agente se necessário ("ajuste o caso X para incluir validação Y").
+### 6. Importar no TestLink (fluxo manual)
 
-### 5. Exportar pra XML TestLink
+```
+agent-at/projects/base-de-conhecimento/output/Analise_Teste_<NomeLegivel>.xml
+↓
+TestLink Web → Admin → Test Specification → Import
+```
 
-No próprio XMind Desktop ou via ferramenta da sua escolha, exporte o `.xmind` como XML TestLink. Esse XML é a entrada do [agent-playwright](../agent-playwright/).
+Equipe de QA manual executa via TestLink normalmente.
+
+### 7. Encaminhar para automação (agent-playwright)
+
+```bash
+cp agent-at/projects/base-de-conhecimento/output/test-analysis.md \
+   agent-playwright/projects/base-de-conhecimento/inputs/
+```
+
+A partir daí, ver [`agent-playwright/README.md`](../agent-playwright/README.md).
 
 ---
 
-## Estrutura de pastas
+## Estrutura do agent-at
 
 ```
 agent-at/
-├── CLAUDE.md                  # Especificação técnica do agente
-├── README.md                  # Este arquivo
-│
-├── docs/                      # Entrada — documentação do projeto (você deposita aqui)
-├── output/                    # Saída — XMind + script + requisitos extraídos (gerado)
+├── README.md                       # este arquivo
+├── CLAUDE.md                       # especificação técnica (regras duras, anti-patterns)
+├── requirements.txt                # deps Python
 ├── template/
-│   └── template.xmind         # Template base reutilizado em todos os projetos
-│
+│   └── template.xmind              # template base compartilhado entre projetos
+├── projects/                       # 1 subpasta por projeto
+│   └── <slug>/
+│       ├── project.config.json
+│       ├── docs/                   # ★ inputs aqui ★
+│       └── output/
+│           ├── test-analysis.md    # canônico (fonte de verdade)
+│           ├── Analise_Teste_*.xmind    # derivado
+│           ├── Analise_Teste_*.xml      # derivado
+│           └── requisitos_extraidos.md  # intermediário
+├── scripts/                        # parsers + geradores + validador
+│   ├── md_canonical_parser.py
+│   ├── md_to_xmind.py
+│   ├── md_to_testlink.py
+│   ├── testlink.xml.j2
+│   └── validate_md_canonical.py    # validação semântica
 └── .claude/
-    └── skills/
-        ├── analyze-test/      # Skill principal — fluxo completo
-        ├── read-docs/         # Skill de leitura/interpretação dos docs
-        ├── generate-xmind/    # Skill de geração do XMind
-        └── twygo-qa-conventions/  # Convenções de QA (auto-carregada)
+    └── skills/                     # 6 skills (analyze-test orquestra as demais)
 ```
 
 ---
 
-## Comandos disponíveis
+## Skills disponíveis
 
-Dentro do Claude Code (modo interativo):
-
-| Comando | O que faz |
+| Skill | Quando usar |
 |---|---|
-| `/analyze-test` | **Fluxo completo** — lê docs, define suítes, gera XMind |
-| `/read-docs` | Apenas leitura e interpretação dos documentos (sem gerar XMind) |
-| `/generate-xmind` | Apenas geração do XMind (após casos já definidos manualmente) |
-
-> A skill `twygo-qa-conventions` carrega automaticamente quando relevante — não precisa ser chamada.
-
----
-
-## Tipos de projeto suportados
-
-| Tipo | Exemplos |
-|---|---|
-| **UI / Funcional** | Validações de tela, campos, componentes, navegação |
-| **API** | Endpoints REST, status codes, payloads, autenticação |
-| **Bloqueio / Contrato** | Modais de bloqueio, downgrade, Super Admin |
-| **SSO / Integração** | Login SSO, sincronização, workers |
-| **Misto** | Combinação dos tipos acima |
+| `/analyze-test` | **Fluxo completo** (input em `docs/` → 3 arquivos em `output/`) |
+| `/read-docs` | Só re-extrair `requisitos_extraidos.md` de `docs/` |
+| `/generate-md-canonical` | Só (re)gerar `test-analysis.md` (canônico) |
+| `/generate-xmind` | Só (re)gerar `.xmind` a partir do MD |
+| `/generate-xml-testlink` | Só (re)gerar `.xml` a partir do MD |
+| `twygo-qa-conventions` | Convenções de escrita (carregada automaticamente) |
 
 ---
 
-## Conexão com os outros agentes
+## Erros comuns
 
-```
-┌────────────┐    docs/      ┌────────┐    XML     ┌──────────────────┐
-│  Discovery │  (.docx/      │ agent- │ TestLink   │ agent-playwright │
-│  + Spike   │ ───────────►  │  at    │ ─────────► │  (executa UI)    │
-└────────────┘   .xlsx)      └────────┘            └──────────────────┘
-                                                          │
-                                                          │ chama quando
-                                                          │ necessário
-                                                          ▼
-                                                   ┌──────────────┐
-                                                   │  agent-db    │
-                                                   │ (validações  │
-                                                   │   em DB)     │
-                                                   └──────────────┘
-```
+### `ValueError: executor=... não suportado em v1`
 
-- **Entrada deste agente**: documentação humana (Discovery, Spike, planilha de quebra).
-- **Saída deste agente**: XMind → exportado pra XML TestLink → consumido pelo agent-playwright.
-- **Handoff**: copie o XML gerado para `agent-playwright/inputs/Analise_Teste_<projeto>.xml` e atualize `agent-playwright/config/project.config.json`.
+Você declarou `executor: api` (ou `db`/`pentest`). Em v1 só `playwright`.
+Outros executores entram no V2 do CONTRACT.md.
 
----
+### `ValueError: type='mixed' não suportado em v1`
 
-## Troubleshooting comum
+Mesma coisa pra `**Tipo**: mixed` no TC. Use `ui`/`api`/`db`.
 
-### `template/template.xmind não encontrado`
-Pegue o template com o time e coloque em `template/template.xmind`. Esse arquivo é o esqueleto reutilizado em todos os projetos.
+### `[ERROR] Anti-pattern A — Ação vaga`
 
-### Pasta `docs/` tem arquivos de projeto antigo
-Limpe `docs/` antes de iniciar projeto novo — o agente lê tudo que estiver lá. Mover pra um backup local ou deletar.
+Você escreveu "Verificar X" ou similar. Troque por verbo canônico + objeto
+literal: `Clicar no botão "Salvar"`, `Aguardar 'Modal X' ser exibido`. Ver
+tabela em [`CLAUDE.md §8`](CLAUDE.md).
 
-### Casos de teste gerados estão genéricos demais
-Verifique se a documentação tem detalhes suficientes (regras de negócio, comportamentos esperados, edge cases). Se a fonte é vaga, peça ao agente: "Refine os casos da suíte X com mais detalhes de validação".
+### `[ERROR] Catálogo '## Textos literais' obrigatório`
 
-### XMind gerado tem prefixos como "[Projeto] QA X.X -" nas suítes
-Bug. As convenções do agente proíbem esses prefixos ([CLAUDE.md §3.7](CLAUDE.md)). Peça regeneração explícita.
+Sua prosa menciona "toast" ou "mensagem", mas o catálogo está vazio.
+Preencha com os textos literais extraídos de `docs/` (estão em
+`output/requisitos_extraidos.md` se já rodou `/read-docs`).
+
+### `[WARN] Playbook 'flipper' sugerido mas não declarado`
+
+Sua prosa cita "feature flag" mas o frontmatter da suíte não declara
+`playbooks: [flipper]`. Adicione — o agent-playwright vai precisar
+disso pra carregar o protocolo correto de toggle/revert.
 
 ---
 
-## Onde aprender mais
+## Referências
 
-| Documento | Quando ler |
-|---|---|
-| [CLAUDE.md](CLAUDE.md) | Antes de modificar o agente — convenções, regras de QA Twygo |
-| [.claude/skills/](.claude/skills/) | Skills disponíveis e como funcionam |
-
-Documentação dos outros agentes:
-- [agent-playwright](../agent-playwright/README.md) — execução E2E (UI)
-- [agent-db](../agent-db/README.md) — validações em banco (em construção)
+- [`CLAUDE.md`](CLAUDE.md) — especificação técnica (princípios, regras duras, anti-patterns)
+- [`../CONTRACT.md`](../CONTRACT.md) — schema do MD canônico (consumido pelos agentes downstream)
+- [`../shared/twygo-platform.md`](../shared/twygo-platform.md) — gotchas Twygo
+- [`../CLAUDE.md`](../CLAUDE.md) — regras meta do monorepo

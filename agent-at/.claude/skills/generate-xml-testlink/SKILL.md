@@ -35,7 +35,7 @@ Onde `<NomeLegivel>` é o nome do projeto sem espaços e sem acentos
 
 ## Como o gerador funciona
 
-Detalhe em [scripts/md_to_testlink.py](../../../scripts/md_to_testlink.py):
+Detalhe em [scripts/md_to_testlink.py](../../scripts/md_to_testlink.py):
 
 1. Parseia o MD canônico via `md_canonical_parser.py`
 2. Renderiza usando template Jinja2 `scripts/testlink.xml.j2`

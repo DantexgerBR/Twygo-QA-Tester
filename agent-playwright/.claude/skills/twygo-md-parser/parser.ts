@@ -105,16 +105,34 @@ export type ParsedAnalysis = {
 // Constantes de mapeamento
 // ============================================================================
 
+// Mapeamento canônico de prioridade (decisão 2026-05-19, alinhado com
+// agent-at/scripts/md_canonical_parser.py):
+//   critical → importance 3 / Allure 'critical'
+//   high     → importance 3 / Allure 'normal'
+//   medium   → importance 2 / Allure 'normal'
+//   low      → importance 1 / Allure 'minor'
 const PRIORITY_TO_IMPORTANCE: Record<Priority, number> = {
   critical: 3,
-  high: 2,
+  high: 3,
   medium: 2,
   low: 1,
+};
+
+const PRIORITY_TO_ALLURE_SEVERITY: Record<Priority, string> = {
+  critical: 'critical',
+  high: 'normal',
+  medium: 'normal',
+  low: 'minor',
 };
 
 function priorityImportance(p: string | undefined): number {
   if (!p) return 2;
   return PRIORITY_TO_IMPORTANCE[p.toLowerCase() as Priority] ?? 2;
+}
+
+export function priorityToAllureSeverity(p: string | undefined): string {
+  if (!p) return 'normal';
+  return PRIORITY_TO_ALLURE_SEVERITY[p.toLowerCase() as Priority] ?? 'normal';
 }
 
 function tcExecutionType(t: string | undefined): number {
@@ -292,7 +310,15 @@ function parseTestCaseBlock(
     }
     const t = parseTcMetaLine(line, 'Tipo');
     if (t) {
-      type = t.toLowerCase() as TcType;
+      const tLower = t.toLowerCase() as TcType;
+      // Restrição v1: 'mixed' é reservado para validações secundárias (V2).
+      if (tLower === 'mixed') {
+        throw new Error(
+          `TC "${title}": type='mixed' não suportado em v1 do CONTRACT.md. ` +
+            `Use ui/api/db. 'mixed' fica para V2 (validações secundárias).`,
+        );
+      }
+      type = tLower;
       continue;
     }
     const pb = parseTcMetaLine(line, 'Playbooks adicionais');
@@ -377,6 +403,14 @@ function parseSuites(region: string): ParsedTestSuite[] {
     const executor = suiteFm.executor as Executor | undefined;
     if (!executor) {
       throw new Error(`Suíte "${suiteName}": campo obrigatório 'executor' ausente`);
+    }
+    // Restrição v1: apenas executor 'playwright' é processável pelo orchestrator.
+    // api/db/pentest ficam para V2 do CONTRACT.md.
+    if (executor !== 'playwright') {
+      throw new Error(
+        `Suíte "${suiteName}": executor='${executor}' não suportado em v1 do CONTRACT.md. ` +
+          `Use 'playwright' (único valor aceito). Outros executores ficam para V2.`,
+      );
     }
 
     const preconditionsList = Array.isArray(suiteFm.preconditions)
