@@ -50,7 +50,7 @@ totals:
 ## Textos literais
 
 ### Toast — sucesso
-- "Modelo de conteúdo duplicado com sucesso."
+- "Modelo duplicado com sucesso."
 - "A regeração dos designs foi iniciada. Você será notificado quando for concluída."
 - "Modelo de conteúdo criado com sucesso." (REVISAR-FIGMA)
 - "Modelo de conteúdo atualizado com sucesso." (REVISAR-FIGMA)
@@ -1093,7 +1093,7 @@ Validar que duplicar modelo cria cópia profunda com nome "[Cópia] <original>" 
 1. Acessar a listagem de modelos com o modelo de teste
    → Listagem é exibida.
 2. Clicar na ação "Duplicar" do modelo de teste
-   → Toast exibida: "Modelo de conteúdo duplicado com sucesso.".
+   → Toast exibida: "Modelo duplicado com sucesso.".
 3. Aguardar a listagem ser atualizada
    → Listagem exibe novo modelo com nome no formato "[Cópia] {nome original do modelo}", listado imediatamente.
 

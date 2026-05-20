@@ -1,12 +1,12 @@
-# Triage Report — Modelos de conteúdo — 2026-05-20 16:58
+# Triage Report — Modelos de conteúdo — 2026-05-20 17:19
 
-**Escopo**: Testsuite: Listagem de Designs (aba Design do Modelo) · **Ambiente**: `staging-base-de-conhecimento`
+**Escopo**: Testsuite: Ações Duplicar e Drag and Drop · **Ambiente**: `staging-base-de-conhecimento`
 
 ## Sumário
 
 | Total | ✅ Passed | ❌ Failed | ⊘ Skipped | Findings exploratórios |
 |---:|---:|---:|---:|---|
-| 3 | 3 | 0 | 0 | 0 erros · 0 warnings · 0 info |
+| 4 | 4 | 0 | 0 | 0 erros · 0 warnings · 0 info |
 
 > **Janela única de revisão.** Marque ☑ em UMA categoria por item.
 > Notas em PT-BR. Commit este arquivo após triagem.

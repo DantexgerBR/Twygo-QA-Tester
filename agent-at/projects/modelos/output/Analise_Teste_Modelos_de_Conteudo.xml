@@ -1091,7 +1091,7 @@ Usuário logado como Admin</preconditions>
         </step>        <step>
           <step_number>2</step_number>
           <actions>Clicar na ação &#34;Duplicar&#34; do modelo de teste</actions>
-          <expectedresults>Toast exibida: &#34;Modelo de conteúdo duplicado com sucesso.&#34;.</expectedresults>
+          <expectedresults>Toast exibida: &#34;Modelo duplicado com sucesso.&#34;.</expectedresults>
           <execution_type>2</execution_type>
         </step>        <step>
           <step_number>3</step_number>
