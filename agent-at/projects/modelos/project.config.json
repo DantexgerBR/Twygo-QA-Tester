@@ -1,0 +1,11 @@
+{
+  "name": "Modelos",
+  "slug": "modelos",
+  "description": "Análise de Teste do projeto 'Modelos' da Twygo.",
+  "environment": "staging",
+  "envSecondary": null,
+  "figmaPrototype": null,
+  "sourceDocs": [],
+  "contractVersion": "1.0",
+  "atVersion": 1
+}
