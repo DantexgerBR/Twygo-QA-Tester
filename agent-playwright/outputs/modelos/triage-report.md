@@ -1,12 +1,12 @@
-# Triage Report — Modelos de conteúdo — 2026-05-20 15:38
+# Triage Report — Modelos de conteúdo — 2026-05-20 15:51
 
-**Escopo**: Testsuite: Criação de Modelo - Aba Imagem · **Ambiente**: `staging-base-de-conhecimento`
+**Escopo**: Testsuite: Criação de Modelo - Aba Áudio · **Ambiente**: `staging-base-de-conhecimento`
 
 ## Sumário
 
 | Total | ✅ Passed | ❌ Failed | ⊘ Skipped | Findings exploratórios |
 |---:|---:|---:|---:|---|
-| 3 | 3 | 0 | 0 | 0 erros · 0 warnings · 0 info |
+| 4 | 4 | 0 | 0 | 0 erros · 0 warnings · 0 info |
 
 > **Janela única de revisão.** Marque ☑ em UMA categoria por item.
 > Notas em PT-BR. Commit este arquivo após triagem.

@@ -1,0 +1,11 @@
+{
+  "runId": "criacao-de-modelo-aba-audio_20260520-155115",
+  "mode": "per-suite",
+  "suiteFilter": "Criação de Modelo - Aba Áudio",
+  "projectName": "Modelos de conteúdo",
+  "environment": "staging-base-de-conhecimento",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-20T18:51:15.793Z"
+}

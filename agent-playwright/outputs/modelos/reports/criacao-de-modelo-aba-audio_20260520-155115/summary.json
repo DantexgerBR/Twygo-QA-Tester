@@ -1,0 +1,29 @@
+{
+  "runId": "criacao-de-modelo-aba-audio_20260520-155115",
+  "scope": "Apenas testsuite contendo \"Criação de Modelo - Aba Áudio\"",
+  "tests": {
+    "total": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 88685
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 0,
+    "tests": 1,
+    "outOfScope": {
+      "errors": 5,
+      "warnings": 5,
+      "info": 1
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

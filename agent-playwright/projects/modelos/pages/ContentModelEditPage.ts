@@ -284,6 +284,45 @@ export class ContentModelEditPage {
     'Gerador autoral por IA com Imagen 4 (Google)',
   ] as const;
 
+  // ─── Aba Áudio ───
+  async gotoFirstModelEditAudio(): Promise<void> {
+    await safeGoto(this.page, `/o/${getOrgId()}/content_models`);
+    await this.page.waitForTimeout(1500);
+    const editIcon = this.page
+      .locator('[data-test-id="content-models-page"] [id*="-edit-element-"]')
+      .first();
+    await editIcon.evaluate((el: HTMLElement) => el.click());
+    await expect(this.page).toHaveURL(/\/content_models\/\d+\/edit/, { timeout: 15_000 });
+    await this.page.locator('[data-test-id="tab-audio"]').click();
+    await expect(this.page.locator('[data-test-id="tab-audio"]')).toHaveAttribute(
+      'aria-selected',
+      'true',
+      { timeout: 10_000 },
+    );
+  }
+
+  audioTitle(): Locator {
+    return this.page.locator('[data-test-id="content-models-audio-title"]');
+  }
+
+  audioDescription(): Locator {
+    return this.page.locator('[data-test-id="content-models-audio-description"]');
+  }
+
+  audioVoiceCard(voice: 'ana' | 'cris' | 'carlos' | 'morgan'): Locator {
+    return this.page.locator(`[data-test-id="modelos-de-conteudo-audio-voice-${voice}"]`);
+  }
+
+  audioPlayButton(voice: 'ana' | 'cris' | 'carlos' | 'morgan'): Locator {
+    return this.page.locator(`[data-test-id="modelos-de-conteudo-audio-play-${voice}"]`);
+  }
+
+  audioRadioByValue(value: 'Ana' | 'Cris' | 'Carlos' | 'Morgan'): Locator {
+    return this.page.locator(`input[type="radio"][value="${value}"]`);
+  }
+
+  audioVoices = ['Ana', 'Cris', 'Carlos', 'Morgan'] as const;
+
   // Cleanup helper: deletar modelo pelo nome via UI listagem.
   // Idempotente — usa try/catch + se modal de confirmação aparecer, confirma.
   async deleteByNameSafe(nome: string): Promise<void> {
