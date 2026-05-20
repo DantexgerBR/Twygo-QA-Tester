@@ -1,0 +1,11 @@
+{
+  "runId": "criacao-de-design-de-aula_20260520-163814",
+  "mode": "per-suite",
+  "suiteFilter": "Criação de Design de Aula",
+  "projectName": "Modelos de conteúdo",
+  "environment": "staging-base-de-conhecimento",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-20T19:38:14.774Z"
+}
