@@ -1,0 +1,11 @@
+{
+  "runId": "preview-de-modelos-e-designs_20260520-174549",
+  "mode": "per-suite",
+  "suiteFilter": "Preview de Modelos e Designs",
+  "projectName": "Modelos de conteúdo",
+  "environment": "staging-base-de-conhecimento",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-20T20:45:49.071Z"
+}

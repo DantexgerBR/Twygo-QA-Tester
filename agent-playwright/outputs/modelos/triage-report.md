@@ -1,6 +1,6 @@
-# Triage Report — Modelos de conteúdo — 2026-05-20 17:19
+# Triage Report — Modelos de conteúdo — 2026-05-20 17:45
 
-**Escopo**: Testsuite: Ações Duplicar e Drag and Drop · **Ambiente**: `staging-base-de-conhecimento`
+**Escopo**: Testsuite: Preview de Modelos e Designs · **Ambiente**: `staging-base-de-conhecimento`
 
 ## Sumário
 

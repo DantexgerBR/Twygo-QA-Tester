@@ -1,0 +1,29 @@
+{
+  "runId": "preview-de-modelos-e-designs_20260520-174549",
+  "scope": "Apenas testsuite contendo \"Preview de Modelos e Designs\"",
+  "tests": {
+    "total": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 59618
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 0,
+    "tests": 1,
+    "outOfScope": {
+      "errors": 4,
+      "warnings": 4,
+      "info": 0
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}
