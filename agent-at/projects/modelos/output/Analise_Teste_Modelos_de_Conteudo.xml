@@ -651,7 +651,7 @@ Usuário logado como Admin</preconditions>
         </step>        <step>
           <step_number>2</step_number>
           <actions>Aguardar as opções serem renderizadas</actions>
-          <expectedresults>Opções exibidas: &#34;Sem imagens, somente textos&#34;, &#34;Banco de imagens aberto&#34;, &#34;Gerador DALL-E (OpenAI)&#34;, &#34;Gerador Imagen 4 (Google)&#34;.</expectedresults>
+          <expectedresults>Opções exibidas: &#34;Sem imagens, somente textos&#34;, &#34;Banco de imagens aberto&#34;, &#34;Gerador autoral por IA com DALL-E (OpenAI)&#34;, &#34;Gerador autoral por IA com Imagen 4 (Google)&#34;.</expectedresults>
           <execution_type>2</execution_type>
         </step>      </steps>
     </testcase>    <testcase name="Default &#34;Sem imagens, somente textos&#34;">

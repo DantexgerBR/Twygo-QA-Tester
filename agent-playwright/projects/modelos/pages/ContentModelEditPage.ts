@@ -246,6 +246,44 @@ export class ContentModelEditPage {
     await btn.evaluate((el: HTMLButtonElement) => el.click());
   }
 
+  // ─── Aba Imagem ───
+  async gotoFirstModelEditImage(): Promise<void> {
+    await safeGoto(this.page, `/o/${getOrgId()}/content_models`);
+    await this.page.waitForTimeout(1500);
+    const editIcon = this.page
+      .locator('[data-test-id="content-models-page"] [id*="-edit-element-"]')
+      .first();
+    await editIcon.evaluate((el: HTMLElement) => el.click());
+    await expect(this.page).toHaveURL(/\/content_models\/\d+\/edit/, { timeout: 15_000 });
+    await this.page.locator('[data-test-id="tab-image"]').click();
+    await expect(this.page.locator('[data-test-id="tab-image"]')).toHaveAttribute(
+      'aria-selected',
+      'true',
+      { timeout: 10_000 },
+    );
+  }
+
+  imageTitle(): Locator {
+    return this.page.locator('[data-test-id="content-models-image-title"]');
+  }
+
+  imageDescription(): Locator {
+    return this.page.locator('[data-test-id="content-models-image-description"]');
+  }
+
+  imageOptionRadio(idx: 0 | 1 | 2 | 3): Locator {
+    return this.page.locator(`#image-option-radio-${idx}`);
+  }
+
+  // UI mostra labels com prefixo "Gerador autoral por IA com..." pros TC3 e TC4.
+  // AT documentava nomes curtos; AT canônico será atualizado.
+  imageOptionLabels = [
+    'Sem imagens, somente textos',
+    'Banco de imagens aberto',
+    'Gerador autoral por IA com DALL-E (OpenAI)',
+    'Gerador autoral por IA com Imagen 4 (Google)',
+  ] as const;
+
   // Cleanup helper: deletar modelo pelo nome via UI listagem.
   // Idempotente — usa try/catch + se modal de confirmação aparecer, confirma.
   async deleteByNameSafe(nome: string): Promise<void> {

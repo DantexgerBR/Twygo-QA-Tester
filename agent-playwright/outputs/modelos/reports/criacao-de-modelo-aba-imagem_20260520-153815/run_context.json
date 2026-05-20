@@ -1,0 +1,11 @@
+{
+  "runId": "criacao-de-modelo-aba-imagem_20260520-153815",
+  "mode": "per-suite",
+  "suiteFilter": "Criação de Modelo - Aba Imagem",
+  "projectName": "Modelos de conteúdo",
+  "environment": "staging-base-de-conhecimento",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-20T18:38:15.512Z"
+}

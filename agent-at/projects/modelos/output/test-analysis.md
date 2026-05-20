@@ -43,7 +43,7 @@ totals:
 ### Opções fixas (extraídas da Especificação)
 - `tipoEstrutura`: ["Atividades sequenciais (1 nível)", "Atividades agrupadas por módulos (2 níveis)"]
 - `cargaHoraria`: ["Micro", "Curto", "Médio", "Estendido", "Longo"]
-- `padroesImagem`: ["Sem imagens, somente textos", "Banco de imagens aberto", "Gerador DALL-E (OpenAI)", "Gerador Imagen 4 (Google)"]
+- `padroesImagem`: ["Sem imagens, somente textos", "Banco de imagens aberto", "Gerador autoral por IA com DALL-E (OpenAI)", "Gerador autoral por IA com Imagen 4 (Google)"]
 - `vozesAudio`: ["Ana", "Cris", "Carlos", "Morgan"]
 - `tiposDesign`: ["Capa", "Introdução", "Corpo", "Encerramento", "Recapitulação", "Sumário"]
 
@@ -709,7 +709,7 @@ Validar 4 opções de padrão de imagem (RN 57).
 1. Acessar a aba "Imagem"
    → Aba é exibida.
 2. Aguardar as opções serem renderizadas
-   → Opções exibidas: "Sem imagens, somente textos", "Banco de imagens aberto", "Gerador DALL-E (OpenAI)", "Gerador Imagen 4 (Google)".
+   → Opções exibidas: "Sem imagens, somente textos", "Banco de imagens aberto", "Gerador autoral por IA com DALL-E (OpenAI)", "Gerador autoral por IA com Imagen 4 (Google)".
 
 ## TC3 — Default "Sem imagens, somente textos"
 **Prioridade**: high
