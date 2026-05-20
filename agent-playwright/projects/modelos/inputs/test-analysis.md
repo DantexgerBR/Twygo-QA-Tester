@@ -132,13 +132,13 @@ totals:
 
 | Método | URL (inferido) | Operação | Sucesso | Erro |
 |---|---|---|---|---|
-| `GET` | `/api/v1/o/:org_id/content_templates` | Listar modelos | 200 | 401/403 |
-| `POST` | `/api/v1/o/:org_id/content_templates` | Criar modelo | 201 | 422 |
-| `PATCH` | `/api/v1/o/:org_id/content_templates/:id` | Editar modelo | 200 | 422 |
-| `DELETE` | `/api/v1/o/:org_id/content_templates/:id` | Excluir modelo | 200 | 404 |
-| `POST` | `/api/v1/o/:org_id/content_templates/:id/duplicate` | Duplicar | 201 | 422 |
-| `POST` | `/api/v1/o/:org_id/content_templates/:id/regenerate_designs` | Regerar (async) | 202 | 422 |
-| `PATCH` | `/api/v1/o/:org_id/content_templates/:id/template_designs/reorder` | Reordenar | 200 | 422 |
+| `GET` | `/api/v1/o/:org_id/content_models` | Listar modelos | 200 | 401/403 |
+| `POST` | `/api/v1/o/:org_id/content_models` | Criar modelo | 201 | 422 |
+| `PATCH` | `/api/v1/o/:org_id/content_models/:id` | Editar modelo | 200 | 422 |
+| `DELETE` | `/api/v1/o/:org_id/content_models/:id` | Excluir modelo | 200 | 404 |
+| `POST` | `/api/v1/o/:org_id/content_models/:id/duplicate` | Duplicar | 201 | 422 |
+| `POST` | `/api/v1/o/:org_id/content_models/:id/regenerate_designs` | Regerar (async) | 202 | 422 |
+| `PATCH` | `/api/v1/o/:org_id/content_models/:id/template_designs/reorder` | Reordenar | 200 | 422 |
 
 ## Campos e validações
 
@@ -146,7 +146,7 @@ totals:
 |---|---|---|---|---|---|
 | Identificação | Nome | input | Sim | 255 | — |
 | Identificação | Descrição | textarea | — | 500 | — |
-| Identificação | Kit de marca | select | — | — | — |
+| Identificação | Kit de marca | select | Sim | — | — |
 | Identificação | Usar como modelo padrão | switch | — | — | false |
 | Identificação | Usar designs sugeridos | switch (só criação) | — | — | true |
 | Identificação | Ativo | switch | — | — | true |
@@ -186,7 +186,7 @@ preconditions:
 Validar acesso à listagem via menu lateral, conforme RN 1, 1.1.
 
 ### Passos
-1. Acessar a URL "/play"
+1. Acessar a URL "/o/{orgId}/dashboard"
    → Dashboard padrão é exibido contendo o menu lateral.
 2. Clicar no menu lateral "Aprendizagem"
    → Submenu lateral é exibido contendo o item "Modelos de conteúdo" com ícone Material "browse".
@@ -202,7 +202,7 @@ Validar acesso à listagem via menu lateral, conforme RN 1, 1.1.
 Validar que a visualização padrão da listagem é em formato Cards, conforme RN 3.
 
 ### Passos
-1. Acessar a URL "/o/{orgId}/content_templates"
+1. Acessar a URL "/o/{orgId}/content_models"
    → Listagem é exibida em formato Cards por padrão.
 2. Aguardar a renderização dos cards
    → Cada card exibe imagem principal, nome do modelo, ações (List Control) e indicador de cor lateral para status.
@@ -216,10 +216,10 @@ Validar que a visualização padrão da listagem é em formato Cards, conforme R
 Validar alternância de visualização entre Cards e Lista, conforme RN 2.
 
 ### Passos
-1. Acessar a URL "/o/{orgId}/content_templates"
+1. Acessar a URL "/o/{orgId}/content_models"
    → Listagem é exibida em formato Cards.
 2. Clicar no botão de alternância para visualização "Lista"
-   → Listagem alterna para formato Lista exibindo colunas: "Nome", "Descrição", "Nome do provedor", "Designs", "Aplicação", "Situação", "Ações".
+   → Listagem alterna para formato Lista exibindo colunas: "Nome", "Descrição", "Provedor", "Designs", "Aplicação", "Situação", "Atualizado em".
 3. Clicar no botão de alternância para visualização "Cards"
    → Listagem retorna para formato Cards.
 
@@ -292,7 +292,7 @@ preconditions:
 Validar busca textual por nome do modelo na listagem.
 
 ### Passos
-1. Acessar a URL "/o/{orgId}/content_templates"
+1. Acessar a URL "/o/{orgId}/content_models"
    → Listagem é exibida com múltiplos modelos.
 2. Preencher o campo "Buscar" com "Modelo TC1"
    → Listagem filtra exibindo apenas modelos cujo nome contém "Modelo TC1".
@@ -370,7 +370,7 @@ preconditions:
 Validar criação de modelo (happy path) preenchendo todos os campos da aba Identificação (RN 7, RN 8).
 
 ### Passos
-1. Acessar a URL "/o/{orgId}/content_templates"
+1. Acessar a URL "/o/{orgId}/content_models"
    → Listagem é exibida.
 2. Clicar no botão "+ Adicionar"
    → Sistema redireciona para a tela de criação exibindo a aba "Identificação".
@@ -1350,7 +1350,7 @@ Validar que o submenu "Modelos de conteúdo" não aparece quando a flag está de
 ### Passos
 1. Desabilitar a feature flag `modelos_de_conteudo` para a organização do teste via Flipper-UI
    → Flag fica como "Conditionally enabled" sem actor `Organization;{orgId}`.
-2. Acessar a URL "/play"
+2. Acessar a URL "/o/{orgId}/dashboard"
    → Dashboard padrão é exibido.
 3. Clicar no menu lateral "Aprendizagem"
    → Submenu lateral é exibido SEM o item "Modelos de conteúdo".
@@ -1366,7 +1366,7 @@ Validar que a funcionalidade fica acessível quando a flag está habilitada (RN 
 ### Passos
 1. Habilitar a feature flag `modelos_de_conteudo` para a organização do teste via Flipper-UI
    → Flag fica como "Conditionally enabled" com actor `Organization;{orgId}`.
-2. Acessar a URL "/play"
+2. Acessar a URL "/o/{orgId}/dashboard"
    → Dashboard padrão é exibido.
 3. Clicar no menu lateral "Aprendizagem"
    → Submenu lateral é exibido COM o item "Modelos de conteúdo".
@@ -1386,7 +1386,7 @@ Validar que ativar a flag durante uma sessão libera a funcionalidade após refr
    → Submenu "Modelos de conteúdo" NÃO é exibido.
 2. Habilitar a flag `modelos_de_conteudo` para a organização via Flipper-UI
    → Flag fica como "Conditionally enabled" com actor `Organization;{orgId}`.
-3. Recarregar a página "/play"
+3. Recarregar a página "/o/{orgId}/dashboard"
    → Dashboard é exibido novamente.
 4. Clicar no menu lateral "Aprendizagem"
    → Submenu lateral agora exibe o item "Modelos de conteúdo".

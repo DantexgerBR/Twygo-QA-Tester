@@ -7,7 +7,7 @@
         "run-test-mcp-server"
       ],
       "env": {
-        "PROJECT": "widgets"
+        "PROJECT": "modelos"
       }
     },
     "chrome-devtools": {

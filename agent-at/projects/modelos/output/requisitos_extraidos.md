@@ -282,19 +282,19 @@ Ao selecionar, preenche automaticamente "Instruções de estrutura" e "Instruç�
 
 | Método | URL (inferido) | Operação |
 |---|---|---|
-| `GET` | `/api/v1/o/:org_id/content_templates` | Listar modelos |
-| `POST` | `/api/v1/o/:org_id/content_templates` | Criar modelo |
-| `PATCH` | `/api/v1/o/:org_id/content_templates/:id` | Editar modelo |
-| `DELETE` | `/api/v1/o/:org_id/content_templates/:id` | Excluir modelo |
-| `POST` | `/api/v1/o/:org_id/content_templates/:id/duplicate` | Duplicar modelo |
-| `POST` | `/api/v1/o/:org_id/content_templates/:id/regenerate_designs` | Regerar designs (async) |
-| `GET/POST/PATCH/DELETE` | `/api/v1/o/:org_id/content_templates/:id/template_designs` | CRUD designs |
-| `PATCH` | `/api/v1/o/:org_id/content_templates/:id/template_designs/reorder` | Drag&drop sequência |
+| `GET` | `/api/v1/o/:org_id/content_models` | Listar modelos |
+| `POST` | `/api/v1/o/:org_id/content_models` | Criar modelo |
+| `PATCH` | `/api/v1/o/:org_id/content_models/:id` | Editar modelo |
+| `DELETE` | `/api/v1/o/:org_id/content_models/:id` | Excluir modelo |
+| `POST` | `/api/v1/o/:org_id/content_models/:id/duplicate` | Duplicar modelo |
+| `POST` | `/api/v1/o/:org_id/content_models/:id/regenerate_designs` | Regerar designs (async) |
+| `GET/POST/PATCH/DELETE` | `/api/v1/o/:org_id/content_models/:id/template_designs` | CRUD designs |
+| `PATCH` | `/api/v1/o/:org_id/content_models/:id/template_designs/reorder` | Drag&drop sequência |
 
 ## 7. Banco de Dados
 
 ### Tabelas envolvidas (inferidas pelo Discovery/Spec)
-- `content_templates` — modelos de conteúdo
+- `content_models` — modelos de conteúdo
 - `template_designs` — designs (página/aula) do modelo
 - `page_activity_models` — modelos de atividade de página (mencionado em QA 4.1)
 

@@ -92,7 +92,7 @@
 ### Pré-condições
 - Ambiente Stage configurado
 - Organização de teste com dados de modelos de conteúdo cadastrados:
-  - Registros em `content_templates`
+  - Registros em `content_models`
   - Registros em `template_designs`
   - Registros em `page_activity_models`
 - Acesso ao banco MySQL (leitura — `staging-base-de-conhecimento`)
@@ -110,9 +110,9 @@
 **Passos**:
 1. Confirmar que existem registros nas tabelas (consulta SQL):
    ```sql
-   SELECT COUNT(*) FROM content_templates WHERE organization_id = :org_id;
+   SELECT COUNT(*) FROM content_models WHERE organization_id = :org_id;
    SELECT COUNT(*) FROM template_designs WHERE content_template_id IN (
-     SELECT id FROM content_templates WHERE organization_id = :org_id
+     SELECT id FROM content_models WHERE organization_id = :org_id
    );
    SELECT COUNT(*) FROM page_activity_models WHERE organization_id = :org_id;
    ```
@@ -123,7 +123,7 @@
 5. Validar que todas as 3 contagens são = 0
 
 **Resultado esperado**:
-- 0 registros remanescentes em `content_templates`, `template_designs`, `page_activity_models` para a organização excluída
+- 0 registros remanescentes em `content_models`, `template_designs`, `page_activity_models` para a organização excluída
 - Logs do worker contêm entrada de execução bem-sucedida com `deleted_count` correto
 
 ### TC2 — Worker NÃO afeta dados de outras organizações
@@ -152,9 +152,9 @@
 2. Criar Trial via URL/API (playbook `provisionar-trial-projeto-twygo`)
 3. Consultar tabelas na Trial:
    ```sql
-   SELECT COUNT(*) FROM content_templates WHERE organization_id = :trial_org_id;
+   SELECT COUNT(*) FROM content_models WHERE organization_id = :trial_org_id;
    SELECT COUNT(*) FROM template_designs WHERE content_template_id IN (
-     SELECT id FROM content_templates WHERE organization_id = :trial_org_id
+     SELECT id FROM content_models WHERE organization_id = :trial_org_id
    );
    ```
 4. Validar que as contagens correspondem aos modelos da organização modelo
@@ -170,7 +170,7 @@
 1. Trial com modelos copiados da organização modelo
 2. Executar exclusão total via widget Sophia (skill `testar-exclusao-dados-trial-twygo`)
 3. Aguardar processamento
-4. Consultar tabelas na Trial — contagens de `content_templates` e `template_designs` devem ser 0
+4. Consultar tabelas na Trial — contagens de `content_models` e `template_designs` devem ser 0
 
 ### TC5 — Log gerado ao criar modelo de conteúdo
 **Prioridade**: critical

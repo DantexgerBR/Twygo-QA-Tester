@@ -9,7 +9,7 @@ Usuário logado como Admin</preconditions>
       <importance>3</importance>
       <steps>        <step>
           <step_number>1</step_number>
-          <actions>Acessar a URL &#34;/play&#34;</actions>
+          <actions>Acessar a URL &#34;/o/{orgId}/dashboard&#34;</actions>
           <expectedresults>Dashboard padrão é exibido contendo o menu lateral.</expectedresults>
           <execution_type>2</execution_type>
         </step>        <step>
@@ -33,7 +33,7 @@ Usuário logado como Admin</preconditions>
       <importance>3</importance>
       <steps>        <step>
           <step_number>1</step_number>
-          <actions>Acessar a URL &#34;/o/{orgId}/content_templates&#34;</actions>
+          <actions>Acessar a URL &#34;/o/{orgId}/content_models&#34;</actions>
           <expectedresults>Listagem é exibida em formato Cards por padrão.</expectedresults>
           <execution_type>2</execution_type>
         </step>        <step>
@@ -52,13 +52,13 @@ Usuário logado como Admin</preconditions>
       <importance>3</importance>
       <steps>        <step>
           <step_number>1</step_number>
-          <actions>Acessar a URL &#34;/o/{orgId}/content_templates&#34;</actions>
+          <actions>Acessar a URL &#34;/o/{orgId}/content_models&#34;</actions>
           <expectedresults>Listagem é exibida em formato Cards.</expectedresults>
           <execution_type>2</execution_type>
         </step>        <step>
           <step_number>2</step_number>
           <actions>Clicar no botão de alternância para visualização &#34;Lista&#34;</actions>
-          <expectedresults>Listagem alterna para formato Lista exibindo colunas: &#34;Nome&#34;, &#34;Descrição&#34;, &#34;Nome do provedor&#34;, &#34;Designs&#34;, &#34;Aplicação&#34;, &#34;Situação&#34;, &#34;Ações&#34;.</expectedresults>
+          <expectedresults>Listagem alterna para formato Lista exibindo colunas: &#34;Nome&#34;, &#34;Descrição&#34;, &#34;Provedor&#34;, &#34;Designs&#34;, &#34;Aplicação&#34;, &#34;Situação&#34;, &#34;Atualizado em&#34;.</expectedresults>
           <execution_type>2</execution_type>
         </step>        <step>
           <step_number>3</step_number>
@@ -138,7 +138,7 @@ Usuário logado como Admin</preconditions>
       <importance>3</importance>
       <steps>        <step>
           <step_number>1</step_number>
-          <actions>Acessar a URL &#34;/o/{orgId}/content_templates&#34;</actions>
+          <actions>Acessar a URL &#34;/o/{orgId}/content_models&#34;</actions>
           <expectedresults>Listagem é exibida com múltiplos modelos.</expectedresults>
           <execution_type>2</execution_type>
         </step>        <step>
@@ -229,7 +229,7 @@ Usuário logado como Admin</preconditions>
       <importance>3</importance>
       <steps>        <step>
           <step_number>1</step_number>
-          <actions>Acessar a URL &#34;/o/{orgId}/content_templates&#34;</actions>
+          <actions>Acessar a URL &#34;/o/{orgId}/content_models&#34;</actions>
           <expectedresults>Listagem é exibida.</expectedresults>
           <execution_type>2</execution_type>
         </step>        <step>
@@ -1369,7 +1369,7 @@ Feature flag `modelos_de_conteudo` controlável via Super Admin</preconditions>
           <execution_type>2</execution_type>
         </step>        <step>
           <step_number>2</step_number>
-          <actions>Acessar a URL &#34;/play&#34;</actions>
+          <actions>Acessar a URL &#34;/o/{orgId}/dashboard&#34;</actions>
           <expectedresults>Dashboard padrão é exibido.</expectedresults>
           <execution_type>2</execution_type>
         </step>        <step>
@@ -1392,7 +1392,7 @@ Feature flag `modelos_de_conteudo` controlável via Super Admin</preconditions>
           <execution_type>2</execution_type>
         </step>        <step>
           <step_number>2</step_number>
-          <actions>Acessar a URL &#34;/play&#34;</actions>
+          <actions>Acessar a URL &#34;/o/{orgId}/dashboard&#34;</actions>
           <expectedresults>Dashboard padrão é exibido.</expectedresults>
           <execution_type>2</execution_type>
         </step>        <step>
@@ -1425,7 +1425,7 @@ Feature flag `modelos_de_conteudo` controlável via Super Admin</preconditions>
           <execution_type>2</execution_type>
         </step>        <step>
           <step_number>3</step_number>
-          <actions>Recarregar a página &#34;/play&#34;</actions>
+          <actions>Recarregar a página &#34;/o/{orgId}/dashboard&#34;</actions>
           <expectedresults>Dashboard é exibido novamente.</expectedresults>
           <execution_type>2</execution_type>
         </step>        <step>
