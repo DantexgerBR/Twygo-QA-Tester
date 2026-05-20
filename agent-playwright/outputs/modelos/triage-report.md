@@ -1,12 +1,12 @@
-# Triage Report — Modelos de conteúdo — 2026-05-20 13:45
+# Triage Report — Modelos de conteúdo — 2026-05-20 14:13
 
-**Escopo**: Testsuite: Listagem e Menu de Modelos · **Ambiente**: `staging-base-de-conhecimento`
+**Escopo**: Testsuite: Filtros e Busca - Modelos · **Ambiente**: `staging-base-de-conhecimento`
 
 ## Sumário
 
 | Total | ✅ Passed | ❌ Failed | ⊘ Skipped | Findings exploratórios |
 |---:|---:|---:|---:|---|
-| 6 | 6 | 0 | 0 | 0 erros · 0 warnings · 0 info |
+| 4 | 4 | 0 | 0 | 0 erros · 0 warnings · 0 info |
 
 > **Janela única de revisão.** Marque ☑ em UMA categoria por item.
 > Notas em PT-BR. Commit este arquivo após triagem.

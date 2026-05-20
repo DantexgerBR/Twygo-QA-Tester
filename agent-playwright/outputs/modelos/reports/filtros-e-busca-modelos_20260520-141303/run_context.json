@@ -1,0 +1,11 @@
+{
+  "runId": "filtros-e-busca-modelos_20260520-141303",
+  "mode": "per-suite",
+  "suiteFilter": "Filtros e Busca - Modelos",
+  "projectName": "Modelos de conteúdo",
+  "environment": "staging-base-de-conhecimento",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-20T17:13:03.621Z"
+}

@@ -120,4 +120,77 @@ export class ContentModelsListPage {
       ).toBeVisible({ timeout: 10_000 });
     }
   }
+
+  // Drawer de filtros — segue padrão canônico documentado em
+  // .claude/skills/testar-filtro-drawer-twygo. IDs do componente são
+  // compartilhados entre listagens Twygo.
+  filterButton(): Locator {
+    return this.page.locator('#open-filter');
+  }
+
+  clearFilterButton(): Locator {
+    return this.page.locator('#clear-filter');
+  }
+
+  async openFilterDrawer(): Promise<void> {
+    // dispatchEvent contorna overlay invisível do chat widget HubSpot (bottom-right).
+    await this.filterButton().dispatchEvent('click');
+    await expect(
+      this.page.locator('[role="dialog"].chakra-modal__content, .chakra-slide'),
+    ).toBeVisible({ timeout: 10_000 });
+  }
+
+  // Idempotente: só clica se #clear-filter visível. Aguarda listagem reidratar
+  // (spinner some + cards OU empty state aparece) — sem isso, próximo assert
+  // pode rodar com listagem em loading.
+  async clearFilter(): Promise<void> {
+    const btn = this.clearFilterButton();
+    if (await btn.isVisible().catch(() => false)) {
+      await btn.dispatchEvent('click');
+      await expect(btn).toHaveCount(0, { timeout: 5_000 });
+      await this.waitForListReady();
+    }
+  }
+
+  // Aguarda listagem terminar reidratação após mudança de filtro/busca.
+  // Spinner Chakra é <div class="chakra-spinner">; some quando dados chegam.
+  async waitForListReady(): Promise<void> {
+    await this.page.locator('.chakra-spinner').waitFor({ state: 'hidden', timeout: 15_000 }).catch(() => undefined);
+    // Listagem renderizada: ou tem card OU empty state "Não há dados"
+    await Promise.race([
+      this.allCards().first().waitFor({ state: 'visible', timeout: 10_000 }).catch(() => undefined),
+      this.page.getByText('Não há dados para exibir').waitFor({ state: 'visible', timeout: 10_000 }).catch(() => undefined),
+    ]);
+  }
+
+  // 4 filtros padrão de Modelos descobertos no recon ao vivo.
+  // Confirma seleção via radio na ordem default-filters-{0,1,2,3}.
+  defaultFilters = {
+    'Modelos ativos': '#default-filters-0',
+    'Modelos inativos': '#default-filters-1',
+    'Modelos próprios': '#default-filters-2',
+    'Modelos de terceiros': '#default-filters-3',
+  } as const;
+
+  async applyDefaultFilter(name: keyof typeof this.defaultFilters): Promise<void> {
+    // Reabre drawer apenas se não estiver aberto (TC pode chamar openFilterDrawer antes)
+    const drawerOpen = await this.page
+      .locator('[role="dialog"].chakra-modal__content')
+      .isVisible()
+      .catch(() => false);
+    if (!drawerOpen) await this.openFilterDrawer();
+    const radioId = this.defaultFilters[name];
+    await this.page.locator(`label.chakra-radio:has(${radioId})`).click();
+    await this.page.locator('#list-filter-apply').dispatchEvent('click');
+    await expect(this.clearFilterButton()).toBeVisible({ timeout: 10_000 });
+  }
+
+  // Asserção: drawer modo A (Lista de filtros) com os 4 filtros padrão de Modelos.
+  async expectDefaultFiltersVisible(): Promise<void> {
+    for (const label of Object.keys(this.defaultFilters)) {
+      await expect(
+        this.page.locator('.chakra-modal__content').getByText(label, { exact: true }),
+      ).toBeVisible({ timeout: 5_000 });
+    }
+  }
 }
