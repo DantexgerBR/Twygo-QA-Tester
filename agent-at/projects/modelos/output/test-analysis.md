@@ -42,7 +42,7 @@ totals:
 
 ### Opções fixas (extraídas da Especificação)
 - `tipoEstrutura`: ["Atividades sequenciais (1 nível)", "Atividades agrupadas por módulos (2 níveis)"]
-- `cargaHoraria`: ["Micro (30 segundos a 5 minutos)", "Curto (5 a 15 minutos)", "Médio (15 a 30 minutos)", "Estendido (30 a 60 minutos)", "Longo (1 a 2 horas)"]
+- `cargaHoraria`: ["Micro", "Curto", "Médio", "Estendido", "Longo"]
 - `padroesImagem`: ["Sem imagens, somente textos", "Banco de imagens aberto", "Gerador DALL-E (OpenAI)", "Gerador Imagen 4 (Google)"]
 - `vozesAudio`: ["Ana", "Cris", "Carlos", "Morgan"]
 - `tiposDesign`: ["Capa", "Introdução", "Corpo", "Encerramento", "Recapitulação", "Sumário"]
@@ -621,7 +621,7 @@ Validar as 5 opções literais de carga horária (RN 18).
 1. Acessar a aba "Estrutura do conteúdo"
    → Aba é exibida.
 2. Clicar no dropdown "Carga horária sugerida"
-   → Dropdown exibe as opções "Micro (30 segundos a 5 minutos)", "Curto (5 a 15 minutos)", "Médio (15 a 30 minutos)", "Estendido (30 a 60 minutos)", "Longo (1 a 2 horas)".
+   → Dropdown exibe as opções "Micro", "Curto", "Médio", "Estendido", "Longo".
 
 ## TC6 — Switch "Incluir questionários" exibe configurações básicas
 **Prioridade**: high

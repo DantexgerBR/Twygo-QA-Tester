@@ -1,0 +1,29 @@
+{
+  "runId": "criacao-de-modelo-aba-estrutura-do-conteudo_20260520-153111",
+  "scope": "Apenas testsuite contendo \"Criação de Modelo - Aba Estrutura do Conteúdo\"",
+  "tests": {
+    "total": 8,
+    "passed": 8,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 153674
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 0,
+    "tests": 1,
+    "outOfScope": {
+      "errors": 6,
+      "warnings": 5,
+      "info": 1
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

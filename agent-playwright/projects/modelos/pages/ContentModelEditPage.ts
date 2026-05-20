@@ -171,6 +171,81 @@ export class ContentModelEditPage {
     await this.page.locator(`[data-test-id="${tid}"]`).click();
   }
 
+  // ─── Aba Estrutura ───
+  async gotoFirstModelEditStructure(): Promise<void> {
+    await safeGoto(this.page, `/o/${getOrgId()}/content_models`);
+    await this.page.waitForTimeout(1500);
+    const editIcon = this.page
+      .locator('[data-test-id="content-models-page"] [id*="-edit-element-"]')
+      .first();
+    await editIcon.evaluate((el: HTMLElement) => el.click());
+    await expect(this.page).toHaveURL(/\/content_models\/\d+\/edit/, { timeout: 15_000 });
+    await this.page.locator('[data-test-id="tab-structure"]').click();
+    await expect(this.page.locator('[data-test-id="tab-structure"]')).toHaveAttribute(
+      'aria-selected',
+      'true',
+      { timeout: 10_000 },
+    );
+  }
+
+  // Tipo de estrutura: <select id="structure_type"> nativo.
+  // (htmlFor do label aponta pra "content-models-structure-type-select" que não
+  // existe no DOM — divergência AT vs UI; o select real usa id snake_case.)
+  tipoEstruturaSelect(): Locator {
+    return this.page.locator('#structure_type');
+  }
+
+  async selectTipoEstrutura(label: 'Atividades sequenciais (1 nível)' | 'Atividades agrupadas por módulos (2 níveis)'): Promise<void> {
+    await this.tipoEstruturaSelect().selectOption({ label });
+    await this.page.waitForTimeout(500);
+  }
+
+  async tipoEstruturaOptions(): Promise<string[]> {
+    return this.tipoEstruturaSelect().locator('option').allTextContents();
+  }
+
+  // Carga horária: <select id="structure_workload"> nativo. UI mostra labels CURTOS
+  // ("Micro", "Curto", etc) — AT documentou completos ("Micro (30s a 5min)") por
+  // engano. AT canônico será atualizado pra refletir UI real.
+  cargaHorariaSelect(): Locator {
+    return this.page.locator('#structure_workload');
+  }
+
+  async cargaHorariaOptionsLabels(): Promise<string[]> {
+    return this.cargaHorariaSelect().locator('option').allTextContents();
+  }
+
+  cargaHorariaOptions = ['Micro', 'Curto', 'Médio', 'Estendido', 'Longo'] as const;
+
+  // Switches da aba Estrutura
+  incluirQuestionariosSwitch(): Locator {
+    return this.page.locator('label[for="structure_include_quiz"]');
+  }
+  incluirQuestionariosChecked(): Promise<boolean> {
+    return this.page.locator('#structure_include_quiz').isChecked();
+  }
+
+  incluirProvaFinalSwitch(): Locator {
+    return this.page.locator('label[for="structure_include_final_exam"]');
+  }
+  incluirProvaFinalChecked(): Promise<boolean> {
+    return this.page.locator('#structure_include_final_exam').isChecked();
+  }
+
+  atividadesPorModuloInput(): Locator {
+    return this.page.locator('#structure_activities_count');
+  }
+
+  structureSaveButton(): Locator {
+    return this.page.locator('[data-test-id="content-models-structure-submit-button"]');
+  }
+
+  async structureSave(): Promise<void> {
+    const btn = this.structureSaveButton();
+    await btn.scrollIntoViewIfNeeded();
+    await btn.evaluate((el: HTMLButtonElement) => el.click());
+  }
+
   // Cleanup helper: deletar modelo pelo nome via UI listagem.
   // Idempotente — usa try/catch + se modal de confirmação aparecer, confirma.
   async deleteByNameSafe(nome: string): Promise<void> {
