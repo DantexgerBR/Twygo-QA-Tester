@@ -1,0 +1,29 @@
+{
+  "runId": "sincronizacao-e-regeracao-de-previews_20260520-175720",
+  "scope": "Apenas testsuite contendo \"Sincronização e Regeração de Previews\"",
+  "tests": {
+    "total": 3,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 3,
+    "durationMs": 0
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 0,
+    "tests": 1,
+    "outOfScope": {
+      "errors": 4,
+      "warnings": 4,
+      "info": 0
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

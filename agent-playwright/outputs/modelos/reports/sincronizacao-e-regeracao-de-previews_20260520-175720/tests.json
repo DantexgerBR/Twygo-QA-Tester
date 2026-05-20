@@ -1,0 +1,284 @@
+{
+  "config": {
+    "configFile": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 3
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright/outputs/modelos/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 3
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "tests/auth/**/*.spec.ts",
+          "projects/modelos/tests/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/modelos/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\modelos\\tests\\features\\sincronizacao-e-regeracao-de-previews\\tc01-alterar-kit-exibe-alerta.spec.ts",
+      "file": "projects/modelos/tests/features/sincronizacao-e-regeracao-de-previews/tc01-alterar-kit-exibe-alerta.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Sincronização e Regeração de Previews",
+          "file": "projects/modelos/tests/features/sincronizacao-e-regeracao-de-previews/tc01-alterar-kit-exibe-alerta.spec.ts",
+          "line": 14,
+          "column": 15,
+          "specs": [
+            {
+              "title": "Alterar Kit de Marca exibe ícone de alerta no card",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\modelos\\tests\\features\\sincronizacao-e-regeracao-de-previews\\tc01-alterar-kit-exibe-alerta.spec.ts",
+                        "line": 14,
+                        "column": 15
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-20T20:57:17.724Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\modelos\\tests\\features\\sincronizacao-e-regeracao-de-previews\\tc01-alterar-kit-exibe-alerta.spec.ts",
+                            "line": 14,
+                            "column": 15
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "587dc9a4d0ecae7bec25-604c3f304dd55154c996",
+              "file": "projects/modelos/tests/features/sincronizacao-e-regeracao-de-previews/tc01-alterar-kit-exibe-alerta.spec.ts",
+              "line": 15,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\modelos\\tests\\features\\sincronizacao-e-regeracao-de-previews\\tc02-botao-regerar-todos-tooltip.spec.ts",
+      "file": "projects/modelos/tests/features/sincronizacao-e-regeracao-de-previews/tc02-botao-regerar-todos-tooltip.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Sincronização e Regeração de Previews",
+          "file": "projects/modelos/tests/features/sincronizacao-e-regeracao-de-previews/tc02-botao-regerar-todos-tooltip.spec.ts",
+          "line": 13,
+          "column": 15,
+          "specs": [
+            {
+              "title": "Botão \"Regerar todos\" exibe tooltip correto",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\modelos\\tests\\features\\sincronizacao-e-regeracao-de-previews\\tc02-botao-regerar-todos-tooltip.spec.ts",
+                        "line": 13,
+                        "column": 15
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-20T20:57:17.725Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\modelos\\tests\\features\\sincronizacao-e-regeracao-de-previews\\tc02-botao-regerar-todos-tooltip.spec.ts",
+                            "line": 13,
+                            "column": 15
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "11a1e58da26c7eddee12-f20ff622364da7b84dda",
+              "file": "projects/modelos/tests/features/sincronizacao-e-regeracao-de-previews/tc02-botao-regerar-todos-tooltip.spec.ts",
+              "line": 14,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\modelos\\tests\\features\\sincronizacao-e-regeracao-de-previews\\tc03-clicar-regerar-todos-toast.spec.ts",
+      "file": "projects/modelos/tests/features/sincronizacao-e-regeracao-de-previews/tc03-clicar-regerar-todos-toast.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Sincronização e Regeração de Previews",
+          "file": "projects/modelos/tests/features/sincronizacao-e-regeracao-de-previews/tc03-clicar-regerar-todos-toast.spec.ts",
+          "line": 8,
+          "column": 15,
+          "specs": [
+            {
+              "title": "Clicar \"Regerar todos\" inicia processo assíncrono",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\modelos\\tests\\features\\sincronizacao-e-regeracao-de-previews\\tc03-clicar-regerar-todos-toast.spec.ts",
+                        "line": 8,
+                        "column": 15
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-20T20:57:17.726Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\modelos\\tests\\features\\sincronizacao-e-regeracao-de-previews\\tc03-clicar-regerar-todos-toast.spec.ts",
+                            "line": 8,
+                            "column": 15
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "4a0481656cd13fc02547-994b6813cd61632a9724",
+              "file": "projects/modelos/tests/features/sincronizacao-e-regeracao-de-previews/tc03-clicar-regerar-todos-toast.spec.ts",
+              "line": 9,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-05-20T20:56:42.570Z",
+    "duration": 35158.079000000005,
+    "expected": 0,
+    "skipped": 3,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
