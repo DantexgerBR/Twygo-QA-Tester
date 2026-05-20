@@ -115,6 +115,62 @@ export class ContentModelEditPage {
     return this.page.locator('.chakra-toast').filter({ hasText: /sucesso/i }).first();
   }
 
+  // ─── Aba Estilo ───
+  async gotoEditStyleTab(id: number | string): Promise<void> {
+    await safeGoto(this.page, `/o/${getOrgId()}/content_models/${id}/edit?tab=style`);
+    await expect(this.page.locator('[data-test-id="tab-style"]')).toHaveAttribute(
+      'aria-selected',
+      'true',
+      { timeout: 15_000 },
+    );
+  }
+
+  // Abre edição do 1º modelo da listagem e troca pra aba style.
+  // Mais robusto que hardcodar ID (que muda entre envs).
+  async gotoFirstModelEditStyle(): Promise<void> {
+    await safeGoto(this.page, `/o/${getOrgId()}/content_models`);
+    await this.page.waitForTimeout(1500);
+    const editIcon = this.page
+      .locator('[data-test-id="content-models-page"] [id*="-edit-element-"]')
+      .first();
+    await editIcon.evaluate((el: HTMLElement) => el.click());
+    await expect(this.page).toHaveURL(/\/content_models\/\d+\/edit/, { timeout: 15_000 });
+    // Click tab style
+    await this.page.locator('[data-test-id="tab-style"]').click();
+    await expect(this.page.locator('[data-test-id="tab-style"]')).toHaveAttribute(
+      'aria-selected',
+      'true',
+      { timeout: 10_000 },
+    );
+  }
+
+  styleAddMoreDataButton(): Locator {
+    return this.page.locator('[data-test-id="content-models-style-add-more-data-button"]');
+  }
+
+  styleAddOptionByTestId = {
+    'Idade': 'content-models-style-add-style-age-range',
+    'Dificuldade': 'content-models-style-add-style-difficulty',
+    'Tom de voz': 'content-models-style-add-style-voice-tone',
+    'Perfil do público': 'content-models-style-add-style-audience-profile',
+    'Idioma': 'content-models-style-add-style-language',
+    'Informações adicionais': 'content-models-style-add-style-additional-info',
+  } as const;
+
+  async openStyleAddMenu(): Promise<void> {
+    // Botão fica próximo ao centro/topo da aba — não precisa de força
+    await this.styleAddMoreDataButton().click();
+    // Espera ao menos 1 menuitem aparecer
+    await expect(
+      this.page.locator('[data-test-id="content-models-style-add-style-age-range"]'),
+    ).toBeVisible({ timeout: 5_000 });
+  }
+
+  async clickStyleAddOption(option: keyof typeof this.styleAddOptionByTestId): Promise<void> {
+    const tid = this.styleAddOptionByTestId[option];
+    await this.page.locator(`[data-test-id="${tid}"]`).click();
+  }
+
   // Cleanup helper: deletar modelo pelo nome via UI listagem.
   // Idempotente — usa try/catch + se modal de confirmação aparecer, confirma.
   async deleteByNameSafe(nome: string): Promise<void> {

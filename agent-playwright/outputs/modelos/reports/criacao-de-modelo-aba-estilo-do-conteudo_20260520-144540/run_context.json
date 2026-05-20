@@ -1,0 +1,11 @@
+{
+  "runId": "criacao-de-modelo-aba-estilo-do-conteudo_20260520-144540",
+  "mode": "per-suite",
+  "suiteFilter": "Criação de Modelo - Aba Estilo do Conteúdo",
+  "projectName": "Modelos de conteúdo",
+  "environment": "staging-base-de-conhecimento",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-20T17:45:40.992Z"
+}
