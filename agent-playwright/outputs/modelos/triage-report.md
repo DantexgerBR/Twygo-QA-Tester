@@ -1,12 +1,12 @@
-# Triage Report — Modelos de conteúdo — 2026-05-20 14:13
+# Triage Report — Modelos de conteúdo — 2026-05-20 14:36
 
-**Escopo**: Testsuite: Filtros e Busca - Modelos · **Ambiente**: `staging-base-de-conhecimento`
+**Escopo**: Testsuite: Criação de Modelo - Aba Identificação · **Ambiente**: `staging-base-de-conhecimento`
 
 ## Sumário
 
 | Total | ✅ Passed | ❌ Failed | ⊘ Skipped | Findings exploratórios |
 |---:|---:|---:|---:|---|
-| 4 | 4 | 0 | 0 | 0 erros · 0 warnings · 0 info |
+| 8 | 7 | 0 | 1 | 0 erros · 0 warnings · 0 info |
 
 > **Janela única de revisão.** Marque ☑ em UMA categoria por item.
 > Notas em PT-BR. Commit este arquivo após triagem.
@@ -20,6 +20,15 @@ Suite rodou limpa. Revise apenas a seção de exploratórios e skips abaixo (se 
 
 ---
 
+## ⊘ Skips legítimos pra revalidação periódica
+
+> Items com `test.fixme` + reason. Se o motivo já não vale (seed criado, bug corrigido), abrir e re-rodar. Ver skill `debugar-bug-produto-stale`.
+
+| TC | Tipo | Motivo |
+|---|---|---|
+| Cancelar criação com alterações pendentes | fixme | — |
+
+---
 
 ## 🐛 Findings exploratórios não-fatais (informativo)
 

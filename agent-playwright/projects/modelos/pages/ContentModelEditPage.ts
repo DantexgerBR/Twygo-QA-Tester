@@ -1,0 +1,146 @@
+import type { Locator, Page } from '@playwright/test';
+import { expect } from '@playwright/test';
+import { safeGoto } from '../../../src/utils/modals.js';
+import { getOrgId } from '../../../src/utils/environment.js';
+
+export class ContentModelEditPage {
+  constructor(private readonly page: Page) {}
+
+  async gotoNew(): Promise<void> {
+    await safeGoto(this.page, `/o/${getOrgId()}/content_models/new`);
+    await this.expectIdentificationTabActive();
+  }
+
+  async gotoEdit(id: number | string): Promise<void> {
+    await safeGoto(this.page, `/o/${getOrgId()}/content_models/${id}/edit`);
+    await this.expectIdentificationTabActive();
+  }
+
+  async expectIdentificationTabActive(): Promise<void> {
+    const tab = this.page.locator('[data-test-id="tab-identification"]');
+    await expect(tab).toBeVisible({ timeout: 30_000 });
+    await expect(tab).toHaveAttribute('aria-selected', 'true');
+  }
+
+  // Inputs da aba Identificação
+  nameInput(): Locator {
+    return this.page.locator('#content-models-name-input');
+  }
+
+  descriptionTextarea(): Locator {
+    return this.page.locator('#content-models-description-textarea');
+  }
+
+  kitDeMarcaInput(): Locator {
+    // react-select; id estável do input interno
+    return this.page.locator('#react-select-2-input');
+  }
+
+  // Switches (Chakra renderiza input hidden — interagir via label)
+  usarComoPadraoLabel(): Locator {
+    return this.page.locator('label[for="is_default"]');
+  }
+
+  usarDesignsSugeridosLabel(): Locator {
+    return this.page.locator('label[for="use_suggested_designs"]');
+  }
+
+  ativoLabel(): Locator {
+    return this.page.locator('label[for="situation"]');
+  }
+
+  usarComoPadraoChecked(): Promise<boolean> {
+    return this.page.locator('#is_default').isChecked();
+  }
+
+  usarDesignsSugeridosChecked(): Promise<boolean> {
+    return this.page.locator('#use_suggested_designs').isChecked();
+  }
+
+  ativoChecked(): Promise<boolean> {
+    return this.page.locator('#situation').isChecked();
+  }
+
+  // Botões
+  saveButton(): Locator {
+    return this.page.locator('[data-test-id="content-models-identification-submit-button"]');
+  }
+
+  backButton(): Locator {
+    return this.page.locator('#content-models-form-back-button');
+  }
+
+  // Salvar via JS click (botão fica no canto inferior direito, coberto pelo chat widget HubSpot).
+  async save(): Promise<void> {
+    const btn = this.saveButton();
+    await btn.scrollIntoViewIfNeeded();
+    await btn.evaluate((el: HTMLButtonElement) => el.click());
+  }
+
+  // Preenchimento Kit de marca via keyboard (dropdown react-select)
+  async selectKitDeMarca(option?: string): Promise<void> {
+    const input = this.kitDeMarcaInput();
+    await input.focus();
+    if (option) {
+      await input.fill(option);
+      await this.page.waitForTimeout(300);
+    }
+    await this.page.keyboard.press('ArrowDown');
+    await this.page.waitForTimeout(200);
+    await this.page.keyboard.press('Enter');
+    await this.page.waitForTimeout(300);
+  }
+
+  // Fluxo completo de criação (TC1 happy path)
+  async fillIdentificationAndSave(opts: {
+    nome: string;
+    descricao?: string;
+    kitDeMarca?: string;
+  }): Promise<void> {
+    await this.nameInput().fill(opts.nome);
+    if (opts.descricao) {
+      await this.descriptionTextarea().fill(opts.descricao);
+    }
+    await this.selectKitDeMarca(opts.kitDeMarca);
+    await this.save();
+  }
+
+  // Badge "Dica" (só renderiza na criação — RN 9)
+  dicaBadge(): Locator {
+    return this.page.locator('[data-test-id="content-models-duplicate-tip-alert"]');
+  }
+
+  // Toast Chakra (sucesso/erro)
+  toastSuccess(): Locator {
+    return this.page.locator('.chakra-toast').filter({ hasText: /sucesso/i }).first();
+  }
+
+  // Cleanup helper: deletar modelo pelo nome via UI listagem.
+  // Idempotente — usa try/catch + se modal de confirmação aparecer, confirma.
+  async deleteByNameSafe(nome: string): Promise<void> {
+    try {
+      await safeGoto(this.page, `/o/${getOrgId()}/content_models`);
+      await this.page.waitForTimeout(1500);
+      await this.page.locator('#play-interest-search').fill(nome);
+      await this.page.waitForTimeout(800);
+      // Card delete icon — content_models-{id}-destroy-element-*-button-3
+      const deleteIcon = this.page
+        .locator('[data-test-id="content-models-page"] [id*="-destroy-element-"]')
+        .first();
+      if (!(await deleteIcon.isVisible().catch(() => false))) return;
+      await deleteIcon.evaluate((el: HTMLElement) => el.click());
+      await this.page.waitForTimeout(500);
+      // Modal de confirmação Chakra — botão "Excluir" ou "Confirmar"
+      for (const label of ['Excluir', 'Confirmar', 'Sim']) {
+        const btn = this.page.getByRole('button', { name: label, exact: true }).first();
+        if (await btn.isVisible({ timeout: 1500 }).catch(() => false)) {
+          await btn.evaluate((el: HTMLElement) => el.click());
+          await this.page.waitForTimeout(1000);
+          break;
+        }
+      }
+    } catch {
+      // best-effort — cleanup não bloqueia próximo TC
+    }
+  }
+}
