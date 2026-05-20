@@ -1052,7 +1052,7 @@ Usuário logado como Admin</preconditions>
           <execution_type>2</execution_type>
         </step>      </steps>
     </testcase>    <testcase name="Filtrar designs por Tipo (Aula/Página)">
-      <summary>Validar filtro padrão &#34;Somente aulas&#34; (RN 50).</summary>
+      <summary>Validar filtro padrão &#34;Só aulas&#34; (RN 50).</summary>
       <preconditions>Ambiente Stage configurado
 Feature flag `modelos_de_conteudo` ativa
 Modelo de teste cadastrado com pelo menos 3 designs (mix de Aula e Página)
@@ -1062,11 +1062,11 @@ Usuário logado como Admin</preconditions>
       <steps>        <step>
           <step_number>1</step_number>
           <actions>Clicar no botão &#34;Filtrar&#34;</actions>
-          <expectedresults>Drawer &#34;Filtros&#34; é exibido com os filtros padrão &#34;Somente páginas&#34; e &#34;Somente aulas&#34;.</expectedresults>
+          <expectedresults>Drawer &#34;Filtros&#34; é exibido com os filtros padrão &#34;Só páginas&#34; e &#34;Só aulas&#34;.</expectedresults>
           <execution_type>2</execution_type>
         </step>        <step>
           <step_number>2</step_number>
-          <actions>Selecionar o filtro padrão &#34;Somente aulas&#34;</actions>
+          <actions>Selecionar o filtro padrão &#34;Só aulas&#34;</actions>
           <expectedresults>Filtro fica marcado.</expectedresults>
           <execution_type>2</execution_type>
         </step>        <step>
@@ -1157,7 +1157,7 @@ Usuário logado como Admin</preconditions>
           <execution_type>2</execution_type>
         </step>        <step>
           <step_number>2</step_number>
-          <actions>Aplicar o filtro padrão &#34;Somente páginas&#34;</actions>
+          <actions>Aplicar o filtro padrão &#34;Só páginas&#34;</actions>
           <expectedresults>Listagem exibe apenas designs do Tipo Página.</expectedresults>
           <execution_type>2</execution_type>
         </step>        <step>

@@ -1055,12 +1055,12 @@ Validar ações disponíveis em cada linha da listagem de designs (RN 46).
 **Playbooks adicionais**: []
 
 ### Objetivo
-Validar filtro padrão "Somente aulas" (RN 50).
+Validar filtro padrão "Só aulas" (RN 50).
 
 ### Passos
 1. Clicar no botão "Filtrar"
-   → Drawer "Filtros" é exibido com os filtros padrão "Somente páginas" e "Somente aulas".
-2. Selecionar o filtro padrão "Somente aulas"
+   → Drawer "Filtros" é exibido com os filtros padrão "Só páginas" e "Só aulas".
+2. Selecionar o filtro padrão "Só aulas"
    → Filtro fica marcado.
 3. Aplicar o filtro
    → Drawer fecha. Listagem exibe apenas designs do Tipo "Aula".
@@ -1138,7 +1138,7 @@ Validar que drag and drop fica desabilitado com filtro ativo (RN 63.1).
 ### Passos
 1. Acessar a aba "Design" do modelo de teste
    → Listagem é exibida.
-2. Aplicar o filtro padrão "Somente páginas"
+2. Aplicar o filtro padrão "Só páginas"
    → Listagem exibe apenas designs do Tipo Página.
 3. Aguardar o ícone de drag ser renderizado
    → Ícone de drag exibido em estado desabilitado nas linhas/cards da listagem filtrada.
