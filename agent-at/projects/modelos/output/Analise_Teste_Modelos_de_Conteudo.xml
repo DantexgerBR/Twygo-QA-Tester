@@ -1,0 +1,1473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="">  <testsuite name="Listagem e Menu de Modelos">    <testcase name="Acessar listagem via submenu Aprendizagem">
+      <summary>Validar acesso à listagem via menu lateral, conforme RN 1, 1.1.</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa na organização do teste
+Pelo menos 2 modelos cadastrados (1 ativo, 1 inativo) para validar visualizações
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a URL &#34;/play&#34;</actions>
+          <expectedresults>Dashboard padrão é exibido contendo o menu lateral.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no menu lateral &#34;Aprendizagem&#34;</actions>
+          <expectedresults>Submenu lateral é exibido contendo o item &#34;Modelos de conteúdo&#34; com ícone Material &#34;browse&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Clicar no submenu &#34;Modelos de conteúdo&#34;</actions>
+          <expectedresults>Sistema redireciona para a listagem e exibe breadcrumb &#34;Aprendizagem &gt; Modelos de conteúdo&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Visualização padrão em Cards">
+      <summary>Validar que a visualização padrão da listagem é em formato Cards, conforme RN 3.</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa na organização do teste
+Pelo menos 2 modelos cadastrados (1 ativo, 1 inativo) para validar visualizações
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a URL &#34;/o/{orgId}/content_templates&#34;</actions>
+          <expectedresults>Listagem é exibida em formato Cards por padrão.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar a renderização dos cards</actions>
+          <expectedresults>Cada card exibe imagem principal, nome do modelo, ações (List Control) e indicador de cor lateral para status.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Alternância entre visualização Cards e Lista">
+      <summary>Validar alternância de visualização entre Cards e Lista, conforme RN 2.</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa na organização do teste
+Pelo menos 2 modelos cadastrados (1 ativo, 1 inativo) para validar visualizações
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a URL &#34;/o/{orgId}/content_templates&#34;</actions>
+          <expectedresults>Listagem é exibida em formato Cards.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão de alternância para visualização &#34;Lista&#34;</actions>
+          <expectedresults>Listagem alterna para formato Lista exibindo colunas: &#34;Nome&#34;, &#34;Descrição&#34;, &#34;Nome do provedor&#34;, &#34;Designs&#34;, &#34;Aplicação&#34;, &#34;Situação&#34;, &#34;Ações&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Clicar no botão de alternância para visualização &#34;Cards&#34;</actions>
+          <expectedresults>Listagem retorna para formato Cards.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Coluna Descrição truncada com tooltip completo (visão Lista)">
+      <summary>Validar que a Descrição na visão Lista é truncada em 50 caracteres com tooltip exibindo o texto completo (RN 4.1.2).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa na organização do teste
+Pelo menos 2 modelos cadastrados (1 ativo, 1 inativo) para validar visualizações
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a listagem em formato Lista para um modelo com Descrição maior que 50 caracteres</actions>
+          <expectedresults>Coluna &#34;Descrição&#34; exibe os primeiros 50 caracteres da descrição seguidos de reticências.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Posicionar o mouse sobre a Descrição truncada</actions>
+          <expectedresults>Tooltip exibido com o texto completo da Descrição.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Botão Adicionar redireciona para criação">
+      <summary>Validar que o botão &#34;Adicionar&#34; inicia o fluxo de criação de modelo, conforme RN 2 e RN 7.</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa na organização do teste
+Pelo menos 2 modelos cadastrados (1 ativo, 1 inativo) para validar visualizações
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a listagem de modelos</actions>
+          <expectedresults>Listagem é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;+ Adicionar&#34;</actions>
+          <expectedresults>Sistema redireciona para a tela de criação exibindo a aba &#34;Identificação&#34; como primeira aba.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Indicador de cor lateral reflete status ativo/inativo no card">
+      <summary>Validar que o indicador de cor lateral dos cards reflete o status ativo/inativo do modelo (RN 5).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa na organização do teste
+Pelo menos 2 modelos cadastrados (1 ativo, 1 inativo) para validar visualizações
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a listagem em formato Cards com modelos ativos e inativos</actions>
+          <expectedresults>Listagem exibe cards com indicadores de cor lateral distintos para modelos ativos e inativos.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar o card de um modelo ativo ser exibido</actions>
+          <expectedresults>Card exibe indicador de cor lateral indicando estado &#34;Ativo&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Aguardar o card de um modelo inativo ser exibido</actions>
+          <expectedresults>Card exibe indicador de cor lateral indicando estado &#34;Inativo&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Filtros e Busca - Modelos">    <testcase name="Buscar modelo por nome">
+      <summary>Validar busca textual por nome do modelo na listagem.</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Pelo menos 4 modelos cadastrados (ativos, inativos, próprios e de terceiros) para validar filtros
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a URL &#34;/o/{orgId}/content_templates&#34;</actions>
+          <expectedresults>Listagem é exibida com múltiplos modelos.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Preencher o campo &#34;Buscar&#34; com &#34;Modelo TC1&#34;</actions>
+          <expectedresults>Listagem filtra exibindo apenas modelos cujo nome contém &#34;Modelo TC1&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Limpar o campo &#34;Buscar&#34;</actions>
+          <expectedresults>Listagem volta a exibir todos os modelos cadastrados.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Filtrar modelos por Situação via drawer">
+      <summary>Validar filtragem por Situação (Ativo/Inativo) via drawer de filtros, conforme RN 60.</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Pelo menos 4 modelos cadastrados (ativos, inativos, próprios e de terceiros) para validar filtros
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no botão &#34;Filtrar&#34;</actions>
+          <expectedresults>Drawer &#34;Filtros&#34; é exibido à direita.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Selecionar a opção &#34;Ativo&#34; no filtro &#34;Situação&#34;</actions>
+          <expectedresults>Filtro &#34;Situação&#34; exibe a opção &#34;Ativo&#34; selecionada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Aplicar o filtro</actions>
+          <expectedresults>Drawer fecha. Listagem exibe apenas modelos com Situação &#34;Ativo&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Aplicar filtro padrão &#34;Modelos próprios&#34;">
+      <summary>Validar filtro padrão &#34;Modelos próprios&#34;, conforme RN 62.</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Pelo menos 4 modelos cadastrados (ativos, inativos, próprios e de terceiros) para validar filtros
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no botão &#34;Filtrar&#34;</actions>
+          <expectedresults>Drawer &#34;Filtros&#34; é exibido com os filtros padrão &#34;Modelos ativos&#34;, &#34;Modelos inativos&#34;, &#34;Modelos próprios&#34;, &#34;Modelos de terceiros&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Selecionar o filtro padrão &#34;Modelos próprios&#34;</actions>
+          <expectedresults>Filtro fica marcado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Aplicar o filtro</actions>
+          <expectedresults>Drawer fecha. Listagem exibe apenas modelos próprios da organização.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Limpar filtros aplicados">
+      <summary>Validar limpeza dos filtros aplicados.</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Pelo menos 4 modelos cadastrados (ativos, inativos, próprios e de terceiros) para validar filtros
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Aplicar o filtro padrão &#34;Modelos ativos&#34;</actions>
+          <expectedresults>Listagem é filtrada exibindo apenas modelos ativos.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;Limpar filtros&#34;</actions>
+          <expectedresults>Listagem volta a exibir todos os modelos cadastrados sem filtros aplicados.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Criação de Modelo - Aba Identificação">    <testcase name="Criar modelo com dados válidos">
+      <summary>Validar criação de modelo (happy path) preenchendo todos os campos da aba Identificação (RN 7, RN 8).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Pelo menos 1 kit de marca cadastrado na organização
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a URL &#34;/o/{orgId}/content_templates&#34;</actions>
+          <expectedresults>Listagem é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;+ Adicionar&#34;</actions>
+          <expectedresults>Sistema redireciona para a tela de criação exibindo a aba &#34;Identificação&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Preencher o campo &#34;Nome&#34; com &#34;Modelo TC1 w{workerIndex}-{timestamp}&#34;</actions>
+          <expectedresults>Campo &#34;Nome&#34; exibe o texto digitado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Preencher o campo &#34;Descrição&#34; com &#34;Modelo de teste automatizado&#34;</actions>
+          <expectedresults>Campo &#34;Descrição&#34; exibe o texto digitado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>5</step_number>
+          <actions>Selecionar &#34;Kit padrão da organização&#34; no dropdown &#34;Kit de marca&#34;</actions>
+          <expectedresults>Dropdown &#34;Kit de marca&#34; exibe a opção selecionada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>6</step_number>
+          <actions>Clicar no botão &#34;Salvar&#34;</actions>
+          <expectedresults>Toast exibida: &#34;Modelo de conteúdo criado com sucesso.&#34;. Sistema permanece na tela de edição ou redireciona para listagem.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Badge &#34;Dica&#34; aparece somente na criação">
+      <summary>Validar que a badge &#34;Dica: Para um resultado mais rápido...&#34; aparece apenas na criação de novo modelo (RN 9).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Pelo menos 1 kit de marca cadastrado na organização
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a tela de criação de modelo</actions>
+          <expectedresults>Aba &#34;Identificação&#34; é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar a badge &#34;Dica&#34; ser renderizada</actions>
+          <expectedresults>Badge exibida com o texto: &#34;Dica: Para um resultado mais rápido, recomendamos duplicar um modelo existente e editar a cópia ao invés de criar um do zero.&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Badge &#34;Dica&#34; NÃO aparece na edição">
+      <summary>Validar que a badge &#34;Dica&#34; NÃO é exibida em modo edição (RN 9).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Pelo menos 1 kit de marca cadastrado na organização
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a listagem com pelo menos 1 modelo cadastrado</actions>
+          <expectedresults>Listagem é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar na ação &#34;Editar&#34; do modelo alvo</actions>
+          <expectedresults>Sistema redireciona para a tela de edição exibindo a aba &#34;Identificação&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Aguardar a tela de edição carregar completamente</actions>
+          <expectedresults>Badge &#34;Dica&#34; NÃO é exibida na tela de edição.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Validar campo Nome obrigatório">
+      <summary>Validar que o campo &#34;Nome&#34; é obrigatório (RN 8).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Pelo menos 1 kit de marca cadastrado na organização
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a tela de criação de modelo</actions>
+          <expectedresults>Aba &#34;Identificação&#34; é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Preencher o campo &#34;Descrição&#34; com &#34;Teste sem nome&#34;</actions>
+          <expectedresults>Campo &#34;Descrição&#34; exibe o texto digitado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Clicar no botão &#34;Salvar&#34;</actions>
+          <expectedresults>Mensagem de validação exibida: &#34;Nome é obrigatório&#34;. Modelo NÃO é criado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Validar limite de 500 caracteres da Descrição">
+      <summary>Validar limite máximo de 500 caracteres no campo &#34;Descrição&#34;.</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Pelo menos 1 kit de marca cadastrado na organização
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a tela de criação de modelo</actions>
+          <expectedresults>Aba &#34;Identificação&#34; é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Preencher o campo &#34;Descrição&#34; com uma string de 501 caracteres</actions>
+          <expectedresults>Campo &#34;Descrição&#34; trunca o input em 500 caracteres OU exibe mensagem de limite atingido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Switch &#34;Usar designs sugeridos&#34; exibido somente na criação">
+      <summary>Validar que o switch &#34;Usar designs sugeridos&#34; só aparece na criação (RN 8).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Pelo menos 1 kit de marca cadastrado na organização
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a tela de criação de modelo</actions>
+          <expectedresults>Aba &#34;Identificação&#34; é exibida com o switch &#34;Usar designs sugeridos&#34; visível, marcado como ativo por padrão.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar a tooltip do switch ser exibida ao posicionar o mouse</actions>
+          <expectedresults>Tooltip exibida: &#34;Quando ativo, a IA utilizará designs pré-definidos como sugestão ao gerar o conteúdo do curso&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Defaults dos switches na criação">
+      <summary>Validar valores default dos switches: &#34;Usar como modelo padrão&#34; = false, &#34;Usar designs sugeridos&#34; = true, &#34;Ativo&#34; = true (RN 8).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Pelo menos 1 kit de marca cadastrado na organização
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a tela de criação de modelo</actions>
+          <expectedresults>Aba &#34;Identificação&#34; é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar os switches serem renderizados</actions>
+          <expectedresults>Switch &#34;Usar como modelo padrão&#34; exibido desativado, switch &#34;Usar designs sugeridos&#34; exibido ativado, switch &#34;Ativo&#34; exibido ativado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Cancelar criação com alterações pendentes">
+      <summary>Validar diálogo nativo de saída com alterações não salvas.</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Pelo menos 1 kit de marca cadastrado na organização
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a tela de criação de modelo</actions>
+          <expectedresults>Aba &#34;Identificação&#34; é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Preencher o campo &#34;Nome&#34; com &#34;Teste cancelamento&#34;</actions>
+          <expectedresults>Campo &#34;Nome&#34; exibe o texto digitado e o estado do form fica &#34;sujo&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Clicar no botão &#34;Cancelar&#34;</actions>
+          <expectedresults>Diálogo nativo do browser é exibido perguntando se o usuário deseja sair sem salvar.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Confirmar manter na página no diálogo</actions>
+          <expectedresults>Usuário permanece na tela de criação com os dados preenchidos.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Criação de Modelo - Aba Estilo do Conteúdo">    <testcase name="Botão &#34;Adicionar mais dados&#34; exibe menu com 6 opções">
+      <summary>Validar que o botão exibe menu com as 6 opções de estilo (RN 12, RN 13).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec (via beforeAll)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Estilo do conteúdo&#34; do modelo de teste</actions>
+          <expectedresults>Aba &#34;Estilo do conteúdo&#34; fica selecionada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;Adicionar mais dados&#34;</actions>
+          <expectedresults>Menu suspenso é exibido contendo as opções: &#34;Idade&#34;, &#34;Dificuldade&#34;, &#34;Tom de voz&#34;, &#34;Perfil do público&#34;, &#34;Idioma&#34;, &#34;Informações adicionais&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Adicionar campo Idade via menu">
+      <summary>Validar adição de campo via menu (RN 13, RN 13.1).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec (via beforeAll)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Estilo do conteúdo&#34; do modelo de teste</actions>
+          <expectedresults>Aba &#34;Estilo do conteúdo&#34; é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;Adicionar mais dados&#34;</actions>
+          <expectedresults>Menu suspenso é exibido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Clicar na opção &#34;Idade&#34; no menu</actions>
+          <expectedresults>Menu fecha e novo campo &#34;Idade&#34; é inserido na seção de estilo, seguindo o mesmo padrão do Estúdio de Criação.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Criação de Modelo - Aba Estrutura do Conteúdo">    <testcase name="Tipo de estrutura exibe 2 opções">
+      <summary>Validar opções do dropdown &#34;Tipo de estrutura&#34; (RN 15, RN 16).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec (via beforeAll)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Estrutura do conteúdo&#34; do modelo de teste</actions>
+          <expectedresults>Aba &#34;Estrutura do conteúdo&#34; fica selecionada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no dropdown &#34;Tipo de estrutura&#34;</actions>
+          <expectedresults>Dropdown exibe as opções &#34;Atividades sequenciais (1 nível)&#34; e &#34;Atividades agrupadas por módulos (2 níveis)&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Tooltip do Tipo de estrutura">
+      <summary>Validar texto literal da tooltip (RN 15).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec (via beforeAll)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Estrutura do conteúdo&#34;</actions>
+          <expectedresults>Aba é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar a tooltip do campo &#34;Tipo de estrutura&#34; ser exibida ao posicionar o mouse</actions>
+          <expectedresults>Tooltip exibida: &#34;Define se o curso possui apenas atividades sequenciais ou se elas são organizadas em módulos.&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Selecionar &#34;2 níveis&#34; exibe campo de atividades por módulo">
+      <summary>Validar comportamento condicional ao selecionar 2 níveis (RN 16.1).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec (via beforeAll)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Estrutura do conteúdo&#34;</actions>
+          <expectedresults>Aba é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Selecionar &#34;Atividades agrupadas por módulos (2 níveis)&#34; no dropdown &#34;Tipo de estrutura&#34;</actions>
+          <expectedresults>Dropdown exibe a opção selecionada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Aguardar o campo &#34;Número de atividades por módulo&#34; ser exibido</actions>
+          <expectedresults>Campo numérico &#34;Número de atividades por módulo&#34; é exibido com tooltip: &#34;Número sugerido de atividades que a IA irá criar dentro de cada módulo do curso.&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Carga horária obrigatória bloqueia salvamento">
+      <summary>Validar que sem &#34;Carga horária sugerida&#34; o salvamento é bloqueado (RN 18).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec (via beforeAll)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Estrutura do conteúdo&#34; do modelo de teste sem carga horária preenchida</actions>
+          <expectedresults>Aba é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;Salvar&#34;</actions>
+          <expectedresults>Mensagem de validação exibida: &#34;Carga horária sugerida é obrigatória&#34;. Modelo NÃO é salvo.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Carga horária exibe 5 opções literais">
+      <summary>Validar as 5 opções literais de carga horária (RN 18).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec (via beforeAll)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Estrutura do conteúdo&#34;</actions>
+          <expectedresults>Aba é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no dropdown &#34;Carga horária sugerida&#34;</actions>
+          <expectedresults>Dropdown exibe as opções &#34;Micro (30 segundos a 5 minutos)&#34;, &#34;Curto (5 a 15 minutos)&#34;, &#34;Médio (15 a 30 minutos)&#34;, &#34;Estendido (30 a 60 minutos)&#34;, &#34;Longo (1 a 2 horas)&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Switch &#34;Incluir questionários&#34; exibe configurações básicas">
+      <summary>Validar que ativar o switch exibe os campos básicos de questionário (RN 21, RN 22).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec (via beforeAll)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Estrutura do conteúdo&#34;</actions>
+          <expectedresults>Aba é exibida com a seção &#34;Questionários ao longo do conteúdo&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Ativar o switch &#34;Incluir questionários no conteúdo&#34;</actions>
+          <expectedresults>Seção expande exibindo os campos básicos de configuração de questionário.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Switch &#34;Configurações avançadas&#34; exibe campos adicionais">
+      <summary>Validar que ativar configurações avançadas exibe campos adicionais (RN 22.1).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec (via beforeAll)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Ativar o switch &#34;Incluir questionários no conteúdo&#34;</actions>
+          <expectedresults>Campos básicos de questionário são exibidos.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Ativar o switch &#34;Configurações avançadas&#34;</actions>
+          <expectedresults>Campos adicionais de configuração são exibidos.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Switch &#34;Incluir prova final&#34;">
+      <summary>Validar exibição da seção &#34;Prova final&#34; e campos básicos (RN 25, RN 26).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec (via beforeAll)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Estrutura do conteúdo&#34;</actions>
+          <expectedresults>Aba é exibida com a seção &#34;Prova final&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar a tooltip da seção &#34;Prova final&#34; ser exibida ao posicionar o mouse</actions>
+          <expectedresults>Tooltip exibida: &#34;Avaliação aplicada ao final do curso, cobrindo todo o conteúdo.&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Ativar o switch &#34;Incluir prova final&#34;</actions>
+          <expectedresults>Seção expande exibindo os campos básicos de configuração de prova final.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Criação de Modelo - Aba Imagem">    <testcase name="Aba Imagem exibe título e subtítulo literais">
+      <summary>Validar textos literais da aba Imagem (RN 57.1, RN 57.2).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec (via beforeAll)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Imagem&#34; do modelo de teste</actions>
+          <expectedresults>Aba &#34;Imagem&#34; fica selecionada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar a renderização da seção</actions>
+          <expectedresults>Título exibido: &#34;Escolha o padrão de imagens para o modelo&#34;. Subtítulo exibido: &#34;Selecione como as imagens serão incluídas nos cursos gerados com este modelo. Cada opção oferece diferentes benefícios para a experiência de aprendizado.&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Opções de padrão de imagem disponíveis">
+      <summary>Validar 4 opções de padrão de imagem (RN 57).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec (via beforeAll)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Imagem&#34;</actions>
+          <expectedresults>Aba é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar as opções serem renderizadas</actions>
+          <expectedresults>Opções exibidas: &#34;Sem imagens, somente textos&#34;, &#34;Banco de imagens aberto&#34;, &#34;Gerador DALL-E (OpenAI)&#34;, &#34;Gerador Imagen 4 (Google)&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Default &#34;Sem imagens, somente textos&#34;">
+      <summary>Validar que o padrão selecionado por default é &#34;Sem imagens, somente textos&#34; (RN 57.4).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec (via beforeAll)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Imagem&#34; em um novo modelo recém-criado</actions>
+          <expectedresults>Aba é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar a seleção default ser renderizada</actions>
+          <expectedresults>Opção &#34;Sem imagens, somente textos&#34; é exibida como selecionada por padrão.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Criação de Modelo - Aba Áudio">    <testcase name="Aba Áudio exibe título e subtítulo literais">
+      <summary>Validar textos literais da aba Áudio (RN 58.1, RN 58.2).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec (via beforeAll)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Áudio&#34; do modelo de teste</actions>
+          <expectedresults>Aba &#34;Áudio&#34; fica selecionada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar a renderização da seção</actions>
+          <expectedresults>Título exibido: &#34;Escolha a voz padrão para narrar as aulas&#34;. Subtítulo exibido: &#34;Selecione a voz que melhor se adequa ao tom deste modelo. Você pode ouvir uma amostra de cada voz antes de escolher.&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Opções de voz disponíveis">
+      <summary>Validar 4 opções de voz (RN 58).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec (via beforeAll)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Áudio&#34;</actions>
+          <expectedresults>Aba é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar as opções de voz serem renderizadas</actions>
+          <expectedresults>Opções exibidas: &#34;Ana&#34;, &#34;Cris&#34;, &#34;Carlos&#34;, &#34;Morgan&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Default voz &#34;Ana&#34;">
+      <summary>Validar que a voz default selecionada é &#34;Ana&#34; (RN 58.4).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec (via beforeAll)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Áudio&#34; em um novo modelo recém-criado</actions>
+          <expectedresults>Aba é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar a seleção default ser renderizada</actions>
+          <expectedresults>Opção &#34;Ana&#34; é exibida como selecionada por padrão.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Botão de preview de voz funcional">
+      <summary>Validar que o botão de preview/ouvir amostra está disponível para cada voz (RN 58 — quebra QA 1.5).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec (via beforeAll)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Áudio&#34;</actions>
+          <expectedresults>Aba é exibida com as 4 opções de voz.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão de preview da voz &#34;Cris&#34;</actions>
+          <expectedresults>Sistema inicia reprodução da amostra de áudio da voz &#34;Cris&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Criação de Design de Página">    <testcase name="Acessar criação de Página via menu Adicionar">
+      <summary>Validar fluxo de criação de Página (RN 30, RN 31, RN 32).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec, com pelo menos 1 kit de marca selecionado
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Design&#34; do modelo de teste</actions>
+          <expectedresults>Aba &#34;Design&#34; exibe a listagem de designs (vazia ou com designs cadastrados).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;Adicionar&#34;</actions>
+          <expectedresults>Menu suspenso é exibido com as opções &#34;Aula&#34; e &#34;Página&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Clicar na opção &#34;Página&#34;</actions>
+          <expectedresults>Sistema redireciona para a tela de criação de Página exibindo a aba &#34;Identificação&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Validar campos obrigatórios da aba Identificação - Página">
+      <summary>Validar campos obrigatórios da aba Identificação de design de Página (RN 33).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec, com pelo menos 1 kit de marca selecionado
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a tela de criação de Página com a aba &#34;Identificação&#34;</actions>
+          <expectedresults>Aba &#34;Identificação&#34; é exibida com campos vazios.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;Salvar&#34; sem preencher nada</actions>
+          <expectedresults>Mensagens de validação exibidas para os campos obrigatórios: &#34;Nome&#34;, &#34;Instruções de estrutura para a IA&#34;, &#34;Sequência&#34;. Página NÃO é criada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Auto-preenchimento ao selecionar tipo &#34;Capa&#34;">
+      <summary>Validar auto-preenchimento dos campos de instruções ao selecionar o tipo &#34;Capa&#34; (RN 33.1).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec, com pelo menos 1 kit de marca selecionado
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a tela de criação de Página com a aba &#34;Identificação&#34;</actions>
+          <expectedresults>Aba &#34;Identificação&#34; é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Selecionar &#34;Capa&#34; no campo &#34;Tipo&#34;</actions>
+          <expectedresults>Campo &#34;Tipo&#34; exibe &#34;Capa&#34; selecionado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Aguardar o auto-preenchimento dos campos de instruções</actions>
+          <expectedresults>Campo &#34;Instruções de estrutura para a IA&#34; é preenchido automaticamente com: &#34;Usar sempre como primeira parte de qualquer aula.&#34;. Campo &#34;Instruções de conteúdo para a IA&#34; é preenchido automaticamente com texto canônico da Capa.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Tooltip do campo Tipo">
+      <summary>Validar texto da tooltip do campo Tipo (RN 33).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec, com pelo menos 1 kit de marca selecionado
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a tela de criação de Página com a aba &#34;Identificação&#34;</actions>
+          <expectedresults>Aba é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar a tooltip do campo &#34;Tipo&#34; ser exibida ao posicionar o mouse</actions>
+          <expectedresults>Tooltip exibida: &#34;Classifique este design por tipo de parte (ex: Capa, Corpo, Encerramento). Essa informação será utilizada para filtrar e organizar seus designs.&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Salvar Identificação redireciona para aba Design">
+      <summary>Validar redirecionamento automático após salvar Identificação (RN 34).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec, com pelo menos 1 kit de marca selecionado
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a tela de criação de Página com a aba &#34;Identificação&#34;</actions>
+          <expectedresults>Aba &#34;Identificação&#34; é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Preencher o campo &#34;Nome&#34; com &#34;Design TC5 w{workerIndex}-{timestamp}&#34;</actions>
+          <expectedresults>Campo &#34;Nome&#34; exibe o texto digitado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Selecionar &#34;Corpo&#34; no campo &#34;Tipo&#34;</actions>
+          <expectedresults>Campos de instrução são auto-preenchidos.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Preencher o campo &#34;Sequência&#34; com &#34;1&#34;</actions>
+          <expectedresults>Campo &#34;Sequência&#34; exibe o valor digitado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>5</step_number>
+          <actions>Clicar no botão &#34;Salvar&#34;</actions>
+          <expectedresults>Toast exibida: &#34;Design criado com sucesso.&#34;. Sistema redireciona automaticamente para a aba &#34;Design&#34; da própria Página.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Aba Design exibe Plate Editor com Kit de Marca default">
+      <summary>Validar que a aba Design exibe o Plate Editor com kit de marca selecionado (RN 35, RN 36.1).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec, com pelo menos 1 kit de marca selecionado
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Design&#34; de uma Página recém-salva</actions>
+          <expectedresults>Aba &#34;Design&#34; é exibida com o Plate Editor renderizado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar o select de Kit de Marca ser renderizado</actions>
+          <expectedresults>Select de Kit de Marca exibe o mesmo kit que está selecionado no Modelo por padrão.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Salvar Página retorna para aba Design do Modelo">
+      <summary>Validar retorno à aba Design do Modelo com listagem atualizada (RN 37).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec, com pelo menos 1 kit de marca selecionado
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Design&#34; da Página em criação</actions>
+          <expectedresults>Plate Editor é exibido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;Salvar&#34; da Página</actions>
+          <expectedresults>Sistema retorna para a aba &#34;Design&#34; do Modelo de conteúdo.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Aguardar a listagem de designs do Modelo carregar</actions>
+          <expectedresults>Listagem exibe a nova Página criada na lista de designs.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Criação de Design de Aula">    <testcase name="Acessar criação de Aula via menu Adicionar">
+      <summary>Validar fluxo de criação de Aula (RN 30, RN 31, RN 38).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec, com pelo menos 1 kit de marca selecionado
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Design&#34; do modelo de teste</actions>
+          <expectedresults>Aba &#34;Design&#34; exibe a listagem de designs.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;Adicionar&#34;</actions>
+          <expectedresults>Menu suspenso é exibido com as opções &#34;Aula&#34; e &#34;Página&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Clicar na opção &#34;Aula&#34;</actions>
+          <expectedresults>Sistema redireciona para a tela de criação de Aula exibindo a aba &#34;Identificação&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Salvar Aula com dados válidos">
+      <summary>Validar criação de Aula com campos da Identificação (RN 39, RN 40).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec, com pelo menos 1 kit de marca selecionado
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a tela de criação de Aula com a aba &#34;Identificação&#34;</actions>
+          <expectedresults>Aba &#34;Identificação&#34; é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Preencher o campo &#34;Nome&#34; com &#34;Aula TC2 w{workerIndex}-{timestamp}&#34;</actions>
+          <expectedresults>Campo &#34;Nome&#34; exibe o texto digitado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Selecionar &#34;Introdução&#34; no campo &#34;Tipo&#34;</actions>
+          <expectedresults>Campos de instruções são auto-preenchidos com textos canônicos de Introdução.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Preencher o campo &#34;Sequência&#34; com &#34;1&#34;</actions>
+          <expectedresults>Campo &#34;Sequência&#34; exibe o valor digitado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>5</step_number>
+          <actions>Clicar no botão &#34;Salvar&#34;</actions>
+          <expectedresults>Sistema redireciona automaticamente para a aba &#34;Design&#34; da Aula.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Aba Design da Aula exibe editor padrão com customizações">
+      <summary>Validar que a aba Design exibe o editor de Aula padrão com customizações de kit de marca (RN 41, RN 42).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec, com pelo menos 1 kit de marca selecionado
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Design&#34; de uma Aula recém-salva</actions>
+          <expectedresults>Editor de Aula padrão da plataforma é exibido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar a ferramenta de layout com seleção de kit de marca ser renderizada</actions>
+          <expectedresults>Ferramenta de layout exibe os 3 primeiros kits de marca cadastrados, com possibilidade de scroll para acessar os demais.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Salvar Aula retorna para aba Design do Modelo">
+      <summary>Validar retorno à aba Design do Modelo (RN 43).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec, com pelo menos 1 kit de marca selecionado
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Design&#34; da Aula em criação</actions>
+          <expectedresults>Editor é exibido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;Salvar&#34; da Aula</actions>
+          <expectedresults>Sistema retorna para a aba &#34;Design&#34; do Modelo de conteúdo.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Aguardar a listagem de designs do Modelo carregar</actions>
+          <expectedresults>Listagem exibe a nova Aula criada na lista de designs.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Listagem de Designs (aba Design do Modelo)">    <testcase name="Listagem exibe colunas obrigatórias">
+      <summary>Validar colunas da listagem de designs (RN 44, RN 45).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado com pelo menos 3 designs (mix de Aula e Página)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Design&#34; do modelo de teste</actions>
+          <expectedresults>Aba &#34;Design&#34; é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar a listagem de designs ser renderizada</actions>
+          <expectedresults>Listagem exibe colunas: &#34;Nome&#34;, &#34;Formato&#34;, &#34;Tipo&#34;, &#34;Ações&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Ações da listagem de designs">
+      <summary>Validar ações disponíveis em cada linha da listagem de designs (RN 46).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado com pelo menos 3 designs (mix de Aula e Página)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Design&#34; do modelo de teste</actions>
+          <expectedresults>Listagem é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar a coluna &#34;Ações&#34; de cada linha ser renderizada</actions>
+          <expectedresults>Cada linha da listagem exibe os botões &#34;Editar&#34;, &#34;Duplicar&#34; e &#34;Excluir&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Filtrar designs por Tipo (Aula/Página)">
+      <summary>Validar filtro padrão &#34;Somente aulas&#34; (RN 50).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado com pelo menos 3 designs (mix de Aula e Página)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no botão &#34;Filtrar&#34;</actions>
+          <expectedresults>Drawer &#34;Filtros&#34; é exibido com os filtros padrão &#34;Somente páginas&#34; e &#34;Somente aulas&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Selecionar o filtro padrão &#34;Somente aulas&#34;</actions>
+          <expectedresults>Filtro fica marcado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Aplicar o filtro</actions>
+          <expectedresults>Drawer fecha. Listagem exibe apenas designs do Tipo &#34;Aula&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Ações Duplicar e Drag and Drop">    <testcase name="Duplicar modelo com cópia profunda">
+      <summary>Validar que duplicar modelo cria cópia profunda com nome &#34;[Cópia] &lt;original&gt;&#34; (RN 6.1).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado com pelo menos 3 designs cadastrados
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a listagem de modelos com o modelo de teste</actions>
+          <expectedresults>Listagem é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar na ação &#34;Duplicar&#34; do modelo de teste</actions>
+          <expectedresults>Toast exibida: &#34;Modelo de conteúdo duplicado com sucesso.&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Aguardar a listagem ser atualizada</actions>
+          <expectedresults>Listagem exibe novo modelo com nome no formato &#34;[Cópia] {nome original do modelo}&#34;, listado imediatamente.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Duplicar design individual">
+      <summary>Validar duplicação individual de design (RN 6.1 estendido pela QA 2.2).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado com pelo menos 3 designs cadastrados
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Design&#34; do modelo de teste</actions>
+          <expectedresults>Listagem de designs é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar na ação &#34;Duplicar&#34; de um design existente</actions>
+          <expectedresults>Listagem atualiza exibindo cópia do design com nome no formato &#34;[Cópia] {nome original do design}&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Drag and drop reorder designs (visão Lista)">
+      <summary>Validar drag and drop de reordenação na visão Lista (RN 63).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado com pelo menos 3 designs cadastrados
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Design&#34; do modelo de teste em visualização Lista</actions>
+          <expectedresults>Listagem é exibida com pelo menos 3 designs.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Arrastar o ícone de drag do segundo item para a primeira posição</actions>
+          <expectedresults>Listagem reflete a nova ordem com o item arrastado na primeira posição.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Aguardar a nova sequência ser persistida</actions>
+          <expectedresults>Listagem mantém a nova ordem após recarregar a página.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Drag and drop desabilitado quando filtro ativo">
+      <summary>Validar que drag and drop fica desabilitado com filtro ativo (RN 63.1).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado com pelo menos 3 designs cadastrados
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Design&#34; do modelo de teste</actions>
+          <expectedresults>Listagem é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aplicar o filtro padrão &#34;Somente páginas&#34;</actions>
+          <expectedresults>Listagem exibe apenas designs do Tipo Página.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Aguardar o ícone de drag ser renderizado</actions>
+          <expectedresults>Ícone de drag exibido em estado desabilitado nas linhas/cards da listagem filtrada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Preview de Modelos e Designs">    <testcase name="Abrir Preview de Modelo via card">
+      <summary>Validar abertura do modal carrossel de preview do modelo (RN 5.2).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado com pelo menos 2 designs com previews gerados (1 Aula e 1 Página)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a listagem de modelos em visualização Cards</actions>
+          <expectedresults>Listagem é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar na ação &#34;Preview&#34; do modelo de teste</actions>
+          <expectedresults>Modal de preview é exibido com carrossel contendo o primeiro design.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Conteúdo de cada item do carrossel">
+      <summary>Validar campos exibidos em cada slide do carrossel (RN 5.2).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado com pelo menos 2 designs com previews gerados (1 Aula e 1 Página)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Abrir o modal de Preview do modelo de teste</actions>
+          <expectedresults>Modal exibe o primeiro slide do carrossel.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar a renderização do slide</actions>
+          <expectedresults>Slide exibe: texto &#34;Modelo: {nome do modelo}&#34;, Thumb do design, texto &#34;Design: {nome do design}&#34;, texto &#34;Tipo: {Aula ou Página}&#34;, texto &#34;Prompt: {prosa de instruções}&#34;, indicador &#34;Design 1 de 2&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Navegar entre slides no carrossel">
+      <summary>Validar navegação entre slides (RN 5.2).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado com pelo menos 2 designs com previews gerados (1 Aula e 1 Página)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Abrir o modal de Preview do modelo de teste</actions>
+          <expectedresults>Modal exibe &#34;Design 1 de 2&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão de navegação &#34;Próximo&#34; do carrossel</actions>
+          <expectedresults>Modal exibe o slide seguinte com indicador &#34;Design 2 de 2&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Preview de Design tipo Página tem zoom com scroll">
+      <summary>Validar opção de zoom com scroll apenas em designs do tipo Página (RN 5.2).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado com pelo menos 2 designs com previews gerados (1 Aula e 1 Página)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Abrir o modal de Preview de um design tipo Página</actions>
+          <expectedresults>Modal exibe o preview da Página.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar a opção de zoom ser renderizada</actions>
+          <expectedresults>Componente de zoom com scroll é exibido sobre o preview da Página.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Sincronização e Regeração de Previews">    <testcase name="Alterar Kit de Marca exibe ícone de alerta no card">
+      <summary>Validar exibição do ícone de alerta na listagem após alteração do kit de marca (RN 59, RN 59.1).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado com pelo menos 1 design e Kit de Marca selecionado
+Pelo menos 2 kits de marca distintos cadastrados na organização
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Identificação&#34; do modelo de teste</actions>
+          <expectedresults>Aba &#34;Identificação&#34; é exibida com o kit de marca atual selecionado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Selecionar um Kit de Marca diferente no dropdown &#34;Kit de marca&#34;</actions>
+          <expectedresults>Dropdown exibe a nova opção selecionada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Clicar no botão &#34;Salvar&#34;</actions>
+          <expectedresults>Toast de sucesso é exibida (REVISAR-FIGMA: texto exato).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Acessar a listagem de modelos</actions>
+          <expectedresults>Card do modelo exibe ícone de alerta no canto superior direito.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>5</step_number>
+          <actions>Aguardar a tooltip do ícone de alerta ser exibida ao posicionar o mouse</actions>
+          <expectedresults>Tooltip exibida: &#34;Este modelo possui designs pendentes de regeração. Acesse a aba design e clique no botão &#39;Regerar designs&#39;.&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Botão &#34;Regerar todos&#34; exibe tooltip correto">
+      <summary>Validar exibição do botão &#34;Regerar todos&#34; na aba Design com tooltip literal (RN 59.2, RN 59.3).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado com pelo menos 1 design e Kit de Marca selecionado
+Pelo menos 2 kits de marca distintos cadastrados na organização
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Design&#34; do modelo após alteração de kit de marca</actions>
+          <expectedresults>Aba &#34;Design&#34; exibe a listagem de designs e o botão &#34;Regerar todos&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar a tooltip do botão &#34;Regerar todos&#34; ser exibida ao posicionar o mouse</actions>
+          <expectedresults>Tooltip exibida: &#34;O kit de marca foi alterado. Clique em &#39;Regerar todos&#39; para atualizar todos os designs com as novas configurações de cores e fontes.&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Clicar &#34;Regerar todos&#34; inicia processo assíncrono">
+      <summary>Validar inicio do processo de regeração com toast (RN 59.4).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado com pelo menos 1 design e Kit de Marca selecionado
+Pelo menos 2 kits de marca distintos cadastrados na organização
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Design&#34; do modelo após alteração de kit de marca</actions>
+          <expectedresults>Botão &#34;Regerar todos&#34; é exibido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;Regerar todos&#34;</actions>
+          <expectedresults>Toast exibida: &#34;A regeração dos designs foi iniciada. Você será notificado quando for concluída.&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Bloqueio Exclusão Cores Kit de Marca">    <testcase name="Bloqueio de exclusão de cor em uso por modelo">
+      <summary>Validar que cor de kit de marca em uso por modelo não pode ser excluída (RN 64).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Kit de marca cadastrado e associado a pelo menos 1 modelo de conteúdo
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a tela de edição do kit de marca utilizado pelo modelo de teste</actions>
+          <expectedresults>Tela de edição é exibida com as cores cadastradas.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão de excluir da cor que está em uso pelo modelo</actions>
+          <expectedresults>Mensagem de bloqueio exibida indicando que a cor está em uso por um ou mais modelos de conteúdo. Cor NÃO é excluída.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Exclusão permitida de cor sem modelos associados">
+      <summary>Validar que cor sem modelos associados pode ser excluída normalmente (RN 64).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Kit de marca cadastrado e associado a pelo menos 1 modelo de conteúdo
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a tela de edição de um kit de marca com cor não utilizada por nenhum modelo</actions>
+          <expectedresults>Tela de edição é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão de excluir da cor não utilizada</actions>
+          <expectedresults>Cor é excluída e Toast de sucesso é exibida (REVISAR-FIGMA: texto exato).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Feature flag modelos_de_conteudo">    <testcase name="Acesso bloqueado com flag desabilitada">
+      <summary>Validar que o submenu &#34;Modelos de conteúdo&#34; não aparece quando a flag está desabilitada (RN 1.2).</summary>
+      <preconditions>Ambiente Stage configurado
+Usuário logado como Admin com flag elevada para Flipper-UI
+Feature flag `modelos_de_conteudo` controlável via Super Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Desabilitar a feature flag `modelos_de_conteudo` para a organização do teste via Flipper-UI</actions>
+          <expectedresults>Flag fica como &#34;Conditionally enabled&#34; sem actor `Organization;{orgId}`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Acessar a URL &#34;/play&#34;</actions>
+          <expectedresults>Dashboard padrão é exibido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Clicar no menu lateral &#34;Aprendizagem&#34;</actions>
+          <expectedresults>Submenu lateral é exibido SEM o item &#34;Modelos de conteúdo&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Acesso liberado com flag habilitada">
+      <summary>Validar que a funcionalidade fica acessível quando a flag está habilitada (RN 1.2).</summary>
+      <preconditions>Ambiente Stage configurado
+Usuário logado como Admin com flag elevada para Flipper-UI
+Feature flag `modelos_de_conteudo` controlável via Super Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Habilitar a feature flag `modelos_de_conteudo` para a organização do teste via Flipper-UI</actions>
+          <expectedresults>Flag fica como &#34;Conditionally enabled&#34; com actor `Organization;{orgId}`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Acessar a URL &#34;/play&#34;</actions>
+          <expectedresults>Dashboard padrão é exibido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Clicar no menu lateral &#34;Aprendizagem&#34;</actions>
+          <expectedresults>Submenu lateral é exibido COM o item &#34;Modelos de conteúdo&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Clicar no submenu &#34;Modelos de conteúdo&#34;</actions>
+          <expectedresults>Sistema redireciona para a listagem de modelos de conteúdo.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Transição off → on durante a sessão">
+      <summary>Validar que ativar a flag durante uma sessão libera a funcionalidade após refresh.</summary>
+      <preconditions>Ambiente Stage configurado
+Usuário logado como Admin com flag elevada para Flipper-UI
+Feature flag `modelos_de_conteudo` controlável via Super Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Iniciar sessão com a flag desabilitada para a organização do teste</actions>
+          <expectedresults>Submenu &#34;Modelos de conteúdo&#34; NÃO é exibido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Habilitar a flag `modelos_de_conteudo` para a organização via Flipper-UI</actions>
+          <expectedresults>Flag fica como &#34;Conditionally enabled&#34; com actor `Organization;{orgId}`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Recarregar a página &#34;/play&#34;</actions>
+          <expectedresults>Dashboard é exibido novamente.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Clicar no menu lateral &#34;Aprendizagem&#34;</actions>
+          <expectedresults>Submenu lateral agora exibe o item &#34;Modelos de conteúdo&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Ambientes adicionais - Modelos">    <testcase name="Modelos criados no principal não aparecem no adicional">
+      <summary>Validar isolamento de dados de modelos entre tenants pareados.</summary>
+      <preconditions>Ambiente Stage configurado com env adicional pareado
+Feature flag `modelos_de_conteudo` ativa em ambas as orgs (principal e adicional)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Criar modelo &#34;Modelo TC1 isolamento w{workerIndex}-{timestamp}&#34; no ambiente principal</actions>
+          <expectedresults>Toast exibida: &#34;Modelo de conteúdo criado com sucesso.&#34;. Listagem do principal exibe o novo modelo.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Acessar a listagem de modelos no ambiente adicional pareado</actions>
+          <expectedresults>Listagem do ambiente adicional NÃO exibe o modelo criado no principal.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Modelos criados no adicional não aparecem no principal">
+      <summary>Validar isolamento bidirecional.</summary>
+      <preconditions>Ambiente Stage configurado com env adicional pareado
+Feature flag `modelos_de_conteudo` ativa em ambas as orgs (principal e adicional)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Criar modelo &#34;Modelo TC2 isolamento w{workerIndex}-{timestamp}&#34; no ambiente adicional</actions>
+          <expectedresults>Toast exibida: &#34;Modelo de conteúdo criado com sucesso.&#34;. Listagem do adicional exibe o novo modelo.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Acessar a listagem de modelos no ambiente principal</actions>
+          <expectedresults>Listagem do ambiente principal NÃO exibe o modelo criado no adicional.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite></testsuite>
