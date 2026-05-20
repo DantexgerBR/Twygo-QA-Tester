@@ -1,0 +1,11 @@
+{
+  "runId": "criacao-de-design-de-pagina_20260520-161018",
+  "mode": "per-suite",
+  "suiteFilter": "Criação de Design de Página",
+  "projectName": "Modelos de conteúdo",
+  "environment": "staging-base-de-conhecimento",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-20T19:10:18.151Z"
+}
