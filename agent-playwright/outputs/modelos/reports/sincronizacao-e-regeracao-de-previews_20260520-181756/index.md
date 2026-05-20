@@ -1,6 +1,6 @@
 # Relatório de Execução — Twygo QA
 
-**Projeto:** Modelos de conteúdo · **Ambiente:** `staging-base-de-conhecimento` · **Browsers:** chromium · **Gerado em:** 20/05/2026, 17:57:20
+**Projeto:** Modelos de conteúdo · **Ambiente:** `staging-base-de-conhecimento` · **Browsers:** chromium · **Gerado em:** 20/05/2026, 18:17:56
 
 > **Escopo:** Apenas testsuite contendo "Sincronização e Regeração de Previews"
 

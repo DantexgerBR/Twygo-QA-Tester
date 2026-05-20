@@ -74,11 +74,11 @@
         {
           "title": "Sincronização e Regeração de Previews",
           "file": "projects/modelos/tests/features/sincronizacao-e-regeracao-de-previews/tc01-alterar-kit-exibe-alerta.spec.ts",
-          "line": 14,
+          "line": 25,
           "column": 15,
           "specs": [
             {
-              "title": "Alterar Kit de Marca exibe ícone de alerta no card",
+              "title": "Alterar Kit de Marca exibe ícone de alerta nos designs",
               "ok": true,
               "tags": [],
               "tests": [
@@ -89,7 +89,7 @@
                       "type": "fixme",
                       "location": {
                         "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\modelos\\tests\\features\\sincronizacao-e-regeracao-de-previews\\tc01-alterar-kit-exibe-alerta.spec.ts",
-                        "line": 14,
+                        "line": 25,
                         "column": 15
                       }
                     }
@@ -107,13 +107,13 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-20T20:57:17.724Z",
+                      "startTime": "2026-05-20T21:17:53.647Z",
                       "annotations": [
                         {
                           "type": "fixme",
                           "location": {
                             "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\modelos\\tests\\features\\sincronizacao-e-regeracao-de-previews\\tc01-alterar-kit-exibe-alerta.spec.ts",
-                            "line": 14,
+                            "line": 25,
                             "column": 15
                           }
                         }
@@ -124,9 +124,9 @@
                   "status": "skipped"
                 }
               ],
-              "id": "587dc9a4d0ecae7bec25-604c3f304dd55154c996",
+              "id": "587dc9a4d0ecae7bec25-b2413680a5c9c46f901d",
               "file": "projects/modelos/tests/features/sincronizacao-e-regeracao-de-previews/tc01-alterar-kit-exibe-alerta.spec.ts",
-              "line": 15,
+              "line": 26,
               "column": 3
             }
           ]
@@ -143,7 +143,7 @@
         {
           "title": "Sincronização e Regeração de Previews",
           "file": "projects/modelos/tests/features/sincronizacao-e-regeracao-de-previews/tc02-botao-regerar-todos-tooltip.spec.ts",
-          "line": 13,
+          "line": 16,
           "column": 15,
           "specs": [
             {
@@ -158,7 +158,7 @@
                       "type": "fixme",
                       "location": {
                         "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\modelos\\tests\\features\\sincronizacao-e-regeracao-de-previews\\tc02-botao-regerar-todos-tooltip.spec.ts",
-                        "line": 13,
+                        "line": 16,
                         "column": 15
                       }
                     }
@@ -176,13 +176,13 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-20T20:57:17.725Z",
+                      "startTime": "2026-05-20T21:17:53.647Z",
                       "annotations": [
                         {
                           "type": "fixme",
                           "location": {
                             "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\modelos\\tests\\features\\sincronizacao-e-regeracao-de-previews\\tc02-botao-regerar-todos-tooltip.spec.ts",
-                            "line": 13,
+                            "line": 16,
                             "column": 15
                           }
                         }
@@ -195,7 +195,7 @@
               ],
               "id": "11a1e58da26c7eddee12-f20ff622364da7b84dda",
               "file": "projects/modelos/tests/features/sincronizacao-e-regeracao-de-previews/tc02-botao-regerar-todos-tooltip.spec.ts",
-              "line": 14,
+              "line": 17,
               "column": 3
             }
           ]
@@ -212,7 +212,7 @@
         {
           "title": "Sincronização e Regeração de Previews",
           "file": "projects/modelos/tests/features/sincronizacao-e-regeracao-de-previews/tc03-clicar-regerar-todos-toast.spec.ts",
-          "line": 8,
+          "line": 18,
           "column": 15,
           "specs": [
             {
@@ -227,7 +227,7 @@
                       "type": "fixme",
                       "location": {
                         "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\modelos\\tests\\features\\sincronizacao-e-regeracao-de-previews\\tc03-clicar-regerar-todos-toast.spec.ts",
-                        "line": 8,
+                        "line": 18,
                         "column": 15
                       }
                     }
@@ -245,13 +245,13 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-20T20:57:17.726Z",
+                      "startTime": "2026-05-20T21:17:53.647Z",
                       "annotations": [
                         {
                           "type": "fixme",
                           "location": {
                             "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\modelos\\tests\\features\\sincronizacao-e-regeracao-de-previews\\tc03-clicar-regerar-todos-toast.spec.ts",
-                            "line": 8,
+                            "line": 18,
                             "column": 15
                           }
                         }
@@ -264,7 +264,7 @@
               ],
               "id": "4a0481656cd13fc02547-994b6813cd61632a9724",
               "file": "projects/modelos/tests/features/sincronizacao-e-regeracao-de-previews/tc03-clicar-regerar-todos-toast.spec.ts",
-              "line": 9,
+              "line": 19,
               "column": 3
             }
           ]
@@ -274,8 +274,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-05-20T20:56:42.570Z",
-    "duration": 35158.079000000005,
+    "startTime": "2026-05-20T21:17:19.862Z",
+    "duration": 33786.472,
     "expected": 0,
     "skipped": 3,
     "unexpected": 0,

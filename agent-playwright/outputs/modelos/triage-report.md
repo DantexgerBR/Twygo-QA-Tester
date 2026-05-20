@@ -1,4 +1,4 @@
-# Triage Report — Modelos de conteúdo — 2026-05-20 17:57
+# Triage Report — Modelos de conteúdo — 2026-05-20 18:17
 
 **Escopo**: Testsuite: Sincronização e Regeração de Previews · **Ambiente**: `staging-base-de-conhecimento`
 
@@ -26,7 +26,7 @@ Suite rodou limpa. Revise apenas a seção de exploratórios e skips abaixo (se 
 
 | TC | Tipo | Motivo |
 |---|---|---|
-| Alterar Kit de Marca exibe ícone de alerta no card | fixme | — |
+| Alterar Kit de Marca exibe ícone de alerta nos designs | fixme | — |
 | Botão "Regerar todos" exibe tooltip correto | fixme | — |
 | Clicar "Regerar todos" inicia processo assíncrono | fixme | — |
 

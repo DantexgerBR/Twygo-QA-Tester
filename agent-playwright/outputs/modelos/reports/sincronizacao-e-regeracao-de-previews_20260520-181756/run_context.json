@@ -1,5 +1,5 @@
 {
-  "runId": "sincronizacao-e-regeracao-de-previews_20260520-175720",
+  "runId": "sincronizacao-e-regeracao-de-previews_20260520-181756",
   "mode": "per-suite",
   "suiteFilter": "Sincronização e Regeração de Previews",
   "projectName": "Modelos de conteúdo",
@@ -7,5 +7,5 @@
   "browsers": [
     "chromium"
   ],
-  "generatedAt": "2026-05-20T20:57:20.842Z"
+  "generatedAt": "2026-05-20T21:17:56.276Z"
 }
