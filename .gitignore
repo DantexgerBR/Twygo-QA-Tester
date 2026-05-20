@@ -30,6 +30,12 @@ test-results/
 # Toda a pasta outputs/ é regenerada (parser, executor, validator, report, allure)
 agent-playwright/outputs/
 
+# ===== Outputs gerados pelo agente Tasks-QA =====
+# Planilhas .xlsx geradas por execução — não commitar
+agent-tasks-qa/output/*.xlsx
+agent-tasks-qa/output/*.md
+!agent-tasks-qa/output/.gitkeep
+
 # ===== Env / segredos =====
 .env
 .env.local

@@ -20,26 +20,27 @@ Monorepo dos agentes de QA da Twygo. Cada agente vive em sua própria pasta, é 
 
 ## Visão geral
 
-O time de QA Twygo opera com **3 agentes especializados** que trabalham em sequência, cada um numa fase do ciclo de QA:
+O time de QA Twygo opera com **4 agentes especializados** que trabalham em sequência, cada um numa fase do ciclo de QA:
 
 ```
-┌────────────┐   docs   ┌──────────┐  XML  ┌────────────────┐  acessa  ┌──────────┐
-│ Discovery  │ ───────► │ agent-at │ ────► │ agent-          │ quando   │ agent-   │
-│ + Spike    │  (.docx, │   (AT)   │       │  playwright    │ ───────► │   db     │
-│ + Quebra   │  .xlsx)  │          │       │  (executa E2E) │ preciso  │  (DB)    │
-└────────────┘          └──────────┘       └────────────────┘          └──────────┘
-                          XMind →             specs Playwright            queries
-                          XML TestLink        + relatórios                read-only
+┌────────────┐  docs  ┌──────────────────┐  .xlsx  ┌──────────┐  XML  ┌────────────────┐  acessa  ┌──────────┐
+│ Discovery  │ ─────► │ agent-tasks-qa   │ ──────► │ agent-at │ ────► │ agent-          │ quando   │ agent-   │
+│ + Spike    │ (.docx │ (planejamento /  │ quebra  │   (AT)   │       │  playwright    │ ───────► │   db     │
+│ + Quebra   │  .xlsx)│  estimativas)    │ atividades        │       │  (executa E2E) │ preciso  │  (DB)    │
+└────────────┘        └──────────────────┘         └──────────┘       └────────────────┘          └──────────┘
+                       planilha QA + Dev            XMind →             specs Playwright            queries
+                       importável                   XML TestLink        + relatórios                read-only
 ```
 
 A organização em monorepo facilita manutenção, versionamento conjunto, e a futura criação de pipelines independentes no GitHub Actions (um workflow por agente).
 
 ---
 
-## Os 3 agentes — quando usar cada um
+## Os 4 agentes — quando usar cada um
 
 | Agente | Pasta | Função | Stack | Status |
 |---|---|---|---|---|
+| **Tasks-QA** (Planejamento) | [`agent-tasks-qa/`](agent-tasks-qa/) | Quebra atividades de QA e gera estimativas para reuniões de planejamento | Python + Claude Code Skills | ✅ Operacional |
 | **AT** (Análise de Teste) | [`agent-at/`](agent-at/) | Lê documentos do projeto e gera XMind com cenários e casos de teste | Python + Claude Code Skills | ✅ Operacional |
 | **Playwright** (E2E UI) | [`agent-playwright/`](agent-playwright/) | Executa testes E2E no frontend a partir de XMLs do TestLink | TypeScript + Playwright + Claude Code | ✅ Operacional |
 | **DB** (Banco de Dados) | [`agent-db/`](agent-db/) | Executa validações em banco quando o caso de teste exige | Python + SQLAlchemy + Claude Code | 🚧 Em construção |
@@ -48,6 +49,7 @@ A organização em monorepo facilita manutenção, versionamento conjunto, e a f
 
 | Você precisa de... | Use |
 |---|---|
+| Quebrar atividades de QA + estimativas para planejamento | [agent-tasks-qa](agent-tasks-qa/README.md) |
 | Transformar Discovery/Spike em casos de teste detalhados | [agent-at](agent-at/README.md) |
 | Rodar testes de UI a partir de um XML TestLink | [agent-playwright](agent-playwright/README.md) |
 | Validar consequências em banco (registros, FKs, views) | [agent-db](agent-db/README.md) — quando estiver pronto |
@@ -71,6 +73,18 @@ A organização em monorepo facilita manutenção, versionamento conjunto, e a f
 ## Quickstart
 
 Cada agente é executado a partir da sua própria pasta. O Claude Code carrega apenas o `CLAUDE.md` e as skills de `.claude/skills/` daquela pasta — os agentes **não enxergam um ao outro**.
+
+### Agente Tasks-QA
+
+```bash
+cd agent-tasks-qa
+pip install -r requirements.txt   # primeira vez
+claude
+```
+
+Dentro do Claude Code: `/break-qa-tasks` (após depositar Discovery + planilha de Dev em `docs/`).
+
+> Detalhes: [agent-tasks-qa/README.md](agent-tasks-qa/README.md)
 
 ### Agente AT
 
@@ -111,6 +125,21 @@ cd agent-db
 ## Fluxo completo de um projeto Twygo
 
 Suponha que chega um projeto novo: **"Widgets"** (com Discovery + planilha de quebra de atividades).
+
+### 0. Planejamento de QA (reunião de refinamento)
+
+```bash
+cd agent-tasks-qa
+# Depositar inputs em docs/:
+#   - [Discovery] Widgets.docx
+#   - Quebra de atividades - Widgets.xlsx (com atividades de Dev estimadas)
+claude
+> /break-qa-tasks
+```
+
+Saída: `agent-tasks-qa/output/QA_Atividades_Widgets_Complementada.xlsx` (Dev+QA) e `QA_Only_Widgets.xlsx`.
+
+Revise estimativas, importe no gestor de projetos da Twygo.
 
 ### 1. Análise de teste
 
@@ -185,6 +214,14 @@ A branch `project/<slug>` fica preservada como histórico do projeto. Próximo p
 ├── .github/
 │   └── workflows/                  # workflows futuros (um por agente)
 │
+├── agent-tasks-qa/                 # Agente de quebra de atividades de QA (Python + Claude Code)
+│   ├── README.md                   # como usar este agente
+│   ├── CLAUDE.md                   # especificação técnica
+│   ├── requirements.txt            # openpyxl, python-docx, docx2txt
+│   ├── docs/                       # depositar Discovery + planilha de Dev aqui
+│   ├── output/                     # planilhas .xlsx geradas
+│   └── .claude/skills/             # skills locais (break-qa-tasks, read-inputs, ...)
+│
 ├── agent-at/                       # Agente de Análise de Teste (Python + Claude Code)
 │   ├── README.md                   # como usar este agente
 │   ├── CLAUDE.md                   # especificação técnica
@@ -215,7 +252,7 @@ A branch `project/<slug>` fica preservada como histórico do projeto. Próximo p
     └── .claude/skills/             # skills locais (db-test-executor, ...)
 ```
 
-> **Regra de isolamento:** nenhum arquivo de agente (`package.json`, `CLAUDE.md`, `playwright.config.ts`, etc.) deve aparecer na raiz. Tudo fica dentro de `agent-at/`, `agent-playwright/` ou `agent-db/`.
+> **Regra de isolamento:** nenhum arquivo de agente (`package.json`, `CLAUDE.md`, `playwright.config.ts`, etc.) deve aparecer na raiz. Tudo fica dentro de `agent-tasks-qa/`, `agent-at/`, `agent-playwright/` ou `agent-db/`.
 
 ---
 
@@ -225,6 +262,7 @@ A branch `project/<slug>` fica preservada como histórico do projeto. Próximo p
 
 | Agente | README |
 |---|---|
+| Tasks-QA (planejamento) | [agent-tasks-qa/README.md](agent-tasks-qa/README.md) |
 | Análise de Teste | [agent-at/README.md](agent-at/README.md) |
 | Playwright | [agent-playwright/README.md](agent-playwright/README.md) |
 | Banco de Dados | [agent-db/README.md](agent-db/README.md) |
@@ -233,6 +271,7 @@ A branch `project/<slug>` fica preservada como histórico do projeto. Próximo p
 
 | Agente | CLAUDE.md (espec) | Setup | Outros |
 |---|---|---|---|
+| Tasks-QA | [agent-tasks-qa/CLAUDE.md](agent-tasks-qa/CLAUDE.md) | — | — |
 | AT | [agent-at/CLAUDE.md](agent-at/CLAUDE.md) | — | — |
 | Playwright | [agent-playwright/CLAUDE.md](agent-playwright/CLAUDE.md) | [SETUP.md](agent-playwright/.claude/SETUP.md) | [PROJECT_BOOTSTRAP](agent-playwright/.claude/PROJECT_BOOTSTRAP.md) · [commands](agent-playwright/.claude/commands.md) · [prose-patterns](agent-playwright/.claude/prose-patterns.md) |
 | DB | [agent-db/CLAUDE.md](agent-db/CLAUDE.md) | — | — |
