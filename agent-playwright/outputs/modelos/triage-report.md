@@ -1,4 +1,4 @@
-# Triage Report — Modelos de conteúdo — 2026-05-20 16:10
+# Triage Report — Modelos de conteúdo — 2026-05-20 16:24
 
 **Escopo**: Testsuite: Criação de Design de Página · **Ambiente**: `staging-base-de-conhecimento`
 
@@ -6,7 +6,7 @@
 
 | Total | ✅ Passed | ❌ Failed | ⊘ Skipped | Findings exploratórios |
 |---:|---:|---:|---:|---|
-| 7 | 4 | 0 | 3 | 0 erros · 0 warnings · 0 info |
+| 7 | 7 | 0 | 0 | 0 erros · 0 warnings · 0 info |
 
 > **Janela única de revisão.** Marque ☑ em UMA categoria por item.
 > Notas em PT-BR. Commit este arquivo após triagem.
@@ -20,17 +20,6 @@ Suite rodou limpa. Revise apenas a seção de exploratórios e skips abaixo (se 
 
 ---
 
-## ⊘ Skips legítimos pra revalidação periódica
-
-> Items com `test.fixme` + reason. Se o motivo já não vale (seed criado, bug corrigido), abrir e re-rodar. Ver skill `debugar-bug-produto-stale`.
-
-| TC | Tipo | Motivo |
-|---|---|---|
-| Auto-preenchimento ao selecionar tipo "Capa" | fixme | — |
-| Tooltip do campo Tipo | fixme | — |
-| Aba Design exibe Plate Editor com Kit de Marca default | fixme | — |
-
----
 
 ## 🐛 Findings exploratórios não-fatais (informativo)
 

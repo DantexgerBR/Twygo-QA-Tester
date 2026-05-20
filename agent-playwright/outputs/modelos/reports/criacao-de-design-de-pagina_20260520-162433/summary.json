@@ -1,12 +1,12 @@
 {
-  "runId": "criacao-de-design-de-pagina_20260520-161018",
+  "runId": "criacao-de-design-de-pagina_20260520-162433",
   "scope": "Apenas testsuite contendo \"Criação de Design de Página\"",
   "tests": {
     "total": 7,
-    "passed": 4,
+    "passed": 7,
     "failed": 0,
-    "skipped": 3,
-    "durationMs": 143802
+    "skipped": 0,
+    "durationMs": 181122
   },
   "exploratory": {
     "errors": 0,
@@ -15,7 +15,7 @@
     "testsuites": 0,
     "tests": 1,
     "outOfScope": {
-      "errors": 6,
+      "errors": 5,
       "warnings": 5,
       "info": 1
     },

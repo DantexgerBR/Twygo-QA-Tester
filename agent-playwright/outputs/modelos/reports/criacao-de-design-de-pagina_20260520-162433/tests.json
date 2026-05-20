@@ -93,7 +93,7 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 32263,
+                      "duration": 21891,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
@@ -101,18 +101,18 @@
                       "steps": [
                         {
                           "title": "1. Abrir aba Design do modelo",
-                          "duration": 19774
+                          "duration": 16613
                         },
                         {
                           "title": "2. Clicar Adicionar e validar menu com Aula + Página",
-                          "duration": 1336
+                          "duration": 659
                         },
                         {
                           "title": "3. Clicar \"Página\" e validar redirect pra criação",
-                          "duration": 3104
+                          "duration": 1530
                         }
                       ],
-                      "startTime": "2026-05-20T19:09:28.836Z",
+                      "startTime": "2026-05-20T19:23:29.554Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -194,7 +194,7 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 33480,
+                      "duration": 26786,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
@@ -202,18 +202,18 @@
                       "steps": [
                         {
                           "title": "1. Abrir tela de criação Página",
-                          "duration": 24066
+                          "duration": 20208
                         },
                         {
                           "title": "2. Clicar Salvar sem preencher nada",
-                          "duration": 7111
+                          "duration": 4607
                         },
                         {
                           "title": "3. Validar bloqueio (URL permanece em /new)",
-                          "duration": 60
+                          "duration": 30
                         }
                       ],
-                      "startTime": "2026-05-20T19:09:28.837Z",
+                      "startTime": "2026-05-20T19:23:29.571Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -276,8 +276,8 @@
         {
           "title": "Criação de Design de Página",
           "file": "projects/modelos/tests/features/criacao-de-design-de-pagina/tc03-autofill-tipo-capa.spec.ts",
-          "line": 12,
-          "column": 15,
+          "line": 5,
+          "column": 6,
           "specs": [
             {
               "title": "Auto-preenchimento ao selecionar tipo \"Capa\"",
@@ -286,49 +286,85 @@
               "tests": [
                 {
                   "timeout": 120000,
-                  "annotations": [
-                    {
-                      "type": "fixme",
-                      "location": {
-                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\modelos\\tests\\features\\criacao-de-design-de-pagina\\tc03-autofill-tipo-capa.spec.ts",
-                        "line": 12,
-                        "column": 15
-                      }
-                    }
-                  ],
-                  "expectedStatus": "skipped",
+                  "annotations": [],
+                  "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": -1,
-                      "parallelIndex": -1,
-                      "status": "skipped",
-                      "duration": 0,
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 26448,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-20T19:09:27.665Z",
-                      "annotations": [
+                      "steps": [
                         {
-                          "type": "fixme",
-                          "location": {
-                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\modelos\\tests\\features\\criacao-de-design-de-pagina\\tc03-autofill-tipo-capa.spec.ts",
-                            "line": 12,
-                            "column": 15
-                          }
+                          "title": "1. Abrir tela de criação Página",
+                          "duration": 19497
+                        },
+                        {
+                          "title": "2. Validar contadores zerados ANTES de selecionar Tipo",
+                          "duration": 1740
+                        },
+                        {
+                          "title": "3. Selecionar \"Capa\" no campo Tipo",
+                          "duration": 3147
+                        },
+                        {
+                          "title": "4. Validar auto-fill via contadores Plate (49/500 estrutura + 225/500 conteúdo)",
+                          "duration": 53
                         }
                       ],
-                      "attachments": []
+                      "startTime": "2026-05-20T19:23:29.570Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gTW9kZWxvcyBkZSBjb250ZcO6ZG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNyaWHDp8OjbyBkZSBEZXNpZ24gZGUgUMOhZ2luYSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJBdXRvLXByZWVuY2hpbWVudG8gYW8gc2VsZWNpb25hciB0aXBvIFwiQ2FwYVwiIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-8db40-to-ao-selecionar-tipo-Capa--chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-8db40-to-ao-selecionar-tipo-Capa--chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-8db40-to-ao-selecionar-tipo-Capa--chromium\\trace.zip"
+                        }
+                      ]
                     }
                   ],
-                  "status": "skipped"
+                  "status": "expected"
                 }
               ],
               "id": "fa76fd4b74d697fcf048-df52d07ec1bbc89bfdf8",
               "file": "projects/modelos/tests/features/criacao-de-design-de-pagina/tc03-autofill-tipo-capa.spec.ts",
-              "line": 13,
+              "line": 6,
               "column": 3
             }
           ]
@@ -345,8 +381,8 @@
         {
           "title": "Criação de Design de Página",
           "file": "projects/modelos/tests/features/criacao-de-design-de-pagina/tc04-tooltip-campo-tipo.spec.ts",
-          "line": 9,
-          "column": 15,
+          "line": 5,
+          "column": 6,
           "specs": [
             {
               "title": "Tooltip do campo Tipo",
@@ -355,49 +391,77 @@
               "tests": [
                 {
                   "timeout": 120000,
-                  "annotations": [
-                    {
-                      "type": "fixme",
-                      "location": {
-                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\modelos\\tests\\features\\criacao-de-design-de-pagina\\tc04-tooltip-campo-tipo.spec.ts",
-                        "line": 9,
-                        "column": 15
-                      }
-                    }
-                  ],
-                  "expectedStatus": "skipped",
+                  "annotations": [],
+                  "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": -1,
-                      "parallelIndex": -1,
-                      "status": "skipped",
-                      "duration": 0,
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 25401,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-20T19:09:27.666Z",
-                      "annotations": [
+                      "steps": [
                         {
-                          "type": "fixme",
-                          "location": {
-                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\modelos\\tests\\features\\criacao-de-design-de-pagina\\tc04-tooltip-campo-tipo.spec.ts",
-                            "line": 9,
-                            "column": 15
-                          }
+                          "title": "1. Abrir tela de criação Página",
+                          "duration": 20788
+                        },
+                        {
+                          "title": "2. Hover no .tooltip-icon do campo Tipo e validar tooltip",
+                          "duration": 2144
                         }
                       ],
-                      "attachments": []
+                      "startTime": "2026-05-20T19:23:29.571Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gTW9kZWxvcyBkZSBjb250ZcO6ZG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNyaWHDp8OjbyBkZSBEZXNpZ24gZGUgUMOhZ2luYSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJUb29sdGlwIGRvIGNhbXBvIFRpcG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJtZWRpdW0ifV19fQ=="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-8d1bd-ágina-Tooltip-do-campo-Tipo-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-8d1bd-ágina-Tooltip-do-campo-Tipo-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-8d1bd-ágina-Tooltip-do-campo-Tipo-chromium\\trace.zip"
+                        }
+                      ]
                     }
                   ],
-                  "status": "skipped"
+                  "status": "expected"
                 }
               ],
               "id": "abeb4f7d6383fcdef571-8b8c26b01fb41c4d5fc0",
               "file": "projects/modelos/tests/features/criacao-de-design-de-pagina/tc04-tooltip-campo-tipo.spec.ts",
-              "line": 10,
+              "line": 6,
               "column": 3
             }
           ]
@@ -430,10 +494,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 34211,
+                      "duration": 24426,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
@@ -441,22 +505,22 @@
                       "steps": [
                         {
                           "title": "1. Abrir tela de criação Página",
-                          "duration": 26905
+                          "duration": 17309
                         },
                         {
                           "title": "2-3. Preencher Nome + Tipo \"Corpo\"",
-                          "duration": 3371
+                          "duration": 3911
                         },
                         {
                           "title": "4. Preencher Sequência = 1",
-                          "duration": 101
+                          "duration": 100
                         },
                         {
                           "title": "5. Salvar e validar redirect pra aba Design do próprio Design",
-                          "duration": 1024
+                          "duration": 1116
                         }
                       ],
-                      "startTime": "2026-05-20T19:09:28.871Z",
+                      "startTime": "2026-05-20T19:23:54.101Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -519,59 +583,91 @@
         {
           "title": "Criação de Design de Página",
           "file": "projects/modelos/tests/features/criacao-de-design-de-pagina/tc06-aba-design-plate-editor-kit.spec.ts",
-          "line": 9,
-          "column": 15,
+          "line": 5,
+          "column": 6,
           "specs": [
             {
-              "title": "Aba Design exibe Plate Editor com Kit de Marca default",
+              "title": "Aba Design exibe Plate Editor com Kit de Marca",
               "ok": true,
               "tags": [],
               "tests": [
                 {
                   "timeout": 120000,
-                  "annotations": [
-                    {
-                      "type": "fixme",
-                      "location": {
-                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\modelos\\tests\\features\\criacao-de-design-de-pagina\\tc06-aba-design-plate-editor-kit.spec.ts",
-                        "line": 9,
-                        "column": 15
-                      }
-                    }
-                  ],
-                  "expectedStatus": "skipped",
+                  "annotations": [],
+                  "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": -1,
-                      "parallelIndex": -1,
-                      "status": "skipped",
-                      "duration": 0,
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 24961,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-20T19:09:27.667Z",
-                      "annotations": [
+                      "steps": [
                         {
-                          "type": "fixme",
-                          "location": {
-                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\modelos\\tests\\features\\criacao-de-design-de-pagina\\tc06-aba-design-plate-editor-kit.spec.ts",
-                            "line": 9,
-                            "column": 15
-                          }
+                          "title": "1. Criar Design via Identificação e chegar na aba Design",
+                          "duration": 22956
+                        },
+                        {
+                          "title": "2. Validar Plate Editor renderizado (testId canônico)",
+                          "duration": 647
+                        },
+                        {
+                          "title": "3. Validar botão de Kit de Marca presente",
+                          "duration": 30
                         }
                       ],
-                      "attachments": []
+                      "startTime": "2026-05-20T19:23:56.598Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gTW9kZWxvcyBkZSBjb250ZcO6ZG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNyaWHDp8OjbyBkZSBEZXNpZ24gZGUgUMOhZ2luYSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJBYmEgRGVzaWduIGV4aWJlIFBsYXRlIEVkaXRvciBjb20gS2l0IGRlIE1hcmNhIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJoaWdoIn1dfX0="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-4e05e-ate-Editor-com-Kit-de-Marca-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-4e05e-ate-Editor-com-Kit-de-Marca-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-4e05e-ate-Editor-com-Kit-de-Marca-chromium\\trace.zip"
+                        }
+                      ]
                     }
                   ],
-                  "status": "skipped"
+                  "status": "expected"
                 }
               ],
-              "id": "4b061d19f259f65d1205-db14e4d53d6025f63212",
+              "id": "4b061d19f259f65d1205-d49dd6714a6ac71c82ef",
               "file": "projects/modelos/tests/features/criacao-de-design-de-pagina/tc06-aba-design-plate-editor-kit.spec.ts",
-              "line": 12,
+              "line": 8,
               "column": 3
             }
           ]
@@ -604,10 +700,10 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 43848,
+                      "duration": 31209,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
@@ -615,18 +711,18 @@
                       "steps": [
                         {
                           "title": "1. Criar Página até aba Design",
-                          "duration": 32741
+                          "duration": 23814
                         },
                         {
                           "title": "2. Clicar Salvar (Design) e validar retorno pra aba Design do Modelo",
-                          "duration": 8349
+                          "duration": 5736
                         },
                         {
                           "title": "3. Validar listagem atualizada com o novo Design",
-                          "duration": 303
+                          "duration": 271
                         }
                       ],
-                      "startTime": "2026-05-20T19:09:28.888Z",
+                      "startTime": "2026-05-20T19:23:57.692Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -682,10 +778,10 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-05-20T19:08:52.834Z",
-    "duration": 81941.028,
-    "expected": 4,
-    "skipped": 3,
+    "startTime": "2026-05-20T19:22:54.466Z",
+    "duration": 95602.96,
+    "expected": 7,
+    "skipped": 0,
     "unexpected": 0,
     "flaky": 0
   }

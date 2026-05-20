@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-20T19:10:15.918Z",
+  "generatedAt": "2026-05-20T19:24:31.127Z",
   "summary": {
     "errors": 0,
     "warnings": 0,
@@ -7,7 +7,7 @@
     "testsuites": 1,
     "tests": 1,
     "outOfScope": {
-      "errors": 6,
+      "errors": 5,
       "warnings": 5,
       "info": 1
     },
@@ -107,13 +107,13 @@
       ],
       "outOfScope": {
         "totals": {
-          "errors": 6,
+          "errors": 5,
           "warnings": 5,
           "info": 1
         },
         "byKind": {
           "console_error": 1,
-          "a11y_violation": 11
+          "a11y_violation": 10
         },
         "findings": [
           {
@@ -153,32 +153,6 @@
             "kind": "a11y_violation",
             "severity": "error",
             "url": "https://basedeconhecimento.stage.twygoead.com/play?menu_id=play",
-            "message": "[a11y/aria-progressbar-name] ARIA progressbar nodes must have an accessible name",
-            "detail": {
-              "ruleId": "aria-progressbar-name",
-              "impact": "serious",
-              "tags": [
-                "cat.aria",
-                "wcag2a",
-                "wcag111",
-                "EN-301-549",
-                "EN-9.1.1.1",
-                "RGAAv4",
-                "RGAA-11.1.1"
-              ],
-              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-progressbar-name?application=playwright",
-              "affectedNodes": 1,
-              "firstNodeTarget": [
-                ".chakra-progress"
-              ],
-              "firstNodeHtml": "<div class=\"chakra-progress css-120wkjd\" data-indeterminate=\"\" aria-valuemax=\"100\" aria-valuemin=\"0\" role=\"progressbar\">"
-            },
-            "inScope": false
-          },
-          {
-            "kind": "a11y_violation",
-            "severity": "error",
-            "url": "https://basedeconhecimento.stage.twygoead.com/play?menu_id=play",
             "message": "[a11y/color-contrast] Elements must meet minimum color contrast ratio thresholds",
             "detail": {
               "ruleId": "color-contrast",
@@ -196,7 +170,7 @@
                 "RGAA-3.2.1"
               ],
               "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
-              "affectedNodes": 2,
+              "affectedNodes": 3,
               "firstNodeTarget": [
                 ".brand-hidden > .back-dashboard"
               ],
@@ -388,7 +362,7 @@
                 "RGAA-9.2.1"
               ],
               "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=playwright",
-              "affectedNodes": 9,
+              "affectedNodes": 10,
               "firstNodeTarget": [
                 "#mobile-logo > img[alt=\"Logo - Base de conhecimento\"][title=\"Logo - Base de conhecimento\"]"
               ],

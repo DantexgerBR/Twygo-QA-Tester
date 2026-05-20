@@ -1,6 +1,6 @@
 # Relatório de Execução — Twygo QA
 
-**Projeto:** Modelos de conteúdo · **Ambiente:** `staging-base-de-conhecimento` · **Browsers:** chromium · **Gerado em:** 20/05/2026, 16:10:18
+**Projeto:** Modelos de conteúdo · **Ambiente:** `staging-base-de-conhecimento` · **Browsers:** chromium · **Gerado em:** 20/05/2026, 16:24:33
 
 > **Escopo:** Apenas testsuite contendo "Criação de Design de Página"
 
@@ -10,7 +10,7 @@
 
 | Total | ✅ Aprovados | ❌ Falhas | ⊘ Ignorados | Duração |
 |---:|---:|---:|---:|---:|
-| 7 | 4 | 0 | 3 | 143.8s |
+| 7 | 7 | 0 | 0 | 181.1s |
 
 ## Validação Exploratória
 
@@ -22,7 +22,7 @@
 
 | Testsuite | Total | Distribuição (✅/❌/⊘) | %Pass | ❌ | ⊘ | Findings | Tempo |
 |---|---:|---|---:|---:|---:|---|---:|
-| **Criação de Design de Página** | 7 | `[███████████⊘⊘⊘⊘⊘⊘⊘⊘⊘]` 4/0/3 | 57% | 0 | 3 | — | 143.8s |
+| **Criação de Design de Página** | 7 | `[████████████████████]` 7/0/0 | 100% | 0 | 0 | — | 181.1s |
 
 ## Onde ir agora
 
