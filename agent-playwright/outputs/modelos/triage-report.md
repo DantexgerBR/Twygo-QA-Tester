@@ -1,12 +1,12 @@
-# Triage Report — Modelos de conteúdo — 2026-05-21 08:14
+# Triage Report — Modelos de conteúdo — 2026-05-21 08:17
 
-**Escopo**: Testsuite: Feature flag modelos_de_conteudo · **Ambiente**: `staging-base-de-conhecimento`
+**Escopo**: Testsuite: Ambientes adicionais - Modelos · **Ambiente**: `staging-base-de-conhecimento`
 
 ## Sumário
 
 | Total | ✅ Passed | ❌ Failed | ⊘ Skipped | Findings exploratórios |
 |---:|---:|---:|---:|---|
-| 3 | 0 | 0 | 3 | 0 erros · 0 warnings · 0 info |
+| 2 | 0 | 0 | 2 | 0 erros · 0 warnings · 0 info |
 
 > **Janela única de revisão.** Marque ☑ em UMA categoria por item.
 > Notas em PT-BR. Commit este arquivo após triagem.
@@ -26,9 +26,8 @@ Suite rodou limpa. Revise apenas a seção de exploratórios e skips abaixo (se 
 
 | TC | Tipo | Motivo |
 |---|---|---|
-| Acesso bloqueado com flag desabilitada | fixme | — |
-| Acesso liberado com flag habilitada | fixme | — |
-| Transição off → on durante a sessão | fixme | — |
+| Modelos criados no principal não aparecem no adicional | fixme | — |
+| Modelos criados no adicional não aparecem no principal | fixme | — |
 
 ---
 
