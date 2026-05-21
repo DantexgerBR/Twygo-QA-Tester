@@ -1,14 +1,14 @@
-# [inconclusivo] Conteúdo de cada item do carrossel
+# [inconclusivo] Filtrar modelos por Situação via drawer
 
 > _Categoria confiança: **baixa** — Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace_
 > _Gerado em 2026-05-21T21:07:44.597Z · commit f90ba01_
 
 ## Identificação
-- **Suite**: Preview de Modelos e Designs
-- **TC**: Conteúdo de cada item do carrossel
-- **Spec**: `projects/modelos/tests/features/preview-de-modelos-e-designs/tc02-conteudo-carrossel.spec.ts`
-- **Erro em**: `C:\Claude\Recertificação\twygo-agents-qa\agent-playwright\projects\modelos\tests\features\preview-de-modelos-e-designs\tc02-conteudo-carrossel.spec.ts:41:9`
-- **Status**: failed (23346ms)
+- **Suite**: Filtros e Busca - Modelos
+- **TC**: Filtrar modelos por Situação via drawer
+- **Spec**: `projects/modelos/tests/features/filtros-e-busca-modelos/tc02-filtrar-por-situacao-via-drawer.spec.ts`
+- **Erro em**: `C:\Claude\Recertificação\twygo-agents-qa\agent-playwright\projects\modelos\pages\ContentModelsListPage.ts:101:71`
+- **Status**: failed (10068ms)
 
 ## Ambiente
 - **Env**: staging-base-de-conhecimento (`https://basedeconhecimento.stage.twygoead.com/`)
@@ -20,22 +20,21 @@
 ## Reprodução
 - **Pré-condições**: storageState pré-logado em `outputs/.auth/storage.json`, perfil Administrador.
 - **Passo-a-passo**:
-  1. 1. Acessar listagem e abrir Preview — ✅
-  2. 2. Validar elementos do slide: Modelo:, Design:, Tipo:, indicador X de Y — ❌ **falhou aqui**
+  1. 1. Acessar listagem e abrir drawer de filtros — ✅
+  2. 2. Aplicar filtro padrão "Modelos ativos" — ✅
+  3. 3. Validar drawer fechou e #clear-filter ficou visível — ❌ **falhou aqui**
 - **Taxa**: 1/1 nesta execução `[REVISAR taxa real — rodar 3+ vezes]`
 
 ## Comportamento
 - **Esperado**: [REVISAR — preencher com expectedresults do XML do step que falhou]
 - **Observado**:
   ```
-  Error: expect(locator).toBeVisible() failed
+  Error: esperava ao menos 1 cards, encontrei 0
   
-  Locator: locator('[data-test-id="content-models-preview-modal-image"]')
-  Expected: visible
-  Timeout: 10000ms
-  Error: element(s) not found
+  expect(received).toBeGreaterThanOrEqual(expected)
   
-  Call log:
+  Expected: >= 1
+  Received:    0
   ```
 
 ## Evidência técnica
@@ -44,10 +43,10 @@
 _Sem HTTP 4xx/5xx capturados pela fixture exploratória nesta execução._
 
 ### Attachments
-- ![screenshot](../test-artifacts/projects-modelos-tests-fea-4071c-o-de-cada-item-do-carrossel-chromium/test-failed-1.png)
-- [video](../test-artifacts/projects-modelos-tests-fea-4071c-o-de-cada-item-do-carrossel-chromium/video.webm)
-- [error-context](../test-artifacts/projects-modelos-tests-fea-4071c-o-de-cada-item-do-carrossel-chromium/error-context.md)
-- [trace](../test-artifacts/projects-modelos-tests-fea-4071c-o-de-cada-item-do-carrossel-chromium/trace.zip)
+- ![screenshot](../test-artifacts/projects-modelos-tests-fea-40575-los-por-Situação-via-drawer-chromium/test-failed-1.png)
+- [video](../test-artifacts/projects-modelos-tests-fea-40575-los-por-Situação-via-drawer-chromium/video.webm)
+- [error-context](../test-artifacts/projects-modelos-tests-fea-40575-los-por-Situação-via-drawer-chromium/error-context.md)
+- [trace](../test-artifacts/projects-modelos-tests-fea-40575-los-por-Situação-via-drawer-chromium/trace.zip)
 
 ### IDs envolvidos
 - orgId: 37007

@@ -1,14 +1,14 @@
-# [inconclusivo] Conteúdo de cada item do carrossel
+# [inconclusivo] Duplicar modelo com cópia profunda
 
 > _Categoria confiança: **baixa** — Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace_
 > _Gerado em 2026-05-21T21:07:44.597Z · commit f90ba01_
 
 ## Identificação
-- **Suite**: Preview de Modelos e Designs
-- **TC**: Conteúdo de cada item do carrossel
-- **Spec**: `projects/modelos/tests/features/preview-de-modelos-e-designs/tc02-conteudo-carrossel.spec.ts`
-- **Erro em**: `C:\Claude\Recertificação\twygo-agents-qa\agent-playwright\projects\modelos\tests\features\preview-de-modelos-e-designs\tc02-conteudo-carrossel.spec.ts:41:9`
-- **Status**: failed (23346ms)
+- **Suite**: Ações Duplicar e Drag and Drop
+- **TC**: Duplicar modelo com cópia profunda
+- **Spec**: `projects/modelos/tests/features/acoes-duplicar-e-drag-and-drop/tc01-duplicar-modelo-copia-profunda.spec.ts`
+- **Erro em**: `C:\Claude\Recertificação\twygo-agents-qa\agent-playwright\projects\modelos\tests\features\acoes-duplicar-e-drag-and-drop\tc01-duplicar-modelo-copia-profunda.spec.ts:41:9`
+- **Status**: failed (28498ms)
 
 ## Ambiente
 - **Env**: staging-base-de-conhecimento (`https://basedeconhecimento.stage.twygoead.com/`)
@@ -20,8 +20,8 @@
 ## Reprodução
 - **Pré-condições**: storageState pré-logado em `outputs/.auth/storage.json`, perfil Administrador.
 - **Passo-a-passo**:
-  1. 1. Acessar listagem e abrir Preview — ✅
-  2. 2. Validar elementos do slide: Modelo:, Design:, Tipo:, indicador X de Y — ❌ **falhou aqui**
+  1. 1. Acessar listagem de modelos — ✅
+  2. 2. Clicar Duplicar (icon content_copy) do 1º modelo — ❌ **falhou aqui**
 - **Taxa**: 1/1 nesta execução `[REVISAR taxa real — rodar 3+ vezes]`
 
 ## Comportamento
@@ -30,9 +30,9 @@
   ```
   Error: expect(locator).toBeVisible() failed
   
-  Locator: locator('[data-test-id="content-models-preview-modal-image"]')
+  Locator: locator('.chakra-toast').filter({ hasText: 'duplicado com sucesso' }).first()
   Expected: visible
-  Timeout: 10000ms
+  Timeout: 15000ms
   Error: element(s) not found
   
   Call log:
@@ -44,10 +44,12 @@
 _Sem HTTP 4xx/5xx capturados pela fixture exploratória nesta execução._
 
 ### Attachments
-- ![screenshot](../test-artifacts/projects-modelos-tests-fea-4071c-o-de-cada-item-do-carrossel-chromium/test-failed-1.png)
-- [video](../test-artifacts/projects-modelos-tests-fea-4071c-o-de-cada-item-do-carrossel-chromium/video.webm)
-- [error-context](../test-artifacts/projects-modelos-tests-fea-4071c-o-de-cada-item-do-carrossel-chromium/error-context.md)
-- [trace](../test-artifacts/projects-modelos-tests-fea-4071c-o-de-cada-item-do-carrossel-chromium/trace.zip)
+- ![screenshot](../test-artifacts/projects-modelos-tests-fea-81805-r-modelo-com-cópia-profunda-chromium/test-failed-1.png)
+- [video](../test-artifacts/projects-modelos-tests-fea-81805-r-modelo-com-cópia-profunda-chromium/video.webm)
+- [error-context](../test-artifacts/projects-modelos-tests-fea-81805-r-modelo-com-cópia-profunda-chromium/error-context.md)
+- ![screenshot](../test-artifacts/projects-modelos-tests-fea-81805-r-modelo-com-cópia-profunda-chromium/test-failed-2.png)
+- [error-context](../test-artifacts/projects-modelos-tests-fea-81805-r-modelo-com-cópia-profunda-chromium/error-context.md)
+- [trace](../test-artifacts/projects-modelos-tests-fea-81805-r-modelo-com-cópia-profunda-chromium/trace.zip)
 
 ### IDs envolvidos
 - orgId: 37007
