@@ -1,12 +1,12 @@
-# Triage Report — Modelos de conteúdo — 2026-05-21 08:10
+# Triage Report — Modelos de conteúdo — 2026-05-21 08:14
 
-**Escopo**: Testsuite: Bloqueio Exclusão Cores Kit de Marca · **Ambiente**: `staging-base-de-conhecimento`
+**Escopo**: Testsuite: Feature flag modelos_de_conteudo · **Ambiente**: `staging-base-de-conhecimento`
 
 ## Sumário
 
 | Total | ✅ Passed | ❌ Failed | ⊘ Skipped | Findings exploratórios |
 |---:|---:|---:|---:|---|
-| 2 | 2 | 0 | 0 | 0 erros · 0 warnings · 0 info |
+| 3 | 0 | 0 | 3 | 0 erros · 0 warnings · 0 info |
 
 > **Janela única de revisão.** Marque ☑ em UMA categoria por item.
 > Notas em PT-BR. Commit este arquivo após triagem.
@@ -20,6 +20,17 @@ Suite rodou limpa. Revise apenas a seção de exploratórios e skips abaixo (se 
 
 ---
 
+## ⊘ Skips legítimos pra revalidação periódica
+
+> Items com `test.fixme` + reason. Se o motivo já não vale (seed criado, bug corrigido), abrir e re-rodar. Ver skill `debugar-bug-produto-stale`.
+
+| TC | Tipo | Motivo |
+|---|---|---|
+| Acesso bloqueado com flag desabilitada | fixme | — |
+| Acesso liberado com flag habilitada | fixme | — |
+| Transição off → on durante a sessão | fixme | — |
+
+---
 
 ## 🐛 Findings exploratórios não-fatais (informativo)
 
