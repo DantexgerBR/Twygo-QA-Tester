@@ -223,14 +223,16 @@ Lê documentação humana e consolida requisitos.
 - **Output**: `projects/<slug>/output/requisitos_extraidos.md` (intermediário/debug)
 - **Não emite** o MD canônico — só extrai matéria-prima
 
-### 5.2.5 `recon-visual` [NOVO em 2026-05-19]
-Reconhecimento visual opt-in via playwright-mcp.
+### 5.2.5 `recon-prototipo` [renomeada em CONTRACT.md v1.1 — 2026-05-22]
+Reconhecimento visual de protótipos navegáveis via playwright-mcp.
+Anteriormente `recon-visual` (alias mantido para configs 1.0).
 
-- **Input**: Figma protótipo (URL pública) e/ou env Stage (credenciais via `.env`)
-- **Output**: `projects/<slug>/output/recon-visual.md` (catálogos de textos literais reais)
-- **Quando usar**: SEMPRE que projeto tem Figma ou Stage acessível
-- **MCP usado**: `playwright` (declarado em [`.mcp.json`](../.mcp.json))
+- **Input**: URL pública de protótipo (Figma Make, Vercel, etc.) em `prototypeUrl` do `project.config.json`
+- **Output**: `projects/<slug>/output/recon-prototipo.md` (catálogos de textos literais reais)
+- **Quando usar**: AUTOMÁTICO em `contract_version: 1.1+` quando `prototypeUrl` preenchido; opt-in em 1.0
+- **MCP usado**: `playwright` em modo `--headless` (declarado em [`.mcp.json`](../.mcp.json))
 - **Pré-req máquina**: Chrome + Node 20+
+- **Fallback gracioso**: timeout/login/MCP indisponível → skip + warning, AT prossegue
 
 ### 5.3 `generate-md-canonical` [NOVO em v1]
 Emite `test-analysis.md` seguindo o schema do [CONTRACT.md §4](../CONTRACT.md).

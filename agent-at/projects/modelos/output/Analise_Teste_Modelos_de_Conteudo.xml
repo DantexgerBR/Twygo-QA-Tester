@@ -24,7 +24,7 @@ Usuário logado como Admin</preconditions>
           <execution_type>2</execution_type>
         </step>      </steps>
     </testcase>    <testcase name="Visualização padrão em Cards">
-      <summary>Validar que a visualização padrão da listagem é em formato Cards, conforme RN 3.</summary>
+      <summary>Validar que a visualização padrão da listagem é em formato Cards, conforme RN 3. Inclui validação visual do carregamento das imagens dos cards via `expectImageLoaded`.</summary>
       <preconditions>Ambiente Stage configurado
 Feature flag `modelos_de_conteudo` ativa na organização do teste
 Pelo menos 2 modelos cadastrados (1 ativo, 1 inativo) para validar visualizações
@@ -40,6 +40,11 @@ Usuário logado como Admin</preconditions>
           <step_number>2</step_number>
           <actions>Aguardar a renderização dos cards</actions>
           <expectedresults>Cada card exibe imagem principal, nome do modelo, ações (List Control) e indicador de cor lateral para status.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Executar o helper `expectImageLoaded` sobre cada &#34;imagem principal&#34; do card</actions>
+          <expectedresults>Para cada card, helper retorna true (img.complete === true &amp;&amp; naturalWidth &gt;= 32).</expectedresults>
           <execution_type>2</execution_type>
         </step>      </steps>
     </testcase>    <testcase name="Alternância entre visualização Cards e Lista">
@@ -219,6 +224,50 @@ Usuário logado como Admin</preconditions>
           <expectedresults>Listagem volta a exibir todos os modelos cadastrados sem filtros aplicados.</expectedresults>
           <execution_type>2</execution_type>
         </step>      </steps>
+    </testcase>    <testcase name="Combinação de filtros + busca textual">
+      <summary>Validar aplicação simultânea de busca textual + filtrar por situação + filtrar por origem (combinatório). Atende §1.5 do CONTRACT.md v1.1.</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Pelo menos 4 modelos cadastrados (ativos, inativos, próprios e de terceiros) para validar filtros
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a URL &#34;/o/{orgId}/content_models&#34;</actions>
+          <expectedresults>Listagem é exibida com múltiplos modelos.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Preencher o campo &#34;Buscar&#34; com &#34;Modelo TC&#34;</actions>
+          <expectedresults>Listagem aplica busca textual e filtra exibindo apenas modelos cujo nome contém &#34;Modelo TC&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Clicar no botão &#34;Filtrar&#34;</actions>
+          <expectedresults>Drawer &#34;Filtros&#34; é exibido para filtrar por critérios adicionais.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Selecionar o filtro padrão &#34;Modelos ativos&#34; para filtrar por situação</actions>
+          <expectedresults>Critério para filtrar por situação fica marcado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>5</step_number>
+          <actions>Selecionar o filtro padrão &#34;Modelos próprios&#34; para filtrar por origem</actions>
+          <expectedresults>Critério para filtrar por origem fica marcado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>6</step_number>
+          <actions>Clicar no botão &#34;Aplicar&#34; para aplicar os filtros simultaneamente</actions>
+          <expectedresults>Drawer fecha. Listagem exibe apenas modelos que: (a) contêm &#34;Modelo TC&#34; no nome, (b) estão ativos, (c) são próprios da organização. Resultado é a interseção das 3 condições.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>7</step_number>
+          <actions>Clicar no botão &#34;Limpar filtros&#34; para limpar todos os filtros aplicados</actions>
+          <expectedresults>Listagem volta a exibir todos os modelos cadastrados.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
     </testcase>  </testsuite>  <testsuite name="Criação de Modelo - Aba Identificação">    <testcase name="Criar modelo com dados válidos">
       <summary>Validar criação de modelo (happy path) preenchendo todos os campos da aba Identificação (RN 7, RN 8).</summary>
       <preconditions>Ambiente Stage configurado
@@ -301,8 +350,8 @@ Usuário logado como Admin</preconditions>
           <expectedresults>Badge &#34;Dica&#34; NÃO é exibida na tela de edição.</expectedresults>
           <execution_type>2</execution_type>
         </step>      </steps>
-    </testcase>    <testcase name="Validar campo Nome obrigatório">
-      <summary>Validar que o campo &#34;Nome&#34; é obrigatório (RN 8).</summary>
+    </testcase>    <testcase name="Validações negativas do campo Nome (matriz A-D)">
+      <summary>Validar comportamento do campo &#34;Nome&#34; para entradas inválidas — obrigatoriedade, limites, caracteres especiais e tentativas de injeção. Cobertura conforme matriz A-D da skill `cenarios-negativos-twygo`.</summary>
       <preconditions>Ambiente Stage configurado
 Feature flag `modelos_de_conteudo` ativa
 Pelo menos 1 kit de marca cadastrado na organização
@@ -316,17 +365,12 @@ Usuário logado como Admin</preconditions>
           <execution_type>2</execution_type>
         </step>        <step>
           <step_number>2</step_number>
-          <actions>Preencher o campo &#34;Descrição&#34; com &#34;Teste sem nome&#34;</actions>
-          <expectedresults>Campo &#34;Descrição&#34; exibe o texto digitado.</expectedresults>
-          <execution_type>2</execution_type>
-        </step>        <step>
-          <step_number>3</step_number>
-          <actions>Clicar no botão &#34;Salvar&#34;</actions>
-          <expectedresults>Mensagem de validação exibida: &#34;Nome é obrigatório&#34;. Modelo NÃO é criado.</expectedresults>
+          <actions>Para cada linha da `**Validation matrix**` abaixo, preencher &#34;Nome&#34; com `Entrada`, demais campos com defaults válidos, clicar &#34;Salvar&#34;</actions>
+          <expectedresults>Sistema deve reagir conforme `Esperado` da linha. **Validation matrix**: | Categoria | Entrada | Esperado | |---|---|---| | A | (vazio) | Mensagem &#34;Nome é obrigatório&#34; exibida. Modelo NÃO é criado. | | B | &#34;A&#34; (1 caractere) | Modelo criado com sucesso (sem mínimo declarado). | | B | string de 255 caracteres | Modelo criado com sucesso (limite máximo aceito). | | B | string de 256 caracteres | Input trunca em 255 caracteres OU mensagem de limite exibida. Modelo NÃO é criado com 256+. | | C | &#34;Modelo @çãõ#$%&#34; (acentos + especiais) | Modelo criado com sucesso preservando os caracteres. | | C | &#34; Modelo &#34; (espaços) | Modelo criado; espaços laterais podem ser preservados ou trimados conforme implementação. | | D | &#34;&lt;script&gt;alert(1)&lt;/script&gt;&#34; | Modelo criado com o texto literal armazenado e exibido escapado (sem execução de script). | | D | &#34;&#39;; DROP TABLE--&#34; | Modelo criado com o texto literal; nenhum efeito colateral no banco. |</expectedresults>
           <execution_type>2</execution_type>
         </step>      </steps>
-    </testcase>    <testcase name="Validar limite de 500 caracteres da Descrição">
-      <summary>Validar limite máximo de 500 caracteres no campo &#34;Descrição&#34;.</summary>
+    </testcase>    <testcase name="Validações negativas do campo Descrição (matriz B-D)">
+      <summary>Validar comportamento do campo &#34;Descrição&#34; para entradas inválidas — limites, caracteres especiais e tentativas de injeção. Não inclui categoria A (campo opcional). Cobertura conforme matriz da skill `cenarios-negativos-twygo`.</summary>
       <preconditions>Ambiente Stage configurado
 Feature flag `modelos_de_conteudo` ativa
 Pelo menos 1 kit de marca cadastrado na organização
@@ -340,8 +384,8 @@ Usuário logado como Admin</preconditions>
           <execution_type>2</execution_type>
         </step>        <step>
           <step_number>2</step_number>
-          <actions>Preencher o campo &#34;Descrição&#34; com uma string de 501 caracteres</actions>
-          <expectedresults>Campo &#34;Descrição&#34; trunca o input em 500 caracteres OU exibe mensagem de limite atingido.</expectedresults>
+          <actions>Para cada linha da `**Validation matrix**` abaixo, preencher &#34;Nome&#34; com valor válido, &#34;Descrição&#34; com `Entrada`, clicar &#34;Salvar&#34;</actions>
+          <expectedresults>Sistema deve reagir conforme `Esperado` da linha. **Validation matrix**: | Categoria | Entrada | Esperado | |---|---|---| | B | string de 500 caracteres | Modelo criado com sucesso (limite máximo). | | B | string de 501 caracteres | Input trunca em 500 caracteres OU mensagem de limite exibida. Modelo NÃO é criado com 501+. | | C | &#34;Descrição @çãõ#$%&#34; | Modelo criado preservando caracteres. | | C | &#34;linha 1\nlinha 2\nlinha 3&#34; (com quebras) | Modelo criado; quebras de linha preservadas conforme renderização textarea. | | D | &#34;&lt;img src=x onerror=alert(1)&gt;&#34; | Modelo criado com o texto literal; payload exibido escapado. |</expectedresults>
           <execution_type>2</execution_type>
         </step>      </steps>
     </testcase>    <testcase name="Switch &#34;Usar designs sugeridos&#34; exibido somente na criação">
@@ -409,6 +453,25 @@ Usuário logado como Admin</preconditions>
           <step_number>4</step_number>
           <actions>Confirmar manter na página no diálogo</actions>
           <expectedresults>Usuário permanece na tela de criação com os dados preenchidos.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Validação do campo Kit de marca obrigatório (matriz A)">
+      <summary>Validar obrigatoriedade do campo &#34;Kit de marca&#34; no save. Cobertura conforme matriz da skill `cenarios-negativos-twygo` (select → categoria A).</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Pelo menos 1 kit de marca cadastrado na organização
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a tela de criação de modelo</actions>
+          <expectedresults>Aba &#34;Identificação&#34; é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Para cada linha da `**Validation matrix**` abaixo, preencher &#34;Nome&#34; com valor válido, configurar &#34;Kit de marca&#34; conforme `Entrada`, clicar &#34;Salvar&#34;</actions>
+          <expectedresults>Sistema deve reagir conforme `Esperado`. **Validation matrix**: | Categoria | Entrada | Esperado | |---|---|---| | A | Nenhum kit selecionado | Mensagem de validação de obrigatoriedade exibida (REVISAR-FIGMA: texto exato). Modelo NÃO é criado. | | A | &#34;Kit padrão da organização&#34; selecionado | Modelo criado com sucesso. |</expectedresults>
           <execution_type>2</execution_type>
         </step>      </steps>
     </testcase>  </testsuite>  <testsuite name="Criação de Modelo - Aba Estilo do Conteúdo">    <testcase name="Botão &#34;Adicionar mais dados&#34; exibe menu com 6 opções">
@@ -516,8 +579,8 @@ Usuário logado como Admin</preconditions>
           <expectedresults>Campo numérico &#34;Número de atividades por módulo&#34; é exibido com tooltip: &#34;Número sugerido de atividades que a IA irá criar dentro de cada módulo do curso.&#34;.</expectedresults>
           <execution_type>2</execution_type>
         </step>      </steps>
-    </testcase>    <testcase name="Carga horária obrigatória bloqueia salvamento">
-      <summary>Validar que sem &#34;Carga horária sugerida&#34; o salvamento é bloqueado (RN 18).</summary>
+    </testcase>    <testcase name="Validação obrigatoriedade da Carga horária (matriz A)">
+      <summary>Validar obrigatoriedade do campo &#34;Carga horária sugerida&#34; (select → categoria A). Cobertura conforme matriz da skill `cenarios-negativos-twygo`.</summary>
       <preconditions>Ambiente Stage configurado
 Feature flag `modelos_de_conteudo` ativa
 Modelo de teste cadastrado no setup do spec (via beforeAll)
@@ -526,13 +589,13 @@ Usuário logado como Admin</preconditions>
       <importance>3</importance>
       <steps>        <step>
           <step_number>1</step_number>
-          <actions>Acessar a aba &#34;Estrutura do conteúdo&#34; do modelo de teste sem carga horária preenchida</actions>
+          <actions>Acessar a aba &#34;Estrutura do conteúdo&#34; do modelo de teste</actions>
           <expectedresults>Aba é exibida.</expectedresults>
           <execution_type>2</execution_type>
         </step>        <step>
           <step_number>2</step_number>
-          <actions>Clicar no botão &#34;Salvar&#34;</actions>
-          <expectedresults>Mensagem de validação exibida: &#34;Carga horária sugerida é obrigatória&#34;. Modelo NÃO é salvo.</expectedresults>
+          <actions>Para cada linha da `**Validation matrix**`, configurar &#34;Carga horária&#34; conforme `Entrada`, clicar &#34;Salvar&#34;</actions>
+          <expectedresults>Sistema reage conforme `Esperado`. **Validation matrix**: | Categoria | Entrada | Esperado | |---|---|---| | A | Nenhuma opção selecionada | Mensagem &#34;Carga horária sugerida é obrigatória&#34; exibida. Modelo NÃO é salvo. | | A | &#34;Médio&#34; selecionado | Salvamento permitido. |</expectedresults>
           <execution_type>2</execution_type>
         </step>      </steps>
     </testcase>    <testcase name="Carga horária exibe 5 opções literais">
@@ -773,8 +836,8 @@ Usuário logado como Admin</preconditions>
           <expectedresults>Sistema redireciona para a tela de criação de Página exibindo a aba &#34;Identificação&#34;.</expectedresults>
           <execution_type>2</execution_type>
         </step>      </steps>
-    </testcase>    <testcase name="Validar campos obrigatórios da aba Identificação - Página">
-      <summary>Validar campos obrigatórios da aba Identificação de design de Página (RN 33).</summary>
+    </testcase>    <testcase name="Validações negativas dos campos obrigatórios — Página (matriz A)">
+      <summary>Validar obrigatoriedade dos 3 campos críticos (Nome, Instruções de estrutura, Sequência) na aba Identificação de Página. Cobertura conforme matriz da skill `cenarios-negativos-twygo`.</summary>
       <preconditions>Ambiente Stage configurado
 Feature flag `modelos_de_conteudo` ativa
 Modelo de teste cadastrado no setup do spec, com pelo menos 1 kit de marca selecionado
@@ -788,8 +851,8 @@ Usuário logado como Admin</preconditions>
           <execution_type>2</execution_type>
         </step>        <step>
           <step_number>2</step_number>
-          <actions>Clicar no botão &#34;Salvar&#34; sem preencher nada</actions>
-          <expectedresults>Mensagens de validação exibidas para os campos obrigatórios: &#34;Nome&#34;, &#34;Instruções de estrutura para a IA&#34;, &#34;Sequência&#34;. Página NÃO é criada.</expectedresults>
+          <actions>Para cada linha da `**Validation matrix**`, configurar campos conforme `Entrada` (demais defaults), clicar &#34;Salvar&#34;</actions>
+          <expectedresults>Sistema reage conforme `Esperado`. **Validation matrix**: | Categoria | Entrada | Esperado | |---|---|---| | A | Todos os 3 campos vazios | Mensagens de validação exibidas para &#34;Nome&#34;, &#34;Instruções de estrutura para a IA&#34;, &#34;Sequência&#34;. Página NÃO criada. | | A | &#34;Nome&#34; vazio (demais preenchidos) | Validação só de Nome. Página NÃO criada. | | A | &#34;Instruções de estrutura&#34; vazia (demais preenchidos) | Validação só de Instruções. Página NÃO criada. | | A | &#34;Sequência&#34; vazio (demais preenchidos) | Validação só de Sequência. Página NÃO criada. | | A | Todos os 3 preenchidos | Sistema redireciona para aba Design (sem mensagens de validação). |</expectedresults>
           <execution_type>2</execution_type>
         </step>      </steps>
     </testcase>    <testcase name="Auto-preenchimento ao selecionar tipo &#34;Capa&#34;">
@@ -912,6 +975,117 @@ Usuário logado como Admin</preconditions>
           <expectedresults>Listagem exibe a nova Página criada na lista de designs.</expectedresults>
           <execution_type>2</execution_type>
         </step>      </steps>
+    </testcase>    <testcase name="Plate Editor — inserir texto via teclado">
+      <summary>Validar input básico de texto no Plate Editor. Atende mínimo da skill `testar-plate-editor-twygo`.</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec, com pelo menos 1 kit de marca selecionado
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Design&#34; de uma Página recém-salva</actions>
+          <expectedresults>Plate Editor é exibido com seletor `[data-slate-editor=&#34;true&#34;]` visível e focável.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar dentro da área do editor</actions>
+          <expectedresults>Cursor de texto fica posicionado dentro do editor.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Digitar &#34;Texto inserido pelo TC8&#34;</actions>
+          <expectedresults>Editor exibe o texto digitado em tempo real.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Salvar o design</actions>
+          <expectedresults>Texto persistido. Ao recarregar, o conteúdo do editor exibe &#34;Texto inserido pelo TC8&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Plate Editor — inserir espaço reservado para IA">
+      <summary>Validar inserção de espaço reservado para IA via Plate Editor (RN 36.4.x). Atende mínimo da skill `testar-plate-editor-twygo`.</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec, com pelo menos 1 kit de marca selecionado
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Design&#34; de uma Página recém-salva</actions>
+          <expectedresults>Plate Editor é exibido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão de inserir espaço reservado para IA (toolbar do editor)</actions>
+          <expectedresults>Modal &#34;Inserir espaço reservado para IA&#34; é exibido com textarea de instruções.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Preencher o textarea com &#34;Inserir conteúdo IA para validação automatizada&#34;</actions>
+          <expectedresults>Textarea exibe o texto digitado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Clicar no botão &#34;Confirmar&#34;</actions>
+          <expectedresults>Modal fecha. Editor exibe o nó de espaço reservado renderizado inline com o prompt.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Plate Editor — inserir logo via toolbar">
+      <summary>Validar inserção de logo no Plate Editor (suporta upload no editor). Atende mínimo da skill `testar-plate-editor-twygo` e endereça o padrão de bug &#34;upload tratado como caixa preta&#34;.</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec, com pelo menos 1 kit de marca selecionado
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Design&#34; de uma Página recém-salva</actions>
+          <expectedresults>Plate Editor é exibido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão de inserir logo (toolbar do editor)</actions>
+          <expectedresults>Dialog de seleção/upload de logo é exibido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Selecionar a opção de logo padrão da organização</actions>
+          <expectedresults>Dialog fecha. Editor exibe o elemento de logo renderizado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Executar o helper `expectImageLoaded` sobre o elemento &#34;logo inserido&#34;</actions>
+          <expectedresults>Helper retorna true para a `&lt;img&gt;` do logo (img.complete === true &amp;&amp; naturalWidth &gt;= 16).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Plate Editor — drag and drop de bloco para reordenar">
+      <summary>Validar reordenação de blocos via drag and drop no Plate Editor.</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec, com pelo menos 1 kit de marca selecionado
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Design&#34; de uma Página com pelo menos 2 blocos inseridos</actions>
+          <expectedresults>Plate Editor exibe os blocos em sequência.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Arrastar o segundo bloco para a posição do primeiro</actions>
+          <expectedresults>Editor reflete a nova ordem.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Salvar o design e recarregar</actions>
+          <expectedresults>Nova ordem persistida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
     </testcase>  </testsuite>  <testsuite name="Criação de Design de Aula">    <testcase name="Acessar criação de Aula via menu Adicionar">
       <summary>Validar fluxo de criação de Aula (RN 30, RN 31, RN 38).</summary>
       <preconditions>Ambiente Stage configurado
@@ -1013,6 +1187,54 @@ Usuário logado como Admin</preconditions>
           <expectedresults>Listagem exibe a nova Aula criada na lista de designs.</expectedresults>
           <execution_type>2</execution_type>
         </step>      </steps>
+    </testcase>    <testcase name="Editor Aula — inserir texto via teclado">
+      <summary>Validar input básico de texto no editor de Aula. Atende mínimo da skill `testar-plate-editor-twygo`.</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec, com pelo menos 1 kit de marca selecionado
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Design&#34; de uma Aula recém-salva</actions>
+          <expectedresults>Editor de Aula é exibido com áreas editáveis.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar dentro de uma área de texto editável</actions>
+          <expectedresults>Cursor de texto fica posicionado dentro da área.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Digitar &#34;Conteúdo da aula TC5&#34;</actions>
+          <expectedresults>Editor exibe o texto digitado em tempo real.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Salvar a Aula</actions>
+          <expectedresults>Texto persistido. Ao recarregar, o conteúdo do editor exibe &#34;Conteúdo da aula TC5&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Editor Aula — alternar kit de marca via ferramenta de layout">
+      <summary>Validar que a alteração do kit de marca via ferramenta de layout reflete no editor.</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado no setup do spec, com pelo menos 1 kit de marca selecionado
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Design&#34; de uma Aula com kit padrão da organização</actions>
+          <expectedresults>Editor exibe o slide com cores/fontes do kit padrão.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar em um kit de marca alternativo na ferramenta de layout</actions>
+          <expectedresults>Editor atualiza cores/fontes refletindo o novo kit selecionado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
     </testcase>  </testsuite>  <testsuite name="Listagem de Designs (aba Design do Modelo)">    <testcase name="Listagem exibe colunas obrigatórias">
       <summary>Validar colunas da listagem de designs (RN 44, RN 45).</summary>
       <preconditions>Ambiente Stage configurado
@@ -1073,6 +1295,45 @@ Usuário logado como Admin</preconditions>
           <step_number>3</step_number>
           <actions>Aplicar o filtro</actions>
           <expectedresults>Drawer fecha. Listagem exibe apenas designs do Tipo &#34;Aula&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Combinação de filtros + busca textual na listagem de designs">
+      <summary>Validar aplicação simultânea de busca textual + filtrar por tipo na listagem de designs (combinatório). Atende §1.5 do CONTRACT.md v1.1.</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado com pelo menos 3 designs (mix de Aula e Página)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a aba &#34;Design&#34; do modelo de teste</actions>
+          <expectedresults>Listagem é exibida com múltiplos designs (mix de Aula e Página).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Preencher o campo &#34;Buscar&#34; com &#34;Design TC&#34;</actions>
+          <expectedresults>Listagem aplica busca textual e filtra exibindo apenas designs cujo nome contém &#34;Design TC&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Clicar no botão &#34;Filtrar&#34;</actions>
+          <expectedresults>Drawer &#34;Filtros&#34; é exibido para filtrar por critérios adicionais.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Selecionar o filtro padrão &#34;Só páginas&#34; para filtrar por tipo</actions>
+          <expectedresults>Critério para filtrar por tipo fica marcado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>5</step_number>
+          <actions>Clicar em &#34;Aplicar&#34; para aplicar os filtros simultaneamente</actions>
+          <expectedresults>Drawer fecha. Listagem exibe apenas designs que: (a) contêm &#34;Design TC&#34; no nome, (b) são do tipo Página. Resultado é a interseção das 2 condições.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>6</step_number>
+          <actions>Clicar no botão &#34;Limpar filtros&#34; para limpar todos os filtros aplicados</actions>
+          <expectedresults>Listagem volta a exibir todos os designs do modelo.</expectedresults>
           <execution_type>2</execution_type>
         </step>      </steps>
     </testcase>  </testsuite>  <testsuite name="Ações Duplicar e Drag and Drop">    <testcase name="Duplicar modelo com cópia profunda">
@@ -1186,7 +1447,7 @@ Usuário logado como Admin</preconditions>
           <execution_type>2</execution_type>
         </step>      </steps>
     </testcase>    <testcase name="Conteúdo de cada item do carrossel">
-      <summary>Validar campos exibidos em cada slide do carrossel (RN 5.2).</summary>
+      <summary>Validar campos exibidos em cada slide do carrossel (RN 5.2). Inclui validação visual do carregamento da thumb via `expectImageLoaded`.</summary>
       <preconditions>Ambiente Stage configurado
 Feature flag `modelos_de_conteudo` ativa
 Modelo de teste cadastrado com pelo menos 2 designs com previews gerados (1 Aula e 1 Página)
@@ -1202,6 +1463,11 @@ Usuário logado como Admin</preconditions>
           <step_number>2</step_number>
           <actions>Aguardar a renderização do slide</actions>
           <expectedresults>Slide exibe: texto &#34;Modelo: {nome do modelo}&#34;, Thumb do design, texto &#34;Design: {nome do design}&#34;, texto &#34;Tipo: {Aula ou Página}&#34;, texto &#34;Prompt: {prosa de instruções}&#34;, indicador &#34;Design 1 de 2&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Executar o helper `expectImageLoaded` sobre o elemento &#34;thumb do design&#34;</actions>
+          <expectedresults>Helper retorna true para a `&lt;img&gt;` da thumb (img.complete &amp;&amp; naturalWidth &gt;= 64).</expectedresults>
           <execution_type>2</execution_type>
         </step>      </steps>
     </testcase>    <testcase name="Navegar entre slides no carrossel">
@@ -1224,7 +1490,7 @@ Usuário logado como Admin</preconditions>
           <execution_type>2</execution_type>
         </step>      </steps>
     </testcase>    <testcase name="Preview de Design tipo Página tem zoom com scroll">
-      <summary>Validar opção de zoom com scroll apenas em designs do tipo Página (RN 5.2).</summary>
+      <summary>Validar opção de zoom com scroll apenas em designs do tipo Página (RN 5.2). Inclui validação visual do preview da Página.</summary>
       <preconditions>Ambiente Stage configurado
 Feature flag `modelos_de_conteudo` ativa
 Modelo de teste cadastrado com pelo menos 2 designs com previews gerados (1 Aula e 1 Página)
@@ -1240,6 +1506,35 @@ Usuário logado como Admin</preconditions>
           <step_number>2</step_number>
           <actions>Aguardar a opção de zoom ser renderizada</actions>
           <expectedresults>Componente de zoom com scroll é exibido sobre o preview da Página.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Executar o helper `expectImageLoaded` sobre o elemento &#34;preview da Página&#34;</actions>
+          <expectedresults>Helper retorna true para a `&lt;img&gt;` do preview (img.complete === true &amp;&amp; naturalWidth &gt;= 128).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Preview falha graciosamente quando imagem do design não carrega">
+      <summary>Validar que `expectImageLoaded` DETECTA imagem broken e marca o teste como failed — endereça o padrão de bug &#34;toBeVisible passa em img com src inválido&#34;. Atende §1.2 do CONTRACT.md v1.1.</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado com pelo menos 2 designs com previews gerados (1 Aula e 1 Página)
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Abrir o modal de Preview do modelo de teste</actions>
+          <expectedresults>Modal exibe o primeiro slide.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Inspecionar o elemento `&lt;img&gt;` da thumb do design</actions>
+          <expectedresults>Elemento `&lt;img&gt;` exibe atributo `src` apontando para o asset gerado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Executar o helper `expectImageLoaded` sobre o elemento &#34;thumb do design&#34;</actions>
+          <expectedresults>Helper retorna true quando img.complete === true &amp;&amp; naturalWidth &gt;= 64. Se a imagem está broken (src inválido, 404, naturalWidth === 0): helper falha com mensagem &#34;image not visually loaded — possibly broken src or 0x0 natural size&#34;.</expectedresults>
           <execution_type>2</execution_type>
         </step>      </steps>
     </testcase>  </testsuite>  <testsuite name="Sincronização e Regeração de Previews">    <testcase name="Alterar Kit de Marca exibe ícone de alerta no card">
@@ -1315,6 +1610,36 @@ Usuário logado como Admin</preconditions>
           <step_number>2</step_number>
           <actions>Clicar no botão &#34;Regerar todos&#34;</actions>
           <expectedresults>Toast exibida: &#34;A regeração dos designs foi iniciada. Você será notificado quando for concluída.&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Previews regerados carregam visualmente após processo assíncrono">
+      <summary>Validar que após o processo assíncrono concluir, os previews dos designs carregam visualmente (sem broken-img). Atende §1.2 do CONTRACT.md v1.1.</summary>
+      <preconditions>Ambiente Stage configurado
+Feature flag `modelos_de_conteudo` ativa
+Modelo de teste cadastrado com pelo menos 1 design e Kit de Marca selecionado
+Pelo menos 2 kits de marca distintos cadastrados na organização
+Usuário logado como Admin</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Disparar o processo de regeração via &#34;Regerar todos&#34;</actions>
+          <expectedresults>Toast de início é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar a notificação assíncrona &#34;Regerações concluídas&#34;</actions>
+          <expectedresults>Notificação é exibida com header &#34;Regerações concluídas&#34; e body &#34;As regerações dos designs do modelo {nome} foram concluídas.&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Abrir o modal de Preview do modelo</actions>
+          <expectedresults>Modal exibe os slides com as thumbs regeradas.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Executar o helper `expectImageLoaded` sobre cada &#34;thumb do carrossel&#34;</actions>
+          <expectedresults>Para cada slide, helper retorna true (img.complete === true &amp;&amp; naturalWidth &gt;= 64). Nenhuma broken-img detectada após regeração.</expectedresults>
           <execution_type>2</execution_type>
         </step>      </steps>
     </testcase>  </testsuite>  <testsuite name="Bloqueio Exclusão Cores Kit de Marca">    <testcase name="Bloqueio de exclusão de cor em uso por modelo">

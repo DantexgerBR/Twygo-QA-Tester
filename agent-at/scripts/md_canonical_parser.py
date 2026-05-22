@@ -63,6 +63,11 @@ from typing import Any
 # Decisão 2026-05-19: 4 valores no MD; critical+high vão pro mesmo
 # priority-1 no XMind (ambos "alto" do ponto de vista do QA manual);
 # Allure preserva granularidade (critical/normal/normal/minor).
+# Versões do contrato suportadas. Adicionar nova versão aqui quando bumpar.
+# Ver CONTRACT.md §15 para detalhes.
+SUPPORTED_CONTRACT_VERSIONS = {"1.0", "1.1"}
+
+
 _PRIORITY_MAP = {
     "critical": 1,  # XMind priority-1; TestLink importance 3; Allure critical
     "high": 1,      # XMind priority-1; TestLink importance 3; Allure normal
@@ -152,6 +157,53 @@ def _extract_catalog_sections(body: str) -> tuple[dict[str, str], str]:
     return catalogs, rest
 
 
+def _parse_validation_matrix(table_md: str) -> list[dict[str, str]]:
+    """
+    Parseia bloco de tabela markdown da seção **Validation matrix** de um TC
+    (CONTRACT.md v1.1 §15). Esperado:
+
+        | Cenário | Categoria | Input | Esperado |
+        |---|---|---|---|
+        | Vazio | A | "" | Erro X |
+        | ...
+
+    Retorna lista de dicts:
+        [{"cenario": "Vazio", "categoria": "A", "input": '""', "esperado": "Erro X"}, ...]
+
+    Aceita variações de header (insensível a case, sem acento). Linhas com
+    `---|---|...` (separador) são ignoradas.
+    """
+    rows: list[dict[str, str]] = []
+    lines = [ln.strip() for ln in table_md.strip().split("\n") if ln.strip()]
+    if len(lines) < 2:
+        return rows
+
+    def _split_row(line: str) -> list[str]:
+        parts = line.strip().strip("|").split("|")
+        return [p.strip() for p in parts]
+
+    headers_raw = _split_row(lines[0])
+    # Normaliza header (lower + remove acentos)
+    header_map = {
+        "cenário": "cenario", "cenario": "cenario",
+        "categoria": "categoria", "cat": "categoria",
+        "input": "input", "entrada": "input",
+        "esperado": "esperado", "resultado": "esperado", "resultado esperado": "esperado",
+    }
+    cols = [header_map.get(h.lower(), h.lower()) for h in headers_raw]
+
+    for line in lines[1:]:
+        # Linha separadora |---|---| — ignorar
+        if all(set(p) <= {"-", ":"} for p in _split_row(line) if p):
+            continue
+        cells = _split_row(line)
+        if len(cells) != len(cols):
+            continue
+        row = dict(zip(cols, cells))
+        rows.append(row)
+    return rows
+
+
 def _parse_test_case_block(block: str, tc_number_expected: int) -> dict[str, Any]:
     """
     Parseia um bloco que começa com `## TC<N> — <título>` e termina antes
@@ -204,6 +256,38 @@ def _parse_test_case_block(block: str, tc_number_expected: int) -> dict[str, Any
                 tc["playbooks_adicionais"] = []
         elif raw:
             tc["playbooks_adicionais"] = [s.strip() for s in raw.split(",") if s.strip()]
+
+    # ===== Campos novos em contract_version 1.1 (CONTRACT.md §15) =====
+
+    # **RNs cobertas**: [1, 1.1, 1.2] — usado por check_v11_rn_to_tc
+    rns_m = re.search(
+        r"^\*\*RNs cobertas\*\*:\s*(\[.*?\]|\S.*)$",
+        body,
+        re.MULTILINE,
+    )
+    tc["rns_cobertas"] = []
+    if rns_m:
+        raw = rns_m.group(1).strip()
+        if raw.startswith("["):
+            try:
+                parsed = yaml.safe_load(raw) or []
+                # Converte itens para string (RNs podem ser "1", "1.1", "1.2.3")
+                tc["rns_cobertas"] = [str(x).strip() for x in parsed]
+            except yaml.YAMLError:
+                tc["rns_cobertas"] = []
+        elif raw and raw not in ("[]", "—", "-"):
+            tc["rns_cobertas"] = [s.strip() for s in raw.split(",") if s.strip()]
+
+    # **Validation matrix**: tabela markdown (extraída como bloco bruto)
+    # Formato esperado: |Cenário|Categoria|Input|Esperado| ...
+    matrix_m = re.search(
+        r"^\*\*Validation matrix\*\*:\s*\n((?:\|.+\|\s*\n?)+)",
+        body,
+        re.MULTILINE,
+    )
+    tc["validation_matrix"] = []
+    if matrix_m:
+        tc["validation_matrix"] = _parse_validation_matrix(matrix_m.group(1))
 
     # ### Objetivo
     obj_m = re.search(
@@ -336,11 +420,24 @@ def parse_canonical_md(path: str | Path) -> dict[str, Any]:
             f"Frontmatter de projeto sem campos obrigatórios: {sorted(missing)}"
         )
 
+    # Validação da versão do contrato (introduzida em 1.1 — 2026-05-22).
+    # Aceita strings ("1.0", "1.1") e floats (1.0, 1.1) por compatibilidade
+    # com YAML que parsea números sem aspas como float.
+    raw_version = project_fm["contract_version"]
+    version_str = f"{raw_version:.1f}" if isinstance(raw_version, float) else str(raw_version).strip()
+    if version_str not in SUPPORTED_CONTRACT_VERSIONS:
+        raise ValueError(
+            f"contract_version={raw_version!r} não suportada. "
+            f"Versões aceitas: {sorted(SUPPORTED_CONTRACT_VERSIONS)}. "
+            f"Ver CONTRACT.md §15."
+        )
+
     catalogs, suites_region = _extract_catalog_sections(rest)
     suites = _parse_suites(suites_region)
 
     return {
         "project_frontmatter": project_fm,
+        "contract_version": version_str,  # exposto para o validator selecionar regras
         "catalogs": catalogs,
         "suites": suites,
     }

@@ -1,9 +1,9 @@
 ---
-contract_version: 1.0
-at_version: 1
+contract_version: 1.1
+at_version: 2
 project: modelos
 project_name: "Modelos de conteúdo"
-generated_at: 2026-05-20T01:30:00Z
+generated_at: 2026-05-22T14:00:00Z
 source_docs:
   - "docs/[Especificação de Requisitos] Modelos de conteúdo – v02 06.04.2026.docx"
   - "docs/Quebra de atividades - DEV - Modelos de conteúdo.xlsx"
@@ -12,16 +12,24 @@ env: staging-base-de-conhecimento
 env_secondary: null
 totals:
   suites: 16
-  test_cases: 67
-  steps: 174
+  test_cases: 78
+  steps: 198
 ---
 
 # Análise de Teste — Modelos de conteúdo
 
-> **AT v1** — escopo: 15 suítes UI (executor `playwright`). As 2 suítes
-> DB/MS puras (QA 1.8 Indexação Vector DB; QA 4.1 Transversais Banco/Trial/Logs)
-> estão em [`db_validations_pending.md`](db_validations_pending.md) — fluxo
-> manual TestLink até V2 do CONTRACT.
+> **AT v2 (contract_version 1.1)** — escopo: 15 suítes UI (executor
+> `playwright`). As 2 suítes DB/MS puras (QA 1.8 Indexação Vector DB;
+> QA 4.1 Transversais Banco/Trial/Logs) estão em
+> [`db_validations_pending.md`](db_validations_pending.md) — fluxo manual
+> TestLink até V2 do CONTRACT.
+>
+> **Mudanças vs AT v1**:
+> 1. RNs cobertas declaradas explicitamente por TC (rastreabilidade)
+> 2. Validation matrix data-driven em campos obrigatórios e com limite (categorias A-D)
+> 3. Playbook `preview-visual` ativando validação de carregamento de imagens
+> 4. Playbook `plate-editor` ativando TCs mínimos do editor (Design Página/Aula)
+> 5. TC combinatório de filtros (Filtros e Busca TC5)
 
 ## Dados de teste
 
@@ -167,7 +175,7 @@ totals:
 suite: Listagem e Menu de Modelos
 executor: playwright
 org: principal
-playbooks: [filtro-drawer, flipper, cleanup-dados, toast-chakra]
+playbooks: [flipper, cleanup-dados, toast-chakra, preview-visual]
 preconditions:
   - Ambiente Stage configurado
   - Feature flag `modelos_de_conteudo` ativa na organização do teste
@@ -181,6 +189,7 @@ preconditions:
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [1, 1.1]
 
 ### Objetivo
 Validar acesso à listagem via menu lateral, conforme RN 1, 1.1.
@@ -196,21 +205,25 @@ Validar acesso à listagem via menu lateral, conforme RN 1, 1.1.
 ## TC2 — Visualização padrão em Cards
 **Prioridade**: critical
 **Tipo**: ui
-**Playbooks adicionais**: []
+**Playbooks adicionais**: [preview-visual]
+**RNs cobertas**: [3]
 
 ### Objetivo
-Validar que a visualização padrão da listagem é em formato Cards, conforme RN 3.
+Validar que a visualização padrão da listagem é em formato Cards, conforme RN 3. Inclui validação visual do carregamento das imagens dos cards via `expectImageLoaded`.
 
 ### Passos
 1. Acessar a URL "/o/{orgId}/content_models"
    → Listagem é exibida em formato Cards por padrão.
 2. Aguardar a renderização dos cards
    → Cada card exibe imagem principal, nome do modelo, ações (List Control) e indicador de cor lateral para status.
+3. Executar o helper `expectImageLoaded` sobre cada "imagem principal" do card
+   → Para cada card, helper retorna true (img.complete === true && naturalWidth >= 32).
 
 ## TC3 — Alternância entre visualização Cards e Lista
 **Prioridade**: high
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [2]
 
 ### Objetivo
 Validar alternância de visualização entre Cards e Lista, conforme RN 2.
@@ -227,6 +240,7 @@ Validar alternância de visualização entre Cards e Lista, conforme RN 2.
 **Prioridade**: medium
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [4.1.2]
 
 ### Objetivo
 Validar que a Descrição na visão Lista é truncada em 50 caracteres com tooltip exibindo o texto completo (RN 4.1.2).
@@ -241,6 +255,7 @@ Validar que a Descrição na visão Lista é truncada em 50 caracteres com toolt
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [2, 7]
 
 ### Objetivo
 Validar que o botão "Adicionar" inicia o fluxo de criação de modelo, conforme RN 2 e RN 7.
@@ -255,6 +270,7 @@ Validar que o botão "Adicionar" inicia o fluxo de criação de modelo, conforme
 **Prioridade**: medium
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [5]
 
 ### Objetivo
 Validar que o indicador de cor lateral dos cards reflete o status ativo/inativo do modelo (RN 5).
@@ -287,6 +303,7 @@ preconditions:
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [60]
 
 ### Objetivo
 Validar busca textual por nome do modelo na listagem.
@@ -303,6 +320,7 @@ Validar busca textual por nome do modelo na listagem.
 **Prioridade**: high
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [60]
 
 ### Objetivo
 Validar filtragem por Situação (Ativo/Inativo) via drawer de filtros, conforme RN 60.
@@ -319,6 +337,7 @@ Validar filtragem por Situação (Ativo/Inativo) via drawer de filtros, conforme
 **Prioridade**: high
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [62]
 
 ### Objetivo
 Validar filtro padrão "Modelos próprios", conforme RN 62.
@@ -335,6 +354,7 @@ Validar filtro padrão "Modelos próprios", conforme RN 62.
 **Prioridade**: medium
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [60, 62]
 
 ### Objetivo
 Validar limpeza dos filtros aplicados.
@@ -344,6 +364,31 @@ Validar limpeza dos filtros aplicados.
    → Listagem é filtrada exibindo apenas modelos ativos.
 2. Clicar no botão "Limpar filtros"
    → Listagem volta a exibir todos os modelos cadastrados sem filtros aplicados.
+
+## TC5 — Combinação de filtros + busca textual
+**Prioridade**: high
+**Tipo**: ui
+**Playbooks adicionais**: []
+**RNs cobertas**: [60, 62]
+
+### Objetivo
+Validar aplicação simultânea de busca textual + filtrar por situação + filtrar por origem (combinatório). Atende §1.5 do CONTRACT.md v1.1.
+
+### Passos
+1. Acessar a URL "/o/{orgId}/content_models"
+   → Listagem é exibida com múltiplos modelos.
+2. Preencher o campo "Buscar" com "Modelo TC"
+   → Listagem aplica busca textual e filtra exibindo apenas modelos cujo nome contém "Modelo TC".
+3. Clicar no botão "Filtrar"
+   → Drawer "Filtros" é exibido para filtrar por critérios adicionais.
+4. Selecionar o filtro padrão "Modelos ativos" para filtrar por situação
+   → Critério para filtrar por situação fica marcado.
+5. Selecionar o filtro padrão "Modelos próprios" para filtrar por origem
+   → Critério para filtrar por origem fica marcado.
+6. Clicar no botão "Aplicar" para aplicar os filtros simultaneamente
+   → Drawer fecha. Listagem exibe apenas modelos que: (a) contêm "Modelo TC" no nome, (b) estão ativos, (c) são próprios da organização. Resultado é a interseção das 3 condições.
+7. Clicar no botão "Limpar filtros" para limpar todos os filtros aplicados
+   → Listagem volta a exibir todos os modelos cadastrados.
 
 ---
 
@@ -365,6 +410,7 @@ preconditions:
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [7, 8]
 
 ### Objetivo
 Validar criação de modelo (happy path) preenchendo todos os campos da aba Identificação (RN 7, RN 8).
@@ -387,6 +433,7 @@ Validar criação de modelo (happy path) preenchendo todos os campos da aba Iden
 **Prioridade**: high
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [9]
 
 ### Objetivo
 Validar que a badge "Dica: Para um resultado mais rápido..." aparece apenas na criação de novo modelo (RN 9).
@@ -401,6 +448,7 @@ Validar que a badge "Dica: Para um resultado mais rápido..." aparece apenas na 
 **Prioridade**: high
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [9]
 
 ### Objetivo
 Validar que a badge "Dica" NÃO é exibida em modo edição (RN 9).
@@ -413,40 +461,64 @@ Validar que a badge "Dica" NÃO é exibida em modo edição (RN 9).
 3. Aguardar a tela de edição carregar completamente
    → Badge "Dica" NÃO é exibida na tela de edição.
 
-## TC4 — Validar campo Nome obrigatório
+## TC4 — Validações negativas do campo Nome (matriz A-D)
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [8]
 
 ### Objetivo
-Validar que o campo "Nome" é obrigatório (RN 8).
+Validar comportamento do campo "Nome" para entradas inválidas — obrigatoriedade, limites, caracteres especiais e tentativas de injeção. Cobertura conforme matriz A-D da skill `cenarios-negativos-twygo`.
 
 ### Passos
 1. Acessar a tela de criação de modelo
    → Aba "Identificação" é exibida.
-2. Preencher o campo "Descrição" com "Teste sem nome"
-   → Campo "Descrição" exibe o texto digitado.
-3. Clicar no botão "Salvar"
-   → Mensagem de validação exibida: "Nome é obrigatório". Modelo NÃO é criado.
+2. Para cada linha da `**Validation matrix**` abaixo, preencher "Nome" com `Entrada`, demais campos com defaults válidos, clicar "Salvar"
+   → Sistema deve reagir conforme `Esperado` da linha.
 
-## TC5 — Validar limite de 500 caracteres da Descrição
+**Validation matrix**:
+
+| Categoria | Entrada | Esperado |
+|---|---|---|
+| A | (vazio) | Mensagem "Nome é obrigatório" exibida. Modelo NÃO é criado. |
+| B | "A" (1 caractere) | Modelo criado com sucesso (sem mínimo declarado). |
+| B | string de 255 caracteres | Modelo criado com sucesso (limite máximo aceito). |
+| B | string de 256 caracteres | Input trunca em 255 caracteres OU mensagem de limite exibida. Modelo NÃO é criado com 256+. |
+| C | "Modelo @çãõ#$%" (acentos + especiais) | Modelo criado com sucesso preservando os caracteres. |
+| C | "   Modelo   " (espaços) | Modelo criado; espaços laterais podem ser preservados ou trimados conforme implementação. |
+| D | "<script>alert(1)</script>" | Modelo criado com o texto literal armazenado e exibido escapado (sem execução de script). |
+| D | "'; DROP TABLE--" | Modelo criado com o texto literal; nenhum efeito colateral no banco. |
+
+## TC5 — Validações negativas do campo Descrição (matriz B-D)
 **Prioridade**: medium
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [8]
 
 ### Objetivo
-Validar limite máximo de 500 caracteres no campo "Descrição".
+Validar comportamento do campo "Descrição" para entradas inválidas — limites, caracteres especiais e tentativas de injeção. Não inclui categoria A (campo opcional). Cobertura conforme matriz da skill `cenarios-negativos-twygo`.
 
 ### Passos
 1. Acessar a tela de criação de modelo
    → Aba "Identificação" é exibida.
-2. Preencher o campo "Descrição" com uma string de 501 caracteres
-   → Campo "Descrição" trunca o input em 500 caracteres OU exibe mensagem de limite atingido.
+2. Para cada linha da `**Validation matrix**` abaixo, preencher "Nome" com valor válido, "Descrição" com `Entrada`, clicar "Salvar"
+   → Sistema deve reagir conforme `Esperado` da linha.
+
+**Validation matrix**:
+
+| Categoria | Entrada | Esperado |
+|---|---|---|
+| B | string de 500 caracteres | Modelo criado com sucesso (limite máximo). |
+| B | string de 501 caracteres | Input trunca em 500 caracteres OU mensagem de limite exibida. Modelo NÃO é criado com 501+. |
+| C | "Descrição @çãõ#$%" | Modelo criado preservando caracteres. |
+| C | "linha 1\nlinha 2\nlinha 3" (com quebras) | Modelo criado; quebras de linha preservadas conforme renderização textarea. |
+| D | "<img src=x onerror=alert(1)>" | Modelo criado com o texto literal; payload exibido escapado. |
 
 ## TC6 — Switch "Usar designs sugeridos" exibido somente na criação
 **Prioridade**: high
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [8]
 
 ### Objetivo
 Validar que o switch "Usar designs sugeridos" só aparece na criação (RN 8).
@@ -461,6 +533,7 @@ Validar que o switch "Usar designs sugeridos" só aparece na criação (RN 8).
 **Prioridade**: high
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [8]
 
 ### Objetivo
 Validar valores default dos switches: "Usar como modelo padrão" = false, "Usar designs sugeridos" = true, "Ativo" = true (RN 8).
@@ -475,6 +548,7 @@ Validar valores default dos switches: "Usar como modelo padrão" = false, "Usar 
 **Prioridade**: medium
 **Tipo**: ui
 **Playbooks adicionais**: [beforeunload]
+**RNs cobertas**: [8]
 
 ### Objetivo
 Validar diálogo nativo de saída com alterações não salvas.
@@ -488,6 +562,28 @@ Validar diálogo nativo de saída com alterações não salvas.
    → Diálogo nativo do browser é exibido perguntando se o usuário deseja sair sem salvar.
 4. Confirmar manter na página no diálogo
    → Usuário permanece na tela de criação com os dados preenchidos.
+
+## TC9 — Validação do campo Kit de marca obrigatório (matriz A)
+**Prioridade**: critical
+**Tipo**: ui
+**Playbooks adicionais**: []
+**RNs cobertas**: [8]
+
+### Objetivo
+Validar obrigatoriedade do campo "Kit de marca" no save. Cobertura conforme matriz da skill `cenarios-negativos-twygo` (select → categoria A).
+
+### Passos
+1. Acessar a tela de criação de modelo
+   → Aba "Identificação" é exibida.
+2. Para cada linha da `**Validation matrix**` abaixo, preencher "Nome" com valor válido, configurar "Kit de marca" conforme `Entrada`, clicar "Salvar"
+   → Sistema deve reagir conforme `Esperado`.
+
+**Validation matrix**:
+
+| Categoria | Entrada | Esperado |
+|---|---|---|
+| A | Nenhum kit selecionado | Mensagem de validação de obrigatoriedade exibida (REVISAR-FIGMA: texto exato). Modelo NÃO é criado. |
+| A | "Kit padrão da organização" selecionado | Modelo criado com sucesso. |
 
 ---
 
@@ -509,6 +605,7 @@ preconditions:
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [12, 13]
 
 ### Objetivo
 Validar que o botão exibe menu com as 6 opções de estilo (RN 12, RN 13).
@@ -523,6 +620,7 @@ Validar que o botão exibe menu com as 6 opções de estilo (RN 12, RN 13).
 **Prioridade**: high
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [13, 13.1]
 
 ### Objetivo
 Validar adição de campo via menu (RN 13, RN 13.1).
@@ -555,6 +653,7 @@ preconditions:
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [15, 16]
 
 ### Objetivo
 Validar opções do dropdown "Tipo de estrutura" (RN 15, RN 16).
@@ -569,6 +668,7 @@ Validar opções do dropdown "Tipo de estrutura" (RN 15, RN 16).
 **Prioridade**: high
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [15]
 
 ### Objetivo
 Validar texto literal da tooltip (RN 15).
@@ -583,6 +683,7 @@ Validar texto literal da tooltip (RN 15).
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [16.1]
 
 ### Objetivo
 Validar comportamento condicional ao selecionar 2 níveis (RN 16.1).
@@ -595,24 +696,33 @@ Validar comportamento condicional ao selecionar 2 níveis (RN 16.1).
 3. Aguardar o campo "Número de atividades por módulo" ser exibido
    → Campo numérico "Número de atividades por módulo" é exibido com tooltip: "Número sugerido de atividades que a IA irá criar dentro de cada módulo do curso.".
 
-## TC4 — Carga horária obrigatória bloqueia salvamento
+## TC4 — Validação obrigatoriedade da Carga horária (matriz A)
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [18]
 
 ### Objetivo
-Validar que sem "Carga horária sugerida" o salvamento é bloqueado (RN 18).
+Validar obrigatoriedade do campo "Carga horária sugerida" (select → categoria A). Cobertura conforme matriz da skill `cenarios-negativos-twygo`.
 
 ### Passos
-1. Acessar a aba "Estrutura do conteúdo" do modelo de teste sem carga horária preenchida
+1. Acessar a aba "Estrutura do conteúdo" do modelo de teste
    → Aba é exibida.
-2. Clicar no botão "Salvar"
-   → Mensagem de validação exibida: "Carga horária sugerida é obrigatória". Modelo NÃO é salvo.
+2. Para cada linha da `**Validation matrix**`, configurar "Carga horária" conforme `Entrada`, clicar "Salvar"
+   → Sistema reage conforme `Esperado`.
+
+**Validation matrix**:
+
+| Categoria | Entrada | Esperado |
+|---|---|---|
+| A | Nenhuma opção selecionada | Mensagem "Carga horária sugerida é obrigatória" exibida. Modelo NÃO é salvo. |
+| A | "Médio" selecionado | Salvamento permitido. |
 
 ## TC5 — Carga horária exibe 5 opções literais
 **Prioridade**: high
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [18]
 
 ### Objetivo
 Validar as 5 opções literais de carga horária (RN 18).
@@ -627,6 +737,7 @@ Validar as 5 opções literais de carga horária (RN 18).
 **Prioridade**: high
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [21, 22]
 
 ### Objetivo
 Validar que ativar o switch exibe os campos básicos de questionário (RN 21, RN 22).
@@ -641,6 +752,7 @@ Validar que ativar o switch exibe os campos básicos de questionário (RN 21, RN
 **Prioridade**: high
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [22.1]
 
 ### Objetivo
 Validar que ativar configurações avançadas exibe campos adicionais (RN 22.1).
@@ -655,6 +767,7 @@ Validar que ativar configurações avançadas exibe campos adicionais (RN 22.1).
 **Prioridade**: high
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [25, 26]
 
 ### Objetivo
 Validar exibição da seção "Prova final" e campos básicos (RN 25, RN 26).
@@ -687,6 +800,7 @@ preconditions:
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [57.1, 57.2]
 
 ### Objetivo
 Validar textos literais da aba Imagem (RN 57.1, RN 57.2).
@@ -701,6 +815,7 @@ Validar textos literais da aba Imagem (RN 57.1, RN 57.2).
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [57]
 
 ### Objetivo
 Validar 4 opções de padrão de imagem (RN 57).
@@ -715,6 +830,7 @@ Validar 4 opções de padrão de imagem (RN 57).
 **Prioridade**: high
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [57.4]
 
 ### Objetivo
 Validar que o padrão selecionado por default é "Sem imagens, somente textos" (RN 57.4).
@@ -745,6 +861,7 @@ preconditions:
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [58.1, 58.2]
 
 ### Objetivo
 Validar textos literais da aba Áudio (RN 58.1, RN 58.2).
@@ -759,6 +876,7 @@ Validar textos literais da aba Áudio (RN 58.1, RN 58.2).
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [58]
 
 ### Objetivo
 Validar 4 opções de voz (RN 58).
@@ -773,6 +891,7 @@ Validar 4 opções de voz (RN 58).
 **Prioridade**: high
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [58.4]
 
 ### Objetivo
 Validar que a voz default selecionada é "Ana" (RN 58.4).
@@ -787,6 +906,7 @@ Validar que a voz default selecionada é "Ana" (RN 58.4).
 **Prioridade**: medium
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [58]
 
 ### Objetivo
 Validar que o botão de preview/ouvir amostra está disponível para cada voz (RN 58 — quebra QA 1.5).
@@ -803,7 +923,7 @@ Validar que o botão de preview/ouvir amostra está disponível para cada voz (R
 suite: Criação de Design de Página
 executor: playwright
 org: principal
-playbooks: [cleanup-dados, flipper, toast-chakra]
+playbooks: [cleanup-dados, flipper, toast-chakra, plate-editor]
 preconditions:
   - Ambiente Stage configurado
   - Feature flag `modelos_de_conteudo` ativa
@@ -817,6 +937,7 @@ preconditions:
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [30, 31, 32]
 
 ### Objetivo
 Validar fluxo de criação de Página (RN 30, RN 31, RN 32).
@@ -829,24 +950,36 @@ Validar fluxo de criação de Página (RN 30, RN 31, RN 32).
 3. Clicar na opção "Página"
    → Sistema redireciona para a tela de criação de Página exibindo a aba "Identificação".
 
-## TC2 — Validar campos obrigatórios da aba Identificação - Página
+## TC2 — Validações negativas dos campos obrigatórios — Página (matriz A)
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [33]
 
 ### Objetivo
-Validar campos obrigatórios da aba Identificação de design de Página (RN 33).
+Validar obrigatoriedade dos 3 campos críticos (Nome, Instruções de estrutura, Sequência) na aba Identificação de Página. Cobertura conforme matriz da skill `cenarios-negativos-twygo`.
 
 ### Passos
 1. Acessar a tela de criação de Página com a aba "Identificação"
    → Aba "Identificação" é exibida com campos vazios.
-2. Clicar no botão "Salvar" sem preencher nada
-   → Mensagens de validação exibidas para os campos obrigatórios: "Nome", "Instruções de estrutura para a IA", "Sequência". Página NÃO é criada.
+2. Para cada linha da `**Validation matrix**`, configurar campos conforme `Entrada` (demais defaults), clicar "Salvar"
+   → Sistema reage conforme `Esperado`.
+
+**Validation matrix**:
+
+| Categoria | Entrada | Esperado |
+|---|---|---|
+| A | Todos os 3 campos vazios | Mensagens de validação exibidas para "Nome", "Instruções de estrutura para a IA", "Sequência". Página NÃO criada. |
+| A | "Nome" vazio (demais preenchidos) | Validação só de Nome. Página NÃO criada. |
+| A | "Instruções de estrutura" vazia (demais preenchidos) | Validação só de Instruções. Página NÃO criada. |
+| A | "Sequência" vazio (demais preenchidos) | Validação só de Sequência. Página NÃO criada. |
+| A | Todos os 3 preenchidos | Sistema redireciona para aba Design (sem mensagens de validação). |
 
 ## TC3 — Auto-preenchimento ao selecionar tipo "Capa"
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [33.1]
 
 ### Objetivo
 Validar auto-preenchimento dos campos de instruções ao selecionar o tipo "Capa" (RN 33.1).
@@ -863,6 +996,7 @@ Validar auto-preenchimento dos campos de instruções ao selecionar o tipo "Capa
 **Prioridade**: medium
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [33]
 
 ### Objetivo
 Validar texto da tooltip do campo Tipo (RN 33).
@@ -877,6 +1011,7 @@ Validar texto da tooltip do campo Tipo (RN 33).
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [34]
 
 ### Objetivo
 Validar redirecionamento automático após salvar Identificação (RN 34).
@@ -896,7 +1031,8 @@ Validar redirecionamento automático após salvar Identificação (RN 34).
 ## TC6 — Aba Design exibe Plate Editor com Kit de Marca default
 **Prioridade**: high
 **Tipo**: ui
-**Playbooks adicionais**: []
+**Playbooks adicionais**: [plate-editor]
+**RNs cobertas**: [35, 36.1]
 
 ### Objetivo
 Validar que a aba Design exibe o Plate Editor com kit de marca selecionado (RN 35, RN 36.1).
@@ -911,6 +1047,7 @@ Validar que a aba Design exibe o Plate Editor com kit de marca selecionado (RN 3
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [37]
 
 ### Objetivo
 Validar retorno à aba Design do Modelo com listagem atualizada (RN 37).
@@ -923,13 +1060,87 @@ Validar retorno à aba Design do Modelo com listagem atualizada (RN 37).
 3. Aguardar a listagem de designs do Modelo carregar
    → Listagem exibe a nova Página criada na lista de designs.
 
+## TC8 — Plate Editor — inserir texto via teclado
+**Prioridade**: critical
+**Tipo**: ui
+**Playbooks adicionais**: [plate-editor]
+**RNs cobertas**: [36]
+
+### Objetivo
+Validar input básico de texto no Plate Editor. Atende mínimo da skill `testar-plate-editor-twygo`.
+
+### Passos
+1. Acessar a aba "Design" de uma Página recém-salva
+   → Plate Editor é exibido com seletor `[data-slate-editor="true"]` visível e focável.
+2. Clicar dentro da área do editor
+   → Cursor de texto fica posicionado dentro do editor.
+3. Digitar "Texto inserido pelo TC8"
+   → Editor exibe o texto digitado em tempo real.
+4. Salvar o design
+   → Texto persistido. Ao recarregar, o conteúdo do editor exibe "Texto inserido pelo TC8".
+
+## TC9 — Plate Editor — inserir espaço reservado para IA
+**Prioridade**: critical
+**Tipo**: ui
+**Playbooks adicionais**: [plate-editor]
+**RNs cobertas**: [36.4]
+
+### Objetivo
+Validar inserção de espaço reservado para IA via Plate Editor (RN 36.4.x). Atende mínimo da skill `testar-plate-editor-twygo`.
+
+### Passos
+1. Acessar a aba "Design" de uma Página recém-salva
+   → Plate Editor é exibido.
+2. Clicar no botão de inserir espaço reservado para IA (toolbar do editor)
+   → Modal "Inserir espaço reservado para IA" é exibido com textarea de instruções.
+3. Preencher o textarea com "Inserir conteúdo IA para validação automatizada"
+   → Textarea exibe o texto digitado.
+4. Clicar no botão "Confirmar"
+   → Modal fecha. Editor exibe o nó de espaço reservado renderizado inline com o prompt.
+
+## TC10 — Plate Editor — inserir logo via toolbar
+**Prioridade**: high
+**Tipo**: ui
+**Playbooks adicionais**: [plate-editor]
+**RNs cobertas**: [36]
+
+### Objetivo
+Validar inserção de logo no Plate Editor (suporta upload no editor). Atende mínimo da skill `testar-plate-editor-twygo` e endereça o padrão de bug "upload tratado como caixa preta".
+
+### Passos
+1. Acessar a aba "Design" de uma Página recém-salva
+   → Plate Editor é exibido.
+2. Clicar no botão de inserir logo (toolbar do editor)
+   → Dialog de seleção/upload de logo é exibido.
+3. Selecionar a opção de logo padrão da organização
+   → Dialog fecha. Editor exibe o elemento de logo renderizado.
+4. Executar o helper `expectImageLoaded` sobre o elemento "logo inserido"
+   → Helper retorna true para a `<img>` do logo (img.complete === true && naturalWidth >= 16).
+
+## TC11 — Plate Editor — drag and drop de bloco para reordenar
+**Prioridade**: high
+**Tipo**: ui
+**Playbooks adicionais**: [plate-editor]
+**RNs cobertas**: [36]
+
+### Objetivo
+Validar reordenação de blocos via drag and drop no Plate Editor.
+
+### Passos
+1. Acessar a aba "Design" de uma Página com pelo menos 2 blocos inseridos
+   → Plate Editor exibe os blocos em sequência.
+2. Arrastar o segundo bloco para a posição do primeiro
+   → Editor reflete a nova ordem.
+3. Salvar o design e recarregar
+   → Nova ordem persistida.
+
 ---
 
 ---
 suite: Criação de Design de Aula
 executor: playwright
 org: principal
-playbooks: [cleanup-dados, flipper, toast-chakra]
+playbooks: [cleanup-dados, flipper, toast-chakra, plate-editor]
 preconditions:
   - Ambiente Stage configurado
   - Feature flag `modelos_de_conteudo` ativa
@@ -943,6 +1154,7 @@ preconditions:
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [30, 31, 38]
 
 ### Objetivo
 Validar fluxo de criação de Aula (RN 30, RN 31, RN 38).
@@ -959,6 +1171,7 @@ Validar fluxo de criação de Aula (RN 30, RN 31, RN 38).
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [39, 40]
 
 ### Objetivo
 Validar criação de Aula com campos da Identificação (RN 39, RN 40).
@@ -978,7 +1191,8 @@ Validar criação de Aula com campos da Identificação (RN 39, RN 40).
 ## TC3 — Aba Design da Aula exibe editor padrão com customizações
 **Prioridade**: high
 **Tipo**: ui
-**Playbooks adicionais**: []
+**Playbooks adicionais**: [plate-editor]
+**RNs cobertas**: [41, 42]
 
 ### Objetivo
 Validar que a aba Design exibe o editor de Aula padrão com customizações de kit de marca (RN 41, RN 42).
@@ -993,6 +1207,7 @@ Validar que a aba Design exibe o editor de Aula padrão com customizações de k
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [43]
 
 ### Objetivo
 Validar retorno à aba Design do Modelo (RN 43).
@@ -1004,6 +1219,40 @@ Validar retorno à aba Design do Modelo (RN 43).
    → Sistema retorna para a aba "Design" do Modelo de conteúdo.
 3. Aguardar a listagem de designs do Modelo carregar
    → Listagem exibe a nova Aula criada na lista de designs.
+
+## TC5 — Editor Aula — inserir texto via teclado
+**Prioridade**: high
+**Tipo**: ui
+**Playbooks adicionais**: [plate-editor]
+**RNs cobertas**: [41]
+
+### Objetivo
+Validar input básico de texto no editor de Aula. Atende mínimo da skill `testar-plate-editor-twygo`.
+
+### Passos
+1. Acessar a aba "Design" de uma Aula recém-salva
+   → Editor de Aula é exibido com áreas editáveis.
+2. Clicar dentro de uma área de texto editável
+   → Cursor de texto fica posicionado dentro da área.
+3. Digitar "Conteúdo da aula TC5"
+   → Editor exibe o texto digitado em tempo real.
+4. Salvar a Aula
+   → Texto persistido. Ao recarregar, o conteúdo do editor exibe "Conteúdo da aula TC5".
+
+## TC6 — Editor Aula — alternar kit de marca via ferramenta de layout
+**Prioridade**: high
+**Tipo**: ui
+**Playbooks adicionais**: [plate-editor]
+**RNs cobertas**: [42]
+
+### Objetivo
+Validar que a alteração do kit de marca via ferramenta de layout reflete no editor.
+
+### Passos
+1. Acessar a aba "Design" de uma Aula com kit padrão da organização
+   → Editor exibe o slide com cores/fontes do kit padrão.
+2. Clicar em um kit de marca alternativo na ferramenta de layout
+   → Editor atualiza cores/fontes refletindo o novo kit selecionado.
 
 ---
 
@@ -1025,6 +1274,7 @@ preconditions:
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [44, 45]
 
 ### Objetivo
 Validar colunas da listagem de designs (RN 44, RN 45).
@@ -1039,6 +1289,7 @@ Validar colunas da listagem de designs (RN 44, RN 45).
 **Prioridade**: high
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [46]
 
 ### Objetivo
 Validar ações disponíveis em cada linha da listagem de designs (RN 46).
@@ -1053,6 +1304,7 @@ Validar ações disponíveis em cada linha da listagem de designs (RN 46).
 **Prioridade**: high
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [50]
 
 ### Objetivo
 Validar filtro padrão "Só aulas" (RN 50).
@@ -1064,6 +1316,29 @@ Validar filtro padrão "Só aulas" (RN 50).
    → Filtro fica marcado.
 3. Aplicar o filtro
    → Drawer fecha. Listagem exibe apenas designs do Tipo "Aula".
+
+## TC4 — Combinação de filtros + busca textual na listagem de designs
+**Prioridade**: high
+**Tipo**: ui
+**Playbooks adicionais**: []
+**RNs cobertas**: [50]
+
+### Objetivo
+Validar aplicação simultânea de busca textual + filtrar por tipo na listagem de designs (combinatório). Atende §1.5 do CONTRACT.md v1.1.
+
+### Passos
+1. Acessar a aba "Design" do modelo de teste
+   → Listagem é exibida com múltiplos designs (mix de Aula e Página).
+2. Preencher o campo "Buscar" com "Design TC"
+   → Listagem aplica busca textual e filtra exibindo apenas designs cujo nome contém "Design TC".
+3. Clicar no botão "Filtrar"
+   → Drawer "Filtros" é exibido para filtrar por critérios adicionais.
+4. Selecionar o filtro padrão "Só páginas" para filtrar por tipo
+   → Critério para filtrar por tipo fica marcado.
+5. Clicar em "Aplicar" para aplicar os filtros simultaneamente
+   → Drawer fecha. Listagem exibe apenas designs que: (a) contêm "Design TC" no nome, (b) são do tipo Página. Resultado é a interseção das 2 condições.
+6. Clicar no botão "Limpar filtros" para limpar todos os filtros aplicados
+   → Listagem volta a exibir todos os designs do modelo.
 
 ---
 
@@ -1085,6 +1360,7 @@ preconditions:
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [6.1]
 
 ### Objetivo
 Validar que duplicar modelo cria cópia profunda com nome "[Cópia] <original>" (RN 6.1).
@@ -1101,6 +1377,7 @@ Validar que duplicar modelo cria cópia profunda com nome "[Cópia] <original>" 
 **Prioridade**: high
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [6.1]
 
 ### Objetivo
 Validar duplicação individual de design (RN 6.1 estendido pela QA 2.2).
@@ -1115,6 +1392,7 @@ Validar duplicação individual de design (RN 6.1 estendido pela QA 2.2).
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [63]
 
 ### Objetivo
 Validar drag and drop de reordenação na visão Lista (RN 63).
@@ -1131,6 +1409,7 @@ Validar drag and drop de reordenação na visão Lista (RN 63).
 **Prioridade**: high
 **Tipo**: ui
 **Playbooks adicionais**: [filtro-drawer]
+**RNs cobertas**: [63.1]
 
 ### Objetivo
 Validar que drag and drop fica desabilitado com filtro ativo (RN 63.1).
@@ -1149,7 +1428,7 @@ Validar que drag and drop fica desabilitado com filtro ativo (RN 63.1).
 suite: Preview de Modelos e Designs
 executor: playwright
 org: principal
-playbooks: [cleanup-dados, flipper]
+playbooks: [cleanup-dados, flipper, preview-visual]
 preconditions:
   - Ambiente Stage configurado
   - Feature flag `modelos_de_conteudo` ativa
@@ -1163,6 +1442,7 @@ preconditions:
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [5.2]
 
 ### Objetivo
 Validar abertura do modal carrossel de preview do modelo (RN 5.2).
@@ -1176,21 +1456,25 @@ Validar abertura do modal carrossel de preview do modelo (RN 5.2).
 ## TC2 — Conteúdo de cada item do carrossel
 **Prioridade**: critical
 **Tipo**: ui
-**Playbooks adicionais**: []
+**Playbooks adicionais**: [preview-visual]
+**RNs cobertas**: [5.2]
 
 ### Objetivo
-Validar campos exibidos em cada slide do carrossel (RN 5.2).
+Validar campos exibidos em cada slide do carrossel (RN 5.2). Inclui validação visual do carregamento da thumb via `expectImageLoaded`.
 
 ### Passos
 1. Abrir o modal de Preview do modelo de teste
    → Modal exibe o primeiro slide do carrossel.
 2. Aguardar a renderização do slide
    → Slide exibe: texto "Modelo: {nome do modelo}", Thumb do design, texto "Design: {nome do design}", texto "Tipo: {Aula ou Página}", texto "Prompt: {prosa de instruções}", indicador "Design 1 de 2".
+3. Executar o helper `expectImageLoaded` sobre o elemento "thumb do design"
+   → Helper retorna true para a `<img>` da thumb (img.complete && naturalWidth >= 64).
 
 ## TC3 — Navegar entre slides no carrossel
 **Prioridade**: high
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [5.2]
 
 ### Objetivo
 Validar navegação entre slides (RN 5.2).
@@ -1204,16 +1488,36 @@ Validar navegação entre slides (RN 5.2).
 ## TC4 — Preview de Design tipo Página tem zoom com scroll
 **Prioridade**: medium
 **Tipo**: ui
-**Playbooks adicionais**: []
+**Playbooks adicionais**: [preview-visual]
+**RNs cobertas**: [5.2]
 
 ### Objetivo
-Validar opção de zoom com scroll apenas em designs do tipo Página (RN 5.2).
+Validar opção de zoom com scroll apenas em designs do tipo Página (RN 5.2). Inclui validação visual do preview da Página.
 
 ### Passos
 1. Abrir o modal de Preview de um design tipo Página
    → Modal exibe o preview da Página.
 2. Aguardar a opção de zoom ser renderizada
    → Componente de zoom com scroll é exibido sobre o preview da Página.
+3. Executar o helper `expectImageLoaded` sobre o elemento "preview da Página"
+   → Helper retorna true para a `<img>` do preview (img.complete === true && naturalWidth >= 128).
+
+## TC5 — Preview falha graciosamente quando imagem do design não carrega
+**Prioridade**: high
+**Tipo**: ui
+**Playbooks adicionais**: [preview-visual]
+**RNs cobertas**: [5.2]
+
+### Objetivo
+Validar que `expectImageLoaded` DETECTA imagem broken e marca o teste como failed — endereça o padrão de bug "toBeVisible passa em img com src inválido". Atende §1.2 do CONTRACT.md v1.1.
+
+### Passos
+1. Abrir o modal de Preview do modelo de teste
+   → Modal exibe o primeiro slide.
+2. Inspecionar o elemento `<img>` da thumb do design
+   → Elemento `<img>` exibe atributo `src` apontando para o asset gerado.
+3. Executar o helper `expectImageLoaded` sobre o elemento "thumb do design"
+   → Helper retorna true quando img.complete === true && naturalWidth >= 64. Se a imagem está broken (src inválido, 404, naturalWidth === 0): helper falha com mensagem "image not visually loaded — possibly broken src or 0x0 natural size".
 
 ---
 
@@ -1221,7 +1525,7 @@ Validar opção de zoom com scroll apenas em designs do tipo Página (RN 5.2).
 suite: Sincronização e Regeração de Previews
 executor: playwright
 org: principal
-playbooks: [flipper, toast-chakra, cleanup-dados]
+playbooks: [flipper, toast-chakra, cleanup-dados, preview-visual]
 preconditions:
   - Ambiente Stage configurado
   - Feature flag `modelos_de_conteudo` ativa
@@ -1236,6 +1540,7 @@ preconditions:
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [59, 59.1]
 
 ### Objetivo
 Validar exibição do ícone de alerta na listagem após alteração do kit de marca (RN 59, RN 59.1).
@@ -1256,6 +1561,7 @@ Validar exibição do ícone de alerta na listagem após alteração do kit de m
 **Prioridade**: high
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [59.2, 59.3]
 
 ### Objetivo
 Validar exibição do botão "Regerar todos" na aba Design com tooltip literal (RN 59.2, RN 59.3).
@@ -1270,6 +1576,7 @@ Validar exibição do botão "Regerar todos" na aba Design com tooltip literal (
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [59.4]
 
 ### Objetivo
 Validar inicio do processo de regeração com toast (RN 59.4).
@@ -1279,6 +1586,25 @@ Validar inicio do processo de regeração com toast (RN 59.4).
    → Botão "Regerar todos" é exibido.
 2. Clicar no botão "Regerar todos"
    → Toast exibida: "A regeração dos designs foi iniciada. Você será notificado quando for concluída.".
+
+## TC4 — Previews regerados carregam visualmente após processo assíncrono
+**Prioridade**: high
+**Tipo**: ui
+**Playbooks adicionais**: [preview-visual]
+**RNs cobertas**: [59.4]
+
+### Objetivo
+Validar que após o processo assíncrono concluir, os previews dos designs carregam visualmente (sem broken-img). Atende §1.2 do CONTRACT.md v1.1.
+
+### Passos
+1. Disparar o processo de regeração via "Regerar todos"
+   → Toast de início é exibida.
+2. Aguardar a notificação assíncrona "Regerações concluídas"
+   → Notificação é exibida com header "Regerações concluídas" e body "As regerações dos designs do modelo {nome} foram concluídas.".
+3. Abrir o modal de Preview do modelo
+   → Modal exibe os slides com as thumbs regeradas.
+4. Executar o helper `expectImageLoaded` sobre cada "thumb do carrossel"
+   → Para cada slide, helper retorna true (img.complete === true && naturalWidth >= 64). Nenhuma broken-img detectada após regeração.
 
 ---
 
@@ -1300,6 +1626,7 @@ preconditions:
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [64]
 
 ### Objetivo
 Validar que cor de kit de marca em uso por modelo não pode ser excluída (RN 64).
@@ -1314,6 +1641,7 @@ Validar que cor de kit de marca em uso por modelo não pode ser excluída (RN 64
 **Prioridade**: high
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [64]
 
 ### Objetivo
 Validar que cor sem modelos associados pode ser excluída normalmente (RN 64).
@@ -1343,6 +1671,7 @@ preconditions:
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [1.2]
 
 ### Objetivo
 Validar que o submenu "Modelos de conteúdo" não aparece quando a flag está desabilitada (RN 1.2).
@@ -1359,6 +1688,7 @@ Validar que o submenu "Modelos de conteúdo" não aparece quando a flag está de
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [1.2]
 
 ### Objetivo
 Validar que a funcionalidade fica acessível quando a flag está habilitada (RN 1.2).
@@ -1377,6 +1707,7 @@ Validar que a funcionalidade fica acessível quando a flag está habilitada (RN 
 **Prioridade**: medium
 **Tipo**: ui
 **Playbooks adicionais**: []
+**RNs cobertas**: [1.2]
 
 ### Objetivo
 Validar que ativar a flag durante uma sessão libera a funcionalidade após refresh.
@@ -1410,6 +1741,7 @@ preconditions:
 **Prioridade**: critical
 **Tipo**: ui
 **Playbooks adicionais**: [cleanup-dados]
+**RNs cobertas**: [1]
 
 ### Objetivo
 Validar isolamento de dados de modelos entre tenants pareados.
@@ -1424,6 +1756,7 @@ Validar isolamento de dados de modelos entre tenants pareados.
 **Prioridade**: high
 **Tipo**: ui
 **Playbooks adicionais**: [cleanup-dados]
+**RNs cobertas**: [1]
 
 ### Objetivo
 Validar isolamento bidirecional.
