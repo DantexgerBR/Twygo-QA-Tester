@@ -63,6 +63,11 @@ from typing import Any
 # Decisão 2026-05-19: 4 valores no MD; critical+high vão pro mesmo
 # priority-1 no XMind (ambos "alto" do ponto de vista do QA manual);
 # Allure preserva granularidade (critical/normal/normal/minor).
+# Versões do contrato suportadas. Adicionar nova versão aqui quando bumpar.
+# Ver CONTRACT.md §15 para detalhes.
+SUPPORTED_CONTRACT_VERSIONS = {"1.0", "1.1"}
+
+
 _PRIORITY_MAP = {
     "critical": 1,  # XMind priority-1; TestLink importance 3; Allure critical
     "high": 1,      # XMind priority-1; TestLink importance 3; Allure normal
@@ -336,11 +341,24 @@ def parse_canonical_md(path: str | Path) -> dict[str, Any]:
             f"Frontmatter de projeto sem campos obrigatórios: {sorted(missing)}"
         )
 
+    # Validação da versão do contrato (introduzida em 1.1 — 2026-05-22).
+    # Aceita strings ("1.0", "1.1") e floats (1.0, 1.1) por compatibilidade
+    # com YAML que parsea números sem aspas como float.
+    raw_version = project_fm["contract_version"]
+    version_str = f"{raw_version:.1f}" if isinstance(raw_version, float) else str(raw_version).strip()
+    if version_str not in SUPPORTED_CONTRACT_VERSIONS:
+        raise ValueError(
+            f"contract_version={raw_version!r} não suportada. "
+            f"Versões aceitas: {sorted(SUPPORTED_CONTRACT_VERSIONS)}. "
+            f"Ver CONTRACT.md §15."
+        )
+
     catalogs, suites_region = _extract_catalog_sections(rest)
     suites = _parse_suites(suites_region)
 
     return {
         "project_frontmatter": project_fm,
+        "contract_version": version_str,  # exposto para o validator selecionar regras
         "catalogs": catalogs,
         "suites": suites,
     }

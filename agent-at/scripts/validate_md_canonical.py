@@ -281,13 +281,53 @@ def check_schema_completeness(data: dict[str, Any]) -> list[Issue]:
 
 
 # ============================================================================
+# Validações específicas de contract_version 1.1 (placeholders)
+# ============================================================================
+# Cada função aqui é chamada APENAS quando contract_version >= 1.1.
+# Implementadas progressivamente nas próximas fases do roadmap 1.1.
+# Em 2026-05-22 (Fase 0), todas retornam lista vazia — placeholders.
+
+def check_v11_rn_to_tc(data: dict[str, Any]) -> list[Issue]:
+    """v1.1 §1.1 — cada RN catalogada precisa de pelo menos 1 TC referenciando.
+    Implementação na Fase 2 do roadmap."""
+    return []
+
+
+def check_v11_negative_coverage(suite: dict[str, Any]) -> list[Issue]:
+    """v1.1 §1.3 — cobertura mínima de cenários negativos por campo obrigatório.
+    Implementação na Fase 2 do roadmap."""
+    return []
+
+
+def check_v11_combinatorial_filters(suite: dict[str, Any]) -> list[Issue]:
+    """v1.1 §2.2 — suítes com playbook 'filtro-drawer' precisam de pelo menos
+    1 TC combinatório (2+ filtros + busca textual).
+    Implementação na Fase 2 do roadmap."""
+    return []
+
+
+# ============================================================================
 # Entrada
 # ============================================================================
 
-def validate(md_path: str | Path) -> tuple[list[str], list[str]]:
-    """Retorna (errors, warnings)."""
+def validate(md_path: str | Path) -> tuple[list[str], list[str], str]:
+    """Retorna (errors, warnings, contract_version_aplicado).
+
+    O conjunto de regras é selecionado pelo `contract_version` declarado no
+    frontmatter do MD:
+      - 1.0: regras originais (anti-patterns A-H + playbooks + catálogos +
+             restrições v1 + schema)
+      - 1.1: tudo de 1.0 + verificações novas (RN→TC, negativos amplos,
+             combinatórias) — em Fase 0 (2026-05-22) ainda são placeholders.
+
+    Ver CONTRACT.md §15 para detalhes.
+    """
     data = parse_canonical_md(md_path)
+    contract_version = data.get("contract_version", "1.0")
+
     all_issues: list[Issue] = []
+
+    # === Regras comuns a 1.0 e 1.1 ===
     for suite in data["suites"]:
         all_issues.extend(check_v1_restrictions(suite))
         all_issues.extend(check_antipatterns(suite))
@@ -295,9 +335,16 @@ def validate(md_path: str | Path) -> tuple[list[str], list[str]]:
     all_issues.extend(check_catalogs(data))
     all_issues.extend(check_schema_completeness(data))
 
+    # === Regras adicionais de 1.1 ===
+    if contract_version == "1.1":
+        all_issues.extend(check_v11_rn_to_tc(data))
+        for suite in data["suites"]:
+            all_issues.extend(check_v11_negative_coverage(suite))
+            all_issues.extend(check_v11_combinatorial_filters(suite))
+
     errors = [m for sev, m in all_issues if sev == "error"]
     warnings = [m for sev, m in all_issues if sev == "warning"]
-    return errors, warnings
+    return errors, warnings, contract_version
 
 
 def main() -> None:
@@ -310,10 +357,12 @@ def main() -> None:
     args = parser.parse_args()
 
     try:
-        errors, warnings = validate(args.md_path)
+        errors, warnings, contract_version = validate(args.md_path)
     except (FileNotFoundError, ValueError) as e:
         print(f"[FATAL] Parser falhou antes da validação: {e}", file=sys.stderr)
         sys.exit(1)
+
+    print(f"[INFO] contract_version aplicada: {contract_version}")
 
     if errors:
         print(f"\n=== {len(errors)} ERRO(S) — bloqueiam entrega da AT ===")

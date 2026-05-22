@@ -5,6 +5,15 @@
 > **não são vinculantes ainda** — implementadas conforme novos agentes
 > entrarem (`agent-api`, `agent-db` ativado, `agent-pentest`,
 > `agent-tasks-qa`).
+>
+> **Versões do contrato em uso**:
+> - **1.0** — versão original (2026-05-18). ATs antigas (Base de Conhecimento,
+>   Modelos atual) declaram `contract_version: 1.0` e seguem regras dela.
+> - **1.1** — hardening de cobertura (2026-05-22). Introduz validação RN→TC,
+>   cobertura ampliada de cenários negativos, combinatórias mínimas e
+>   ativação automática do recon de protótipo. **Aplicada a projetos novos
+>   por escolha explícita** (`contract_version: 1.1` no frontmatter).
+>   ATs antigas em `1.0` continuam válidas — migração é opt-in. Detalhes na §15.
 
 > **Quem precisa ler este documento:**
 > - Quem mantém `agent-at` (escreve neste contrato como produtor)
@@ -737,6 +746,94 @@ Garantir que listagem renderiza todos os componentes obrigatórios da UI.
 
 ---
 
+## 15. Versão 1.1 — Hardening de cobertura (2026-05-22)
+
+### Motivação
+
+Auditoria pós-execução do projeto **Modelos de conteúdo** revelou bugs
+reais (detectados em repasse exploratório manual) que **não foram pegos**
+pela AT + execução automatizada Playwright. 5 padrões sistemáticos
+identificados (resumo em [§Decisões 2026-05-22](#13-decisões-registradas)):
+
+1. Validações de campos obrigatórios sub-cobertas (1 TC genérico por aba
+   em vez de matriz por campo)
+2. Componente de filtro/listagem **divergente da Especificação** no Stage
+   — generator se adaptou ao que existia (Stage) em vez de denunciar a
+   divergência
+3. Falha em **carregamento visual de previews** (broken images) — testes
+   funcionais com `toBeVisible()` passam em `<img>` quebrada
+4. Upload de arquivos em **componentes complexos** (Plate Editor) — AT
+   tratou componente como caixa preta sem validar interações internas
+5. Filtros com **múltiplas opções combinadas** não cobertos — testes
+   1-dimensionais
+
+v1.1 introduz **5 mudanças vinculantes** + **2 mudanças no fluxo do
+agent-at** que atacam diretamente esses padrões.
+
+### Mudanças vinculantes em ATs `contract_version: 1.1`
+
+| Item | Mudança | Onde | Status na 1.1 |
+|---|---|---|---|
+| 1.1 | Validação RN → TC (cada RN em `requisitos_extraidos.md` precisa de pelo menos 1 TC referenciando) | `validate_md_canonical.py` + schema MD (campo `rns_cobertas` por TC) | **warning** em 1.1 (não bloqueia); pode virar erro em 1.2 |
+| 1.2 | Padrão canônico de validação visual para previews/thumbs/imagens | Skill nova `validar-preview-visual-twygo` (opt-in via playbook) | **opt-in** |
+| 1.3 | Cobertura mínima de cenários negativos por campo obrigatório (consolidada via matriz data-driven em 1 TC, não N TCs separados) | `validate_md_canonical.py` + skill nova `cenarios-negativos-twygo` | **warning** em 1.1 |
+| 2.1 | Padrão canônico de teste do Plate Editor (espaços IA, kit de marca, upload, etc.) | Skill nova `testar-plate-editor-twygo` (opt-in via playbook) | **opt-in** |
+| 2.2 | Combinatórias mínimas obrigatórias (1+ TC combinando 2 filtros + busca textual em suítes com playbook `filtro-drawer`) | `validate_md_canonical.py` | **warning** em 1.1 |
+
+### Mudanças no fluxo do agent-at em 1.1
+
+| Item | Mudança | Onde |
+|---|---|---|
+| Recon-prototipo automático | Etapa 2.5 do `/analyze-test` invoca `/recon-prototipo` automaticamente quando `figmaPrototype` (renomeado para `prototypeUrl`) está preenchido. **Fallback gracioso**: timeout/login/MCP indisponível → skip com warning, AT prossegue | Skill `recon-prototipo` (renomeada de `recon-visual`) + atualização da `analyze-test/SKILL.md` |
+| Categorias A-H de cenários negativos | Skill `cenarios-negativos-twygo` documenta 8 categorias obrigatórias (obrigatoriedade, boundary, caracteres, injection, tipo errado, extensão de arquivo, MIME, tamanho de arquivo) + 3 V2 (race, network, estado) | Skill nova |
+
+### Categorias I-K reservadas para V2
+
+Race conditions, network failures e estado inválido permanecem **fora do
+escopo da 1.1** — são flaky por natureza e exigem infraestrutura de retry
+adequada. Serão habilitadas em versão futura (V2 ou 1.2 conforme prioridade).
+
+### Compatibilidade e migração
+
+- **ATs com `contract_version: 1.0` continuam válidas indefinidamente**
+- **Validador roda regras diferentes baseado em `contract_version`**:
+  - 1.0: regras originais (anti-patterns A-H + playbooks + catálogos)
+  - 1.1: tudo de 1.0 + 5 mudanças vinculantes acima
+- **Migração de AT existente** é opt-in:
+  1. Editar frontmatter: `contract_version: 1.0` → `1.1`
+  2. Adicionar campo `rns_cobertas` por TC (manual ou via skill futura)
+  3. Re-rodar `validate_md_canonical.py` e tratar warnings
+  4. Skills opt-in (1.2, 2.1) ativam ao declarar playbooks novos
+- **Projetos novos**: regerados em 1.1 por default a partir de 2026-05-22
+
+### Versionamento do validator
+
+`validate_md_canonical.py` lê `contract_version` do frontmatter e:
+- Se `1.0`: aplica conjunto v1.0 de regras (estado atual)
+- Se `1.1`: aplica conjunto v1.0 + regras novas v1.1
+- Se outro valor: erro de schema (versão não suportada)
+
+### Schema novo em 1.1
+
+Campos opcionais adicionados (não-breaking para v1.0):
+
+```yaml
+# Frontmatter de projeto (raiz)
+prototypeUrl: https://figma.com/...      # renomeado de figmaPrototype; mantém alias
+
+# Por TC (dentro de Suíte)
+**Prioridade**: critical
+**Tipo**: ui
+**Playbooks adicionais**: []
+**RNs cobertas**: [1, 1.1, 1.2]         # novo em 1.1
+**Validation matrix**: [...]            # novo em 1.1 (para data-driven negativos)
+```
+
+Em 1.0, esses campos são ignorados silenciosamente (forward-compatibility
+implícita). Em 1.1, eles são lidos e validados.
+
+---
+
 ## 13. Decisões registradas
 
 | Data | Decisão | Por quê |
@@ -748,6 +845,9 @@ Garantir que listagem renderiza todos os componentes obrigatórios da UI.
 | 2026-05-18 | agent-docs-qa é produtor de docs de usabilidade, não auditor cross-agente | Esclarecimento do usuário; categoria revisada |
 | 2026-05-18 | Campo `org` (chave simbólica) opcional no frontmatter de suíte | Permite suítes do mesmo projeto declararem orgs distintas (principal/secundário/trial). Resolução para orgId concreto fica no consumidor — MD canônico não carrega IDs reais |
 | 2026-05-18 | Valores concretos (hosts, orgIds, emails, flags de projeto) NÃO ficam em arquivos versionados cross-agente (CONTRACT.md, shared/twygo-platform.md) | Revisão de segurança — git versionado não deve expor infra interna; valores vivem em `.env` (gitignored) referenciado via `${VAR}` em `environment.json` |
+| 2026-05-22 | Introdução de `contract_version: 1.1` (hardening de cobertura) | Auditoria pós-execução do projeto Modelos identificou 5 padrões sistemáticos de bugs reais que passaram pela AT/Playwright automatizado. 5 mudanças vinculantes + 2 mudanças no fluxo do agent-at. Categorias I-K (race/network/estado inválido) reservadas para V2. ATs `1.0` continuam válidas; migração é opt-in. Detalhes em §15. |
+| 2026-05-22 | Validador `validate_md_canonical.py` passa a fazer branching de regras por `contract_version` | Permite coexistência sem regressão. ATs antigas seguem regras 1.0; novas usam 1.1 |
+| 2026-05-22 | Recon-prototipo automático com fallback gracioso (Opção C) | Histórico mostra que opt-in não foi usado (Base de Conhecimento e Modelos pularam recon). Default automático garante uso, mas fallback (timeout/login/MCP indisponível) impede travamento do fluxo. Override via flag `--no-recon` |
 
 ---
 
