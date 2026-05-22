@@ -407,17 +407,32 @@ def _extract_obrigatorios_do_catalogo(catalogs: dict[str, str]) -> list[dict[str
     return fields
 
 
+def _suite_prose(suite: dict[str, Any]) -> str:
+    """Concatena toda prosa de uma suíte (objetivos + passos) — útil para
+    detectar quais campos a suíte realmente interage com."""
+    parts: list[str] = []
+    for tc in suite["test_cases"]:
+        parts.append(tc.get("objective", ""))
+        for step in tc["steps"]:
+            parts.append(step["action"])
+            parts.append(step["expected"])
+    return " ".join(parts).lower()
+
+
 def check_v11_negative_coverage(suite: dict[str, Any], catalogs: dict[str, str]) -> list[Issue]:
     """v1.1 §1.3 — cobertura mínima de cenários negativos por campo (categorias
     A-H da skill cenarios-negativos-twygo).
 
-    Heurística:
+    Heurística refinada:
     1. Lê catálogo `## Campos e validações` (declarado no MD)
-    2. Para cada campo obrigatório/upload, identifica categorias obrigatórias
-       por tipo (A-H)
-    3. Procura TCs da suíte com `**Validation matrix**` mencionando o campo
-       e cobrindo as categorias
-    4. Reporta warnings para campos cujas categorias não são cobertas
+    2. Filtra apenas campos RELEVANTES para a suíte: aqueles cujo nome
+       aparece na prosa de algum TC (objetivo ou passos). Campo no
+       catálogo mas não mencionado na suíte é skipado (irrelevante).
+    3. Para cada campo relevante, identifica categorias obrigatórias por
+       tipo (A-H)
+    4. Procura TCs com `**Validation matrix**` cobrindo as categorias
+    5. Reporta warnings para campos relevantes cujas categorias não são
+       cobertas
     """
     issues: list[Issue] = []
     fm = suite["frontmatter"]
@@ -426,6 +441,9 @@ def check_v11_negative_coverage(suite: dict[str, Any], catalogs: dict[str, str])
     fields = _extract_obrigatorios_do_catalogo(catalogs)
     if not fields:
         return issues  # sem catálogo, sem o que validar
+
+    # Prosa da suíte para detectar quais campos são relevantes
+    prose = _suite_prose(suite)
 
     # Coleta TCs com validation_matrix nesta suíte
     suite_matrices: list[dict[str, Any]] = []
@@ -437,7 +455,21 @@ def check_v11_negative_coverage(suite: dict[str, Any], catalogs: dict[str, str])
             })
 
     for field in fields:
-        # Heurística de tipo (lowercased)
+        field_name_lower = field["name"].lower()
+
+        # Filtro de relevância: campo só é relevante se a suíte menciona
+        # o nome do campo (entre aspas, com case original) na prosa
+        # Procura tanto pelo nome em aspas duplas ("Nome") quanto pelo
+        # nome em prosa (campo Nome)
+        if (
+            f'"{field_name_lower}"' not in prose
+            and f'campo "{field_name_lower}"' not in prose
+            and f'campo {field_name_lower}' not in prose
+            and field_name_lower not in prose.replace('"', '').replace("'", '')
+        ):
+            continue  # campo do catálogo não é mencionado nesta suíte
+
+        # Heurística de tipo
         ftype = field["type"]
         required_categories: set[str] = set()
         for prefix, cats in _FIELD_TYPE_CATEGORIES.items():
@@ -445,20 +477,19 @@ def check_v11_negative_coverage(suite: dict[str, Any], catalogs: dict[str, str])
                 required_categories |= cats
                 break
         if not required_categories:
-            continue  # tipo não mapeado (switch, toggle, etc.)
+            continue  # tipo não exige matriz (switch, toggle)
 
         # Procura matriz mencionando esse campo
         matching_matrix_rows: list[dict[str, str]] = []
         for m in suite_matrices:
-            # Heurística: título do TC menciona o nome do campo
-            if field["name"].lower() in m["title"].lower():
+            if field_name_lower in m["title"].lower():
                 matching_matrix_rows.extend(m["rows"])
 
         if not matching_matrix_rows:
             issues.append((
                 "warning",
-                f"v1.1 §1.3: Suíte '{suite_name}' tem campo '{field['name']}' (tipo "
-                f"'{ftype}') mas nenhum TC com `**Validation matrix**` cobre. "
+                f"v1.1 §1.3: Suíte '{suite_name}' menciona campo '{field['name']}' "
+                f"(tipo '{ftype}') mas nenhum TC com `**Validation matrix**` o cobre. "
                 f"Categorias obrigatórias por tipo: {sorted(required_categories)}.",
             ))
             continue
