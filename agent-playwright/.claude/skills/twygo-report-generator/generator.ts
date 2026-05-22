@@ -427,6 +427,63 @@ function playwrightHumanSummary(rawError: string): string {
   if (/element is not enabled/i.test(text)) {
     return 'O elemento foi encontrado mas estava desabilitado e não permitiu interação.';
   }
+  // Asserts numéricos: toBeGreaterThan(OrEqual), toBeLessThan(OrEqual)
+  // Captura tanto a forma técnica (Expected: >= N / Received: M) quanto
+  // a forma com mensagem custom ("esperava ao menos N X, encontrei M").
+  const numericOrder = text.match(
+    /toBe(Greater|Less)Than(OrEqual)?\(\)?[\s\S]*?Expected[^\n]*?:\s*([^\n]+)[\s\S]*?Received[^\n]*?:\s*([^\n]+)/i,
+  );
+  if (numericOrder) {
+    const dir = numericOrder[1].toLowerCase() === 'greater' ? 'maior' : 'menor';
+    const inclusive = numericOrder[2] ? ' ou igual' : '';
+    const expected = numericOrder[3].trim();
+    const received = numericOrder[4].trim();
+    return `Quantidade fora do esperado: deveria ser ${dir}${inclusive} a ${expected}, mas obteve ${received}. Isso geralmente indica que a ação que deveria popular a tela (listagem/filtro/busca) ficou vazia ou retornou menos itens que o necessário.`;
+  }
+  const customCountMatch = text.match(/Error:\s*esperava\s+(?:ao menos\s+)?(\d+)\s+([^,]+?),\s+encontrei\s+(\d+)/i);
+  if (customCountMatch) {
+    const expected = customCountMatch[1];
+    const what = customCountMatch[2].trim();
+    const received = customCountMatch[3];
+    return `Esperava encontrar pelo menos ${expected} "${what}" na tela, mas encontrou ${received}. Provavelmente a listagem/filtro/busca não retornou os resultados esperados (ou a UI não renderizou os elementos a tempo).`;
+  }
+  // Asserts booleanos: toBe(true), toBe(false)
+  const boolMatch = text.match(/toBe\(\)?[\s\S]*?Expected[^\n]*?:\s*(true|false)[\s\S]*?Received[^\n]*?:\s*(true|false)/i);
+  if (boolMatch) {
+    const expected = boolMatch[1].toLowerCase();
+    const received = boolMatch[2].toLowerCase();
+    return `Condição esperada não foi atendida: esperava ${expected === 'true' ? 'verdadeiro' : 'falso'} (${expected}), mas obteve ${received === 'true' ? 'verdadeiro' : 'falso'} (${received}).`;
+  }
+  // toEqual com valores primitivos comuns
+  const equalMatch = text.match(/toEqual\(\)?[\s\S]*?Expected[^\n]*?:\s*([^\n]+)[\s\S]*?Received[^\n]*?:\s*([^\n]+)/i);
+  if (equalMatch) {
+    const expected = truncate(equalMatch[1].trim(), 80);
+    const received = truncate(equalMatch[2].trim(), 80);
+    return `O valor obtido não é igual ao esperado. Esperado: ${expected} · Atual: ${received}.`;
+  }
+  // toBeTruthy/toBeFalsy
+  if (/toBeTruthy\(\)?\s*failed/i.test(text)) {
+    return 'O valor obtido era vazio/nulo/falso, mas era esperado algo presente (truthy). Isso geralmente indica que uma query no DOM ou um cálculo retornou vazio.';
+  }
+  if (/toBeFalsy\(\)?\s*failed/i.test(text)) {
+    return 'O valor obtido era um valor presente (truthy), mas era esperado vazio/nulo/falso (falsy).';
+  }
+  // toHaveAttribute / toHaveValue / toHaveClass
+  if (/toHaveAttribute/i.test(text)) {
+    const attr = text.match(/Expected[^\n]*?attribute[^\n]*?:\s*([^\n]+)/i)?.[1]?.trim();
+    return `Atributo HTML do elemento não bate com o esperado${attr ? ` (esperado: ${attr})` : ''}.`;
+  }
+  if (/toHaveValue/i.test(text)) {
+    const expected = text.match(/Expected[^\n]*?:\s*([^\n]+)/)?.[1]?.trim();
+    return `Valor preenchido no campo não bate com o esperado${expected ? ` (esperado: ${expected})` : ''}.`;
+  }
+  if (/toHaveClass/i.test(text)) {
+    return 'Classes CSS do elemento não batem com o esperado (estado visual divergente).';
+  }
+  // expect.poll/waitFor timeout
+  if (/expect\.poll[\s\S]*?timed? out/i.test(text) || /waitFor[\s\S]*?[Tt]imeout/.test(text)) {
+    return 'A condição esperada não se tornou verdadeira dentro do tempo limite — a UI não chegou ao estado aguardado.';
+  }
   const firstMeaningful = text
     .split('\n')
     .map((l) => l.trim())
@@ -434,10 +491,71 @@ function playwrightHumanSummary(rawError: string): string {
   return truncate(firstMeaningful, 240);
 }
 
+/**
+ * Categorias canônicas de fixme (CLAUDE.md §7.6 Anti-pattern F).
+ * Cada categoria define destinatário e próximo passo, para o relatório
+ * dizer ao leitor leigo QUEM precisa agir e O QUE precisa ser feito.
+ *
+ * Convenção pro spec: declarar via `test.fixme(true, '[Categoria] motivo')`
+ * onde Categoria é uma das chaves abaixo (case-insensitive).
+ */
+const FIXME_CATEGORIES: Record<
+  string,
+  { label: string; recipient: string; nextStep: string }
+> = {
+  'xml-desatualizado': {
+    label: 'XML/AT desatualizado',
+    recipient: 'AT / QA Lead',
+    nextStep: 'Atualizar o roteiro do TC no `test-analysis.md` para refletir a UI atual e regenerar derivados.',
+  },
+  'seed-ausente': {
+    label: 'Seed/dado de teste ausente',
+    recipient: 'QA Lead',
+    nextStep: 'Criar a seed especificada no env (ou ajustar pré-condição do TC pra usar dado já existente).',
+  },
+  'dep-externa': {
+    label: 'Dependência externa fora do controle',
+    recipient: 'DevOps / Infra',
+    nextStep: 'Verificar feature flag, serviço externo ou ambiente referenciado pela pré-condição.',
+  },
+  'bloqueio-temporario': {
+    label: 'Bloqueio temporário declarado',
+    recipient: 'Time (PM/Tech Lead)',
+    nextStep: 'Reabrir quando o ticket linkado for fechado; sem ticket, transformar em bug-report.',
+  },
+};
+
+const FIXME_CATEGORY_REGEX = /^\s*\[([a-zA-ZÀ-ſ\s\-_]+)\]\s*(.*)$/;
+
+/** Extrai categoria do `skipReason` no formato `[Categoria] motivo`. */
+function parseFixmeCategory(reason: string): { categoryKey: string; rest: string } | null {
+  const m = reason.match(FIXME_CATEGORY_REGEX);
+  if (!m) return null;
+  const key = m[1]
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/_/g, '-');
+  if (FIXME_CATEGORIES[key]) {
+    return { categoryKey: key, rest: m[2].trim() };
+  }
+  return null;
+}
+
+/**
+ * Resumo de falha/skip para a linha de cabeçalho `> **Por que...:**`.
+ * Para skip/fixme, retorna texto unidimensional (a estrutura detalhada
+ * vai em `renderFixmeBlock()` no bloco "⏳ Pendente").
+ */
 function failureOrSkipSummary(t: FlatTest): string {
   if (t.status === 'passed') return '—';
   if (t.status === 'skipped' || (t.status === 'interrupted' && !t.errorMessage)) {
     if (t.skipReason) {
+      const parsed = parseFixmeCategory(t.skipReason);
+      if (parsed) {
+        const cat = FIXME_CATEGORIES[parsed.categoryKey];
+        return `${cat.label} — ${parsed.rest || 'sem detalhe'}. Quem precisa agir: ${cat.recipient}.`;
+      }
       const prefix = t.skipKind === 'manual' || /REVISAR_MANUAL/i.test(t.skipReason)
         ? 'Caso requer intervenção manual: '
         : t.skipKind === 'fixme'
@@ -445,9 +563,37 @@ function failureOrSkipSummary(t: FlatTest): string {
           : 'Caso ignorado intencionalmente: ';
       return `${prefix}${t.skipReason}`;
     }
-    return 'Caso ignorado pelo Playwright sem justificativa registrada (test.skip/fixme sem mensagem).';
+    return '[REVISAR] Motivo do skip não declarado no spec. Edite o `test.fixme(true, "[Categoria] motivo")` indicando uma das categorias canônicas: xml-desatualizado | seed-ausente | dep-externa | bloqueio-temporario.';
   }
   return playwrightHumanSummary(stripAnsi(t.errorMessage ?? ''));
+}
+
+/**
+ * Bloco detalhado para skip/fixme no `tests.md` (substitui o bloco
+ * "⏳ Pendente — execução automatizada não realizada" antigo).
+ * Inclui categoria + destinatário + próximo passo quando o spec declara
+ * via `[Categoria] motivo`.
+ */
+function renderFixmeStructured(t: FlatTest): string[] {
+  const lines: string[] = [];
+  const reason = t.skipReason ?? '';
+  const parsed = parseFixmeCategory(reason);
+
+  if (parsed) {
+    const cat = FIXME_CATEGORIES[parsed.categoryKey];
+    lines.push(`- **Categoria:** ${cat.label}`);
+    lines.push(`- **Quem precisa agir:** ${cat.recipient}`);
+    lines.push(`- **Próximo passo:** ${cat.nextStep}`);
+    lines.push(`- **Motivo declarado pelo spec:** ${parsed.rest || '_sem detalhe_'}`);
+  } else if (reason) {
+    lines.push(`- **Motivo declarado pelo spec:** ${reason}`);
+    lines.push(`- **Categoria:** _não declarada_ — pra próxima revisão, ajustar o spec para \`test.fixme(true, '[Categoria] motivo')\` com uma das categorias canônicas (xml-desatualizado | seed-ausente | dep-externa | bloqueio-temporario).`);
+  } else {
+    lines.push(`- **Categoria:** ⚠️ Não declarada`);
+    lines.push(`- **Motivo declarado pelo spec:** _ausente_`);
+    lines.push(`- **Próximo passo:** Editar o spec para declarar \`test.fixme(true, '[Categoria] motivo')\` com uma das categorias canônicas (xml-desatualizado | seed-ausente | dep-externa | bloqueio-temporario). Sem declaração, leitor leigo não sabe quem precisa agir.`);
+  }
+  return lines;
 }
 
 // ─── Flatten ────────────────────────────────────────────────────────────────
@@ -960,7 +1106,6 @@ function renderUnifiedStepsTableMd(xml: ParsedTestCase | undefined, t: FlatTest)
 
 function renderManualPendingBlockMd(t: FlatTest, xml: ParsedTestCase | undefined): string {
   const sev = xml ? SEVERITY_PT[severityFromImportance(xml.importance)] : '—';
-  const reason = t.skipReason ?? 'Sem motivo registrado.';
   const reproSteps: string[] = [];
   if (xml?.preconditions) {
     xml.preconditions
@@ -978,13 +1123,70 @@ function renderManualPendingBlockMd(t: FlatTest, xml: ParsedTestCase | undefined
   lines.push(`#### ⏳ Pendente — execução automatizada não realizada`);
   lines.push('');
   lines.push(`- **Severidade do caso (XML):** ${sev}`);
-  lines.push(`- **Motivo do skip / fixme:** ${reason}`);
+  // Bloco estruturado com categoria + destinatário + próximo passo
+  // (CLAUDE.md §7.6 Anti-pattern F). Sem categoria declarada o leitor
+  // leigo não sabe quem precisa agir; o bloco abaixo orienta.
+  for (const line of renderFixmeStructured(t)) lines.push(line);
   lines.push('');
   lines.push(`**Roteiro do XML (para validação manual):**`);
   for (const l of reproSteps) lines.push(`1. ${l}`);
   lines.push('');
   lines.push(`> Esse caso não bloqueia a build, mas precisa de validação manual ou ajuste no agente.`);
   return lines.join('\n');
+}
+
+/**
+ * Próximas ações sugeridas por categoria automática do bug-report
+ * (gerada por `gerar-bug-report-de-tc-red/generator.ts`). Cada bullet é
+ * acionável e ajuda leitor leigo a saber qual o próximo passo de
+ * investigação/correção.
+ */
+const NEXT_ACTIONS_BY_CATEGORY: Record<BugReportEntry['categoriaSugerida'], string[]> = {
+  'bug-produto': [
+    'Reproduzir o cenário manualmente seguindo os passos do TC para confirmar o bug.',
+    'Abrir `error-context.md` para ver o estado da página no momento da falha.',
+    'Verificar Network/Console no exploratório agregado (`exploratory.md`) — request 4xx/5xx ou Erro JS provavelmente apontam para a causa.',
+    'Registrar como bug de produto no backlog do dev responsável.',
+  ],
+  'spec-fragil': [
+    'Inspecionar o trace (`npx playwright show-trace`) para confirmar que o elemento existe mas o seletor/timing falhou.',
+    'Avaliar se o spec viola algum dos 3 padrões da skill `criar-spec-resiliente-twygo` (count de seed, timing pós-hidratação, retry de rede).',
+    'Disparar o healer (`playwright-test-healer`) para corrigir seletor/timing/asserção SEM alterar a intenção do teste.',
+  ],
+  'modal-nao-tratado': [
+    'Verificar `error-context.md` ou screenshot — se há modal NPS Sofia, "Modelo de página duplicado" ou similar bloqueando o fluxo.',
+    'Confirmar que o spec usa `safeGoto` em vez de `page.goto` direto (CLAUDE.md raiz §"page.goto + dismissCommonModals obrigatórios").',
+    'Atualizar `src/utils/modals.ts` `dismissCommonModals()` se o modal não estiver coberto.',
+  ],
+  'flakiness': [
+    'Re-executar o spec isoladamente: `PROJECT=<slug> npx playwright test <path> --repeat-each=3`.',
+    'Se passar em retry, é flakiness — investigar timing/race/rede; não abrir bug de produto.',
+    'Considerar skill `comparar-chrome-mcp-vs-playwright` para confirmar que reproduz só no Playwright.',
+  ],
+  'inconclusivo': [
+    'Sem evidência suficiente para classificar — abrir `trace.zip` (`npx playwright show-trace`) para ver passo a passo da execução.',
+    'Reabrir o agente com o trace em mãos para reclassificar manualmente em uma das 4 categorias.',
+  ],
+};
+
+const CATEGORY_ICON: Record<BugReportEntry['categoriaSugerida'], string> = {
+  'bug-produto': '🐛',
+  'spec-fragil': '🧪',
+  'modal-nao-tratado': '🪟',
+  'flakiness': '🌀',
+  'inconclusivo': '❓',
+};
+
+const CATEGORY_LABEL: Record<BugReportEntry['categoriaSugerida'], string> = {
+  'bug-produto': 'Bug de produto',
+  'spec-fragil': 'Spec frágil (problema no teste, não no produto)',
+  'modal-nao-tratado': 'Modal não tratado (bloqueio de UI)',
+  'flakiness': 'Flakiness (intermitência)',
+  'inconclusivo': 'Inconclusivo (precisa investigação manual)',
+};
+
+function findBugReportFor(t: FlatTest, bugReports: BugReportEntry[]): BugReportEntry | undefined {
+  return bugReports.find((b) => b.testcase === t.testcase && b.testsuite === t.testsuite);
 }
 
 function renderBugReportBlockMd(
@@ -994,6 +1196,7 @@ function renderBugReportBlockMd(
   reportDir: string,
   envEntry: EnvironmentEntry | undefined,
   envName: string,
+  bugReportEntry: BugReportEntry | undefined,
 ): string {
   if (t.status === 'passed') return '';
   if (t.status === 'skipped') return renderManualPendingBlockMd(t, xml);
@@ -1001,8 +1204,24 @@ function renderBugReportBlockMd(
   const sev = xml ? SEVERITY_PT[severityFromImportance(xml.importance)] : '—';
   const summary = failureOrSkipSummary(t);
   const failedStep = t.failedStepIndex !== null ? t.steps[t.failedStepIndex] : null;
-  const stepRef = failedStep ? `${failedStep.number}. ${failedStep.title}` : '—';
+  // Deduplicar prefixo numérico do título do step quando ele já começa com
+  // o mesmo número que vamos prefixar manualmente.
+  // Ex.: failedStep.number=3, title="3. Validar..." → não duplicar, render "3. Validar..."
+  const cleanFailedStepTitle = failedStep
+    ? failedStep.title.replace(new RegExp(`^${failedStep.number}\\.\\s+`), '').trim()
+    : '';
+  const stepRef = failedStep ? `${failedStep.number}. ${cleanFailedStepTitle}` : '—';
   const bugDescription = `[${sev}] ${t.testcase} — ${summary}`;
+  // Comportamento atual interpretativo: combina a tradução leiga + qual
+  // step falhou + o que esperava acontecer. Não só repete o erro técnico.
+  const expectedAtFailedStep = failedStep && xml?.steps
+    ? xml.steps.find((s) => s.stepNumber === failedStep.number)?.expectedResults
+    : undefined;
+  const interpretedCurrent = failedStep
+    ? `${summary} (falha aconteceu no passo ${failedStep.number}: "${cleanFailedStepTitle}"${
+        expectedAtFailedStep ? `, que deveria resultar em: ${expectedAtFailedStep}` : ''
+      })`
+    : summary;
 
   const reproSteps: string[] = [];
   if (xml?.preconditions) {
@@ -1032,8 +1251,19 @@ function renderBugReportBlockMd(
   const annEnvLabel = t.annotations.find((a) => a.type === 'envLabel')?.description?.trim();
 
   const effectiveBaseUrl = annBaseUrl ?? envEntry?.baseUrl;
-  const effectiveEmail = annEmailRef ?? envEntry?.credentials.email ?? '—';
-  const effectivePassword = annPasswordRef ?? envEntry?.credentials.password ?? '—';
+  // Trocar placeholders `${VAR}` por texto amigável: leitor leigo não
+  // entende variável de ambiente. Mostra "Credenciais via env: VAR
+  // (consulte .env)" em vez do literal `${TWYGO_X_EMAIL}`.
+  const friendlyEnvRef = (raw: string | undefined): string => {
+    if (!raw || raw === '—') return '—';
+    const m = raw.match(/^\$\{([A-Z0-9_]+)\}\s*(.*)$/);
+    if (!m) return raw;
+    const varName = m[1];
+    const extra = m[2].trim();
+    return `Credenciais via env: \`${varName}\` (consulte \`.env\`)${extra ? ` — ${extra}` : ''}`;
+  };
+  const effectiveEmail = friendlyEnvRef(annEmailRef ?? envEntry?.credentials.email);
+  const effectivePassword = friendlyEnvRef(annPasswordRef ?? envEntry?.credentials.password);
   const effectiveEnvLabel = annEnvLabel ?? envName;
 
   const failureUrl = inferFailureUrl(t, effectiveBaseUrl);
@@ -1087,7 +1317,7 @@ Comportamento esperado
 ${expectedBehavior}
 
 Comportamento atual
-${summary}
+${interpretedCurrent}
 
 Informações
 - URL: ${failureUrl}
@@ -1110,6 +1340,27 @@ Execução
   const lines: string[] = [];
   lines.push(`#### 🐛 Pronto para registro de bug`);
   lines.push('');
+  // Classificação automática propagada de `gerar-bug-report-de-tc-red`.
+  // É o sinal mais valioso para leitor leigo: "isto é bug de produto?
+  // ou problema do teste?". Sem isso, o leigo lê só a mensagem técnica.
+  if (bugReportEntry) {
+    const icon = CATEGORY_ICON[bugReportEntry.categoriaSugerida];
+    const label = CATEGORY_LABEL[bugReportEntry.categoriaSugerida];
+    const confEmoji = bugReportEntry.categoriaConfianca === 'alta'
+      ? '🟢'
+      : bugReportEntry.categoriaConfianca === 'media'
+        ? '🟡'
+        : '🔴';
+    lines.push(`> ${icon} **Análise automática:** ${label} · Confiança ${confEmoji} ${bugReportEntry.categoriaConfianca}`);
+    lines.push(`> _Por quê:_ ${bugReportEntry.categoriaJustificativa}`);
+    lines.push(`> _Bug-report estruturado:_ [\`bug-reports/${bugReportEntry.id}.md\`](bug-reports/${bugReportEntry.id}.md)`);
+    lines.push('');
+    lines.push(`**Próximas ações sugeridas:**`);
+    for (const action of NEXT_ACTIONS_BY_CATEGORY[bugReportEntry.categoriaSugerida]) {
+      lines.push(`- ${action}`);
+    }
+    lines.push('');
+  }
   lines.push(`**Descrição do BUG:** ${bugDescription}`);
   lines.push('');
   lines.push(`**Passo a passo para reprodução:**`);
@@ -1117,7 +1368,7 @@ Execução
   lines.push('');
   lines.push(`**Comportamento esperado:** ${expectedBehavior}`);
   lines.push('');
-  lines.push(`**Comportamento atual:** ${summary}`);
+  lines.push(`**Comportamento atual:** ${interpretedCurrent}`);
   lines.push('');
   lines.push(`**Informações:**`);
   lines.push('');
@@ -1151,15 +1402,22 @@ function renderTestcaseDetailPanelMd(
   reportDir: string,
   envEntry: EnvironmentEntry | undefined,
   envName: string,
+  bugReportEntry: BugReportEntry | undefined,
 ): string {
   const lines: string[] = [];
   const failedStep = t.failedStepIndex !== null ? t.steps[t.failedStepIndex] : null;
   const summary = t.status !== 'passed' ? failureOrSkipSummary(t) : null;
+  // Deduplicar prefixo numérico do título do step quando ele já começa
+  // com o mesmo número (caso real: failedStep.number=3 + title="3. Validar..."
+  // gerava "3. 3. Validar..." na apresentação).
+  const cleanFailedStepTitle = failedStep
+    ? failedStep.title.replace(new RegExp(`^${failedStep.number}\\.\\s+`), '').trim()
+    : '';
 
   if (summary) {
     const label = t.status === 'skipped' ? 'Por que foi ignorado' : 'Por que falhou';
     lines.push(`> **${STATUS_EMOJI[t.status] ?? '·'} ${label}:** ${summary}`);
-    if (failedStep) lines.push(`> _Step impactado:_ **${failedStep.title}**`);
+    if (failedStep) lines.push(`> _Step impactado:_ **${failedStep.number}. ${cleanFailedStepTitle}**`);
     lines.push('');
   }
   if (xml?.summary) {
@@ -1187,7 +1445,7 @@ function renderTestcaseDetailPanelMd(
   lines.push(renderEvidenceMd(t, reportDir));
   lines.push('');
 
-  const bug = renderBugReportBlockMd(t, xml, runId, reportDir, envEntry, envName);
+  const bug = renderBugReportBlockMd(t, xml, runId, reportDir, envEntry, envName, bugReportEntry);
   if (bug) {
     lines.push(bug);
     lines.push('');
@@ -1214,6 +1472,7 @@ function renderTestsMd(args: {
   reportDir: string;
   envEntry: EnvironmentEntry | undefined;
   envName: string;
+  bugReports: BugReportEntry[];
 }): string {
   const lines: string[] = [];
   lines.push(`# Casos de teste — ${args.projectName}`);
@@ -1243,7 +1502,8 @@ function renderTestsMd(args: {
       lines.push('');
       lines.push(`<a id="${anchorId}"></a>_Arquivo:_ \`${t.fileLabel}\` · _Duração:_ ${(t.durationMs / 1000).toFixed(2)}s · _Browser:_ ${t.project}`);
       lines.push('');
-      lines.push(renderTestcaseDetailPanelMd(t, xml, args.runId, args.reportDir, args.envEntry, args.envName));
+      const bugReportEntry = findBugReportFor(t, args.bugReports);
+      lines.push(renderTestcaseDetailPanelMd(t, xml, args.runId, args.reportDir, args.envEntry, args.envName, bugReportEntry));
       lines.push('');
       lines.push(`---`);
       lines.push('');
@@ -1688,6 +1948,7 @@ async function main(): Promise<void> {
       reportDir,
       envEntry,
       envName: cfg.environment,
+      bugReports: bugReportsBundle?.reports ?? [],
     }),
   );
   writeFileSync(
