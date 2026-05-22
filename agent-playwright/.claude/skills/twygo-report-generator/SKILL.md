@@ -1,10 +1,91 @@
 ---
 name: twygo-report-generator
-description: Gera relatório Markdown estruturado por execução em outputs/reports/{slug}_{timestamp}/ (index.md + tests.md + exploratory.md + JSONs). Em modo regressivo, dispara também o Allure CLI para o relatório executivo com trend histórico (Allure mantém HTML — built-in). v3.1 adiciona auto-detect — se rodado sem flag mas test-results.json tem 1 única testsuite, promove pra per-suite com slug correto (evita pasta all-suites enganosa). v3.2 adiciona rotação automática — mantém só o latest por prefix em `outputs/<slug>/reports/`, move anteriores pra `outputs-archive/<slug>/reports/` (gitignored). v3.3 adiciona suporte a override de env por annotation — bug-report do TC usa URL/Login/Senha/orgId da Trial real quando o spec emite `testInfo.annotations.push({type: 'baseURL'|'orgId'|'emailRef'|'passwordRef'|'envLabel', description: ...})`, em vez de mostrar sempre o env principal do project.config.json.
-version: 3.3.0
+description: Gera relatório Markdown estruturado por execução em outputs/reports/{slug}_{timestamp}/ (index.md + tests.md + exploratory.md + JSONs). Em modo regressivo, dispara também o Allure CLI para o relatório executivo com trend histórico (Allure mantém HTML — built-in). v3.1 adiciona auto-detect — se rodado sem flag mas test-results.json tem 1 única testsuite, promove pra per-suite com slug correto (evita pasta all-suites enganosa). v3.2 adiciona rotação automática — mantém só o latest por prefix em `outputs/<slug>/reports/`, move anteriores pra `outputs-archive/<slug>/reports/` (gitignored). v3.3 adiciona suporte a override de env por annotation — bug-report do TC usa URL/Login/Senha/orgId da Trial real quando o spec emite `testInfo.annotations.push({type: 'baseURL'|'orgId'|'emailRef'|'passwordRef'|'envLabel', description: ...})`, em vez de mostrar sempre o env principal do project.config.json. v3.4 endereça relatório opaco para leitor leigo — expande `playwrightHumanSummary` cobrindo asserts numéricos/booleanos/equal/HaveAttribute/HaveValue, propaga classificação automática do `gerar-bug-report-de-tc-red` (bug-produto/spec-frágil/modal-não-tratado/flakiness/inconclusivo) com próximas ações sugeridas por categoria no bloco `🐛 Pronto para registro de bug`, exige categoria+destinatário+próximo passo no fixme via `test.fixme(true, '[xml-desatualizado|seed-ausente|dep-externa|bloqueio-temporario] motivo')`, gera "Comportamento atual" interpretativo (não só repete o erro técnico), substitui placeholders `${VAR}` por "Credenciais via env: `VAR` (consulte `.env`)", e deduplica prefixo numérico do step impactado.
+version: 3.4.0
 ---
 
 # twygo-report-generator
+
+## Linguagem leiga em `tests.md` (v3.4+)
+
+Endereça o gap de relatórios opacos para QAs leigos. 6 mudanças cumulativas:
+
+### 1. Mensagens de erro traduzidas
+
+`playwrightHumanSummary` agora cobre 15+ padrões (vs 12 antes). Novos:
+
+| Padrão Playwright | Tradução PT-BR |
+|---|---|
+| `toBeGreaterThan(OrEqual)` / `toBeLessThan(OrEqual)` falhou | "Quantidade fora do esperado: deveria ser maior/menor a N, mas obteve M. Isso geralmente indica que a ação que deveria popular a tela (listagem/filtro/busca) ficou vazia ou retornou menos itens que o necessário." |
+| `Error: esperava ao menos N X, encontrei M` (assert custom) | "Esperava encontrar pelo menos N "X" na tela, mas encontrou M. Provavelmente a listagem/filtro/busca não retornou os resultados esperados (ou a UI não renderizou os elementos a tempo)." |
+| `toBe(true/false)` falhou | "Condição esperada não foi atendida: esperava verdadeiro/falso, mas obteve falso/verdadeiro." |
+| `toEqual(primitive)` falhou | "O valor obtido não é igual ao esperado. Esperado: X · Atual: Y." |
+| `toBeTruthy()` / `toBeFalsy()` falhou | "O valor obtido era vazio/nulo/falso..." |
+| `toHaveAttribute/Value/Class` falhou | "Atributo HTML/Valor/Classes CSS do elemento não bate com o esperado." |
+| `expect.poll`/`waitFor` timeout | "A condição esperada não se tornou verdadeira dentro do tempo limite — a UI não chegou ao estado aguardado." |
+
+### 2. Classificação automática propagada do bug-report
+
+Quando `gerar-bug-report-de-tc-red` rodou antes (`bug-reports.json` existe),
+o bloco `🐛 Pronto para registro de bug` no `tests.md` agora exibe um
+cabeçalho destacado:
+
+```markdown
+> 🐛 **Análise automática:** Bug de produto · Confiança 🟢 alta
+> _Por quê:_ HTTP 422 in-scope no PATCH /panels/:id/change_status
+> _Bug-report estruturado:_ [`bug-reports/<id>.md`](bug-reports/<id>.md)
+
+**Próximas ações sugeridas:**
+- Reproduzir o cenário manualmente seguindo os passos do TC para confirmar o bug.
+- Abrir `error-context.md` para ver o estado da página no momento da falha.
+- Verificar Network/Console no exploratório agregado (`exploratory.md`)...
+- Registrar como bug de produto no backlog do dev responsável.
+```
+
+5 categorias × 2-4 próximas ações cada (`NEXT_ACTIONS_BY_CATEGORY` no
+generator.ts). Sem `bug-reports.json`, o bloco fica como antes (sem
+header de classificação).
+
+### 3. Fixme/skip exige categoria + destinatário
+
+Default antigo: `"Caso ignorado pelo Playwright sem justificativa registrada"`
+— opaco. Novo: o spec **deve** declarar categoria no formato
+`test.fixme(true, '[Categoria] motivo')`. Categorias canônicas (CLAUDE.md
+§7.6 Anti-pattern F):
+
+| Categoria | Destinatário | Próximo passo |
+|---|---|---|
+| `xml-desatualizado` | AT / QA Lead | Atualizar o roteiro do TC no `test-analysis.md` e regenerar derivados |
+| `seed-ausente` | QA Lead | Criar a seed especificada no env |
+| `dep-externa` | DevOps / Infra | Verificar feature flag / serviço externo |
+| `bloqueio-temporario` | Time (PM/Tech Lead) | Reabrir quando ticket fechado |
+
+Sem declaração, o report mostra: _"[REVISAR] Motivo do skip não declarado
+no spec. Edite o `test.fixme(true, '[Categoria] motivo')'..."_ — indica
+ao leitor leigo que o spec precisa ser corrigido.
+
+### 4. "Comportamento atual" interpretativo
+
+Antes: repetia só a mensagem técnica.
+Depois: combina tradução leiga + step que falhou + expectedResults do XML:
+
+```
+Comportamento atual:
+Quantidade fora do esperado: deveria ser maior ou igual a 1, mas obteve 0.
+(falha aconteceu no passo 3: "Aplicar o filtro", que deveria resultar em:
+"Drawer fecha. Listagem exibe apenas modelos com Situação 'Ativo'.")
+```
+
+### 5. Credenciais `${VAR}` substituídas por texto amigável
+
+Antes: `| Login | ${TWYGO_STAGING_BASE_DE_CONHECIMENTO_EMAIL} |`
+Depois: `| Login | Credenciais via env: \`TWYGO_STAGING_BASE_DE_CONHECIMENTO_EMAIL\` (consulte \`.env\`) |`
+
+### 6. Step impactado sem duplicação numérica
+
+Antes: `Step impactado: 3. 3. Validar drawer fechou` (duplicado porque
+`failedStep.title` já contém `"3. ..."` e prefixávamos com `failedStep.number`)
+Depois: `Step impactado: 3. Validar drawer fechou` (deduplicado via regex)
 
 ## Override de env por annotation (v3.3+)
 
