@@ -1,0 +1,11 @@
+{
+  "runId": "feature-flag-modelos-de-conteudo_20260521-081441",
+  "mode": "per-suite",
+  "suiteFilter": "Feature flag modelos_de_conteudo",
+  "projectName": "Modelos de conteúdo",
+  "environment": "staging-base-de-conhecimento",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-21T11:14:41.551Z"
+}

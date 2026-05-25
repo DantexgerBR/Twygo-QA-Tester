@@ -1,0 +1,15 @@
+{
+  "name": "Modelos de conteúdo",
+  "slug": "modelos",
+  "description": "Análise de Teste do projeto 'Modelos de conteúdo' da Twygo.",
+  "environment": "staging-base-de-conhecimento",
+  "envSecondary": null,
+  "figmaPrototype": "https://prototipo-base-de-conhecimento-ge2y9l6c2.vercel.app",
+  "sourceDocs": [
+    "docs/[Especificação de Requisitos] Modelos de conteúdo – v02 06.04.2026.docx",
+    "docs/Quebra de atividades - DEV - Modelos de conteúdo.xlsx",
+    "docs/Quebra de atividades - QA - Modelos.xlsx"
+  ],
+  "contractVersion": "1.0",
+  "atVersion": 1
+}

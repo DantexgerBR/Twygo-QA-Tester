@@ -27,8 +27,8 @@ npm run agent:run -- --suite "[Kit de marca] QA 2.1 - ..."
 ```
 
 Resultado:
-- `outputs/reports/{slug-suite}_{timestamp}/index.html` (relatório estruturado).
-- `outputs/reports/latest-suite-{slug}.html` (atalho para a última run).
+- `outputs/reports/{slug-suite}_{timestamp}/index.md` (relatório Markdown estruturado).
+- `outputs/reports/latest-suite-{slug}.md` (atalho para a última run).
 
 ## 3. Fluxo regressivo (fim de projeto / CI)
 
@@ -46,8 +46,8 @@ npm run agent:parse \
 ```
 
 Resultado:
-- `outputs/reports/regression_{timestamp}/index.html` (HTML estruturado).
-- `outputs/allure-report/` (Allure com trend, publicado em GH Pages pelo
+- `outputs/reports/regression_{timestamp}/index.md` (Markdown estruturado).
+- `outputs/allure-report/` (Allure HTML built-in com trend, publicado em GH Pages pelo
   workflow [`.github/workflows/regression.yml`](../../.github/workflows/regression.yml)).
 
 ## 4. Healing após falha (interativo)
@@ -85,11 +85,11 @@ npm run clean                          # Apaga outputs/ gerados
 
 Definidas em `agent-playwright/.env` (gitignored):
 
-- `TWYGO_STAGING_USER`, `TWYGO_STAGING_PASS` — credenciais resolvidas via
+- `TWYGO_STAGING_EMAIL`, `TWYGO_STAGING_PASSWORD` (e os pares `_WITHOUT_CREDITS_*`, `_WIDGETS_*`, `_WIDGETS_DISABLED_*`) — credenciais resolvidas via
   `${VAR}` em `config/environment.json`.
 - `EXPLORATORY_STRICT=1` — promove findings exploratórios `error` a falhas
   do teste (use em CI quando quiser zero tolerância a console errors / 5xx).
-- `REGRESSION=true` — ativa reporter Allure em vez do HTML do Playwright.
+- `REGRESSION=true` — ativa reporter Allure (HTML built-in com trend histórico). Reporter HTML do Playwright foi removido em 2026-05; saída padrão é Markdown em `outputs/<slug>/reports/<run>/`.
 - `LOG_LEVEL=debug` — output verbose dos scripts.
 
 ## 7. Argumentos do orquestrador (`npm run agent:run`)

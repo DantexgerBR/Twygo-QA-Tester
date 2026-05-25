@@ -43,23 +43,7 @@ Para cada `<testcase>` no escopo:
 
 1. Carregar do JSON parseado: `name`, `summary`, `preconditions`, `importance`,
    `executionType`, `steps[]`.
-2. Invocar o subagent **`playwright-test-planner`** (definido em `.claude/agents/`, MCP `playwright-test`) com este contexto:
-   ```
-   Você está testando a plataforma Twygo (módulo: <nome da testsuite>).
-   Caso de teste: <nome do testcase>
-   Resumo: <summary>
-   Pré-condições: <preconditions>
-   
-   Passos a automatizar:
-   1. AÇÃO: <step.actions> | RESULTADO ESPERADO: <step.expectedResults>
-   2. AÇÃO: ...
-   
-   Convenções obrigatórias (ver CLAUDE.md seção 5):
-   - Tradução de prosa PT-BR → Playwright conforme padrões documentados.
-   - Preferir getByTestId; se não houver data-testid no DOM, sugerir adicioná-lo.
-   - Nunca waitForTimeout.
-   - Annotations Allure obrigatórias (ver Etapa 4).
-   ```
+2. Invocar o subagent **`playwright-test-planner`** (definido em `.claude/agents/`, MCP `playwright-test`) com o template canônico — **ver [prompts.md](prompts.md) seção "Planner — Etapa 2"** para o template completo + contexto adicional (prose-patterns, recon, Page Objects existentes) que deve ser carregado junto.
 3. Validar que o plano contempla **todos** os steps do XML — não pode pular.
 4. Se o planner reportar ambiguidade ou impossibilidade, marcar como
    `// REVISAR` e prosseguir (não chutar).
@@ -101,6 +85,12 @@ Para cada testcase planejado:
        fluxo. Comentário no código serve só pra capturar invariante não-óbvia
        (sync alert que força `force:true`, tabela compartilhada que exige
        revert, prosa ambígua marcada `// REVISAR`).
+     - **E. Constantes-de-domínio em `<test-case>.data.ts`, não inline.**
+       IDs (`envId: 36799`), slugs, listas de fixtures vão num arquivo
+       `<mesmo-nome>.data.ts` ao lado do spec, exportando um objeto `as const`.
+       O spec só importa e referencia (`data.envId`). Convenção em CLAUDE.md
+       §3.1. Generator deve emitir o `.data.ts` SEMPRE que o teste tiver ≥1
+       constante de domínio — mesmo que seja só uma. Não inline.
 2. Annotations Allure obrigatórias no início de cada `test()`:
    ```ts
    await allure.epic(`Twygo - ${projectName}`);                    // do projectName em config
@@ -158,6 +148,82 @@ Se houve falhas que parecem **mudança de UI** (não bug funcional):
      **nunca** muda o que o teste valida).
 3. Apresentar diff ao QA para aprovação antes de aplicar.
 
+### Etapa 8.1 — Validar diff do heal (gate estático)
+
+**Disparada sempre** que Etapa 8 produziu correções aceitas pelo QA, antes
+de commitar/aplicar. Invoca a skill [`validar-heal-diff`](../validar-heal-diff/SKILL.md)
+com:
+
+- Lista de arquivos modificados (em `tests/`, `src/pages/`, `projects/`)
+- Diff completo (`git diff --no-color --unified=0`)
+
+A skill classifica cada hunk como `passed` / `needs_review` / `blocked` e
+retorna veredito agregado:
+
+| Veredito | Ação do orquestrador |
+|---|---|
+| `passed` | Segue pra Etapa 8.5 ou commit local |
+| `needs_review` | Mostra hunks suspeitos ao QA, pede confirmação por hunk; se QA rejeitar qualquer, escala pra `blocked` |
+| `blocked` | Reverte (`git checkout -- <arquivos>`), apresenta relatório com hunks bloqueados, instrui QA a atualizar XML do AT (caminho legítimo pra mudar intenção do teste) |
+
+Esta etapa **enforce a regra dura #11** ("healer só toca seletor/timing/
+asserção, nunca intenção") de forma estática — em vez de depender só do
+prompt do healer respeitar a regra. Bloqueios típicos: assertion polarity
+flip (`toBeVisible` → `toBeHidden`), mudança de título de `test()` ou
+`test.describe()`, reorder de steps, adição/remoção de `test.fixme(true,)`.
+
+### Etapa 8.5 — Post-heal: abrir PR (opt-in via GitHub MCP)
+
+Disparada **só** quando (a) Etapa 8 aceitou correções E (b) o GitHub MCP
+está ativo (ver [SETUP.md §3.2](../../SETUP.md)). Se o MCP `github` não
+estiver em `/mcp`, pula silenciosamente — não bloquear.
+
+1. Detectar que o heal modificou arquivos: `git status -s tests/ src/pages/ projects/`.
+   Se vazio, encerrar (não havia o que aplicar).
+2. Determinar branch alvo:
+   - Se branch atual é `master`: criar `fix/heal-<slug-suite>-<YYYYMMDD-HHmm>`.
+   - Se branch atual é `project/<slug>` ou `fix/*`: commitar nela mesma.
+3. Commit dos arquivos modificados:
+   ```bash
+   git add tests/ src/pages/ projects/<slug>/
+   git commit -m "chore(heal): conserta seletor/timing em <slug-suite>
+
+   Healer aplicou correções minimais (seletor, espera, asserção).
+   Intenção dos testes preservada — XML do AT não foi alterado.
+
+   Refs: <link pro relatório que expôs a falha>"
+   ```
+4. Push: `git push -u origin <branch>`.
+5. Abrir PR via GitHub MCP (`mcp__github__create_pull_request` ou similar):
+   - Título: `[heal] <slug-suite> — conserta seletor/timing pós-mudança UI`
+   - Body com:
+     - Lista de specs alterados (caminho + 1 linha de resumo da mudança)
+     - Link pro relatório que mostrou a falha original
+     - Checklist: "Healer só corrige seletor/timing/asserção (regra dura
+       #11 do CLAUDE.md). Reviewer confirma que a intenção do teste
+       não mudou."
+6. Retornar ao QA: URL do PR + branch + 1 linha de resumo.
+
+**Trigger condicional** (pseudo-lógica que o orchestrator implementa):
+
+```
+if (etapa8.aplicouCorrecoes && mcpAtivo('github')) {
+  rodarEtapa85();
+} else if (etapa8.aplicouCorrecoes) {
+  loggar("PR não aberto — GitHub MCP não está ativo. " +
+         "Para ativar: ver SETUP.md §3.2.");
+}
+```
+
+**Não disparar etapa 8.5 quando**:
+- Modificações fora de `tests/`, `src/pages/`, `projects/` (heal só toca
+  esses três caminhos por construção).
+- Working tree tem mudanças não-heal misturadas (typecheck mexido,
+  Page Object reescrito por outra razão) — pedir ao QA pra commitar
+  separado primeiro.
+- A branch atual é `master` E o repo está em modo "branch protegida" — o
+  push falha; pedir ao QA pra criar branch manualmente.
+
 ## Modos de uso
 
 ### Modo interativo (per-suite, dev local)
@@ -208,6 +274,13 @@ outputs/exploratory/*.json                   # da fixture
 outputs/exploratory-findings.json            # do validator
 outputs/reports/{slug-suite}_{timestamp}/    # do report-generator (per-suite)
 outputs/allure-report/                       # do Allure CLI (regressivo)
+```
+
+E quando a Etapa 8.5 dispara (heal aceito + GitHub MCP ativo):
+
+```
+fix/heal-<slug-suite>-<timestamp>            # branch nova (se vinha de master)
+PR aberto em github.com/Twygo/twygo-agents-qa  # URL retornada ao QA
 ```
 
 ## Regras

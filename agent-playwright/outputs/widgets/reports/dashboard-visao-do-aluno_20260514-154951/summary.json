@@ -1,0 +1,29 @@
+{
+  "runId": "dashboard-visao-do-aluno_20260514-154951",
+  "scope": "Apenas testsuite contendo \"Dashboard - Visão do aluno\"",
+  "tests": {
+    "total": 8,
+    "passed": 6,
+    "failed": 2,
+    "skipped": 0,
+    "durationMs": 129537
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 1,
+    "tests": 8,
+    "outOfScope": {
+      "errors": 68,
+      "warnings": 56,
+      "info": 1
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

@@ -1,5 +1,20 @@
 # Agente de Execução de Testes Playwright — Twygo
 
+> **Regras meta do monorepo**: o [CLAUDE.md raiz](../CLAUDE.md) define
+> 4 regras que valem aqui também:
+> 1. **Feedback corretivo do usuário ⇒ propor skill** (antes de seguir).
+> 2. **Problema vivenciado ⇒ propor skill de diagnóstico** (antes de fechar).
+> 3. **Erro próprio reconhecido ⇒ propor skill ou melhoria de código**
+>    (mesmo sem o usuário apontar — pause e ofereça antes de só corrigir).
+> 4. **Novo tipo de teste sem padrão documentado ⇒ propor skill `testar-X-twygo`**.
+>
+> Aplicado a este agente: se um spec que você gerou quebrar por um
+> seletor frágil, sync alert, modal não previsto, prosa traduzida
+> errada, ou anti-pattern de §7.6 que você cometeu sem perceber — é
+> caso da regra 3. Pause, proponha skill (atualizar `prose-patterns.md`,
+> criar skill `testar-<padrão>-twygo`, ou refactor concreto em
+> `src/utils/...`) e espere o usuário decidir.
+
 ## 1. Propósito do Agente
 
 Você é um **Engenheiro de Qualidade Sênior** especializado na plataforma Twygo,
@@ -101,11 +116,11 @@ agent-playwright/
 │   │   ├── test-results.json           # JSON reporter Playwright
 │   │   ├── exploratory-findings.json   # agregação (twygo-exploratory-validator)
 │   │   ├── exploratory/                # findings por teste
-│   │   ├── reports/<runId>/            # HTML estruturado
+│   │   ├── playwright-summary.md       # resumo da última run (sobrescrito)
+│   │   ├── reports/<runId>/            # Markdown estruturado (index.md + tests.md + exploratory.md + JSONs)
 │   │   ├── allure-results/             # modo regressivo
-│   │   ├── allure-report/              # Allure CLI
-│   │   ├── html-report/                # Playwright HTML
-│   │   └── test-artifacts/             # screenshots, traces
+│   │   ├── allure-report/              # Allure CLI (HTML built-in com trend)
+│   │   └── test-artifacts/             # screenshots, traces, error-context.md
 │   └── _all/                       # quando PROJECT_ALL=true (regressivo cumulativo)
 │
 ├── .claude/
@@ -126,6 +141,61 @@ agent-playwright/
 │       └── webapp-testing/         # oficial Anthropic
 └── templates/                      # page-object-template.ts, test-template.ts
 ```
+
+### 3.1. Convenção de dados por teste
+
+Cada caso de teste isola seus dados (IDs de ambientes, slugs, listas de
+inputs, paths derivados) num arquivo `*.data.ts` ao lado do spec. Variáveis
+**reutilizadas entre specs do mesmo projeto** ficam em `projects/<slug>/data/`.
+Variáveis **genéricas Twygo** (não acopladas a um projeto) ficam em
+`src/fixtures/`.
+
+```
+projects/<slug>/
+├── tests/features/<suite-slug>/
+│   ├── <test-case>.spec.ts            # spec — sem hardcode
+│   ├── <test-case>.data.ts            # variáveis SÓ deste teste
+│   └── <suite-slug>.shared.data.ts    # opcional — compartilhado pela suíte
+├── data/                              # constants do projeto (orgIds extra, paths)
+│   ├── environments.data.ts
+│   └── content-types.data.ts
+└── ...
+```
+
+Forma do `<test-case>.data.ts`:
+
+```ts
+// projects/creditos-fase-02/tests/features/configurar-indexacao-conteudo-por-ambiente/configurar-a-indexacao-curso-checkbox.data.ts
+export const configurarIndexacaoCursoData = {
+  envId: 36799,
+  alternativeEnvId: 36796,
+  contentAssets: ['text', 'page', 'lesson', 'stampedPdf', 'video', 'files'] as const,
+} as const;
+```
+
+E no spec:
+
+```ts
+import { configurarIndexacaoCursoData as data } from './configurar-a-indexacao-curso-checkbox.data.js';
+
+test('configurar a indexação curso checkbox', async ({ page }) => {
+  await page.goto(`/o/${getOrgId()}/environments/${data.envId}/edit`);
+  // ...
+});
+```
+
+**Por quê**:
+- Specs param de carregar literais opacos (`36799`) — leitor entende a
+  intenção pelo nome (`data.envId`).
+- Mesma variável repetida em N specs vira 1 ponto de mudança quando o
+  ambiente muda.
+- Generator/healer não precisam adivinhar quais constantes são fixture —
+  tudo que estiver em `*.data.ts` é dado, tudo que estiver em `*.spec.ts`
+  é fluxo.
+
+Generator (`playwright-test-generator`) deve emitir `<test-case>.data.ts`
+junto com o `.spec.ts` mesmo que o teste tenha apenas 1 constante — não
+inline. Ver Anti-pattern E em §7.6.
 
 ### Como o orquestrador descobre o projeto ativo
 
@@ -164,7 +234,8 @@ Dois modos:
 | 4. Generate | **generator** (plugin Playwright) + Playwright MCP | Spec `.spec.ts` + Page Objects + annotations Allure |
 | 5. Execute | Playwright (com `--grep` per-suite ou tudo regressivo) | Roda + grava findings exploratórios via fixture |
 | 5.5. Validate | `twygo-exploratory-validator` | Agrega findings em `exploratory-findings.json` |
-| 6. Report | `twygo-report-generator` | HTML per-suite OU per-suite + Allure (regressivo) |
+| 5.7. **Bug-reports** *(novo)* | `gerar-bug-report-de-tc-red` | Para cada TC red, monta registro estruturado (Network/Console + reprodução + categoria + severity) pronto pra virar task. Output em `outputs/<slug>/bug-reports/`. Roda antes do report-generator pra ele consumir o bundle |
+| 6. Report | `twygo-report-generator` | HTML per-suite OU per-suite + Allure (regressivo). Renderiza seção "Bug Reports prontos" no `index.md` linkando os MDs por TC + arquiva `bug-reports/` dentro do reportDir (self-contained) |
 | 7. Heal (opcional) | **healer** (plugin Playwright) | Conserta seletor/timing/asserção após mudança de UI |
 
 **Annotations Allure obrigatórias** (Fase 4) derivadas do XML:
@@ -178,6 +249,42 @@ Dois modos:
 **Strict exploratório**: `EXPLORATORY_STRICT=1` ou `--strict` promove findings
 de severidade `error` (console error, page error, HTTP 5xx, axe critical) a
 falhas explícitas. Default: informativos.
+
+### 4.1. Evidências commitáveis vs intermediários gitignored
+
+Fluxo de fases produz dois grupos de artefatos com tratamento git distinto:
+
+| Grupo | Onde fica | Git | Quem consome |
+|---|---|---|---|
+| **Intermediários** (Fases 5/5.5) | `outputs/<slug>/test-artifacts/` · `outputs/<slug>/exploratory/` · `outputs/<slug>/exploratory-findings.json` · `outputs/<slug>/test-results.json` · `outputs/<slug>/playwright-summary.md` | **gitignored** (`outputs/**/<paths>`) | Input do report-generator (Fase 6). Não versionar |
+| **Report self-contained** (Fase 6) | `outputs/<slug>/reports/<slug>_<ts>/` (com sub-`artifacts/` + `bug-reports/` + `index.md` + `tests.md` + `exploratory.md` + `*.json`) | **commitado** (`outputs/**/reports/` NÃO está no gitignore) | QAs auxiliares analisando run histórica |
+| **Decisão QA** | `outputs/<slug>/triage-report.md` · `outputs/<slug>/bug-reports.json` · `outputs/<slug>/bug-reports/` | **commitado** | Próxima rodada do agente lê triage; bug-reports viram task |
+
+**Por quê dois grupos**: report-generator copia attachments (screenshots step, `test-finished-*.png`, `trace.zip`, `video.webm`, `error-context.md`) para `<reportDir>/artifacts/<test-folder>/` durante render. ReportDir vira self-contained — QA auxiliar abre 1 pasta e tem TUDO (sumário, detalhe por teste, exploratórios agregados, bug-reports, artifacts). Originais em `test-artifacts/` ficam duplicados → gitignored sem perda. Ver memory `feedback_archive_artifacts_in_report`.
+
+### 4.2. Pré-condição: rodar `agent:report` após `playwright test` standalone
+
+Se você rodou via **orquestrador** (`npm run agent:suite -- --suite <slug>` ou `agent:regression`), Fase 6 (`twygo-report-generator`) executa auto — reportDir gerado, evidências commitáveis.
+
+Se você rodou **`npx playwright test` direto** (smoke/debug), o reportDir NÃO existe. Para gerar manualmente:
+
+```bash
+PROJECT=<slug> npm run agent:report
+```
+
+Consome `outputs/<slug>/test-results.json` (+ `exploratory-findings.json` se a fixture exploratória gravou) e produz `outputs/<slug>/reports/<slug>_<ts>/`. **Sem esse passo, evidências ficam locais e não vão pro git** — outros QAs não conseguem analisar a run.
+
+Regra dura: **toda run que vai virar commit precisa passar pelo report-generator**. Se rodar Playwright direto pra commitar resultados, lembre de rodar `agent:report` antes do `git add`.
+
+### 4.3. Windows: `core.longpaths`
+
+Paths gerados pelo report-generator (combinando slug do projeto + run-id + test-folder PT-BR transliterado + step name + SHA hash) excedem `MAX_PATH=260` do Windows. Habilitar uma vez por máquina:
+
+```bash
+git config --global core.longpaths true
+```
+
+Sem isso, `git add outputs/<slug>/reports/` falha com `Filename too long`. Detalhe em skill `debugar-filename-too-long-windows`.
 
 ---
 
@@ -202,10 +309,12 @@ política para prosa ambígua e cenários fora do escopo.
 | MCP | Quando usar |
 |---|---|
 | **`playwright-test`** (`npx playwright run-test-mcp-server`) | **Padrão** — usado pelos 3 subagents oficiais de test (Fases 3/4/7). Expõe `browser_*`, `planner_*`, `generator_*`, `test_*`, `browser_generate_locator` |
-| **`chrome-devtools`** ([ChromeDevTools/chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp)) | Opt-in — debug profundo (Web Vitals, traces) |
-| **`github`** ([github/github-mcp-server](https://github.com/github/github-mcp-server)) | Opt-in — CI/healer abrindo issues + PRs |
+| **`chrome-devtools`** ([ChromeDevTools/chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp)) | Opt-in — debug profundo (Web Vitals, performance traces, memory). Ativação: [SETUP.md §3.1](.claude/SETUP.md) |
+| **`github`** ([github/github-mcp-server](https://github.com/github/github-mcp-server)) | Opt-in — healer abre PR pós-correção (Etapa 8.5 do orchestrator), CI abre issue em falha. Ativação: [SETUP.md §3.2](.claude/SETUP.md) |
 
-> O `.mcp.json` é gerado por `npx playwright init-agents --loop claude` no SETUP. Não editar manualmente.
+> O `.mcp.json` é gerado por `npx playwright init-agents --loop claude` no
+> SETUP. Não editar manualmente — para sincronizar com upstream, use a
+> skill [`atualizar-agents-oficiais`](.claude/skills/atualizar-agents-oficiais/SKILL.md).
 
 ### 6.2. Subagents Claude Code para Playwright (`.claude/agents/`)
 
@@ -228,9 +337,19 @@ Definidos por `npx playwright init-agents --loop claude` (oficial Microsoft). S�
 | Skill | Fase | Papel |
 |---|---|---|
 | **`twygo-xml-parser`** | 2 | TestLink XML → JSON estruturado |
-| **`twygo-test-orchestrator`** | 3, 4, 5, 7 | Orquestra planner/generator/healer com contexto Twygo. Modos `--suite` e `--regression` |
+| **`twygo-test-orchestrator`** | 3, 4, 5, 7, 8.5 | Orquestra planner/generator/healer com contexto Twygo. Modos `--suite` e `--regression`. Etapa 8.5 abre PR via GitHub MCP (opt-in) |
 | **`twygo-exploratory-validator`** | 5.5 | Agrega findings + cobertura + exporter Allure |
 | **`twygo-report-generator`** | 6 | HTML híbrido per-suite + delega Allure CLI no regressivo |
+| **`gerar-bug-report-de-tc-red`** | 5.7 | Para cada TC red (failed/timedOut sem fixme), monta bug-report pronto pra task: Network/Console da fixture exploratória + steps/erro/attachments do Playwright + categoria sugerida (bug-produto/spec-fragil/modal-nao-tratado/flakiness/inconclusivo) com confiança. Grava `outputs/<slug>/bug-reports.json` + 1 MD por TC em `bug-reports/<id>.md`. Consumido por `twygo-report-generator` (Fase 6) que renderiza seção no `index.md`. Rodar isolado via `npm run agent:bug-reports` |
+| **`atualizar-agents-oficiais`** | manutenção | Re-roda `npx playwright init-agents --loop=claude` e mostra diff dos 3 subagents oficiais pra QA aprovar antes de aceitar updates upstream |
+| **`validar-heal-diff`** | 8.1 | Gate estático sobre o diff do healer. Bloqueia mudanças que indicam drift de intenção (assertion polarity flip, title change, step reorder, fixme add/remove). Enforca regra dura #11 |
+| **`limpar-dados-de-teste-twygo`** | 3, 4, 7 | Template canônico de `afterAll`/`afterEach` em specs que criam/alteram estado persistente (painel, item de menu, toggle, contrato). Catálogo de variants `*_safe` no POM + ordem de cleanup com dependência (filho antes de pai) + anti-patterns. Enforca Anti-pattern G do §7.6 |
+| **`testar-feature-flag-twygo`** | 3, 4, 7 | Como testar features gated por feature flag Flipper (`/admin/manage/features/<flag>`). Toggle via UI (Add/Remove actor `Organization;<orgId>`), POM `FlipperAdminPage`, helper `ensureFlipperActor` com revert idempotente, pré-condição user com flag elevada. Anti-patterns: nunca `Fully Enable`/`Disable`/`Delete` (afetam todas as orgs). Destrava fixme "requer toggle runtime da flag" |
+| **`alterar-funcionalidade-contrato-twygo`** | 3, 4, 7 | Plan/contrato é gate independente do Flipper. Toggle via Super Admin (`/admin/edit_sys_subscription_settings/<orgId>` → Contratos → Vigente → Editar → checkbox `<feature>` + Salvar). POM `SuperAdminPage.setContractFunctionality` + helper `ensureContractFeature`. Algumas features (ex `user_panels`) exigem AMBOS gates ON pra funcionar end-to-end |
+| **`provisionar-trial-projeto-twygo`** | pre-3 | Playbook Claude+executor de 8 passos pra provisionar 1 Trial dedicada (ICP "Outros" / `icp5`) por projeto, ANTES de iniciar suite Trial. 4 pausas manuais (DB update na `organization_icps.icp5`, email unlock, feature flags, contrato) + 1 etapa Claude (wizard `/new/register/steps`). Produz `projects/<slug>/data/trial-env.json`. Pré-requisito da `testar-exclusao-dados-trial-twygo` |
+| **`testar-exclusao-dados-trial-twygo`** | 3, 4 | Fluxo canônico Sophia widget → "Excluir informações" → modal com 4 opções (SophiaTech / Admin / Usuários / Tudo). 1 Trial dedicada por projeto consumida de `data/trial-env.json` (gerado por `provisionar-trial-projeto-twygo`). Seletores `getByRole` (Sophia não tem testId), Page Object proposto `SophiaWidget` em `src/pages/`, anti-patterns (consumir Trial de outro projeto, re-inflar matriz de 5 ICPs) |
+| **`roadmap-recon-cache`** | design | Especificação não-implementada — propõe migrar recon de `inputs/` (git) pra `outputs/<slug>/recon-cache/` (regenerável + TTL) |
+| **`roadmap-agent-metrics`** | design | Especificação não-implementada — orchestrator emite `metrics.json` por execução; skill nova agrega trend (typecheckFirstPassRate, fixmeRate, healBlockedRate, etc) |
 
 ### 6.5. Bibliotecas npm
 
@@ -292,7 +411,7 @@ Erros comuns que custaram horas em sessões anteriores. Generator/healer/planner
 - A convenção é: `test.describe('<testsuite>', () => { test('<testcase>', ...) })`. O reporter tira o nome da testsuite do `describe` e o nome do testcase do `test()`.
 
 ### Super Admin (`/admin`) — tabela de preços e contratos
-- **Pré-requisito**: usuário do `environment.json` precisa estar logado E em perfil "Administrador". O `globalSetup` cobre o login; o perfil já vem do user evertongambeta@gmail.com / eduardo.schmidt@twygo.com.
+- **Pré-requisito**: usuário do `environment.json` precisa estar logado E em perfil "Administrador". O `globalSetup` cobre o login; o perfil deve estar atribuído ao user de teste declarado no `.env`.
 - **Não trocar perfil pela UI** — basta acessar a rota `/admin` direto. Use `SuperAdminPage` (`src/pages/SuperAdminPage.ts`).
 - **Caminhos canônicos** (validados em 2026-05-05 com o usuário):
   | Operação | Rota direta | Helper |
@@ -300,32 +419,68 @@ Erros comuns que custaram horas em sessões anteriores. Generator/healer/planner
   | Entrada Super Admin | `/admin` | `superAdminPage.openSuperAdmin()` |
   | Tabela de preços (todas) | `/admin/subscription_plans` | `superAdminPage.openSubscriptionPlans()` — na lista, identificar tabela com coluna "Ativo" = Sim e clicar Editar |
   | Editar contrato vigente da org | `/admin/edit_sys_subscription_settings/{orgId}` | `superAdminPage.openEditContract(orgId)` |
-- **orgIds em `environment.json`**:
-  - `staging.orgId = 36602` (`stage10.stage.twygoead.com`)
-  - `staging-without-credits.orgId = 36912` (`eduapi.stage.twygoead.com`)
+- **Ambientes**:
+
+  Estrutura de envs (slugs, papéis, sufixos semânticos) está documentada
+  em [`shared/twygo-platform.md §1`](../shared/twygo-platform.md). Valores
+  concretos (hosts, orgIds) ficam em `.env` (gitignored), referenciados
+  via `${VAR}` em `config/environment.json` resolvido por
+  `loadEnvironmentConfig()` (`src/utils/environment.ts`).
+
+  Cada `projects/<slug>/project.config.json` declara qual env usar via
+  campo `environment`. Para descobrir quais envs estão disponíveis,
+  consulte `config/environment.json` ou rode `getEnvByName()`.
+
 - **Tabela de preços é COMPARTILHADA**: alterar a tabela ativa afeta TODAS as organizações daquele banco. Se um teste muda a tabela ativa, faça o **revert ao final** (idealmente via `test.afterEach`/`test.afterAll`). Tests que apenas leem (asserções) não precisam de revert.
 - Padrões de prosa Super Admin estão em `.claude/prose-patterns.md` seção 3.5 — generator deve consultar antes de marcar `test.fixme` por "requer Super Admin".
 
-### Cenários "sem saldo de créditos de IA" (organização zerada/negativa)
-- Ambiente principal `staging` (`stage10.stage.twygoead.com`) tem créditos sobrando — não dá pra zerar sem afetar outras suítes.
-- Para testes de bloqueio de funcionalidades (RN: organização sem saldo) use o ambiente secundário **`staging-without-credits`** (`eduapi.stage.twygoead.com`, login `eduardo.schmidt@twygo.com`). Já está em `config/environment.json`.
-- `globalSetup` detecta automaticamente qualquer chave terminando em `-without-credits` e gera storage adicional em `outputs/.auth/storage-without-credits.json`.
-- Specs que precisam dele importam o caminho e plugam via `test.use`:
-  ```ts
-  import { SECONDARY_STORAGE_PATH } from '../../../../../tests/setup/global-setup.js';
-  import { getEnvByName } from '../../../../../src/utils/environment.js';
-  test.use({
-    storageState: SECONDARY_STORAGE_PATH,
-    baseURL: getEnvByName('staging-without-credits').baseUrl,
-  });
-  ```
-- Não invente outras organizações pra "esvaziar saldo" — sempre use o env secundário convencionado.
+### Cenários "bloqueio por flag/saldo" (env secundário)
+
+A convenção do `globalSetup` cobre 2 famílias de bloqueio por env secundário,
+identificadas por sufixo semântico no slug do env:
+
+| Família | Sufixo do env secundário | Quando usar |
+|---|---|---|
+| **Saldo de IA zerado** | `-without-credits` | Specs que validam o que acontece quando a org não tem créditos pra IA (UI de bloqueio, mensagem, dispatch de evento) |
+| **Módulo desligado** | `-disabled` (e variantes específicas do projeto) | Specs que validam UI quando feature flag/contrato está OFF (ex: aba não aparece, redirect, banner) |
+
+Catálogo completo de sufixos canônicos em
+[`shared/twygo-platform.md §1.3`](../shared/twygo-platform.md).
+
+**Como o `globalSetup` decide qual env secundário logar:**
+
+1. Match direto pelo principal: `<principal>-without-credits` ou `<principal>-disabled`. Ex: se principal é `staging-<slug>`, procura `staging-<slug>-disabled` em `environment.json`.
+2. Fallback: primeiro env diferente do principal terminando em qualquer dos sufixos canônicos.
+
+Sem secundário, specs que precisam dele falham com "storage não encontrado" — mas o storage é gerado em `outputs/.auth/storage-without-credits.json`, fixo, indep. de qual sufixo casou.
+
+**Como specs consomem o env secundário:**
+
+```ts
+import { SECONDARY_STORAGE_PATH } from '../../../../../tests/setup/global-setup.js';
+import { getEnvByName } from '../../../../../src/utils/environment.js';
+
+test.use({
+  storageState: SECONDARY_STORAGE_PATH,
+  baseURL: getEnvByName('<slug-do-env-secundario>').baseUrl,
+});
+```
+
+Não invente outras organizações pra "simular bloqueio" — sempre use o env secundário convencionado. Se aparecer um cenário novo (ex: "org sem feature X"), adicione um env `<principal>-<sufixo-X>-disabled` em `environment.json` + `.env.example` + `.env`.
+
+### Modal "Modelo de página duplicado" (form de item de menu)
+
+- Form `/o/{orgId}/use_modes/{useModeId}/use_mode_itens/new` valida client-side a unicidade do `page_model` dentro do useMode. Quando o useMode já tem outro item com o mesmo modelo (ex.: dois `user_panels`), o click em Salvar dispara modal `role="dialog"` com header literal "Modelo de página duplicado" e body "Esta página já foi adicionada na lista de menus deste modo de uso. Deseja adicioná-la novamente?".
+- Botão "Salvar" do modal confirma a duplicação e prossegue o POST → redirect normal. "Cancelar" mantém na rota /new.
+- Validado live 2026-05-13 via chrome-devtools-mcp em ambiente de teste com seed duplicada existente.
+- `PaineisListPage.associatePanelToMenu` faz race-handle: após click no Salvar, espera 3s pelo modal; se aparecer, clica Salvar do modal e segue; se não, prossegue redirect normal. Getters: `getDuplicatePageModelModal()` / `getDuplicatePageModelConfirmButton()`.
+- Implicação: tenants compartilhados entre testes podem ter seed manual ainda usando `page_model=user_panels`. IDs específicos de seed (useMode, item) ficam no `.data.ts` do TC que depende deles; não delete esses items em cleanup sem confirmar.
 
 ---
 
 ## 7.6. Anti-patterns do output do generator (proibidos em specs gerados)
 
-Estes 4 anti-patterns foram observados em specs gerados anteriormente e
+Estes 6 anti-patterns foram observados em specs gerados anteriormente e
 violam regras do próprio CLAUDE.md. O `twygo-test-orchestrator` deve passá-los
 explicitamente ao `playwright-test-generator` antes de cada geração (ver
 SKILL.md do orchestrator, Etapa 4). Healer deve recusar correções que
@@ -342,8 +497,8 @@ introduzam qualquer um deles.
   declaram `test.use({ storageState: { cookies: [], origins: [] } })`.
 
 ### B. NUNCA hardcodar URL/orgId/credenciais
-- ❌ `const BASE_URL = 'https://stage10.stage.twygoead.com';`
-- ❌ `await page.goto('/o/36602/ai_consumption_analysis?tab=settings');`
+- ❌ `const BASE_URL = 'https://<host-real>.twygoead.com';`
+- ❌ `await page.goto('/o/<orgId-real>/ai_consumption_analysis?tab=settings');`
 - ✅ Importar de [src/utils/environment.ts](src/utils/environment.ts):
   ```ts
   import { getBaseUrl, getOrgId } from '../../../../../src/utils/environment.js';
@@ -379,6 +534,98 @@ introduzam qualquer um deles.
   diz com nome de método/variável. Comentários WHY (por que assim) capturam
   invariantes não-óbvias que somem se removidos. Allure step já narra o
   fluxo — comentário extra é ruído.
+
+### E. NUNCA hardcodar constantes-de-domínio inline no spec
+
+- ❌ `const ENV_ID = 36799; const AVIAO_ENV_ID = 36796;` no topo do `.spec.ts`
+- ❌ `await page.goto('/o/${getOrgId()}/environments/36799/edit');`
+- ✅ Mover para `<test-case>.data.ts` adjacente:
+  ```ts
+  // configurar-a-indexacao-curso-checkbox.data.ts
+  export const data = { envId: 36799, alternativeEnvId: 36796 } as const;
+  ```
+- ✅ Importar no spec: `import { data } from './configurar-a-indexacao-curso-checkbox.data.js'`
+- **Por quê**: viola §3.1 (convenção de dados por teste). IDs e listas
+  hardcoded espalhados pelos specs (a) duplicam quando dois testes
+  compartilham — e divergem em silêncio quando um spec atualiza e o outro
+  não, (b) escondem intenção (leitor vê `36799`, não `envId.aviao`),
+  (c) bagunçam o diff quando um ambiente troca de ID — vira pesca em
+  N arquivos. Mover pra `*.data.ts` resolve os 3.
+- **Exceção**: literais que NÃO são domínio — `await page.waitForTimeout(2000)`
+  é proibido por outra regra; `expect(items).toHaveCount(3)` quando o `3`
+  é a expectativa do próprio cenário (não dado de input). Use bom senso:
+  **se o número/string poderia mudar quando o ambiente Twygo muda, é dado
+  e vai pro `.data.ts`**.
+
+### F. NUNCA usar `fixme` pra esconder bug de produto
+
+- ❌ `test.describe.fixme('...', () => { /* BLOCKED-BY-PRODUCT-BUG */ })`
+- ❌ `test.fixme(true, 'API retorna 500 quando ...')`
+- ✅ Deixar o teste rodar e falhar com a asserção que deveria passar; documentar
+  a causa raiz em comentário no topo do arquivo (sintoma observável + arquivo/linha
+  do bug no servidor + fix sugerido). Quando o dev corrigir, o teste passa
+  automaticamente sem mudança no spec.
+- **Por quê**: skip esconde bug do relatório. Dev olha o vermelho, lê o
+  comentário acima da `test.describe`, sabe o que arrumar — esse é o ciclo
+  inteiro de feedback automatizado. `fixme` quebra esse loop: o spec fica
+  amarelo silencioso, o bug nunca aparece no painel, e a pessoa que abriu
+  o PR não tem como saber que tem teste cobrindo o caso.
+- **Quando usar `fixme` (legítimo)**:
+  - **Spec/XML desatualizado** — XML descreve fluxo que não existe mais na UI;
+    destinatário é AT/QA Lead (revisar XML), não dev de produto. Ex: TC4 de
+    `ativar-inativar-painel/reativar-modo-uso-painel-inativo.spec.ts`.
+  - **Seed ausente** — cenário composto requer dados que não estão no env
+    (ex: "Painel X inativo + menu Y vinculado"). Destinatário é QA Lead
+    (criar seed), não dev de produto.
+  - **Dependência externa fora** — feature flag desligada num env onde
+    deveria estar ligada; destinatário é DevOps/infra.
+  - **Bloqueio temporário declarado pelo time** — "vamos cobrir isso na
+    sprint X"; deve ter ticket linkado.
+- **Matriz de decisão**:
+
+  | Sintoma | Destinatário do sinal | Mecanismo correto |
+  |---|---|---|
+  | Bug no servidor (500, 404 indevido, NoMethodError) | Dev de produto | ✅ falha vermelha + comentário causa raiz |
+  | UI mudou e XML não acompanhou | AT / QA Lead | ✅ `fixme` com mensagem "XML desatualizado" |
+  | Seed faltando | QA Lead | ✅ `fixme` com mensagem "seed ausente: <especificação>" |
+  | Feature flag off num env errado | DevOps | ✅ `fixme` com mensagem + ticket |
+  | "Vou voltar nisso depois" sem causa raiz identificada | — | ❌ NÃO commitar. Investigue antes |
+
+- **Exceção real**: nenhuma — toda exceção cai em uma das 4 categorias
+  "fixme legítimo" acima. Se não bate em nenhuma, é Anti-pattern F.
+
+### G. NUNCA criar/alterar estado persistente sem `afterAll` que limpa
+
+- ❌ Spec chama `createPanel`, `associatePanelToMenu`, `toggleActiveByName`
+  (em estado pré-existente que não vai ser recriado), `addWidget` em painel
+  pré-existente, ou edita Super Admin sem `test.afterAll` revertendo.
+- ❌ `try { await paineis.deletePanelByName(name); } catch {}` inline no `afterAll`.
+- ❌ `await page` (do test, já fechada) usado em `afterAll` — sempre criar
+  contexto fresco via `browser.newContext({ storageState })`.
+- ❌ Nome literal de recurso (`'Painel Teste'`) — sempre worker-isolated
+  (`Painel TC2 w${testInfo.workerIndex}-${Date.now()}`).
+- ✅ `test.afterAll` com contexto fresco + variant `*_safe` do POM
+  (`deletePanelByNameSafe`, `disassociatePanelFromMenu_safe`).
+- ✅ Quando há dependência (menu vinculado → painel), ORDEM: filho antes
+  de pai. Desassociar menu **antes** de deletar painel — senão produto
+  bloqueia delete com modal "Painel em uso".
+- ✅ Toggle reversível (suite muda switch de painel pré-existente):
+  `afterAll` reverte toggle com check de idempotência (`isChecked()`).
+- **Por quê**: org compartilhada entre runs. Sem cleanup, env acumula
+  orphans cumulativamente. Pior: orphan menu items disparam toast
+  genérico "Não foi possível inativar o painel" pra TODOS os painéis da
+  org enquanto o orphan existir (`bug_title_for_linked_menus`). Suítes
+  verdes na primeira run viram red no dia seguinte por contaminação.
+- **Como aplicar**: ler skill [`limpar-dados-de-teste-twygo`](.claude/skills/limpar-dados-de-teste-twygo/SKILL.md)
+  ANTES de gerar/aprovar spec novo. Generator deve seguir checklist da
+  skill; healer deve recusar PR sem cleanup pareado.
+- **Catálogo de variants `*_safe` existentes**: `deletePanelByNameSafe`
+  (`PaineisListPage.ts:786`), `disassociatePanelFromMenu_safe`
+  (`PaineisListPage.ts:933`). Criar nova quando demandado seguindo
+  protocolo da skill.
+- **Exceção**: testes 100% read-only (apenas leem listagem/colunas) e
+  testes que mockam request via `page.route` sem hitar backend não
+  precisam cleanup. Em dúvida, assumir que precisa.
 
 ---
 

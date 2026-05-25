@@ -1,0 +1,29 @@
+{
+  "runId": "adicionar-widgets_20260513-230847",
+  "scope": "Apenas testsuite contendo \"Adicionar widgets\"",
+  "tests": {
+    "total": 11,
+    "passed": 11,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 139318
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 1,
+    "tests": 11,
+    "outOfScope": {
+      "errors": 124,
+      "warnings": 33,
+      "info": 0
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

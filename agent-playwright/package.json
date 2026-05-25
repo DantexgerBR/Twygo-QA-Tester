@@ -11,8 +11,9 @@
     "test:chromium": "playwright test --project=chromium",
     "test:firefox": "playwright test --project=firefox",
     "test:debug": "playwright test --debug",
-    "test:report": "playwright show-report outputs/html-report",
-    "agent:parse": "tsx .claude/skills/twygo-xml-parser/parser.ts",
+    "agent:parse": "tsx .claude/skills/twygo-input-parser/dispatcher.ts",
+    "agent:parse-xml": "tsx .claude/skills/twygo-xml-parser/parser.ts",
+    "agent:parse-md": "tsx .claude/skills/twygo-md-parser/parser.ts",
     "agent:suites": "tsx .claude/skills/twygo-test-orchestrator/orchestrator.ts --list",
     "agent:run": "tsx .claude/skills/twygo-test-orchestrator/orchestrator.ts",
     "agent:smoke": "tsx .claude/skills/twygo-test-orchestrator/orchestrator.ts --smoke-only",
@@ -20,8 +21,10 @@
     "agent:regression": "tsx .claude/skills/twygo-test-orchestrator/orchestrator.ts --regression",
     "agent:explore": "tsx .claude/skills/twygo-exploratory-validator/validator.ts",
     "agent:report": "tsx .claude/skills/twygo-report-generator/generator.ts",
+    "agent:triage": "tsx .claude/skills/twygo-triage-report/generator.ts",
+    "agent:bug-reports": "tsx .claude/skills/gerar-bug-report-de-tc-red/generator.ts",
     "typecheck": "tsc --noEmit",
-    "clean": "rimraf outputs/screenshots outputs/traces outputs/test-results.json outputs/test-report.html outputs/html-report outputs/exploratory outputs/exploratory-findings.json outputs/reports outputs/allure-results outputs/allure-report outputs/test-analysis.parsed.json"
+    "clean": "rimraf outputs/screenshots outputs/traces outputs/test-results.json outputs/html-report outputs/playwright-summary.md outputs/exploratory outputs/exploratory-findings.json outputs/reports outputs/allure-results outputs/allure-report outputs/test-analysis.parsed.json outputs/*/playwright-summary.md outputs/*/html-report"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.2",
@@ -29,10 +32,12 @@
     "@types/node": "^22.10.0",
     "allure-commandline": "^2.38.1",
     "allure-playwright": "^3.7.1",
+    "dotenv": "^17.4.2",
     "fast-xml-parser": "^4.5.0",
     "rimraf": "^6.0.1",
     "tsx": "^4.19.0",
-    "typescript": "^5.7.0"
+    "typescript": "^5.7.0",
+    "yaml": "^2.9.0"
   },
   "engines": {
     "node": ">=20.0.0"

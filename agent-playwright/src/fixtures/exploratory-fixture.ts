@@ -1,4 +1,5 @@
 import { test as base, expect } from '@playwright/test';
+import * as allure from 'allure-js-commons';
 import { existsSync, readFileSync } from 'node:fs';
 import {
   ExploratoryCollector,
@@ -36,6 +37,12 @@ function loadProbeConfig(): ProbeConfig {
     probes: { ...DEFAULT_PROBE_CONFIG.probes, ...(userCfg.probes ?? {}) },
     ignoredHttpStatuses: userCfg.ignoredHttpStatuses ?? DEFAULT_PROBE_CONFIG.ignoredHttpStatuses,
     ignoredHostnames: userCfg.ignoredHostnames ?? DEFAULT_PROBE_CONFIG.ignoredHostnames,
+    // Concatena defaults Twygo-wide com extensões do projeto (vs. substituir).
+    // Projeto pode silenciar mais erros conhecidos sem perder os globais.
+    ignoredMessagePatterns: [
+      ...DEFAULT_PROBE_CONFIG.ignoredMessagePatterns,
+      ...(userCfg.ignoredMessagePatterns ?? []),
+    ],
     scopedRoutes: userCfg.scopedRoutes ?? DEFAULT_PROBE_CONFIG.scopedRoutes,
     scopedKeywords: userCfg.scopedKeywords ?? DEFAULT_PROBE_CONFIG.scopedKeywords,
     activeProbes: { ...DEFAULT_PROBE_CONFIG.activeProbes, ...(userCfg.activeProbes ?? {}) },
@@ -43,8 +50,11 @@ function loadProbeConfig(): ProbeConfig {
   return cachedConfig;
 }
 
+export type StepFn = <T>(name: string, body: () => Promise<T>) => Promise<T>;
+
 type ExploratoryFixtures = {
   exploratory: ExploratoryCollector;
+  step: StepFn;
 };
 
 /**
@@ -58,6 +68,17 @@ type ExploratoryFixtures = {
 export const test = base.extend<ExploratoryFixtures>({
   exploratory: [
     async ({ page }, use, testInfo) => {
+      // Bloqueia chat widget HubSpot — iframe `hubspot-messages-iframe-container`
+      // tem `z-index: 1000000` e intercepta pointer events de botões legítimos
+      // do app (ex.: "Salvar Layout", botões de modal de import). Skill
+      // `debugar-chat-widget-hubspot` documenta o padrão. Route block global
+      // é estratégia recomendada pra suítes regressivas/CI — testes E2E não
+      // validam o widget; suíte específica do chat pode opt-out via
+      // `await page.unroute(...)` se necessário.
+      await page.route(/.*\.(hubspot\.com|hs-scripts\.com|hsforms\.com|hubapi\.com)\b.*/, (route) =>
+        route.abort('blockedbyclient'),
+      );
+
       const config = loadProbeConfig();
       const collector = new ExploratoryCollector(config);
       collector.attach(page);
@@ -121,6 +142,29 @@ export const test = base.extend<ExploratoryFixtures>({
     },
     { auto: true },
   ],
+  // Substitui `allure.step` capturando screenshot ao final de cada step XML.
+  // Sem isso, `screenshot: 'on'` do Playwright só captura test-finished (pós-cleanup);
+  // evidência por step exige snapshot no instante da validação.
+  step: async ({ page }, use, testInfo) => {
+    let stepIndex = 0;
+    const fn: StepFn = async (name, body) => {
+      stepIndex += 1;
+      let result!: Awaited<ReturnType<typeof body>>;
+      await allure.step(name, async () => {
+        result = await body();
+        const safe = name.replace(/[^a-zA-Z0-9_-]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60);
+        const attachmentName = `step-${String(stepIndex).padStart(2, '0')}-${safe}`;
+        const filePath = testInfo.outputPath(`${attachmentName}.png`);
+        // path → grava no disk; o report-generator filtra attachments com path
+        // (descarta body-only que o JSON reporter marca hasPath:false).
+        const buffer = await page.screenshot({ path: filePath, fullPage: false });
+        await allure.attachment(`${attachmentName}.png`, buffer, 'image/png');
+        await testInfo.attach(attachmentName, { path: filePath, contentType: 'image/png' });
+      });
+      return result;
+    };
+    await use(fn);
+  },
 });
 
 export { expect };

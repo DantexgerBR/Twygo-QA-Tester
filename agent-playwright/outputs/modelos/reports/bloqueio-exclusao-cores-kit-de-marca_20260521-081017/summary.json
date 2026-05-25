@@ -1,0 +1,29 @@
+{
+  "runId": "bloqueio-exclusao-cores-kit-de-marca_20260521-081017",
+  "scope": "Apenas testsuite contendo \"Bloqueio Exclusão Cores Kit de Marca\"",
+  "tests": {
+    "total": 2,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 49012
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 0,
+    "tests": 1,
+    "outOfScope": {
+      "errors": 4,
+      "warnings": 4,
+      "info": 0
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "runId": "duplicar-paineis_20260512-154037",
+  "mode": "per-suite",
+  "suiteFilter": "Duplicar painéis",
+  "projectName": "Widgets",
+  "environment": "staging-widgets",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-12T18:40:37.388Z"
+}

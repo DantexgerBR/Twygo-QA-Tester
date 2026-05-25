@@ -1,0 +1,629 @@
+{
+  "generatedAt": "2026-05-21T21:07:44.597Z",
+  "project": "modelos",
+  "totalRed": 8,
+  "reports": [
+    {
+      "id": "acoes-duplicar-e-drag-and-drop__duplicar-modelo-com-copia-profunda",
+      "title": "Duplicar modelo com cópia profunda — Error: expect(locator).toBeVisible() failed",
+      "testsuite": "Ações Duplicar e Drag and Drop",
+      "testcase": "Duplicar modelo com cópia profunda",
+      "file": "projects/modelos/tests/features/acoes-duplicar-e-drag-and-drop/tc01-duplicar-modelo-copia-profunda.spec.ts",
+      "status": "failed",
+      "durationMs": 28498,
+      "categoriaSugerida": "inconclusivo",
+      "categoriaConfianca": "baixa",
+      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
+      "severity": "media",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-base-de-conhecimento",
+        "baseUrl": "https://basedeconhecimento.stage.twygoead.com/",
+        "orgId": "37007",
+        "browser": "chromium",
+        "user": "agents.qa@claude.com"
+      },
+      "buildCommit": "f90ba01",
+      "generatedAt": "2026-05-21T21:07:44.597Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Acessar listagem de modelos",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "2. Clicar Duplicar (icon content_copy) do 1º modelo",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: expect(locator).toBeVisible() failed\n\nLocator: locator('.chakra-toast').filter({ hasText: 'duplicado com sucesso' }).first()\nExpected: visible\nTimeout: 15000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 15000ms\n  - waiting for locator('.chakra-toast').filter({ hasText: 'duplicado com sucesso' }).first()\n",
+      "errorLocation": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\modelos\\tests\\features\\acoes-duplicar-e-drag-and-drop\\tc01-duplicar-modelo-copia-profunda.spec.ts:41:9",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-81805-r-modelo-com-cópia-profunda-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-81805-r-modelo-com-cópia-profunda-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-81805-r-modelo-com-cópia-profunda-chromium/error-context.md"
+        },
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-81805-r-modelo-com-cópia-profunda-chromium/test-failed-2.png"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-81805-r-modelo-com-cópia-profunda-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-81805-r-modelo-com-cópia-profunda-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37007",
+        "userId": null
+      }
+    },
+    {
+      "id": "criacao-de-modelo-aba-estilo-do-conteudo__botao-adicionar-mais-dados-exibe-menu-com-6-opcoes",
+      "title": "Botão \"Adicionar mais dados\" exibe menu com 6 opções — TimeoutError: locator.click: Timeout 30000ms exceeded.",
+      "testsuite": "Criação de Modelo - Aba Estilo do Conteúdo",
+      "testcase": "Botão \"Adicionar mais dados\" exibe menu com 6 opções",
+      "file": "projects/modelos/tests/features/criacao-de-modelo-aba-estilo-do-conteudo/tc01-adicionar-mais-dados-menu-6-opcoes.spec.ts",
+      "status": "failed",
+      "durationMs": 45093,
+      "categoriaSugerida": "spec-fragil",
+      "categoriaConfianca": "media",
+      "categoriaJustificativa": "Timeout sem HTTP error — possível wait/seletor frágil. Confirmar via chrome-mcp",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-base-de-conhecimento",
+        "baseUrl": "https://basedeconhecimento.stage.twygoead.com/",
+        "orgId": "37007",
+        "browser": "chromium",
+        "user": "agents.qa@claude.com"
+      },
+      "buildCommit": "f90ba01",
+      "generatedAt": "2026-05-21T21:07:44.597Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Abrir modelo seedado na aba Estilo",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "2. Clicar \"Adicionar mais dados\" e validar 6 opções no menu",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('[data-test-id=\"content-models-style-add-more-data-button\"]')\n    - locator resolved to <button disabled type=\"button\" aria-haspopup=\"menu\" aria-expanded=\"false\" id=\"menu-button-:r1j:\" aria-controls=\"menu-list-:r1j:\" data-test-id=\"content-models-style-add-more-data-button\" class=\"chakra-button chakra-menu__menu-button css-7vf75e\">…</button>\n  - attempting click action\n    2 × waiting for element to be visible, enabled and stable\n      - element is not enabled\n    - retrying click action\n    - waiting 20ms\n    2 × waiting for element to be visible, enabled and stable\n      - element is not enabled\n    - retrying click action\n      - waiting 100ms\n    57 × waiting for element to be visible, enabled and s …[+90 chars]",
+      "errorLocation": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\modelos\\pages\\ContentModelEditPage.ts:162:41",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-eff58-dos-exibe-menu-com-6-opções-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-eff58-dos-exibe-menu-com-6-opções-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-eff58-dos-exibe-menu-com-6-opções-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-eff58-dos-exibe-menu-com-6-opções-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37007",
+        "userId": null
+      }
+    },
+    {
+      "id": "criacao-de-modelo-aba-estilo-do-conteudo__adicionar-campo-idade-via-menu",
+      "title": "Adicionar campo Idade via menu — TimeoutError: locator.click: Timeout 30000ms exceeded.",
+      "testsuite": "Criação de Modelo - Aba Estilo do Conteúdo",
+      "testcase": "Adicionar campo Idade via menu",
+      "file": "projects/modelos/tests/features/criacao-de-modelo-aba-estilo-do-conteudo/tc02-adicionar-campo-idade.spec.ts",
+      "status": "failed",
+      "durationMs": 45051,
+      "categoriaSugerida": "spec-fragil",
+      "categoriaConfianca": "media",
+      "categoriaJustificativa": "Timeout sem HTTP error — possível wait/seletor frágil. Confirmar via chrome-mcp",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-base-de-conhecimento",
+        "baseUrl": "https://basedeconhecimento.stage.twygoead.com/",
+        "orgId": "37007",
+        "browser": "chromium",
+        "user": "agents.qa@claude.com"
+      },
+      "buildCommit": "f90ba01",
+      "generatedAt": "2026-05-21T21:07:44.597Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Abrir modelo seedado na aba Estilo",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "2. Abrir menu \"Adicionar mais dados\"",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('[data-test-id=\"content-models-style-add-more-data-button\"]')\n    - locator resolved to <button disabled type=\"button\" aria-haspopup=\"menu\" aria-expanded=\"false\" id=\"menu-button-:r1j:\" aria-controls=\"menu-list-:r1j:\" data-test-id=\"content-models-style-add-more-data-button\" class=\"chakra-button chakra-menu__menu-button css-7vf75e\">…</button>\n  - attempting click action\n    2 × waiting for element to be visible, enabled and stable\n      - element is not enabled\n    - retrying click action\n    - waiting 20ms\n    2 × waiting for element to be visible, enabled and stable\n      - element is not enabled\n    - retrying click action\n      - waiting 100ms\n    57 × waiting for element to be visible, enabled and s …[+90 chars]",
+      "errorLocation": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\modelos\\pages\\ContentModelEditPage.ts:162:41",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-d9836-cionar-campo-Idade-via-menu-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-d9836-cionar-campo-Idade-via-menu-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-d9836-cionar-campo-Idade-via-menu-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-d9836-cionar-campo-Idade-via-menu-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37007",
+        "userId": null
+      }
+    },
+    {
+      "id": "criacao-de-modelo-aba-estrutura-do-conteudo__carga-horaria-obrigatoria-bloqueia-salvamento",
+      "title": "Carga horária obrigatória bloqueia salvamento — Error: expect(locator).toHaveCount(expected) failed",
+      "testsuite": "Criação de Modelo - Aba Estrutura do Conteúdo",
+      "testcase": "Carga horária obrigatória bloqueia salvamento",
+      "file": "projects/modelos/tests/features/criacao-de-modelo-aba-estrutura-do-conteudo/tc04-carga-horaria-obrigatoria-bloqueia-save.spec.ts",
+      "status": "failed",
+      "durationMs": 20425,
+      "categoriaSugerida": "spec-fragil",
+      "categoriaConfianca": "alta",
+      "categoriaJustificativa": "Locator bate em N elementos — seletor não-único",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-base-de-conhecimento",
+        "baseUrl": "https://basedeconhecimento.stage.twygoead.com/",
+        "orgId": "37007",
+        "browser": "chromium",
+        "user": "agents.qa@claude.com"
+      },
+      "buildCommit": "f90ba01",
+      "generatedAt": "2026-05-21T21:07:44.597Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Abrir aba Estrutura sem carga horária preenchida",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "2. Clicar Salvar e validar bloqueio (sem redirect/sem toast sucesso)",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: expect(locator).toHaveCount(expected) failed\n\nLocator:  locator('.chakra-toast').filter({ hasText: /sucesso/i })\nExpected: 0\nReceived: 3\nTimeout:  3000ms\n\nCall log:\n  - Expect \"toHaveCount\" with timeout 3000ms\n  - waiting for locator('.chakra-toast').filter({ hasText: /sucesso/i })\n    7 × locator resolved to 3 elements\n      - unexpected value \"3\"\n",
+      "errorLocation": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\modelos\\tests\\features\\criacao-de-modelo-aba-estrutura-do-conteudo\\tc04-carga-horaria-obrigatoria-bloqueia-save.spec.ts:27:27",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-26232-gatória-bloqueia-salvamento-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-26232-gatória-bloqueia-salvamento-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-26232-gatória-bloqueia-salvamento-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-26232-gatória-bloqueia-salvamento-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37007",
+        "userId": null
+      }
+    },
+    {
+      "id": "criacao-de-modelo-aba-estrutura-do-conteudo__switch-incluir-questionarios-exibe-configuracoes-basicas",
+      "title": "Switch \"Incluir questionários\" exibe configurações básicas — Error: expect(locator).toBeVisible() failed",
+      "testsuite": "Criação de Modelo - Aba Estrutura do Conteúdo",
+      "testcase": "Switch \"Incluir questionários\" exibe configurações básicas",
+      "file": "projects/modelos/tests/features/criacao-de-modelo-aba-estrutura-do-conteudo/tc06-switch-incluir-questionarios.spec.ts",
+      "status": "failed",
+      "durationMs": 15524,
+      "categoriaSugerida": "spec-fragil",
+      "categoriaConfianca": "alta",
+      "categoriaJustificativa": "Locator bate em N elementos — seletor não-único",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-base-de-conhecimento",
+        "baseUrl": "https://basedeconhecimento.stage.twygoead.com/",
+        "orgId": "37007",
+        "browser": "chromium",
+        "user": "agents.qa@claude.com"
+      },
+      "buildCommit": "f90ba01",
+      "generatedAt": "2026-05-21T21:07:44.597Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Abrir aba Estrutura com seção \"Questionários ao longo do conteúdo\"",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "2. Ativar switch \"Incluir questionários\" e validar configurações expostas",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: expect(locator).toBeVisible() failed\n\nLocator: getByText('Configurações avançadas', { exact: true })\nExpected: visible\nError: strict mode violation: getByText('Configurações avançadas', { exact: true }) resolved to 2 elements:\n    1) <div class=\"css-yljlks\">Configurações avançadas</div> aka getByText('Configurações avançadas').first()\n    2) <div class=\"css-yljlks\">Configurações avançadas</div> aka getByText('Configurações avançadas').nth(1)\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 5000ms\n  - waiting for getByText('Configurações avançadas', { exact: true })\n",
+      "errorLocation": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\modelos\\tests\\features\\criacao-de-modelo-aba-estrutura-do-conteudo\\tc06-switch-incluir-questionarios.spec.ts:32:9",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-ca9a9-exibe-configurações-básicas-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-ca9a9-exibe-configurações-básicas-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-ca9a9-exibe-configurações-básicas-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-ca9a9-exibe-configurações-básicas-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37007",
+        "userId": null
+      }
+    },
+    {
+      "id": "criacao-de-modelo-aba-imagem__default-sem-imagens-somente-textos",
+      "title": "Default \"Sem imagens, somente textos\" — Error: expect(received).toBe(expected) // Object.is equality",
+      "testsuite": "Criação de Modelo - Aba Imagem",
+      "testcase": "Default \"Sem imagens, somente textos\"",
+      "file": "projects/modelos/tests/features/criacao-de-modelo-aba-imagem/tc03-default-sem-imagens.spec.ts",
+      "status": "failed",
+      "durationMs": 14129,
+      "categoriaSugerida": "inconclusivo",
+      "categoriaConfianca": "baixa",
+      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
+      "severity": "media",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-base-de-conhecimento",
+        "baseUrl": "https://basedeconhecimento.stage.twygoead.com/",
+        "orgId": "37007",
+        "browser": "chromium",
+        "user": "agents.qa@claude.com"
+      },
+      "buildCommit": "f90ba01",
+      "generatedAt": "2026-05-21T21:07:44.597Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Abrir aba Imagem em modelo seedado",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "2. Validar radio-0 (\"Sem imagens, somente textos\") marcado por padrão",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false",
+      "errorLocation": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\modelos\\tests\\features\\criacao-de-modelo-aba-imagem\\tc03-default-sem-imagens.spec.ts:19:62",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-fb2c4-Sem-imagens-somente-textos--chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-fb2c4-Sem-imagens-somente-textos--chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-fb2c4-Sem-imagens-somente-textos--chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-fb2c4-Sem-imagens-somente-textos--chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37007",
+        "userId": null
+      }
+    },
+    {
+      "id": "filtros-e-busca-modelos__filtrar-modelos-por-situacao-via-drawer",
+      "title": "Filtrar modelos por Situação via drawer — Error: esperava ao menos 1 cards, encontrei 0",
+      "testsuite": "Filtros e Busca - Modelos",
+      "testcase": "Filtrar modelos por Situação via drawer",
+      "file": "projects/modelos/tests/features/filtros-e-busca-modelos/tc02-filtrar-por-situacao-via-drawer.spec.ts",
+      "status": "failed",
+      "durationMs": 10068,
+      "categoriaSugerida": "inconclusivo",
+      "categoriaConfianca": "baixa",
+      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
+      "severity": "media",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-base-de-conhecimento",
+        "baseUrl": "https://basedeconhecimento.stage.twygoead.com/",
+        "orgId": "37007",
+        "browser": "chromium",
+        "user": "agents.qa@claude.com"
+      },
+      "buildCommit": "f90ba01",
+      "generatedAt": "2026-05-21T21:07:44.597Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Acessar listagem e abrir drawer de filtros",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "2. Aplicar filtro padrão \"Modelos ativos\"",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 3,
+          "action": "3. Validar drawer fechou e #clear-filter ficou visível",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: esperava ao menos 1 cards, encontrei 0\n\nexpect(received).toBeGreaterThanOrEqual(expected)\n\nExpected: >= 1\nReceived:    0",
+      "errorLocation": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\modelos\\pages\\ContentModelsListPage.ts:101:71",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-40575-los-por-Situação-via-drawer-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-40575-los-por-Situação-via-drawer-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-40575-los-por-Situação-via-drawer-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-40575-los-por-Situação-via-drawer-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37007",
+        "userId": null
+      }
+    },
+    {
+      "id": "preview-de-modelos-e-designs__conteudo-de-cada-item-do-carrossel",
+      "title": "Conteúdo de cada item do carrossel — Error: expect(locator).toBeVisible() failed",
+      "testsuite": "Preview de Modelos e Designs",
+      "testcase": "Conteúdo de cada item do carrossel",
+      "file": "projects/modelos/tests/features/preview-de-modelos-e-designs/tc02-conteudo-carrossel.spec.ts",
+      "status": "failed",
+      "durationMs": 23346,
+      "categoriaSugerida": "inconclusivo",
+      "categoriaConfianca": "baixa",
+      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
+      "severity": "media",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-base-de-conhecimento",
+        "baseUrl": "https://basedeconhecimento.stage.twygoead.com/",
+        "orgId": "37007",
+        "browser": "chromium",
+        "user": "agents.qa@claude.com"
+      },
+      "buildCommit": "f90ba01",
+      "generatedAt": "2026-05-21T21:07:44.597Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Acessar listagem e abrir Preview",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "2. Validar elementos do slide: Modelo:, Design:, Tipo:, indicador X de Y",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: expect(locator).toBeVisible() failed\n\nLocator: locator('[data-test-id=\"content-models-preview-modal-image\"]')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 10000ms\n  - waiting for locator('[data-test-id=\"content-models-preview-modal-image\"]')\n",
+      "errorLocation": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\modelos\\tests\\features\\preview-de-modelos-e-designs\\tc02-conteudo-carrossel.spec.ts:41:9",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-4071c-o-de-cada-item-do-carrossel-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-4071c-o-de-cada-item-do-carrossel-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-4071c-o-de-cada-item-do-carrossel-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-modelos-tests-fea-4071c-o-de-cada-item-do-carrossel-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37007",
+        "userId": null
+      }
+    }
+  ]
+}

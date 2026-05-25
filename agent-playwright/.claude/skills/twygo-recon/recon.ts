@@ -5,6 +5,7 @@ import { parseArgs } from 'node:util';
 import { createLogger } from '../../../src/utils/logger.js';
 import { FILES } from '../../../src/utils/constants.js';
 import {
+  getOrgId,
   getOutputPath,
   getProjectConfigPath,
   resolveProjectPath,
@@ -17,21 +18,31 @@ const log = createLogger('recon');
 type ProjConfig = { environment: string };
 type EnvConfig = Record<string, { baseUrl: string; credentials: { email: string; password: string }; timeout: number }>;
 
-function parseFlags(): { suite?: string; urls?: string[] } {
+function parseFlags(): { suite?: string; urls?: string[]; project?: string } {
   const { values } = parseArgs({
     options: {
       suite: { type: 'string' },
       url: { type: 'string' },
       urls: { type: 'string' }, // comma-separated multiple URLs
+      project: { type: 'string' },
     },
     strict: false,
   });
+  // Propaga --project como env var PROJECT antes que getProjectSlug() seja
+  // chamado pelos imports (mirror do orchestrator.ts).
+  if (values.project) {
+    process.env.PROJECT = values.project as string;
+  }
   const single = values.url as string | undefined;
   const multi = values.urls as string | undefined;
   let urls: string[] | undefined;
   if (multi) urls = multi.split(',').map((u) => u.trim()).filter(Boolean);
   else if (single) urls = [single];
-  return { suite: values.suite as string | undefined, urls };
+  return {
+    suite: values.suite as string | undefined,
+    urls,
+    project: values.project as string | undefined,
+  };
 }
 
 function flattenSuites(suite: ParsedTestSuite, acc: ParsedTestSuite[] = []): ParsedTestSuite[] {
@@ -55,22 +66,25 @@ function findSuite(parsed: ParsedAnalysis, query: string): ParsedTestSuite | nul
  * Caso o usuário passe --url explicitamente, esse override prevalece.
  */
 function inferCanonicalUrl(suite: ParsedTestSuite): string {
-  // Heurísticas conhecidas (expandir conforme cobertura cresce)
+  // Heurísticas conhecidas (expandir conforme cobertura cresce).
+  // orgId resolvido em runtime via getOrgId() — depende do PROJECT env var
+  // apontar para o slug correto. NÃO hardcodar valores reais.
+  const orgId = getOrgId();
   const lower = suite.name.toLowerCase();
   if (lower.includes('indexação') || lower.includes('agente de atendimento')) {
-    return '/o/36602/ai_consumption_analysis?tab=settings';
+    return `/o/${orgId}/ai_consumption_analysis?tab=settings`;
   }
   if (lower.includes('histórico de consumo')) {
-    return '/o/36602/ai_consumption_analysis?tab=consumption';
+    return `/o/${orgId}/ai_consumption_analysis?tab=consumption`;
   }
   if (lower.includes('política de créditos')) {
-    return '/o/36602/ai_consumption_analysis?tab=policy';
+    return `/o/${orgId}/ai_consumption_analysis?tab=policy`;
   }
   if (lower.includes('tabela de preços')) {
     return '/admin/edit_sys_subscription_settings/';
   }
   // Fallback: dashboard admin
-  return '/o/36602/dashboard';
+  return `/o/${orgId}/dashboard`;
 }
 
 type Probe = {

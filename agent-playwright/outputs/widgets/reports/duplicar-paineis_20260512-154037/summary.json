@@ -1,0 +1,29 @@
+{
+  "runId": "duplicar-paineis_20260512-154037",
+  "scope": "Apenas testsuite contendo \"Duplicar painéis\"",
+  "tests": {
+    "total": 6,
+    "passed": 4,
+    "failed": 2,
+    "skipped": 0,
+    "durationMs": 58665
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 1,
+    "tests": 9,
+    "outOfScope": {
+      "errors": 63,
+      "warnings": 28,
+      "info": 9
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

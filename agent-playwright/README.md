@@ -75,10 +75,11 @@ Se os 3 passos terminaram sem erro, abra o Claude Code:
 claude
 ```
 
-Dentro do Claude Code, instale o plugin oficial Playwright (subagents que o orquestrador usa para planner/generator/healer):
+Dentro do Claude Code, instale o marketplace oficial do Claude e plugin oficial do Playwright (subagents que o orquestrador usa para planner/generator/healer):
 
 ```
-/plugin install playwright
+claude plugin marketplace add anthropics/claude-plugins-official
+claude plugin install playwright@claude-plugins-official
 ```
 
 Conferir que está OK:
@@ -151,15 +152,101 @@ Use [`projects/creditos-fase-02/project.config.json`](projects/creditos-fase-02/
 
 > O caminho de `testAnalysisFile` é **relativo ao diretório do projeto** (`projects/widgets/`), não à raiz do agente.
 
-### 5. Validar
+### 5. Sanity check de configuração
 
 ```bash
 npm run typecheck                          # deve passar limpo
 npm run agent:parse -- --project widgets   # parseia o XML do projeto
-npm run agent:suites -- --project widgets  # lista as testsuites do projeto
+npm run agent:suites -- --project widgets  # lista as testsuites disponíveis
 ```
 
+Se os 3 comandos terminaram sem erro, o XML está válido e o projeto está pronto pra preparação + geração de specs.
+
 > Se `projects/` tiver **só 1 projeto**, a flag `--project` é opcional — o agente auto-detecta. Quando houver 2+ projetos coexistindo (na master cumulativa), a flag é obrigatória.
+
+### 6. Preparar storageState (login global 1×)
+
+```bash
+npm run agent:smoke -- --project widgets
+```
+
+Faz login no env primário (e no secundário se houver `*-without-credits` ou `*-widgets-disabled` em `environment.json`) e grava `outputs/.auth/storage.json`. Specs reusam esse storage — não logam por teste.
+
+> Idempotente: o smoke detecta storage fresco (<30min) e não re-loga sem necessidade.
+
+### 7. Gerar specs por bloco (primeira vez)
+
+Para **cada testsuite** que você quer cobrir, rode este ciclo: recon → plan + generate → run. Faça **uma de cada vez** — generator funciona melhor com escopo enxuto e dá pra revisar diff por bloco.
+
+#### 7.1. Recon da área (opcional, recomendado)
+
+```bash
+# Funciona igual em Linux / macOS / Git Bash / Windows PowerShell
+npm run agent:recon -- --project widgets --suite "Listagem de painéis"
+```
+
+Loga no app, navega na área da testsuite, captura test-ids/roles/labels e salva em `projects/<slug>/inputs/recon-<slug-suite>.md`. O planner consome isso depois e corta ~70% do tempo de exploração live.
+
+> A flag `--project` é opcional quando há só 1 projeto em `projects/` (auto-detect). Alternativa: env var (útil pra encadear múltiplos comandos sem repetir):
+>
+> ```bash
+> # Linux / macOS / Git Bash
+> PROJECT=widgets npm run agent:recon -- --suite "Listagem de painéis"
+>
+> # Windows PowerShell
+> $env:PROJECT="widgets"; npm run agent:recon -- --suite "Listagem de painéis"
+> ```
+
+#### 7.2. Plan + Generate (interativo via Claude Code)
+
+```bash
+claude
+```
+
+Dentro do Claude Code, peça em linguagem natural:
+
+```
+Execute o orquestrador para a suite "Listagem de painéis"
+```
+
+O agente:
+1. Carrega `CLAUDE.md` + skill `twygo-test-orchestrator`
+2. Despacha o subagent **planner** (exploração live → plano em `projects/<slug>/specs/<slug-suite>-plan.md`)
+3. Despacha o subagent **generator** (Page Objects em `projects/<slug>/pages/` + specs em `projects/<slug>/tests/features/<slug-suite>/`)
+4. Roda `npm run typecheck`
+
+> Testcases com pré-condição não satisfeita (dados não seedados, env não disponível) saem do generator com `test.fixme(true, "<motivo>")` — não chutamos.
+
+#### 7.3. Executar e validar a suite gerada
+
+```bash
+npm run agent:run -- --project widgets --suite "Listagem de painéis"
+```
+
+Pre-flight + Playwright filtrado por suite + validador exploratório + relatório. Saída:
+
+```
+outputs/widgets/reports/listagem-de-paineis_{timestamp}/index.md
+outputs/reports/latest-suite-listagem-de-paineis.md
+```
+
+Se algum teste quebrar por seletor após mudança de UI, use **healing** (ver [seção dedicada](#healing-teste-quebrou-depois-de-mudança-de-ui)).
+
+### 8. Iterar pelos demais blocos
+
+Repita **7.1 → 7.3** para cada testsuite do projeto. Cada bloco vira um diretório em `projects/<slug>/tests/features/<slug-suite>/` com 1 `.spec.ts` por testcase.
+
+### 9. Geração completa / regressivo final
+
+Quando os blocos individuais estiverem todos passando, rode o projeto inteiro:
+
+```bash
+# Todas as suítes do projeto (pre-flight → execução completa → report)
+npm run agent:run -- --project widgets
+
+# Regressivo final com Allure CLI + GH Pages (fim de projeto)
+npm run agent:regression -- --project widgets
+```
 
 > **Checklist completo + commits**: [.claude/PROJECT_BOOTSTRAP.md](.claude/PROJECT_BOOTSTRAP.md).
 
@@ -201,14 +288,14 @@ Claude carrega o `CLAUDE.md` + skills locais e segue as 9 fases canônicas (pars
 ### O que esperar de saída
 
 ```
-outputs/reports/{slug-suite}_{timestamp}/index.html
-outputs/reports/latest-suite-{slug}.html       (atalho pra última run)
+outputs/reports/{slug-suite}_{timestamp}/index.md
+outputs/reports/latest-suite-{slug}.md       (atalho pra última run)
 ```
 
-Abra o `index.html` no navegador pra ver:
+Abra o `index.md` no IDE/GitHub pra ver:
 - ✅ Casos passados / ❌ falhados
-- 📷 Screenshots e traces das falhas
-- 🔍 Findings exploratórios (console errors, axe-core, HTTP 4xx/5xx)
+- 📷 Screenshots inline e link pro trace nas falhas
+- 🔍 Findings exploratórios (console errors, axe-core, HTTP 4xx/5xx) em [`exploratory.md`](#)
 
 ---
 
@@ -224,8 +311,8 @@ npm run agent:regression   # roda tudo + Allure CLI
 > Internamente equivale a: `npm run agent:parse && REGRESSION=true npm run agent:run -- --regression && npm run agent:explore && npm run agent:report -- --regression`.
 
 Saída:
-- `outputs/allure-report/index.html` — relatório executivo Allure (com tendência histórica em CI/GH Pages)
-- `outputs/reports/regression_{timestamp}/` — HTML estruturado por suíte
+- `outputs/allure-report/index.html` — relatório executivo Allure (HTML built-in, com tendência histórica em CI/GH Pages)
+- `outputs/reports/regression_{timestamp}/` — Markdown estruturado por suíte (`index.md` + `tests.md` + `exploratory.md` + JSONs)
 
 > Em CI, o workflow `.github/workflows/regression.yml` roda automaticamente em PR para `main`.
 
@@ -252,6 +339,16 @@ O healer:
 Você revisa, aprova, commita.
 
 > **Healer NUNCA muda intenção do teste** — só seletor, timing ou asserção. Para mudar o que o teste valida, o XML do agente AT precisa ser atualizado primeiro.
+
+### Auto-PR pós-heal (opt-in)
+
+Se você ativou o **GitHub MCP** ([SETUP.md §3.2](.claude/SETUP.md)), o orquestrador oferece abrir um PR automaticamente após você aprovar as correções do healer. Fluxo:
+
+1. Healer aplicou correções e você aprovou o diff.
+2. Orquestrador detecta MCP `github` ativo → cria branch `fix/heal-<slug>-<timestamp>` (se você estava em `master`), commita, push, abre PR.
+3. Você recebe a URL do PR no chat — review humano continua seu.
+
+Sem o GitHub MCP ativo, a Etapa 8.5 é pulada silenciosamente — fluxo manual segue funcionando como sempre. Detalhes em [twygo-test-orchestrator SKILL.md](.claude/skills/twygo-test-orchestrator/SKILL.md) Etapa 8.5.
 
 ---
 
@@ -345,9 +442,10 @@ npm run test:debug                                      # debug step-by-step
 ### Pós-execução
 ```bash
 npm run agent:explore                    # consolida findings exploratórios
-npm run agent:report                     # gera relatório (per-suite ou regressivo)
-npm run test:report                      # abre o HTML report do Playwright
+npm run agent:report                     # gera relatório Markdown (per-suite ou regressivo)
 ```
+
+> Saída em `outputs/<slug>/reports/<run>/index.md` + `tests.md` + `exploratory.md` (Markdown estruturado, abre no IDE/GitHub). Em modo regressivo, também `outputs/allure-report/` (Allure HTML built-in com trend). Reporter HTML do Playwright foi removido em 2026-05 — pra debug profundo de uma falha use `npx playwright show-trace <path-do-trace>` (traces continuam em `test-artifacts/`).
 
 ### Limpeza
 ```bash
@@ -360,45 +458,71 @@ npm run clean                            # apaga outputs/
 
 ## Variáveis de ambiente
 
-Crie `.env` na raiz do agente (gitignored):
+Copie o template e preencha:
 
 ```bash
-TWYGO_STAGING_USER=qa@twygo.com
-TWYGO_STAGING_PASS=<senha do staging>
+cp .env.example .env
+```
 
-# Opcionais:
+Variáveis em `.env` — preencha só os pares dos envs/projetos que vai rodar. A
+estrutura canônica (slugs de env, pares de variáveis, sufixos semânticos)
+está em `config/environment.json` versionado; o `.env.example` documenta
+quais variáveis preencher. Valores reais (hosts, orgIds, emails, senhas)
+NUNCA ficam aqui — apenas no `.env` local (gitignored).
+
+```bash
+# Para CADA env declarado em config/environment.json, defina:
+TWYGO_<ENV_SLUG_UPPER>_HOST=<host real do env>
+TWYGO_<ENV_SLUG_UPPER>_ORG_ID=<orgId numérico do env>
+TWYGO_<ENV_SLUG_UPPER>_EMAIL=<email do user de teste com perfil Admin>
+TWYGO_<ENV_SLUG_UPPER>_PASSWORD=<senha do user>
+
+# Opcionais (globais):
 EXPLORATORY_STRICT=1     # promove findings exploratórios (axe, console errors) a falhas
 LOG_LEVEL=debug          # output verbose dos scripts
 REGRESSION=true          # ativa reporter Allure (geralmente setado pelo agent:regression)
 ```
 
-`config/environment.json` resolve `${TWYGO_STAGING_USER}` automaticamente.
+> Exemplos de slugs de env (sem valores): `staging` (principal), `staging-<projeto>` (principal de um projeto específico), `staging-without-credits` (secundário sem créditos), `<principal>-disabled` (secundário com módulo off). Convenção completa em [`shared/twygo-platform.md §1`](../shared/twygo-platform.md).
+
+> **Qual env é usado em cada projeto:** lido de `projects/<slug>/project.config.json` campo `environment`. O `globalSetup` faz login no env principal e detecta o secundário pelo nome (ex: principal `staging-widgets` → procura `staging-widgets-disabled`).
+
+`config/environment.json` referencia essas variáveis via `${VAR}` e
+`src/utils/environment.ts#loadEnvironmentConfig()` resolve no boot. `.env`
+está no `.gitignore` da raiz do monorepo — nunca commitar.
+
+> Se aparecer `Variável de ambiente "TWYGO_*" referenciada em
+> config/environment.json mas não definida`, sua `.env` está faltando ou
+> incompleta. Use a skill `configurar-ambiente` (`.claude/skills/configurar-ambiente/SKILL.md`).
 
 ---
 
 ## Troubleshooting comum
 
 ### `Smoke test falhou — não vou prosseguir com planner/execução`
-storageState corrompido ou ambiente Twygo fora do ar. Force relogin apagando o storage:
+
+**Antes de mexer em qualquer coisa**, rode o checklist de 1min em
+[.claude/skills/debugar-smoke-login/SKILL.md](.claude/skills/debugar-smoke-login/SKILL.md):
 
 ```bash
-# Linux / macOS / Git Bash
-rm -rf outputs/.auth
-
-# Windows PowerShell
-Remove-Item -Recurse -Force outputs/.auth
-
-# Windows CMD
-rmdir /s /q outputs\.auth
+curl -sI https://<host-staging>/users/login | head -3   # 5xx? ambiente fora
+grep -c '^TWYGO_.*=.\+$' .env                            # 8 esperado (4 envs × email/senha) ou ≥2 se rodando só projeto principal
 ```
 
-E rode novamente:
+Se `curl` deu **5xx**: ambiente Twygo fora — **não mexa em código**, espere
+voltar. Se `grep` deu valor menor que o esperado: `.env` incompleto —
+`cp .env.example .env` e preencha (skill `configurar-ambiente`).
+
+Se ambos OK, storageState pode estar corrompido — apaga e re-roda:
 
 ```bash
+rm -rf outputs/.auth   # Linux/macOS/Git Bash
+# Remove-Item -Recurse -Force outputs/.auth   # Windows PowerShell
+# rmdir /s /q outputs\.auth                   # Windows CMD
 npm run agent:smoke
 ```
 
-Se ainda falhar, confira que a baseURL do staging está acessível e que as credenciais em `.env` estão corretas.
+Outras causas (layout mudou, etc) cobertas no skill `debugar-smoke-login`.
 
 ### `Cannot find module 'allure-js-commons'`
 ```bash
@@ -469,6 +593,6 @@ Acabou o setup? Faça este ciclo curto pra confirmar que tudo funciona:
 1. `npm run agent:smoke` — confirma que login + ambiente estão OK
 2. `npm run agent:suites` — lista as testsuites do projeto atual
 3. `npm run agent:run -- --suite "<um nome da lista>"` — roda 1 suíte
-4. Abra `outputs/reports/<slug>_<ts>/index.html` no navegador e confira o relatório
+4. Abra `outputs/reports/<slug>_<ts>/index.md` no IDE/GitHub e confira o relatório
 
 Se isso passou, você está pronto pro fluxo dia-a-dia.

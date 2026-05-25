@@ -2,7 +2,11 @@ import { defineConfig, devices } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { getProjectSlug, listAvailableProjects } from './src/utils/environment.js';
+import {
+  getProjectSlug,
+  listAvailableProjects,
+  loadEnvironmentConfig,
+} from './src/utils/environment.js';
 
 // __dirname não existe em ES modules; reconstruímos a partir de import.meta.url
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -44,9 +48,9 @@ const projectConfig: ProjectConfig = JSON.parse(
     'utf-8',
   ),
 );
-const environmentConfig: EnvironmentConfig = JSON.parse(
-  readFileSync(resolve(__dirname, 'config/environment.json'), 'utf-8'),
-);
+// Resolve `${VAR}` placeholders via process.env (carregado de .env).
+// Ver agent-playwright/.env.example.
+const environmentConfig: EnvironmentConfig = loadEnvironmentConfig();
 
 const env = environmentConfig[projectConfig.environment];
 if (!env) {
@@ -108,7 +112,12 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: 4,
+  // Regressão usa 1 worker pra evitar saturação do tenant staging (criação
+  // simultânea de painéis por múltiplos workers fazia listagem demorar >60s
+  // pra carregar → tab "Painéis" timeout. Per-suite continua com 4 workers
+  // pra rapidez no dia-a-dia. Detectado via env REGRESSION (settado pelo
+  // orchestrator no modo --regression).
+  workers: process.env.REGRESSION === 'true' ? 1 : 4,
   timeout: 120_000,
   globalSetup: './tests/setup/global-setup.ts',
   reporter: process.env.REGRESSION === 'true'
@@ -122,8 +131,14 @@ export default defineConfig({
         }],
       ]
     : [
+        // Sem reporter `html` — alinhado com a decisão de Markdown em
+        // chore/agentes-qa-overhaul. O resumo da última run vai pra
+        // `outputs/<slug>/playwright-summary.md` (gerado pelo
+        // twygo-report-generator) e o detalhamento timestamp-versionado em
+        // `outputs/<slug>/reports/<slug>_<ts>/{index,tests,exploratory}.md`.
+        // Pra debug profundo de step específico, use o trace de cada falha
+        // (em test-artifacts/) com `npx playwright show-trace <path>`.
         ['list'],
-        ['html', { outputFolder: `${outputBase}/html-report`, open: 'never' }],
         ['json', { outputFile: `${outputBase}/test-results.json` }],
       ],
   outputDir: `${outputBase}/test-artifacts`,
@@ -132,9 +147,14 @@ export default defineConfig({
     headless: projectConfig.headless,
     actionTimeout: env.timeout,
     navigationTimeout: env.timeout,
-    trace: projectConfig.performance.enableTracing ? 'retain-on-failure' : 'off',
-    video: projectConfig.performance.enableVideo ? 'retain-on-failure' : 'off',
-    screenshot: projectConfig.reporting.screenshotsOnFailure ? 'only-on-failure' : 'off',
+    // Captura de evidência: sempre-on em sucesso E falha (regra dura 9.1 do
+    // CLAUDE.md — relatório precisa de prova por TC, não só quando quebra).
+    // Para desligar num projeto específico, basta `enableTracing: false` /
+    // `enableVideo: false` / `screenshotsOnFailure: false` em
+    // `projects/<slug>/project.config.json`.
+    trace: projectConfig.performance.enableTracing ? 'on' : 'off',
+    video: projectConfig.performance.enableVideo ? 'on' : 'retain-on-failure',
+    screenshot: projectConfig.reporting.screenshotsOnFailure ? 'on' : 'off',
     viewport: { width: 1280, height: 720 },
     ignoreHTTPSErrors: true,
     locale: 'pt-BR',

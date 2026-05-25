@@ -22,7 +22,7 @@ npm run agent:recon -- --suite "<nome da testsuite>"
 Ou com URL específica em vez do nome da testsuite:
 
 ```bash
-npm run agent:recon -- --url "/o/36602/ai_consumption_analysis?tab=settings"
+npm run agent:recon -- --url "/o/{orgId}/ai_consumption_analysis?tab=settings"
 ```
 
 ## Saída

@@ -62,15 +62,14 @@ necessário trocar perfil pela UI.
 |---|---|
 | "Acessar Super Admin" / "Em Super Admin" | `await page.goto('/admin')` ou `superAdminPage.openSuperAdmin()` |
 | "Acessar a tabela de preços" / "Editar tabela de preços ativa" | `await page.goto('/admin/subscription_plans')` ou `superAdminPage.openSubscriptionPlans()`. Na lista, identificar a tabela com coluna "Ativo" = Sim e clicar em "Editar". |
-| "Editar o contrato da organização <X>" | `await page.goto('/admin/edit_sys_subscription_settings/{orgId}')` ou `superAdminPage.openEditContract(orgId)`. orgId vem de `environment.json[env].orgId` (`staging = 36602`, `staging-without-credits = 36912`). |
+| "Editar o contrato da organização <X>" | `await page.goto('/admin/edit_sys_subscription_settings/{orgId}')` ou `superAdminPage.openEditContract(orgId)`. orgId resolvido via `getOrgId()` ou `getEnvByName(<slug>).orgId` (valores em `.env`, referenciados por `environment.json`). |
 | "Pesquisar pela organização" → "Editar/Visualizar" → "Aba Contratos" → "Editar contrato vigente" | `superAdminPage.navigateToOrgSubscriptions(orgIdOrName)` quando a prosa exige passar pela UI; caso contrário usar deep-link `openEditContract(orgId)`. |
 
-**IDs das organizações de referência** (estão em `environment.json`):
-
-| Ambiente | Host | orgId |
-|---|---|---|
-| `staging` | `stage10.stage.twygoead.com` | `36602` |
-| `staging-without-credits` | `eduapi.stage.twygoead.com` | `36912` |
+**Organizações de referência**: valores reais (hosts, orgIds) vivem em
+`.env` (gitignored) referenciados via `${VAR}` em `config/environment.json`.
+Estrutura de envs / sufixos semânticos em
+[`shared/twygo-platform.md §1`](../../shared/twygo-platform.md). NÃO
+hardcodar orgId em spec ou comentário.
 
 > Quando um caso de teste do XML pede operação Super Admin, **importe e use
 > `SuperAdminPage`**; não invente seletores nem rotas. Se a prosa fala em
@@ -110,9 +109,9 @@ orgIds, **nunca**.
 
 Anti-pattern proibido (CLAUDE.md §7.6 B):
 ```ts
-// ❌ proibido
-const BASE_URL = 'https://stage10.stage.twygoead.com';
-await page.goto(`${BASE_URL}/o/36602/ai_consumption_analysis?tab=settings`);
+// ❌ proibido — host e orgId hardcoded
+const BASE_URL = 'https://<host-real>.twygoead.com';
+await page.goto(`${BASE_URL}/o/<orgId-real>/ai_consumption_analysis?tab=settings`);
 ```
 
 ## 5. Heurística de seletor (resumo da política `data-testid`)

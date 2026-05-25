@@ -1,0 +1,29 @@
+{
+  "runId": "criacao-de-design-de-aula_20260520-163814",
+  "scope": "Apenas testsuite contendo \"Criação de Design de Aula\"",
+  "tests": {
+    "total": 4,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 2,
+    "durationMs": 47912
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 0,
+    "tests": 1,
+    "outOfScope": {
+      "errors": 5,
+      "warnings": 5,
+      "info": 1
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

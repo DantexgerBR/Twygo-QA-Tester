@@ -1,0 +1,11 @@
+{
+  "runId": "criacao-de-modelo-aba-identificacao_20260520-143601",
+  "mode": "per-suite",
+  "suiteFilter": "Criação de Modelo - Aba Identificação",
+  "projectName": "Modelos de conteúdo",
+  "environment": "staging-base-de-conhecimento",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-20T17:36:01.071Z"
+}

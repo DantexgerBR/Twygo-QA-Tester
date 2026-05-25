@@ -1,0 +1,29 @@
+{
+  "runId": "feature-flag-modelos-de-conteudo_20260521-081441",
+  "scope": "Apenas testsuite contendo \"Feature flag modelos_de_conteudo\"",
+  "tests": {
+    "total": 3,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 3,
+    "durationMs": 0
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 0,
+    "tests": 1,
+    "outOfScope": {
+      "errors": 4,
+      "warnings": 4,
+      "info": 0
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}
