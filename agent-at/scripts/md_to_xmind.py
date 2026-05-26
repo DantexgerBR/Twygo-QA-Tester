@@ -21,8 +21,8 @@ from pathlib import Path
 
 from md_canonical_parser import (
     parse_canonical_md,
-    priority_to_xmind_marker,
     preconditions_as_text,
+    priority_to_xmind_marker,
 )
 
 

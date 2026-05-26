@@ -803,13 +803,13 @@ export class PaineisListPage {
       const row = this.getRowByName(name);
       const exists = (await row.count()) > 0;
       if (!exists) {
-        // eslint-disable-next-line no-console -- diagnóstico em afterAll
+         
         console.warn(`[deletePanelByNameSafe] painel "${name}" não existe — cleanup no-op`);
         return;
       }
       await this.deletePanelByName(name);
     } catch (err) {
-      // eslint-disable-next-line no-console -- diagnóstico em afterAll
+       
       console.warn(
         `[deletePanelByNameSafe] falha ao deletar "${name}": ${(err as Error).message}`,
       );
@@ -973,7 +973,7 @@ export class PaineisListPage {
       const row = this.getMenuItemRowByName(finalItemName);
       const exists = (await row.count()) > 0;
       if (!exists) {
-        // eslint-disable-next-line no-console -- diagnóstico em afterAll
+         
         console.warn(
           `[disassociatePanelFromMenu_safe] item "${finalItemName}" não existe no menu ${useModeId} — cleanup no-op`,
         );
@@ -981,7 +981,7 @@ export class PaineisListPage {
       }
       await this.disassociatePanelFromMenu(panelName, useModeId, itemName);
     } catch (err) {
-      // eslint-disable-next-line no-console -- diagnóstico em afterAll
+       
       console.warn(
         `[disassociatePanelFromMenu_safe] falha ao desassociar "${finalItemName}" de ${useModeId}: ${(err as Error).message}`,
       );

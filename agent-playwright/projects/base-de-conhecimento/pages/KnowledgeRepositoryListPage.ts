@@ -76,7 +76,7 @@ export class KnowledgeRepositoryListPage {
         return;
       } catch (err) {
         lastErr = err;
-        // eslint-disable-next-line no-console
+         
         console.warn(`[goToList] tentativa ${attempt}/${maxAttempts} falhou: ${(err as Error).message}`);
       }
     }
@@ -677,7 +677,7 @@ export class KnowledgeRepositoryListPage {
         return row?.getAttribute('data-item-id') ?? null;
       }, name);
       if (!id) {
-        // eslint-disable-next-line no-console
+         
         console.warn(`[deleteRepositoryByNameSafe] "${name}" não encontrado — cleanup no-op`);
         return;
       }
@@ -694,11 +694,11 @@ export class KnowledgeRepositoryListPage {
         { orgId: this.orgId, id },
       );
       if (status >= 400) {
-        // eslint-disable-next-line no-console
+         
         console.warn(`[deleteRepositoryByNameSafe] DELETE "${name}" id=${id} → status ${status}`);
       }
     } catch (err) {
-      // eslint-disable-next-line no-console
+       
       console.warn(
         `[deleteRepositoryByNameSafe] falha ao deletar "${name}": ${(err as Error).message}`,
       );

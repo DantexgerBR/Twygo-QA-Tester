@@ -18,8 +18,11 @@ Este script foi usado como referência pela skill /generate-xmind no fluxo legad
 Copiar este arquivo para output/generate_xmind.py e adicionar as suítes e casos de teste.
 """
 
-import json, zipfile, os, shutil, uuid
-
+import json
+import os
+import shutil
+import uuid
+import zipfile
 
 # =====================================================================
 # FUNÇÕES UTILITÁRIAS (NÃO MODIFICAR)
@@ -143,7 +146,7 @@ def create_xmind(output_path, template_path):
 
     # Reempacotar
     with zipfile.ZipFile(output_path, 'w', zipfile.ZIP_DEFLATED) as z:
-        for root, dirs, files in os.walk(temp_dir):
+        for root, _dirs, files in os.walk(temp_dir):
             for file in files:
                 fp = os.path.join(root, file)
                 z.write(fp, os.path.relpath(fp, temp_dir))

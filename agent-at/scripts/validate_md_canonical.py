@@ -23,7 +23,6 @@ from typing import Any
 
 from md_canonical_parser import parse_canonical_md
 
-
 # ============================================================================
 # Tabelas canônicas (decisão 2026-05-19 — agent-at/.claude/skills/generate-md-canonical/SKILL.md §Tabelas-keyword)
 # ============================================================================
@@ -337,7 +336,7 @@ def main() -> None:
         print(f"\n[STRICT] {len(warnings)} warning(s) — modo strict bloqueia.")
         sys.exit(1)
 
-    print(f"\n[PASS] Apenas warnings. Revise mas pode prosseguir.")
+    print("\n[PASS] Apenas warnings. Revise mas pode prosseguir.")
     sys.exit(0)
 
 

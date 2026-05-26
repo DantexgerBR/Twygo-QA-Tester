@@ -44,8 +44,8 @@ except ImportError as e:
 
 from md_canonical_parser import (
     parse_canonical_md,
-    priority_to_testlink_importance,
     preconditions_as_text,
+    priority_to_testlink_importance,
 )
 
 

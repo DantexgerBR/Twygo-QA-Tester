@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# Pre-commit gate do monorepo twygo-agents-qa.
+# Ativar uma vez por clone:  git config core.hooksPath .githooks
+# Pular pontualmente (use com parcimônia):  git commit --no-verify
+set -uo pipefail
+
+staged=$(git diff --cached --name-only --diff-filter=ACM)
+fail=0
+
+# --- agent-playwright (TypeScript): typecheck + lint ---
+if echo "$staged" | grep -Eq '^agent-playwright/.*\.(ts|cts|mts|cjs|mjs)$'; then
+  echo "[pre-commit] agent-playwright -> typecheck + eslint"
+  (
+    cd agent-playwright || exit 1
+    npm run --silent typecheck || exit 1
+    npx --no-install eslint . || exit 1
+  ) || { echo "[pre-commit] ❌ agent-playwright reprovou (typecheck/lint)."; fail=1; }
+fi
+
+# --- Agentes Python: ruff (só se ruff estiver instalado) ---
+py_staged=$(echo "$staged" | grep -E '\.py$' || true)
+if [ -n "$py_staged" ]; then
+  if command -v ruff >/dev/null 2>&1; then
+    echo "[pre-commit] ruff check (Python)"
+    ruff check $py_staged || { echo "[pre-commit] ❌ ruff reprovou."; fail=1; }
+  else
+    echo "[pre-commit] (ruff não instalado — pulando checagem Python)"
+  fi
+fi
+
+if [ "$fail" -ne 0 ]; then
+  echo "[pre-commit] Commit BLOQUEADO. Corrija os erros acima (ou 'git commit --no-verify' p/ pular)."
+  exit 1
+fi
+echo "[pre-commit] ✅ ok"
+exit 0

@@ -164,7 +164,7 @@ function preconditionsAsText(pre: string[] | string | undefined): string {
 }
 
 function splitTopLevelFrontmatter(md: string): { frontmatter: Record<string, unknown>; rest: string } {
-  const trimmed = md.replace(/^﻿/, '').trimStart();
+  const trimmed = md.replace(/^\uFEFF/, '').trimStart();
   if (!trimmed.startsWith('---')) {
     throw new Error('MD canônico precisa começar com frontmatter YAML delimitado por ---');
   }

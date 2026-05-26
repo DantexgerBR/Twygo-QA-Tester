@@ -68,7 +68,7 @@ export class KnowledgeRepositoryFormPage {
         return;
       } catch (err) {
         lastErr = err;
-        // eslint-disable-next-line no-console
+         
         console.warn(`[goToCreate] tentativa ${attempt}/${maxAttempts} falhou: ${(err as Error).message}`);
       }
     }
@@ -104,7 +104,7 @@ export class KnowledgeRepositoryFormPage {
         return;
       } catch (err) {
         lastErr = err;
-        // eslint-disable-next-line no-console
+         
         console.warn(`[goToEdit] tentativa ${attempt}/${maxAttempts} falhou: ${(err as Error).message}`);
       }
     }

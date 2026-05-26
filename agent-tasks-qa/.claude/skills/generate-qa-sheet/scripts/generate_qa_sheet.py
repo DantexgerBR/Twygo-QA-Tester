@@ -30,7 +30,6 @@ import re
 import sys
 from pathlib import Path
 
-
 COLUNAS = [
     "Tipo da atividade",
     "Título da atividade",

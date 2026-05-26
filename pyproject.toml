@@ -1,0 +1,22 @@
+# Configuração de qualidade dos agentes Python (agent-at, agent-db, agent-tasks-qa).
+# Ferramenta: ruff (lint + format). Rodar: `ruff check .` e `ruff format .`
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = [
+  "**/output",
+  "**/outputs",
+  "**/__pycache__",
+  "legacy",
+]
+
+[tool.ruff.lint]
+# Conjunto pragmático: pega bugs reais (E, F, B) + imports (I), sem floodar estilo.
+select = ["E", "F", "I", "B", "UP"]
+ignore = [
+  "E501",  # linha longa — deixa o formatter cuidar, não bloqueia
+]
+
+[tool.ruff.format]
+quote-style = "double"

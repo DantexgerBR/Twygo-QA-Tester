@@ -49,9 +49,6 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
         const contentIndexingCheckbox = page.getByRole('checkbox', { name: 'Indexação de conteúdo' });
         await expect(contentIndexingCheckbox).toBeVisible();
 
-        // Verificar se há sincronização em andamento (REVIEW_NEEDED: bloqueia edição)
-        const syncBlocking = await editPage.isSyncBlocking();
-
         // REVISAR: hover preciso no tooltip-icon do toggle Indexação é frágil
         // (estrutura DOM varia conforme estado de sync e renderização React).
         // Tentamos hover; se falhar, pulamos a asserção do texto e marcamos REVISAR.
@@ -73,7 +70,7 @@ test.describe('Configurar a utilização do indexação de conteúdo por ambient
           );
         } catch {
           // REVISAR: tooltip-icon não localizável ou hover bloqueado pelo sync — sub-asserção REVIEW_NEEDED
-          syncBlocking; // referência para silenciar warning de variável não usada
+          // (syncBlocking observado acima; sub-asserção do tooltip pulada quando hover falha)
         }
       },
     );

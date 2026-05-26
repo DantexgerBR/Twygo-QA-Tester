@@ -54,10 +54,10 @@ Saída do parse_canonical_md:
 
 import re
 import sys
-import yaml
 from pathlib import Path
 from typing import Any
 
+import yaml
 
 # Mapeamento canônico de prioridade — usado por XMind/TestLink/Allure.
 # Decisão 2026-05-19: 4 valores no MD; critical+high vão pro mesmo
@@ -268,7 +268,7 @@ def _parse_suites(rest: str) -> list[dict[str, Any]]:
     for m in fm_pattern.finditer(rest):
         positions.append((m.start(), m.end(), m.group(1)))
 
-    for idx, (start, end, fm_text) in enumerate(positions):
+    for idx, (_start, end, fm_text) in enumerate(positions):
         # Corpo da suíte: do fim deste FM até o início do próximo FM (ou fim)
         body_start = end
         body_end = positions[idx + 1][0] if idx + 1 < len(positions) else len(rest)

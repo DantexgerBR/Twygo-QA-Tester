@@ -323,7 +323,7 @@ export class SeedAdminPage extends BasePage {
           .isVisible({ timeout: 3_000 })
           .catch(() => false);
         if (!triggerVisible) {
-          // eslint-disable-next-line no-console -- diagnóstico em afterAll
+           
           console.warn(
             `[deleteCursoByIdSafe] Botão "Excluir" não encontrado para curso id=${id}. ` +
               `Possível mudança de UI ou curso já deletado — cleanup no-op.`,
@@ -354,7 +354,7 @@ export class SeedAdminPage extends BasePage {
         .waitForURL(/\/o\/\d+\/events(\?|$|\/)/, { timeout: 15_000 })
         .catch(() => undefined);
     } catch (err) {
-      // eslint-disable-next-line no-console -- diagnóstico em afterAll
+       
       console.warn(
         `[deleteCursoByIdSafe] Falha ao deletar curso id=${id}: ${(err as Error).message}`,
       );
@@ -597,7 +597,7 @@ export class SeedAdminPage extends BasePage {
         .isVisible({ timeout: 5_000 })
         .catch(() => false);
       if (!rowVisible) {
-        // eslint-disable-next-line no-console -- diagnóstico em afterAll
+         
         console.warn(
           `[deleteUsuarioByEmailSafe] Usuário "${email}" não encontrado — cleanup no-op.`,
         );
@@ -612,7 +612,7 @@ export class SeedAdminPage extends BasePage {
           .getByRole('button', { name: /(Ações|Opções|Mais)/i })
           .first();
         if (!(await actions.isVisible().catch(() => false))) {
-          // eslint-disable-next-line no-console -- diagnóstico em afterAll
+           
           console.warn(
             `[deleteUsuarioByEmailSafe] Trigger de ações não encontrado para "${email}".`,
           );
@@ -638,7 +638,7 @@ export class SeedAdminPage extends BasePage {
       // Aguarda row sair da listagem.
       await expect(row).toHaveCount(0, { timeout: 10_000 }).catch(() => undefined);
     } catch (err) {
-      // eslint-disable-next-line no-console -- diagnóstico em afterAll
+       
       console.warn(
         `[deleteUsuarioByEmailSafe] Falha ao deletar "${email}": ${(err as Error).message}`,
       );
@@ -743,14 +743,14 @@ export class SeedAdminPage extends BasePage {
       // de teste — mantemos como TODO consciente. Quando
       // criarAlunoMatriculado for implementado e retornar participantId
       // real, ajustar este método para usar o id em data-item-id da row.
-      // eslint-disable-next-line no-console -- diagnóstico em afterAll
+       
       console.warn(
         '[desinscreverParticipantSafe] não implementado — precisa recon live ' +
           'do fluxo "Desinscrever participant" + identificação da row por ' +
           'participantId. Refatorar para aceitar email como handle.',
       );
     } catch (err) {
-      // eslint-disable-next-line no-console -- diagnóstico em afterAll
+       
       console.warn(
         `[desinscreverParticipantSafe] Falha em event=${eventId}: ${(err as Error).message}`,
       );
