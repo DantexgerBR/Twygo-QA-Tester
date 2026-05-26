@@ -1,0 +1,46 @@
+# database.config.example.yaml — copie para database.config.yaml e ajuste.
+# Credenciais NUNCA aqui — apenas em .env. Aqui só referenciamos com ${VAR}.
+
+# --- Conexões disponíveis ---
+connections:
+  default:
+    host: ${DB_HOST}
+    port: ${DB_PORT}
+    user: ${DB_USER}
+    password: ${DB_PASSWORD}
+    database: ${DB_DATABASE}
+    read_only: true              # SET SESSION TRANSACTION READ ONLY
+    pool_pre_ping: true
+    pool_size: 5
+    max_overflow: 5
+
+  # Exemplo: conexão nomeada para staging
+  # staging:
+  #   host: ${DB_HOST_STAGING}
+  #   ...
+
+# --- Defaults de execução ---
+defaults:
+  chunk_size: 5000               # tabelas grandes em keyset pagination
+  fail_fast: false               # continua mesmo após FAIL para coletar tudo
+  evidence_top_n: 50             # nº de linhas divergentes guardadas por validação
+  report_format: [json, html]    # formatos a emitir em output/
+
+# --- Tabelas que SEMPRE devem ser validadas em lotes ---
+batch_tables:
+  - ai_indexing_logs
+  - ai_assistant_logs
+  - historic_content_engagements
+  - event_participant_logs
+
+# --- Mapeamento de domínios → diretório de queries ---
+# (queries reais ficam em src/queries/<domain>/*.sql.j2)
+domains:
+  creditos_ia:
+    queries_dir: src/queries/creditos_ia
+  indexacao:
+    queries_dir: src/queries/indexacao
+  agente_atendimento:
+    queries_dir: src/queries/agente_atendimento
+  integridade:
+    queries_dir: src/queries/integridade

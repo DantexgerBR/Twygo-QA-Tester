@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+  <xs:element name="test-analysis">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="metadata" type="MetadataType"/>
+        <xs:element name="test-scenarios" type="ScenariosType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="MetadataType">
+    <xs:sequence>
+      <xs:element name="project" type="xs:string"/>
+      <xs:element name="version" type="xs:string"/>
+      <xs:element name="date" type="xs:string"/>
+      <xs:element name="author" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ScenariosType">
+    <xs:sequence>
+      <xs:element name="scenario" type="ScenarioType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ScenarioType">
+    <xs:sequence>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+      <xs:element name="test-case" type="TestCaseType" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="TestCaseType">
+    <xs:sequence>
+      <xs:element name="preconditions" type="PreconditionsType" minOccurs="0"/>
+      <xs:element name="steps" type="StepsType"/>
+      <xs:element name="expected-results" type="ResultsType"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="PreconditionsType">
+    <xs:sequence>
+      <xs:element name="condition" type="xs:string" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="StepsType">
+    <xs:sequence>
+      <xs:element name="step" type="StepType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="StepType" mixed="true">
+    <xs:attribute name="id" type="xs:string" use="required"/>
+    <xs:attribute name="action" type="xs:string" use="required"/>
+    <xs:attribute name="target" type="xs:string"/>
+    <xs:attribute name="locator" type="xs:string"/>
+    <xs:attribute name="value" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="ResultsType">
+    <xs:sequence>
+      <xs:element name="result" type="ResultType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ResultType" mixed="true">
+    <xs:attribute name="id" type="xs:string" use="required"/>
+    <xs:attribute name="assertion" type="xs:string" use="required"/>
+    <xs:attribute name="target" type="xs:string"/>
+    <xs:attribute name="locator" type="xs:string"/>
+    <xs:attribute name="value" type="xs:string"/>
+  </xs:complexType>
+
+</xs:schema>

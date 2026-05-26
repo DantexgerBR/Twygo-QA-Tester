@@ -1,0 +1,8 @@
+- [Repositório QA Twygo (oficial)](twygo_agents_qa_repo.md) — ~/twygo-agents-qa, TypeScript+Playwright, repo canônico do time; branch project/recertificacao
+- [Repositório Playwright Twygo (legado)](playwright_twygo_repo.md) — ~/playwright-tests (Python), usado antes do repo oficial; ainda existe mas não é o canônico
+- [Skill twygo-test](twygo_test_skill.md) — skill global que governa o fluxo de gerar testes Twygo e reportar incidentes
+- [Fatos da plataforma Twygo](twygo_app_facts.md) — rotas (/login, /e/{id}/learn, /e/{id}/contents/{id}/edit), particularidade da marca d'água (overlay HTML, não server-side), conta dante.tavares@twygo.com é admin+aluno do evento 787696
+- [Casos de teste executados](twygo_casos_executados.md) — T-1594/T-1595/T-1596: status, bugs encontrados, estado atual da atividade 9280032 que vários casos compartilham
+- [Ambiente Twygo dev (twyg-app)](twyg_app_dev.md) — montagem do monolito Rails em ~/twyg-app, em progresso (aguardando docker.io ser instalado)
+- [Autonomia em criação de dados de teste](feedback_autonomia_criacao.md) — criar dados autonomamente (nomes genéricos) quando lista está vazia, sem pedir permissão
+- [Playwright headless=True](feedback_headless.md) — sempre headless=True; modo visível interfere com volume/controles do sistema do usuário

@@ -1,0 +1,12 @@
+{
+  "_generated": "2026-05-15",
+  "_baseOrgId": 36988,
+  "_baseEnvName": "staging-widgets",
+  "_provisionedFrom": "legacy-env-reuse",
+  "_provisionedFromNote": "Reaproveitando env legacy `trial-agentsqa-other` (orgId 36981, host trialagentsqa5). Exclusão ainda não rodou nesse env — após primeira run da suite, dados serão zerados e Trial precisará ser re-provisionada via skill `provisionar-trial-projeto-twygo` (passos 1-7). Próximos projetos NÃO usam este atalho — devem rodar o playbook completo.",
+  "icp": "other",
+  "url": "https://trialagentsqa5.stage.twygoead.com/",
+  "orgId": 36981,
+  "emailEnvVar": "TWYGO_TRIAL_AGENTSQA_OTHER_EMAIL",
+  "passwordEnvVar": "TWYGO_TRIAL_AGENTSQA_OTHER_PASSWORD"
+}

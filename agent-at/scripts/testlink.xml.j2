@@ -1,0 +1,28 @@
+{%- macro render_suite(suite) -%}
+  <testsuite name="{{ suite.frontmatter.suite | e }}">
+    {%- for tc in suite.test_cases %}
+    <testcase name="{{ tc.title | e }}">
+      <summary>{{ tc.objective | e }}</summary>
+      <preconditions>{{ suite_preconditions(suite) | e }}</preconditions>
+      <execution_type>{{ 2 if tc.type in ('ui', 'api', 'db') else 1 }}</execution_type>
+      <importance>{{ tc_importance(tc) }}</importance>
+      <steps>
+        {%- for step in tc.steps %}
+        <step>
+          <step_number>{{ loop.index }}</step_number>
+          <actions>{{ step.action | e }}</actions>
+          <expectedresults>{{ step.expected | e }}</expectedresults>
+          <execution_type>{{ 2 if tc.type in ('ui', 'api', 'db') else 1 }}</execution_type>
+        </step>
+        {%- endfor %}
+      </steps>
+    </testcase>
+    {%- endfor %}
+  </testsuite>
+{%- endmacro -%}
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="">
+  {%- for suite in suites %}
+  {{ render_suite(suite) }}
+  {%- endfor %}
+</testsuite>

@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Claude/Agente AT/**)",
+      "Bash(python3 -c \"import docx; print\\('python-docx OK'\\)\")",
+      "Bash(python3 -c \"import zipfile; print\\('zipfile OK'\\)\")",
+      "Bash(py --version)",
+      "Bash(where python *)",
+      "Bash(where py *)",
+      "Bash(python -c \"import docx; print\\('python-docx OK', docx.__version__\\)\")",
+      "Bash(python -m pip install python-docx)"
+    ]
+  }
+}

@@ -1,0 +1,84 @@
+# ===== Node.js =====
+node_modules/
+dist/
+build/
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ===== Playwright =====
+playwright-report/
+test-results/
+.playwright/
+# Scratch do Playwright MCP (snapshots aria/CSV gravados pelo MCP server
+# durante exploration de planner/healer). 100% volátil — não deve subir.
+.playwright-mcp/
+
+# ===== Outputs gerados pelo agente Playwright =====
+# Outputs SÃO commitados (decisão 2026-05-08): histórico de execuções
+# acessível direto no git facilita PR review e compartilhamento sem
+# clone+run. test-artifacts/ inclusive (PNGs, error-context.md) — só os
+# trace.zip ficam fora porque inflam o repo (~12MB cada).
+# Única outra exceção: storage de auth (`.auth/`) — cookies Twygo,
+# sensível, não vai pro repo.
+agent-playwright/outputs/.auth/
+agent-playwright/outputs/**/*.zip
+
+# ===== Outputs gerados pelo agente Tasks-QA =====
+# Planilhas .xlsx geradas por execução — não commitar
+agent-tasks-qa/output/*.xlsx
+agent-tasks-qa/output/*.md
+!agent-tasks-qa/output/.gitkeep
+
+# ===== Env / segredos =====
+.env
+.env.local
+.env.*.local
+
+# ===== Logs =====
+*.log
+
+# ===== IDEs / Editors =====
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== Claude Code (workspace local) =====
+.claude/settings.local.json
+
+# Plugin caveman (per-user) — cache de skills baixadas + lock manifest.
+# Não-padronizado pelo time; cada dev decide se usa. Análogo a deps de
+# editor pessoal. Caveman é instalável via plugin manager; lock pode ser
+# regenerado a qualquer momento.
+.agents/
+skills-lock.json
+
+# ===== Legacy Python repo =====
+legacy/playwright-python/.venv/
+legacy/playwright-python/test-results/
+legacy/playwright-python/evidencias/
+legacy/playwright-python/.env
+
+# ===== Claude memory (versionar o conteúdo, não senhas) =====
+# Nenhuma exclusão — memórias em _claude_memory/ são só markdown

@@ -1,0 +1,59 @@
+{
+  "analise_de_testes_descricao_padrao": "- Mapa mental (utilizando estrutura para conversão em .xml, com suítes, casos de testes - título, objetivo, pré-requisitos -, passos e resultado esperado)\n- Converter .xmind para .xml\n- Preparar estrutura (suítes de testes) e importar casos de testes para Testlink\n- Criar plano de testes/baselines\n- Adicionar e atribuir casos para execução",
+  "atividades_finais": [
+    {
+      "tipo": "Reteste",
+      "titulo": "Repasse",
+      "descricao": "Execução desta atividade será apenas se BUG's críticos e/ou muitos retrabalhos | Pode ser cancelada | Validar principalmente fluxos principais / ótimos | Última atividade de teste, alocada após conclusão de todos os testes (execução + retrabalhos)",
+      "esforco": null
+    },
+    {
+      "tipo": "Documentação",
+      "titulo": "Usabilidade",
+      "descricao": "Atividade destinada a criação de documentação de apoio para o time de suporte sobre as funcionalidades, configurações",
+      "esforco": null
+    },
+    {
+      "tipo": "Documentação",
+      "titulo": "Vídeo",
+      "descricao": "Obs.: 5 dias corridos antes da data de entrega (prazo para edição vídeo pelo time de Marketing)",
+      "esforco": null
+    },
+    {
+      "tipo": "Indiretos - Cerimonias da Equipe",
+      "titulo": "Review",
+      "descricao": "Review",
+      "esforco": null
+    },
+    {
+      "tipo": "Deploy",
+      "titulo": "Gerar versão para Deploy (dd/mm)",
+      "descricao": "Gerar versão para deploy",
+      "esforco": 1
+    },
+    {
+      "tipo": "Total",
+      "titulo": "",
+      "descricao": "",
+      "esforco": null
+    }
+  ],
+  "tipos_qa_only": [
+    "Análise de testes",
+    "Execução de testes",
+    "Reteste",
+    "Documentação",
+    "Indiretos - Cerimonias da Equipe",
+    "Deploy",
+    "Total"
+  ],
+  "colunas": [
+    "Tipo da atividade",
+    "Título da atividade",
+    "Descrição",
+    "Esforço estimado",
+    "Início estimado",
+    "Término estimado",
+    "Responsável"
+  ]
+}

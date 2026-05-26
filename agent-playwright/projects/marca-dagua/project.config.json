@@ -1,0 +1,46 @@
+{
+  "projectName": "Marca d'Água em Vídeo",
+  "testAnalysisFile": "inputs/test-analysis.md",
+  "environment": "staging-marca-dagua",
+  "browsers": ["chromium"],
+  "headless": true,
+  "reporting": {
+    "format": "html",
+    "outputDir": "outputs",
+    "screenshotsOnFailure": true
+  },
+  "performance": {
+    "enableTracing": true,
+    "enableVideo": true
+  },
+  "codeGeneration": {
+    "pagesDir": "pages",
+    "featuresDir": "tests/features",
+    "overwriteExistingPages": false,
+    "overwriteExistingTests": true
+  },
+  "exploratory": {
+    "enabled": true,
+    "strict": false,
+    "probes": {
+      "consoleErrors": true,
+      "httpErrors": true,
+      "brokenImages": false,
+      "untestedInteractive": false,
+      "a11y": false
+    },
+    "a11yTags": [],
+    "ignoredHttpStatuses": [],
+    "ignoredHostnames": [],
+    "scopedRoutes": [],
+    "scopedKeywords": [],
+    "activeProbes": {
+      "hoverTooltips": false,
+      "keyboardNav": false,
+      "formEdge": false,
+      "clickabilitySweep": false,
+      "a11yDeep": false,
+      "visualStability": false
+    }
+  }
+}

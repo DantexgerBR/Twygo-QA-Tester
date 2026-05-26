@@ -1,0 +1,170 @@
+{
+  "staging": {
+    "baseUrl": "https://stage10.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_STAGING_EMAIL}",
+      "password": "${TWYGO_STAGING_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "36602",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/36602"
+    }
+  },
+  "staging-without-credits": {
+    "baseUrl": "https://eduapi.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_STAGING_WITHOUT_CREDITS_EMAIL}",
+      "password": "${TWYGO_STAGING_WITHOUT_CREDITS_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "36912",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/36912"
+    }
+  },
+  "staging-widgets": {
+    "baseUrl": "https://widgets.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_STAGING_WIDGETS_EMAIL}",
+      "password": "${TWYGO_STAGING_WIDGETS_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "36988",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/36988"
+    }
+  },
+  "staging-widgets-disabled": {
+    "baseUrl": "https://widgetsdisabled.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_STAGING_WIDGETS_DISABLED_EMAIL}",
+      "password": "${TWYGO_STAGING_WIDGETS_DISABLED_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "36989",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/36989"
+    }
+  },
+  "staging-widgets-aditional": {
+    "baseUrl": "https://adicionalwidgets.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_STAGING_WIDGETS_ADITIONAL_EMAIL}",
+      "password": "${TWYGO_STAGING_WIDGETS_ADITIONAL_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "37002",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/36988"
+    }
+  },
+  "trial-agentsqa-employee": {
+    "baseUrl": "https://trialagentsqa1.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_TRIAL_AGENTSQA_EMPLOYEE_EMAIL}",
+      "password": "${TWYGO_TRIAL_AGENTSQA_EMPLOYEE_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "36977",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/36977"
+    }
+  },
+  "trial-agentsqa-coursesale": {
+    "baseUrl": "https://trialagentsqa2.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_TRIAL_AGENTSQA_COURSESALE_EMAIL}",
+      "password": "${TWYGO_TRIAL_AGENTSQA_COURSESALE_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "36978",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/36978"
+    }
+  },
+  "trial-agentsqa-customer": {
+    "baseUrl": "https://trialagentsqa3.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_TRIAL_AGENTSQA_CUSTOMER_EMAIL}",
+      "password": "${TWYGO_TRIAL_AGENTSQA_CUSTOMER_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "36979",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/36979"
+    }
+  },
+  "trial-agentsqa-partner": {
+    "baseUrl": "https://trialagentsqa4.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_TRIAL_AGENTSQA_PARTNER_EMAIL}",
+      "password": "${TWYGO_TRIAL_AGENTSQA_PARTNER_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "36980",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/36980"
+    }
+  },
+  "trial-agentsqa-other": {
+    "baseUrl": "https://trialagentsqa5.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_TRIAL_AGENTSQA_OTHER_EMAIL}",
+      "password": "${TWYGO_TRIAL_AGENTSQA_OTHER_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "36981",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/36981"
+    }
+  },
+  "staging-marca-dagua": {
+    "baseUrl": "https://twygo1772627238.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_STAGING_MARCA_DAGUA_EMAIL}",
+      "password": "${TWYGO_STAGING_MARCA_DAGUA_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "36675",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/36675"
+    }
+  },
+  "staging-base-de-conhecimento": {
+    "baseUrl": "https://basedeconhecimento.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_STAGING_BASE_DE_CONHECIMENTO_EMAIL}",
+      "password": "${TWYGO_STAGING_BASE_DE_CONHECIMENTO_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "37007",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/37007"
+    }
+  }
+}

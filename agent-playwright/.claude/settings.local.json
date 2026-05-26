@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(claude mcp *)",
+      "Bash(node -e \"const fs=require\\('fs'\\); const j=JSON.parse\\(fs.readFileSync\\('c:/Claude/AgentesQA/agent-playwright/outputs/test-analysis.parsed.json','utf8'\\)\\); console.log\\('top keys:',Object.keys\\(j\\)\\); function names\\(o,d=0\\){if\\(d>3\\)return; if\\(Array.isArray\\(o\\)\\){o.forEach\\(x=>names\\(x,d\\)\\);return;} if\\(o&&typeof o==='object'\\){if\\(o.name\\)console.log\\(' '.repeat\\(d*2\\)+'['+\\(o._type||\\(o.testcases?'TS':o.steps?'TC':'?'\\)\\)+'] '+o.name\\); for\\(const k of Object.keys\\(o\\)\\){if\\(['testsuites','testsuite','testcases','testcase'].includes\\(k\\)\\)names\\(o[k],d+1\\);}}} names\\(j\\);\")",
+      "Bash(node -e ' *)",
+      "mcp__playwright-test__planner_setup_page",
+      "mcp__playwright-test__browser_navigate",
+      "mcp__playwright-test__browser_snapshot",
+      "mcp__playwright-test__browser_type",
+      "mcp__playwright-test__browser_click",
+      "mcp__playwright-test__browser_evaluate",
+      "mcp__playwright-test__browser_run_code",
+      "mcp__playwright-test__browser_navigate_back",
+      "mcp__playwright-test__browser_take_screenshot",
+      "mcp__playwright-test__planner_save_plan",
+      "mcp__playwright-test__browser_network_requests",
+      "Edit(/.claude/skills/twygo-recon/**)",
+      "mcp__playwright-test__generator_setup_page",
+      "mcp__playwright-test__browser_verify_element_visible",
+      "mcp__playwright-test__browser_verify_text_visible",
+      "mcp__playwright-test__browser_verify_value",
+      "mcp__playwright-test__browser_hover",
+      "mcp__playwright-test__browser_wait_for",
+      "mcp__playwright-test__generator_read_log",
+      "mcp__playwright-test__generator_write_test",
+      "Read(//c/Users/edu-s/AppData/Local/Temp/claude/c--Claude-AgentesQA-agent-playwright/2e3d3686-e25c-4ade-b816-3328156ea729/tasks/**)",
+      "Bash(git stash *)",
+      "Bash(git *)",
+      "Bash(gh pr *)",
+      "PowerShell(Get-Command *)"
+    ]
+  }
+}
