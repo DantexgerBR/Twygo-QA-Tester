@@ -45,7 +45,8 @@ export type ProjectConfig = {
 type EnvFile = Record<string, EnvEntry>;
 
 let cachedCurrent: { name: string; entry: EnvEntry } | null = null;
-let cachedAll: EnvFile | null = null;
+let cachedRaw: EnvFile | null = null;
+const expandedEnvCache = new Map<string, EnvEntry>();
 let cachedProjectConfig: ProjectConfig | null = null;
 let cachedProjectSlug: string | null = null;
 
@@ -84,13 +85,29 @@ function expandEnvRefs<T>(value: T, ctx = 'environment.json'): T {
   return value;
 }
 
-function loadAll(): EnvFile {
-  if (cachedAll) return cachedAll;
-  const raw = JSON.parse(
+function loadRaw(): EnvFile {
+  if (cachedRaw) return cachedRaw;
+  cachedRaw = JSON.parse(
     readFileSync(resolve(process.cwd(), FILES.environment), 'utf-8'),
   ) as EnvFile;
-  cachedAll = expandEnvRefs(raw, FILES.environment);
-  return cachedAll;
+  return cachedRaw;
+}
+
+/**
+ * Expande os `${VAR}` de UM env específico (lazy + cacheado). Só valida as
+ * variáveis do env realmente usado — rodar 1 projeto NÃO exige preencher os
+ * outros envs do environment.json (antes o loader expandia o arquivo inteiro
+ * e falhava na primeira var vazia de qualquer env). Retorna undefined se o
+ * env não existe no arquivo.
+ */
+function expandEntry(name: string): EnvEntry | undefined {
+  const raw = loadRaw();
+  if (!(name in raw)) return undefined;
+  const cached = expandedEnvCache.get(name);
+  if (cached) return cached;
+  const expanded = expandEnvRefs(raw[name]!, `${FILES.environment} (env "${name}")`);
+  expandedEnvCache.set(name, expanded);
+  return expanded;
 }
 
 /**
@@ -100,7 +117,18 @@ function loadAll(): EnvFile {
  * literal nos requests.
  */
 export function loadEnvironmentConfig(): EnvFile {
-  return loadAll();
+  // Proxy: expande `${VAR}` SÓ no env acessado (lazy). `name in cfg` e
+  // `Object.keys(cfg)` continuam operando sobre o arquivo cru — só a leitura
+  // de um env por nome dispara a validação/expansão daquele env.
+  const raw = loadRaw();
+  return new Proxy(raw, {
+    get(target, prop, receiver) {
+      if (typeof prop === 'string' && prop in target) {
+        return expandEntry(prop);
+      }
+      return Reflect.get(target, prop, receiver);
+    },
+  });
 }
 
 /**
@@ -236,8 +264,7 @@ export function resolveProjectPath(relativePath: string, slug?: string): string 
 export function getCurrentEnv(): { name: string; entry: EnvEntry } {
   if (cachedCurrent) return cachedCurrent;
   const proj = loadProjectConfig();
-  const all = loadAll();
-  const entry = all[proj.environment];
+  const entry = expandEntry(proj.environment);
   if (!entry) {
     throw new Error(
       `Environment "${proj.environment}" não encontrado em ${FILES.environment}`,
@@ -248,7 +275,7 @@ export function getCurrentEnv(): { name: string; entry: EnvEntry } {
 }
 
 export function getEnvByName(name: string): EnvEntry {
-  const entry = loadAll()[name];
+  const entry = expandEntry(name);
   if (!entry) {
     throw new Error(`Environment "${name}" não encontrado em ${FILES.environment}`);
   }
