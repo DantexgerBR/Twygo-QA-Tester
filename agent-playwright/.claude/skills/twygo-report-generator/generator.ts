@@ -1,8 +1,9 @@
 import { readFileSync, writeFileSync, existsSync, copyFileSync } from 'node:fs';
-import { resolve, join, basename, relative } from 'node:path';
+import { resolve, join, basename, dirname, relative } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { parseArgs } from 'node:util';
 import { createLogger } from '../../../src/utils/logger.js';
+import { rotateReports } from './rotator.js';
 import { FILES } from '../../../src/utils/constants.js';
 import {
   getOutputDir,
@@ -87,23 +88,32 @@ type FlatStep = {
 };
 
 type FlatTest = {
-  testsuite: string;        // describe-block title (real testsuite)
-  fileLabel: string;        // file basename for traceability
-  testcase: string;         // test() title
+  testsuite: string;
+  fileLabel: string;
+  testcase: string;
   project: string;
   status: PlaywrightTestResult['status'];
   durationMs: number;
   errorMessage?: string;
   errorLocation?: string;
-  // Motivo registrado por test.fixme(true, '...') ou test.skip(true, '...')
-  // ou annotation explícita ({ type: 'fixme' | 'skip', description: '...' }).
-  // Usado no relatório quando status === 'skipped' para evitar a frase
-  // genérica "Sem mensagem registrada pelo Playwright."
   skipReason?: string;
   skipKind?: 'fixme' | 'skip' | 'manual' | 'other';
   attachments: Array<{ name: string; path: string; contentType: string }>;
   steps: FlatStep[];
   failedStepIndex: number | null;
+  /**
+   * Annotations cruas do test (`test.info().annotations` no spec). Usado
+   * pra extrair overrides de ambiente quando o spec roda contra um env
+   * diferente do principal do `project.config.json` — ex: specs Trial
+   * que usam `test.use({ baseURL: TRIAL.url })`. Convenções de tipos
+   * lidos pelo bug-block:
+   *   - `baseURL`: URL real consumida pelo spec
+   *   - `orgId`: orgId real (pode diferir do env principal)
+   *   - `emailRef` / `passwordRef`: literais pra mostrar no bug-report
+   *     (formato livre — ex: "${TWYGO_TRIAL_AGENTSQA_OTHER_EMAIL}")
+   *   - `envLabel`: nome amigável (ex: "trial-agentsqa-other (Trial widgets)")
+   */
+  annotations: Array<{ type: string; description?: string }>;
 };
 
 type ExploratoryFinding = {
@@ -167,6 +177,24 @@ type ExploratoryReport = {
   testsuites: ExploratorySuite[];
 };
 
+type BugReportEntry = {
+  id: string;
+  testsuite: string;
+  testcase: string;
+  status: 'failed' | 'timedOut';
+  categoriaSugerida: 'bug-produto' | 'spec-fragil' | 'modal-nao-tratado' | 'flakiness' | 'inconclusivo';
+  categoriaConfianca: 'alta' | 'media' | 'baixa';
+  categoriaJustificativa: string;
+  severity: 'alta' | 'media' | 'baixa';
+};
+
+type BugReportsBundle = {
+  generatedAt: string;
+  project: string;
+  totalRed: number;
+  reports: BugReportEntry[];
+};
+
 const PROBE_PT: Record<string, string> = {
   hoverTooltips: 'Hover em tooltips',
   keyboardNav: 'Navegação por teclado',
@@ -191,11 +219,8 @@ type EnvironmentEntry = {
 
 type EnvironmentMap = Record<string, EnvironmentEntry>;
 
-/**
- * Extrai o orgId (ID do ambiente Twygo) de uma URL.
- * Padrão observado: `/o/{orgId}/...` ou `/o/{orgId}/ai_consumption_analysis/{envId}/...`.
- * Retorna `{ orgId, envId }` quando ambos podem ser identificados.
- */
+// ─── Helpers de coleta/parsing ──────────────────────────────────────────────
+
 function extractIdsFromUrl(url: string | undefined | null): { orgId?: string; envId?: string } {
   if (!url) return {};
   const out: { orgId?: string; envId?: string } = {};
@@ -206,20 +231,11 @@ function extractIdsFromUrl(url: string | undefined | null): { orgId?: string; en
   return out;
 }
 
-/**
- * Tenta inferir a URL onde o teste estava no momento da falha. Procura, na
- * ordem: error-context attachment (Playwright grava o URL no markdown),
- * mensagem de erro (regex `at https://...`) e, em último caso, o baseUrl.
- *
- * O regex tira aspas/parênteses/vírgulas finais que vêm coladas em mensagens
- * de stack trace (ex.: `at https://x.com/y'`).
- */
 function cleanUrl(url: string): string {
   return url.replace(/[)'",;.]+$/, '');
 }
 
 function inferFailureUrl(t: FlatTest, baseUrl: string | undefined): string {
-  // 1. error-context.md frequentemente contém "URL: ..." ou linha com a URL
   const errCtx = t.attachments.find((a) => a.name === 'error-context');
   if (errCtx && existsSync(errCtx.path)) {
     try {
@@ -227,17 +243,13 @@ function inferFailureUrl(t: FlatTest, baseUrl: string | undefined): string {
       const urlLine = md.match(/-\s*url:\s*(\S+)/i)?.[1] ?? md.match(/(https?:\/\/[^\s)]+)/)?.[1];
       if (urlLine) return cleanUrl(urlLine);
     } catch {
-      // ignora — fallback abaixo
+      // ignora
     }
   }
-  // 2. URL no stack/erro
   const fromErr = (t.errorMessage || '').match(/(https?:\/\/[^\s)"']+)/)?.[1];
   if (fromErr) return cleanUrl(fromErr);
-  // 3. Last resort
   return baseUrl ?? '—';
 }
-
-// ─── Parsing & helpers ──────────────────────────────────────────────────────
 
 function parseFlags(): Args {
   const { values } = parseArgs({
@@ -258,14 +270,6 @@ function loadJson<T>(path: string): T | null {
   return JSON.parse(readFileSync(path, 'utf-8')) as T;
 }
 
-function escapeHtml(s: string): string {
-  return s
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
-
 function truncate(s: string, max = 4000): string {
   if (s.length <= max) return s;
   return s.slice(0, max) + `\n... [truncado, ${s.length} chars total]`;
@@ -277,9 +281,16 @@ function timestamp(): string {
   return `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}-${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
 }
 
-/** Remove sequências ANSI usadas pelo Playwright para colorir o terminal. */
 function stripAnsi(s: string): string {
   return s.replace(/\x1b\[[0-9;]*m/g, '');
+}
+
+/**
+ * Escape de pipe `|` e quebra de linha pra strings que vão dentro de células
+ * de tabela GFM. Texto fora de tabela não precisa escape.
+ */
+function mdCell(s: string): string {
+  return s.replace(/\|/g, '\\|').replace(/\r?\n/g, ' ');
 }
 
 // ─── Traduções PT-BR ────────────────────────────────────────────────────────
@@ -293,19 +304,19 @@ const STATUS_PT: Record<string, string> = {
   unknown: '—',
 };
 
-const STATUS_ICON: Record<string, string> = {
-  passed: 'check_circle',
-  failed: 'cancel',
-  timedOut: 'schedule',
-  skipped: 'block',
-  interrupted: 'pause_circle',
-  unknown: 'help',
+const STATUS_EMOJI: Record<string, string> = {
+  passed: '✅',
+  failed: '❌',
+  timedOut: '⏱️',
+  skipped: '⊘',
+  interrupted: '⏸️',
+  unknown: '—',
 };
 
-function statusClass(status: string): 'ok' | 'fail' | 'warn' {
-  if (status === 'passed') return 'ok';
-  if (status === 'skipped' || status === 'interrupted') return 'warn';
-  return 'fail';
+function statusLabel(status: string): string {
+  const emoji = STATUS_EMOJI[status] ?? '·';
+  const label = STATUS_PT[status] ?? status;
+  return `${emoji} ${label}`;
 }
 
 function severityFromImportance(importance: number): 'critico' | 'normal' | 'menor' {
@@ -319,6 +330,13 @@ const SEVERITY_PT: Record<'critico' | 'normal' | 'menor', string> = {
   normal: 'Normal',
   menor: 'Menor',
 };
+
+function severityLabel(importance: number | undefined): string {
+  if (importance === undefined) return '—';
+  const sev = severityFromImportance(importance);
+  const emoji = sev === 'critico' ? '🔴' : sev === 'normal' ? '🟡' : '⚪';
+  return `${emoji} ${SEVERITY_PT[sev]}`;
+}
 
 const KIND_PT: Record<string, string> = {
   console_error: 'Erro JavaScript no navegador',
@@ -336,84 +354,51 @@ function kindPt(kind: string): string {
 
 // ─── Humanizador de erros Playwright → 1 linha PT-BR ────────────────────────
 
-/**
- * Recebe a mensagem de erro crua do Playwright e tenta produzir uma frase
- * curta em PT-BR descrevendo a causa, no estilo da função
- * `_pytest_human_summary` do projeto-referência (C:\Cursor\API).
- *
- * Padrões reconhecidos cobrem os erros mais comuns: timeouts de fill/click,
- * asserções `expect().toBeVisible/toBeChecked/toContainText`, navegação
- * abortada, modal não aparecido, locators não resolvidos.
- */
 function playwrightHumanSummary(rawError: string): string {
   if (!rawError) return 'Sem mensagem registrada pelo Playwright.';
   const text = stripAnsi(rawError).trim();
 
-  // Navigation interrupted by another navigation (precisa vir ANTES do page.goto genérico
-  // pra não cair no regex de net::ERR_*)
   if (/page\.goto:\s*Navigation to\s*"([^"]+)"\s*is interrupted by another navigation/.test(text)) {
     const url = text.match(/page\.goto:\s*Navigation to\s*"([^"]+)"/)?.[1] ?? '?';
     return `Navegação para "${url}" foi interrompida por outra navegação no meio do caminho.`;
   }
-
-  // page.goto net::ERR_* (ex.: net::ERR_ABORTED, net::ERR_NAME_NOT_RESOLVED)
   const gotoNet = text.match(/page\.goto:\s*(net::[A-Z_]+)\b[\s\S]*?\bat\s+(\S+)/);
   if (gotoNet) {
     return `Falha ao carregar a página "${gotoNet[2]}" (motivo: ${gotoNet[1]}).`;
   }
-
-  // Test timeout no nível do teste todo (último, pra dar chance dos casos específicos acima)
   if (/Test timeout of (\d+)ms exceeded/i.test(text)) {
     const ms = text.match(/Test timeout of (\d+)ms/)?.[1];
     return `O teste excedeu o tempo limite de ${ms ? Math.round(Number(ms) / 1000) : '?'}s antes de concluir.`;
   }
-
-  // expect(...).toBeVisible() failed
   if (/toBeVisible\(\)?\s*failed/.test(text)) {
     const loc = text.match(/Locator:\s*([^\n]+)/)?.[1]?.trim();
     return `O elemento esperado não apareceu na tela${loc ? ` (locator: ${loc})` : ''}.`;
   }
-
-  // expect(...).toBeHidden() failed
   if (/toBeHidden\(\)?\s*failed/.test(text)) {
     return 'Um elemento que deveria estar oculto continuou visível.';
   }
-
-  // expect(...).not.toBeChecked() failed → ordem importa: tem que vir ANTES
-  // do regex genérico de toBeChecked, senão a regra abaixo casa também com
-  // `not.toBeChecked` e gera mensagem invertida (bug visto em 2026-05-04 nas
-  // suítes de Indexação onde o XML pede toggle DESABILITADA por padrão).
   if (/not\.toBeChecked\(\)?\s*failed/.test(text)) {
     const loc = text.match(/Locator:\s*([^\n]+)/)?.[1]?.trim();
     return `O checkbox/toggle deveria estar DESMARCADO/DESABILITADO mas estava marcado${loc ? ` (locator: ${loc})` : ''}.`;
   }
-  // expect(...).toBeChecked() failed — usa lookbehind pra não capturar `not.toBeChecked`
   if (/(?<!not\.)toBeChecked\(\)?\s*failed/.test(text)) {
     const loc = text.match(/Locator:\s*([^\n]+)/)?.[1]?.trim();
     return `O checkbox/toggle esperava estar MARCADO/HABILITADO mas estava desmarcado${loc ? ` (locator: ${loc})` : ''}.`;
   }
-
-  // expect(...).toHaveURL failed
   if (/toHaveURL/i.test(text) && /(Expected|Received)/i.test(text)) {
     const expected = text.match(/Expected[^\n]*?:\s*([^\n]+)/)?.[1]?.trim();
     const received = text.match(/Received[^\n]*?:\s*([^\n]+)/)?.[1]?.trim();
     return `A URL não bateu com a esperada${expected ? ` (esperada: ${expected})` : ''}${received ? ` — atual: ${received}` : ''}.`;
   }
-
-  // expect(...).toContainText / toHaveText failed
   if (/(toContainText|toHaveText)\(\)?\s*failed/.test(text)) {
     const expected = text.match(/Expected[^\n]*?:\s*([^\n]+)/)?.[1]?.trim();
     return `O texto esperado não foi encontrado${expected ? `: "${expected}"` : ''}.`;
   }
-
-  // expect(...).toHaveCount failed
   if (/toHaveCount\(\)?\s*failed/.test(text)) {
     const expected = text.match(/Expected[^\n]*?:\s*([^\n]+)/)?.[1]?.trim();
     const received = text.match(/Received[^\n]*?:\s*([^\n]+)/)?.[1]?.trim();
     return `Quantidade de elementos diferente do esperado${expected ? ` (esperado: ${expected}` : ''}${received ? `, encontrado: ${received})` : ''}.`;
   }
-
-  // locator.click / locator.fill timeout
   const action = text.match(/locator\.(click|fill|hover|type|press|check|uncheck|selectOption):\s*(?:Test )?[Tt]imeout (\d+)ms exceeded/);
   if (action) {
     const verb: Record<string, string> = {
@@ -430,28 +415,75 @@ function playwrightHumanSummary(rawError: string): string {
     const loc = text.match(/waiting for\s+([^\n]+)/)?.[1]?.trim() ?? text.match(/Locator:\s*([^\n]+)/)?.[1]?.trim();
     return `Não foi possível ${v} o elemento — ele não ficou disponível em ${Math.round(Number(action[2]) / 1000)}s${loc ? ` (locator: ${loc})` : ''}.`;
   }
-
-  // page.waitForURL timeout
   if (/page\.waitForURL.*[Tt]imeout/.test(text)) {
     return 'A página não navegou para a URL esperada dentro do tempo limite.';
   }
-
-  // strict mode violation
   if (/strict mode violation/i.test(text)) {
     return 'O locator usado bate com mais de um elemento ao mesmo tempo (strict mode).';
   }
-
-  // Element is not visible (encontrado, mas oculto)
   if (/element is not visible/i.test(text)) {
     return 'O elemento foi encontrado no DOM mas estava invisível para o usuário.';
   }
-
-  // Element is not enabled
   if (/element is not enabled/i.test(text)) {
     return 'O elemento foi encontrado mas estava desabilitado e não permitiu interação.';
   }
-
-  // Genérico: pega a 1ª linha real (sem ANSI/cabeçalhos vazios)
+  // Asserts numéricos: toBeGreaterThan(OrEqual), toBeLessThan(OrEqual)
+  // Captura tanto a forma técnica (Expected: >= N / Received: M) quanto
+  // a forma com mensagem custom ("esperava ao menos N X, encontrei M").
+  const numericOrder = text.match(
+    /toBe(Greater|Less)Than(OrEqual)?\(\)?[\s\S]*?Expected[^\n]*?:\s*([^\n]+)[\s\S]*?Received[^\n]*?:\s*([^\n]+)/i,
+  );
+  if (numericOrder) {
+    const dir = numericOrder[1].toLowerCase() === 'greater' ? 'maior' : 'menor';
+    const inclusive = numericOrder[2] ? ' ou igual' : '';
+    const expected = numericOrder[3].trim();
+    const received = numericOrder[4].trim();
+    return `Quantidade fora do esperado: deveria ser ${dir}${inclusive} a ${expected}, mas obteve ${received}. Isso geralmente indica que a ação que deveria popular a tela (listagem/filtro/busca) ficou vazia ou retornou menos itens que o necessário.`;
+  }
+  const customCountMatch = text.match(/Error:\s*esperava\s+(?:ao menos\s+)?(\d+)\s+([^,]+?),\s+encontrei\s+(\d+)/i);
+  if (customCountMatch) {
+    const expected = customCountMatch[1];
+    const what = customCountMatch[2].trim();
+    const received = customCountMatch[3];
+    return `Esperava encontrar pelo menos ${expected} "${what}" na tela, mas encontrou ${received}. Provavelmente a listagem/filtro/busca não retornou os resultados esperados (ou a UI não renderizou os elementos a tempo).`;
+  }
+  // Asserts booleanos: toBe(true), toBe(false)
+  const boolMatch = text.match(/toBe\(\)?[\s\S]*?Expected[^\n]*?:\s*(true|false)[\s\S]*?Received[^\n]*?:\s*(true|false)/i);
+  if (boolMatch) {
+    const expected = boolMatch[1].toLowerCase();
+    const received = boolMatch[2].toLowerCase();
+    return `Condição esperada não foi atendida: esperava ${expected === 'true' ? 'verdadeiro' : 'falso'} (${expected}), mas obteve ${received === 'true' ? 'verdadeiro' : 'falso'} (${received}).`;
+  }
+  // toEqual com valores primitivos comuns
+  const equalMatch = text.match(/toEqual\(\)?[\s\S]*?Expected[^\n]*?:\s*([^\n]+)[\s\S]*?Received[^\n]*?:\s*([^\n]+)/i);
+  if (equalMatch) {
+    const expected = truncate(equalMatch[1].trim(), 80);
+    const received = truncate(equalMatch[2].trim(), 80);
+    return `O valor obtido não é igual ao esperado. Esperado: ${expected} · Atual: ${received}.`;
+  }
+  // toBeTruthy/toBeFalsy
+  if (/toBeTruthy\(\)?\s*failed/i.test(text)) {
+    return 'O valor obtido era vazio/nulo/falso, mas era esperado algo presente (truthy). Isso geralmente indica que uma query no DOM ou um cálculo retornou vazio.';
+  }
+  if (/toBeFalsy\(\)?\s*failed/i.test(text)) {
+    return 'O valor obtido era um valor presente (truthy), mas era esperado vazio/nulo/falso (falsy).';
+  }
+  // toHaveAttribute / toHaveValue / toHaveClass
+  if (/toHaveAttribute/i.test(text)) {
+    const attr = text.match(/Expected[^\n]*?attribute[^\n]*?:\s*([^\n]+)/i)?.[1]?.trim();
+    return `Atributo HTML do elemento não bate com o esperado${attr ? ` (esperado: ${attr})` : ''}.`;
+  }
+  if (/toHaveValue/i.test(text)) {
+    const expected = text.match(/Expected[^\n]*?:\s*([^\n]+)/)?.[1]?.trim();
+    return `Valor preenchido no campo não bate com o esperado${expected ? ` (esperado: ${expected})` : ''}.`;
+  }
+  if (/toHaveClass/i.test(text)) {
+    return 'Classes CSS do elemento não batem com o esperado (estado visual divergente).';
+  }
+  // expect.poll/waitFor timeout
+  if (/expect\.poll[\s\S]*?timed? out/i.test(text) || /waitFor[\s\S]*?[Tt]imeout/.test(text)) {
+    return 'A condição esperada não se tornou verdadeira dentro do tempo limite — a UI não chegou ao estado aguardado.';
+  }
   const firstMeaningful = text
     .split('\n')
     .map((l) => l.trim())
@@ -460,17 +492,70 @@ function playwrightHumanSummary(rawError: string): string {
 }
 
 /**
- * Resumo humano para QUALQUER status não-aprovado:
- * - failed/timedOut/interrupted: usa `playwrightHumanSummary` no erro técnico.
- * - skipped: explicita o motivo do `test.fixme()`/`test.skip()` (annotation
- *   description). Sem isso, o relatório mostrava "Sem mensagem registrada
- *   pelo Playwright." para todos os pulados intencionais — comportamento
- *   reportado pelo usuário em 2026-05-05.
+ * Categorias canônicas de fixme (CLAUDE.md §7.6 Anti-pattern F).
+ * Cada categoria define destinatário e próximo passo, para o relatório
+ * dizer ao leitor leigo QUEM precisa agir e O QUE precisa ser feito.
+ *
+ * Convenção pro spec: declarar via `test.fixme(true, '[Categoria] motivo')`
+ * onde Categoria é uma das chaves abaixo (case-insensitive).
+ */
+const FIXME_CATEGORIES: Record<
+  string,
+  { label: string; recipient: string; nextStep: string }
+> = {
+  'xml-desatualizado': {
+    label: 'XML/AT desatualizado',
+    recipient: 'AT / QA Lead',
+    nextStep: 'Atualizar o roteiro do TC no `test-analysis.md` para refletir a UI atual e regenerar derivados.',
+  },
+  'seed-ausente': {
+    label: 'Seed/dado de teste ausente',
+    recipient: 'QA Lead',
+    nextStep: 'Criar a seed especificada no env (ou ajustar pré-condição do TC pra usar dado já existente).',
+  },
+  'dep-externa': {
+    label: 'Dependência externa fora do controle',
+    recipient: 'DevOps / Infra',
+    nextStep: 'Verificar feature flag, serviço externo ou ambiente referenciado pela pré-condição.',
+  },
+  'bloqueio-temporario': {
+    label: 'Bloqueio temporário declarado',
+    recipient: 'Time (PM/Tech Lead)',
+    nextStep: 'Reabrir quando o ticket linkado for fechado; sem ticket, transformar em bug-report.',
+  },
+};
+
+const FIXME_CATEGORY_REGEX = /^\s*\[([a-zA-ZÀ-ſ\s\-_]+)\]\s*(.*)$/;
+
+/** Extrai categoria do `skipReason` no formato `[Categoria] motivo`. */
+function parseFixmeCategory(reason: string): { categoryKey: string; rest: string } | null {
+  const m = reason.match(FIXME_CATEGORY_REGEX);
+  if (!m) return null;
+  const key = m[1]
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/_/g, '-');
+  if (FIXME_CATEGORIES[key]) {
+    return { categoryKey: key, rest: m[2].trim() };
+  }
+  return null;
+}
+
+/**
+ * Resumo de falha/skip para a linha de cabeçalho `> **Por que...:**`.
+ * Para skip/fixme, retorna texto unidimensional (a estrutura detalhada
+ * vai em `renderFixmeBlock()` no bloco "⏳ Pendente").
  */
 function failureOrSkipSummary(t: FlatTest): string {
   if (t.status === 'passed') return '—';
-  if (t.status === 'skipped' || t.status === 'interrupted' && !t.errorMessage) {
+  if (t.status === 'skipped' || (t.status === 'interrupted' && !t.errorMessage)) {
     if (t.skipReason) {
+      const parsed = parseFixmeCategory(t.skipReason);
+      if (parsed) {
+        const cat = FIXME_CATEGORIES[parsed.categoryKey];
+        return `${cat.label} — ${parsed.rest || 'sem detalhe'}. Quem precisa agir: ${cat.recipient}.`;
+      }
       const prefix = t.skipKind === 'manual' || /REVISAR_MANUAL/i.test(t.skipReason)
         ? 'Caso requer intervenção manual: '
         : t.skipKind === 'fixme'
@@ -478,28 +563,46 @@ function failureOrSkipSummary(t: FlatTest): string {
           : 'Caso ignorado intencionalmente: ';
       return `${prefix}${t.skipReason}`;
     }
-    return 'Caso ignorado pelo Playwright sem justificativa registrada (test.skip/fixme sem mensagem).';
+    return '[REVISAR] Motivo do skip não declarado no spec. Edite o `test.fixme(true, "[Categoria] motivo")` indicando uma das categorias canônicas: xml-desatualizado | seed-ausente | dep-externa | bloqueio-temporario.';
   }
   return playwrightHumanSummary(stripAnsi(t.errorMessage ?? ''));
 }
 
-// ─── Flatten do JSON do Playwright ──────────────────────────────────────────
-
 /**
- * Caminha pela árvore de suites do JSON do Playwright e devolve a lista
- * achatada de testes. A "testsuite" reportada é o título do `describe(...)`
- * mais profundo (que casa com o nome do XML), não o caminho do arquivo —
- * isso resolve o problema histórico do índice mostrar nomes feios como
- * `features\...\foo.spec.ts › Configurar...`.
+ * Bloco detalhado para skip/fixme no `tests.md` (substitui o bloco
+ * "⏳ Pendente — execução automatizada não realizada" antigo).
+ * Inclui categoria + destinatário + próximo passo quando o spec declara
+ * via `[Categoria] motivo`.
  */
+function renderFixmeStructured(t: FlatTest): string[] {
+  const lines: string[] = [];
+  const reason = t.skipReason ?? '';
+  const parsed = parseFixmeCategory(reason);
+
+  if (parsed) {
+    const cat = FIXME_CATEGORIES[parsed.categoryKey];
+    lines.push(`- **Categoria:** ${cat.label}`);
+    lines.push(`- **Quem precisa agir:** ${cat.recipient}`);
+    lines.push(`- **Próximo passo:** ${cat.nextStep}`);
+    lines.push(`- **Motivo declarado pelo spec:** ${parsed.rest || '_sem detalhe_'}`);
+  } else if (reason) {
+    lines.push(`- **Motivo declarado pelo spec:** ${reason}`);
+    lines.push(`- **Categoria:** _não declarada_ — pra próxima revisão, ajustar o spec para \`test.fixme(true, '[Categoria] motivo')\` com uma das categorias canônicas (xml-desatualizado | seed-ausente | dep-externa | bloqueio-temporario).`);
+  } else {
+    lines.push(`- **Categoria:** ⚠️ Não declarada`);
+    lines.push(`- **Motivo declarado pelo spec:** _ausente_`);
+    lines.push(`- **Próximo passo:** Editar o spec para declarar \`test.fixme(true, '[Categoria] motivo')\` com uma das categorias canônicas (xml-desatualizado | seed-ausente | dep-externa | bloqueio-temporario). Sem declaração, leitor leigo não sabe quem precisa agir.`);
+  }
+  return lines;
+}
+
+// ─── Flatten ────────────────────────────────────────────────────────────────
+
 function flatten(suites: PlaywrightSuite[]): FlatTest[] {
   const out: FlatTest[] = [];
   function walk(suite: PlaywrightSuite, ancestors: string[]): void {
-    // Detecta se este nó parece ser arquivo (tem `file` igual ao próprio título)
-    // ou um describe block real (cujo título não tem extensão).
     const isFileNode = suite.file !== undefined && suite.title === suite.file.replace(/\//g, '\\');
     const nextAncestors = isFileNode ? ancestors : [...ancestors, suite.title];
-
     for (const spec of suite.specs ?? []) {
       const testsuite = nextAncestors[nextAncestors.length - 1] ?? spec.title;
       const fileLabel = spec.file ? basename(spec.file) : '';
@@ -513,9 +616,6 @@ function flatten(suites: PlaywrightSuite[]): FlatTest[] {
           errorMessage: s.error?.message,
         }));
         const failedIdx = steps.findIndex((s) => s.status === 'failed');
-        // Annotations vêm tanto no `test` quanto no `result` — preferir test
-        // (mais estável). `test.fixme(true, '...')` e `test.skip(true, '...')`
-        // produzem `{ type: 'fixme'|'skip', description: '...' }`.
         const allAnn: PlaywrightAnnotation[] = [
           ...((test.annotations as PlaywrightAnnotation[] | undefined) ?? []),
           ...((last?.annotations as PlaywrightAnnotation[] | undefined) ?? []),
@@ -547,6 +647,7 @@ function flatten(suites: PlaywrightSuite[]): FlatTest[] {
             .map((a) => ({ name: a.name, path: a.path, contentType: a.contentType })),
           steps,
           failedStepIndex: failedIdx >= 0 ? failedIdx : null,
+          annotations: allAnn.map((a) => ({ type: a.type, description: a.description })),
         });
       }
     }
@@ -596,22 +697,37 @@ function indexTestCasesByName(parsed: ParsedAnalysis): Map<string, ParsedTestCas
 }
 
 /**
- * Devolve a ordem em que as testsuites aparecem no XML (depth-first).
- * Usada para reordenar `byTestsuite` no `tests.html` — antes a ordem era
- * alfabética/inserção, o que confundia revisores acostumados ao XmindMap.
+ * Mapeia `testcase.name.trim()` → label `TC<n>` (n = índice 1-based dentro
+ * da testsuite no XML, ordem de declaração `<testsuite>...<testcase>`).
+ * Usado pelo `formatTcTitle` para prefixar o título do TC no relatório.
  */
+function indexTcNumbersByName(parsed: ParsedAnalysis): Map<string, string> {
+  const m = new Map<string, string>();
+  const allSuites = flattenSuitesFromXml(parsed.rootSuite);
+  for (const suite of allSuites) {
+    suite.testCases.forEach((tc, idx) => {
+      const key = tc.name.trim();
+      if (!m.has(key)) m.set(key, `TC${idx + 1}`);
+    });
+  }
+  return m;
+}
+
+/**
+ * Formata `TC<n> · <name>` se houver TC#, ou `<name>` como fallback.
+ * Usado em index.md, tests.md e playwright-summary.md para prefixar TC#.
+ */
+function formatTcTitle(name: string, tcNumbers: Map<string, string>): string {
+  const tc = tcNumbers.get(name.trim());
+  return tc ? `${tc} · ${name}` : name;
+}
+
 function xmlSuiteOrder(parsed: ParsedAnalysis | null): string[] {
   if (!parsed) return [];
   const all = flattenSuitesFromXml(parsed.rootSuite);
   return all.map((s) => s.name.trim());
 }
 
-/**
- * Reordena o agrupamento por testsuite na mesma ordem do XML. Suites que
- * existem na execução mas não no XML (legados, seed, hand-written) são
- * descartadas com warn — protege contra "suítes inventadas" no relatório,
- * complementando o `testIgnore` do `playwright.config.ts`.
- */
 function reorderByXml(
   byTestsuite: Map<string, FlatTest[]>,
   xmlOrder: string[],
@@ -623,7 +739,6 @@ function reorderByXml(
     const tests = byTestsuite.get(name);
     if (tests && tests.length > 0) out.set(name, tests);
   }
-  // Suites que sobraram (não estão no XML): logar e descartar do relatório
   for (const [name, tests] of byTestsuite.entries()) {
     if (!xmlSet.has(name.toLowerCase())) {
       log.warn(
@@ -635,237 +750,24 @@ function reorderByXml(
   return out;
 }
 
-// ─── HTML / CSS / JS ────────────────────────────────────────────────────────
+// ─── MD render — index.md ───────────────────────────────────────────────────
 
-const SHARED_CSS = `
-:root {
-  --bg: #0d1117; --surface: #161b22; --card: #21262d; --border: #30363d;
-  --text: #e6edf3; --text-soft: #c9d1d9; --muted: #8b949e;
-  --ok: #3fb950; --fail: #f85149; --warn: #d29922; --info: #58a6ff;
-  --link: #58a6ff; --radius: 8px;
-}
-*, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  background: var(--bg); color: var(--text); margin: 0; line-height: 1.55; font-size: 15px;
-}
-a { color: var(--link); text-underline-offset: 2px; }
-a:hover { text-decoration-thickness: 2px; }
-.wrap { max-width: 1080px; margin: 0 auto; padding: 28px 20px 48px; }
-@media (min-width: 1200px) { .wrap { max-width: 1180px; } }
-h1 { font-size: 1.5rem; font-weight: 650; margin: 0 0 6px; letter-spacing: -0.02em; }
-h2 { font-size: 1.1rem; font-weight: 600; margin: 2rem 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); color: var(--text-soft); }
-h3 { font-size: 1rem; font-weight: 600; margin: 0 0 8px; }
-h4 { font-size: 0.78rem; font-weight: 600; margin: 16px 0 6px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
-.subtitle { color: var(--muted); font-size: 0.9rem; }
-.lede { color: var(--text-soft); font-size: 0.95rem; margin: 14px 0 18px; max-width: 75ch; }
-.muted { color: var(--muted); font-size: 0.88rem; }
-.scope-banner { background: rgba(88, 166, 255, 0.08); border: 1px solid rgba(88, 166, 255, 0.3); padding: 10px 14px; border-radius: var(--radius); margin: 14px 0; color: var(--text-soft); font-size: 0.9rem; }
-.attention-banner { background: rgba(248, 81, 73, 0.10); border: 1px solid rgba(248, 81, 73, 0.4); padding: 14px 16px; border-radius: var(--radius); margin: 18px 0; }
-.attention-banner.empty { background: rgba(63, 185, 80, 0.08); border-color: rgba(63, 185, 80, 0.4); }
-.attention-banner h3 { margin: 0 0 6px; color: var(--fail); display: flex; align-items: center; gap: 8px; }
-.attention-banner.empty h3 { color: var(--ok); }
-.attention-banner ul { margin: 6px 0 0; padding-left: 20px; font-size: 0.9rem; }
-.attention-banner li { margin: 3px 0; }
-
-.dashboard-caption { font-size: 0.74rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin: 20px 0 8px; }
-.kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin: 8px 0; }
-.kpi { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 12px; text-align: center; }
-.kpi .num { font-size: 1.5rem; font-weight: 700; line-height: 1.2; font-variant-numeric: tabular-nums; }
-.kpi .lbl { font-size: 0.72rem; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
-.kpi.ok .num { color: var(--ok); } .kpi.fail .num { color: var(--fail); } .kpi.warn .num { color: var(--warn); } .kpi.info .num { color: var(--info); }
-
-.nav { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 8px; }
-.nav a { padding: 12px 18px; background: var(--surface); border-radius: var(--radius); text-decoration: none; border: 1px solid var(--border); font-weight: 500; color: var(--text); }
-.nav a:hover { border-color: var(--link); background: var(--card); }
-
-.section-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; margin: 10px 0; }
-.section-card h3 { margin-top: 0; }
-
-table { width: 100%; border-collapse: collapse; background: var(--surface); border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); margin: 10px 0; }
-th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; font-size: 0.88rem; }
-th { background: #0f172a; color: var(--muted); text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.05em; white-space: nowrap; }
-tr:last-child td { border-bottom: none; }
-.col-num { width: 2.4rem; text-align: center; font-variant-numeric: tabular-nums; color: var(--muted); }
-.col-status { width: 1%; white-space: nowrap; }
-.col-time { width: 1%; white-space: nowrap; color: var(--muted); font-variant-numeric: tabular-nums; }
-.col-actions { width: 1%; white-space: nowrap; }
-
-.badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 999px; font-size: 0.74rem; font-weight: 650; text-transform: uppercase; letter-spacing: 0.04em; }
-.badge.ok { background: rgba(63, 185, 80, 0.15); color: var(--ok); }
-.badge.fail { background: rgba(248, 81, 73, 0.15); color: var(--fail); }
-.badge.warn { background: rgba(210, 153, 34, 0.15); color: var(--warn); }
-.badge.info { background: rgba(88, 166, 255, 0.15); color: var(--info); }
-.badge.severity-critico { background: rgba(248, 81, 73, 0.15); color: var(--fail); }
-.badge.severity-normal { background: rgba(88, 166, 255, 0.15); color: var(--info); }
-.badge.severity-menor { background: rgba(139, 148, 158, 0.18); color: var(--muted); }
-
-button, select { font: inherit; padding: 8px 14px; border-radius: 6px; border: 1px solid var(--border); background: var(--card); color: var(--text); cursor: pointer; }
-button:hover, select:hover { border-color: var(--link); }
-.btn-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 10px 0; }
-.btn-row label { font-size: 0.85rem; color: var(--muted); margin-left: 4px; }
-
-pre { background: #010409; border: 1px solid var(--border); border-radius: 4px; padding: 10px; overflow-x: auto; font-size: 0.78rem; white-space: pre-wrap; word-break: break-word; margin: 6px 0 0; }
-details { margin-top: 6px; }
-details summary { cursor: pointer; color: var(--muted); font-size: 0.85rem; }
-
-/* Linha-resumo + linha-detalhe (acordeon) */
-.tc-summary-row { cursor: pointer; }
-.tc-summary-row.is-expanded { background: var(--card); }
-.tc-detail-row { display: none; }
-.tc-detail-row.is-expanded { display: table-row; }
-.tc-detail-row td { padding: 0; background: #0a0e14; border-bottom: 2px solid var(--border); }
-.tc-detail-panel { padding: 18px 20px 20px; }
-
-/* Strip de status grande */
-.status-strip { margin: -18px -20px 16px; padding: 12px 20px; font-weight: 600; font-size: 0.92rem; display: flex; align-items: center; gap: 10px; }
-.status-strip.ok { background: rgba(63, 185, 80, 0.18); color: var(--ok); border-bottom: 1px solid rgba(63, 185, 80, 0.4); }
-.status-strip.fail { background: rgba(248, 81, 73, 0.15); color: var(--fail); border-bottom: 1px solid rgba(248, 81, 73, 0.4); }
-.status-strip.warn { background: rgba(210, 153, 34, 0.15); color: var(--warn); border-bottom: 1px solid rgba(210, 153, 34, 0.4); }
-.status-strip .material-symbols-outlined { font-size: 1.6rem; }
-
-/* Bloco "Por que falhou" */
-.failure-summary { background: rgba(248, 81, 73, 0.06); border: 1px solid rgba(248, 81, 73, 0.3); border-radius: 6px; padding: 12px 14px; margin: 0 0 14px; font-size: 0.92rem; }
-.failure-summary .label { font-size: 0.72rem; font-weight: 700; color: var(--fail); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
-.failure-summary .text { color: var(--text); }
-.failure-summary .step-ref { color: var(--muted); font-size: 0.82rem; margin-top: 6px; }
-
-.meta-block { margin-bottom: 14px; max-width: 90ch; }
-.meta-block p { margin: 6px 0 0; color: var(--text-soft); }
-.preconditions { padding: 10px 12px; background: #010409; border-left: 3px solid var(--info); border-radius: 0 4px 4px 0; font-size: 0.86rem; color: var(--text-soft); margin-top: 6px; white-space: pre-wrap; }
-
-/* Tabelas internas (steps XML / steps Allure) */
-.inner-scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: 6px; margin: 6px 0 0; background: #010409; }
-.inner-table { width: 100%; font-size: 0.84rem; border: none; border-radius: 0; margin: 0; min-width: 540px; background: transparent; }
-.inner-table th { background: #1a2f4a; color: var(--text-soft); font-size: 0.72rem; padding: 8px 10px; }
-.inner-table td { padding: 9px 10px; border-bottom: 1px solid #21262d; word-break: break-word; }
-.inner-table tbody tr:nth-child(even) { background: #0d111766; }
-.inner-table tbody tr:last-child td { border-bottom: none; }
-.inner-table .step-failed { background: rgba(248, 81, 73, 0.08); }
-.inner-table .step-failed td { border-bottom-color: rgba(248, 81, 73, 0.3); }
-
-/* Evidências */
-.evidence-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin-top: 6px; }
-.evidence-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
-.evidence-card .thumb { display: block; width: 100%; height: 140px; background: #010409; }
-.evidence-card .thumb img { width: 100%; height: 100%; object-fit: contain; }
-.evidence-card .thumb.no-img { display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 0.78rem; padding: 20px; text-align: center; }
-.evidence-card .meta { padding: 8px 10px; font-size: 0.78rem; color: var(--muted); display: flex; justify-content: space-between; align-items: center; }
-.evidence-card .meta a { color: var(--link); }
-
-/* Bug-report */
-.bug-block { background: #010409; border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px; margin-top: 14px; }
-.bug-block textarea { width: 100%; height: 12rem; background: transparent; color: var(--text-soft); border: none; resize: vertical; font-family: ui-monospace, SF Mono, Consolas, monospace; font-size: 0.78rem; padding: 0; }
-.bug-block textarea:focus { outline: none; }
-.bug-block .btn-row { margin-top: 8px; }
-
-.material-symbols-outlined { font-family: "Material Symbols Outlined"; font-weight: normal; font-style: normal; font-size: 1.4rem; line-height: 1; vertical-align: middle; display: inline-block; font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24; }
-.icon-ok { color: var(--ok); } .icon-fail { color: var(--fail); } .icon-warn { color: var(--warn); }
-
-/* Status ícone-only (inspirado na referência API: print do projeto C:\Cursor\API).
-   Evita quebra vertical do texto em colunas estreitas de tabelas internas. */
-.status-icon { display: inline-flex; align-items: center; justify-content: center; cursor: help; }
-.status-icon .material-symbols-outlined { font-size: 1.4rem; }
-.status-icon.icon-ok .material-symbols-outlined { color: var(--ok); }
-.status-icon.icon-fail .material-symbols-outlined { color: var(--fail); }
-.status-icon.icon-warn .material-symbols-outlined { color: var(--warn); }
-.inner-table .col-status, .inner-table th.col-status { width: 3rem; text-align: center; }
-.inner-table .precond-row td { background: rgba(88, 166, 255, 0.06); font-style: italic; }
-.inner-table .precond-row .precond-tag { font-style: normal; font-weight: 600; color: var(--info); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 6px; }
-
-hr.sep { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
-
-/* Tabela ordenável (inspirado em session-report) */
-table.sortable th[data-sort-key] { cursor: pointer; user-select: none; }
-table.sortable th[data-sort-key]:hover { color: var(--text); }
-table.sortable th.sorted-asc::after { content: ' ↑'; color: var(--info); }
-table.sortable th.sorted-desc::after { content: ' ↓'; color: var(--info); }
-
-/* Stacked progress bar (padrão da indústria — PractiTest, Allure, Zephyr) */
-.stacked-bar {
-  display: flex; height: 18px; border-radius: 3px; overflow: hidden;
-  background: var(--card); border: 1px solid var(--border); min-width: 120px;
-  font-size: 0.7rem; font-weight: 700; color: #fff;
-}
-.stacked-bar > span { display: flex; align-items: center; justify-content: center; transition: filter 0.15s; }
-.stacked-bar > span:hover { filter: brightness(1.15); }
-.stacked-bar .seg-ok { background: var(--ok); }
-.stacked-bar .seg-fail { background: var(--fail); }
-.stacked-bar .seg-skip { background: var(--warn); }
-.stacked-bar .seg-empty { color: var(--muted); font-weight: 500; }
-
-.pct-pass { font-variant-numeric: tabular-nums; font-weight: 600; }
-.pct-pass.high { color: var(--ok); }
-.pct-pass.mid { color: var(--warn); }
-.pct-pass.low { color: var(--fail); }
-
-.kind-section { margin-top: 14px; }
-.kind-section .header { padding: 8px 12px; background: var(--card); border-left: 3px solid var(--border); border-radius: 0 4px 4px 0; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin: 0 0 8px; }
-.kind-section.kind-error .header { border-left-color: var(--fail); color: var(--fail); }
-.kind-section.kind-warn .header { border-left-color: var(--warn); color: var(--warn); }
-.kind-section.kind-info .header { border-left-color: var(--info); color: var(--info); }
-.finding-row { padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 0.85rem; background: var(--surface); border-radius: 4px; margin-bottom: 4px; }
-.finding-row .url { font-family: ui-monospace, SF Mono, Consolas, monospace; font-size: 0.76rem; color: var(--muted); margin-top: 4px; word-break: break-all; }
-.a11y-rule { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 10px 12px; margin: 4px 0; }
-.a11y-rule .rule-id { font-family: ui-monospace, SF Mono, Consolas, monospace; font-size: 0.82rem; color: var(--info); font-weight: 600; }
-`;
-
-const SHARED_HEAD_LINKS = `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />`;
-
-function htmlShell(title: string, body: string): string {
-  return `<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${escapeHtml(title)}</title>
-${SHARED_HEAD_LINKS}
-<style>${SHARED_CSS}</style>
-</head>
-<body><div class="wrap">${body}</div></body>
-</html>`;
+function stackedBarAscii(passed: number, failed: number, skipped: number, width = 20): string {
+  const total = passed + failed + skipped;
+  if (total === 0) return '`[' + '·'.repeat(width) + ']`';
+  const ok = Math.round((passed / total) * width);
+  const fa = Math.round((failed / total) * width);
+  const sk = Math.max(0, width - ok - fa);
+  return '`[' + '█'.repeat(ok) + '✗'.repeat(fa) + '⊘'.repeat(sk) + ']`';
 }
 
-function statusBadge(status: string): string {
-  const cls = statusClass(status);
-  const icon = STATUS_ICON[status] ?? STATUS_ICON.unknown;
-  const label = STATUS_PT[status] ?? status;
-  return `<span class="badge ${cls}"><span class="material-symbols-outlined" style="font-size:1rem">${icon}</span>${escapeHtml(label)}</span>`;
+function pctPassLabel(passed: number, total: number): string {
+  if (total === 0) return '—';
+  const pct = Math.round((passed / total) * 100);
+  return `${pct}%`;
 }
 
-/**
- * Versão ícone-only do status — usada em colunas estreitas de tabelas internas
- * (linha de step), onde o badge com texto quebraria verticalmente uma letra
- * por linha (referência: print do usuário em 2026-04-30).
- */
-function statusIcon(status: string): string {
-  const cls = statusClass(status);
-  const icon = STATUS_ICON[status] ?? STATUS_ICON.unknown;
-  const label = STATUS_PT[status] ?? status;
-  return `<span class="status-icon icon-${cls}" title="${escapeHtml(label)}" aria-label="${escapeHtml(label)}"><span class="material-symbols-outlined">${icon}</span></span>`;
-}
-
-function statusStrip(status: string, durationMs: number): string {
-  const cls = statusClass(status);
-  const icon = STATUS_ICON[status] ?? STATUS_ICON.unknown;
-  const label = STATUS_PT[status] ?? status;
-  return `<div class="status-strip ${cls}">
-    <span class="material-symbols-outlined">${icon}</span>
-    <span>${escapeHtml(label)}</span>
-    <span style="margin-left:auto;font-weight:500;color:var(--text-soft);font-size:0.84rem">${(durationMs / 1000).toFixed(2)}s</span>
-  </div>`;
-}
-
-function severityBadge(importance: number | undefined): string {
-  if (importance === undefined) return '';
-  const sev = severityFromImportance(importance);
-  return `<span class="badge severity-${sev}">${SEVERITY_PT[sev]}</span>`;
-}
-
-// ─── Index ──────────────────────────────────────────────────────────────────
-
-function renderIndex(args: {
+function renderIndexMd(args: {
   mode: Mode;
   scopeLabel: string;
   projectName: string;
@@ -878,279 +780,272 @@ function renderIndex(args: {
   exploratoryByTestsuite: Map<string, ExploratorySuite>;
   failedTests: FlatTest[];
   xmlByName: Map<string, ParsedTestCase>;
+  tcNumbers: Map<string, string>;
   runId: string;
+  bugReports: BugReportEntry[];
 }): string {
   const t = args.testsSummary;
   const e = args.exploratorySummary;
-
   const dateBR = new Date(args.generatedAt).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
 
-  // Painel "Precisa de atenção"
-  const criticalFails = args.failedTests.filter((ft) => {
-    const xml = args.xmlByName.get(ft.testcase.trim());
-    return xml?.importance === 3;
-  });
-  const attention = args.failedTests.length === 0
-    ? `<div class="attention-banner empty">
-        <h3><span class="material-symbols-outlined">check_circle</span>Nenhuma falha registrada</h3>
-        <p class="muted" style="margin:0">Todos os ${t.total} caso(s) executado(s) foram aprovados.</p>
-      </div>`
-    : `<div class="attention-banner">
-        <h3><span class="material-symbols-outlined">warning</span>${args.failedTests.length} caso(s) com falha precisam de atenção${criticalFails.length > 0 ? ` (${criticalFails.length} crítico${criticalFails.length === 1 ? '' : 's'})` : ''}</h3>
-        <ul>
-          ${args.failedTests.slice(0, 8).map((ft) => {
-            const xml = args.xmlByName.get(ft.testcase.trim());
-            const sev = xml ? severityBadge(xml.importance) : '';
-            const failedStep = ft.failedStepIndex !== null ? ft.steps[ft.failedStepIndex] : null;
-            const rawErr = failedStep?.errorMessage ?? ft.errorMessage ?? '';
-            return `<li>${sev} <a href="tests.html#tc-${slugify(ft.testcase)}">${escapeHtml(ft.testcase)}</a> <span class="muted">— ${escapeHtml(playwrightHumanSummary(stripAnsi(rawErr)))}</span></li>`;
-          }).join('\n')}
-          ${args.failedTests.length > 8 ? `<li class="muted">…e mais ${args.failedTests.length - 8} caso(s). Veja a lista completa em <a href="tests.html">Casos de teste</a>.</li>` : ''}
-        </ul>
-      </div>`;
+  const lines: string[] = [];
+  lines.push(`# Relatório de Execução — Twygo QA`);
+  lines.push('');
+  lines.push(`**Projeto:** ${args.projectName} · **Ambiente:** \`${args.environment}\` · **Browsers:** ${args.browsers.join(', ')} · **Gerado em:** ${dateBR}`);
+  lines.push('');
+  lines.push(`> **Escopo:** ${args.scopeLabel}`);
+  lines.push('');
 
-  // Stacked progress bar (padrão indústria — PractiTest/Zephyr/Allure)
-  const stackedBar = (passed: number, failed: number, skipped: number): string => {
-    const total = passed + failed + skipped;
-    if (total === 0) return '<span class="muted">—</span>';
-    const pctOk = (passed / total) * 100;
-    const pctFail = (failed / total) * 100;
-    const pctSkip = (skipped / total) * 100;
-    const seg = (cls: string, pct: number, label: number) =>
-      pct > 0 ? `<span class="${cls}" style="width:${pct.toFixed(2)}%" title="${label} ${cls === 'seg-ok' ? 'aprovado(s)' : cls === 'seg-fail' ? 'falha(s)' : 'ignorado(s)'} (${pct.toFixed(0)}%)">${pct >= 12 ? label : ''}</span>` : '';
-    return `<div class="stacked-bar">${seg('seg-ok', pctOk, passed)}${seg('seg-fail', pctFail, failed)}${seg('seg-skip', pctSkip, skipped)}</div>`;
-  };
+  // Painel de atenção
+  if (args.failedTests.length === 0) {
+    lines.push(`> ✅ **Nenhuma falha registrada** — todos os ${t.total} caso(s) executado(s) foram aprovados.`);
+  } else {
+    const criticalFails = args.failedTests.filter((ft) => args.xmlByName.get(ft.testcase.trim())?.importance === 3);
+    lines.push(`> ❌ **${args.failedTests.length} caso(s) com falha precisam de atenção${criticalFails.length > 0 ? ` (${criticalFails.length} crítico${criticalFails.length === 1 ? '' : 's'})` : ''}**`);
+    lines.push('>');
+    for (const ft of args.failedTests.slice(0, 8)) {
+      const xml = args.xmlByName.get(ft.testcase.trim());
+      const sev = xml ? severityLabel(xml.importance) : '';
+      const failedStep = ft.failedStepIndex !== null ? ft.steps[ft.failedStepIndex] : null;
+      const rawErr = failedStep?.errorMessage ?? ft.errorMessage ?? '';
+      lines.push(`> - ${sev} [${formatTcTitle(ft.testcase, args.tcNumbers)}](tests.md#${slugify(ft.testcase)}) — ${playwrightHumanSummary(stripAnsi(rawErr))}`);
+    }
+    if (args.failedTests.length > 8) {
+      lines.push(`> - …e mais ${args.failedTests.length - 8} caso(s). Veja [Casos de teste](tests.md).`);
+    }
+  }
+  lines.push('');
 
-  const pctPassCell = (passed: number, total: number): string => {
-    if (total === 0) return '<span class="muted">—</span>';
-    const pct = Math.round((passed / total) * 100);
-    const cls = pct >= 80 ? 'high' : pct >= 50 ? 'mid' : 'low';
-    return `<span class="pct-pass ${cls}">${pct}%</span>`;
-  };
+  // KPIs
+  lines.push(`## Casos de teste (XML)`);
+  lines.push('');
+  lines.push(`| Total | ✅ Aprovados | ❌ Falhas | ⊘ Ignorados | Duração |`);
+  lines.push(`|---:|---:|---:|---:|---:|`);
+  lines.push(`| ${t.total} | ${t.passed} | ${t.failed} | ${t.skipped} | ${(t.durationMs / 1000).toFixed(1)}s |`);
+  lines.push('');
 
-  // Tabela por testsuite (sortable + stacked bar + %pass)
-  const suiteRows = [...args.byTestsuite.entries()]
-    .map(([name, tests]) => {
+  if (e) {
+    lines.push(`## Validação Exploratória`);
+    lines.push('');
+    lines.push(`| ❌ Erros | ⚠️ Avisos | ℹ️ Informativos | Testsuites c/ findings |`);
+    lines.push(`|---:|---:|---:|---:|`);
+    lines.push(`| ${e.errors} | ${e.warnings} | ${e.info} | ${e.testsuites} |`);
+    lines.push('');
+  }
+
+  // Tabela por testsuite
+  lines.push(`## Por testsuite`);
+  lines.push('');
+  if (args.byTestsuite.size === 0) {
+    lines.push(`_Nenhum teste executado._`);
+  } else {
+    lines.push(`| Testsuite | Total | Distribuição (✅/❌/⊘) | %Pass | ❌ | ⊘ | Findings | Tempo |`);
+    lines.push(`|---|---:|---|---:|---:|---:|---|---:|`);
+    for (const [name, tests] of args.byTestsuite.entries()) {
       const ss = summarizeTests(tests);
       const exp = args.exploratoryByTestsuite.get(name);
       const expCol = exp
-        ? `${exp.totals.errors > 0 ? `<span class="badge fail">${exp.totals.errors} erro${exp.totals.errors === 1 ? '' : 's'}</span> ` : ''}${exp.totals.warnings > 0 ? `<span class="badge warn">${exp.totals.warnings} aviso${exp.totals.warnings === 1 ? '' : 's'}</span>` : ''}${exp.totals.errors === 0 && exp.totals.warnings === 0 ? '<span class="muted">—</span>' : ''}`
-        : '<span class="muted">—</span>';
-      const pctPass = ss.total > 0 ? Math.round((ss.passed / ss.total) * 100) : 0;
-      return `<tr data-fail-count="${ss.failed}" data-total="${ss.total}" data-duration="${ss.durationMs}" data-pct-pass="${pctPass}">
-        <td><strong>${escapeHtml(name)}</strong></td>
-        <td style="text-align:center">${ss.total}</td>
-        <td>${stackedBar(ss.passed, ss.failed, ss.skipped)}</td>
-        <td style="text-align:center">${pctPassCell(ss.passed, ss.total)}</td>
-        <td style="text-align:center">${ss.failed > 0 ? `<span class="badge fail">${ss.failed}</span>` : '<span class="muted">0</span>'}</td>
-        <td style="text-align:center">${ss.skipped > 0 ? `<span class="badge warn">${ss.skipped}</span>` : '<span class="muted">0</span>'}</td>
-        <td>${expCol}</td>
-        <td class="col-time">${(ss.durationMs / 1000).toFixed(1)}s</td>
-      </tr>`;
-    })
-    .join('\n');
+        ? [
+            exp.totals.errors > 0 ? `${exp.totals.errors} err` : '',
+            exp.totals.warnings > 0 ? `${exp.totals.warnings} avi` : '',
+          ].filter(Boolean).join(' · ') || '—'
+        : '—';
+      const bar = stackedBarAscii(ss.passed, ss.failed, ss.skipped);
+      lines.push(`| **${mdCell(name)}** | ${ss.total} | ${bar} ${ss.passed}/${ss.failed}/${ss.skipped} | ${pctPassLabel(ss.passed, ss.total)} | ${ss.failed} | ${ss.skipped} | ${mdCell(expCol)} | ${(ss.durationMs / 1000).toFixed(1)}s |`);
+    }
+  }
+  lines.push('');
 
-  // JSON data block (inspirado em session-report — permite queries client-side)
-  const dataBlock = JSON.stringify({
-    runId: args.runId,
-    generatedAt: args.generatedAt,
-    scope: args.scopeLabel,
-    summary: t,
-    failedTests: args.failedTests.map((ft) => ({
-      testcase: ft.testcase,
-      testsuite: ft.testsuite,
-      status: ft.status,
-      durationMs: ft.durationMs,
-      summary: playwrightHumanSummary(stripAnsi(ft.errorMessage ?? '')),
-    })),
-    bySuite: [...args.byTestsuite.entries()].map(([name, tests]) => ({ name, ...summarizeTests(tests) })),
-  });
+  if (args.bugReports.length > 0) {
+    lines.push(`## Bug Reports prontos pra task`);
+    lines.push('');
+    lines.push(`_${args.bugReports.length} TC(s) red transformados em registro estruturado pronto pra virar issue. Campos \`[REVISAR]\` precisam de validação humana antes da abertura da task._`);
+    lines.push('');
+    const counts = new Map<string, number>();
+    for (const b of args.bugReports) counts.set(b.categoriaSugerida, (counts.get(b.categoriaSugerida) ?? 0) + 1);
+    const breakdown = Array.from(counts.entries()).map(([k, v]) => `**${v}** ${k}`).join(' · ');
+    lines.push(`**Distribuição**: ${breakdown}`);
+    lines.push('');
+    lines.push(`| TC | Categoria | Confiança | Severity | Justificativa |`);
+    lines.push(`|---|---|---|---|---|`);
+    for (const b of args.bugReports) {
+      const icon = b.categoriaSugerida === 'bug-produto' ? '🐛' : b.categoriaSugerida === 'spec-fragil' ? '🧪' : b.categoriaSugerida === 'modal-nao-tratado' ? '🪟' : b.categoriaSugerida === 'flakiness' ? '🌀' : '❓';
+      const tcLabel = formatTcTitle(b.testcase, args.tcNumbers);
+      lines.push(`| [${mdCell(tcLabel)}](bug-reports/${b.id}.md) | ${icon} ${b.categoriaSugerida} | ${b.categoriaConfianca} | ${b.severity} | ${mdCell(b.categoriaJustificativa)} |`);
+    }
+    lines.push('');
+    lines.push(`> Dados brutos: [\`bug-reports.json\`](bug-reports.json)`);
+    lines.push('');
+  }
 
-  const allureLink = args.mode === 'regression'
-    ? '<div class="section-card"><h3>Allure (regressivo, com histórico)</h3><p class="muted" style="margin:0 0 8px">Relatório executivo com trend entre execuções (publicado em GH Pages no CI).</p><p style="margin:0"><a href="../../allure-report/index.html">Abrir Allure →</a></p></div>'
-    : '';
+  lines.push(`## Onde ir agora`);
+  lines.push('');
+  lines.push(`- 📋 [Casos de teste detalhados](tests.md)`);
+  lines.push(`- 🐛 [Validação exploratória](exploratory.md)`);
+  if (args.bugReports.length > 0) {
+    lines.push(`- 📝 [Bug Reports prontos](#bug-reports-prontos-pra-task) (${args.bugReports.length})`);
+  }
+  if (args.mode === 'regression') {
+    lines.push(`- 📊 [Allure (regressivo, com trend histórico)](../../allure-report/index.html) — relatório executivo HTML built-in do Allure`);
+  }
+  lines.push('');
 
-  const body = `
-    <h1>Relatório de Execução — Twygo QA</h1>
-    <p class="subtitle">${escapeHtml(args.projectName)} · ambiente <strong>${escapeHtml(args.environment)}</strong> · ${args.browsers.join(', ')} · ${escapeHtml(dateBR)}</p>
-    <div class="scope-banner"><strong>Escopo:</strong> ${escapeHtml(args.scopeLabel)}</div>
+  lines.push(`## Dados brutos (JSON)`);
+  lines.push('');
+  lines.push(`- [\`summary.json\`](summary.json) — totais agregados`);
+  lines.push(`- [\`tests.json\`](tests.json) — Playwright JSON reporter`);
+  lines.push(`- [\`exploratory.json\`](exploratory.json) — findings exploratórios`);
+  if (args.bugReports.length > 0) {
+    lines.push(`- [\`bug-reports.json\`](bug-reports.json) — registros estruturados pra task`);
+  }
+  lines.push(`- [\`run_context.json\`](run_context.json) — projectName, environment, browsers, mode, timestamp`);
+  lines.push('');
 
-    ${attention}
-
-    <p class="dashboard-caption">Casos de teste roteirizados (XML)</p>
-    <div class="kpi-grid">
-      <div class="kpi"><div class="num">${t.total}</div><div class="lbl">Executados</div></div>
-      <div class="kpi ok"><div class="num">${t.passed}</div><div class="lbl">Aprovados</div></div>
-      <div class="kpi fail"><div class="num">${t.failed}</div><div class="lbl">Falhas</div></div>
-      <div class="kpi warn"><div class="num">${t.skipped}</div><div class="lbl">Ignorados</div></div>
-      <div class="kpi"><div class="num">${(t.durationMs / 1000).toFixed(1)}s</div><div class="lbl">Duração total</div></div>
-    </div>
-
-    ${e ? `
-    <p class="dashboard-caption">Validação Exploratória (achados durante a execução)</p>
-    <div class="kpi-grid">
-      <div class="kpi fail"><div class="num">${e.errors}</div><div class="lbl">Erros</div></div>
-      <div class="kpi warn"><div class="num">${e.warnings}</div><div class="lbl">Avisos</div></div>
-      <div class="kpi info"><div class="num">${e.info}</div><div class="lbl">Informativos</div></div>
-      <div class="kpi"><div class="num">${e.testsuites}</div><div class="lbl">Testsuites c/ findings</div></div>
-    </div>` : ''}
-
-    <h2>Por testsuite <span class="muted" style="font-size:0.78rem;font-weight:normal">— clique nos cabeçalhos pra ordenar; passe o mouse na barra pra ver detalhes</span></h2>
-    <table class="sortable" id="suiteTable">
-      <thead><tr>
-        <th>Testsuite</th>
-        <th style="text-align:center" data-sort-key="total" data-sort-type="num">Total</th>
-        <th>Distribuição (aprovados / falhas / ignorados)</th>
-        <th style="text-align:center" data-sort-key="pct-pass" data-sort-type="num">% Pass</th>
-        <th style="text-align:center" data-sort-key="failed" data-sort-type="num">Falhas</th>
-        <th style="text-align:center" data-sort-key="skipped" data-sort-type="num">Ignorados</th>
-        <th>Findings exploratórios</th>
-        <th data-sort-key="duration" data-sort-type="num">Tempo</th>
-      </tr></thead>
-      <tbody>${suiteRows || '<tr><td colspan="8" class="muted" style="text-align:center">Nenhum teste executado.</td></tr>'}</tbody>
-    </table>
-    <script>
-    // Tabela ordenável (inspirado em session-report). Vanilla JS, sem libs.
-    document.querySelectorAll('table.sortable').forEach((tbl) => {
-      const ths = tbl.querySelectorAll('th[data-sort-key]');
-      ths.forEach((th, idx) => {
-        th.addEventListener('click', () => {
-          const key = th.dataset.sortKey;
-          const type = th.dataset.sortType || 'str';
-          const tbody = tbl.querySelector('tbody');
-          const rows = [...tbody.querySelectorAll('tr')];
-          const dir = th.classList.contains('sorted-asc') ? 'desc' : 'asc';
-          ths.forEach((o) => o.classList.remove('sorted-asc', 'sorted-desc'));
-          th.classList.add('sorted-' + dir);
-          // Mapa key → atributo data-* (camelCase) ou fallback texto da célula
-          const datasetKey = (k) => ({
-            duration: 'duration',
-            failed: 'failCount',
-            'pct-pass': 'pctPass',
-            total: 'total',
-          })[k] || k;
-          const cellIdx = [...th.parentElement.children].indexOf(th);
-          rows.sort((a, b) => {
-            let va, vb;
-            if (type === 'num') {
-              const dk = datasetKey(key);
-              va = a.dataset[dk] !== undefined ? Number(a.dataset[dk]) : (parseFloat(a.children[cellIdx].textContent) || 0);
-              vb = b.dataset[dk] !== undefined ? Number(b.dataset[dk]) : (parseFloat(b.children[cellIdx].textContent) || 0);
-            } else {
-              va = a.children[idx].textContent.trim();
-              vb = b.children[idx].textContent.trim();
-            }
-            if (va < vb) return dir === 'asc' ? -1 : 1;
-            if (va > vb) return dir === 'asc' ? 1 : -1;
-            return 0;
-          });
-          rows.forEach((r) => tbody.appendChild(r));
-        });
-      });
-    });
-    </script>
-
-    <h2>Onde ir agora</h2>
-    <div class="nav">
-      <a href="tests.html"><span class="material-symbols-outlined" style="vertical-align:bottom;font-size:1.1rem">list_alt</span> Casos de teste detalhados →</a>
-      <a href="exploratory.html"><span class="material-symbols-outlined" style="vertical-align:bottom;font-size:1.1rem">bug_report</span> Validação Exploratória →</a>
-    </div>
-    ${allureLink}
-
-    <hr class="sep">
-    <h2>Dados brutos (JSON)</h2>
-    <p class="muted"><a href="summary.json">summary.json</a> · <a href="tests.json">tests.json</a> · <a href="exploratory.json">exploratory.json</a> · <a href="run_context.json">run_context.json</a></p>
-    <p class="muted" style="font-size:0.78rem">Dica: o índice também inclui um bloco <code>&lt;script id="report-data" type="application/json"&gt;</code> com os dados consolidados — útil pra queries no console do navegador.</p>
-
-    <script id="report-data" type="application/json">${dataBlock.replace(/</g, '\\u003c')}</script>
-  `;
-  return htmlShell(`Relatório — ${args.projectName}`, body);
+  return lines.join('\n');
 }
 
-// ─── Tests page (acordeon expansível) ───────────────────────────────────────
+// ─── MD render — tests.md ───────────────────────────────────────────────────
 
-function renderEvidenceCards(t: FlatTest, reportDir: string): string {
-  // Filtra anexos: pega screenshots, error-context, trace
-  const screenshots = t.attachments.filter((a) => a.contentType === 'image/png');
-  const errorCtx = t.attachments.find((a) => a.name === 'error-context');
-  const trace = t.attachments.find((a) => a.contentType === 'application/zip');
-
-  if (screenshots.length === 0 && !errorCtx && !trace) {
-    return '<p class="muted" style="margin:0">Sem evidências anexadas.</p>';
+/**
+ * Determina o test-folder canônico do TC — a pasta `<test-id>-chromium/`
+ * gerada pelo Playwright. Usado por `archiveAttachments` pra consolidar
+ * todos os arquivos do mesmo TC numa única subpasta dentro do report.
+ */
+function canonicalTestFolder(attachments: FlatTest['attachments']): string | undefined {
+  for (const att of attachments) {
+    if (!att.path) continue;
+    const segs = att.path.split(/[\\/]/);
+    for (let i = segs.length - 1; i >= 0; i--) {
+      if (/-(chromium|firefox|webkit)(-?\d*)?$/.test(segs[i])) {
+        return segs[i];
+      }
+    }
   }
-
-  // Os paths dos attachments do Playwright são absolutos. Pra funcionarem
-  // dentro do report HTML (que vive em `outputs/reports/<runId>/`), calculamos
-  // o caminho relativo do reportDir até o arquivo de anexo.
-  const relPath = (p: string) => relative(reportDir, p).replace(/\\/g, '/');
-
-  const cards: string[] = [];
-  for (const ss of screenshots) {
-    cards.push(`<div class="evidence-card">
-      <a class="thumb" href="${escapeHtml(relPath(ss.path))}" target="_blank"><img src="${escapeHtml(relPath(ss.path))}" alt="screenshot da falha" loading="lazy"></a>
-      <div class="meta"><span>${escapeHtml(ss.name)}</span><a href="${escapeHtml(relPath(ss.path))}" target="_blank">abrir</a></div>
-    </div>`);
-  }
-  if (trace) {
-    cards.push(`<div class="evidence-card">
-      <div class="thumb no-img">Trace do Playwright<br><span class="muted" style="font-size:0.7rem">.zip — abra com <code>npx playwright show-trace</code></span></div>
-      <div class="meta"><span>trace.zip</span><a href="${escapeHtml(relPath(trace.path))}" target="_blank">baixar</a></div>
-    </div>`);
-  }
-  if (errorCtx) {
-    cards.push(`<div class="evidence-card">
-      <div class="thumb no-img">Contexto do erro<br><span class="muted" style="font-size:0.7rem">snapshot do DOM no momento da falha</span></div>
-      <div class="meta"><span>error-context.md</span><a href="${escapeHtml(relPath(errorCtx.path))}" target="_blank">abrir</a></div>
-    </div>`);
-  }
-
-  return `<div class="evidence-grid">${cards.join('\n')}</div>`;
+  return undefined;
 }
 
 /**
- * Tabela unificada de execução: combina os steps do XML com a execução
- * Allure correspondente em uma única tabela (decisão tomada após feedback
- * do usuário em 2026-04-30, ref. ao print do projeto C:\Cursor\API onde
- * existe apenas uma tabela "Passos do caso (XML/TestLink)").
+ * Copia os attachments para `<reportDir>/artifacts/<test-folder>/` e
+ * re-escreve `attachment.path` para apontar pra cópia. Sem isso, runs
+ * subsequentes do mesmo projeto sobrescrevem `outputs/<slug>/test-artifacts/`
+ * e o relatório fica com links quebrados.
  *
- * Cada XML step é mapeado pelo número ao Allure step `${n}. <action>`
- * (convenção do generator). Steps Allure que NÃO correspondem a um XML
- * step (ex.: `Pré-condição: Login...`) viram linhas no topo da tabela
- * destacadas como "PRÉ-CONDIÇÃO".
+ * Tolerante a arquivos faltantes (warn + skip).
  */
-function renderUnifiedStepsTable(xml: ParsedTestCase | undefined, t: FlatTest): string {
+function archiveAttachments(tests: FlatTest[], reportDir: string): void {
+  const archiveRoot = join(reportDir, 'artifacts');
+  let copied = 0;
+  let skipped = 0;
+  for (const t of tests) {
+    const canonical = canonicalTestFolder(t.attachments);
+    const newAttachments: typeof t.attachments = [];
+    for (const att of t.attachments) {
+      if (!att.path) continue;
+      if (!existsSync(att.path)) {
+        skipped++;
+        continue;
+      }
+      const destFolder = canonical ?? basename(dirname(att.path));
+      const destDir = join(archiveRoot, destFolder);
+      ensureDir(destDir);
+      const destPath = join(destDir, basename(att.path));
+      try {
+        copyFileSync(att.path, destPath);
+        newAttachments.push({ name: att.name, path: destPath, contentType: att.contentType });
+        copied++;
+      } catch (err) {
+        log.warn(`Falha ao arquivar ${att.path} → ${destPath}: ${(err as Error).message}`);
+        newAttachments.push(att);
+        skipped++;
+      }
+    }
+    t.attachments = newAttachments;
+  }
+  if (copied + skipped > 0) {
+    log.info(`Attachments arquivados em ${archiveRoot}: ${copied} copiados, ${skipped} ausentes/falha.`);
+  }
+}
+
+function renderEvidenceMd(t: FlatTest, reportDir: string): string {
+  const screenshots = t.attachments.filter((a) => a.contentType === 'image/png');
+  const errorCtx = t.attachments.find((a) => a.name === 'error-context');
+  const trace = t.attachments.find((a) => a.contentType === 'application/zip');
+  // Vídeos: dois arquivos por execução (video.webm + video-1.webm), o último
+  // costuma ser placeholder de ~2KB; ordenamos pelo tamanho real do basename
+  // pra que o vídeo principal apareça primeiro no relatório.
+  const videos = t.attachments
+    .filter((a) => a.contentType === 'video/webm' || /\.webm$/i.test(a.path))
+    .sort((a, b) => basename(a.path).length - basename(b.path).length);
+  if (screenshots.length === 0 && !errorCtx && !trace && videos.length === 0) {
+    return '_Sem evidências anexadas._';
+  }
+  // Path relativo ao tests.md (no reportDir) — usado em links/imagens MD.
+  const relPath = (p: string) => relative(reportDir, p).replace(/\\/g, '/');
+  // Path relativo ao cwd da invocação (raiz do agent-playwright) — usado em
+  // bloco bash do trace para que o comando funcione direto no terminal.
+  const cwdPath = (p: string) => relative(process.cwd(), p).replace(/\\/g, '/');
+  const lines: string[] = [];
+
+  // Header com a pasta do TC — orienta o leitor a navegar todos os artifacts
+  // do mesmo caso em um lugar só.
+  const anyPath = (screenshots[0] ?? trace ?? errorCtx ?? videos[0])?.path;
+  if (anyPath) {
+    const folderRel = relPath(dirname(anyPath));
+    lines.push(`📁 _Pasta:_ [\`${folderRel}/\`](${folderRel}/)`);
+  }
+
+  for (const ss of screenshots) {
+    const file = basename(ss.path);
+    const r = relPath(ss.path);
+    lines.push(`- 📸 **Screenshot${ss.name ? ` (${ss.name})` : ''}** — [\`${file}\`](${r})\n\n  ![](${r})`);
+  }
+  for (const v of videos) {
+    lines.push(`- 🎬 [Vídeo da execução (${basename(v.path)})](${relPath(v.path)})`);
+  }
+  if (trace) {
+    const file = basename(trace.path);
+    const r = relPath(trace.path);
+    const cwd = cwdPath(trace.path);
+    lines.push(
+      `- 📦 **Trace** — [\`${file}\`](${r})\n\n  \`\`\`bash\n  npx playwright show-trace ${cwd}\n  \`\`\``,
+    );
+  }
+  for (const v of videos) {
+    const file = basename(v.path);
+    const r = relPath(v.path);
+    lines.push(`- 🎥 **Vídeo** — [\`${file}\`](${r})`);
+  }
+  if (errorCtx) {
+    const file = basename(errorCtx.path);
+    const r = relPath(errorCtx.path);
+    lines.push(`- 📄 **DOM no momento da falha** — [\`${file}\`](${r})`);
+  }
+  return lines.join('\n\n');
+}
+
+function renderUnifiedStepsTableMd(xml: ParsedTestCase | undefined, t: FlatTest): string {
   const overallNote = t.status !== 'passed' ? failureOrSkipSummary(t) : '—';
   const isSkipped = t.status === 'skipped';
-
-  // 1. Identificar steps Allure que NÃO casam com nenhum XML step
   const xmlNumbers = (xml?.steps ?? []).map((s, i) => s.stepNumber ?? i + 1);
   const isXmlStep = (allureTitle: string): boolean =>
     xmlNumbers.some((n) => allureTitle.startsWith(`${n}. `));
   const preconditionSteps = t.steps.filter((as) => !isXmlStep(as.title));
 
-  // 2. Linhas de pré-condição (no topo)
-  const preRows = preconditionSteps.map((as) => {
+  const rows: string[] = [];
+
+  // Pré-condições no topo
+  for (const as of preconditionSteps) {
     const note = as.errorMessage
       ? playwrightHumanSummary(stripAnsi(as.errorMessage))
       : as.status === 'failed'
         ? (overallNote !== '—'
-            ? `Falha sem mensagem específica do step. Causa geral do teste: ${overallNote}`
-            : 'Pré-condição marcada como falha sem mensagem específica do Playwright.')
+            ? `Falha sem mensagem específica do step. Causa geral: ${overallNote}`
+            : 'Pré-condição marcada como falha sem mensagem específica.')
         : '—';
-    const cls = as.status === 'failed' ? 'step-failed precond-row' : 'precond-row';
-    return `<tr class="${cls}">
-      <td class="col-num">—</td>
-      <td colspan="2"><span class="precond-tag">Pré-condição</span>${escapeHtml(as.title)}</td>
-      <td style="text-align:center">${statusIcon(as.status)}</td>
-      <td style="font-size:0.82rem;color:var(--text-soft)">${escapeHtml(note)}</td>
-      <td class="col-time">${(as.durationMs / 1000).toFixed(2)}s</td>
-    </tr>`;
-  }).join('\n');
+    rows.push(`| — | _Pré-condição:_ ${mdCell(as.title)} | — | ${STATUS_EMOJI[as.status] ?? '·'} | ${mdCell(note)} | ${(as.durationMs / 1000).toFixed(2)}s |`);
+  }
 
-  // 3. Linhas dos steps do XML (com status do Allure correspondente)
-  // Identifica o último step Allure que efetivamente rodou (passou ou falhou)
-  // pra marcar steps subsequentes como "não executado" quando o teste foi
-  // interrompido por timeout ou falha catastrófica antes de chegar lá.
+  // XML steps
   const lastExecutedXmlIndex = (() => {
     if (!xml?.steps?.length) return -1;
     let last = -1;
@@ -1163,27 +1058,19 @@ function renderUnifiedStepsTable(xml: ParsedTestCase | undefined, t: FlatTest): 
     return last;
   })();
 
-  const xmlRows = (xml?.steps ?? []).map((s, i) => {
+  for (const [i, s] of (xml?.steps ?? []).entries()) {
     const allureMatch = t.steps.find(
       (as) => as.title.startsWith(`${i + 1}. `) || as.title.startsWith(`${s.stepNumber}. `),
     );
-
-    // Determina status do step:
-    // - allureMatch existe → usa o status do Allure (passed/failed)
-    // - sem match + teste passou → step também passou (caso raro de step sem instrumentação)
-    // - sem match + teste falhou + step antes do último executado → "passed" (já passou; só não foi instrumentado)
-    // - sem match + teste falhou + step depois do último executado → "skipped" (não chegou aqui — interrompido)
     let stepStatus: 'passed' | 'failed' | 'skipped';
     let stepNote: string;
     if (allureMatch) {
       stepStatus = allureMatch.status;
-      // Mesmo se errorMessage for vazio mas status=failed (caso raro), usa overallNote
-      // ao invés de '—' para garantir que uma falha sempre tenha justificativa.
       if (allureMatch.errorMessage) {
         stepNote = playwrightHumanSummary(stripAnsi(allureMatch.errorMessage));
       } else if (allureMatch.status === 'failed') {
         stepNote = overallNote !== '—'
-          ? `Falha sem mensagem específica do step. Causa geral do teste: ${overallNote}`
+          ? `Falha sem mensagem específica do step. Causa geral: ${overallNote}`
           : 'Step marcado como falho sem mensagem específica do Playwright.';
       } else {
         stepNote = '—';
@@ -1192,68 +1079,33 @@ function renderUnifiedStepsTable(xml: ParsedTestCase | undefined, t: FlatTest): 
       stepStatus = 'passed';
       stepNote = '—';
     } else if (isSkipped) {
-      // Teste skipado/fixme: nenhum step executou — todos compartilham o motivo do skip.
       stepStatus = 'skipped';
       stepNote = overallNote !== '—'
         ? `Step não executado — ${overallNote}`
-        : 'Step não executado (caso ignorado, sem justificativa registrada).';
+        : 'Step não executado (caso ignorado).';
     } else if (i <= lastExecutedXmlIndex) {
-      // Casos raros: step não capturado pelo Allure mas teste tentou continuar
       stepStatus = 'passed';
       stepNote = '—';
     } else {
-      // Step depois do último executado e teste falhou → não rodou
       stepStatus = 'skipped';
-      stepNote = `Step não executado: o teste foi interrompido antes de chegar aqui. Causa: ${overallNote !== '—' ? overallNote : 'falha em step anterior ou timeout do teste'}.`;
+      stepNote = `Step não executado: o teste foi interrompido antes. Causa: ${overallNote !== '—' ? overallNote : 'falha em step anterior ou timeout'}.`;
     }
-
-    const cls = stepStatus === 'failed' ? 'step-failed' : '';
     const duration = allureMatch ? `${(allureMatch.durationMs / 1000).toFixed(2)}s` : '—';
-    return `<tr class="${cls}">
-      <td class="col-num">${s.stepNumber}</td>
-      <td>${escapeHtml(s.actions || '(sem ação)')}</td>
-      <td>${escapeHtml(s.expectedResults || '(sem esperado)')}</td>
-      <td style="text-align:center">${statusIcon(stepStatus)}</td>
-      <td style="font-size:0.82rem;color:var(--text-soft)">${escapeHtml(stepNote)}</td>
-      <td class="col-time">${duration}</td>
-    </tr>`;
-  }).join('\n');
-
-  // 4. Casos de borda
-  if (!xml || xml.steps.length === 0) {
-    if (preconditionSteps.length === 0) {
-      return '<p class="muted" style="margin:0">Sem steps Allure ou metadata XML para este testcase.</p>';
-    }
-    // Só pré-condição (sem XML)
-    return `<div class="inner-scroll"><table class="inner-table">
-      <thead><tr>
-        <th class="col-num">#</th>
-        <th colspan="2">Step executado</th>
-        <th class="col-status">Status</th>
-        <th>Notas da execução</th>
-        <th class="col-time">Duração</th>
-      </tr></thead>
-      <tbody>${preRows}</tbody>
-    </table></div>
-    <p class="muted" style="margin:6px 0 0;font-size:0.78rem">Sem metadata XML para mapear roteiro planejado.</p>`;
+    rows.push(`| ${s.stepNumber} | ${mdCell(s.actions || '(sem ação)')} | ${mdCell(s.expectedResults || '(sem esperado)')} | ${STATUS_EMOJI[stepStatus] ?? '·'} | ${mdCell(stepNote)} | ${duration} |`);
   }
 
-  return `<div class="inner-scroll"><table class="inner-table">
-    <thead><tr>
-      <th class="col-num">#</th>
-      <th>Ação do passo</th>
-      <th>Resultado esperado</th>
-      <th class="col-status">Status</th>
-      <th>Notas da execução</th>
-      <th class="col-time">Duração</th>
-    </tr></thead>
-    <tbody>${preRows}${xmlRows}</tbody>
-  </table></div>`;
+  if (!xml || xml.steps.length === 0) {
+    if (preconditionSteps.length === 0) {
+      return '_Sem steps Allure ou metadata XML para este testcase._';
+    }
+  }
+
+  const header = '| # | Ação do passo | Resultado esperado | Status | Notas | Duração |\n|---|---|---|:---:|---|---:|';
+  return `${header}\n${rows.join('\n')}`;
 }
 
-function renderManualPendingBlock(t: FlatTest, xml: ParsedTestCase | undefined): string {
+function renderManualPendingBlockMd(t: FlatTest, xml: ParsedTestCase | undefined): string {
   const sev = xml ? SEVERITY_PT[severityFromImportance(xml.importance)] : '—';
-  const reason = t.skipReason ?? 'Sem motivo registrado.';
   const reproSteps: string[] = [];
   if (xml?.preconditions) {
     xml.preconditions
@@ -1265,77 +1117,158 @@ function renderManualPendingBlock(t: FlatTest, xml: ParsedTestCase | undefined):
   for (const s of xml?.steps ?? []) {
     reproSteps.push(`${s.stepNumber}. ${s.actions}`);
   }
-  if (reproSteps.length === 0) {
-    reproSteps.push('— (sem steps documentados no XML)');
-  }
-  const reproHtml = `<ol style="margin:0;padding-left:20px;color:var(--text-soft);font-size:0.86rem">${reproSteps.map((l) => `<li style="margin:3px 0">${escapeHtml(l)}</li>`).join('\n')}</ol>`;
-  const labelStyle = 'font-size:0.74rem;font-weight:700;color:var(--warn);text-transform:uppercase;letter-spacing:0.06em;margin-top:14px;margin-bottom:4px;display:block';
-  const fieldStyle = 'background:#010409;border:1px solid var(--border);border-radius:4px;padding:8px 10px;margin:4px 0 10px;font-size:0.86rem;color:var(--text-soft);white-space:pre-wrap;word-break:break-word';
+  if (reproSteps.length === 0) reproSteps.push('— (sem steps documentados no XML)');
 
-  return `<h4>Pendente — execução automatizada não realizada</h4>
-    <div class="bug-block" style="padding:14px 16px;border-color:var(--warn)">
-      <span style="${labelStyle}">Severidade do caso (XML)</span>
-      <div style="${fieldStyle}">${escapeHtml(sev)}</div>
-
-      <span style="${labelStyle}">Motivo do skip / fixme</span>
-      <div style="${fieldStyle}">${escapeHtml(reason)}</div>
-
-      <span style="${labelStyle}">Roteiro do XML (para validação manual)</span>
-      <div style="${fieldStyle.replace('white-space:pre-wrap;', '')}">${reproHtml}</div>
-
-      <p class="muted" style="margin:10px 0 0;font-size:0.82rem">Esse caso não bloqueia a build, mas precisa de validação manual ou ajuste no agente para passar a rodar automaticamente.</p>
-    </div>`;
+  const lines: string[] = [];
+  lines.push(`#### ⏳ Pendente — execução automatizada não realizada`);
+  lines.push('');
+  lines.push(`- **Severidade do caso (XML):** ${sev}`);
+  // Bloco estruturado com categoria + destinatário + próximo passo
+  // (CLAUDE.md §7.6 Anti-pattern F). Sem categoria declarada o leitor
+  // leigo não sabe quem precisa agir; o bloco abaixo orienta.
+  for (const line of renderFixmeStructured(t)) lines.push(line);
+  lines.push('');
+  lines.push(`**Roteiro do XML (para validação manual):**`);
+  for (const l of reproSteps) lines.push(`1. ${l}`);
+  lines.push('');
+  lines.push(`> Esse caso não bloqueia a build, mas precisa de validação manual ou ajuste no agente.`);
+  return lines.join('\n');
 }
 
-function renderBugReportBlock(
+/**
+ * Próximas ações sugeridas por categoria automática do bug-report
+ * (gerada por `gerar-bug-report-de-tc-red/generator.ts`). Cada bullet é
+ * acionável e ajuda leitor leigo a saber qual o próximo passo de
+ * investigação/correção.
+ */
+const NEXT_ACTIONS_BY_CATEGORY: Record<BugReportEntry['categoriaSugerida'], string[]> = {
+  'bug-produto': [
+    'Reproduzir o cenário manualmente seguindo os passos do TC para confirmar o bug.',
+    'Abrir `error-context.md` para ver o estado da página no momento da falha.',
+    'Verificar Network/Console no exploratório agregado (`exploratory.md`) — request 4xx/5xx ou Erro JS provavelmente apontam para a causa.',
+    'Registrar como bug de produto no backlog do dev responsável.',
+  ],
+  'spec-fragil': [
+    'Inspecionar o trace (`npx playwright show-trace`) para confirmar que o elemento existe mas o seletor/timing falhou.',
+    'Avaliar se o spec viola algum dos 3 padrões da skill `criar-spec-resiliente-twygo` (count de seed, timing pós-hidratação, retry de rede).',
+    'Disparar o healer (`playwright-test-healer`) para corrigir seletor/timing/asserção SEM alterar a intenção do teste.',
+  ],
+  'modal-nao-tratado': [
+    'Verificar `error-context.md` ou screenshot — se há modal NPS Sofia, "Modelo de página duplicado" ou similar bloqueando o fluxo.',
+    'Confirmar que o spec usa `safeGoto` em vez de `page.goto` direto (CLAUDE.md raiz §"page.goto + dismissCommonModals obrigatórios").',
+    'Atualizar `src/utils/modals.ts` `dismissCommonModals()` se o modal não estiver coberto.',
+  ],
+  'flakiness': [
+    'Re-executar o spec isoladamente: `PROJECT=<slug> npx playwright test <path> --repeat-each=3`.',
+    'Se passar em retry, é flakiness — investigar timing/race/rede; não abrir bug de produto.',
+    'Considerar skill `comparar-chrome-mcp-vs-playwright` para confirmar que reproduz só no Playwright.',
+  ],
+  'inconclusivo': [
+    'Sem evidência suficiente para classificar — abrir `trace.zip` (`npx playwright show-trace`) para ver passo a passo da execução.',
+    'Reabrir o agente com o trace em mãos para reclassificar manualmente em uma das 4 categorias.',
+  ],
+};
+
+const CATEGORY_ICON: Record<BugReportEntry['categoriaSugerida'], string> = {
+  'bug-produto': '🐛',
+  'spec-fragil': '🧪',
+  'modal-nao-tratado': '🪟',
+  'flakiness': '🌀',
+  'inconclusivo': '❓',
+};
+
+const CATEGORY_LABEL: Record<BugReportEntry['categoriaSugerida'], string> = {
+  'bug-produto': 'Bug de produto',
+  'spec-fragil': 'Spec frágil (problema no teste, não no produto)',
+  'modal-nao-tratado': 'Modal não tratado (bloqueio de UI)',
+  'flakiness': 'Flakiness (intermitência)',
+  'inconclusivo': 'Inconclusivo (precisa investigação manual)',
+};
+
+function findBugReportFor(t: FlatTest, bugReports: BugReportEntry[]): BugReportEntry | undefined {
+  return bugReports.find((b) => b.testcase === t.testcase && b.testsuite === t.testsuite);
+}
+
+function renderBugReportBlockMd(
   t: FlatTest,
   xml: ParsedTestCase | undefined,
   runId: string,
   reportDir: string,
   envEntry: EnvironmentEntry | undefined,
   envName: string,
+  bugReportEntry: BugReportEntry | undefined,
 ): string {
   if (t.status === 'passed') return '';
-  // Skipped/fixme não é bug — é pendência manual. Renderiza bloco diferente.
-  if (t.status === 'skipped') return renderManualPendingBlock(t, xml);
+  if (t.status === 'skipped') return renderManualPendingBlockMd(t, xml);
+
   const sev = xml ? SEVERITY_PT[severityFromImportance(xml.importance)] : '—';
   const summary = failureOrSkipSummary(t);
   const failedStep = t.failedStepIndex !== null ? t.steps[t.failedStepIndex] : null;
-  const stepRef = failedStep ? `${failedStep.number}. ${failedStep.title}` : '—';
-
-  // ─── Descrição do BUG: 1ª linha = severidade + nome + resumo
+  // Deduplicar prefixo numérico do título do step quando ele já começa com
+  // o mesmo número que vamos prefixar manualmente.
+  // Ex.: failedStep.number=3, title="3. Validar..." → não duplicar, render "3. Validar..."
+  const cleanFailedStepTitle = failedStep
+    ? failedStep.title.replace(new RegExp(`^${failedStep.number}\\.\\s+`), '').trim()
+    : '';
+  const stepRef = failedStep ? `${failedStep.number}. ${cleanFailedStepTitle}` : '—';
   const bugDescription = `[${sev}] ${t.testcase} — ${summary}`;
+  // Comportamento atual interpretativo: combina a tradução leiga + qual
+  // step falhou + o que esperava acontecer. Não só repete o erro técnico.
+  const expectedAtFailedStep = failedStep && xml?.steps
+    ? xml.steps.find((s) => s.stepNumber === failedStep.number)?.expectedResults
+    : undefined;
+  const interpretedCurrent = failedStep
+    ? `${summary} (falha aconteceu no passo ${failedStep.number}: "${cleanFailedStepTitle}"${
+        expectedAtFailedStep ? `, que deveria resultar em: ${expectedAtFailedStep}` : ''
+      })`
+    : summary;
 
-  // ─── Passo a passo para reprodução: pré-condições + steps do XML
   const reproSteps: string[] = [];
   if (xml?.preconditions) {
-    const lines = xml.preconditions
-      .split(/\r?\n/)
-      .map((l) => l.trim())
-      .filter(Boolean);
-    for (const l of lines) reproSteps.push(`Pré: ${l}`);
+    xml.preconditions.split(/\r?\n/).map((l) => l.trim()).filter(Boolean).forEach((l) => reproSteps.push(`Pré: ${l}`));
   }
   for (const s of xml?.steps ?? []) {
     reproSteps.push(`${s.stepNumber}. ${s.actions}`);
   }
-  if (reproSteps.length === 0) {
-    reproSteps.push('— (sem steps documentados no XML)');
-  }
+  if (reproSteps.length === 0) reproSteps.push('— (sem steps documentados no XML)');
 
-  // ─── Comportamento esperado vs. atual
   const expectedFromFailedStep = failedStep && xml?.steps
     ? xml.steps.find((s) => s.stepNumber === failedStep.number)?.expectedResults
     : undefined;
   const expectedBehavior = expectedFromFailedStep
     || xml?.steps.map((s) => `${s.stepNumber}. ${s.expectedResults}`).join(' | ')
     || '—';
-  const actualBehavior = summary;
 
-  // ─── Informações: URL, Login, Senha, ID do ambiente, Outros
-  const failureUrl = inferFailureUrl(t, envEntry?.baseUrl);
+  // Override do env principal via annotations do spec. Aplica quando o
+  // spec usa `test.use({ baseURL: ... })` apontando pra env diferente
+  // (ex: Trial). Sem annotations, mantém comportamento legado
+  // (env principal do project.config.json). Ver §"Override de env por
+  // annotation" na SKILL.md.
+  const annBaseUrl = t.annotations.find((a) => a.type === 'baseURL')?.description?.trim();
+  const annOrgId = t.annotations.find((a) => a.type === 'orgId')?.description?.trim();
+  const annEmailRef = t.annotations.find((a) => a.type === 'emailRef')?.description?.trim();
+  const annPasswordRef = t.annotations.find((a) => a.type === 'passwordRef')?.description?.trim();
+  const annEnvLabel = t.annotations.find((a) => a.type === 'envLabel')?.description?.trim();
+
+  const effectiveBaseUrl = annBaseUrl ?? envEntry?.baseUrl;
+  // Trocar placeholders `${VAR}` por texto amigável: leitor leigo não
+  // entende variável de ambiente. Mostra "Credenciais via env: VAR
+  // (consulte .env)" em vez do literal `${TWYGO_X_EMAIL}`.
+  const friendlyEnvRef = (raw: string | undefined): string => {
+    if (!raw || raw === '—') return '—';
+    const m = raw.match(/^\$\{([A-Z0-9_]+)\}\s*(.*)$/);
+    if (!m) return raw;
+    const varName = m[1];
+    const extra = m[2].trim();
+    return `Credenciais via env: \`${varName}\` (consulte \`.env\`)${extra ? ` — ${extra}` : ''}`;
+  };
+  const effectiveEmail = friendlyEnvRef(annEmailRef ?? envEntry?.credentials.email);
+  const effectivePassword = friendlyEnvRef(annPasswordRef ?? envEntry?.credentials.password);
+  const effectiveEnvLabel = annEnvLabel ?? envName;
+
+  const failureUrl = inferFailureUrl(t, effectiveBaseUrl);
   const ids = extractIdsFromUrl(failureUrl);
-  // Fallback: se não achou orgId/envId na URL de falha, varre todas as URLs do
-  // error-context (Playwright lista várias URLs intermediárias) ou do erro completo.
+  if (annOrgId && !ids.orgId) ids.orgId = annOrgId;
   if (!ids.orgId || !ids.envId) {
     const errCtx = t.attachments.find((a) => a.name === 'error-context');
     let fullText = t.errorMessage || '';
@@ -1351,6 +1284,7 @@ function renderBugReportBlock(
       if (m) ids.envId = m[1];
     }
   }
+  if (annOrgId) ids.orgId = annOrgId;
   const others: string[] = [];
   if (ids.envId) others.push(`envId interno (rota /ai_consumption_analysis/{envId}): ${ids.envId}`);
   others.push(`Browser: ${t.project}`);
@@ -1358,36 +1292,21 @@ function renderBugReportBlock(
   others.push(`Duração até a falha: ${(t.durationMs / 1000).toFixed(2)}s`);
   if (failedStep) others.push(`Step impactado: ${stepRef}`);
 
-  // ─── Evidências: para cada attachment relevante, descrição + caminho relativo
   const relPath = (p: string) => relative(reportDir, p).replace(/\\/g, '/');
-  type EvidenceItem = { description: string; href: string; isImage: boolean };
-  const evidences: EvidenceItem[] = [];
+  const evidences: string[] = [];
   for (const a of t.attachments) {
     if (a.contentType === 'image/png') {
-      evidences.push({
-        description: `Screenshot capturado pelo Playwright no momento da falha (${a.name})`,
-        href: relPath(a.path),
-        isImage: true,
-      });
+      evidences.push(`- Screenshot capturado pelo Playwright (${a.name}): ${relPath(a.path)}`);
+    } else if (a.contentType === 'video/webm' || /\.webm$/i.test(a.path)) {
+      evidences.push(`- Vídeo da execução (${basename(a.path)}): ${relPath(a.path)}`);
     } else if (a.contentType === 'application/zip') {
-      evidences.push({
-        description: 'Trace completo do Playwright (.zip) — abrir com `npx playwright show-trace`',
-        href: relPath(a.path),
-        isImage: false,
-      });
+      evidences.push(`- Trace completo do Playwright (.zip) — \`npx playwright show-trace\`: ${relPath(a.path)}`);
     } else if (a.name === 'error-context') {
-      evidences.push({
-        description: 'Snapshot do DOM/contexto da página no momento da falha (error-context.md)',
-        href: relPath(a.path),
-        isImage: false,
-      });
+      evidences.push(`- Snapshot do DOM/contexto da página (error-context.md): ${relPath(a.path)}`);
     }
   }
+  const evidenceLines = evidences.length === 0 ? '  (sem anexos)' : evidences.join('\n');
 
-  // ─── Texto agregado para botão "Copiar"
-  const evidenceLines = evidences.length === 0
-    ? '  (sem anexos)'
-    : evidences.map((e) => `  - ${e.description}: ${e.href}`).join('\n');
   const aggregateText = `Descrição do BUG
 ${bugDescription}
 
@@ -1398,12 +1317,12 @@ Comportamento esperado
 ${expectedBehavior}
 
 Comportamento atual
-${actualBehavior}
+${interpretedCurrent}
 
 Informações
 - URL: ${failureUrl}
-- Login: ${envEntry?.credentials.email ?? '—'}
-- Senha: ${envEntry?.credentials.password ?? '—'}
+- Login: ${effectiveEmail}
+- Senha: ${effectivePassword}
 - ID do ambiente (orgId): ${ids.orgId ?? '—'}
 - Outros:
 ${others.map((o) => `  - ${o}`).join('\n')}
@@ -1413,274 +1332,187 @@ ${evidenceLines}
 
 Execução
 - runId: ${runId}
-- environment.json: ${envName}
+- environment.json: ${effectiveEnvLabel}
 - testsuite: ${t.testsuite}
 - testcase: ${t.testcase}
 `;
 
-  // ─── Render visual estruturado por campos padrão
-  const fieldStyle = 'background:#010409;border:1px solid var(--border);border-radius:4px;padding:8px 10px;margin:4px 0 10px;font-size:0.86rem;color:var(--text-soft);white-space:pre-wrap;word-break:break-word';
-  const labelStyle = 'font-size:0.74rem;font-weight:700;color:var(--info);text-transform:uppercase;letter-spacing:0.06em;margin-top:14px;margin-bottom:4px;display:block';
-
-  const reproHtml = `<ol style="margin:0;padding-left:20px;color:var(--text-soft);font-size:0.86rem">${reproSteps.map((l) => `<li style="margin:3px 0">${escapeHtml(l)}</li>`).join('\n')}</ol>`;
-  const othersHtml = `<ul style="margin:0;padding-left:18px;color:var(--text-soft);font-size:0.86rem">${others.map((o) => `<li style="margin:2px 0">${escapeHtml(o)}</li>`).join('\n')}</ul>`;
-  const infoTable = `<table class="inner-table" style="margin:4px 0 8px">
-    <tbody>
-      <tr><td style="width:14rem;color:var(--muted);font-weight:600">URL</td><td style="font-family:ui-monospace,monospace;font-size:0.8rem;word-break:break-all">${escapeHtml(failureUrl)}</td></tr>
-      <tr><td style="color:var(--muted);font-weight:600">Login</td><td>${escapeHtml(envEntry?.credentials.email ?? '—')}</td></tr>
-      <tr><td style="color:var(--muted);font-weight:600">Senha</td><td>${escapeHtml(envEntry?.credentials.password ?? '—')}</td></tr>
-      <tr><td style="color:var(--muted);font-weight:600">ID do ambiente (orgId)</td><td>${escapeHtml(ids.orgId ?? '—')}</td></tr>
-      <tr><td style="color:var(--muted);font-weight:600;vertical-align:top">Outros</td><td>${othersHtml}</td></tr>
-    </tbody>
-  </table>`;
-
-  const evidenceHtml = evidences.length === 0
-    ? '<p class="muted" style="margin:4px 0 8px">Sem anexos coletados pelo Playwright.</p>'
-    : evidences.map((e) => `<div style="display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-bottom:1px dashed var(--border)">
-        <div style="flex:1">
-          <div style="font-size:0.86rem;color:var(--text-soft)">${escapeHtml(e.description)}</div>
-          <div style="margin-top:4px;font-size:0.78rem"><a href="${escapeHtml(e.href)}" target="_blank">${escapeHtml(e.href)}</a></div>
-        </div>
-        ${e.isImage ? `<a href="${escapeHtml(e.href)}" target="_blank" style="flex-shrink:0"><img src="${escapeHtml(e.href)}" alt="evidência" style="max-width:160px;max-height:90px;border-radius:4px;border:1px solid var(--border);object-fit:contain"></a>` : ''}
-      </div>`).join('\n');
-
-  const id = `bug-${slugify(t.testcase)}`;
-  const aggregateId = `${id}-text`;
-  return `<h4>Pronto para registro de bug</h4>
-    <div class="bug-block" style="padding:14px 16px">
-      <span style="${labelStyle}">Descrição do BUG</span>
-      <div style="${fieldStyle}">${escapeHtml(bugDescription)}</div>
-
-      <span style="${labelStyle}">Passo a passo para reprodução</span>
-      <div style="${fieldStyle.replace('white-space:pre-wrap;', '')}">${reproHtml}</div>
-
-      <span style="${labelStyle}">Comportamento esperado</span>
-      <div style="${fieldStyle}">${escapeHtml(expectedBehavior)}</div>
-
-      <span style="${labelStyle}">Comportamento atual</span>
-      <div style="${fieldStyle}">${escapeHtml(actualBehavior)}</div>
-
-      <span style="${labelStyle}">Informações</span>
-      ${infoTable}
-
-      <span style="${labelStyle}">Evidências</span>
-      <div style="background:#010409;border:1px solid var(--border);border-radius:4px;padding:8px 12px;margin:4px 0 10px">${evidenceHtml}</div>
-
-      <details style="margin-top:14px">
-        <summary>Ver texto agregado para copiar (Jira/GitHub/Linear)</summary>
-        <textarea id="${aggregateId}" readonly style="width:100%;height:18rem;background:#010409;color:var(--text-soft);border:1px solid var(--border);resize:vertical;font-family:ui-monospace,SF Mono,Consolas,monospace;font-size:0.78rem;padding:10px;margin-top:8px;border-radius:4px">${escapeHtml(aggregateText)}</textarea>
-        <div class="btn-row">
-          <button type="button" onclick="copyBug('${aggregateId}', this)">Copiar texto agregado</button>
-          <span class="muted" style="margin-left:6px">Cola direto na descrição do ticket.</span>
-        </div>
-      </details>
-    </div>`;
+  const lines: string[] = [];
+  lines.push(`#### 🐛 Pronto para registro de bug`);
+  lines.push('');
+  // Classificação automática propagada de `gerar-bug-report-de-tc-red`.
+  // É o sinal mais valioso para leitor leigo: "isto é bug de produto?
+  // ou problema do teste?". Sem isso, o leigo lê só a mensagem técnica.
+  if (bugReportEntry) {
+    const icon = CATEGORY_ICON[bugReportEntry.categoriaSugerida];
+    const label = CATEGORY_LABEL[bugReportEntry.categoriaSugerida];
+    const confEmoji = bugReportEntry.categoriaConfianca === 'alta'
+      ? '🟢'
+      : bugReportEntry.categoriaConfianca === 'media'
+        ? '🟡'
+        : '🔴';
+    lines.push(`> ${icon} **Análise automática:** ${label} · Confiança ${confEmoji} ${bugReportEntry.categoriaConfianca}`);
+    lines.push(`> _Por quê:_ ${bugReportEntry.categoriaJustificativa}`);
+    lines.push(`> _Bug-report estruturado:_ [\`bug-reports/${bugReportEntry.id}.md\`](bug-reports/${bugReportEntry.id}.md)`);
+    lines.push('');
+    lines.push(`**Próximas ações sugeridas:**`);
+    for (const action of NEXT_ACTIONS_BY_CATEGORY[bugReportEntry.categoriaSugerida]) {
+      lines.push(`- ${action}`);
+    }
+    lines.push('');
+  }
+  lines.push(`**Descrição do BUG:** ${bugDescription}`);
+  lines.push('');
+  lines.push(`**Passo a passo para reprodução:**`);
+  for (const r of reproSteps) lines.push(`1. ${r}`);
+  lines.push('');
+  lines.push(`**Comportamento esperado:** ${expectedBehavior}`);
+  lines.push('');
+  lines.push(`**Comportamento atual:** ${interpretedCurrent}`);
+  lines.push('');
+  lines.push(`**Informações:**`);
+  lines.push('');
+  lines.push(`| Campo | Valor |`);
+  lines.push(`|---|---|`);
+  lines.push(`| URL | \`${failureUrl}\` |`);
+  lines.push(`| Login | ${effectiveEmail} |`);
+  lines.push(`| Senha | ${effectivePassword} |`);
+  lines.push(`| orgId | ${ids.orgId ?? '—'} |`);
+  if (annEnvLabel) lines.push(`| Env (override via annotation) | \`${annEnvLabel}\` |`);
+  for (const o of others) lines.push(`| Outros | ${mdCell(o)} |`);
+  lines.push('');
+  lines.push(`**Evidências:**`);
+  lines.push('');
+  lines.push(evidences.length === 0 ? '_Sem anexos coletados pelo Playwright._' : evidences.join('\n'));
+  lines.push('');
+  lines.push(`<details><summary>📋 Ver texto agregado para copiar (Jira/GitHub/Linear)</summary>`);
+  lines.push('');
+  lines.push('```');
+  lines.push(aggregateText);
+  lines.push('```');
+  lines.push('');
+  lines.push(`</details>`);
+  return lines.join('\n');
 }
 
-function renderTestcaseDetailPanel(
+function renderTestcaseDetailPanelMd(
   t: FlatTest,
   xml: ParsedTestCase | undefined,
   runId: string,
   reportDir: string,
   envEntry: EnvironmentEntry | undefined,
   envName: string,
+  bugReportEntry: BugReportEntry | undefined,
 ): string {
+  const lines: string[] = [];
   const failedStep = t.failedStepIndex !== null ? t.steps[t.failedStepIndex] : null;
   const summary = t.status !== 'passed' ? failureOrSkipSummary(t) : null;
-
-  const failureBlockLabel = t.status === 'skipped'
-    ? 'Por que foi ignorado'
-    : 'Por que falhou';
-  const failureBlock = summary
-    ? `<div class="failure-summary">
-        <div class="label">${failureBlockLabel}</div>
-        <div class="text">${escapeHtml(summary)}</div>
-        ${failedStep ? `<div class="step-ref">Step impactado: <strong>${escapeHtml(failedStep.title)}</strong></div>` : ''}
-      </div>`
+  // Deduplicar prefixo numérico do título do step quando ele já começa
+  // com o mesmo número (caso real: failedStep.number=3 + title="3. Validar..."
+  // gerava "3. 3. Validar..." na apresentação).
+  const cleanFailedStepTitle = failedStep
+    ? failedStep.title.replace(new RegExp(`^${failedStep.number}\\.\\s+`), '').trim()
     : '';
 
-  const summaryBlock = xml?.summary
-    ? `<h4>Sumário (objetivo do caso)</h4><p style="margin:0;color:var(--text-soft)">${escapeHtml(xml.summary)}</p>`
-    : '';
+  if (summary) {
+    const label = t.status === 'skipped' ? 'Por que foi ignorado' : 'Por que falhou';
+    lines.push(`> **${STATUS_EMOJI[t.status] ?? '·'} ${label}:** ${summary}`);
+    if (failedStep) lines.push(`> _Step impactado:_ **${failedStep.number}. ${cleanFailedStepTitle}**`);
+    lines.push('');
+  }
+  if (xml?.summary) {
+    lines.push(`**Sumário (objetivo do caso):** ${xml.summary}`);
+    lines.push('');
+  }
+  if (xml?.preconditions) {
+    lines.push(`**Pré-condições:**`);
+    lines.push('');
+    lines.push('```');
+    lines.push(xml.preconditions.trim());
+    lines.push('```');
+    lines.push('');
+  }
 
-  const preconditionsBlock = xml?.preconditions
-    ? `<h4>Pré-condições</h4><div class="preconditions">${escapeHtml(xml.preconditions)}</div>`
-    : '';
+  lines.push(`**Passos do caso (XML/TestLink + execução Playwright):**`);
+  lines.push('');
+  lines.push(`_Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da execução (do step Allure correspondente). Linhas com "Pré-condição" são da execução automatizada (login, navegação inicial) — não fazem parte do roteiro do XML._`);
+  lines.push('');
+  lines.push(renderUnifiedStepsTableMd(xml, t));
+  lines.push('');
 
-  return `<div class="tc-detail-panel">
-    ${statusStrip(t.status, t.durationMs)}
-    ${failureBlock}
-    ${summaryBlock}
-    ${preconditionsBlock}
+  lines.push(`**Evidências:**`);
+  lines.push('');
+  lines.push(renderEvidenceMd(t, reportDir));
+  lines.push('');
 
-    <h4>Passos do caso (XML/TestLink + execução Playwright)</h4>
-    <p class="muted" style="margin:0 0 6px;font-size:0.82rem">Cada linha reproduz um passo do XML; a coluna <strong>Status</strong> traz o resultado da execução automatizada (do step Allure correspondente). Linhas em azul claro são <strong>pré-condições</strong> da execução (login, navegação inicial) que não fazem parte do roteiro do XML mas são necessárias pra rodar o teste.</p>
-    ${renderUnifiedStepsTable(xml, t)}
+  const bug = renderBugReportBlockMd(t, xml, runId, reportDir, envEntry, envName, bugReportEntry);
+  if (bug) {
+    lines.push(bug);
+    lines.push('');
+  }
 
-    <h4>Evidências</h4>
-    ${renderEvidenceCards(t, reportDir)}
-
-    ${renderBugReportBlock(t, xml, runId, reportDir, envEntry, envName)}
-
-    ${t.errorMessage && t.status !== 'skipped' ? `<details><summary>Stack trace técnica completa (para desenvolvedor)</summary>
-      <pre>${escapeHtml(truncate(stripAnsi(t.errorMessage), 12000))}</pre>
-    </details>` : ''}
-  </div>`;
+  if (t.errorMessage && t.status !== 'skipped') {
+    lines.push(`<details><summary>🔧 Stack trace técnica completa (para desenvolvedor)</summary>`);
+    lines.push('');
+    lines.push('```');
+    lines.push(truncate(stripAnsi(t.errorMessage), 12000));
+    lines.push('```');
+    lines.push('');
+    lines.push(`</details>`);
+  }
+  return lines.join('\n');
 }
 
-function renderTests(args: {
+function renderTestsMd(args: {
   byTestsuite: Map<string, FlatTest[]>;
   projectName: string;
   xmlByName: Map<string, ParsedTestCase>;
+  tcNumbers: Map<string, string>;
   runId: string;
   reportDir: string;
   envEntry: EnvironmentEntry | undefined;
   envName: string;
+  bugReports: BugReportEntry[];
 }): string {
-  const blocks = [...args.byTestsuite.entries()]
-    .map(([suiteName, tests]) => {
-      const rows = tests
-        .map((t, idx) => {
-          const xml = args.xmlByName.get(t.testcase.trim());
-          const importance = xml?.importance;
-          const sev = importance !== undefined ? severityBadge(importance) : '';
-          const detailId = `tc-${slugify(t.testcase)}`;
-          const summaryHint = t.status !== 'passed'
-            ? `<div style="font-size:0.82rem;color:var(--muted);margin-top:4px">${escapeHtml(failureOrSkipSummary(t))}</div>`
-            : '';
-          return `<tr class="tc-summary-row" data-idx="${idx}-${slugify(suiteName)}" data-status="${t.status}" data-importance="${importance ?? ''}" id="${detailId}">
-            <td><strong>${escapeHtml(t.testcase)}</strong> ${sev}${summaryHint}<div class="muted" style="font-size:0.74rem;margin-top:3px">${escapeHtml(t.fileLabel)}</div></td>
-            <td class="col-status">${statusBadge(t.status)}</td>
-            <td class="col-time">${(t.durationMs / 1000).toFixed(2)}s</td>
-            <td class="col-actions"><button type="button" class="tc-toggle" data-idx="${idx}-${slugify(suiteName)}" aria-expanded="false">Expandir detalhes</button></td>
-          </tr>
-          <tr class="tc-detail-row" data-idx="${idx}-${slugify(suiteName)}">
-            <td colspan="4">${renderTestcaseDetailPanel(t, xml, args.runId, args.reportDir, args.envEntry, args.envName)}</td>
-          </tr>`;
-        })
-        .join('\n');
-      const ss = summarizeTests(tests);
-      const sumLine = `<span class="muted">${tests.length} caso(s) — ${ss.passed} aprovado(s), ${ss.failed} falha(s)${ss.skipped ? `, ${ss.skipped} ignorado(s)` : ''}</span>`;
-      return `<h3 style="margin-top:24px">${escapeHtml(suiteName)}</h3>
-        <p style="margin:0 0 8px">${sumLine}</p>
-        <table>
-          <thead><tr>
-            <th>Caso</th>
-            <th class="col-status">Status</th>
-            <th class="col-time">Duração</th>
-            <th class="col-actions">Ações</th>
-          </tr></thead>
-          <tbody>${rows}</tbody>
-        </table>`;
-    })
-    .join('\n');
+  const lines: string[] = [];
+  lines.push(`# Casos de teste — ${args.projectName}`);
+  lines.push('');
+  lines.push(`[← Voltar ao dashboard](index.md)`);
+  lines.push('');
+  lines.push(`Lista detalhada por testsuite. Cada caso traz: o que era esperado pelo XML, quais steps foram executados, evidências (screenshots/trace), texto pronto pra registro de bug e — quando houver falha — uma explicação em PT-BR do motivo.`);
+  lines.push('');
 
-  const filterBar = `<div class="btn-row">
-    <button type="button" onclick="expandAllTests()">Expandir todos os detalhes</button>
-    <button type="button" onclick="collapseAllTests()">Retrair todos os detalhes</button>
-    <label for="statusFilter">Filtrar por status:</label>
-    <select id="statusFilter" onchange="filterByStatus()">
-      <option value="">Todos os status</option>
-      <option value="passed">Só aprovados</option>
-      <option value="failed">Só falhas</option>
-      <option value="timedOut">Só tempo esgotado</option>
-      <option value="skipped">Só ignorados</option>
-    </select>
-    <label for="severityFilter">Severidade:</label>
-    <select id="severityFilter" onchange="filterByStatus()">
-      <option value="">Todas</option>
-      <option value="3">Críticos</option>
-      <option value="2">Normais</option>
-      <option value="1">Menores</option>
-    </select>
-  </div>`;
-
-  const js = `<script>
-function syncDetail(det) { if (!det) return; det.style.display = det.classList.contains('is-expanded') ? 'table-row' : 'none'; }
-function toggleDetail(idx) {
-  const det = document.querySelector('tr.tc-detail-row[data-idx="' + idx + '"]');
-  const sum = document.querySelector('tr.tc-summary-row[data-idx="' + idx + '"]');
-  const btn = document.querySelector('button.tc-toggle[data-idx="' + idx + '"]');
-  if (!det || !btn) return;
-  const open = !det.classList.contains('is-expanded');
-  det.classList.toggle('is-expanded', open);
-  sum?.classList.toggle('is-expanded', open);
-  syncDetail(det);
-  btn.textContent = open ? 'Retrair detalhes' : 'Expandir detalhes';
-  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-}
-document.addEventListener('click', (ev) => {
-  const btn = ev.target.closest('button.tc-toggle');
-  if (btn) { ev.stopPropagation(); toggleDetail(btn.dataset.idx); return; }
-  const row = ev.target.closest('tr.tc-summary-row');
-  if (row && !ev.target.closest('a, button')) toggleDetail(row.dataset.idx);
-});
-function expandAllTests() {
-  document.querySelectorAll('tr.tc-summary-row').forEach((row) => {
-    if (row.style.display === 'none') return;
-    const idx = row.dataset.idx;
-    const det = document.querySelector('tr.tc-detail-row[data-idx="' + idx + '"]');
-    const btn = document.querySelector('button.tc-toggle[data-idx="' + idx + '"]');
-    if (det) { det.classList.add('is-expanded'); syncDetail(det); }
-    row.classList.add('is-expanded');
-    if (btn) { btn.textContent = 'Retrair detalhes'; btn.setAttribute('aria-expanded', 'true'); }
-  });
-}
-function collapseAllTests() {
-  document.querySelectorAll('tr.tc-detail-row').forEach((det) => { det.classList.remove('is-expanded'); syncDetail(det); });
-  document.querySelectorAll('tr.tc-summary-row').forEach((row) => row.classList.remove('is-expanded'));
-  document.querySelectorAll('button.tc-toggle').forEach((btn) => { btn.textContent = 'Expandir detalhes'; btn.setAttribute('aria-expanded', 'false'); });
-}
-function filterByStatus() {
-  const st = document.getElementById('statusFilter').value;
-  const sv = document.getElementById('severityFilter').value;
-  document.querySelectorAll('tr.tc-summary-row').forEach((row) => {
-    const matchSt = !st || row.dataset.status === st;
-    const matchSv = !sv || row.dataset.importance === sv;
-    const show = matchSt && matchSv;
-    row.style.display = show ? '' : 'none';
-    const idx = row.dataset.idx;
-    const det = document.querySelector('tr.tc-detail-row[data-idx="' + idx + '"]');
-    if (det) {
-      if (!show) { det.classList.remove('is-expanded'); det.style.display = 'none'; }
-      else syncDetail(det);
-    }
-  });
-}
-function copyBug(id, btn) {
-  const ta = document.getElementById(id);
-  if (!ta) return;
-  ta.select(); ta.setSelectionRange(0, 99999);
-  navigator.clipboard.writeText(ta.value).then(() => {
-    const original = btn.textContent;
-    btn.textContent = '✓ Copiado';
-    setTimeout(() => { btn.textContent = original; }, 1800);
-  });
-}
-// Auto-expand if URL hash points to a testcase
-window.addEventListener('load', () => {
-  if (location.hash) {
-    const row = document.querySelector(location.hash);
-    if (row) toggleDetail(row.dataset.idx);
+  if (args.byTestsuite.size === 0) {
+    lines.push(`_Nenhum testcase executado._`);
+    return lines.join('\n');
   }
-});
-</script>`;
 
-  const body = `
-    <h1>Casos de teste — ${escapeHtml(args.projectName)}</h1>
-    <p class="subtitle"><a href="index.html">← Voltar ao dashboard</a></p>
-    <p class="lede">Lista detalhada por testsuite. Clique em uma linha (ou em "Expandir detalhes") para ver: o que era esperado pelo XML, quais steps foram executados, evidências (screenshots / trace), texto pronto pra registro de bug e — quando houver falha — uma explicação em PT-BR do motivo.</p>
+  for (const [suiteName, tests] of args.byTestsuite.entries()) {
+    const ss = summarizeTests(tests);
+    lines.push(`## ${suiteName}`);
+    lines.push('');
+    lines.push(`_${tests.length} caso(s) — ${ss.passed} aprovado(s), ${ss.failed} falha(s)${ss.skipped ? `, ${ss.skipped} ignorado(s)` : ''}_`);
+    lines.push('');
 
-    ${filterBar}
-
-    ${blocks || '<p class="muted">Nenhum testcase executado.</p>'}
-
-    ${js}
-  `;
-  return htmlShell(`Casos de teste — ${args.projectName}`, body);
+    for (const t of tests) {
+      const xml = args.xmlByName.get(t.testcase.trim());
+      const sev = xml ? severityLabel(xml.importance) : '';
+      const anchorId = slugify(t.testcase);
+      lines.push(`### ${statusLabel(t.status)} · ${formatTcTitle(t.testcase, args.tcNumbers)} ${sev ? `· ${sev}` : ''}`);
+      lines.push('');
+      lines.push(`<a id="${anchorId}"></a>_Arquivo:_ \`${t.fileLabel}\` · _Duração:_ ${(t.durationMs / 1000).toFixed(2)}s · _Browser:_ ${t.project}`);
+      lines.push('');
+      const bugReportEntry = findBugReportFor(t, args.bugReports);
+      lines.push(renderTestcaseDetailPanelMd(t, xml, args.runId, args.reportDir, args.envEntry, args.envName, bugReportEntry));
+      lines.push('');
+      lines.push(`---`);
+      lines.push('');
+    }
+  }
+  return lines.join('\n');
 }
 
-// ─── Exploratory ────────────────────────────────────────────────────────────
+// ─── MD render — exploratory.md ─────────────────────────────────────────────
 
 function partitionFindings(findings: ExploratoryFinding[]) {
   const out = {
@@ -1700,9 +1532,8 @@ function partitionFindings(findings: ExploratoryFinding[]) {
   return out;
 }
 
-function renderConsoleSection(findings: ExploratoryFinding[]): string {
+function renderConsoleSectionMd(findings: ExploratoryFinding[]): string {
   if (findings.length === 0) return '';
-  // Agrega por mensagem para reduzir ruído (ex.: erro repetido em todas as páginas)
   const aggregated = new Map<string, { kind: string; severity: string; message: string; urls: Set<string>; count: number }>();
   for (const f of findings) {
     const key = `${f.kind}|${f.message.slice(0, 200)}`;
@@ -1710,22 +1541,18 @@ function renderConsoleSection(findings: ExploratoryFinding[]): string {
     if (ex) { ex.count++; ex.urls.add(f.url); }
     else aggregated.set(key, { kind: f.kind, severity: f.severity, message: f.message, urls: new Set([f.url]), count: 1 });
   }
-  const items = [...aggregated.values()]
-    .sort((a, b) => b.count - a.count)
-    .map((g) => `<div class="finding-row">
-      <span class="badge fail">${escapeHtml(kindPt(g.kind))}</span>
-      <span style="margin-left:6px;color:var(--muted);font-size:0.78rem">${g.count} ocorrência(s) em ${g.urls.size} URL(s)</span>
-      <div style="margin-top:6px">${escapeHtml(truncate(g.message, 400))}</div>
-      ${g.urls.size === 1 ? `<div class="url">${escapeHtml([...g.urls][0])}</div>` : ''}
-    </div>`)
-    .join('\n');
-  return `<div class="kind-section kind-error">
-    <h4 class="header">Erros JavaScript no navegador (${findings.length} ocorrência(s) · ${aggregated.size} mensagens distintas)</h4>
-    ${items}
-  </div>`;
+  const lines: string[] = [];
+  lines.push(`#### ❌ Erros JavaScript no navegador (${findings.length} ocorrência(s) · ${aggregated.size} mensagem(ens) distinta(s))`);
+  lines.push('');
+  for (const g of [...aggregated.values()].sort((a, b) => b.count - a.count)) {
+    lines.push(`- **${kindPt(g.kind)}** — _${g.count} ocorrência(s) em ${g.urls.size} URL(s)_`);
+    lines.push(`  > ${truncate(g.message, 400).replace(/\n/g, ' ')}`);
+    if (g.urls.size === 1) lines.push(`  \`${[...g.urls][0]}\``);
+  }
+  return lines.join('\n');
 }
 
-function renderHttpSection(findings: ExploratoryFinding[]): string {
+function renderHttpSectionMd(findings: ExploratoryFinding[]): string {
   if (findings.length === 0) return '';
   const aggregated = new Map<string, { status: number; method: string; url: string; severity: string; count: number }>();
   for (const f of findings) {
@@ -1736,26 +1563,19 @@ function renderHttpSection(findings: ExploratoryFinding[]): string {
     if (ex) ex.count++;
     else aggregated.set(key, { status, method, url: f.url, severity: f.severity, count: 1 });
   }
-  const sortedRows = [...aggregated.values()]
-    .sort((a, b) => b.count - a.count)
-    .map((r) => `<tr>
-      <td><span class="badge ${r.severity === 'error' ? 'fail' : 'warn'}">${r.status}</span></td>
-      <td>${escapeHtml(r.method)}</td>
-      <td style="font-family:ui-monospace,monospace;font-size:0.78rem;word-break:break-all">${escapeHtml(r.url)}</td>
-      <td style="text-align:center">${r.count}</td>
-    </tr>`)
-    .join('\n');
-  const sevCls = findings.some((f) => f.severity === 'error') ? 'kind-error' : 'kind-warn';
-  return `<div class="kind-section ${sevCls}">
-    <h4 class="header">Respostas HTTP de falha (${findings.length} no total · ${aggregated.size} únicas)</h4>
-    <table class="inner-table" style="border-radius:6px;border:1px solid var(--border);background:var(--surface)">
-      <thead><tr><th>Status</th><th>Método</th><th>URL</th><th style="text-align:center">Ocorrências</th></tr></thead>
-      <tbody>${sortedRows}</tbody>
-    </table>
-  </div>`;
+  const sevTitle = findings.some((f) => f.severity === 'error') ? '❌' : '⚠️';
+  const lines: string[] = [];
+  lines.push(`#### ${sevTitle} Respostas HTTP de falha (${findings.length} no total · ${aggregated.size} únicas)`);
+  lines.push('');
+  lines.push(`| Status | Método | URL | Ocorrências |`);
+  lines.push(`|---:|---|---|---:|`);
+  for (const r of [...aggregated.values()].sort((a, b) => b.count - a.count)) {
+    lines.push(`| ${r.status} | ${r.method} | \`${mdCell(r.url)}\` | ${r.count} |`);
+  }
+  return lines.join('\n');
 }
 
-function renderA11ySection(findings: ExploratoryFinding[]): string {
+function renderA11ySectionMd(findings: ExploratoryFinding[]): string {
   if (findings.length === 0) return '';
   const byRule = new Map<string, ExploratoryFinding[]>();
   for (const f of findings) {
@@ -1764,169 +1584,170 @@ function renderA11ySection(findings: ExploratoryFinding[]): string {
     arr.push(f);
     byRule.set(ruleId, arr);
   }
-  const rules = [...byRule.entries()]
-    .sort((a, b) => b[1].length - a[1].length)
-    .map(([ruleId, items]) => {
-      const first = items[0];
-      const impact = (first.detail?.['impact'] as string) ?? 'unknown';
-      const tags = (first.detail?.['tags'] as string[]) ?? [];
-      const helpUrl = (first.detail?.['helpUrl'] as string) ?? '';
-      const sampleHtml = (first.detail?.['firstNodeHtml'] as string) ?? '';
-      const sampleTarget = (first.detail?.['firstNodeTarget'] as string[] | undefined)?.join(' ');
-      const urls = [...new Set(items.map((i) => i.url))];
-      const sevCls = first.severity === 'error' ? 'fail' : 'warn';
-      return `<div class="a11y-rule">
-        <div><span class="rule-id">${escapeHtml(ruleId)}</span> <span class="badge ${sevCls}">${escapeHtml(impact)}</span> <span class="muted" style="margin-left:6px">${items.length} ocorrência(s) em ${urls.length} URL(s)</span></div>
-        <div class="muted" style="margin:4px 0;font-size:0.82rem">${escapeHtml(first.message)}${tags.length > 0 ? ` · WCAG: ${escapeHtml(tags.join(', '))}` : ''}</div>
-        ${helpUrl ? `<div style="font-size:0.78rem;margin:4px 0"><a href="${escapeHtml(helpUrl)}" target="_blank">Como corrigir →</a></div>` : ''}
-        ${sampleTarget ? `<div class="muted" style="font-size:0.78rem">Seletor: <code style="font-family:ui-monospace,monospace">${escapeHtml(sampleTarget)}</code></div>` : ''}
-        ${sampleHtml ? `<pre style="font-size:0.72rem;max-height:6rem">${escapeHtml(sampleHtml)}</pre>` : ''}
-      </div>`;
-    })
-    .join('\n');
-  const sevCls = findings.some((f) => f.severity === 'error') ? 'kind-error' : 'kind-warn';
-  return `<div class="kind-section ${sevCls}">
-    <h4 class="header">Acessibilidade — axe-core (${findings.length} no total · ${byRule.size} regra(s) única(s))</h4>
-    ${rules}
-  </div>`;
+  const sevTitle = findings.some((f) => f.severity === 'error') ? '❌' : '⚠️';
+  const lines: string[] = [];
+  lines.push(`#### ${sevTitle} Acessibilidade — axe-core (${findings.length} no total · ${byRule.size} regra(s) única(s))`);
+  lines.push('');
+  for (const [ruleId, items] of [...byRule.entries()].sort((a, b) => b[1].length - a[1].length)) {
+    const first = items[0];
+    const impact = (first.detail?.['impact'] as string) ?? 'unknown';
+    const tags = (first.detail?.['tags'] as string[]) ?? [];
+    const helpUrl = (first.detail?.['helpUrl'] as string) ?? '';
+    const sampleHtml = (first.detail?.['firstNodeHtml'] as string) ?? '';
+    const sampleTarget = (first.detail?.['firstNodeTarget'] as string[] | undefined)?.join(' ');
+    const urls = [...new Set(items.map((i) => i.url))];
+    lines.push(`- **\`${ruleId}\`** _(${impact})_ — ${items.length} ocorrência(s) em ${urls.length} URL(s)`);
+    lines.push(`  ${first.message}${tags.length > 0 ? ` · _WCAG: ${tags.join(', ')}_` : ''}`);
+    if (helpUrl) lines.push(`  [Como corrigir →](${helpUrl})`);
+    if (sampleTarget) lines.push(`  Seletor: \`${sampleTarget}\``);
+    if (sampleHtml) {
+      lines.push('  ```html');
+      lines.push(`  ${sampleHtml.split('\n').join('\n  ')}`);
+      lines.push('  ```');
+    }
+  }
+  return lines.join('\n');
 }
 
-function renderBrokenImagesSection(findings: ExploratoryFinding[]): string {
+function renderBrokenImagesSectionMd(findings: ExploratoryFinding[]): string {
   if (findings.length === 0) return '';
-  const items = findings.map((f) => {
+  const lines: string[] = [];
+  lines.push(`#### ⚠️ Imagens quebradas (${findings.length})`);
+  lines.push('');
+  for (const f of findings) {
     const src = (f.detail?.['src'] as string) ?? f.message;
     const alt = (f.detail?.['alt'] as string) ?? '';
-    return `<div class="finding-row">
-      <span class="badge warn">${escapeHtml(kindPt('broken_image'))}</span>
-      <span style="font-family:ui-monospace,monospace;font-size:0.78rem;margin-left:6px;word-break:break-all">${escapeHtml(src)}</span>
-      ${alt ? `<span class="muted" style="margin-left:6px"> — alt: "${escapeHtml(alt)}"</span>` : ''}
-      <div class="url">página: ${escapeHtml(f.url)}</div>
-    </div>`;
-  }).join('\n');
-  return `<div class="kind-section kind-warn">
-    <h4 class="header">Imagens quebradas (${findings.length})</h4>
-    ${items}
-  </div>`;
+    lines.push(`- \`${src}\`${alt ? ` — alt: "${alt}"` : ''}`);
+    lines.push(`  _página:_ \`${f.url}\``);
+  }
+  return lines.join('\n');
 }
 
-function renderCoverageSection(coverage: ExploratoryCoverage[]): string {
+function renderCoverageSectionMd(coverage: ExploratoryCoverage[]): string {
   if (coverage.length === 0) return '';
-  const items = coverage.map((c) => {
+  const lines: string[] = [];
+  lines.push(`#### ℹ️ Cobertura observada por URL (${coverage.length})`);
+  lines.push('');
+  for (const c of coverage) {
     const pct = c.totalInteractive > 0 ? Math.min(100, Math.round((c.visibleInteractive / c.totalInteractive) * 100)) : 0;
-    const samples = c.samples.slice(0, 8).map((u) => `${escapeHtml(u.role)}${u.name ? ': ' + escapeHtml(u.name) : ''}`).join(' · ');
-    return `<div style="padding:8px 0;border-bottom:1px solid var(--border)">
-      <div style="font-family:ui-monospace,monospace;font-size:0.78rem;color:var(--text-soft);word-break:break-all">${escapeHtml(c.url)}</div>
-      <div style="height:6px;background:var(--card);border-radius:3px;margin:4px 0 6px;overflow:hidden"><div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--ok),var(--info));border-radius:3px"></div></div>
-      <div class="muted" style="font-size:0.76rem">${c.visibleInteractive}/${c.totalInteractive} elementos interativos visíveis (${pct}%) · amostra: ${samples || '(vazio)'}</div>
-    </div>`;
-  }).join('\n');
-  return `<div class="kind-section kind-info">
-    <h4 class="header">Cobertura observada por URL (${coverage.length})</h4>
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px">${items}</div>
-  </div>`;
+    const samples = c.samples.slice(0, 8).map((u) => `${u.role}${u.name ? ': ' + u.name : ''}`).join(' · ');
+    lines.push(`- \`${c.url}\``);
+    lines.push(`  ${c.visibleInteractive}/${c.totalInteractive} interativos visíveis (**${pct}%**) · amostra: ${samples || '_(vazio)_'}`);
+  }
+  return lines.join('\n');
 }
 
-function renderOutOfScopeSection(bucket: ExploratoryScopedBucket | undefined): string {
+function renderOutOfScopeSectionMd(
+  bucket: ExploratoryScopedBucket | undefined,
+  projectName: string,
+): string {
   if (!bucket) return '';
   const total = bucket.totals.errors + bucket.totals.warnings + bucket.totals.info;
   if (total === 0) return '';
   const partitioned = partitionFindings(bucket.findings);
   const inner = [
-    renderConsoleSection(partitioned.consoleAndPage),
-    renderHttpSection(partitioned.http),
-    renderA11ySection(partitioned.a11y),
-    renderBrokenImagesSection(partitioned.brokenImages),
-  ].filter(Boolean).join('\n');
-  return `<details style="margin-top:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px">
-    <summary style="cursor:pointer;color:var(--muted);font-size:0.88rem">
-      <strong style="color:var(--text-soft)">Fora do escopo "Créditos de IA"</strong>
-      <span style="margin-left:8px">${bucket.totals.errors > 0 ? `<span class="badge fail">${bucket.totals.errors} erro(s)</span>` : ''}${bucket.totals.warnings > 0 ? `<span class="badge warn" style="margin-left:6px">${bucket.totals.warnings} aviso(s)</span>` : ''}${bucket.totals.info > 0 ? `<span class="badge info" style="margin-left:6px">${bucket.totals.info} info</span>` : ''}</span>
-      <span class="muted" style="margin-left:6px">(silenciado dos KPIs principais — telemetria, módulos não relacionados etc.)</span>
-    </summary>
-    <div style="padding:10px 0">${inner || '<p class="muted">Sem detalhes.</p>'}</div>
-  </details>`;
+    renderConsoleSectionMd(partitioned.consoleAndPage),
+    renderHttpSectionMd(partitioned.http),
+    renderA11ySectionMd(partitioned.a11y),
+    renderBrokenImagesSectionMd(partitioned.brokenImages),
+  ].filter(Boolean).join('\n\n');
+  const totals = [
+    bucket.totals.errors > 0 ? `${bucket.totals.errors} erro(s)` : '',
+    bucket.totals.warnings > 0 ? `${bucket.totals.warnings} aviso(s)` : '',
+    bucket.totals.info > 0 ? `${bucket.totals.info} info` : '',
+  ].filter(Boolean).join(' · ');
+  const lines: string[] = [];
+  lines.push(`<details><summary>📁 Fora do escopo "${projectName}" — ${totals} _(silenciado dos KPIs principais)_</summary>`);
+  lines.push('');
+  lines.push(inner || '_Sem detalhes._');
+  lines.push('');
+  lines.push(`</details>`);
+  return lines.join('\n');
 }
 
-function renderActiveProbesSection(ap: ExploratoryActiveProbes | undefined): string {
+function renderActiveProbesSectionMd(ap: ExploratoryActiveProbes | undefined): string {
   if (!ap) return '';
   const probeKeys = Object.keys(ap.byProbe);
   if (probeKeys.length === 0 && ap.findings.length === 0) return '';
-
-  const probeRows = probeKeys
-    .map((key) => {
-      const stats = ap.byProbe[key];
-      const findingCount = ap.findings.filter((f) => f.probe === key).length;
-      const sevCls = findingCount === 0 ? 'ok' : ap.findings.some((f) => f.probe === key && f.severity === 'error') ? 'fail' : 'warn';
-      return `<tr>
-        <td><strong>${escapeHtml(PROBE_PT[key] ?? key)}</strong></td>
-        <td style="text-align:center">${stats.ran}</td>
-        <td style="text-align:center">${stats.failed > 0 ? `<span class="badge fail">${stats.failed}</span>` : '<span class="muted">0</span>'}</td>
-        <td style="text-align:center">${findingCount > 0 ? `<span class="badge ${sevCls}">${findingCount}</span>` : '<span class="muted">0</span>'}</td>
-        <td class="col-time">${(stats.totalDurationMs / 1000).toFixed(2)}s</td>
-      </tr>`;
-    })
-    .join('\n');
-
-  const findingsItems = ap.findings.length === 0
-    ? '<p class="muted">Probes ativos rodaram sem encontrar problemas.</p>'
-    : ap.findings.map((f) => {
-        const sevCls = f.severity === 'error' ? 'fail' : f.severity === 'warn' ? 'warn' : 'info';
-        return `<div class="finding-row">
-          <span class="badge ${sevCls}">${escapeHtml(PROBE_PT[f.probe] ?? f.probe)}</span>
-          <span class="muted" style="margin-left:6px;font-size:0.78rem">teste: ${escapeHtml(f.test)}</span>
-          <div style="margin-top:6px">${escapeHtml(truncate(f.message, 400))}</div>
-          <div class="url">${escapeHtml(f.url)}</div>
-        </div>`;
-      }).join('\n');
-
-  return `<div class="kind-section kind-info" style="margin-top:18px">
-    <h4 class="header">Probes ativos — descobertas adicionais (${ap.findings.length} finding(s))</h4>
-    <table class="inner-table" style="margin-bottom:10px">
-      <thead><tr><th>Probe</th><th style="text-align:center">Execuções OK</th><th style="text-align:center">Falhas internas</th><th style="text-align:center">Findings</th><th>Tempo total</th></tr></thead>
-      <tbody>${probeRows}</tbody>
-    </table>
-    ${findingsItems}
-  </div>`;
+  const lines: string[] = [];
+  lines.push(`#### 🔍 Probes ativos — descobertas adicionais (${ap.findings.length} finding(s))`);
+  lines.push('');
+  lines.push(`| Probe | Execuções OK | Falhas internas | Findings | Tempo |`);
+  lines.push(`|---|---:|---:|---:|---:|`);
+  for (const key of probeKeys) {
+    const stats = ap.byProbe[key];
+    const findingCount = ap.findings.filter((f) => f.probe === key).length;
+    lines.push(`| **${PROBE_PT[key] ?? key}** | ${stats.ran} | ${stats.failed} | ${findingCount} | ${(stats.totalDurationMs / 1000).toFixed(2)}s |`);
+  }
+  lines.push('');
+  if (ap.findings.length === 0) {
+    lines.push(`_Probes ativos rodaram sem encontrar problemas._`);
+  } else {
+    for (const f of ap.findings) {
+      const sevEmoji = f.severity === 'error' ? '❌' : f.severity === 'warn' ? '⚠️' : 'ℹ️';
+      lines.push(`- ${sevEmoji} **${PROBE_PT[f.probe] ?? f.probe}** _(teste: ${f.test})_`);
+      lines.push(`  ${truncate(f.message, 400).replace(/\n/g, ' ')}`);
+      lines.push(`  \`${f.url}\``);
+    }
+  }
+  return lines.join('\n');
 }
 
-function renderExploratory(args: { exploratoryByTestsuite: Map<string, ExploratorySuite>; projectName: string }): string {
-  const blocks = [...args.exploratoryByTestsuite.values()]
-    .map((s) => {
-      const partitioned = partitionFindings(s.findings);
-      const sections = [
-        renderConsoleSection(partitioned.consoleAndPage),
-        renderHttpSection(partitioned.http),
-        renderA11ySection(partitioned.a11y),
-        renderBrokenImagesSection(partitioned.brokenImages),
-        renderCoverageSection(s.coverage),
-      ].filter(Boolean).join('\n');
-      const totalsBar = `<div style="padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin:8px 0">
-        ${s.totals.errors > 0 ? `<span class="badge fail">${s.totals.errors} erro(s)</span>` : ''}
-        ${s.totals.warnings > 0 ? `<span class="badge warn" style="margin-left:6px">${s.totals.warnings} aviso(s)</span>` : ''}
-        ${s.totals.info > 0 ? `<span class="badge info" style="margin-left:6px">${s.totals.info} info</span>` : ''}
-        ${s.totals.errors === 0 && s.totals.warnings === 0 && s.totals.info === 0 ? '<span class="muted">Sem findings in-scope nesta testsuite.</span>' : ''}
-      </div>`;
-      return `<h3 style="margin-top:24px">${escapeHtml(s.testsuiteName)}</h3>
-        ${totalsBar}
-        ${sections}
-        ${renderOutOfScopeSection(s.outOfScope)}
-        ${renderActiveProbesSection(s.activeProbes)}`;
-    })
-    .join('\n');
-  const body = `
-    <h1>Validação Exploratória — ${escapeHtml(args.projectName)}</h1>
-    <p class="subtitle"><a href="index.html">← Voltar ao dashboard</a></p>
-    <p class="lede">Achados capturados pelas probes da fixture exploratória durante a execução dos testes: erros de JavaScript no navegador, respostas HTTP de falha, violações de acessibilidade (axe-core), imagens quebradas e cobertura observada por URL. Os KPIs principais consideram apenas findings <strong>dentro do escopo "Créditos de IA"</strong> (rotas <code>ai_consumption_analysis</code> ou mensagens com palavras-chave do domínio). Findings fora do escopo continuam acessíveis em uma seção colapsada por testsuite. A seção <strong>"Probes ativos"</strong> reúne descobertas além do que os casos do XML cobrem (hover em tooltips, navegação por teclado, valores extremos em forms, varredura de clicáveis, axe deep e estabilidade visual).</p>
-    ${blocks || '<p class="muted">Nenhum finding exploratório registrado.</p>'}
-  `;
-  return htmlShell(`Exploratório — ${args.projectName}`, body);
+function renderExploratoryMd(args: { exploratoryByTestsuite: Map<string, ExploratorySuite>; projectName: string }): string {
+  const lines: string[] = [];
+  lines.push(`# Validação Exploratória — ${args.projectName}`);
+  lines.push('');
+  lines.push(`[← Voltar ao dashboard](index.md)`);
+  lines.push('');
+  lines.push(`Achados capturados pelas probes da fixture exploratória durante a execução: erros JS no navegador, respostas HTTP de falha, violações de acessibilidade (axe-core), imagens quebradas e cobertura observada por URL.`);
+  lines.push('');
+  lines.push(`Os KPIs principais consideram apenas findings **dentro do escopo "${args.projectName}"** (rotas e palavras-chave em \`project.config.json\` → \`exploratory.scopedRoutes\`/\`exploratory.scopedKeywords\`). Findings fora do escopo continuam acessíveis em uma seção colapsada por testsuite.`);
+  lines.push('');
+
+  if (args.exploratoryByTestsuite.size === 0) {
+    lines.push(`_Nenhum finding exploratório registrado._`);
+    return lines.join('\n');
+  }
+
+  for (const s of args.exploratoryByTestsuite.values()) {
+    const partitioned = partitionFindings(s.findings);
+    lines.push(`## ${s.testsuiteName}`);
+    lines.push('');
+    const totalsLine = [
+      s.totals.errors > 0 ? `❌ ${s.totals.errors} erro(s)` : '',
+      s.totals.warnings > 0 ? `⚠️ ${s.totals.warnings} aviso(s)` : '',
+      s.totals.info > 0 ? `ℹ️ ${s.totals.info} info` : '',
+    ].filter(Boolean).join(' · ');
+    lines.push(totalsLine || `_Sem findings in-scope nesta testsuite._`);
+    lines.push('');
+    const sections = [
+      renderConsoleSectionMd(partitioned.consoleAndPage),
+      renderHttpSectionMd(partitioned.http),
+      renderA11ySectionMd(partitioned.a11y),
+      renderBrokenImagesSectionMd(partitioned.brokenImages),
+      renderCoverageSectionMd(s.coverage),
+    ].filter(Boolean).join('\n\n');
+    if (sections) {
+      lines.push(sections);
+      lines.push('');
+    }
+    const oos = renderOutOfScopeSectionMd(s.outOfScope, args.projectName);
+    if (oos) {
+      lines.push(oos);
+      lines.push('');
+    }
+    const probes = renderActiveProbesSectionMd(s.activeProbes);
+    if (probes) {
+      lines.push(probes);
+      lines.push('');
+    }
+    lines.push(`---`);
+    lines.push('');
+  }
+  return lines.join('\n');
 }
 
-// ─── Allure helpers (regression mode) ───────────────────────────────────────
-
-function metaRefresh(target: string): string {
-  return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=${escapeHtml(target)}"><title>Redirecionando…</title></head><body><a href="${escapeHtml(target)}">Abrir relatório mais recente</a></body></html>`;
-}
+// ─── Allure (regression mode) ───────────────────────────────────────────────
 
 function runAllureGenerate(): boolean {
   const resultsDir = getOutputDir('allure-results');
@@ -1959,8 +1780,13 @@ async function main(): Promise<void> {
   const cfg = loadJson<ProjectConfig>(getProjectConfigPath());
   if (!cfg) throw new Error('Config ausente: projects/<slug>/project.config.json');
 
-  // Carrega environment.json pro bloco "Pronto para registro de bug" — extrai
-  // URL/Login/Senha/orgId pra encaixar nos campos padrão do template de bug.
+  // IMPORTANTE: lemos o environment.json CRU (sem expandir ${VAR}) de propósito.
+  // O bloco "Pronto para registro de bug" do tests.md mostra Login/Senha pra
+  // colar em Jira/GitHub/Linear; mostrar a senha real expandida vazaria
+  // credencial em ticket público. Usuário pediu explicitamente em 2026-05-08
+  // ("preciso que rode com os itens da env, não com esses [valores reais]").
+  // Outros consumidores (global-setup, playwright.config) seguem usando
+  // `loadEnvironmentConfig()` que expande — só este caso é proposital cru.
   const envMap = loadJson<EnvironmentMap>(resolve(process.cwd(), FILES.environment));
   const envEntry = envMap?.[cfg.environment];
   if (!envEntry) {
@@ -1974,11 +1800,29 @@ async function main(): Promise<void> {
   const exploratoryReport = loadJson<ExploratoryReport>(getOutputPath('exploratory-findings.json'));
   const parsedAnalysis = loadJson<ParsedAnalysis>(getOutputPath('test-analysis.parsed.json'));
   const xmlByName = parsedAnalysis ? indexTestCasesByName(parsedAnalysis) : new Map<string, ParsedTestCase>();
+  const tcNumbers = parsedAnalysis ? indexTcNumbersByName(parsedAnalysis) : new Map<string, string>();
   if (!parsedAnalysis) {
-    log.warn('outputs/<slug>/test-analysis.parsed.json ausente — tests.html não terá metadata do XML (steps, summary, preconditions).');
+    log.warn('outputs/<slug>/test-analysis.parsed.json ausente — tests.md não terá metadata do XML (steps, summary, preconditions).');
   }
 
   const allTests = flatten(playwrightReport.suites);
+
+  // Auto-detect: se modo default 'all-suites' foi inferido por ausência de flag
+  // (CLI standalone via `npm run agent:report`) mas o test-results.json contém
+  // só 1 testsuite distinta, promove pra modo per-suite com o nome detectado.
+  // Cobre o caso de filtrar Playwright via `npx playwright test <path>` e
+  // depois rodar agent:report direto, sem orchestrator. Flag explícita
+  // (--suite ou --regression) sempre tem prioridade.
+  if (args.mode === 'all-suites') {
+    const distinctTestsuites = new Set(allTests.map((t) => t.testsuite));
+    if (distinctTestsuites.size === 1) {
+      const sole = distinctTestsuites.values().next().value as string;
+      log.info(`Auto-detect: única testsuite "${sole}" no test-results.json — promovendo modo all-suites → per-suite.`);
+      args.mode = 'per-suite';
+      args.suite = sole;
+    }
+  }
+
   let tests = allTests;
   let scopeLabel: string;
   let folderPrefix: string;
@@ -1988,15 +1832,15 @@ async function main(): Promise<void> {
     tests = allTests.filter((t) => t.testsuite.includes(args.suite!));
     scopeLabel = `Apenas testsuite contendo "${args.suite}"`;
     folderPrefix = slugify(args.suite);
-    latestPointerName = `latest-suite-${slugify(args.suite)}.html`;
+    latestPointerName = `latest-suite-${slugify(args.suite)}.md`;
   } else if (args.mode === 'regression') {
     scopeLabel = 'Regressivo completo (todas as testsuites)';
     folderPrefix = 'regression';
-    latestPointerName = 'latest-regression.html';
+    latestPointerName = 'latest-regression.md';
   } else {
     scopeLabel = 'Todas as testsuites (modo padrão)';
     folderPrefix = 'all-suites';
-    latestPointerName = 'latest-all.html';
+    latestPointerName = 'latest-all.md';
   }
 
   const ts = timestamp();
@@ -2005,15 +1849,54 @@ async function main(): Promise<void> {
   const reportDir = join(reportsRoot, folderName);
   ensureDir(reportDir);
 
+  // Arquiva attachments dentro do reportDir ANTES de renderizar tests.md, pra
+  // que os links relativos apontem pra dentro do report (self-contained) — e o
+  // próximo cleanRunArtifacts() do orchestrator não esvazia as evidências.
+  archiveAttachments(tests, reportDir);
+
   const xmlOrder = xmlSuiteOrder(parsedAnalysis);
   const byTestsuite = reorderByXml(groupByTestsuite(tests), xmlOrder);
-  // Mantém apenas testes em suítes do XML para o resumo/failed list (defesa
-  // em profundidade contra spec hand-written ou seed escapando do testIgnore).
   if (xmlOrder.length > 0) {
     const allowed = new Set(xmlOrder.map((n) => n.toLowerCase()));
     tests = tests.filter((t) => allowed.has(t.testsuite.toLowerCase()));
   }
   const failedTests = tests.filter((t) => t.status !== 'passed' && t.status !== 'skipped');
+
+  // Bug-reports (Fase 5.7): lê o bundle gerado por `gerar-bug-report-de-tc-red`,
+  // filtra pelas testsuites ativas no scope desta run e arquiva os MDs +
+  // bundle.json dentro do reportDir (self-contained, mesmo padrão do
+  // archiveAttachments).
+  const bugReportsBundle = loadJson<BugReportsBundle>(getOutputPath('bug-reports.json'));
+  const activeSuiteNames = new Set(Array.from(byTestsuite.keys()).map((s) => s.toLowerCase()));
+  const bugReports = (bugReportsBundle?.reports ?? []).filter((b) =>
+    activeSuiteNames.has(b.testsuite.toLowerCase()),
+  );
+  if (bugReports.length > 0) {
+    const bugReportsSrcDir = getOutputDir('bug-reports');
+    const bugReportsDestDir = join(reportDir, 'bug-reports');
+    ensureDir(bugReportsDestDir);
+    let copiedMd = 0;
+    let missingMd = 0;
+    for (const b of bugReports) {
+      const srcMd = join(bugReportsSrcDir, `${b.id}.md`);
+      if (existsSync(srcMd)) {
+        copyFileSync(srcMd, join(bugReportsDestDir, `${b.id}.md`));
+        copiedMd++;
+      } else {
+        missingMd++;
+      }
+    }
+    const filteredBundle = {
+      generatedAt: bugReportsBundle?.generatedAt ?? new Date().toISOString(),
+      project: bugReportsBundle?.project ?? cfg.projectName,
+      totalRed: bugReports.length,
+      reports: bugReports,
+    };
+    writeFileSync(join(reportDir, 'bug-reports.json'), JSON.stringify(filteredBundle, null, 2), 'utf-8');
+    log.info(`Bug-reports arquivados: ${copiedMd} MD(s)${missingMd > 0 ? ` (${missingMd} ausente(s))` : ''}`);
+  } else if (!bugReportsBundle) {
+    log.warn('outputs/<slug>/bug-reports.json ausente — rode `npm run agent:bug-reports` pra gerar antes do report, ou use --no-bug-reports no orchestrator.');
+  }
 
   const filteredExploratory = exploratoryReport
     ? args.mode === 'per-suite' && args.suite
@@ -2035,8 +1918,8 @@ async function main(): Promise<void> {
   const generatedAt = new Date().toISOString();
 
   writeFileSync(
-    join(reportDir, 'index.html'),
-    renderIndex({
+    join(reportDir, 'index.md'),
+    renderIndexMd({
       mode: args.mode,
       scopeLabel,
       projectName: cfg.projectName,
@@ -2049,24 +1932,28 @@ async function main(): Promise<void> {
       exploratoryByTestsuite,
       failedTests,
       xmlByName,
+      tcNumbers,
       runId: folderName,
+      bugReports,
     }),
   );
   writeFileSync(
-    join(reportDir, 'tests.html'),
-    renderTests({
+    join(reportDir, 'tests.md'),
+    renderTestsMd({
       byTestsuite,
       projectName: cfg.projectName,
       xmlByName,
+      tcNumbers,
       runId: folderName,
       reportDir,
       envEntry,
       envName: cfg.environment,
+      bugReports: bugReportsBundle?.reports ?? [],
     }),
   );
   writeFileSync(
-    join(reportDir, 'exploratory.html'),
-    renderExploratory({ exploratoryByTestsuite, projectName: cfg.projectName }),
+    join(reportDir, 'exploratory.md'),
+    renderExploratoryMd({ exploratoryByTestsuite, projectName: cfg.projectName }),
   );
   writeFileSync(
     join(reportDir, 'run_context.json'),
@@ -2085,9 +1972,52 @@ async function main(): Promise<void> {
     copyFileSync(exploratoryFindingsPath, join(reportDir, 'exploratory.json'));
   }
 
-  writeFileSync(join(reportsRoot, latestPointerName), metaRefresh(`${folderName}/index.html`));
+  // Atalho `latest-*.md` na raiz: MD curto que linka pro relatório mais recente.
+  // Sem `<meta refresh>` (não existe em MD); IDE/GitHub renderizam o link direto.
+  const pointerContent = `# Relatório mais recente — ${folderPrefix}\n\n**[Abrir → \`${folderName}/index.md\`](${folderName}/index.md)**\n\n_Gerado em ${new Date(generatedAt).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}._\n`;
+  writeFileSync(join(reportsRoot, latestPointerName), pointerContent);
 
-  log.info(`Relatório gerado → ${reportDir}/index.html`);
+  // playwright-summary.md na raiz de outputs/<slug>/ — substitui o html-report
+  // do Playwright (reporter built-in foi removido em chore/agentes-qa-overhaul).
+  // Resumo da ÚLTIMA run, sem timestamp no caminho (sobrescrito a cada execução).
+  // Tem 2 papéis: (1) ponto fixo pra ferramentas que esperam um arquivo previsível,
+  // (2) acesso 1-click ao último resultado sem ter que navegar pra reports/<ts>/.
+  const summaryLines: string[] = [];
+  summaryLines.push(`# Resumo Playwright — ${cfg.projectName}`);
+  summaryLines.push('');
+  summaryLines.push(`**Última run** (${args.mode}) · ${new Date(generatedAt).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}`);
+  summaryLines.push('');
+  summaryLines.push(`| Total | ✅ Aprovados | ❌ Falhas | ⊘ Ignorados | Duração |`);
+  summaryLines.push(`|---:|---:|---:|---:|---:|`);
+  summaryLines.push(`| ${testsSummary.total} | ${testsSummary.passed} | ${testsSummary.failed} | ${testsSummary.skipped} | ${(testsSummary.durationMs / 1000).toFixed(1)}s |`);
+  summaryLines.push('');
+  summaryLines.push(`> **Escopo:** ${scopeLabel}`);
+  summaryLines.push(`> **Ambiente:** \`${cfg.environment}\` · **Browsers:** ${cfg.browsers.join(', ')}`);
+  summaryLines.push('');
+  summaryLines.push(`## Resultados`);
+  summaryLines.push('');
+  if (tests.length === 0) {
+    summaryLines.push(`_Nenhum teste executado._`);
+  } else {
+    summaryLines.push(`| Status | Testsuite | Caso | Duração | Resumo |`);
+    summaryLines.push(`|:---:|---|---|---:|---|`);
+    for (const t of tests) {
+      const statusEmoji = STATUS_EMOJI[t.status] ?? '·';
+      const summary = t.status !== 'passed' ? failureOrSkipSummary(t) : '—';
+      summaryLines.push(`| ${statusEmoji} | ${mdCell(t.testsuite)} | ${mdCell(formatTcTitle(t.testcase, tcNumbers))} | ${(t.durationMs / 1000).toFixed(2)}s | ${mdCell(summary)} |`);
+    }
+  }
+  summaryLines.push('');
+  summaryLines.push(`## Onde encontrar mais`);
+  summaryLines.push('');
+  summaryLines.push(`- 📋 [Detalhamento desta run](reports/${folderName}/index.md) — KPIs por testsuite, links pra cases e findings exploratórios`);
+  summaryLines.push(`- 🔍 [Casos de teste detalhados](reports/${folderName}/tests.md) — passos, evidências, bug-report pronto`);
+  summaryLines.push(`- 🐛 [Validação exploratória](reports/${folderName}/exploratory.md) — console errors, axe, HTTP, cobertura`);
+  summaryLines.push(`- 📦 Traces de cada falha em \`reports/${folderName}/artifacts/\` (self-contained) — abrir com \`npx playwright show-trace <path>\``);
+  summaryLines.push('');
+  writeFileSync(getOutputPath('playwright-summary.md'), summaryLines.join('\n'));
+
+  log.info(`Relatório gerado → ${reportDir}/index.md`);
   log.info(
     `  ${testsSummary.passed}✓ ${testsSummary.failed}✗ ${testsSummary.skipped}⊘${
       exploratorySummary
@@ -2099,6 +2029,22 @@ async function main(): Promise<void> {
 
   if (args.mode === 'regression') {
     runAllureGenerate();
+  }
+
+  // Rotaciona reports antigos: mantém apenas o latest por prefixo em
+  // outputs/<slug>/reports/, move os anteriores para outputs-archive/<slug>/reports/
+  // (gitignored). Garante que git só tenha a última execução por suite
+  // enquanto preserva histórico local pra análise/audit.
+  const projectRoot = dirname(reportsRoot);
+  const projectSlug = basename(projectRoot);
+  const archiveRoot = resolve(process.cwd(), 'outputs-archive', projectSlug);
+  try {
+    const rot = rotateReports(projectRoot, archiveRoot);
+    if (rot.archived.length > 0) {
+      log.info(`Reports rotacionados: ${rot.archived.length} arquivado(s) em outputs-archive/${projectSlug}/reports/`);
+    }
+  } catch (err) {
+    log.warn(`Falha rotação reports: ${(err as Error).message}`);
   }
 }
 

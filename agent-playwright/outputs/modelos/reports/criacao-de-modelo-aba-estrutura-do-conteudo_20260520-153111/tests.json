@@ -1,0 +1,877 @@
+{
+  "config": {
+    "configFile": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright/outputs/modelos/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "tests/auth/**/*.spec.ts",
+          "projects/modelos/tests/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/modelos/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\modelos\\tests\\features\\criacao-de-modelo-aba-estrutura-do-conteudo\\tc01-tipo-estrutura-exibe-2-opcoes.spec.ts",
+      "file": "projects/modelos/tests/features/criacao-de-modelo-aba-estrutura-do-conteudo/tc01-tipo-estrutura-exibe-2-opcoes.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Criação de Modelo - Aba Estrutura do Conteúdo",
+          "file": "projects/modelos/tests/features/criacao-de-modelo-aba-estrutura-do-conteudo/tc01-tipo-estrutura-exibe-2-opcoes.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Tipo de estrutura exibe 2 opções",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 18571,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Abrir modelo seedado na aba Estrutura",
+                          "duration": 15791
+                        },
+                        {
+                          "title": "2. Ler options do <select> nativo \"Tipo de estrutura\"",
+                          "duration": 471
+                        }
+                      ],
+                      "startTime": "2026-05-20T18:30:25.531Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gTW9kZWxvcyBkZSBjb250ZcO6ZG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNyaWHDp8OjbyBkZSBNb2RlbG8gLSBBYmEgRXN0cnV0dXJhIGRvIENvbnRlw7pkbyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJUaXBvIGRlIGVzdHJ1dHVyYSBleGliZSAyIG9ww6fDtWVzIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-436b3-de-estrutura-exibe-2-opções-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-436b3-de-estrutura-exibe-2-opções-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-436b3-de-estrutura-exibe-2-opções-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "699e2f65464ff8bc6712-fa70f2b4eeaaaf5bd35c",
+              "file": "projects/modelos/tests/features/criacao-de-modelo-aba-estrutura-do-conteudo/tc01-tipo-estrutura-exibe-2-opcoes.spec.ts",
+              "line": 6,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\modelos\\tests\\features\\criacao-de-modelo-aba-estrutura-do-conteudo\\tc02-tooltip-tipo-estrutura.spec.ts",
+      "file": "projects/modelos/tests/features/criacao-de-modelo-aba-estrutura-do-conteudo/tc02-tooltip-tipo-estrutura.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Criação de Modelo - Aba Estrutura do Conteúdo",
+          "file": "projects/modelos/tests/features/criacao-de-modelo-aba-estrutura-do-conteudo/tc02-tooltip-tipo-estrutura.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Tooltip do Tipo de estrutura",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 18295,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Abrir aba Estrutura",
+                          "duration": 14770
+                        },
+                        {
+                          "title": "2. Hover no ícone info do label \"Tipo de estrutura\" e validar tooltip",
+                          "duration": 1430
+                        }
+                      ],
+                      "startTime": "2026-05-20T18:30:25.485Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gTW9kZWxvcyBkZSBjb250ZcO6ZG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNyaWHDp8OjbyBkZSBNb2RlbG8gLSBBYmEgRXN0cnV0dXJhIGRvIENvbnRlw7pkbyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJUb29sdGlwIGRvIFRpcG8gZGUgZXN0cnV0dXJhIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJoaWdoIn1dfX0="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-5ae19-ooltip-do-Tipo-de-estrutura-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-5ae19-ooltip-do-Tipo-de-estrutura-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-5ae19-ooltip-do-Tipo-de-estrutura-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9f3285aa1ce0d0018ab0-fd313722fc4df0b8fe7e",
+              "file": "projects/modelos/tests/features/criacao-de-modelo-aba-estrutura-do-conteudo/tc02-tooltip-tipo-estrutura.spec.ts",
+              "line": 6,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\modelos\\tests\\features\\criacao-de-modelo-aba-estrutura-do-conteudo\\tc03-2-niveis-exibe-atividades-por-modulo.spec.ts",
+      "file": "projects/modelos/tests/features/criacao-de-modelo-aba-estrutura-do-conteudo/tc03-2-niveis-exibe-atividades-por-modulo.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Criação de Modelo - Aba Estrutura do Conteúdo",
+          "file": "projects/modelos/tests/features/criacao-de-modelo-aba-estrutura-do-conteudo/tc03-2-niveis-exibe-atividades-por-modulo.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Selecionar \"2 níveis\" exibe campo de atividades por módulo",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 18723,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Abrir aba Estrutura",
+                          "duration": 14837
+                        },
+                        {
+                          "title": "2. Selecionar \"2 níveis\"",
+                          "duration": 984
+                        },
+                        {
+                          "title": "3. Validar campo \"Nº de atividades\" aparece",
+                          "duration": 391
+                        },
+                        {
+                          "title": "cleanup: voltar para \"1 nível\"",
+                          "duration": 928
+                        }
+                      ],
+                      "startTime": "2026-05-20T18:30:25.532Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gTW9kZWxvcyBkZSBjb250ZcO6ZG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNyaWHDp8OjbyBkZSBNb2RlbG8gLSBBYmEgRXN0cnV0dXJhIGRvIENvbnRlw7pkbyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJTZWxlY2lvbmFyIFwiMiBuw612ZWlzXCIgZXhpYmUgY2FtcG8gZGUgYXRpdmlkYWRlcyBwb3IgbcOzZHVsbyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-10eb6-po-de-atividades-por-módulo-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-10eb6-po-de-atividades-por-módulo-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-10eb6-po-de-atividades-por-módulo-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "131dca143290a49d5ff4-93db03e9f189b17c1458",
+              "file": "projects/modelos/tests/features/criacao-de-modelo-aba-estrutura-do-conteudo/tc03-2-niveis-exibe-atividades-por-modulo.spec.ts",
+              "line": 6,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\modelos\\tests\\features\\criacao-de-modelo-aba-estrutura-do-conteudo\\tc04-carga-horaria-obrigatoria-bloqueia-save.spec.ts",
+      "file": "projects/modelos/tests/features/criacao-de-modelo-aba-estrutura-do-conteudo/tc04-carga-horaria-obrigatoria-bloqueia-save.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Criação de Modelo - Aba Estrutura do Conteúdo",
+          "file": "projects/modelos/tests/features/criacao-de-modelo-aba-estrutura-do-conteudo/tc04-carga-horaria-obrigatoria-bloqueia-save.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Carga horária obrigatória bloqueia salvamento",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 19910,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Abrir aba Estrutura sem carga horária preenchida",
+                          "duration": 15448
+                        },
+                        {
+                          "title": "2. Clicar Salvar e validar bloqueio (sem redirect/sem toast sucesso)",
+                          "duration": 2814
+                        }
+                      ],
+                      "startTime": "2026-05-20T18:30:25.502Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gTW9kZWxvcyBkZSBjb250ZcO6ZG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNyaWHDp8OjbyBkZSBNb2RlbG8gLSBBYmEgRXN0cnV0dXJhIGRvIENvbnRlw7pkbyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJDYXJnYSBob3LDoXJpYSBvYnJpZ2F0w7NyaWEgYmxvcXVlaWEgc2FsdmFtZW50byJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-26232-gatória-bloqueia-salvamento-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-26232-gatória-bloqueia-salvamento-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-26232-gatória-bloqueia-salvamento-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "afc915411340996fa659-2f40129437f8da5fcf01",
+              "file": "projects/modelos/tests/features/criacao-de-modelo-aba-estrutura-do-conteudo/tc04-carga-horaria-obrigatoria-bloqueia-save.spec.ts",
+              "line": 6,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\modelos\\tests\\features\\criacao-de-modelo-aba-estrutura-do-conteudo\\tc05-carga-horaria-5-opcoes.spec.ts",
+      "file": "projects/modelos/tests/features/criacao-de-modelo-aba-estrutura-do-conteudo/tc05-carga-horaria-5-opcoes.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Criação de Modelo - Aba Estrutura do Conteúdo",
+          "file": "projects/modelos/tests/features/criacao-de-modelo-aba-estrutura-do-conteudo/tc05-carga-horaria-5-opcoes.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Carga horária exibe 5 opções literais",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 16128,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Abrir aba Estrutura",
+                          "duration": 13699
+                        },
+                        {
+                          "title": "2. Ler options de \"Carga horária\" e validar as 5 esperadas",
+                          "duration": 267
+                        }
+                      ],
+                      "startTime": "2026-05-20T18:30:45.142Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gTW9kZWxvcyBkZSBjb250ZcO6ZG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNyaWHDp8OjbyBkZSBNb2RlbG8gLSBBYmEgRXN0cnV0dXJhIGRvIENvbnRlw7pkbyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJDYXJnYSBob3LDoXJpYSBleGliZSA1IG9ww6fDtWVzIGxpdGVyYWlzIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJoaWdoIn1dfX0="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-62b2e-ria-exibe-5-opções-literais-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-62b2e-ria-exibe-5-opções-literais-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-62b2e-ria-exibe-5-opções-literais-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6ab14bec6b78728fe51d-5de72bb5fa006492c4a3",
+              "file": "projects/modelos/tests/features/criacao-de-modelo-aba-estrutura-do-conteudo/tc05-carga-horaria-5-opcoes.spec.ts",
+              "line": 6,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\modelos\\tests\\features\\criacao-de-modelo-aba-estrutura-do-conteudo\\tc06-switch-incluir-questionarios.spec.ts",
+      "file": "projects/modelos/tests/features/criacao-de-modelo-aba-estrutura-do-conteudo/tc06-switch-incluir-questionarios.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Criação de Modelo - Aba Estrutura do Conteúdo",
+          "file": "projects/modelos/tests/features/criacao-de-modelo-aba-estrutura-do-conteudo/tc06-switch-incluir-questionarios.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Switch \"Incluir questionários\" exibe configurações básicas",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 19484,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Abrir aba Estrutura com seção \"Questionários ao longo do conteúdo\"",
+                          "duration": 16021
+                        },
+                        {
+                          "title": "2. Ativar switch \"Incluir questionários\" e validar configurações expostas",
+                          "duration": 1504
+                        },
+                        {
+                          "title": "cleanup: desativar switch pra próximo TC começar limpo",
+                          "duration": 666
+                        }
+                      ],
+                      "startTime": "2026-05-20T18:30:45.405Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gTW9kZWxvcyBkZSBjb250ZcO6ZG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNyaWHDp8OjbyBkZSBNb2RlbG8gLSBBYmEgRXN0cnV0dXJhIGRvIENvbnRlw7pkbyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJTd2l0Y2ggXCJJbmNsdWlyIHF1ZXN0aW9uw6FyaW9zXCIgZXhpYmUgY29uZmlndXJhw6fDtWVzIGLDoXNpY2FzIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJoaWdoIn1dfX0="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-ca9a9-exibe-configurações-básicas-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-ca9a9-exibe-configurações-básicas-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-ca9a9-exibe-configurações-básicas-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "84865838c596e7c51b8b-1eac7c7f18b9db5fa00e",
+              "file": "projects/modelos/tests/features/criacao-de-modelo-aba-estrutura-do-conteudo/tc06-switch-incluir-questionarios.spec.ts",
+              "line": 6,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\modelos\\tests\\features\\criacao-de-modelo-aba-estrutura-do-conteudo\\tc07-switch-configuracoes-avancadas.spec.ts",
+      "file": "projects/modelos/tests/features/criacao-de-modelo-aba-estrutura-do-conteudo/tc07-switch-configuracoes-avancadas.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Criação de Modelo - Aba Estrutura do Conteúdo",
+          "file": "projects/modelos/tests/features/criacao-de-modelo-aba-estrutura-do-conteudo/tc07-switch-configuracoes-avancadas.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Switch \"Configurações avançadas\" exibe campos adicionais",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 21308,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Abrir aba Estrutura",
+                          "duration": 16967
+                        },
+                        {
+                          "title": "2. Ativar \"Incluir questionários\" (campos básicos)",
+                          "duration": 1646
+                        },
+                        {
+                          "title": "3. Ativar \"Configurações avançadas\" e validar campos adicionais",
+                          "duration": 1018
+                        },
+                        {
+                          "title": "cleanup: desligar switches",
+                          "duration": 642
+                        }
+                      ],
+                      "startTime": "2026-05-20T18:30:45.516Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gTW9kZWxvcyBkZSBjb250ZcO6ZG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNyaWHDp8OjbyBkZSBNb2RlbG8gLSBBYmEgRXN0cnV0dXJhIGRvIENvbnRlw7pkbyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJTd2l0Y2ggXCJDb25maWd1cmHDp8O1ZXMgYXZhbsOnYWRhc1wiIGV4aWJlIGNhbXBvcyBhZGljaW9uYWlzIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJoaWdoIn1dfX0="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-8c90b-das-exibe-campos-adicionais-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-8c90b-das-exibe-campos-adicionais-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-8c90b-das-exibe-campos-adicionais-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "cf88b8f29eeb15197284-b32b71dca82b75e1a5a9",
+              "file": "projects/modelos/tests/features/criacao-de-modelo-aba-estrutura-do-conteudo/tc07-switch-configuracoes-avancadas.spec.ts",
+              "line": 6,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\modelos\\tests\\features\\criacao-de-modelo-aba-estrutura-do-conteudo\\tc08-switch-incluir-prova-final.spec.ts",
+      "file": "projects/modelos/tests/features/criacao-de-modelo-aba-estrutura-do-conteudo/tc08-switch-incluir-prova-final.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Criação de Modelo - Aba Estrutura do Conteúdo",
+          "file": "projects/modelos/tests/features/criacao-de-modelo-aba-estrutura-do-conteudo/tc08-switch-incluir-prova-final.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Switch \"Incluir prova final\"",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 21255,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Abrir aba Estrutura com seção \"Prova final\"",
+                          "duration": 17652
+                        },
+                        {
+                          "title": "2. Ativar switch \"Incluir prova final\" e validar sub-switch \"Configurações avançadas\"",
+                          "duration": 2007
+                        },
+                        {
+                          "title": "cleanup: desligar switch",
+                          "duration": 635
+                        }
+                      ],
+                      "startTime": "2026-05-20T18:30:46.324Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gTW9kZWxvcyBkZSBjb250ZcO6ZG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNyaWHDp8OjbyBkZSBNb2RlbG8gLSBBYmEgRXN0cnV0dXJhIGRvIENvbnRlw7pkbyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJTd2l0Y2ggXCJJbmNsdWlyIHByb3ZhIGZpbmFsXCIifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJoaWdoIn1dfX0="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-27d82-Switch-Incluir-prova-final--chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-27d82-Switch-Incluir-prova-final--chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-27d82-Switch-Incluir-prova-final--chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4a8dcb77e371c5be8d98-c5430aa5f6b665d93a25",
+              "file": "projects/modelos/tests/features/criacao-de-modelo-aba-estrutura-do-conteudo/tc08-switch-incluir-prova-final.spec.ts",
+              "line": 6,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-05-20T18:29:50.677Z",
+    "duration": 77722.84499999999,
+    "expected": 8,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -1,10 +1,11 @@
 import { parseArgs } from 'node:util';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, rmSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { spawn } from 'node:child_process';
 import { createLogger } from '../../../src/utils/logger.js';
 import { FILES } from '../../../src/utils/constants.js';
 import {
+  getOutputDir,
   getOutputPath,
   getProjectConfigPath,
 } from '../../../src/utils/environment.js';
@@ -22,7 +23,9 @@ type Args = {
   all: boolean;
   regression: boolean;
   noExplore: boolean;
+  noBugReports: boolean;
   noReport: boolean;
+  noTriage: boolean;
   list: boolean;
   noPreflight: boolean;
   smokeOnly: boolean;
@@ -36,7 +39,9 @@ function parseFlags(): Args {
       all: { type: 'boolean', default: false },
       regression: { type: 'boolean', default: false },
       'no-explore': { type: 'boolean', default: false },
+      'no-bug-reports': { type: 'boolean', default: false },
       'no-report': { type: 'boolean', default: false },
+      'no-triage': { type: 'boolean', default: false },
       list: { type: 'boolean', default: false },
       'no-preflight': { type: 'boolean', default: false },
       'smoke-only': { type: 'boolean', default: false },
@@ -50,7 +55,9 @@ function parseFlags(): Args {
     all: Boolean(values.all) || Boolean(values.regression),
     regression: Boolean(values.regression),
     noExplore: Boolean(values['no-explore']),
+    noBugReports: Boolean(values['no-bug-reports']),
     noReport: Boolean(values['no-report']),
+    noTriage: Boolean(values['no-triage']),
     list: Boolean(values.list),
     noPreflight: Boolean(values['no-preflight']),
     smokeOnly: Boolean(values['smoke-only']),
@@ -129,10 +136,31 @@ function runShell(
   });
 }
 
+/**
+ * Limpa findings exploratórios e artifacts do run anterior, ANTES do
+ * Playwright iniciar uma nova execução. Sem isso, JSONs nomeados por
+ * `__w{workerIndex}` acumulam entre runs (Playwright pode atribuir
+ * worker diferente) e o validator agrega findings stale (potencialmente
+ * de envs/orgIds removidos).
+ */
+function cleanRunArtifacts(): void {
+  const dirsToClean = [
+    getOutputDir('exploratory'),
+    getOutputDir('test-artifacts'),
+  ];
+  for (const d of dirsToClean) {
+    if (existsSync(d)) {
+      rmSync(d, { recursive: true, force: true });
+      log.debug(`Limpou ${d} (run anterior)`);
+    }
+  }
+}
+
 async function runPlaywright(
   suites: ParsedTestSuite[],
   regression: boolean,
 ): Promise<number> {
+  cleanRunArtifacts();
   const env: Record<string, string> = {};
   if (regression) env.REGRESSION = 'true';
   const grep = regression ? null : buildGrep(suites);
@@ -179,8 +207,25 @@ async function chainExplore(): Promise<number> {
   ]);
 }
 
+async function chainBugReports(): Promise<number> {
+  return runShell('npx', [
+    'tsx',
+    '.claude/skills/gerar-bug-report-de-tc-red/generator.ts',
+  ]);
+}
+
 async function chainReport(suites: ParsedTestSuite[], regression: boolean): Promise<number> {
   const args = ['tsx', '.claude/skills/twygo-report-generator/generator.ts'];
+  if (regression) {
+    args.push('--regression');
+  } else if (suites.length === 1) {
+    args.push('--suite', suites[0].name);
+  }
+  return runShell('npx', args);
+}
+
+async function chainTriage(suites: ParsedTestSuite[], regression: boolean): Promise<number> {
+  const args = ['tsx', '.claude/skills/twygo-triage-report/generator.ts'];
   if (regression) {
     args.push('--regression');
   } else if (suites.length === 1) {
@@ -258,10 +303,22 @@ async function main(): Promise<void> {
     if (exploreExit !== 0) log.warn(`Validador exploratório exit ${exploreExit}`);
   }
 
+  if (!args.noBugReports) {
+    log.info('=== Fase 5.7: Bug Reports prontos pra task ===');
+    const bugExit = await chainBugReports();
+    if (bugExit !== 0) log.warn(`Bug-reports generator exit ${bugExit}`);
+  }
+
   if (!args.noReport) {
     log.info('=== Fase 6: Relatório ===');
     const reportExit = await chainReport(suites, args.regression);
     if (reportExit !== 0) log.warn(`Relatório exit ${reportExit}`);
+  }
+
+  if (!args.noTriage) {
+    log.info('=== Fase 6.5: Triage Report (lista dúvidas pra QA) ===');
+    const triageExit = await chainTriage(suites, args.regression);
+    if (triageExit !== 0) log.warn(`Triage exit ${triageExit}`);
   }
 
   process.exit(playwrightExit);

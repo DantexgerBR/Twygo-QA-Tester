@@ -1,0 +1,29 @@
+{
+  "runId": "layout-das-abas_20260514-111819",
+  "scope": "Apenas testsuite contendo \"Layout das abas\"",
+  "tests": {
+    "total": 11,
+    "passed": 10,
+    "failed": 1,
+    "skipped": 0,
+    "durationMs": 847484
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 1,
+    "tests": 27,
+    "outOfScope": {
+      "errors": 355,
+      "warnings": 114,
+      "info": 10
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

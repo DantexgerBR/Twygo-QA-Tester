@@ -1,0 +1,11 @@
+{
+  "runId": "ambientes-adicionais-modelos_20260521-081739",
+  "mode": "per-suite",
+  "suiteFilter": "Ambientes adicionais - Modelos",
+  "projectName": "Modelos de conteúdo",
+  "environment": "staging-base-de-conhecimento",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-21T11:17:39.609Z"
+}

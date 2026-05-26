@@ -1,0 +1,469 @@
+{
+  "config": {
+    "configFile": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright/outputs/modelos/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "tests/auth/**/*.spec.ts",
+          "projects/modelos/tests/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/modelos/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\modelos\\tests\\features\\preview-de-modelos-e-designs\\tc01-abrir-preview-modelo-via-card.spec.ts",
+      "file": "projects/modelos/tests/features/preview-de-modelos-e-designs/tc01-abrir-preview-modelo-via-card.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Preview de Modelos e Designs",
+          "file": "projects/modelos/tests/features/preview-de-modelos-e-designs/tc01-abrir-preview-modelo-via-card.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Abrir Preview de Modelo via card",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 14271,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar listagem de modelos em Cards",
+                          "duration": 11390
+                        },
+                        {
+                          "title": "2. Clicar ícone visibility do 1º modelo e validar modal Preview",
+                          "duration": 1452
+                        }
+                      ],
+                      "startTime": "2026-05-20T20:45:29.071Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gTW9kZWxvcyBkZSBjb250ZcO6ZG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IlByZXZpZXcgZGUgTW9kZWxvcyBlIERlc2lnbnMifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJBYnJpciBQcmV2aWV3IGRlIE1vZGVsbyB2aWEgY2FyZCJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-b2a65--Preview-de-Modelo-via-card-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-b2a65--Preview-de-Modelo-via-card-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-b2a65--Preview-de-Modelo-via-card-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c0fd760f7170a9d58912-cfd8ea351cb661be563c",
+              "file": "projects/modelos/tests/features/preview-de-modelos-e-designs/tc01-abrir-preview-modelo-via-card.spec.ts",
+              "line": 6,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\modelos\\tests\\features\\preview-de-modelos-e-designs\\tc02-conteudo-carrossel.spec.ts",
+      "file": "projects/modelos/tests/features/preview-de-modelos-e-designs/tc02-conteudo-carrossel.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Preview de Modelos e Designs",
+          "file": "projects/modelos/tests/features/preview-de-modelos-e-designs/tc02-conteudo-carrossel.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Conteúdo de cada item do carrossel",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 14113,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar listagem e abrir Preview",
+                          "duration": 12367
+                        },
+                        {
+                          "title": "2. Validar elementos do slide: Modelo:, Design:, Tipo:, indicador X de Y",
+                          "duration": 97
+                        }
+                      ],
+                      "startTime": "2026-05-20T20:45:29.090Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gTW9kZWxvcyBkZSBjb250ZcO6ZG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IlByZXZpZXcgZGUgTW9kZWxvcyBlIERlc2lnbnMifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJDb250ZcO6ZG8gZGUgY2FkYSBpdGVtIGRvIGNhcnJvc3NlbCJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-4071c-o-de-cada-item-do-carrossel-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-4071c-o-de-cada-item-do-carrossel-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-4071c-o-de-cada-item-do-carrossel-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b78fc6ff67bf4da2c0c2-fc3aa4d880c251de9a2c",
+              "file": "projects/modelos/tests/features/preview-de-modelos-e-designs/tc02-conteudo-carrossel.spec.ts",
+              "line": 6,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\modelos\\tests\\features\\preview-de-modelos-e-designs\\tc03-navegar-entre-slides.spec.ts",
+      "file": "projects/modelos/tests/features/preview-de-modelos-e-designs/tc03-navegar-entre-slides.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Preview de Modelos e Designs",
+          "file": "projects/modelos/tests/features/preview-de-modelos-e-designs/tc03-navegar-entre-slides.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Navegar entre slides no carrossel",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 15172,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Abrir Preview do modelo",
+                          "duration": 12631
+                        },
+                        {
+                          "title": "2. Clicar \"Próximo design\" e validar indicador \"Design 2\"",
+                          "duration": 1174
+                        }
+                      ],
+                      "startTime": "2026-05-20T20:45:29.120Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gTW9kZWxvcyBkZSBjb250ZcO6ZG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IlByZXZpZXcgZGUgTW9kZWxvcyBlIERlc2lnbnMifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJOYXZlZ2FyIGVudHJlIHNsaWRlcyBubyBjYXJyb3NzZWwifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJoaWdoIn1dfX0="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-dda88-r-entre-slides-no-carrossel-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-dda88-r-entre-slides-no-carrossel-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-dda88-r-entre-slides-no-carrossel-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "925db9569e85244dafa6-1e9184c06a20d3589e8e",
+              "file": "projects/modelos/tests/features/preview-de-modelos-e-designs/tc03-navegar-entre-slides.spec.ts",
+              "line": 6,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\modelos\\tests\\features\\preview-de-modelos-e-designs\\tc04-preview-pagina-zoom-scroll.spec.ts",
+      "file": "projects/modelos/tests/features/preview-de-modelos-e-designs/tc04-preview-pagina-zoom-scroll.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Preview de Modelos e Designs",
+          "file": "projects/modelos/tests/features/preview-de-modelos-e-designs/tc04-preview-pagina-zoom-scroll.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Preview de Design tipo Página tem zoom com scroll",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 16062,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Abrir Preview do modelo",
+                          "duration": 12583
+                        },
+                        {
+                          "title": "2. Navegar até slide com Tipo: Página",
+                          "duration": 2109
+                        },
+                        {
+                          "title": "3. Validar controles de zoom (aria-label Aumentar/Diminuir)",
+                          "duration": 49
+                        }
+                      ],
+                      "startTime": "2026-05-20T20:45:29.107Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gTW9kZWxvcyBkZSBjb250ZcO6ZG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IlByZXZpZXcgZGUgTW9kZWxvcyBlIERlc2lnbnMifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJQcmV2aWV3IGRlIERlc2lnbiB0aXBvIFDDoWdpbmEgdGVtIHpvb20gY29tIHNjcm9sbCJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJtZWRpdW0ifV19fQ=="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-57886--Página-tem-zoom-com-scroll-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-57886--Página-tem-zoom-com-scroll-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-57886--Página-tem-zoom-com-scroll-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "941948f9c439b557ffbe-a0ee313cba557101d69a",
+              "file": "projects/modelos/tests/features/preview-de-modelos-e-designs/tc04-preview-pagina-zoom-scroll.spec.ts",
+              "line": 6,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-05-20T20:44:52.454Z",
+    "duration": 53510.929,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

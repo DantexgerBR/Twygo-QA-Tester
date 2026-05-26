@@ -118,4 +118,97 @@ export class SuperAdminPage extends BasePage {
     await this.orgSearchInput.fill(String(orgIdOrName));
     await this.page.keyboard.press('Enter');
   }
+
+  /**
+   * Ativa/desativa uma funcionalidade no contrato Vigente da org.
+   *
+   * Fluxo:
+   *  1. Abre `/admin/edit_sys_subscription_settings/<orgId>`
+   *  2. Click na aba/seção "Contratos"
+   *  3. Localiza row do contrato Vigente + click "Editar"
+   *     (`button#edit-contract-<contractId>`)
+   *  4. Toggle do `<input id="<featureName>">` (idempotente — no-op se
+   *     já está no estado desejado)
+   *  5. Chama `window.ContractOrganization.toogleFunctionality(featureName)`
+   *     manualmente (handler global Twygo) — sem isso, save submete payload
+   *     incompleto e estado não persiste
+   *  6. Click `button.save-form-button` visível
+   *  7. Aguarda reload e confirma persistência re-abrindo edit
+   *
+   * Retorna `true` se mudou estado, `false` se já estava no estado desejado.
+   *
+   * Ver skill `alterar-funcionalidade-contrato-twygo` para detalhes.
+   */
+  async setContractFunctionality(
+    orgId: string | number,
+    featureName: string,
+    enabled: boolean,
+  ): Promise<{ changed: boolean; wasEnabled: boolean }> {
+    await this.openEditContract(orgId);
+
+    // Aba Contratos é um <a id="org_contracts" class="tab_selector"> sem
+    // href. Página tem ID duplicado (`<a>` clicável + `<div>` painel da
+    // tab, ambos `id="org_contracts"`) — qualificar com tag pra evitar
+    // strict-mode violation. Validado live 2026-05-15.
+    await this.page.locator('a#org_contracts.tab_selector').click();
+
+    // Row do contrato Vigente — texto "Vigente" identifica. Pega button#edit-contract-X.
+    const vigenteEditBtn = this.page
+      .locator('tr')
+      .filter({ hasText: 'Vigente' })
+      .locator('button[id^="edit-contract-"].edit-contract-button')
+      .first();
+    await vigenteEditBtn.waitFor({ state: 'visible', timeout: 10_000 });
+    await vigenteEditBtn.click();
+
+    // Aguarda o form Editar renderizar o checkbox (attached é OK — o
+    // multiselect colapsa o componente, mas o input fica no DOM).
+    await this.page
+      .locator(`input#${featureName}`)
+      .waitFor({ state: 'attached', timeout: 15_000 });
+
+    // Form inline carrega. Checkbox da feature fica DENTRO de um multiselect
+    // custom (`.functionality-checkboxes`) colapsado por default — não é
+    // visível ao Playwright. Mas o handler global do Twygo aceita toggle
+    // via JS direto. Consolidamos toggle+handler+save em UM evaluate.
+    //
+    // Validado: form.submit() programático NÃO persiste (anti-pattern A).
+    // Precisamos do click() no `button.save-form-button` real (dentro do
+    // form de contrato), que dispara validação JS + monta payload completo.
+    const result = await this.page.evaluate(
+      ({ name, desired }) => {
+        const cb = document.getElementById(name) as HTMLInputElement | null;
+        if (!cb) return { ok: false as const, error: `checkbox #${name} not found` };
+        if (cb.disabled) {
+          return { ok: false as const, error: `checkbox #${name} disabled (fixed by plan template)` };
+        }
+        const wasChecked = cb.checked;
+        if (wasChecked === desired) {
+          return { ok: true as const, changed: false, wasChecked };
+        }
+        cb.click();
+        const w = window as unknown as { ContractOrganization?: { toogleFunctionality: (n: string) => void } };
+        w.ContractOrganization?.toogleFunctionality(name);
+        // Save button DENTRO do form de contrato. Há múltiplos no DOM —
+        // pegar pelo form ancestor garante.
+        const form = document.getElementById('organization-contract-form') as HTMLFormElement | null;
+        if (!form) return { ok: false as const, error: 'organization-contract-form not found' };
+        const saveBtn = form.querySelector<HTMLButtonElement>('button.save-form-button');
+        if (!saveBtn) return { ok: false as const, error: 'save button not found in contract form' };
+        saveBtn.click();
+        return { ok: true as const, changed: true, wasChecked };
+      },
+      { name: featureName, desired: enabled },
+    );
+
+    if (!result.ok) {
+      throw new Error(`setContractFunctionality: ${result.error}`);
+    }
+    if (!result.changed) {
+      return { changed: false, wasEnabled: result.wasChecked };
+    }
+
+    await this.page.waitForLoadState('load', { timeout: 15_000 });
+    return { changed: true, wasEnabled: result.wasChecked };
+  }
 }

@@ -1,0 +1,3877 @@
+{
+  "rootSuite": {
+    "name": "",
+    "testCases": [],
+    "childSuites": [
+      {
+        "name": "Listagem de painéis",
+        "testCases": [
+          {
+            "name": "Acessar a listagem de Painéis a partir do 'Menu'",
+            "summary": "Validar acesso à listagem e renomeação de menu/breadcrumb (R1).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Clicar no menu lateral 'Menu'",
+                "expectedResults": "Submenu lateral é exibido contendo os itens de navegação",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar na aba 'Modos de uso'",
+                "expectedResults": "Sistema redireciona para a tela de Modos de uso e exibe breadcrumb 'Navegação > Modos de uso'",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Clicar na aba 'Painéis'",
+                "expectedResults": "Aba 'Painéis' fica selecionada e exibe a listagem de painéis",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Verificar o componente da listagem",
+                "expectedResults": "Listagem é renderizada usando o componente 'list-control'",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Validar componentes obrigatórios da listagem de painéis",
+            "summary": "Verificar presença de botão Adicionar, campo de pesquisa e visualizações lista/cards (R2).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem de painéis é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar a presença do botão de criação",
+                "expectedResults": "Botão '+ Adicionar' é exibido no topo da listagem",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Verificar a presença do campo de pesquisa",
+                "expectedResults": "Campo de pesquisa é exibido no topo da listagem",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Verificar os modos de visualização disponíveis",
+                "expectedResults": "Controles 'Lista' e 'Cards' são exibidos; modo 'Lista' está selecionado por padrão",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Validar colunas exibidas na visualização em lista",
+            "summary": "Validar colunas Nome, Descrição, Provedora, Data de criação, Ativo e Ações (R2).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existem painéis previamente cadastrados na organização",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu no modo 'Lista'",
+                "expectedResults": "Tabela exibe os cabeçalhos: 'Nome', 'Descrição', 'Provedora', 'Data de criação', 'Ativo', 'Ações'",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar a coluna 'Ativo'",
+                "expectedResults": "Coluna 'Ativo' apresenta um switch por linha indicando estado ativo/inativo",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Verificar a coluna 'Ações'",
+                "expectedResults": "Coluna 'Ações' exibe os ícones de 'Editar', 'Duplicar' e 'Excluir' em cada linha",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Alternar entre visualização em lista e cards",
+            "summary": "Validar troca de visualização lista/cards e persistência da seleção do usuário (R2).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existem painéis previamente cadastrados na organização",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida no modo 'Lista' por padrão",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no controle de visualização 'Cards'",
+                "expectedResults": "Listagem é renderizada em formato de cards",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Clicar no controle de visualização 'Lista'",
+                "expectedResults": "Listagem volta a ser renderizada em formato de tabela com as colunas padrão",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Ordenar listagem por cada coluna",
+            "summary": "Validar ordenação ascendente/descendente em cada coluna ordenável (R2).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existem ao menos 3 painéis cadastrados",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida com ordenação padrão",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no cabeçalho da coluna 'Nome'",
+                "expectedResults": "Linhas são reordenadas em ordem alfabética crescente pelo nome",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Clicar novamente no cabeçalho da coluna 'Nome'",
+                "expectedResults": "Linhas são reordenadas em ordem alfabética decrescente pelo nome",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Clicar no cabeçalho da coluna 'Descrição'",
+                "expectedResults": "Linhas são reordenadas em ordem alfabética crescente pela descrição",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 5,
+                "actions": "Clicar novamente no cabeçalho da coluna 'Descrição'",
+                "expectedResults": "Linhas são reordenadas em ordem alfabética decrescente pelo nome",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 6,
+                "actions": "Clicar no cabeçalho da coluna 'Provedora'",
+                "expectedResults": "Linhas são reordenadas em ordem alfabética crescente pelo nome do provedor",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 7,
+                "actions": "Clicar novamente no cabeçalho da coluna 'Provedora'",
+                "expectedResults": "Linhas são reordenadas em ordem alfabética decrescente pelo nome do provedor",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 8,
+                "actions": "Clicar no cabeçalho da coluna 'Data de criação'",
+                "expectedResults": "Linhas são reordenadas pela data de criação na ordem de data mais antiga para a mais recente",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 9,
+                "actions": "Clicar novamente no cabeçalho da coluna 'Data de criação'",
+                "expectedResults": "Linhas são reordenadas pela data de criação na ordem de data mais recente para a mais antiga",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 10,
+                "actions": "Clicar no cabeçalho da coluna 'Ativo'",
+                "expectedResults": "Linhas são ordenadas de inativos para ativos",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 11,
+                "actions": "Clicar novamente no cabeçalho da coluna 'Ativo'",
+                "expectedResults": "Linhas são ordenadas de ativos para inativos",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Paginação da listagem com volume de painéis",
+            "summary": "Validar paginação quando há mais painéis que o limite por página.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existem mais de 25 painéis cadastrados",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida com paginação no rodapé",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no botão 'Próxima página' do paginador",
+                "expectedResults": "Sistema avança uma página e exibe os próximos registros",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Clicar no botão 'Página anterior' do paginador",
+                "expectedResults": "Sistema retorna para a página anterior",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Acessar listagem com a feature flag desabilitada",
+            "summary": "Garantir que aba 'Painéis' não é exibida quando a flag está desabilitada (R1).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' DESABILITADA Usuário logado como Admin",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar Menu > Modos de uso",
+                "expectedResults": "Tela de Modos de uso é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar a presença da aba 'Painéis'",
+                "expectedResults": "Aba 'Painéis' NÃO é exibida na tela de Modos de uso",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Acessar diretamente pela rota da aba 'Painéis'",
+                "expectedResults": "Mensagem padrão de que a página não existe",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Validar acessibilidade por teclado na listagem (TAB / setas / ENTER / ESC)",
+            "summary": "Validar usabilidade conforme requisito da planilha (QA 2.1).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existem painéis cadastrados",
+            "executionType": 1,
+            "importance": 1,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a listagem de Painéis",
+                "expectedResults": "Listagem é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Pressionar a tecla 'Tab' repetidamente",
+                "expectedResults": "Foco percorre os controles na ordem: campo de pesquisa, controles de visualização, botão '+ Adicionar', linhas da tabela",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Pressionar a tecla 'Enter' no botão '+ Adicionar' com foco",
+                "expectedResults": "Sistema redireciona para a tela de criação de painel",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Pressionar a tecla 'Esc' na tela aberta",
+                "expectedResults": "Sistema retorna para a listagem (ou exibe modal de confirmação se houver alterações)",
+                "executionType": 1
+              }
+            ]
+          }
+        ],
+        "childSuites": []
+      },
+      {
+        "name": "Ativar / Inativar painel",
+        "testCases": [
+          {
+            "name": "Inativar um painel não associado a nenhum modo de uso",
+            "summary": "Validar inativação direta via switch da coluna 'Ativo' (R2 RN12).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existe painel 'Painel QA Teste' cadastrado e ativo, sem associação com modo de uso",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida com 'Painel QA Teste' ativo",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no switch da coluna 'Ativo' na linha 'Painel QA Teste'",
+                "expectedResults": "Switch fica desligado e estado 'Inativo' é persistido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Recarregar a página",
+                "expectedResults": "Painel 'Painel QA Teste' permanece com switch desligado na coluna 'Ativo'",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Ativar um painel previamente inativo",
+            "summary": "Validar reativação via switch (R2 RN12).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existe painel 'Painel QA Teste' cadastrado e inativo",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida com 'Painel QA Teste' inativo",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no switch da coluna 'Ativo' na linha 'Painel QA Teste'",
+                "expectedResults": "Switch fica ligado e estado 'Ativo' é persistido",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Tentar inativar painel associado a um ou mais modos de uso",
+            "summary": "Validar modal informativo de bloqueio (R2 RN12.1).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existe painel 'Painel Vinculado' associado a 2 menus de modos de uso ativos",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida com 'Painel Vinculado' ativo",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no switch da coluna 'Ativo' na linha 'Painel Vinculado'",
+                "expectedResults": "Modal informativo é exibido listando os menus que utilizam o painel e informando que não pode ser desativado",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Clicar no botão 'Fechar' ou 'OK' do modal",
+                "expectedResults": "Modal é fechado e switch permanece ligado (painel continua ativo)",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Tentar reativar modo de uso vinculado a um painel inativo",
+            "summary": "Validar bloqueio descrito em R15 RN93.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existe menu de modo de uso vinculado ao painel 'Painel QA Teste' que está inativo Menu está inativo",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar Menu > Modos de uso",
+                "expectedResults": "Tela de Modos de uso é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no switch de ativação do menu vinculado a 'Painel QA Teste'",
+                "expectedResults": "Modal informativo é exibido informando que o painel está inativo e não pode ser reativado",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Clicar no botão 'Fechar' do modal",
+                "expectedResults": "Modal é fechado e menu permanece inativo",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Verificar persistência do estado Ativo após reload",
+            "summary": "Validar persistência das alterações de status.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existem painéis ativos e inativos",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Alterar o switch 'Ativo' de um painel para o estado oposto",
+                "expectedResults": "Switch reflete o novo estado",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Recarregar a página (F5)",
+                "expectedResults": "Listagem é recarregada e o switch mantém o estado alterado",
+                "executionType": 1
+              }
+            ]
+          }
+        ],
+        "childSuites": []
+      },
+      {
+        "name": "Compartilhamento de painéis",
+        "testCases": [
+          {
+            "name": "Visualizar painel compartilhado na listagem",
+            "summary": "Validar exibição de painéis com provedora externa (R2 RN14).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Organização possui painel compartilhado 'Painel Compartilhado X' com provedora 'Twygo Studio'",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar a coluna 'Provedora' do painel 'Painel Compartilhado X'",
+                "expectedResults": "Coluna 'Provedora' exibe 'Twygo Studio'",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Tentar editar um painel compartilhado",
+            "summary": "Validar restrição de edição (R2 RN15).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Organização possui painel compartilhado 'Painel Compartilhado X'",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar o ícone 'Editar' na linha do painel 'Painel Compartilhado X'",
+                "expectedResults": "Ícone 'Editar' está desabilitado ou ausente para painéis compartilhados",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Tentar excluir um painel compartilhado",
+            "summary": "Validar restrição de exclusão (R2 RN15).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Organização possui painel compartilhado 'Painel Compartilhado X'",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar o ícone 'Excluir' na linha do painel 'Painel Compartilhado X'",
+                "expectedResults": "Ícone 'Excluir' está desabilitado ou ausente para painéis compartilhados",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Duplicar painel compartilhado",
+            "summary": "Validar se ação de duplicar fica disponível em painéis compartilhados.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Organização possui painel compartilhado 'Painel Compartilhado X'",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no ícone 'Duplicar' na linha do painel 'Painel Compartilhado X'",
+                "expectedResults": "Painel é duplicado para a organização atual com nome '[Cópia] Painel Compartilhado X'",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Verificar o painel duplicado na listagem",
+                "expectedResults": "Painel '[Cópia] Painel Compartilhado X' é exibido como painel próprio (provedora local) e permite edição/exclusão",
+                "executionType": 1
+              }
+            ]
+          }
+        ],
+        "childSuites": []
+      },
+      {
+        "name": "Pesquisa e Filtros",
+        "testCases": [
+          {
+            "name": "Pesquisar painel pelo nome",
+            "summary": "Validar pesquisa por Nome (R2 RN8, R3 RN16).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existem painéis 'Vendas 2026', 'Marketing Q1', 'Financeiro'",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Preencher o campo de pesquisa com 'Vendas'",
+                "expectedResults": "Listagem é filtrada exibindo apenas o painel 'Vendas 2026'",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Limpar o campo de pesquisa",
+                "expectedResults": "Listagem volta a exibir todos os painéis",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Pesquisar painel pela descrição",
+            "summary": "Validar pesquisa por Descrição (R3 RN16).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existe painel com descrição contendo 'KPIs estratégicos'",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Preencher o campo de pesquisa com 'KPIs'",
+                "expectedResults": "Listagem exibe apenas painéis cuja Descrição contém 'KPIs'",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Aplicar filtro padrão 'Painéis próprios'",
+            "summary": "Validar filtro padrão Próprios (R3 RN17).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existem painéis próprios e compartilhados na organização",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Selecionar o filtro 'Painéis próprios'",
+                "expectedResults": "Listagem exibe somente painéis cuja Provedora é a própria organização",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Aplicar filtro padrão 'Painéis compartilhados'",
+            "summary": "Validar filtro padrão Compartilhados (R3 RN17).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existem painéis próprios e compartilhados na organização",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Selecionar o filtro 'Painéis compartilhados'",
+                "expectedResults": "Listagem exibe somente painéis cuja Provedora é externa",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Aplicar filtro padrão 'Painéis ativos'",
+            "summary": "Validar filtro padrão Ativos (R3 RN17).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existem painéis ativos e inativos",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Selecionar o filtro 'Painéis ativos'",
+                "expectedResults": "Listagem exibe somente painéis com switch 'Ativo' ligado",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Aplicar filtro padrão 'Painéis inativos'",
+            "summary": "Validar filtro padrão Inativos (R3 RN17).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existem painéis ativos e inativos",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Selecionar o filtro 'Painéis inativos'",
+                "expectedResults": "Listagem exibe somente painéis com switch 'Ativo' desligado",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Filtrar pela coluna 'Nome'",
+            "summary": "Validar filtro por coluna (R3 RN18).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existem painéis de diferentes nomes",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no ícone de Filtro > Novo > Colunas para filtrar > Nome",
+                "expectedResults": "Opções de 'Nomes' são exibidas para seleção",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Selecionar um ou mais nomes e 'Aplicar'",
+                "expectedResults": "Listagem exibe apenas painéis daquele nome",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Filtrar pela coluna 'Descrição'",
+            "summary": "Validar filtro por coluna (R3 RN18).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existem painéis de diferentes descrições",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no ícone de Filtro > Novo > Colunas para filtrar > Descrição",
+                "expectedResults": "Deve permitir inserir texto de 'Descrição'",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Aplicar filtro",
+                "expectedResults": "Listagem exibe apenas painéis daquela descrição",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Filtrar pela coluna 'Provedora'",
+            "summary": "Validar filtro por coluna (R3 RN18).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existem painéis de diferentes provedoras",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no ícone de Filtro > Novo > Colunas para filtrar > Nome",
+                "expectedResults": "Painel de filtro é exibido com as provedoras disponíveis",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Selecionar uma provedora específica e aplicar",
+                "expectedResults": "Listagem exibe apenas painéis daquela provedora",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Filtrar pela coluna 'Data de criação'",
+            "summary": "Validar filtro por coluna (R3 RN18).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existem painéis de diferentes datas de criação",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no ícone de Filtro > Novo > Colunas para filtrar > Data de criação",
+                "expectedResults": "Painel de filtro é exibido com componente de data",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Selecionar data específica e aplicar",
+                "expectedResults": "Listagem exibe apenas painéis daquela data",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Filtrar pela coluna 'Ativo'",
+            "summary": "Validar filtro por coluna (R3 RN18).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existem painéis de diferentes status (ativos e inativos)",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no ícone de Filtro > Novo > Colunas para filtrar > Ativo",
+                "expectedResults": "Painel de filtro é exibido com as opções de 'Ativo' e 'Inativo'",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Selecionar uma opção específica e aplicar",
+                "expectedResults": "Listagem exibe apenas painéis daquela situação",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Pesquisar termo inexistente",
+            "summary": "Validar comportamento da listagem sem resultados.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Preencher o campo de pesquisa com 'XXXYYY9999'",
+                "expectedResults": "Listagem exibe estado vazio com mensagem padrão de 'Nenhum resultado encontrado'",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Combinar pesquisa e filtros padrão",
+            "summary": "Validar interação entre pesquisa e filtros.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existem painéis 'Vendas 2026' (ativo) e 'Vendas 2025' (inativo)",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Selecionar o filtro 'Painéis ativos'",
+                "expectedResults": "Listagem é filtrada por painéis ativos",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Preencher o campo de pesquisa com 'Vendas'",
+                "expectedResults": "Listagem exibe apenas 'Vendas 2026' (ativo + nome contém 'Vendas')",
+                "executionType": 1
+              }
+            ]
+          }
+        ],
+        "childSuites": []
+      },
+      {
+        "name": "Adicionar/editar aba",
+        "testCases": [
+          {
+            "name": "Acessar a tela de criação de painel",
+            "summary": "Validar acesso à tela de criação a partir do botão '+ Adicionar' (R5 RN21).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no botão '+ Adicionar'",
+                "expectedResults": "Sistema redireciona para a tela de criação de painel exibindo as abas 'Identificação' e 'Layouts'; aba 'Identificação' fica ativa por padrão",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Criar painel com Nome e Descrição preenchidos (happy path)",
+            "summary": "Validar criação completa de painel (R5 RN22, RN23).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a tela de criação clicando em '+ Adicionar'",
+                "expectedResults": "Tela de criação é exibida na aba 'Identificação'",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Preencher o campo 'Nome' com 'Painel de Vendas Q1'",
+                "expectedResults": "Campo aceita o valor digitado",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Preencher o campo 'Descrição' com 'Painel para acompanhamento de KPIs de vendas'",
+                "expectedResults": "Campo aceita o valor digitado",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Clicar na aba 'Layouts'",
+                "expectedResults": "Aba 'Layouts' fica selecionada e exibe a aba inicial 'Nova aba' criada automaticamente",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 5,
+                "actions": "Clicar no botão 'Salvar layout'",
+                "expectedResults": "Painel é salvo, sistema redireciona para a listagem e exibe 'Painel de Vendas Q1' na primeira posição",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Tentar salvar painel sem preencher o campo obrigatório 'Nome'",
+            "summary": "Validar mensagem de erro em campo obrigatório.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a tela de criação clicando em '+ Adicionar'",
+                "expectedResults": "Tela de criação é exibida na aba 'Identificação'",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Deixar o campo 'Nome' vazio e tentar avançar",
+                "expectedResults": "Campo 'Nome' fica destacado em vermelho com mensagem de campo obrigatório",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Validar limite de 255 caracteres no campo Nome",
+            "summary": "Validar limitação do input.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a tela de criação clicando em '+ Adicionar'",
+                "expectedResults": "Tela de criação é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Preencher o campo 'Nome' com 256 caracteres",
+                "expectedResults": "Campo aceita no máximo 255 caracteres ou exibe mensagem de limite excedido",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Validar limite de 500 caracteres no campo Descrição",
+            "summary": "Validar limitação do textarea.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a tela de criação clicando em '+ Adicionar'",
+                "expectedResults": "Tela de criação é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Preencher o campo 'Descrição' com 501 caracteres",
+                "expectedResults": "Campo aceita no máximo 500 caracteres ou exibe mensagem de limite excedido",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Validar tipos de caracteres aceitos no campo Nome",
+            "summary": "Validar aceitação de letras, números, especiais e acentos.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin",
+            "executionType": 1,
+            "importance": 1,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a tela de criação clicando em '+ Adicionar'",
+                "expectedResults": "Tela de criação é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Preencher o campo 'Nome' com 'Áéíóú ç ñ - _ . / 123 !@#'",
+                "expectedResults": "Campo aceita caracteres especiais, acentos e números sem alteração visual",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Clicar no botão 'Salvar layout'",
+                "expectedResults": "Painel é salvo com o nome exato preenchido",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Validar exibição da aba inicial 'Nova aba' criada automaticamente",
+            "summary": "Validar criação automática da primeira aba (R6 RN25).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a tela de criação clicando em '+ Adicionar'",
+                "expectedResults": "Tela de criação é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Tentar clicar na aba 'Layout'",
+                "expectedResults": "Aba deve estar com acesso bloqueado",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Preencher nome, descrição e 'Salvar'",
+                "expectedResults": "Aba 'Layouts' deve ficar ativa",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Clicar na aba 'Layouts'",
+                "expectedResults": "Aba inicial nomeada 'Nova aba' é exibida automaticamente",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Renomear aba existente via ícone de lápis",
+            "summary": "Validar fluxo de renomeação (R6 RN27, RN28).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existe painel em edição com aba 'Nova aba'",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Layouts' do painel em edição",
+                "expectedResults": "Aba 'Nova aba' é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no ícone de lápis ao lado do nome 'Nova aba'",
+                "expectedResults": "Modal 'Renomear aba' é exibido com subtítulo 'Altere o nome da aba selecionada' e campo 'Nome da aba'",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Preencher o campo 'Nome da aba' com 'Resumo Geral'",
+                "expectedResults": "Campo aceita o valor",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Clicar no botão 'Renomear'",
+                "expectedResults": "Modal é fechado, aba é renomeada para 'Resumo Geral' e toast exibida: 'Aba renomeada com sucesso'",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Validar 255 caracteres para o 'Nome da aba'",
+            "summary": "Validar máximo de caracteres para de renomeação de aba (RN28).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existe painel em edição com aba 'Nova aba'",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Layouts' do painel em edição",
+                "expectedResults": "Aba 'Nova aba' é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no ícone de lápis ao lado do nome 'Nova aba'",
+                "expectedResults": "Modal 'Renomear aba' é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Preencher o campo 'Nome da aba' com 255 caracteres",
+                "expectedResults": "Campo aceita o valor",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Clicar no botão 'Renomear'",
+                "expectedResults": "Modal é fechado, aba é renomeada para 'Resumo Geral' e toast exibida: 'Aba renomeada com sucesso'",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 5,
+                "actions": "Renomear novamente a aba, tentando adicionar 256 caracteres",
+                "expectedResults": "Campo não permite a inserção de +255 caracteres",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Cancelar renomeação de aba",
+            "summary": "Validar ação de cancelar no modal Renomear (R6 RN28).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existe painel em edição com aba 'Resumo Geral'",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Layouts' do painel em edição",
+                "expectedResults": "Aba 'Resumo Geral' é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no ícone de lápis ao lado do nome 'Resumo Geral'",
+                "expectedResults": "Modal 'Renomear aba' é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Preencher o campo 'Nome da aba' com 'Outro nome'",
+                "expectedResults": "Campo aceita o valor",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Clicar no botão 'Cancelar'",
+                "expectedResults": "Modal é fechado e nome da aba permanece 'Resumo Geral'",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Adicionar nova aba via opção 'Criar nova aba'",
+            "summary": "Validar fluxo de criação de aba vazia (R6 RN30, RN31, RN32).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existe painel em edição com pelo menos uma aba",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Layouts' do painel em edição",
+                "expectedResults": "Aba existente é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no botão 'Adicionar aba'",
+                "expectedResults": "Modal 'Adicionar nova aba' é exibido com subtítulo 'Escolha como deseja criar a nova aba' e duas opções: Criar nova aba; Importar de outro painel",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Validar botão da opção 'Criar nova aba'",
+                "expectedResults": "Deve exibir um ícone de adição '+'<br /> Com a descrição:<br /> Crie uma nova aba vazia e adicione widgets manualmente",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Clicar na opção 'Criar nova aba'",
+                "expectedResults": "Avança step no modal exibindo: <br /> Título: Adicionar nova aba<br /> Subtítulo: Crie uma nova aba vazia<br /> Campos de 'Nome da aba' e 'Categoria'<br /> Botões de 'Voltar', 'Cancelar', 'Criar aba'",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 5,
+                "actions": "Preencher o campo 'Nome da aba' com 'Engajamento'",
+                "expectedResults": "Campo aceita o valor",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 6,
+                "actions": "Selecionar 'Aprendizagem' no dropdown 'Categoria'",
+                "expectedResults": "Opção é selecionada",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 7,
+                "actions": "Clicar no botão 'Criar aba'",
+                "expectedResults": "Modal é fechado, nova aba 'Engajamento' é adicionada e deve permitir a edição",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Cancelar criação de nova aba a partir da seleção de tipo",
+            "summary": "Validar ação Cancelar no modal de seleção (R6 RN30).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existe painel em edição",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Layouts' do painel em edição",
+                "expectedResults": "Aba existente é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no botão 'Adicionar aba'",
+                "expectedResults": "Modal 'Adicionar nova aba' é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Fechar o modal pelo botão 'X'",
+                "expectedResults": "Modal é fechado e nenhuma aba é criada",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Fechar o modal clicando fora",
+                "expectedResults": "Modal é fechado e nenhuma aba é criada",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 5,
+                "actions": "Fechar o modal pelo botão 'Cancelar'",
+                "expectedResults": "Modal é fechado e nenhuma aba é criada",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Voltar do step 'Criar nova aba' para a seleção de tipo",
+            "summary": "Validar ação Voltar (R6 RN31).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existe painel em edição",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Layouts' e clicar em 'Adicionar aba'",
+                "expectedResults": "Modal 'Adicionar nova aba' é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar na opção 'Criar nova aba'",
+                "expectedResults": "Modal avança para o step de criação",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Clicar no botão 'Voltar'",
+                "expectedResults": "Modal retorna ao step de seleção entre 'Criar nova aba' e 'Importar de outro painel'",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Excluir aba quando há mais de uma aba",
+            "summary": "Validar exclusão e regra da aba única remanescente (R6 RN33, RN34).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição contém duas abas: 'Aba A' e 'Aba B'",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Layouts' do painel em edição",
+                "expectedResults": "Abas 'Aba A' e 'Aba B' são exibidas e ícone de exclusão deve estar disponível para as duas abas",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no ícone 'Excluir' da aba 'Aba B'",
+                "expectedResults": "Aba 'Aba B' é removida e a 'Aba A' fica como aba ativa",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Verificar o ícone 'Excluir' na aba restante 'Aba A'",
+                "expectedResults": "Ícone 'Excluir' está desabilitado/oculto na aba 'Aba A' (regra de pelo menos uma aba)",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Tentar excluir aba quando há apenas uma aba",
+            "summary": "Validar bloqueio de exclusão da aba única (R6 RN26, RN34).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição contém apenas a aba 'Nova aba'",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Layouts' do painel em edição",
+                "expectedResults": "Aba 'Nova aba' é exibida como única",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar a presença e estado do ícone 'Excluir' na 'Nova aba'",
+                "expectedResults": "Ícone 'Excluir' está desabilitado/oculto",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Verificar a presença do ícone 'Renomear' (lápis)",
+                "expectedResults": "Ícone de renomear permanece habilitado",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Modal padrão de confirmação ao alternar abas com alterações não salvas",
+            "summary": "Validar modal de alterações pendentes (Dev 3.18 - lógica reaproveitada).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição contém duas abas: 'Aba A' (com alterações não salvas) e 'Aba B'",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Estar na 'Aba A' com alterações não salvas",
+                "expectedResults": "Aba 'Aba A' é exibida com alterações pendentes",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar na 'Aba B'",
+                "expectedResults": "Modal padrão de confirmação é exibido perguntando se deseja salvar as alterações",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Clicar no botão 'Sim, salvar' do modal",
+                "expectedResults": "Alterações são salvas, modal é fechado e 'Aba B' fica ativa",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Modal de confirmação do navegador ao sair com alterações não salvas",
+            "summary": "Validar prompt do navegador ao tentar sair via botão Voltar do navegador.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição com alterações não salvas",
+            "executionType": 1,
+            "importance": 1,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Estar na tela de edição com alterações não salvas",
+                "expectedResults": "Tela de edição é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no botão 'Voltar' do navegador",
+                "expectedResults": "Prompt nativo do navegador é exibido perguntando se deseja sair sem salvar",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Cancelar o prompt do navegador",
+                "expectedResults": "Usuário permanece na tela de edição com as alterações",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Validar acessibilidade por teclado ao criar aba",
+            "summary": "Validar usabilidade conforme requisito da planilha (QA 2.1).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existem painéis cadastrados",
+            "executionType": 1,
+            "importance": 1,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar 'Criar aba'",
+                "expectedResults": "Modal é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Pressionar a tecla 'Tab' repetidamente",
+                "expectedResults": "Foco percorre os campos em ordem",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Pressionar a tecla 'Enter' no botão 'Criar nova aba' com foco",
+                "expectedResults": "Sistema redireciona para próximo step de criaçãlo",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Pressionar a tecla 'Esc' na tela aberta",
+                "expectedResults": "Sistema retorna para a listagem",
+                "executionType": 1
+              }
+            ]
+          }
+        ],
+        "childSuites": []
+      },
+      {
+        "name": "Layout das abas",
+        "testCases": [
+          {
+            "name": "Validar barra de ferramentas fixa no topo da área de layout",
+            "summary": "Validar componentes da toolbar (R8 RN54, RN55).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição com aba 'Nova aba' selecionada",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Layouts' do painel em edição",
+                "expectedResults": "Barra de ferramentas é exibida no topo da área de layout, fixa enquanto rola",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar os elementos da toolbar",
+                "expectedResults": "Botão '+ Adicionar widget' à esquerda; controles 'Visualização: Desktop', 'Visualização: Tablet', 'Visualização: Mobile' e switch 'Permitir reorganizar widgets' à direita",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Trocar visualização para Tablet (768) e validar alerta",
+            "summary": "Validar comportamento e alerta no modo Tablet (R8 RN57, RN57.1).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição com aba contendo widgets",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Layouts' do painel em edição",
+                "expectedResults": "Layout é exibido no modo Desktop por padrão<br /> Com switch 'Permitir reorganizar widgets' habilitado",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no controle 'Visualização: Tablet'",
+                "expectedResults": "Layout é renderizado em 768px e alerta exibido: 'Visualização (Tablet) — edição disponível no Desktop'",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Verificar o switch 'Permitir reorganizar widgets'",
+                "expectedResults": "Switch fica desabilitado e exibe tooltip 'Edição disponível apenas no modo Desktop' ao passar o cursor",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Trocar visualização para Mobile (360) e validar alerta",
+            "summary": "Validar comportamento e alerta no modo Mobile (R8 RN57.2).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição com aba contendo widgets",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Layouts' do painel em edição",
+                "expectedResults": "Layout é exibido no modo Desktop<br /> Com switch 'Permitir reorganizar widgets' habilitado",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no controle 'Visualização: Mobile'",
+                "expectedResults": "Layout é renderizado em 360px e alerta exibido: 'Visualização (Mobile) — edição disponível no Desktop'",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Verificar o switch 'Permitir reorganizar widgets'",
+                "expectedResults": "Switch fica desabilitado e exibe tooltip 'Edição disponível apenas no modo Desktop'",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Voltar para visualização Desktop após Tablet/Mobile",
+            "summary": "Validar volta ao modo Desktop e reativação do switch.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição com aba contendo widgets",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Layouts' do painel em edição",
+                "expectedResults": "Layout é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no controle 'Visualização: Tablet'",
+                "expectedResults": "Layout é renderizado em 768px",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Clicar no controle 'Visualização: Desktop'",
+                "expectedResults": "Layout é renderizado em largura Desktop e alerta de Tablet/Mobile NÃO é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Verificar o switch 'Permitir reorganizar widgets'",
+                "expectedResults": "Switch fica habilitado novamente",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Ativar switch 'Permitir reorganizar widgets' e mover widget",
+            "summary": "Validar reorganização habilitada (R8 RN59, RN59.1).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição com aba contendo dois widgets",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Layouts' do painel em edição no modo Desktop",
+                "expectedResults": "Layout é exibido com os widgets",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Ativar o switch 'Permitir reorganizar widgets'",
+                "expectedResults": "Switch fica ligado e widgets exibem indicação visual de que são arrastáveis",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Arrastar o primeiro widget para a posição do segundo",
+                "expectedResults": "Widgets trocam de posição no grid",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Switch desativado: tentar arrastar widget",
+            "summary": "Validar bloqueio de reorganização com switch desligado (R8 RN60).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição com aba contendo dois widgets",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Layouts' do painel em edição no modo Desktop",
+                "expectedResults": "Layout é exibido com os widgets",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Manter o switch 'Permitir reorganizar widgets' desligado",
+                "expectedResults": "Switch permanece desligado",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Tentar arrastar um widget",
+                "expectedResults": "Widget não é movido (drag bloqueado) e nenhuma alteração ocorre no layout",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Estado vazio da aba sem widgets",
+            "summary": "Validar estado vazio com título, descrição e botão (R8 RN61, RN62, RN63).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição com aba 'Nova aba' sem widgets",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Layouts' do painel em edição",
+                "expectedResults": "Aba 'Nova aba' é exibida sem widgets",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar o estado vazio da área de layout",
+                "expectedResults": "Ícone ilustrativo centralizado é exibido, título \"Nenhum widget adicionado\", descrição \"Clique no botão \"Adicionar Widget\" para começar a montar sua tela personalizada\" e botão primário \"+ Adicionar Widget\"",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Clicar no botão '+ Adicionar Widget' do estado vazio",
+                "expectedResults": "Drawer 'Widgets disponíveis' é aberto (mesma ação do botão da toolbar)",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Salvar layout pela barra de rodapé",
+            "summary": "Validar persistência via 'Salvar layout' (R8 RN65, RN65.2).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição com aba contendo widget recém-adicionado",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Layouts' do painel em edição",
+                "expectedResults": "Layout é exibido com o widget",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no botão 'Salvar layout' da barra de rodapé",
+                "expectedResults": "Layout é persistido, sistema redireciona para a listagem de painéis e o painel aparece na listagem",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Reabrir o painel salvo",
+                "expectedResults": "Aba e widgets continuam exibidos exatamente como salvos",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Cancelar edição com alterações não salvas",
+            "summary": "Validar ação 'Cancelar' (R8 RN65, RN65.1).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição com alterações não salvas",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Estar na aba 'Layouts' com alterações não salvas",
+                "expectedResults": "Layout é exibido com alterações pendentes",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no botão 'Cancelar' da barra de rodapé",
+                "expectedResults": "Sistema descarta alterações e retorna para a listagem de painéis",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Toolbar permanece fixa ao rolar a área de layout",
+            "summary": "Validar comportamento sticky da toolbar (R8 RN54).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição com aba contendo muitos widgets",
+            "executionType": 1,
+            "importance": 1,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Layouts' do painel em edição",
+                "expectedResults": "Layout é exibido com vários widgets",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Rolar verticalmente a área de layout",
+                "expectedResults": "Barra de ferramentas permanece visível e fixa no topo durante a rolagem",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Rolar verticalmente até o final",
+                "expectedResults": "Barra de rodapé com 'Cancelar' e 'Salvar layout' permanece visível e fixa no rodapé",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Validar acessibilidade por teclado aba 'Layout'",
+            "summary": "Validar usabilidade conforme requisito da planilha (QA 2.1).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin",
+            "executionType": 1,
+            "importance": 1,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar aba 'Layout'",
+                "expectedResults": "Configurações das abas são carregadas",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Pressionar a tecla 'Tab' repetidamente",
+                "expectedResults": "Foco percorre os campos em ordem",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Pressionar a tecla 'Enter' no botão '+ Adicionar Widget' com foco",
+                "expectedResults": "Sistema redireciona para adição de widget",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Pressionar a tecla 'Esc' na tela aberta",
+                "expectedResults": "Sistema retorna para o estado vazio ou abas criadas",
+                "executionType": 1
+              }
+            ]
+          }
+        ],
+        "childSuites": []
+      },
+      {
+        "name": "Adicionar widgets",
+        "testCases": [
+          {
+            "name": "Abrir drawer de widgets disponíveis",
+            "summary": "Validar abertura do drawer (R9 RN66, RN67).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição com aba selecionada",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Layouts' do painel em edição",
+                "expectedResults": "Layout é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no botão '+ Adicionar widget' da toolbar",
+                "expectedResults": "Drawer lateral é aberto com título 'Widgets disponíveis'",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Validar componentes do drawer de widgets",
+            "summary": "Validar campos de filtro, busca e listagem (R9 RN67, RN68, RN69, RN69.1, RN70).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição com aba selecionada",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Abrir o drawer de widgets disponíveis",
+                "expectedResults": "Drawer 'Widgets disponíveis' é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar a área de filtros",
+                "expectedResults": "Bloco de filtros está colapsado por padrão",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Clicar no campo de filtros para expandir",
+                "expectedResults": "Filtros são exibidos, incluindo o multi select 'Categorias' com opções 'Todos' e 'Aprendizagem'",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Verificar o campo 'Buscar'",
+                "expectedResults": "Campo \"Buscar\" é exibido com placeholder \"Digite o nome do widget...\"",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Validar widgets disponíveis na categoria Aprendizagem",
+            "summary": "Validar listagem completa dos widgets (R9 RN73-77).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição com aba selecionada",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Abrir o drawer de widgets disponíveis e selecionar a categoria 'Aprendizagem'",
+                "expectedResults": "Widgets são listados abaixo dos filtros, agrupados por categoria",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar o agrupamento dos widgets",
+                "expectedResults": "Devem estar agrupados na categoria 'Aprendizagem' e exibidos em formato de lista ou grid",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Verificar a apresentação de cada widget",
+                "expectedResults": "Cada widget exibe: Nome, Descrição, tags associadas (quando aplicável, indicando a categoria) e badge (indicando o perfil: Usuário, Instrutor, Administrador)",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Verificar os widgets exibidos na categoria 'Aprendizagem'",
+                "expectedResults": "Drawer exibe os widgets: 'Resumo das atividades', 'Conteúdos em andamento', 'Ranking', 'Meus certificados'",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Validar informação literal dos widgets",
+            "summary": "Validar textos descritivos, badges e tags (R9 RN73-76).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição com aba selecionada",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Abrir o drawer de widgets disponíveis",
+                "expectedResults": "Drawer é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar widget 'Resumo das atividades'",
+                "expectedResults": "Descrição: \"Exibe um resumo completo das atividades de aprendizagem do usuário\"<br /> Badge: Usuário<br /> Tag: Aprendizagem<br /> Tooltip: exibe descrição completa do widget",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Verificar widget 'Conteúdos em andamento'",
+                "expectedResults": "Descrição: \"Exibe os conteúdos que o usuário está cursando atualmente\"<br /> Badge: Usuário<br /> Tag: Aprendizagem<br /> Tooltip: exibe descrição completa do widget",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Verificar widget 'Ranking'",
+                "expectedResults": "Descrição: \"Exibe para o usuário a sua posição do ranking e o top 5 do ambiente\"<br /> Badge: Usuário<br /> Tag: Aprendizagem<br /> Tooltip: exibe descrição completa do widget",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 5,
+                "actions": "Verificar widget 'Meus certificados'",
+                "expectedResults": "Descrição: \"Exibe todos os certificados que o usuário conquistou\"<br /> Badge: Usuário<br /> Tag: Aprendizagem<br /> Tooltip: exibe descrição completa do widget",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Filtrar widgets pelo multi select 'Categorias'",
+            "summary": "Validar filtro por categoria (R9 RN69.1).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição com aba selecionada",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Abrir o drawer e expandir os filtros",
+                "expectedResults": "Filtros são exibidos com 'Todos' e 'Aprendizagem'",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Selecionar apenas 'Aprendizagem' no multi select",
+                "expectedResults": "Listagem exibe somente widgets da categoria 'Aprendizagem'",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Selecionar 'Todos'",
+                "expectedResults": "Listagem exibe todos os widgets disponíveis",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Pesquisar widget pelo nome no drawer",
+            "summary": "Validar campo de busca (R9 RN70).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição com aba selecionada",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Abrir o drawer de widgets disponíveis",
+                "expectedResults": "Drawer é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Preencher o campo 'Buscar' com 'Ranking'",
+                "expectedResults": "Listagem exibe somente o widget 'Ranking'",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Limpar o campo 'Buscar'",
+                "expectedResults": "Listagem volta a exibir todos os widgets",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Preencher o campo 'Buscar' com 'XXXX9999'",
+                "expectedResults": "Listagem do drawer exibe estado vazio sem widgets",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Adicionar widget 'Resumo das atividades'",
+            "summary": "Validar adição de widget (R9 RN80, RN81, RN83).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição com aba 'Nova aba' vazia",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Abrir o drawer de widgets disponíveis",
+                "expectedResults": "Drawer é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no widget 'Resumo das atividades'",
+                "expectedResults": "Widget é adicionado ao layout da aba ativa e toast exibida: \"Widget adicionado com sucesso\"",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Verificar a posição do widget no layout",
+                "expectedResults": "Widget 'Resumo das atividades' é exibido no layout (largura padrão diferente de 6 colunas conforme exceção)",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Adicionar widget 'Conteúdos em andamento'",
+            "summary": "Validar adição com largura padrão (R9 RN83.1).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição com aba 'Nova aba' vazia",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Abrir o drawer de widgets disponíveis",
+                "expectedResults": "Drawer é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no widget 'Conteúdos em andamento'",
+                "expectedResults": "Widget é adicionado ao layout e toast exibida: \"Widget adicionado com sucesso\"",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Verificar a largura do widget no grid",
+                "expectedResults": "Widget ocupa 6 colunas do grid",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Adicionar widget 'Ranking'",
+            "summary": "Validar largura específica do Ranking (R9 RN83.1).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição com aba 'Nova aba' vazia",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Abrir o drawer de widgets disponíveis",
+                "expectedResults": "Drawer é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no widget 'Ranking'",
+                "expectedResults": "Widget é adicionado ao layout e toast exibida: \"Widget adicionado com sucesso\"",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Verificar exibição e a largura do widget no grid",
+                "expectedResults": "Widget Ranking é exibido com sucesso e deve ocupar a largura padrão diferente de 6 colunas (exceção descrita na documentação)",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Adicionar widget 'Meus certificados'",
+            "summary": "Validar adição com largura padrão (R9 RN83.1).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição com aba 'Nova aba' vazia",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Abrir o drawer de widgets disponíveis",
+                "expectedResults": "Drawer é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no widget 'Conteúdos em andamento'",
+                "expectedResults": "Widget é adicionado ao layout e toast exibida: \"Widget adicionado com sucesso\"",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Verificar a largura do widget no grid",
+                "expectedResults": "Widget ocupa 6 colunas do grid",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Adicionar múltiplos widgets em sequência",
+            "summary": "Validar empilhamento e cálculo de próxima posição.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição com aba 'Nova aba' vazia",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Abrir o drawer de widgets disponíveis",
+                "expectedResults": "Drawer é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no widget 'Resumo das atividades'",
+                "expectedResults": "Widget é adicionado e ocupa a primeira posição do grid",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Clicar no widget 'Conteúdos em andamento'",
+                "expectedResults": "Widget é adicionado e posicionado abaixo/à direita do anterior conforme próxima posição calculada",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Clicar no widget 'Meus certificados'",
+                "expectedResults": "Widget é adicionado e posicionado na próxima posição disponível",
+                "executionType": 1
+              }
+            ]
+          }
+        ],
+        "childSuites": []
+      },
+      {
+        "name": "Editar/Excluir widgets",
+        "testCases": [
+          {
+            "name": "Drawer de configurações ao 'Editar' Widget",
+            "summary": "Validar abertura e componentes do drawer de edição (R10 RN84 RN85).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição com aba contendo o widget 'Resumo das atividades'",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Layouts' do painel em edição",
+                "expectedResults": "Layout é exibido com o widget",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no ícone 'Editar' (lápis) do widget 'Resumo das atividades'",
+                "expectedResults": "Drawer com o título 'Configurações do widget' é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Verificar os campos do drawer",
+                "expectedResults": "Drawer contém: switch 'Mostrar título', campo 'Título' (input texto, máx. 255 caracteres), switch 'Mostrar ícone', campo 'Ícone' (componente seletor de ícones)",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Verificar os botões do drawer",
+                "expectedResults": "Botões 'Cancelar' e 'Salvar' são exibidos no rodapé do drawer",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Salvar alterações no drawer de configurações do widget",
+            "summary": "Validar persistência das configurações (R10 RN86).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Drawer 'Configurações do widget' aberto para o widget 'Resumo das atividades'",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Ativar o switch 'Mostrar título'",
+                "expectedResults": "Switch fica ligado",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Preencher o campo 'Título' com 'Resumo Personalizado'",
+                "expectedResults": "Campo aceita o valor",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Ativar o switch 'Mostrar ícone'",
+                "expectedResults": "Switch fica ligado",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Selecionar um ícone no componente 'Ícone'",
+                "expectedResults": "Ícone é selecionado",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 5,
+                "actions": "Clicar no botão 'Salvar' do drawer",
+                "expectedResults": "Drawer é fechado e toast exibida: \"Configurações salvas com sucesso\"",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 6,
+                "actions": "Verificar o widget no layout",
+                "expectedResults": "Widget exibe título 'Resumo Personalizado' e o ícone selecionado",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Cancelar alterações no drawer de configurações do widget",
+            "summary": "Validar ação Cancelar do drawer (R10 RN86.1).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Drawer 'Configurações do widget' aberto para o widget 'Resumo das atividades' Widget originalmente sem título customizado",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Ativar o switch 'Mostrar título'",
+                "expectedResults": "Switch fica ligado",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Preencher o campo 'Título' com 'Não vai salvar'",
+                "expectedResults": "Campo aceita o valor",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Clicar no botão 'Cancelar' do drawer",
+                "expectedResults": "Drawer é fechado sem persistir alterações",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Verificar o widget no layout",
+                "expectedResults": "Widget mantém o título original (sem 'Não vai salvar')",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Limite de 255 caracteres no campo 'Título' do drawer",
+            "summary": "Validar limitação do campo Título.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Drawer 'Configurações do widget' aberto para um widget",
+            "executionType": 1,
+            "importance": 1,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Preencher o campo 'Título' com 256 caracteres",
+                "expectedResults": "Campo aceita no máximo 255 caracteres ou exibe mensagem de limite excedido",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Excluir widget pelo ícone 'x'",
+            "summary": "Validar exclusão do widget (R10 RN87).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição com aba contendo widget 'Conteúdos em andamento'",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Layouts' do painel em edição",
+                "expectedResults": "Layout é exibido com o widget",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no ícone 'Excluir' (x) do widget 'Conteúdos em andamento'",
+                "expectedResults": "Widget é removido do layout",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Clicar no botão 'Salvar layout'",
+                "expectedResults": "Layout é persistido sem o widget excluído",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Switches 'Mostrar título' e 'Mostrar ícone' desligados",
+            "summary": "Validar comportamento quando switches estão desligados.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Drawer 'Configurações do widget' aberto",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Desativar o switch 'Mostrar título'",
+                "expectedResults": "Campo 'Título' fica desabilitado",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Desativar o switch 'Mostrar ícone'",
+                "expectedResults": "Campo 'Ícone' fica desabilitado",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Clicar no botão 'Salvar' do drawer",
+                "expectedResults": "Drawer é fechado e toast exibida: \"Configurações salvas com sucesso\"",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Verificar o widget no layout",
+                "expectedResults": "Widget é exibido sem título e sem ícone",
+                "executionType": 1
+              }
+            ]
+          }
+        ],
+        "childSuites": []
+      },
+      {
+        "name": "Duplicar painéis",
+        "testCases": [
+          {
+            "name": "Duplicar painel próprio com várias abas e widgets",
+            "summary": "Validar duplicação completa (R4 RN19, RN20).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existe painel próprio 'Painel Original' com 3 abas e 5 widgets configurados",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida com 'Painel Original'",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no ícone 'Duplicar' na linha do 'Painel Original'",
+                "expectedResults": "Painel é duplicado e listagem é atualizada",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Verificar o novo painel no final da listagem",
+                "expectedResults": "Novo painel '[Cópia] Painel Original' é exibido na última posição",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Abrir o painel '[Cópia] Painel Original'",
+                "expectedResults": "Painel duplicado contém as 3 abas e os 5 widgets do painel original com configurações preservadas",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Duplicar painel ativo - status do painel duplicado",
+            "summary": "Validar status do painel duplicado.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existe painel próprio 'Painel Original' ATIVO",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no ícone 'Duplicar' na linha do 'Painel Original'",
+                "expectedResults": "Painel é duplicado",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Verificar o switch 'Ativo' do painel '[Cópia] Painel Original'",
+                "expectedResults": "Switch reflete o estado padrão definido para painéis duplicados (ativo ou inativo conforme regra do produto)",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Duplicar painel várias vezes",
+            "summary": "Validar geração de múltiplas cópias com nomes únicos.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existe painel 'Painel Original'",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no ícone 'Duplicar' na linha do 'Painel Original'",
+                "expectedResults": "Painel '[Cópia] Painel Original' é criado",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Clicar novamente no ícone 'Duplicar' na linha do 'Painel Original'",
+                "expectedResults": "Outra cópia é criada com nome único (ex: '[Cópia] Painel Original (2)' ou similar)",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Editar painel duplicado",
+            "summary": "Validar que cópia é independente do original.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existe painel duplicado '[Cópia] Painel Original'",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no ícone 'Editar' na linha de '[Cópia] Painel Original'",
+                "expectedResults": "Tela de edição é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Alterar o nome para 'Painel Editado' e salvar",
+                "expectedResults": "Nome é atualizado para 'Painel Editado'",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Verificar o painel original na listagem",
+                "expectedResults": "Painel 'Painel Original' permanece com nome inalterado",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Excluir painel duplicado",
+            "summary": "Validar que cópia é independente do original.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existe painel duplicado '[Cópia] Painel Original'",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no ícone 'Excluir' na linha de '[Cópia] Painel Original'",
+                "expectedResults": "Modal de confirmação de exclusão é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Confirmar exclusão",
+                "expectedResults": "Painel duplicado é excluído com sucesso",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Inativar painel duplicado",
+            "summary": "Validar que cópia é independente do original.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existe painel duplicado '[Cópia] Painel Original'",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no ícone 'Inativar' na linha de '[Cópia] Painel Original'",
+                "expectedResults": "Painel é inativado com sucesso",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Compartilhar painel duplicado",
+            "summary": "Validar que cópia é independente do original.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existe painel duplicado '[Cópia] Painel Original'",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Compartilhar o painel duplicado",
+                "expectedResults": "Painel duplicado é compartilhado com sucesso",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Realizar aceite de compartilhamento e validar painel no consumidor",
+                "expectedResults": "Painel é exibido e permite ser aplicado com sucesso",
+                "executionType": 1
+              }
+            ]
+          }
+        ],
+        "childSuites": []
+      },
+      {
+        "name": "Importar abas",
+        "testCases": [
+          {
+            "name": "Acessar o fluxo de Importar de outro painel",
+            "summary": "Validar acesso ao step de importação (R7 RN42, RN43).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição com pelo menos uma aba Existem outros painéis com abas e widgets disponíveis",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Layouts' do painel em edição",
+                "expectedResults": "Aba existente é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no botão 'Adicionar aba'",
+                "expectedResults": "Modal 'Adicionar nova aba' é exibido com subtítulo 'Escolha como deseja criar a nova aba'",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Validar botão da opção 'Importar de outro painel'",
+                "expectedResults": "Deve exibir um ícone de download<br /> Com a descrição:<br /> Reutilize uma aba existente de outro painel",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Clicar na opção 'Importar de outro painel'",
+                "expectedResults": "Avança step no modal exibindo: <br /> Título: Adicionar nova aba<br /> Subtítulo: Importar de outro painel<br /> Campo: Painel de origem",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 5,
+                "actions": "Verificar outras opções do step",
+                "expectedResults": "Nenhuma outra opção ou preview de aba deve ser exibida enquanto painel de origem não estiver selecionado",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Selecionar painel de origem e listar abas disponíveis",
+            "summary": "Validar carregamento das abas (R7 RN44, RN45).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição Existe painel 'Painel Origem' com 2 abas: 'Aba X' (2 widgets) e 'Aba Y' (3 widgets)",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Iniciar o fluxo Importar de outro painel",
+                "expectedResults": "Modal de importação é exibido com 'Painel de origem'",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Selecionar 'Painel Origem' no select 'Painel de origem'",
+                "expectedResults": "Campo 'Aba disponível' é exibido listando 'Aba X (2 widgets)' e 'Aba Y (3 widgets)'",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Visualizar preview da aba selecionada",
+            "summary": "Validar exibição de preview com widgets (R7 RN46).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Modal de importação aberto com 'Painel Origem' selecionado e abas listadas",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Selecionar 'Aba X (2 widgets)' no campo 'Aba disponível'",
+                "expectedResults": "Preview é exibido com nome da aba, quantidade de widgets e a lista de widgets inclusos",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Auto-preencher 'Nome da nova aba' com nome original",
+            "summary": "Validar pré-preenchimento (R7 RN47, RN48).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Modal de importação aberto, painel e aba selecionados",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Selecionar 'Aba X' no campo 'Aba disponível'",
+                "expectedResults": "Preview é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar o campo 'Nome da nova aba'",
+                "expectedResults": "Campo é preenchido automaticamente com 'Aba X'",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Alterar o valor para 'Aba Importada'",
+                "expectedResults": "Campo aceita a edição",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Tentar inserir 256 caracteres",
+                "expectedResults": "Campo aceita apenas 255",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Selecionar Categoria na importação",
+            "summary": "Validar campo Categoria (R7 RN49).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Modal de importação aberto",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Selecionar painel e aba no fluxo de importação",
+                "expectedResults": "Campo 'Categoria' é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Selecionar 'Aprendizagem' no dropdown 'Categoria'",
+                "expectedResults": "Opção é selecionada",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Importar aba (happy path)",
+            "summary": "Validar importação completa (R7 RN50, RN51, RN52, RN53).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Modal de importação aberto, 'Painel Origem' e 'Aba X' (2 widgets) selecionados, 'Nome da nova aba' = 'Aba Importada'",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Clicar no botão 'Importar aba'",
+                "expectedResults": "Modal é fechado, nova aba \"Aba Importada\" é criada e selecionada como aba ativa, toast exibida: \"Aba importada com sucesso\"",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar a aba importada",
+                "expectedResults": "'Aba Importada' é exibida e contém os 2 widgets copiados da 'Aba X' do 'Painel Origem'",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Voltar do step de importação para a seleção de tipo",
+            "summary": "Validar ação Voltar (R7).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Modal de importação aberto",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Estar no step 'Importar de outro painel'",
+                "expectedResults": "Modal exibido com campos de painel/aba",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no botão 'Voltar'",
+                "expectedResults": "Modal retorna ao step de seleção entre 'Criar nova aba' e 'Importar de outro painel'",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Cancelar importação",
+            "summary": "Validar ação Cancelar.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Modal de importação aberto",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Estar no step 'Importar de outro painel' com campos preenchidos",
+                "expectedResults": "Modal exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Clicar no botão 'Cancelar'",
+                "expectedResults": "Modal é fechado e nenhuma aba é importada",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Tentar importar sem selecionar painel de origem",
+            "summary": "Validar campo obrigatório.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Modal de importação aberto",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Estar no step 'Importar de outro painel' sem selecionar painel",
+                "expectedResults": "Campos seguintes ('Aba disponível', 'Nome da nova aba') não são exibidos",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Tentar acionar 'Importar aba' (se botão estiver visível)",
+                "expectedResults": "Botão está desabilitado ou exibe erro de campo obrigatório no 'Painel de origem'",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Importar aba com painel sem abas disponíveis",
+            "summary": "Validar comportamento quando painel não tem abas (cenário de borda).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existe painel 'Painel Vazio' sem abas registradas (caso possível)",
+            "executionType": 1,
+            "importance": 1,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Iniciar o fluxo de importação",
+                "expectedResults": "Modal exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Selecionar 'Painel Vazio' no campo 'Painel de origem'",
+                "expectedResults": "Campo 'Aba disponível' exibe estado vazio ou mensagem informando que não há abas disponíveis",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Editar aba importada",
+            "summary": "Validar edição de uma aba importada",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Realizar a importação de uma aba com nome 'Editar aba Importada'",
+            "executionType": 1,
+            "importance": 1,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Editar nome da aba já importada",
+                "expectedResults": "Nome é editado com sucesso",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Adicionar/Remover/Mover Widgets de aba importada",
+                "expectedResults": "Ações são realizadas e salvas com sucesso",
+                "executionType": 1
+              }
+            ]
+          }
+        ],
+        "childSuites": []
+      },
+      {
+        "name": "Modo de uso - Painéis do usuário",
+        "testCases": [
+          {
+            "name": "Selecionar 'Painéis do usuário' como modelo de página no modo de uso",
+            "summary": "Validar seleção do modelo e exibição do campo Espaço (R11 RN88).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existe painel 'Painel Aluno' ativo cadastrado",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar Configurações > Menu > Modos de uso",
+                "expectedResults": "Tela de Modos de uso é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Acessar a configuração de um menu existente (ou criar novo)",
+                "expectedResults": "Formulário de configuração é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Ao adicionar menu, selecionar 'Painéis do usuário' no modelo de página",
+                "expectedResults": "Campo 'Espaço' é exibido para selecionar o painel",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Selecionar 'Painel Aluno' no campo 'Espaço'",
+                "expectedResults": "Painel é selecionado e configuração é salva",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Listar painéis disponíveis no campo 'Espaço'",
+            "summary": "Validar opções listadas no campo Espaço.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existem mais de 3 painéis ativos e outros inativos cadastrados",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a configuração de um menu de modo de uso",
+                "expectedResults": "Formulário é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Selecionar 'Painéis do usuário' no modelo de página",
+                "expectedResults": "Campo 'Espaço' é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Abrir o dropdown 'Espaço'",
+                "expectedResults": "Opções listadas correspondem aos painéis ativos disponíveis para a organização, confirmando que painéis inativos não são exibidos",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Não permitir reabilitar menu inativado quando 'Espaço' do 'Painel do usuário' inativo",
+            "summary": "Validar que não permite reativar um 'Menu' cujo espaço tenha sido inativado. (RN 9",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Ter 1 painel ativo Criar um modo de uso com este painel ativo Confirmar que o menu de 'Painéis do usuário' esteja 'Habilitado' Salvar edições do modo de uso Desabilitar o menu de 'Painéis do usuário' Inativar o painel utilizado",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a edição do modo de uso criado",
+                "expectedResults": "Menus devem ser listados corretamente",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Tentar habilitar o menu de 'Painéis do usuário'",
+                "expectedResults": "Não deve permitir habilitar e deve exibir mensagem: \"Painel está inativo e não pode ser reativado\"",
+                "executionType": 1
+              }
+            ]
+          }
+        ],
+        "childSuites": []
+      },
+      {
+        "name": "Dashboard - Visão do aluno",
+        "testCases": [
+          {
+            "name": "Renderizar widget 'Resumo das atividades' para o aluno",
+            "summary": "Validar exibição do widget com dados reais.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Aluno Aluno possui histórico de atividades de aprendizagem Menu configurado com painel contendo widget 'Resumo das atividades'",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar o menu do painel",
+                "expectedResults": "Painel é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar o widget 'Resumo das atividades'",
+                "expectedResults": "Widget exibe os dados de aprendizagem do usuário (mesmos dados disponíveis no dashboard legado)",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Renderizar widget 'Conteúdos em andamento' para o aluno",
+            "summary": "Validar exibição do widget com dados reais.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Aluno Aluno possui conteúdos em andamento Menu configurado com painel contendo widget 'Conteúdos em andamento'",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar o menu do painel",
+                "expectedResults": "Painel é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar o widget 'Conteúdos em andamento'",
+                "expectedResults": "Widget exibe a lista de conteúdos que o aluno está cursando atualmente",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Renderizar widget 'Ranking' para o aluno",
+            "summary": "Validar exibição do widget Ranking.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Aluno Aluno possui posição no ranking Menu configurado com painel contendo widget 'Ranking'",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar o menu do painel",
+                "expectedResults": "Painel é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar o widget 'Ranking'",
+                "expectedResults": "Widget exibe posição do aluno e o top 5 do ambiente",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Renderizar widget 'Meus certificados' para o aluno",
+            "summary": "Validar exibição do widget de certificados.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Aluno Aluno possui certificados conquistados Menu configurado com painel contendo widget 'Meus certificados'",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar o menu do painel",
+                "expectedResults": "Painel é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar o widget 'Meus certificados'",
+                "expectedResults": "Widget exibe a lista de certificados conquistados pelo aluno",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Renderização de widget configurado com título e ícone customizados",
+            "summary": "Validar persistência das customizações para a visão do aluno.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Aluno Widget 'Resumo das atividades' configurado com Mostrar título=ON, Título='Meu Resumo' e Ícone customizado",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar o menu do painel como aluno",
+                "expectedResults": "Painel é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar o widget 'Resumo das atividades'",
+                "expectedResults": "Widget exibe o título 'Meu Resumo' e o ícone customizado configurados pelo Admin",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Renderização de widget configurado sem título e ícone customizados",
+            "summary": "Validar persistência das customizações para a visão do aluno.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Aluno Widget 'Resumo das atividades' configurado com Mostrar título=OFF e Ícone customizado=OFF",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar o menu do painel como aluno",
+                "expectedResults": "Painel é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar o widget 'Resumo das atividades'",
+                "expectedResults": "Widget é exibido sem 'Meu Resumo' e sem ícone",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Aluno acessa painel sem widgets configurados",
+            "summary": "Validar comportamento de painel vazio.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Aluno Menu configurado com painel cuja aba ativa não possui widgets",
+            "executionType": 1,
+            "importance": 1,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar o menu do painel",
+                "expectedResults": "Painel é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar o conteúdo da aba",
+                "expectedResults": "Aba é exibida vazia (sem o estado vazio de admin) ou conforme regra do produto para visão readonly",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Exibição de um widget por aba",
+            "summary": "Validar navegação entre abas (R11 RN89.1).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Aluno Menu configurado com painel que possui 5 abas, sendo 1 para cada widget e uma última que adiciona os 4 widgets na mesma aba",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar o menu do painel",
+                "expectedResults": "As 5 \"abas\" são exibidas",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Navegar em cada uma das abas",
+                "expectedResults": "Cada um dos widgets deve ser carregado carregado conforme configurado",
+                "executionType": 1
+              }
+            ]
+          }
+        ],
+        "childSuites": []
+      },
+      {
+        "name": "Mobile",
+        "testCases": [
+          {
+            "name": "Visualização do aluno em viewport Mobile 412x915 (vertical)",
+            "summary": "Validar responsividade da visão do aluno (QA 6.3).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Aluno Viewport Mobile 412x915 (vertical) Menu configurado com painel contendo widgets",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar o menu do painel no viewport 412x915",
+                "expectedResults": "Painel é renderizado adaptado ao viewport, com widgets reorganizados verticalmente",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Rolar verticalmente",
+                "expectedResults": "Conteúdo é scrollável e widgets são exibidos sequencialmente",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Visualização do aluno em viewport Mobile 393x873 (vertical)",
+            "summary": "Validar responsividade.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Aluno Viewport Mobile 393x873 (vertical)",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar o menu do painel no viewport 393x873",
+                "expectedResults": "Painel é renderizado adaptado ao viewport",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Visualização do aluno em viewport Mobile 414x896 (vertical)",
+            "summary": "Validar responsividade.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Aluno Viewport Mobile 414x896 (vertical)",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar o menu do painel no viewport 414x896",
+                "expectedResults": "Painel é renderizado adaptado ao viewport",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Visualização do aluno em viewport Mobile horizontal",
+            "summary": "Validar orientação horizontal.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Aluno Viewport Mobile 915x412 (horizontal)",
+            "executionType": 1,
+            "importance": 1,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar o menu do painel no viewport horizontal",
+                "expectedResults": "Painel é renderizado em modo horizontal e widgets ajustam-se à largura disponível",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Acesso do Admin pelo viewport Mobile - exibição do alerta",
+            "summary": "Validar mensagem de edição apenas no Desktop (R8 RN57.1, RN57.2).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Viewport Mobile 412x915",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Layouts' do painel em edição",
+                "expectedResults": "Layout é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar o alerta exibido",
+                "expectedResults": "Alerta exibido: 'Visualização (Mobile) — edição disponível no Desktop'",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Verificar o switch 'Permitir reorganizar widgets'",
+                "expectedResults": "Switch fica desabilitado e tooltip 'Edição disponível apenas no modo Desktop' é exibida ao tocá-lo",
+                "executionType": 1
+              }
+            ]
+          }
+        ],
+        "childSuites": []
+      },
+      {
+        "name": "Worker - Migração de painéis",
+        "testCases": [
+          {
+            "name": "Worker cria painel padrão para organização sem painel pré-existente",
+            "summary": "Validar migração inicial.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário Super Admin com acesso à execução de workers Organização não possui painel padrão criado",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Executar o worker de migração de painéis para a organização-alvo",
+                "expectedResults": "Worker executa sem erros e logs indicam criação de painel padrão",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Acessar a aba 'Painéis' como Admin da organização",
+                "expectedResults": "Listagem exibe um painel padrão criado pelo worker, com abas e widgets equivalentes ao dashboard legado",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Acessar Menu > Modos de uso",
+                "expectedResults": "Menu antigo de dashboard foi removido e novo menu (mesmo nome e ícone) foi criado vinculado ao painel padrão",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Worker não duplica painel quando organização já possui painel padrão",
+            "summary": "Validar idempotência do worker.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário Super Admin Organização já possui painel padrão criado",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Executar o worker de migração de painéis novamente",
+                "expectedResults": "Worker executa sem erros e logs indicam que painel padrão já existe; nenhuma duplicação ocorre",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Acessar a aba 'Painéis'",
+                "expectedResults": "Listagem mantém apenas o painel padrão original",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Worker cria shared events necessários",
+            "summary": "Validar criação de shared events.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário Super Admin Organização sem shared events do painel",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Executar o worker de migração",
+                "expectedResults": "Worker cria os shared events necessários para os widgets do painel",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar registros de shared events da organização",
+                "expectedResults": "Shared events do painel padrão estão presentes",
+                "executionType": 1
+              }
+            ]
+          }
+        ],
+        "childSuites": []
+      },
+      {
+        "name": "Worker - Reversão",
+        "testCases": [
+          {
+            "name": "Worker de reversão restaura dashboard padrão anterior",
+            "summary": "Validar reversão do modo de uso.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário Super Admin Organização foi migrada para o painel padrão",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Executar o worker de reversão para a organização-alvo",
+                "expectedResults": "Worker executa sem erros e logs indicam reversão",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Acessar Menu > Modos de uso como Admin da organização",
+                "expectedResults": "Menu vinculado ao painel padrão foi removido e dashboard antigo está disponível novamente",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Reversão preserva painéis criados manualmente",
+            "summary": "Validar que painéis manuais não são apagados na reversão.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário Super Admin Organização possui painel padrão (migrado) + painel 'Manual A' criado pelo Admin",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Executar o worker de reversão",
+                "expectedResults": "Worker executa",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Acessar a aba 'Painéis' como Admin",
+                "expectedResults": "Painel 'Manual A' continua presente; apenas o vínculo do menu de modo de uso foi revertido",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Worker de reversão é idempotente",
+            "summary": "Validar execução repetida do worker.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário Super Admin Organização já revertida",
+            "executionType": 1,
+            "importance": 1,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Executar o worker de reversão novamente",
+                "expectedResults": "Worker executa sem erros e logs indicam que a reversão já foi aplicada; nenhuma alteração adicional ocorre",
+                "executionType": 1
+              }
+            ]
+          }
+        ],
+        "childSuites": []
+      },
+      {
+        "name": "Beta / Launch",
+        "testCases": [
+          {
+            "name": "Funcionalidade na tabela de preços e contrato",
+            "summary": "Validar inclusão da funcionalidade no contrato (Dev 8.1).",
+            "preconditions": "Ambiente Stage configurado Usuário logado como Super Admin",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a tabela de preços e contratos via Super Admin",
+                "expectedResults": "Tela de tabela de preços é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar a presença da funcionalidade 'Gestão de Painéis'",
+                "expectedResults": "Funcionalidade 'Gestão de Painéis' é listada e pode ser habilitada por contrato",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Habilitar funcionalidade para o contrato",
+                "expectedResults": "Deve ficar com checkbox habilitado<br /> Alteração salva com sucesso",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Editar contrato e verificar persistência de configuração",
+                "expectedResults": "Funcionalidade continua habilitada no contrato",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 5,
+                "actions": "Desabilitar a funcionalidade no contrato",
+                "expectedResults": "Deve ficar com checkbox desabilitado<br /> Alteração salva com sucesso",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 6,
+                "actions": "Editar contrato e verificar persistência de configuração",
+                "expectedResults": "Funcionalidade continua desabilitada no contrato",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Bloqueio de contrato na tela de edição de painel sem funcionalidade habilitada",
+            "summary": "Validar tela padrão de bloqueio (Dev 8.2).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' DESABILITADA no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Sistema exibe tela padrão de bloqueio de contrato",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar o conteúdo do bloqueio",
+                "expectedResults": "Tela exibe título, descrição e CTA padrão da funcionalidade bloqueada por contrato",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Bloqueio de contrato no modelo 'Painéis do usuário' do modo de uso",
+            "summary": "Validar bloqueio em modo de uso (Dev 8.2).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' DESABILITADA no contrato Usuário logado como Admin",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a configuração de um menu de modo de uso",
+                "expectedResults": "Formulário é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Tentar selecionar 'Painéis do usuário' no modelo de página",
+                "expectedResults": "Opção exibe modal de bloqueio de contrato OU está desabilitada",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Bloqueio de contrato no menu do aluno",
+            "summary": "Validar bloqueio em modo de uso (Dev 8.2).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' DESABILITADA no contrato Usuário logado como Aluno",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar o menu com painéis do usuário como aluno",
+                "expectedResults": "Exibe modal de bloqueio de contrato",
+                "executionType": 1
+              }
+            ]
+          }
+        ],
+        "childSuites": []
+      },
+      {
+        "name": "Banco histórico",
+        "testCases": [
+          {
+            "name": "Worker HistoricBaseCron exclui registros de panel_tabs e panel_widgets da organização",
+            "summary": "Validar inclusão das tabelas na rotina de banco histórico (R13 RN91).",
+            "preconditions": "Ambiente Stage configurado Organização excluída/marcada para histórico Existem registros em panel_tabs e panel_widgets vinculados via organization_id",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Executar o worker HistoricBaseCron para a organização-alvo",
+                "expectedResults": "Worker executa sem erros e logs indicam inclusão das tabelas panel_tabs e panel_widgets",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar a tabela panel_tabs após execução",
+                "expectedResults": "Registros vinculados à organization_id da organização-alvo são removidos",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Verificar a tabela panel_widgets após execução",
+                "expectedResults": "Registros vinculados à organization_id da organização-alvo são removidos",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Worker preserva registros de outras organizações",
+            "summary": "Validar isolamento por organization_id.",
+            "preconditions": "Ambiente Stage configurado Organização A (excluída) e Organização B (ativa) possuem painéis",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Executar o worker HistoricBaseCron para a Organização A",
+                "expectedResults": "Worker executa",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar registros da Organização B nas tabelas panel_tabs e panel_widgets",
+                "expectedResults": "Registros da Organização B permanecem inalterados",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Worker registra log de tabelas processadas",
+            "summary": "Validar logs de auditoria do worker.",
+            "preconditions": "Ambiente Stage configurado Organização-alvo possui painéis",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Executar o worker HistoricBaseCron",
+                "expectedResults": "Worker registra logs estruturados indicando as tabelas processadas (panel_tabs, panel_widgets) e quantidade de registros excluídos",
+                "executionType": 1
+              }
+            ]
+          }
+        ],
+        "childSuites": []
+      },
+      {
+        "name": "Logs",
+        "testCases": [
+          {
+            "name": "Log de criação de painel",
+            "summary": "Validar registro de log na criação (R14 RN92).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' e clicar em '+ Adicionar'",
+                "expectedResults": "Tela de criação é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Preencher Nome e Descrição <br /> 'Salvar'",
+                "expectedResults": "Painel é criado e listado",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Acessar a tela de logs do sistema (admin de logs)",
+                "expectedResults": "Log de 'criação de painel' é registrado com user_id, organization_id, IP, timestamp e payload contendo: nome, descrição, provedora, data de criação, status)",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Log de status do painel",
+            "summary": "Validar registro de log na criação (R14 RN92).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Ter um painel ativo",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Inativar painel",
+                "expectedResults": "Painel é inativado com sucesso",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Acessar a tela de logs do sistema (admin de logs)",
+                "expectedResults": "Log de \"atualização\" é registrado com user_id, organization_id, IP, timestamp e payload",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Ativar painel",
+                "expectedResults": "Painel é ativado com sucesso",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Acessar a tela de logs do sistema (admin de logs)",
+                "expectedResults": "Log de \"atualização\" é registrado com user_id, organization_id, IP, timestamp e payload",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Log de edição de painel",
+            "summary": "Validar registro de log na edição.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existe painel cadastrado",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Editar um painel alterando o 'Nome' e 'Descrição'",
+                "expectedResults": "Painel é salvo",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Acessar a tela de logs",
+                "expectedResults": "Log de 'edição de painel' é registrado com diff dos campos alterados, user_id, organization_id e IP",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Log de exclusão de painel",
+            "summary": "Validar registro de log na exclusão.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existe painel cadastrado",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Excluir um painel pela ação 'Excluir'",
+                "expectedResults": "Painel é removido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Acessar a tela de logs",
+                "expectedResults": "Log de 'exclusão de painel' é registrado com user_id, organization_id, IP e referência ao painel excluído",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Log de duplicação de painel",
+            "summary": "Validar registro de log na exclusão.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Existe painel cadastrado",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Duplicar painel cadastrado",
+                "expectedResults": "Painel é duplicado com sucesso",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Acessar a tela de logs",
+                "expectedResults": "Log de \"duplicação\" é registrado com mesmos dados do log de criação user_id, organization_id, IP, timestamp e payload contendo: nome, descrição, provedora, data de criação, status)",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Log de criação de aba",
+            "summary": "Validar log para abas.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Adicionar nova aba ao painel e salvar",
+                "expectedResults": "Aba é criada",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Acessar a tela de logs",
+                "expectedResults": "Log de 'criação de aba' é registrado com user_id, organization_id e IP",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Log de edição de aba",
+            "summary": "Validar log para abas.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel com aba já criada",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Editar Painel > Editar/renomear aba",
+                "expectedResults": "Aba é editada",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Acessar a tela de logs",
+                "expectedResults": "Log de 'edição da aba' é registrado com user_id, organization_id e IP",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Log de exclusão de aba",
+            "summary": "Validar log para abas.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel com 2 abas",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Excluir uma aba do painel e salvar",
+                "expectedResults": "Aba é removida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Acessar a tela de logs",
+                "expectedResults": "Log de 'exclusão de aba' é registrado com user_id, organization_id e IP",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Log de adição/remoção de widget",
+            "summary": "Validar log para widgets.",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin Painel em edição",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Adicionar e depois excluir um widget na aba e salvar layout",
+                "expectedResults": "Widget é adicionado e em seguida removido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Acessar a tela de logs",
+                "expectedResults": "Logs de 'criação de widget' e 'exclusão de widget' são registrados com user_id, organization_id, IP, payload com configurações do widget e permissão de reorganização dos widgets",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Reposicionar widgets na aba e Salvar",
+                "expectedResults": "Log de \"atualização\" deve ser registrado com as novas posições dos widgets",
+                "executionType": 1
+              }
+            ]
+          }
+        ],
+        "childSuites": []
+      },
+      {
+        "name": "Ambientes adicionais",
+        "testCases": [
+          {
+            "name": "Funcionalidade de Painéis em ambiente adicional",
+            "summary": "Validar disponibilidade da funcionalidade em ambientes adicionais.",
+            "preconditions": "Ambiente adicional configurado para a organização Funcionalidade 'Gestão de Painéis' habilitada Feature flag 'habilitar_paineis_do_usuario' ativa Usuário logado como Admin no ambiente adicional",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar Menu > Modos de uso no ambiente adicional",
+                "expectedResults": "Tela é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar a aba 'Painéis'",
+                "expectedResults": "Aba 'Painéis' é exibida e listagem é carregada corretamente",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Painéis criados no ambiente principal não são exibidos no ambiente adicional",
+            "summary": "Validar isolamento de dados entre ambientes.",
+            "preconditions": "Organização com ambiente principal e adicional Painel 'Painel Principal' criado no ambiente principal",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a aba 'Painéis' no ambiente adicional",
+                "expectedResults": "Listagem do ambiente adicional NÃO contém 'Painel Principal'",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Modo de uso configurado em ambiente adicional usa painel local",
+            "summary": "Validar configuração isolada por ambiente.",
+            "preconditions": "Ambiente adicional configurado Painel 'Painel Local' criado no ambiente adicional",
+            "executionType": 1,
+            "importance": 1,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a configuração de modo de uso no ambiente adicional",
+                "expectedResults": "Formulário é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Selecionar 'Painéis do usuário' e abrir o dropdown 'Espaço'",
+                "expectedResults": "Dropdown lista apenas painéis do ambiente adicional ('Painel Local')",
+                "executionType": 1
+              }
+            ]
+          }
+        ],
+        "childSuites": []
+      },
+      {
+        "name": "Feature flag",
+        "testCases": [
+          {
+            "name": "Feature flag desabilitada - aba 'Painéis' não é exibida para Admin",
+            "summary": "Validar ocultação total do módulo (R1).",
+            "preconditions": "Ambiente Stage configurado Funcionalidade 'Gestão de Painéis' habilitada no contrato Feature flag 'habilitar_paineis_do_usuario' DESABILITADA Usuário logado como Admin",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar Menu > Modos de uso",
+                "expectedResults": "Tela é exibida sem a aba 'Painéis'",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Feature flag habilitada com painéis criados - menu do aluno acessível",
+            "summary": "Validar acesso do aluno com flag ativa.",
+            "preconditions": "Ambiente Stage configurado Flag ativa Menu de modo de uso configurado com painel ativo Usuário logado como Aluno",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar o menu configurado com painel",
+                "expectedResults": "Painel é exibido normalmente para o aluno",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Transição: flag habilitada -> desabilitada com painéis aplicados",
+            "summary": "Validar ocultação do menu com widgets na visão do aluno.",
+            "preconditions": "Ambiente Stage configurado Flag inicialmente ATIVA Menu de modo de uso configurado com painel Usuário logado como Aluno",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar o menu como aluno (flag ativa)",
+                "expectedResults": "Painel é exibido",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Desabilitar a feature flag para a organização",
+                "expectedResults": "Flag é desabilitada",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Recarregar a aplicação como aluno",
+                "expectedResults": "Menu vinculado ao painel é ocultado da visão do aluno",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Menu marcado como 'Padrão' com flag desabilitada",
+            "summary": "Validar comportamento de menu padrão quando flag fica off.",
+            "preconditions": "Ambiente Stage configurado Flag inicialmente ATIVA Menu vinculado ao painel marcado como 'Padrão' Usuário logado como Aluno",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Desabilitar a feature flag para a organização",
+                "expectedResults": "Flag é desabilitada",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Acessar a aplicação como aluno",
+                "expectedResults": "Sistema NÃO usa o menu de painel como página padrão; aluno é redirecionado para o dashboard legado ou outro modo de uso disponível",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Transição: flag desabilitada -> habilitada",
+            "summary": "Validar reativação do módulo.",
+            "preconditions": "Ambiente Stage configurado Flag inicialmente DESABILITADA Usuário logado como Admin",
+            "executionType": 1,
+            "importance": 2,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar Menu > Modos de uso (flag desabilitada)",
+                "expectedResults": "Aba 'Painéis' NÃO é exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Habilitar a feature flag para a organização",
+                "expectedResults": "Flag é habilitada",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Recarregar a tela de Modos de uso",
+                "expectedResults": "Aba 'Painéis' passa a ser exibida",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Acessar o menu como aluno",
+                "expectedResults": "Painel é exibido",
+                "executionType": 1
+              }
+            ]
+          }
+        ],
+        "childSuites": []
+      },
+      {
+        "name": "Trial",
+        "testCases": [
+          {
+            "name": "Criação de trial via URL com painéis pré-definidos",
+            "summary": "Validar inclusão de painéis na criação de trial (Dev 8.4, QA 11.3).",
+            "preconditions": "Ambiente Stage configurado Ambiente de base cópia com Painéis com abas configurados completamente (utilizando todas as configurações de abas e widgets possíveis)",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Acessar a URL 'https://stage.twygoead.com/new/register/steps?1' e completar o cadastro",
+                "expectedResults": "Trial é criado com sucesso",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Realizar login no trial recém-criado como Admin",
+                "expectedResults": "Usuário acessa o trial<br /> Ambiente é populado corretamente",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Acessar a aba 'Painéis' em Configurações > Menu",
+                "expectedResults": "Listagem exibe os painéis pré-definidos do trial (dashboard do aluno migrado)<br /> E também os demais painéis criados na base cópia",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Acessar o menu de painéis como aluno do novo ambiente",
+                "expectedResults": "Menu é acessado com sucesso",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Criação de trial via API com painéis pré-definidos",
+            "summary": "Validar inclusão via API.",
+            "preconditions": "Ambiente Stage configurado Token de acesso válido para 'https://stage.twygo.com/api/v2/external_onboarding'",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Enviar POST 'https://stage.twygo.com/api/v2/external_onboarding' com payload de criação de trial",
+                "expectedResults": "API responde com status 201/200 e cria o trial",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Realizar login no trial criado como Admin",
+                "expectedResults": "Usuário acessa o trial",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 3,
+                "actions": "Acessar a aba 'Painéis'",
+                "expectedResults": "Listagem exibe os painéis pré-definidos do trial<br /> E também os demais painéis criados na base cópia",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 4,
+                "actions": "Acessar o menu de painéis como aluno do novo ambiente",
+                "expectedResults": "Menu é acessado com sucesso",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Exclusão de trial: dados pré-definidos da SophiaTech removidos",
+            "summary": "Validar limpeza completa na exclusão do trial.",
+            "preconditions": "Trial criado e populado com painéis e abas",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Executar a rotina de exclusão do trial",
+                "expectedResults": "Rotina executa",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar a base de dados após exclusão",
+                "expectedResults": "Todos os registros pré-definidos da SophiaTech (painéis, abas, widgets) são removidos da organização-trial",
+                "executionType": 1
+              }
+            ]
+          },
+          {
+            "name": "Exclusão de trial: dados criados pelo Admin removidos",
+            "summary": "Validar limpeza de dados manuais do Admin.",
+            "preconditions": "Trial criado, Admin criou painel 'Painel do Admin Trial'",
+            "executionType": 1,
+            "importance": 3,
+            "steps": [
+              {
+                "stepNumber": 1,
+                "actions": "Executar a rotina de exclusão do trial",
+                "expectedResults": "Rotina executa",
+                "executionType": 1
+              },
+              {
+                "stepNumber": 2,
+                "actions": "Verificar a base após exclusão",
+                "expectedResults": "Painel 'Painel do Admin Trial' (criado manualmente) também é removido junto com pré-definidos",
+                "executionType": 1
+              }
+            ]
+          }
+        ],
+        "childSuites": []
+      }
+    ]
+  },
+  "totals": {
+    "suites": 22,
+    "testCases": 144,
+    "steps": 407
+  }
+}

@@ -1,0 +1,368 @@
+{
+  "config": {
+    "configFile": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 3
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright/outputs/modelos/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 3
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "tests/auth/**/*.spec.ts",
+          "projects/modelos/tests/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/modelos/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\modelos\\tests\\features\\criacao-de-modelo-aba-imagem\\tc01-aba-imagem-titulo-subtitulo.spec.ts",
+      "file": "projects/modelos/tests/features/criacao-de-modelo-aba-imagem/tc01-aba-imagem-titulo-subtitulo.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Criação de Modelo - Aba Imagem",
+          "file": "projects/modelos/tests/features/criacao-de-modelo-aba-imagem/tc01-aba-imagem-titulo-subtitulo.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Aba Imagem exibe título e subtítulo literais",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 16025,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Abrir modelo seedado na aba Imagem",
+                          "duration": 13995
+                        },
+                        {
+                          "title": "2. Validar título e subtítulo literais",
+                          "duration": 426
+                        }
+                      ],
+                      "startTime": "2026-05-20T18:37:54.731Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gTW9kZWxvcyBkZSBjb250ZcO6ZG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNyaWHDp8OjbyBkZSBNb2RlbG8gLSBBYmEgSW1hZ2VtIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJBYmEgSW1hZ2VtIGV4aWJlIHTDrXR1bG8gZSBzdWJ0w610dWxvIGxpdGVyYWlzIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-2ff59-título-e-subtítulo-literais-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-2ff59-título-e-subtítulo-literais-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-2ff59-título-e-subtítulo-literais-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b6a87d8091421b08ac86-5fee61358b20c4e229f2",
+              "file": "projects/modelos/tests/features/criacao-de-modelo-aba-imagem/tc01-aba-imagem-titulo-subtitulo.spec.ts",
+              "line": 6,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\modelos\\tests\\features\\criacao-de-modelo-aba-imagem\\tc02-opcoes-padrao-imagem.spec.ts",
+      "file": "projects/modelos/tests/features/criacao-de-modelo-aba-imagem/tc02-opcoes-padrao-imagem.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Criação de Modelo - Aba Imagem",
+          "file": "projects/modelos/tests/features/criacao-de-modelo-aba-imagem/tc02-opcoes-padrao-imagem.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Opções de padrão de imagem disponíveis",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 16046,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Abrir aba Imagem",
+                          "duration": 13759
+                        },
+                        {
+                          "title": "2. Validar 4 opções renderizadas (heading literal)",
+                          "duration": 643
+                        }
+                      ],
+                      "startTime": "2026-05-20T18:37:54.747Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gTW9kZWxvcyBkZSBjb250ZcO6ZG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNyaWHDp8OjbyBkZSBNb2RlbG8gLSBBYmEgSW1hZ2VtIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJPcMOnw7VlcyBkZSBwYWRyw6NvIGRlIGltYWdlbSBkaXNwb27DrXZlaXMifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-ad913-adrão-de-imagem-disponíveis-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-ad913-adrão-de-imagem-disponíveis-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-ad913-adrão-de-imagem-disponíveis-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "236d16957cba5b115255-13aa7aa53697dd701b6c",
+              "file": "projects/modelos/tests/features/criacao-de-modelo-aba-imagem/tc02-opcoes-padrao-imagem.spec.ts",
+              "line": 6,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\modelos\\tests\\features\\criacao-de-modelo-aba-imagem\\tc03-default-sem-imagens.spec.ts",
+      "file": "projects/modelos/tests/features/criacao-de-modelo-aba-imagem/tc03-default-sem-imagens.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Criação de Modelo - Aba Imagem",
+          "file": "projects/modelos/tests/features/criacao-de-modelo-aba-imagem/tc03-default-sem-imagens.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Default \"Sem imagens, somente textos\"",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 16397,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Abrir aba Imagem em modelo seedado",
+                          "duration": 14374
+                        },
+                        {
+                          "title": "2. Validar radio-0 (\"Sem imagens, somente textos\") marcado por padrão",
+                          "duration": 538
+                        }
+                      ],
+                      "startTime": "2026-05-20T18:37:54.731Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gTW9kZWxvcyBkZSBjb250ZcO6ZG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNyaWHDp8OjbyBkZSBNb2RlbG8gLSBBYmEgSW1hZ2VtIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJEZWZhdWx0IFwiU2VtIGltYWdlbnMsIHNvbWVudGUgdGV4dG9zXCIifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJoaWdoIn1dfX0="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-fb2c4-Sem-imagens-somente-textos--chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-fb2c4-Sem-imagens-somente-textos--chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-fb2c4-Sem-imagens-somente-textos--chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "61066b45615368691ac4-816a521710fb19355d5f",
+              "file": "projects/modelos/tests/features/criacao-de-modelo-aba-imagem/tc03-default-sem-imagens.spec.ts",
+              "line": 6,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-05-20T18:37:20.269Z",
+    "duration": 51962.518,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

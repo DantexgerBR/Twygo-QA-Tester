@@ -1,6 +1,20 @@
 """
+[LEGADO — v0 do agent-at, anterior ao CONTRACT.md v1 (2026-05-18)]
+
+Este script foi a base do fluxo antigo: Claude gerava um script Python
+hardcoded em `output/generate_xmind.py` com dicts de TCs e rodava pra
+emitir o XMind. XMind era fonte de verdade.
+
+A partir do CONTRACT.md v1, o fluxo mudou:
+- Fonte de verdade: `projects/<slug>/output/test-analysis.md` (MD canônico)
+- XMind é derivado, gerado por `scripts/md_to_xmind.py` (raiz do agent-at)
+- XML TestLink também é derivado, gerado por `scripts/md_to_testlink.py`
+
+Este arquivo permanece como REFERÊNCIA HISTÓRICA do formato content.json
+do XMind (útil pra debug). Não rodar mais — usar `md_to_xmind.py`.
+
 Script base para gerar XMind de análise de teste.
-Este script é usado como referência pela skill /generate-xmind.
+Este script foi usado como referência pela skill /generate-xmind no fluxo legado.
 Copiar este arquivo para output/generate_xmind.py e adicionar as suítes e casos de teste.
 """
 

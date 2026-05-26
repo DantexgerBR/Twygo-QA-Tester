@@ -1,0 +1,29 @@
+{
+  "runId": "ambientes-adicionais_20260514-183619",
+  "scope": "Apenas testsuite contendo \"Ambientes adicionais\"",
+  "tests": {
+    "total": 3,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 23773
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 1,
+    "tests": 3,
+    "outOfScope": {
+      "errors": 23,
+      "warnings": 15,
+      "info": 2
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

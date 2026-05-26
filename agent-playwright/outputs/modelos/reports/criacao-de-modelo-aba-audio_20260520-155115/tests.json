@@ -1,0 +1,465 @@
+{
+  "config": {
+    "configFile": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright/outputs/modelos/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "tests/auth/**/*.spec.ts",
+          "projects/modelos/tests/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/modelos/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\modelos\\tests\\features\\criacao-de-modelo-aba-audio\\tc01-aba-audio-titulo-subtitulo.spec.ts",
+      "file": "projects/modelos/tests/features/criacao-de-modelo-aba-audio/tc01-aba-audio-titulo-subtitulo.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Criação de Modelo - Aba Áudio",
+          "file": "projects/modelos/tests/features/criacao-de-modelo-aba-audio/tc01-aba-audio-titulo-subtitulo.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Aba Áudio exibe título e subtítulo literais",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 22216,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Abrir modelo seedado na aba Áudio",
+                          "duration": 17817
+                        },
+                        {
+                          "title": "2. Validar título e subtítulo literais",
+                          "duration": 237
+                        }
+                      ],
+                      "startTime": "2026-05-20T18:50:46.119Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gTW9kZWxvcyBkZSBjb250ZcO6ZG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNyaWHDp8OjbyBkZSBNb2RlbG8gLSBBYmEgw4F1ZGlvIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJBYmEgw4F1ZGlvIGV4aWJlIHTDrXR1bG8gZSBzdWJ0w610dWxvIGxpdGVyYWlzIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-d8ce1-título-e-subtítulo-literais-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-d8ce1-título-e-subtítulo-literais-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-d8ce1-título-e-subtítulo-literais-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7e60fd3ddd2fc6183785-30a953f64e50445fc45b",
+              "file": "projects/modelos/tests/features/criacao-de-modelo-aba-audio/tc01-aba-audio-titulo-subtitulo.spec.ts",
+              "line": 6,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\modelos\\tests\\features\\criacao-de-modelo-aba-audio\\tc02-opcoes-voz.spec.ts",
+      "file": "projects/modelos/tests/features/criacao-de-modelo-aba-audio/tc02-opcoes-voz.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Criação de Modelo - Aba Áudio",
+          "file": "projects/modelos/tests/features/criacao-de-modelo-aba-audio/tc02-opcoes-voz.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Opções de voz disponíveis",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 21927,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Abrir aba Áudio",
+                          "duration": 17208
+                        },
+                        {
+                          "title": "2. Validar 4 cards de voz visíveis (Ana, Cris, Carlos, Morgan)",
+                          "duration": 673
+                        }
+                      ],
+                      "startTime": "2026-05-20T18:50:46.135Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gTW9kZWxvcyBkZSBjb250ZcO6ZG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNyaWHDp8OjbyBkZSBNb2RlbG8gLSBBYmEgw4F1ZGlvIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJPcMOnw7VlcyBkZSB2b3ogZGlzcG9uw612ZWlzIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-36075-o-Opções-de-voz-disponíveis-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-36075-o-Opções-de-voz-disponíveis-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-36075-o-Opções-de-voz-disponíveis-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e566416baa85e9356be9-5c287670e8783a22d3d5",
+              "file": "projects/modelos/tests/features/criacao-de-modelo-aba-audio/tc02-opcoes-voz.spec.ts",
+              "line": 6,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\modelos\\tests\\features\\criacao-de-modelo-aba-audio\\tc03-default-voz-ana.spec.ts",
+      "file": "projects/modelos/tests/features/criacao-de-modelo-aba-audio/tc03-default-voz-ana.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Criação de Modelo - Aba Áudio",
+          "file": "projects/modelos/tests/features/criacao-de-modelo-aba-audio/tc03-default-voz-ana.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Default voz \"Ana\"",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 22510,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Abrir aba Áudio em modelo seedado",
+                          "duration": 19923
+                        },
+                        {
+                          "title": "2. Validar radio \"Ana\" marcado por padrão",
+                          "duration": 175
+                        }
+                      ],
+                      "startTime": "2026-05-20T18:50:46.120Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gTW9kZWxvcyBkZSBjb250ZcO6ZG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNyaWHDp8OjbyBkZSBNb2RlbG8gLSBBYmEgw4F1ZGlvIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJEZWZhdWx0IHZveiBcIkFuYVwiIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJoaWdoIn1dfX0="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-a5dd1--Aba-Áudio-Default-voz-Ana--chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-a5dd1--Aba-Áudio-Default-voz-Ana--chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-a5dd1--Aba-Áudio-Default-voz-Ana--chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a3f8851585d60f6404c7-34b04a3e0d6316d1b48f",
+              "file": "projects/modelos/tests/features/criacao-de-modelo-aba-audio/tc03-default-voz-ana.spec.ts",
+              "line": 6,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\modelos\\tests\\features\\criacao-de-modelo-aba-audio\\tc04-botao-preview-voz.spec.ts",
+      "file": "projects/modelos/tests/features/criacao-de-modelo-aba-audio/tc04-botao-preview-voz.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Criação de Modelo - Aba Áudio",
+          "file": "projects/modelos/tests/features/criacao-de-modelo-aba-audio/tc04-botao-preview-voz.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Botão de preview de voz funcional",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 22032,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Abrir aba Áudio com 4 vozes",
+                          "duration": 18110
+                        },
+                        {
+                          "title": "2. Clicar botão preview da voz \"Cris\" e validar request áudio disparado",
+                          "duration": 192
+                        }
+                      ],
+                      "startTime": "2026-05-20T18:50:46.136Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gTW9kZWxvcyBkZSBjb250ZcO6ZG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNyaWHDp8OjbyBkZSBNb2RlbG8gLSBBYmEgw4F1ZGlvIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJCb3TDo28gZGUgcHJldmlldyBkZSB2b3ogZnVuY2lvbmFsIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJtZWRpdW0ifV19fQ=="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-10e36-de-preview-de-voz-funcional-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-10e36-de-preview-de-voz-funcional-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-10e36-de-preview-de-voz-funcional-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d708dd5207c7cec3d744-9be8a341bc03e04f5758",
+              "file": "projects/modelos/tests/features/criacao-de-modelo-aba-audio/tc04-botao-preview-voz.spec.ts",
+              "line": 6,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-05-20T18:50:11.144Z",
+    "duration": 59603.951,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

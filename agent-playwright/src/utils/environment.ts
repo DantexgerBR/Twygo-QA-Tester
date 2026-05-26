@@ -1,5 +1,6 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import 'dotenv/config';
 import { FILES } from './constants.js';
 
 export type EnvCredentials = {
@@ -48,12 +49,58 @@ let cachedAll: EnvFile | null = null;
 let cachedProjectConfig: ProjectConfig | null = null;
 let cachedProjectSlug: string | null = null;
 
+/**
+ * Substitui placeholders `${VAR}` em strings por `process.env.VAR`.
+ * Aplica recursivamente em arrays e objetos. Lança se a variável referenciada
+ * não estiver definida — força o usuário a preencher `.env` em vez de
+ * silenciosamente substituir por string vazia (que vazaria como credencial
+ * inválida na primeira execução).
+ */
+const VAR_REF = /\$\{([A-Z_][A-Z0-9_]*)\}/g;
+
+function expandEnvRefs<T>(value: T, ctx = 'environment.json'): T {
+  if (typeof value === 'string') {
+    return value.replace(VAR_REF, (_, name: string) => {
+      const v = process.env[name];
+      if (v === undefined || v === '') {
+        throw new Error(
+          `Variável de ambiente "${name}" referenciada em ${ctx} mas não definida. ` +
+            `Copie .env.example para .env e preencha (ver agent-playwright/.claude/SETUP.md).`,
+        );
+      }
+      return v;
+    }) as unknown as T;
+  }
+  if (Array.isArray(value)) {
+    return value.map((v) => expandEnvRefs(v, ctx)) as unknown as T;
+  }
+  if (value && typeof value === 'object') {
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
+      out[k] = expandEnvRefs(v, ctx);
+    }
+    return out as unknown as T;
+  }
+  return value;
+}
+
 function loadAll(): EnvFile {
   if (cachedAll) return cachedAll;
-  cachedAll = JSON.parse(
+  const raw = JSON.parse(
     readFileSync(resolve(process.cwd(), FILES.environment), 'utf-8'),
   ) as EnvFile;
+  cachedAll = expandEnvRefs(raw, FILES.environment);
   return cachedAll;
+}
+
+/**
+ * Carrega `config/environment.json` com placeholders `${VAR}` já expandidos
+ * via `process.env`. Use este helper em vez de `JSON.parse(readFileSync(...))`
+ * direto — caso contrário credenciais vazam como `${TWYGO_STAGING_PASSWORD}`
+ * literal nos requests.
+ */
+export function loadEnvironmentConfig(): EnvFile {
+  return loadAll();
 }
 
 /**

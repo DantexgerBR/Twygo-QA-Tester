@@ -1,0 +1,11 @@
+{
+  "runId": "all-suites_20260522-133758",
+  "mode": "all-suites",
+  "suiteFilter": null,
+  "projectName": "Modelos de conteúdo",
+  "environment": "staging-base-de-conhecimento",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-22T16:37:59.187Z"
+}

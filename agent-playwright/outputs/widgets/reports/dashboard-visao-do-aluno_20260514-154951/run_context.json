@@ -1,0 +1,11 @@
+{
+  "runId": "dashboard-visao-do-aluno_20260514-154951",
+  "mode": "per-suite",
+  "suiteFilter": "Dashboard - Visão do aluno",
+  "projectName": "Widgets",
+  "environment": "staging-widgets",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-14T18:49:51.315Z"
+}

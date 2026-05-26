@@ -1,0 +1,11 @@
+{
+  "runId": "layout-das-abas_20260514-111819",
+  "mode": "per-suite",
+  "suiteFilter": "Layout das abas",
+  "projectName": "Widgets",
+  "environment": "staging-widgets",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-14T14:18:19.796Z"
+}

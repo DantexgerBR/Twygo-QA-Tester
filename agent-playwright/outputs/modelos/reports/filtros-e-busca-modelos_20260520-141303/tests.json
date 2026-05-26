@@ -1,0 +1,485 @@
+{
+  "config": {
+    "configFile": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright/outputs/modelos/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "tests/auth/**/*.spec.ts",
+          "projects/modelos/tests/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/modelos/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\modelos\\tests\\features\\filtros-e-busca-modelos\\tc01-buscar-modelo-por-nome.spec.ts",
+      "file": "projects/modelos/tests/features/filtros-e-busca-modelos/tc01-buscar-modelo-por-nome.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Filtros e Busca - Modelos",
+          "file": "projects/modelos/tests/features/filtros-e-busca-modelos/tc01-buscar-modelo-por-nome.spec.ts",
+          "line": 6,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Buscar modelo por nome",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 16278,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar listagem com múltiplos modelos",
+                          "duration": 10375
+                        },
+                        {
+                          "title": "2. Buscar pelo prefixo do seed e validar resultado filtrado",
+                          "duration": 1804
+                        },
+                        {
+                          "title": "3. Limpar busca e validar listagem retorna ao estado completo",
+                          "duration": 1558
+                        }
+                      ],
+                      "startTime": "2026-05-20T17:12:40.650Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gTW9kZWxvcyBkZSBjb250ZcO6ZG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkZpbHRyb3MgZSBCdXNjYSAtIE1vZGVsb3MifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJCdXNjYXIgbW9kZWxvIHBvciBub21lIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-58924-elos-Buscar-modelo-por-nome-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-58924-elos-Buscar-modelo-por-nome-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-58924-elos-Buscar-modelo-por-nome-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5f2654885c0a2d61923b-d4e3f78c630ffd46db47",
+              "file": "projects/modelos/tests/features/filtros-e-busca-modelos/tc01-buscar-modelo-por-nome.spec.ts",
+              "line": 7,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\modelos\\tests\\features\\filtros-e-busca-modelos\\tc02-filtrar-por-situacao-via-drawer.spec.ts",
+      "file": "projects/modelos/tests/features/filtros-e-busca-modelos/tc02-filtrar-por-situacao-via-drawer.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Filtros e Busca - Modelos",
+          "file": "projects/modelos/tests/features/filtros-e-busca-modelos/tc02-filtrar-por-situacao-via-drawer.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Filtrar modelos por Situação via drawer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 16549,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar listagem e abrir drawer de filtros",
+                          "duration": 11203
+                        },
+                        {
+                          "title": "2. Aplicar filtro padrão \"Modelos ativos\"",
+                          "duration": 1952
+                        },
+                        {
+                          "title": "3. Validar drawer fechou e #clear-filter ficou visível",
+                          "duration": 649
+                        },
+                        {
+                          "title": "cleanup: limpar filtro pra próximo TC começar limpo",
+                          "duration": 540
+                        }
+                      ],
+                      "startTime": "2026-05-20T17:12:40.677Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gTW9kZWxvcyBkZSBjb250ZcO6ZG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkZpbHRyb3MgZSBCdXNjYSAtIE1vZGVsb3MifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJGaWx0cmFyIG1vZGVsb3MgcG9yIFNpdHVhw6fDo28gdmlhIGRyYXdlciJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJoaWdoIn1dfX0="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-40575-los-por-Situação-via-drawer-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-40575-los-por-Situação-via-drawer-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-40575-los-por-Situação-via-drawer-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bb84d8e262cd387dc392-5b63a9840e05748214c4",
+              "file": "projects/modelos/tests/features/filtros-e-busca-modelos/tc02-filtrar-por-situacao-via-drawer.spec.ts",
+              "line": 6,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\modelos\\tests\\features\\filtros-e-busca-modelos\\tc03-aplicar-filtro-padrao-modelos-proprios.spec.ts",
+      "file": "projects/modelos/tests/features/filtros-e-busca-modelos/tc03-aplicar-filtro-padrao-modelos-proprios.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Filtros e Busca - Modelos",
+          "file": "projects/modelos/tests/features/filtros-e-busca-modelos/tc03-aplicar-filtro-padrao-modelos-proprios.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Aplicar filtro padrão Modelos próprios",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 16989,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar listagem e abrir drawer com 4 filtros padrão visíveis",
+                          "duration": 13700
+                        },
+                        {
+                          "title": "2. Aplicar filtro padrão \"Modelos próprios\"",
+                          "duration": 690
+                        },
+                        {
+                          "title": "3. Validar filtro aplicado (drawer fechou, #clear-filter visível)",
+                          "duration": 281
+                        },
+                        {
+                          "title": "cleanup: limpar filtro",
+                          "duration": 417
+                        }
+                      ],
+                      "startTime": "2026-05-20T17:12:40.635Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gTW9kZWxvcyBkZSBjb250ZcO6ZG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkZpbHRyb3MgZSBCdXNjYSAtIE1vZGVsb3MifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJBcGxpY2FyIGZpbHRybyBwYWRyw6NvIFwiTW9kZWxvcyBwcsOzcHJpb3NcIiJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJoaWdoIn1dfX0="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-5260f-tro-padrão-Modelos-próprios-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-5260f-tro-padrão-Modelos-próprios-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-5260f-tro-padrão-Modelos-próprios-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "259bd21099219354dc9e-57539c2cd0df152a921e",
+              "file": "projects/modelos/tests/features/filtros-e-busca-modelos/tc03-aplicar-filtro-padrao-modelos-proprios.spec.ts",
+              "line": 6,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\modelos\\tests\\features\\filtros-e-busca-modelos\\tc04-limpar-filtros-aplicados.spec.ts",
+      "file": "projects/modelos/tests/features/filtros-e-busca-modelos/tc04-limpar-filtros-aplicados.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Filtros e Busca - Modelos",
+          "file": "projects/modelos/tests/features/filtros-e-busca-modelos/tc04-limpar-filtros-aplicados.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Limpar filtros aplicados",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 16617,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Aplicar filtro padrão Modelos ativos",
+                          "duration": 13141
+                        },
+                        {
+                          "title": "2. Clicar Limpar filtros e validar listagem volta sem filtro",
+                          "duration": 1251
+                        }
+                      ],
+                      "startTime": "2026-05-20T17:12:40.651Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gTW9kZWxvcyBkZSBjb250ZcO6ZG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkZpbHRyb3MgZSBCdXNjYSAtIE1vZGVsb3MifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJMaW1wYXIgZmlsdHJvcyBhcGxpY2Fkb3MifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJtZWRpdW0ifV19fQ=="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-7b8fa-os-Limpar-filtros-aplicados-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-7b8fa-os-Limpar-filtros-aplicados-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\modelos\\test-artifacts\\projects-modelos-tests-fea-7b8fa-os-Limpar-filtros-aplicados-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9fb6c54e002c0f2f7e66-860a8953412c3f0efe61",
+              "file": "projects/modelos/tests/features/filtros-e-busca-modelos/tc04-limpar-filtros-aplicados.spec.ts",
+              "line": 6,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-05-20T17:12:06.189Z",
+    "duration": 53549.183999999994,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "runId": "regression_20260525-111454",
+  "mode": "regression",
+  "suiteFilter": null,
+  "projectName": "Modelos de conteúdo",
+  "environment": "staging-base-de-conhecimento",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-25T14:14:55.531Z"
+}

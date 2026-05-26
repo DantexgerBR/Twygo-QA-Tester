@@ -1,0 +1,29 @@
+{
+  "runId": "feature-flag_20260515-131014",
+  "scope": "Apenas testsuite contendo \"Feature flag\"",
+  "tests": {
+    "total": 5,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 1,
+    "durationMs": 241010
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 1,
+    "tests": 6,
+    "outOfScope": {
+      "errors": 65,
+      "warnings": 33,
+      "info": 3
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

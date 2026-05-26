@@ -1,0 +1,11 @@
+{
+  "runId": "acoes-duplicar-e-drag-and-drop_20260520-171909",
+  "mode": "per-suite",
+  "suiteFilter": "Ações Duplicar e Drag and Drop",
+  "projectName": "Modelos de conteúdo",
+  "environment": "staging-base-de-conhecimento",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-20T20:19:09.466Z"
+}

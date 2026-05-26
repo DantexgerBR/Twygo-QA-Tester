@@ -1,0 +1,11 @@
+{
+  "runId": "modo-de-uso-paineis-do-usuario_20260514-130856",
+  "mode": "per-suite",
+  "suiteFilter": "Modo de uso - Painéis do usuário",
+  "projectName": "Widgets",
+  "environment": "staging-widgets",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-14T16:08:56.379Z"
+}

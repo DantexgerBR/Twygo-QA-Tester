@@ -1,0 +1,3641 @@
+{
+  "generatedAt": "2026-05-14T02:08:46.590Z",
+  "summary": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 1,
+    "tests": 11,
+    "outOfScope": {
+      "errors": 124,
+      "warnings": 33,
+      "info": 0
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  },
+  "testsuites": [
+    {
+      "testsuiteName": "Adicionar widgets",
+      "totals": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "byKind": {},
+      "findings": [],
+      "coverage": [
+        {
+          "url": "https://widgets.stage.twygoead.com/o/36988/panels/803408/edit?tab=layouts",
+          "totalInteractive": 135,
+          "visibleInteractive": 57,
+          "samples": [
+            {
+              "role": "link",
+              "name": "dashboard-menu"
+            },
+            {
+              "role": "link",
+              "name": "new_contents-menu"
+            },
+            {
+              "role": "link",
+              "name": "shared_events-menu"
+            },
+            {
+              "role": "link",
+              "name": "records-menu"
+            },
+            {
+              "role": "link",
+              "name": "certificates-menu"
+            },
+            {
+              "role": "link",
+              "name": "users-menu"
+            },
+            {
+              "role": "link",
+              "name": "companies-menu"
+            },
+            {
+              "role": "link",
+              "name": "question_lists-menu"
+            },
+            {
+              "role": "link",
+              "name": "communities-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization_chart-menu"
+            },
+            {
+              "role": "link",
+              "name": "roles-menu"
+            },
+            {
+              "role": "link",
+              "name": "competencies-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "visualize_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization-name-menu"
+            },
+            {
+              "role": "link",
+              "name": "navigation-name-menu"
+            },
+            {
+              "role": "link",
+              "name": "integrations-menu"
+            },
+            {
+              "role": "link",
+              "name": "autopilot-menu"
+            },
+            {
+              "role": "link",
+              "name": "game-rules-menu"
+            },
+            {
+              "role": "link",
+              "name": "comunication-menu"
+            },
+            {
+              "role": "link",
+              "name": "payments-menu"
+            },
+            {
+              "role": "link",
+              "name": "subscription-plans-menu"
+            }
+          ]
+        },
+        {
+          "url": "https://widgets.stage.twygoead.com/o/36988/panels/803406/edit?tab=layouts",
+          "totalInteractive": 146,
+          "visibleInteractive": 69,
+          "samples": [
+            {
+              "role": "link",
+              "name": "dashboard-menu"
+            },
+            {
+              "role": "link",
+              "name": "new_contents-menu"
+            },
+            {
+              "role": "link",
+              "name": "shared_events-menu"
+            },
+            {
+              "role": "link",
+              "name": "records-menu"
+            },
+            {
+              "role": "link",
+              "name": "certificates-menu"
+            },
+            {
+              "role": "link",
+              "name": "users-menu"
+            },
+            {
+              "role": "link",
+              "name": "companies-menu"
+            },
+            {
+              "role": "link",
+              "name": "question_lists-menu"
+            },
+            {
+              "role": "link",
+              "name": "communities-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization_chart-menu"
+            },
+            {
+              "role": "link",
+              "name": "roles-menu"
+            },
+            {
+              "role": "link",
+              "name": "competencies-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "visualize_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization-name-menu"
+            },
+            {
+              "role": "link",
+              "name": "navigation-name-menu"
+            },
+            {
+              "role": "link",
+              "name": "integrations-menu"
+            },
+            {
+              "role": "link",
+              "name": "autopilot-menu"
+            },
+            {
+              "role": "link",
+              "name": "game-rules-menu"
+            },
+            {
+              "role": "link",
+              "name": "comunication-menu"
+            },
+            {
+              "role": "link",
+              "name": "payments-menu"
+            },
+            {
+              "role": "link",
+              "name": "subscription-plans-menu"
+            }
+          ]
+        },
+        {
+          "url": "https://widgets.stage.twygoead.com/o/36988/panels/803405/edit?tab=layouts",
+          "totalInteractive": 135,
+          "visibleInteractive": 58,
+          "samples": [
+            {
+              "role": "link",
+              "name": "dashboard-menu"
+            },
+            {
+              "role": "link",
+              "name": "new_contents-menu"
+            },
+            {
+              "role": "link",
+              "name": "shared_events-menu"
+            },
+            {
+              "role": "link",
+              "name": "records-menu"
+            },
+            {
+              "role": "link",
+              "name": "certificates-menu"
+            },
+            {
+              "role": "link",
+              "name": "users-menu"
+            },
+            {
+              "role": "link",
+              "name": "companies-menu"
+            },
+            {
+              "role": "link",
+              "name": "question_lists-menu"
+            },
+            {
+              "role": "link",
+              "name": "communities-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization_chart-menu"
+            },
+            {
+              "role": "link",
+              "name": "roles-menu"
+            },
+            {
+              "role": "link",
+              "name": "competencies-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "visualize_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization-name-menu"
+            },
+            {
+              "role": "link",
+              "name": "navigation-name-menu"
+            },
+            {
+              "role": "link",
+              "name": "integrations-menu"
+            },
+            {
+              "role": "link",
+              "name": "autopilot-menu"
+            },
+            {
+              "role": "link",
+              "name": "game-rules-menu"
+            },
+            {
+              "role": "link",
+              "name": "comunication-menu"
+            },
+            {
+              "role": "link",
+              "name": "payments-menu"
+            },
+            {
+              "role": "link",
+              "name": "subscription-plans-menu"
+            }
+          ]
+        },
+        {
+          "url": "https://widgets.stage.twygoead.com/o/36988/panels/803407/edit?tab=layouts",
+          "totalInteractive": 140,
+          "visibleInteractive": 63,
+          "samples": [
+            {
+              "role": "link",
+              "name": "dashboard-menu"
+            },
+            {
+              "role": "link",
+              "name": "new_contents-menu"
+            },
+            {
+              "role": "link",
+              "name": "shared_events-menu"
+            },
+            {
+              "role": "link",
+              "name": "records-menu"
+            },
+            {
+              "role": "link",
+              "name": "certificates-menu"
+            },
+            {
+              "role": "link",
+              "name": "users-menu"
+            },
+            {
+              "role": "link",
+              "name": "companies-menu"
+            },
+            {
+              "role": "link",
+              "name": "question_lists-menu"
+            },
+            {
+              "role": "link",
+              "name": "communities-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization_chart-menu"
+            },
+            {
+              "role": "link",
+              "name": "roles-menu"
+            },
+            {
+              "role": "link",
+              "name": "competencies-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "visualize_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization-name-menu"
+            },
+            {
+              "role": "link",
+              "name": "navigation-name-menu"
+            },
+            {
+              "role": "link",
+              "name": "integrations-menu"
+            },
+            {
+              "role": "link",
+              "name": "autopilot-menu"
+            },
+            {
+              "role": "link",
+              "name": "game-rules-menu"
+            },
+            {
+              "role": "link",
+              "name": "comunication-menu"
+            },
+            {
+              "role": "link",
+              "name": "payments-menu"
+            },
+            {
+              "role": "link",
+              "name": "subscription-plans-menu"
+            }
+          ]
+        },
+        {
+          "url": "https://widgets.stage.twygoead.com/o/36988/panels/803409/edit?tab=layouts",
+          "totalInteractive": 135,
+          "visibleInteractive": 58,
+          "samples": [
+            {
+              "role": "link",
+              "name": "dashboard-menu"
+            },
+            {
+              "role": "link",
+              "name": "new_contents-menu"
+            },
+            {
+              "role": "link",
+              "name": "shared_events-menu"
+            },
+            {
+              "role": "link",
+              "name": "records-menu"
+            },
+            {
+              "role": "link",
+              "name": "certificates-menu"
+            },
+            {
+              "role": "link",
+              "name": "users-menu"
+            },
+            {
+              "role": "link",
+              "name": "companies-menu"
+            },
+            {
+              "role": "link",
+              "name": "question_lists-menu"
+            },
+            {
+              "role": "link",
+              "name": "communities-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization_chart-menu"
+            },
+            {
+              "role": "link",
+              "name": "roles-menu"
+            },
+            {
+              "role": "link",
+              "name": "competencies-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "visualize_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization-name-menu"
+            },
+            {
+              "role": "link",
+              "name": "navigation-name-menu"
+            },
+            {
+              "role": "link",
+              "name": "integrations-menu"
+            },
+            {
+              "role": "link",
+              "name": "autopilot-menu"
+            },
+            {
+              "role": "link",
+              "name": "game-rules-menu"
+            },
+            {
+              "role": "link",
+              "name": "comunication-menu"
+            },
+            {
+              "role": "link",
+              "name": "payments-menu"
+            },
+            {
+              "role": "link",
+              "name": "subscription-plans-menu"
+            }
+          ]
+        },
+        {
+          "url": "https://widgets.stage.twygoead.com/o/36988/panels/803410/edit?tab=layouts",
+          "totalInteractive": 135,
+          "visibleInteractive": 58,
+          "samples": [
+            {
+              "role": "link",
+              "name": "dashboard-menu"
+            },
+            {
+              "role": "link",
+              "name": "new_contents-menu"
+            },
+            {
+              "role": "link",
+              "name": "shared_events-menu"
+            },
+            {
+              "role": "link",
+              "name": "records-menu"
+            },
+            {
+              "role": "link",
+              "name": "certificates-menu"
+            },
+            {
+              "role": "link",
+              "name": "users-menu"
+            },
+            {
+              "role": "link",
+              "name": "companies-menu"
+            },
+            {
+              "role": "link",
+              "name": "question_lists-menu"
+            },
+            {
+              "role": "link",
+              "name": "communities-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization_chart-menu"
+            },
+            {
+              "role": "link",
+              "name": "roles-menu"
+            },
+            {
+              "role": "link",
+              "name": "competencies-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "visualize_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization-name-menu"
+            },
+            {
+              "role": "link",
+              "name": "navigation-name-menu"
+            },
+            {
+              "role": "link",
+              "name": "integrations-menu"
+            },
+            {
+              "role": "link",
+              "name": "autopilot-menu"
+            },
+            {
+              "role": "link",
+              "name": "game-rules-menu"
+            },
+            {
+              "role": "link",
+              "name": "comunication-menu"
+            },
+            {
+              "role": "link",
+              "name": "payments-menu"
+            },
+            {
+              "role": "link",
+              "name": "subscription-plans-menu"
+            }
+          ]
+        },
+        {
+          "url": "https://widgets.stage.twygoead.com/o/36988/panels/803411/edit?tab=layouts",
+          "totalInteractive": 136,
+          "visibleInteractive": 59,
+          "samples": [
+            {
+              "role": "link",
+              "name": "dashboard-menu"
+            },
+            {
+              "role": "link",
+              "name": "new_contents-menu"
+            },
+            {
+              "role": "link",
+              "name": "shared_events-menu"
+            },
+            {
+              "role": "link",
+              "name": "records-menu"
+            },
+            {
+              "role": "link",
+              "name": "certificates-menu"
+            },
+            {
+              "role": "link",
+              "name": "users-menu"
+            },
+            {
+              "role": "link",
+              "name": "companies-menu"
+            },
+            {
+              "role": "link",
+              "name": "question_lists-menu"
+            },
+            {
+              "role": "link",
+              "name": "communities-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization_chart-menu"
+            },
+            {
+              "role": "link",
+              "name": "roles-menu"
+            },
+            {
+              "role": "link",
+              "name": "competencies-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "visualize_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization-name-menu"
+            },
+            {
+              "role": "link",
+              "name": "navigation-name-menu"
+            },
+            {
+              "role": "link",
+              "name": "integrations-menu"
+            },
+            {
+              "role": "link",
+              "name": "autopilot-menu"
+            },
+            {
+              "role": "link",
+              "name": "game-rules-menu"
+            },
+            {
+              "role": "link",
+              "name": "comunication-menu"
+            },
+            {
+              "role": "link",
+              "name": "payments-menu"
+            },
+            {
+              "role": "link",
+              "name": "subscription-plans-menu"
+            }
+          ]
+        },
+        {
+          "url": "https://widgets.stage.twygoead.com/o/36988/panels/803412/edit?tab=layouts",
+          "totalInteractive": 135,
+          "visibleInteractive": 57,
+          "samples": [
+            {
+              "role": "link",
+              "name": "dashboard-menu"
+            },
+            {
+              "role": "link",
+              "name": "new_contents-menu"
+            },
+            {
+              "role": "link",
+              "name": "shared_events-menu"
+            },
+            {
+              "role": "link",
+              "name": "records-menu"
+            },
+            {
+              "role": "link",
+              "name": "certificates-menu"
+            },
+            {
+              "role": "link",
+              "name": "users-menu"
+            },
+            {
+              "role": "link",
+              "name": "companies-menu"
+            },
+            {
+              "role": "link",
+              "name": "question_lists-menu"
+            },
+            {
+              "role": "link",
+              "name": "communities-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization_chart-menu"
+            },
+            {
+              "role": "link",
+              "name": "roles-menu"
+            },
+            {
+              "role": "link",
+              "name": "competencies-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "visualize_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization-name-menu"
+            },
+            {
+              "role": "link",
+              "name": "navigation-name-menu"
+            },
+            {
+              "role": "link",
+              "name": "integrations-menu"
+            },
+            {
+              "role": "link",
+              "name": "autopilot-menu"
+            },
+            {
+              "role": "link",
+              "name": "game-rules-menu"
+            },
+            {
+              "role": "link",
+              "name": "comunication-menu"
+            },
+            {
+              "role": "link",
+              "name": "payments-menu"
+            },
+            {
+              "role": "link",
+              "name": "subscription-plans-menu"
+            }
+          ]
+        },
+        {
+          "url": "https://widgets.stage.twygoead.com/o/36988/panels/803413/edit?tab=layouts",
+          "totalInteractive": 135,
+          "visibleInteractive": 57,
+          "samples": [
+            {
+              "role": "link",
+              "name": "dashboard-menu"
+            },
+            {
+              "role": "link",
+              "name": "new_contents-menu"
+            },
+            {
+              "role": "link",
+              "name": "shared_events-menu"
+            },
+            {
+              "role": "link",
+              "name": "records-menu"
+            },
+            {
+              "role": "link",
+              "name": "certificates-menu"
+            },
+            {
+              "role": "link",
+              "name": "users-menu"
+            },
+            {
+              "role": "link",
+              "name": "companies-menu"
+            },
+            {
+              "role": "link",
+              "name": "question_lists-menu"
+            },
+            {
+              "role": "link",
+              "name": "communities-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization_chart-menu"
+            },
+            {
+              "role": "link",
+              "name": "roles-menu"
+            },
+            {
+              "role": "link",
+              "name": "competencies-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "visualize_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization-name-menu"
+            },
+            {
+              "role": "link",
+              "name": "navigation-name-menu"
+            },
+            {
+              "role": "link",
+              "name": "integrations-menu"
+            },
+            {
+              "role": "link",
+              "name": "autopilot-menu"
+            },
+            {
+              "role": "link",
+              "name": "game-rules-menu"
+            },
+            {
+              "role": "link",
+              "name": "comunication-menu"
+            },
+            {
+              "role": "link",
+              "name": "payments-menu"
+            },
+            {
+              "role": "link",
+              "name": "subscription-plans-menu"
+            }
+          ]
+        },
+        {
+          "url": "https://widgets.stage.twygoead.com/o/36988/panels/803414/edit?tab=layouts",
+          "totalInteractive": 135,
+          "visibleInteractive": 57,
+          "samples": [
+            {
+              "role": "link",
+              "name": "dashboard-menu"
+            },
+            {
+              "role": "link",
+              "name": "new_contents-menu"
+            },
+            {
+              "role": "link",
+              "name": "shared_events-menu"
+            },
+            {
+              "role": "link",
+              "name": "records-menu"
+            },
+            {
+              "role": "link",
+              "name": "certificates-menu"
+            },
+            {
+              "role": "link",
+              "name": "users-menu"
+            },
+            {
+              "role": "link",
+              "name": "companies-menu"
+            },
+            {
+              "role": "link",
+              "name": "question_lists-menu"
+            },
+            {
+              "role": "link",
+              "name": "communities-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization_chart-menu"
+            },
+            {
+              "role": "link",
+              "name": "roles-menu"
+            },
+            {
+              "role": "link",
+              "name": "competencies-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "visualize_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization-name-menu"
+            },
+            {
+              "role": "link",
+              "name": "navigation-name-menu"
+            },
+            {
+              "role": "link",
+              "name": "integrations-menu"
+            },
+            {
+              "role": "link",
+              "name": "autopilot-menu"
+            },
+            {
+              "role": "link",
+              "name": "game-rules-menu"
+            },
+            {
+              "role": "link",
+              "name": "comunication-menu"
+            },
+            {
+              "role": "link",
+              "name": "payments-menu"
+            },
+            {
+              "role": "link",
+              "name": "subscription-plans-menu"
+            }
+          ]
+        },
+        {
+          "url": "https://widgets.stage.twygoead.com/o/36988/panels/803415/edit?tab=layouts",
+          "totalInteractive": 135,
+          "visibleInteractive": 57,
+          "samples": [
+            {
+              "role": "link",
+              "name": "dashboard-menu"
+            },
+            {
+              "role": "link",
+              "name": "new_contents-menu"
+            },
+            {
+              "role": "link",
+              "name": "shared_events-menu"
+            },
+            {
+              "role": "link",
+              "name": "records-menu"
+            },
+            {
+              "role": "link",
+              "name": "certificates-menu"
+            },
+            {
+              "role": "link",
+              "name": "users-menu"
+            },
+            {
+              "role": "link",
+              "name": "companies-menu"
+            },
+            {
+              "role": "link",
+              "name": "question_lists-menu"
+            },
+            {
+              "role": "link",
+              "name": "communities-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization_chart-menu"
+            },
+            {
+              "role": "link",
+              "name": "roles-menu"
+            },
+            {
+              "role": "link",
+              "name": "competencies-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "visualize_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization-name-menu"
+            },
+            {
+              "role": "link",
+              "name": "navigation-name-menu"
+            },
+            {
+              "role": "link",
+              "name": "integrations-menu"
+            },
+            {
+              "role": "link",
+              "name": "autopilot-menu"
+            },
+            {
+              "role": "link",
+              "name": "game-rules-menu"
+            },
+            {
+              "role": "link",
+              "name": "comunication-menu"
+            },
+            {
+              "role": "link",
+              "name": "payments-menu"
+            },
+            {
+              "role": "link",
+              "name": "subscription-plans-menu"
+            }
+          ]
+        }
+      ],
+      "outOfScope": {
+        "totals": {
+          "errors": 124,
+          "warnings": 33,
+          "info": 0
+        },
+        "byKind": {
+          "console_error": 89,
+          "a11y_violation": 68
+        },
+        "findings": [
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803408/edit",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803408/edit",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803408/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803408/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803408/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803408/edit?tab=layouts",
+            "message": "[a11y/color-contrast] Elements must meet minimum color contrast ratio thresholds",
+            "detail": {
+              "ruleId": "color-contrast",
+              "impact": "serious",
+              "tags": [
+                "cat.color",
+                "wcag2aa",
+                "wcag143",
+                "TTv5",
+                "TT13.c",
+                "EN-301-549",
+                "EN-9.1.4.3",
+                "ACT",
+                "RGAAv4",
+                "RGAA-3.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
+              "affectedNodes": 24,
+              "firstNodeTarget": [
+                ".top-user-name__infor > .name"
+              ],
+              "firstNodeHtml": "<span class=\"name\">\nClaude Agents\n</span>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803408/edit?tab=layouts",
+            "message": "[a11y/landmark-unique] Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+            "detail": {
+              "ruleId": "landmark-unique",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
+              "affectedNodes": 6,
+              "firstNodeTarget": [
+                ".chakra-portal:nth-child(30) > div[aria-label=\"Notifications-top\"][aria-live=\"polite\"][role=\"region\"]"
+              ],
+              "firstNodeHtml": "<div role=\"region\" aria-live=\"polite\" aria-label=\"Notifications-top\" id=\"chakra-toast-manager...\" style=\"position: fixed; z-i...\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803408/edit?tab=layouts",
+            "message": "[a11y/meta-viewport] Zooming and scaling must not be disabled",
+            "detail": {
+              "ruleId": "meta-viewport",
+              "impact": "moderate",
+              "tags": [
+                "cat.sensory-and-visual-cues",
+                "wcag2aa",
+                "wcag144",
+                "EN-301-549",
+                "EN-9.1.4.4",
+                "ACT",
+                "RGAAv4",
+                "RGAA-10.4.2"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/meta-viewport?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "meta[name=\"viewport\"]"
+              ],
+              "firstNodeHtml": "<meta content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui\" name=\"viewport\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803408/edit?tab=layouts",
+            "message": "[a11y/region] All page content should be contained by landmarks",
+            "detail": {
+              "ruleId": "region",
+              "impact": "moderate",
+              "tags": [
+                "cat.keyboard",
+                "best-practice",
+                "RGAAv4",
+                "RGAA-9.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "#tabs-\\:rq\\:--tabpanel-1"
+              ],
+              "firstNodeHtml": "<div tabindex=\"0\" role=\"tabpanel\" aria-labelledby=\"tabs-:rq:--tab-1\" id=\"tabs-:rq:--tabpanel-1\" class=\"chakra-tabs__tab-panel css-47dblg\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803406/edit",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803406/edit",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803406/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803406/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803406/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803406/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803406/edit?tab=layouts",
+            "message": "[a11y/aria-allowed-attr] Elements must only use supported ARIA attributes",
+            "detail": {
+              "ruleId": "aria-allowed-attr",
+              "impact": "critical",
+              "tags": [
+                "cat.aria",
+                "wcag2a",
+                "wcag412",
+                "EN-301-549",
+                "EN-9.4.1.2",
+                "RGAAv4",
+                "RGAA-7.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-allowed-attr?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "#popover-trigger-\\:r7\\:"
+              ],
+              "firstNodeHtml": "<div id=\"popover-trigger-:r7:\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"popover-content-:r7:\" class=\"css-tz0gqg\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803406/edit?tab=layouts",
+            "message": "[a11y/aria-progressbar-name] ARIA progressbar nodes must have an accessible name",
+            "detail": {
+              "ruleId": "aria-progressbar-name",
+              "impact": "serious",
+              "tags": [
+                "cat.aria",
+                "wcag2a",
+                "wcag111",
+                "EN-301-549",
+                "EN-9.1.1.1",
+                "RGAAv4",
+                "RGAA-11.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-progressbar-name?application=playwright",
+              "affectedNodes": 7,
+              "firstNodeTarget": [
+                ".css-1iassa2.chakra-stack:nth-child(1) > .chakra-progress.css-2sdpfm[aria-valuemax=\"100\"]"
+              ],
+              "firstNodeHtml": "<div class=\"chakra-progress css-2sdpfm\" aria-valuemax=\"100\" aria-valuemin=\"0\" aria-valuenow=\"85\" role=\"progressbar\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803406/edit?tab=layouts",
+            "message": "[a11y/color-contrast] Elements must meet minimum color contrast ratio thresholds",
+            "detail": {
+              "ruleId": "color-contrast",
+              "impact": "serious",
+              "tags": [
+                "cat.color",
+                "wcag2aa",
+                "wcag143",
+                "TTv5",
+                "TT13.c",
+                "EN-301-549",
+                "EN-9.1.4.3",
+                "ACT",
+                "RGAAv4",
+                "RGAA-3.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
+              "affectedNodes": 44,
+              "firstNodeTarget": [
+                ".top-user-name__infor > .name"
+              ],
+              "firstNodeHtml": "<span class=\"name\">\nClaude Agents\n</span>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803406/edit?tab=layouts",
+            "message": "[a11y/image-alt] Images must have alternative text",
+            "detail": {
+              "ruleId": "image-alt",
+              "impact": "critical",
+              "tags": [
+                "cat.text-alternatives",
+                "wcag2a",
+                "wcag111",
+                "section508",
+                "section508.22.a",
+                "TTv5",
+                "TT7.a",
+                "TT7.b",
+                "EN-301-549",
+                "EN-9.1.1.1",
+                "ACT",
+                "RGAAv4",
+                "RGAA-1.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/image-alt?application=playwright",
+              "affectedNodes": 3,
+              "firstNodeTarget": [
+                "#mobile-close-menu > img"
+              ],
+              "firstNodeHtml": "<img src=\"/assets/svg/mobile-close-menu.svg\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803406/edit?tab=layouts",
+            "message": "[a11y/label] Form elements must have labels",
+            "detail": {
+              "ruleId": "label",
+              "impact": "critical",
+              "tags": [
+                "cat.forms",
+                "wcag2a",
+                "wcag412",
+                "section508",
+                "section508.22.n",
+                "TTv5",
+                "TT5.c",
+                "EN-301-549",
+                "EN-9.4.1.2",
+                "ACT",
+                "RGAAv4",
+                "RGAA-11.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/label?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                ".chakra-switch__input"
+              ],
+              "firstNodeHtml": "<input class=\"chakra-switch__input\" type=\"checkbox\" aria-disabled=\"false\" value=\"\" style=\"border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hi"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803406/edit?tab=layouts",
+            "message": "[a11y/landmark-unique] Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+            "detail": {
+              "ruleId": "landmark-unique",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
+              "affectedNodes": 6,
+              "firstNodeTarget": [
+                ".chakra-portal:nth-child(30) > div[aria-label=\"Notifications-top\"][aria-live=\"polite\"][role=\"region\"]"
+              ],
+              "firstNodeHtml": "<div role=\"region\" aria-live=\"polite\" aria-label=\"Notifications-top\" id=\"chakra-toast-manager...\" style=\"position: fixed; z-i...\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803406/edit?tab=layouts",
+            "message": "[a11y/list] <ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+            "detail": {
+              "ruleId": "list",
+              "impact": "serious",
+              "tags": [
+                "cat.structure",
+                "wcag2a",
+                "wcag131",
+                "EN-301-549",
+                "EN-9.1.3.1",
+                "RGAAv4",
+                "RGAA-9.3.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/list?application=playwright",
+              "affectedNodes": 2,
+              "firstNodeTarget": [
+                ".mobile-user-menu > .menu-main"
+              ],
+              "firstNodeHtml": "<ul class=\"menu-main\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803406/edit?tab=layouts",
+            "message": "[a11y/meta-viewport] Zooming and scaling must not be disabled",
+            "detail": {
+              "ruleId": "meta-viewport",
+              "impact": "moderate",
+              "tags": [
+                "cat.sensory-and-visual-cues",
+                "wcag2aa",
+                "wcag144",
+                "EN-301-549",
+                "EN-9.1.4.4",
+                "ACT",
+                "RGAAv4",
+                "RGAA-10.4.2"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/meta-viewport?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "meta[name=\"viewport\"]"
+              ],
+              "firstNodeHtml": "<meta content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui\" name=\"viewport\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803406/edit?tab=layouts",
+            "message": "[a11y/region] All page content should be contained by landmarks",
+            "detail": {
+              "ruleId": "region",
+              "impact": "moderate",
+              "tags": [
+                "cat.keyboard",
+                "best-practice",
+                "RGAAv4",
+                "RGAA-9.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=playwright",
+              "affectedNodes": 34,
+              "firstNodeTarget": [
+                "#mobile-logo > img[alt=\"Logo - widgets [36988]\"][title=\"Logo - widgets [36988]\"]"
+              ],
+              "firstNodeHtml": "<img title=\"Logo - widgets [36988]\" alt=\"Logo - widgets [36988]\" style=\"height: 50px; align: center\" src=\"https://cdn-stage.twygo.com/uploads/organizations_36988_medium_logo_1778081380.png?1778081380\""
+            },
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803405/edit",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803405/edit",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803405/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803405/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803405/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803405/edit?tab=layouts",
+            "message": "[a11y/aria-allowed-attr] Elements must only use supported ARIA attributes",
+            "detail": {
+              "ruleId": "aria-allowed-attr",
+              "impact": "critical",
+              "tags": [
+                "cat.aria",
+                "wcag2a",
+                "wcag412",
+                "EN-301-549",
+                "EN-9.4.1.2",
+                "RGAAv4",
+                "RGAA-7.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-allowed-attr?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "#popover-trigger-\\:r7\\:"
+              ],
+              "firstNodeHtml": "<div id=\"popover-trigger-:r7:\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"popover-content-:r7:\" class=\"css-tz0gqg\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803405/edit?tab=layouts",
+            "message": "[a11y/aria-progressbar-name] ARIA progressbar nodes must have an accessible name",
+            "detail": {
+              "ruleId": "aria-progressbar-name",
+              "impact": "serious",
+              "tags": [
+                "cat.aria",
+                "wcag2a",
+                "wcag111",
+                "EN-301-549",
+                "EN-9.1.1.1",
+                "RGAAv4",
+                "RGAA-11.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-progressbar-name?application=playwright",
+              "affectedNodes": 4,
+              "firstNodeTarget": [
+                ".css-xne1nq"
+              ],
+              "firstNodeHtml": "<div aria-valuemax=\"100\" aria-valuemin=\"0\" aria-valuenow=\"75\" role=\"progressbar\" class=\"css-xne1nq\" style=\"width: 75%;\"></div>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803405/edit?tab=layouts",
+            "message": "[a11y/color-contrast] Elements must meet minimum color contrast ratio thresholds",
+            "detail": {
+              "ruleId": "color-contrast",
+              "impact": "serious",
+              "tags": [
+                "cat.color",
+                "wcag2aa",
+                "wcag143",
+                "TTv5",
+                "TT13.c",
+                "EN-301-549",
+                "EN-9.1.4.3",
+                "ACT",
+                "RGAAv4",
+                "RGAA-3.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
+              "affectedNodes": 24,
+              "firstNodeTarget": [
+                ".top-user-name__infor > .name"
+              ],
+              "firstNodeHtml": "<span class=\"name\">\nClaude Agents\n</span>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803405/edit?tab=layouts",
+            "message": "[a11y/image-alt] Images must have alternative text",
+            "detail": {
+              "ruleId": "image-alt",
+              "impact": "critical",
+              "tags": [
+                "cat.text-alternatives",
+                "wcag2a",
+                "wcag111",
+                "section508",
+                "section508.22.a",
+                "TTv5",
+                "TT7.a",
+                "TT7.b",
+                "EN-301-549",
+                "EN-9.1.1.1",
+                "ACT",
+                "RGAAv4",
+                "RGAA-1.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/image-alt?application=playwright",
+              "affectedNodes": 3,
+              "firstNodeTarget": [
+                "#mobile-close-menu > img"
+              ],
+              "firstNodeHtml": "<img src=\"/assets/svg/mobile-close-menu.svg\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803405/edit?tab=layouts",
+            "message": "[a11y/label] Form elements must have labels",
+            "detail": {
+              "ruleId": "label",
+              "impact": "critical",
+              "tags": [
+                "cat.forms",
+                "wcag2a",
+                "wcag412",
+                "section508",
+                "section508.22.n",
+                "TTv5",
+                "TT5.c",
+                "EN-301-549",
+                "EN-9.4.1.2",
+                "ACT",
+                "RGAAv4",
+                "RGAA-11.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/label?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                ".chakra-switch__input"
+              ],
+              "firstNodeHtml": "<input class=\"chakra-switch__input\" type=\"checkbox\" aria-disabled=\"false\" value=\"\" style=\"border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hi"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803405/edit?tab=layouts",
+            "message": "[a11y/landmark-unique] Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+            "detail": {
+              "ruleId": "landmark-unique",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
+              "affectedNodes": 6,
+              "firstNodeTarget": [
+                ".chakra-portal:nth-child(33) > div[aria-label=\"Notifications-top\"][aria-live=\"polite\"][role=\"region\"]"
+              ],
+              "firstNodeHtml": "<div role=\"region\" aria-live=\"polite\" aria-label=\"Notifications-top\" id=\"chakra-toast-manager...\" style=\"position: fixed; z-i...\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803405/edit?tab=layouts",
+            "message": "[a11y/list] <ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+            "detail": {
+              "ruleId": "list",
+              "impact": "serious",
+              "tags": [
+                "cat.structure",
+                "wcag2a",
+                "wcag131",
+                "EN-301-549",
+                "EN-9.1.3.1",
+                "RGAAv4",
+                "RGAA-9.3.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/list?application=playwright",
+              "affectedNodes": 2,
+              "firstNodeTarget": [
+                ".mobile-user-menu > .menu-main"
+              ],
+              "firstNodeHtml": "<ul class=\"menu-main\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803405/edit?tab=layouts",
+            "message": "[a11y/meta-viewport] Zooming and scaling must not be disabled",
+            "detail": {
+              "ruleId": "meta-viewport",
+              "impact": "moderate",
+              "tags": [
+                "cat.sensory-and-visual-cues",
+                "wcag2aa",
+                "wcag144",
+                "EN-301-549",
+                "EN-9.1.4.4",
+                "ACT",
+                "RGAAv4",
+                "RGAA-10.4.2"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/meta-viewport?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "meta[name=\"viewport\"]"
+              ],
+              "firstNodeHtml": "<meta content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui\" name=\"viewport\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803405/edit?tab=layouts",
+            "message": "[a11y/region] All page content should be contained by landmarks",
+            "detail": {
+              "ruleId": "region",
+              "impact": "moderate",
+              "tags": [
+                "cat.keyboard",
+                "best-practice",
+                "RGAAv4",
+                "RGAA-9.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=playwright",
+              "affectedNodes": 34,
+              "firstNodeTarget": [
+                "#mobile-logo > img[alt=\"Logo - widgets [36988]\"][title=\"Logo - widgets [36988]\"]"
+              ],
+              "firstNodeHtml": "<img title=\"Logo - widgets [36988]\" alt=\"Logo - widgets [36988]\" style=\"height: 50px; align: center\" src=\"https://cdn-stage.twygo.com/uploads/organizations_36988_medium_logo_1778081380.png?1778081380\""
+            },
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803407/edit",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803407/edit",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803407/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803407/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803407/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803407/edit?tab=layouts",
+            "message": "[a11y/aria-allowed-attr] Elements must only use supported ARIA attributes",
+            "detail": {
+              "ruleId": "aria-allowed-attr",
+              "impact": "critical",
+              "tags": [
+                "cat.aria",
+                "wcag2a",
+                "wcag412",
+                "EN-301-549",
+                "EN-9.4.1.2",
+                "RGAAv4",
+                "RGAA-7.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-allowed-attr?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "#popover-trigger-\\:r7\\:"
+              ],
+              "firstNodeHtml": "<div id=\"popover-trigger-:r7:\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"popover-content-:r7:\" class=\"css-tz0gqg\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803407/edit?tab=layouts",
+            "message": "[a11y/color-contrast] Elements must meet minimum color contrast ratio thresholds",
+            "detail": {
+              "ruleId": "color-contrast",
+              "impact": "serious",
+              "tags": [
+                "cat.color",
+                "wcag2aa",
+                "wcag143",
+                "TTv5",
+                "TT13.c",
+                "EN-301-549",
+                "EN-9.1.4.3",
+                "ACT",
+                "RGAAv4",
+                "RGAA-3.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
+              "affectedNodes": 31,
+              "firstNodeTarget": [
+                ".top-user-name__infor > .name"
+              ],
+              "firstNodeHtml": "<span class=\"name\">\nClaude Agents\n</span>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803407/edit?tab=layouts",
+            "message": "[a11y/image-alt] Images must have alternative text",
+            "detail": {
+              "ruleId": "image-alt",
+              "impact": "critical",
+              "tags": [
+                "cat.text-alternatives",
+                "wcag2a",
+                "wcag111",
+                "section508",
+                "section508.22.a",
+                "TTv5",
+                "TT7.a",
+                "TT7.b",
+                "EN-301-549",
+                "EN-9.1.1.1",
+                "ACT",
+                "RGAAv4",
+                "RGAA-1.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/image-alt?application=playwright",
+              "affectedNodes": 3,
+              "firstNodeTarget": [
+                "#mobile-close-menu > img"
+              ],
+              "firstNodeHtml": "<img src=\"/assets/svg/mobile-close-menu.svg\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803407/edit?tab=layouts",
+            "message": "[a11y/label] Form elements must have labels",
+            "detail": {
+              "ruleId": "label",
+              "impact": "critical",
+              "tags": [
+                "cat.forms",
+                "wcag2a",
+                "wcag412",
+                "section508",
+                "section508.22.n",
+                "TTv5",
+                "TT5.c",
+                "EN-301-549",
+                "EN-9.4.1.2",
+                "ACT",
+                "RGAAv4",
+                "RGAA-11.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/label?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                ".chakra-switch__input"
+              ],
+              "firstNodeHtml": "<input class=\"chakra-switch__input\" type=\"checkbox\" aria-disabled=\"false\" value=\"\" style=\"border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hi"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803407/edit?tab=layouts",
+            "message": "[a11y/landmark-unique] Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+            "detail": {
+              "ruleId": "landmark-unique",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
+              "affectedNodes": 6,
+              "firstNodeTarget": [
+                ".chakra-portal:nth-child(33) > div[aria-label=\"Notifications-top\"][aria-live=\"polite\"][role=\"region\"]"
+              ],
+              "firstNodeHtml": "<div role=\"region\" aria-live=\"polite\" aria-label=\"Notifications-top\" id=\"chakra-toast-manager...\" style=\"position: fixed; z-i...\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803407/edit?tab=layouts",
+            "message": "[a11y/list] <ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+            "detail": {
+              "ruleId": "list",
+              "impact": "serious",
+              "tags": [
+                "cat.structure",
+                "wcag2a",
+                "wcag131",
+                "EN-301-549",
+                "EN-9.1.3.1",
+                "RGAAv4",
+                "RGAA-9.3.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/list?application=playwright",
+              "affectedNodes": 2,
+              "firstNodeTarget": [
+                ".mobile-user-menu > .menu-main"
+              ],
+              "firstNodeHtml": "<ul class=\"menu-main\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803407/edit?tab=layouts",
+            "message": "[a11y/meta-viewport] Zooming and scaling must not be disabled",
+            "detail": {
+              "ruleId": "meta-viewport",
+              "impact": "moderate",
+              "tags": [
+                "cat.sensory-and-visual-cues",
+                "wcag2aa",
+                "wcag144",
+                "EN-301-549",
+                "EN-9.1.4.4",
+                "ACT",
+                "RGAAv4",
+                "RGAA-10.4.2"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/meta-viewport?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "meta[name=\"viewport\"]"
+              ],
+              "firstNodeHtml": "<meta content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui\" name=\"viewport\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803407/edit?tab=layouts",
+            "message": "[a11y/region] All page content should be contained by landmarks",
+            "detail": {
+              "ruleId": "region",
+              "impact": "moderate",
+              "tags": [
+                "cat.keyboard",
+                "best-practice",
+                "RGAAv4",
+                "RGAA-9.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=playwright",
+              "affectedNodes": 34,
+              "firstNodeTarget": [
+                "#mobile-logo > img[alt=\"Logo - widgets [36988]\"][title=\"Logo - widgets [36988]\"]"
+              ],
+              "firstNodeHtml": "<img title=\"Logo - widgets [36988]\" alt=\"Logo - widgets [36988]\" style=\"height: 50px; align: center\" src=\"https://cdn-stage.twygo.com/uploads/organizations_36988_medium_logo_1778081380.png?1778081380\""
+            },
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803409/edit",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803409/edit",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803409/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803409/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803409/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803409/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803409/edit?tab=layouts",
+            "message": "[a11y/aria-allowed-attr] Elements must only use supported ARIA attributes",
+            "detail": {
+              "ruleId": "aria-allowed-attr",
+              "impact": "critical",
+              "tags": [
+                "cat.aria",
+                "wcag2a",
+                "wcag412",
+                "EN-301-549",
+                "EN-9.4.1.2",
+                "RGAAv4",
+                "RGAA-7.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-allowed-attr?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "#popover-trigger-\\:r7\\:"
+              ],
+              "firstNodeHtml": "<div id=\"popover-trigger-:r7:\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"popover-content-:r7:\" class=\"css-tz0gqg\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803409/edit?tab=layouts",
+            "message": "[a11y/color-contrast] Elements must meet minimum color contrast ratio thresholds",
+            "detail": {
+              "ruleId": "color-contrast",
+              "impact": "serious",
+              "tags": [
+                "cat.color",
+                "wcag2aa",
+                "wcag143",
+                "TTv5",
+                "TT13.c",
+                "EN-301-549",
+                "EN-9.1.4.3",
+                "ACT",
+                "RGAAv4",
+                "RGAA-3.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
+              "affectedNodes": 28,
+              "firstNodeTarget": [
+                ".top-user-name__infor > .name"
+              ],
+              "firstNodeHtml": "<span class=\"name\">\nClaude Agents\n</span>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803409/edit?tab=layouts",
+            "message": "[a11y/image-alt] Images must have alternative text",
+            "detail": {
+              "ruleId": "image-alt",
+              "impact": "critical",
+              "tags": [
+                "cat.text-alternatives",
+                "wcag2a",
+                "wcag111",
+                "section508",
+                "section508.22.a",
+                "TTv5",
+                "TT7.a",
+                "TT7.b",
+                "EN-301-549",
+                "EN-9.1.1.1",
+                "ACT",
+                "RGAAv4",
+                "RGAA-1.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/image-alt?application=playwright",
+              "affectedNodes": 3,
+              "firstNodeTarget": [
+                "#mobile-close-menu > img"
+              ],
+              "firstNodeHtml": "<img src=\"/assets/svg/mobile-close-menu.svg\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803409/edit?tab=layouts",
+            "message": "[a11y/label] Form elements must have labels",
+            "detail": {
+              "ruleId": "label",
+              "impact": "critical",
+              "tags": [
+                "cat.forms",
+                "wcag2a",
+                "wcag412",
+                "section508",
+                "section508.22.n",
+                "TTv5",
+                "TT5.c",
+                "EN-301-549",
+                "EN-9.4.1.2",
+                "ACT",
+                "RGAAv4",
+                "RGAA-11.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/label?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                ".chakra-switch__input"
+              ],
+              "firstNodeHtml": "<input class=\"chakra-switch__input\" type=\"checkbox\" aria-disabled=\"false\" value=\"\" style=\"border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hi"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803409/edit?tab=layouts",
+            "message": "[a11y/landmark-unique] Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+            "detail": {
+              "ruleId": "landmark-unique",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
+              "affectedNodes": 6,
+              "firstNodeTarget": [
+                ".chakra-portal:nth-child(30) > div[aria-label=\"Notifications-top\"][aria-live=\"polite\"][role=\"region\"]"
+              ],
+              "firstNodeHtml": "<div role=\"region\" aria-live=\"polite\" aria-label=\"Notifications-top\" id=\"chakra-toast-manager...\" style=\"position: fixed; z-i...\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803409/edit?tab=layouts",
+            "message": "[a11y/list] <ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+            "detail": {
+              "ruleId": "list",
+              "impact": "serious",
+              "tags": [
+                "cat.structure",
+                "wcag2a",
+                "wcag131",
+                "EN-301-549",
+                "EN-9.1.3.1",
+                "RGAAv4",
+                "RGAA-9.3.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/list?application=playwright",
+              "affectedNodes": 2,
+              "firstNodeTarget": [
+                ".mobile-user-menu > .menu-main"
+              ],
+              "firstNodeHtml": "<ul class=\"menu-main\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803409/edit?tab=layouts",
+            "message": "[a11y/meta-viewport] Zooming and scaling must not be disabled",
+            "detail": {
+              "ruleId": "meta-viewport",
+              "impact": "moderate",
+              "tags": [
+                "cat.sensory-and-visual-cues",
+                "wcag2aa",
+                "wcag144",
+                "EN-301-549",
+                "EN-9.1.4.4",
+                "ACT",
+                "RGAAv4",
+                "RGAA-10.4.2"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/meta-viewport?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "meta[name=\"viewport\"]"
+              ],
+              "firstNodeHtml": "<meta content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui\" name=\"viewport\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803409/edit?tab=layouts",
+            "message": "[a11y/region] All page content should be contained by landmarks",
+            "detail": {
+              "ruleId": "region",
+              "impact": "moderate",
+              "tags": [
+                "cat.keyboard",
+                "best-practice",
+                "RGAAv4",
+                "RGAA-9.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=playwright",
+              "affectedNodes": 34,
+              "firstNodeTarget": [
+                "#mobile-logo > img[alt=\"Logo - widgets [36988]\"][title=\"Logo - widgets [36988]\"]"
+              ],
+              "firstNodeHtml": "<img title=\"Logo - widgets [36988]\" alt=\"Logo - widgets [36988]\" style=\"height: 50px; align: center\" src=\"https://cdn-stage.twygo.com/uploads/organizations_36988_medium_logo_1778081380.png?1778081380\""
+            },
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803410/edit",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803410/edit",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803410/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803410/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803410/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803410/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803410/edit?tab=layouts",
+            "message": "[a11y/aria-allowed-attr] Elements must only use supported ARIA attributes",
+            "detail": {
+              "ruleId": "aria-allowed-attr",
+              "impact": "critical",
+              "tags": [
+                "cat.aria",
+                "wcag2a",
+                "wcag412",
+                "EN-301-549",
+                "EN-9.4.1.2",
+                "RGAAv4",
+                "RGAA-7.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-allowed-attr?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "#popover-trigger-\\:r7\\:"
+              ],
+              "firstNodeHtml": "<div id=\"popover-trigger-:r7:\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"popover-content-:r7:\" class=\"css-tz0gqg\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803410/edit?tab=layouts",
+            "message": "[a11y/aria-progressbar-name] ARIA progressbar nodes must have an accessible name",
+            "detail": {
+              "ruleId": "aria-progressbar-name",
+              "impact": "serious",
+              "tags": [
+                "cat.aria",
+                "wcag2a",
+                "wcag111",
+                "EN-301-549",
+                "EN-9.1.1.1",
+                "RGAAv4",
+                "RGAA-11.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-progressbar-name?application=playwright",
+              "affectedNodes": 3,
+              "firstNodeTarget": [
+                ".css-1iassa2.chakra-stack:nth-child(1) > .chakra-progress.css-2sdpfm[aria-valuemax=\"100\"]"
+              ],
+              "firstNodeHtml": "<div class=\"chakra-progress css-2sdpfm\" aria-valuemax=\"100\" aria-valuemin=\"0\" aria-valuenow=\"85\" role=\"progressbar\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803410/edit?tab=layouts",
+            "message": "[a11y/color-contrast] Elements must meet minimum color contrast ratio thresholds",
+            "detail": {
+              "ruleId": "color-contrast",
+              "impact": "serious",
+              "tags": [
+                "cat.color",
+                "wcag2aa",
+                "wcag143",
+                "TTv5",
+                "TT13.c",
+                "EN-301-549",
+                "EN-9.1.4.3",
+                "ACT",
+                "RGAAv4",
+                "RGAA-3.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
+              "affectedNodes": 21,
+              "firstNodeTarget": [
+                ".top-user-name__infor > .name"
+              ],
+              "firstNodeHtml": "<span class=\"name\">\nClaude Agents\n</span>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803410/edit?tab=layouts",
+            "message": "[a11y/image-alt] Images must have alternative text",
+            "detail": {
+              "ruleId": "image-alt",
+              "impact": "critical",
+              "tags": [
+                "cat.text-alternatives",
+                "wcag2a",
+                "wcag111",
+                "section508",
+                "section508.22.a",
+                "TTv5",
+                "TT7.a",
+                "TT7.b",
+                "EN-301-549",
+                "EN-9.1.1.1",
+                "ACT",
+                "RGAAv4",
+                "RGAA-1.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/image-alt?application=playwright",
+              "affectedNodes": 3,
+              "firstNodeTarget": [
+                "#mobile-close-menu > img"
+              ],
+              "firstNodeHtml": "<img src=\"/assets/svg/mobile-close-menu.svg\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803410/edit?tab=layouts",
+            "message": "[a11y/label] Form elements must have labels",
+            "detail": {
+              "ruleId": "label",
+              "impact": "critical",
+              "tags": [
+                "cat.forms",
+                "wcag2a",
+                "wcag412",
+                "section508",
+                "section508.22.n",
+                "TTv5",
+                "TT5.c",
+                "EN-301-549",
+                "EN-9.4.1.2",
+                "ACT",
+                "RGAAv4",
+                "RGAA-11.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/label?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                ".chakra-switch__input"
+              ],
+              "firstNodeHtml": "<input class=\"chakra-switch__input\" type=\"checkbox\" aria-disabled=\"false\" value=\"\" style=\"border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hi"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803410/edit?tab=layouts",
+            "message": "[a11y/landmark-unique] Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+            "detail": {
+              "ruleId": "landmark-unique",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
+              "affectedNodes": 6,
+              "firstNodeTarget": [
+                ".chakra-portal:nth-child(33) > div[aria-label=\"Notifications-top\"][aria-live=\"polite\"][role=\"region\"]"
+              ],
+              "firstNodeHtml": "<div role=\"region\" aria-live=\"polite\" aria-label=\"Notifications-top\" id=\"chakra-toast-manager...\" style=\"position: fixed; z-i...\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803410/edit?tab=layouts",
+            "message": "[a11y/list] <ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+            "detail": {
+              "ruleId": "list",
+              "impact": "serious",
+              "tags": [
+                "cat.structure",
+                "wcag2a",
+                "wcag131",
+                "EN-301-549",
+                "EN-9.1.3.1",
+                "RGAAv4",
+                "RGAA-9.3.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/list?application=playwright",
+              "affectedNodes": 2,
+              "firstNodeTarget": [
+                ".mobile-user-menu > .menu-main"
+              ],
+              "firstNodeHtml": "<ul class=\"menu-main\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803410/edit?tab=layouts",
+            "message": "[a11y/meta-viewport] Zooming and scaling must not be disabled",
+            "detail": {
+              "ruleId": "meta-viewport",
+              "impact": "moderate",
+              "tags": [
+                "cat.sensory-and-visual-cues",
+                "wcag2aa",
+                "wcag144",
+                "EN-301-549",
+                "EN-9.1.4.4",
+                "ACT",
+                "RGAAv4",
+                "RGAA-10.4.2"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/meta-viewport?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "meta[name=\"viewport\"]"
+              ],
+              "firstNodeHtml": "<meta content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui\" name=\"viewport\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803410/edit?tab=layouts",
+            "message": "[a11y/region] All page content should be contained by landmarks",
+            "detail": {
+              "ruleId": "region",
+              "impact": "moderate",
+              "tags": [
+                "cat.keyboard",
+                "best-practice",
+                "RGAAv4",
+                "RGAA-9.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=playwright",
+              "affectedNodes": 34,
+              "firstNodeTarget": [
+                "#mobile-logo > img[alt=\"Logo - widgets [36988]\"][title=\"Logo - widgets [36988]\"]"
+              ],
+              "firstNodeHtml": "<img title=\"Logo - widgets [36988]\" alt=\"Logo - widgets [36988]\" style=\"height: 50px; align: center\" src=\"https://cdn-stage.twygo.com/uploads/organizations_36988_medium_logo_1778081380.png?1778081380\""
+            },
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803411/edit",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803411/edit",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803411/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803411/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803411/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803411/edit?tab=layouts",
+            "message": "[a11y/color-contrast] Elements must meet minimum color contrast ratio thresholds",
+            "detail": {
+              "ruleId": "color-contrast",
+              "impact": "serious",
+              "tags": [
+                "cat.color",
+                "wcag2aa",
+                "wcag143",
+                "TTv5",
+                "TT13.c",
+                "EN-301-549",
+                "EN-9.1.4.3",
+                "ACT",
+                "RGAAv4",
+                "RGAA-3.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
+              "affectedNodes": 24,
+              "firstNodeTarget": [
+                ".top-user-name__infor > .name"
+              ],
+              "firstNodeHtml": "<span class=\"name\">\nClaude Agents\n</span>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803411/edit?tab=layouts",
+            "message": "[a11y/label] Form elements must have labels",
+            "detail": {
+              "ruleId": "label",
+              "impact": "critical",
+              "tags": [
+                "cat.forms",
+                "wcag2a",
+                "wcag412",
+                "section508",
+                "section508.22.n",
+                "TTv5",
+                "TT5.c",
+                "EN-301-549",
+                "EN-9.4.1.2",
+                "ACT",
+                "RGAAv4",
+                "RGAA-11.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/label?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "#widget-filter-categories"
+              ],
+              "firstNodeHtml": "<input class=\"\" autocapitalize=\"none\" autocomplete=\"off\" autocorrect=\"off\" id=\"widget-filter-catego...\" spellcheck=\"false\" tabindex=\"0\" type=\"text\" aria-autocomplete=\"list\" aria-expanded=\"false\" aria-"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803411/edit?tab=layouts",
+            "message": "[a11y/landmark-unique] Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+            "detail": {
+              "ruleId": "landmark-unique",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
+              "affectedNodes": 6,
+              "firstNodeTarget": [
+                ".chakra-portal:nth-child(33) > div[aria-label=\"Notifications-top\"][aria-live=\"polite\"][role=\"region\"]"
+              ],
+              "firstNodeHtml": "<div role=\"region\" aria-live=\"polite\" aria-label=\"Notifications-top\" id=\"chakra-toast-manager...\" style=\"position: fixed; z-i...\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803411/edit?tab=layouts",
+            "message": "[a11y/meta-viewport] Zooming and scaling must not be disabled",
+            "detail": {
+              "ruleId": "meta-viewport",
+              "impact": "moderate",
+              "tags": [
+                "cat.sensory-and-visual-cues",
+                "wcag2aa",
+                "wcag144",
+                "EN-301-549",
+                "EN-9.1.4.4",
+                "ACT",
+                "RGAAv4",
+                "RGAA-10.4.2"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/meta-viewport?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "meta[name=\"viewport\"]"
+              ],
+              "firstNodeHtml": "<meta content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui\" name=\"viewport\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803411/edit?tab=layouts",
+            "message": "[a11y/region] All page content should be contained by landmarks",
+            "detail": {
+              "ruleId": "region",
+              "impact": "moderate",
+              "tags": [
+                "cat.keyboard",
+                "best-practice",
+                "RGAAv4",
+                "RGAA-9.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "#tabs-\\:rq\\:--tabpanel-1"
+              ],
+              "firstNodeHtml": "<div tabindex=\"0\" role=\"tabpanel\" aria-labelledby=\"tabs-:rq:--tab-1\" id=\"tabs-:rq:--tabpanel-1\" class=\"chakra-tabs__tab-panel css-47dblg\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803412/edit",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803412/edit",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803412/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803412/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803412/edit?tab=layouts",
+            "message": "[a11y/color-contrast] Elements must meet minimum color contrast ratio thresholds",
+            "detail": {
+              "ruleId": "color-contrast",
+              "impact": "serious",
+              "tags": [
+                "cat.color",
+                "wcag2aa",
+                "wcag143",
+                "TTv5",
+                "TT13.c",
+                "EN-301-549",
+                "EN-9.1.4.3",
+                "ACT",
+                "RGAAv4",
+                "RGAA-3.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
+              "affectedNodes": 21,
+              "firstNodeTarget": [
+                ".top-user-name__infor > .name"
+              ],
+              "firstNodeHtml": "<span class=\"name\">\nClaude Agents\n</span>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803412/edit?tab=layouts",
+            "message": "[a11y/landmark-unique] Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+            "detail": {
+              "ruleId": "landmark-unique",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
+              "affectedNodes": 6,
+              "firstNodeTarget": [
+                ".chakra-portal:nth-child(34) > div[aria-label=\"Notifications-top\"][aria-live=\"polite\"][role=\"region\"]"
+              ],
+              "firstNodeHtml": "<div role=\"region\" aria-live=\"polite\" aria-label=\"Notifications-top\" id=\"chakra-toast-manager...\" style=\"position: fixed; z-i...\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803412/edit?tab=layouts",
+            "message": "[a11y/meta-viewport] Zooming and scaling must not be disabled",
+            "detail": {
+              "ruleId": "meta-viewport",
+              "impact": "moderate",
+              "tags": [
+                "cat.sensory-and-visual-cues",
+                "wcag2aa",
+                "wcag144",
+                "EN-301-549",
+                "EN-9.1.4.4",
+                "ACT",
+                "RGAAv4",
+                "RGAA-10.4.2"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/meta-viewport?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "meta[name=\"viewport\"]"
+              ],
+              "firstNodeHtml": "<meta content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui\" name=\"viewport\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803412/edit?tab=layouts",
+            "message": "[a11y/region] All page content should be contained by landmarks",
+            "detail": {
+              "ruleId": "region",
+              "impact": "moderate",
+              "tags": [
+                "cat.keyboard",
+                "best-practice",
+                "RGAAv4",
+                "RGAA-9.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "#tabs-\\:rq\\:--tabpanel-1"
+              ],
+              "firstNodeHtml": "<div tabindex=\"0\" role=\"tabpanel\" aria-labelledby=\"tabs-:rq:--tab-1\" id=\"tabs-:rq:--tabpanel-1\" class=\"chakra-tabs__tab-panel css-47dblg\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803413/edit",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803413/edit",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803413/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803413/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803413/edit?tab=layouts",
+            "message": "[a11y/color-contrast] Elements must meet minimum color contrast ratio thresholds",
+            "detail": {
+              "ruleId": "color-contrast",
+              "impact": "serious",
+              "tags": [
+                "cat.color",
+                "wcag2aa",
+                "wcag143",
+                "TTv5",
+                "TT13.c",
+                "EN-301-549",
+                "EN-9.1.4.3",
+                "ACT",
+                "RGAAv4",
+                "RGAA-3.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
+              "affectedNodes": 24,
+              "firstNodeTarget": [
+                ".top-user-name__infor > .name"
+              ],
+              "firstNodeHtml": "<span class=\"name\">\nClaude Agents\n</span>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803413/edit?tab=layouts",
+            "message": "[a11y/landmark-unique] Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+            "detail": {
+              "ruleId": "landmark-unique",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
+              "affectedNodes": 6,
+              "firstNodeTarget": [
+                ".chakra-portal:nth-child(34) > div[aria-label=\"Notifications-top\"][aria-live=\"polite\"][role=\"region\"]"
+              ],
+              "firstNodeHtml": "<div role=\"region\" aria-live=\"polite\" aria-label=\"Notifications-top\" id=\"chakra-toast-manager...\" style=\"position: fixed; z-i...\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803413/edit?tab=layouts",
+            "message": "[a11y/meta-viewport] Zooming and scaling must not be disabled",
+            "detail": {
+              "ruleId": "meta-viewport",
+              "impact": "moderate",
+              "tags": [
+                "cat.sensory-and-visual-cues",
+                "wcag2aa",
+                "wcag144",
+                "EN-301-549",
+                "EN-9.1.4.4",
+                "ACT",
+                "RGAAv4",
+                "RGAA-10.4.2"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/meta-viewport?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "meta[name=\"viewport\"]"
+              ],
+              "firstNodeHtml": "<meta content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui\" name=\"viewport\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803413/edit?tab=layouts",
+            "message": "[a11y/region] All page content should be contained by landmarks",
+            "detail": {
+              "ruleId": "region",
+              "impact": "moderate",
+              "tags": [
+                "cat.keyboard",
+                "best-practice",
+                "RGAAv4",
+                "RGAA-9.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "#tabs-\\:rq\\:--tabpanel-1"
+              ],
+              "firstNodeHtml": "<div tabindex=\"0\" role=\"tabpanel\" aria-labelledby=\"tabs-:rq:--tab-1\" id=\"tabs-:rq:--tabpanel-1\" class=\"chakra-tabs__tab-panel css-47dblg\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803414/edit",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803414/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803414/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803414/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803414/edit?tab=layouts",
+            "message": "[a11y/color-contrast] Elements must meet minimum color contrast ratio thresholds",
+            "detail": {
+              "ruleId": "color-contrast",
+              "impact": "serious",
+              "tags": [
+                "cat.color",
+                "wcag2aa",
+                "wcag143",
+                "TTv5",
+                "TT13.c",
+                "EN-301-549",
+                "EN-9.1.4.3",
+                "ACT",
+                "RGAAv4",
+                "RGAA-3.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
+              "affectedNodes": 24,
+              "firstNodeTarget": [
+                ".top-user-name__infor > .name"
+              ],
+              "firstNodeHtml": "<span class=\"name\">\nClaude Agents\n</span>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803414/edit?tab=layouts",
+            "message": "[a11y/landmark-unique] Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+            "detail": {
+              "ruleId": "landmark-unique",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
+              "affectedNodes": 6,
+              "firstNodeTarget": [
+                ".chakra-portal:nth-child(34) > div[aria-label=\"Notifications-top\"][aria-live=\"polite\"][role=\"region\"]"
+              ],
+              "firstNodeHtml": "<div role=\"region\" aria-live=\"polite\" aria-label=\"Notifications-top\" id=\"chakra-toast-manager...\" style=\"position: fixed; z-i...\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803414/edit?tab=layouts",
+            "message": "[a11y/meta-viewport] Zooming and scaling must not be disabled",
+            "detail": {
+              "ruleId": "meta-viewport",
+              "impact": "moderate",
+              "tags": [
+                "cat.sensory-and-visual-cues",
+                "wcag2aa",
+                "wcag144",
+                "EN-301-549",
+                "EN-9.1.4.4",
+                "ACT",
+                "RGAAv4",
+                "RGAA-10.4.2"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/meta-viewport?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "meta[name=\"viewport\"]"
+              ],
+              "firstNodeHtml": "<meta content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui\" name=\"viewport\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803414/edit?tab=layouts",
+            "message": "[a11y/region] All page content should be contained by landmarks",
+            "detail": {
+              "ruleId": "region",
+              "impact": "moderate",
+              "tags": [
+                "cat.keyboard",
+                "best-practice",
+                "RGAAv4",
+                "RGAA-9.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "#tabs-\\:ri\\:--tabpanel-1"
+              ],
+              "firstNodeHtml": "<div tabindex=\"0\" role=\"tabpanel\" aria-labelledby=\"tabs-:ri:--tab-1\" id=\"tabs-:ri:--tabpanel-1\" class=\"chakra-tabs__tab-panel css-47dblg\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/new",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803415/edit",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803415/edit",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803415/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803415/edit?tab=layouts",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803415/edit?tab=layouts",
+            "message": "[a11y/color-contrast] Elements must meet minimum color contrast ratio thresholds",
+            "detail": {
+              "ruleId": "color-contrast",
+              "impact": "serious",
+              "tags": [
+                "cat.color",
+                "wcag2aa",
+                "wcag143",
+                "TTv5",
+                "TT13.c",
+                "EN-301-549",
+                "EN-9.1.4.3",
+                "ACT",
+                "RGAAv4",
+                "RGAA-3.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
+              "affectedNodes": 24,
+              "firstNodeTarget": [
+                ".top-user-name__infor > .name"
+              ],
+              "firstNodeHtml": "<span class=\"name\">\nClaude Agents\n</span>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803415/edit?tab=layouts",
+            "message": "[a11y/landmark-unique] Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+            "detail": {
+              "ruleId": "landmark-unique",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
+              "affectedNodes": 6,
+              "firstNodeTarget": [
+                ".chakra-portal:nth-child(33) > div[aria-label=\"Notifications-top\"][aria-live=\"polite\"][role=\"region\"]"
+              ],
+              "firstNodeHtml": "<div role=\"region\" aria-live=\"polite\" aria-label=\"Notifications-top\" id=\"chakra-toast-manager...\" style=\"position: fixed; z-i...\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803415/edit?tab=layouts",
+            "message": "[a11y/meta-viewport] Zooming and scaling must not be disabled",
+            "detail": {
+              "ruleId": "meta-viewport",
+              "impact": "moderate",
+              "tags": [
+                "cat.sensory-and-visual-cues",
+                "wcag2aa",
+                "wcag144",
+                "EN-301-549",
+                "EN-9.1.4.4",
+                "ACT",
+                "RGAAv4",
+                "RGAA-10.4.2"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/meta-viewport?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "meta[name=\"viewport\"]"
+              ],
+              "firstNodeHtml": "<meta content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui\" name=\"viewport\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://widgets.stage.twygoead.com/o/36988/panels/803415/edit?tab=layouts",
+            "message": "[a11y/region] All page content should be contained by landmarks",
+            "detail": {
+              "ruleId": "region",
+              "impact": "moderate",
+              "tags": [
+                "cat.keyboard",
+                "best-practice",
+                "RGAAv4",
+                "RGAA-9.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "#tabs-\\:rq\\:--tabpanel-1"
+              ],
+              "firstNodeHtml": "<div tabindex=\"0\" role=\"tabpanel\" aria-labelledby=\"tabs-:rq:--tab-1\" id=\"tabs-:rq:--tabpanel-1\" class=\"chakra-tabs__tab-panel css-47dblg\">"
+            },
+            "inScope": false
+          }
+        ]
+      },
+      "activeProbes": {
+        "totals": {
+          "errors": 0,
+          "warnings": 0,
+          "info": 0
+        },
+        "byProbe": {},
+        "findings": []
+      }
+    }
+  ]
+}

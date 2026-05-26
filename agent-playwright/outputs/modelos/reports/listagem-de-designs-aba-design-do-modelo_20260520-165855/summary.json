@@ -1,0 +1,29 @@
+{
+  "runId": "listagem-de-designs-aba-design-do-modelo_20260520-165855",
+  "scope": "Apenas testsuite contendo \"Listagem de Designs (aba Design do Modelo)\"",
+  "tests": {
+    "total": 3,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 53322
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 0,
+    "tests": 1,
+    "outOfScope": {
+      "errors": 6,
+      "warnings": 5,
+      "info": 1
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

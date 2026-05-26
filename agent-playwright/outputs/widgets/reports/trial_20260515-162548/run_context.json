@@ -1,0 +1,11 @@
+{
+  "runId": "trial_20260515-162548",
+  "mode": "per-suite",
+  "suiteFilter": "Trial",
+  "projectName": "Widgets",
+  "environment": "staging-widgets",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-15T19:25:48.928Z"
+}

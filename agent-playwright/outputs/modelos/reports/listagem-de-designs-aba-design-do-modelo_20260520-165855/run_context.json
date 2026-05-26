@@ -1,0 +1,11 @@
+{
+  "runId": "listagem-de-designs-aba-design-do-modelo_20260520-165855",
+  "mode": "per-suite",
+  "suiteFilter": "Listagem de Designs (aba Design do Modelo)",
+  "projectName": "Modelos de conteúdo",
+  "environment": "staging-base-de-conhecimento",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-20T19:58:55.206Z"
+}

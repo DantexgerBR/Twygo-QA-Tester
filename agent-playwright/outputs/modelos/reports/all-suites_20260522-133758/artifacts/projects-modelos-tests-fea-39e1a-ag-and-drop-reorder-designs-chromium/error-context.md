@@ -1,0 +1,1014 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: projects\modelos\tests\features\acoes-duplicar-e-drag-and-drop\tc03-drag-drop-reorder-designs.spec.ts >> Ações Duplicar e Drag and Drop >> Drag and drop reorder designs
+- Location: projects\modelos\tests\features\acoes-duplicar-e-drag-and-drop\tc03-drag-drop-reorder-designs.spec.ts:6:3
+
+# Error details
+
+```
+TimeoutError: locator.dragTo: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator('[data-test-id="modelos-de-conteudo-design-card-warning"] [data-test-id="modelos-de-conteudo-design-card-drag-handle"]').first()
+
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - generic "Logo - Base de conhecimento" [ref=e4]:
+        - img "Logo - Base de conhecimento" [ref=e5]
+      - img "Fechar menu" [ref=e7]
+    - generic [ref=e9]:
+      - list [ref=e10]:
+        - list [ref=e11]:
+          - listitem [ref=e12]:
+            - link "leaderboard Dashboard" [ref=e13] [cursor=pointer]:
+              - /url: /o/37007/dashboard
+              - generic [ref=e14]:
+                - generic [ref=e16]: leaderboard
+                - generic [ref=e17]: Dashboard
+          - listitem [ref=e18]:
+            - generic [ref=e20]:
+              - generic [ref=e23]: school
+              - generic [ref=e24]: Aprendizagem
+            - list [ref=e25]:
+              - listitem [ref=e26]:
+                - link "format_list_bulleted_add Conteúdos" [ref=e27] [cursor=pointer]:
+                  - /url: /o/37007/events?tab=events
+                  - generic [ref=e28]:
+                    - generic [ref=e30]: format_list_bulleted_add
+                    - generic [ref=e31]: Conteúdos
+              - listitem [ref=e32]:
+                - link "send Compartilhamentos" [ref=e33] [cursor=pointer]:
+                  - /url: /o/37007/shared_events
+                  - generic [ref=e34]:
+                    - generic [ref=e36]: send
+                    - generic [ref=e37]: Compartilhamentos
+              - listitem [ref=e38]:
+                - link "description Registros BETA" [ref=e39] [cursor=pointer]:
+                  - /url: /o/37007/records
+                  - generic [ref=e40]:
+                    - generic [ref=e42]: description
+                    - generic [ref=e43]: Registros
+                    - generic [ref=e44]: BETA
+              - listitem [ref=e45]:
+                - link "workspace_premium Certificados" [ref=e46] [cursor=pointer]:
+                  - /url: /o/37007/certificate_models
+                  - generic [ref=e47]:
+                    - generic [ref=e49]: workspace_premium
+                    - generic [ref=e50]: Certificados
+              - listitem [ref=e51]:
+                - link "browse Modelos de conteúdo" [ref=e52] [cursor=pointer]:
+                  - /url: /o/37007/content_models
+                  - generic [ref=e53]:
+                    - generic [ref=e55]: browse
+                    - generic [ref=e56]: Modelos de conteúdo
+              - listitem [ref=e57]:
+                - link "folder_open Base de conhecimento" [ref=e58] [cursor=pointer]:
+                  - /url: /o/37007/knowledge_repositories
+                  - generic [ref=e59]:
+                    - generic [ref=e61]: folder_open
+                    - generic [ref=e62]: Base de conhecimento
+          - listitem [ref=e63]:
+            - link "group Usuários" [ref=e64] [cursor=pointer]:
+              - /url: /o/37007/users
+              - generic [ref=e65]:
+                - generic [ref=e67]: group
+                - generic [ref=e68]: Usuários
+          - listitem [ref=e69]:
+            - link "work Empresas" [ref=e70] [cursor=pointer]:
+              - /url: /o/37007/companies
+              - generic [ref=e71]:
+                - generic [ref=e73]: work
+                - generic [ref=e74]: Empresas
+          - listitem [ref=e75]:
+            - link "live_help Questionários" [ref=e76] [cursor=pointer]:
+              - /url: /o/37007/question_lists
+              - generic [ref=e77]:
+                - generic [ref=e79]: live_help
+                - generic [ref=e80]: Questionários
+          - listitem [ref=e81]:
+            - link "groups Comunidades" [ref=e82] [cursor=pointer]:
+              - /url: /o/37007/feed
+              - generic [ref=e83]:
+                - generic [ref=e85]: groups
+                - generic [ref=e86]: Comunidades
+          - listitem [ref=e87]:
+            - generic [ref=e89]:
+              - generic [ref=e92]: psychology
+              - generic [ref=e93]:
+                - text: Skills
+                - generic [ref=e94]: BETA
+            - list [ref=e95]:
+              - listitem [ref=e96]:
+                - link "lan Organograma" [ref=e97] [cursor=pointer]:
+                  - /url: /o/37007/organization_chart
+                  - generic [ref=e98]:
+                    - generic [ref=e100]: lan
+                    - generic [ref=e101]: Organograma
+              - listitem [ref=e102]:
+                - link "badge Funções de negócio" [ref=e103] [cursor=pointer]:
+                  - /url: /o/37007/roles
+                  - generic [ref=e104]:
+                    - generic [ref=e106]: badge
+                    - generic [ref=e107]: Funções de negócio
+              - listitem [ref=e108]:
+                - link "award_star Competências" [ref=e109] [cursor=pointer]:
+                  - /url: /o/37007/organization_chart_competencies
+                  - generic [ref=e110]:
+                    - generic [ref=e112]: award_star
+                    - generic [ref=e113]: Competências
+          - listitem [ref=e114]:
+            - generic [ref=e116]:
+              - generic [ref=e119]: account_tree
+              - generic [ref=e120]: Processos
+            - list [ref=e121]:
+              - listitem [ref=e122]:
+                - link "send Repositórios" [ref=e123] [cursor=pointer]:
+                  - /url: /o/37007/organization_datasets
+                  - generic [ref=e124]:
+                    - generic [ref=e126]: send
+                    - generic [ref=e127]: Repositórios
+              - listitem [ref=e128]:
+                - link "send Arquitetura de Processos" [ref=e129] [cursor=pointer]:
+                  - /url: /o/37007/process_architecture
+                  - generic [ref=e130]:
+                    - generic [ref=e132]: send
+                    - generic [ref=e133]: Arquitetura de Processos
+              - listitem [ref=e134]:
+                - link "send Agente de Documentação" [ref=e135] [cursor=pointer]:
+                  - /url: /o/37007/process_documentations
+                  - generic [ref=e136]:
+                    - generic [ref=e138]: send
+                    - generic [ref=e139]: Agente de Documentação
+              - listitem [ref=e140]:
+                - link "send Documentos de Referência" [ref=e141] [cursor=pointer]:
+                  - /url: /o/37007/reference_documents
+                  - generic [ref=e142]:
+                    - generic [ref=e144]: send
+                    - generic [ref=e145]: Documentos de Referência
+              - listitem [ref=e146]:
+                - link "send Portal de processos" [ref=e147] [cursor=pointer]:
+                  - /url: /o/37007/visualize_documentations
+                  - generic [ref=e148]:
+                    - generic [ref=e150]: send
+                    - generic [ref=e151]: Portal de processos
+      - generic [ref=e152]: Base de conhecimento
+      - list [ref=e153]:
+        - listitem [ref=e154]:
+          - generic [ref=e155]:
+            - generic [ref=e156]: f
+            - text: Configurações
+          - list [ref=e157]:
+            - listitem [ref=e158]:
+              - link "e Organização" [ref=e159] [cursor=pointer]:
+                - /url: /o/37007/edit
+                - generic [ref=e160]: e
+                - text: Organização
+            - listitem [ref=e161]:
+              - link " Menu" [ref=e162] [cursor=pointer]:
+                - /url: /o/37007/use_modes
+                - generic [ref=e163]: 
+                - text: Menu
+            - listitem [ref=e164]:
+              - link "electrical_services Integrações" [ref=e165] [cursor=pointer]:
+                - /url: /o/37007/integrations
+                - generic [ref=e166]: electrical_services
+                - text: Integrações
+            - listitem [ref=e167]:
+              - link "flash_auto Piloto automático" [ref=e168] [cursor=pointer]:
+                - /url: /o/37007/autopilots
+                - generic [ref=e169]: flash_auto
+                - text: Piloto automático
+            - listitem [ref=e170]:
+              - link " Regras do Jogo" [ref=e171] [cursor=pointer]:
+                - /url: /o/37007/game_rules
+                - generic [ref=e172]: 
+                - text: Regras do Jogo
+            - listitem [ref=e173]:
+              - link " Comunicação" [ref=e174] [cursor=pointer]:
+                - /url: /o/37007/communication
+                - generic [ref=e175]: 
+                - text: Comunicação
+            - listitem [ref=e176]:
+              - link "sell Cobrança de inscrição" [ref=e177] [cursor=pointer]:
+                - /url: /o/37007/payments
+                - generic [ref=e178]: sell
+                - text: Cobrança de inscrição
+            - listitem [ref=e179]:
+              - link "credit_card Plano e assinatura" [ref=e180] [cursor=pointer]:
+                - /url: /o/37007/subscription_plans
+                - generic [ref=e181]: credit_card
+                - text: Plano e assinatura
+            - text: s
+            - listitem [ref=e182]:
+              - link " Segurança NOVO" [ref=e183] [cursor=pointer]:
+                - /url: /o/37007/security
+                - generic [ref=e184]: 
+                - text: Segurança NOVO
+            - listitem [ref=e185]:
+              - link "smart_toy Controle de IA BETA" [ref=e186] [cursor=pointer]:
+                - /url: /o/37007/ai_consumption_analysis
+                - generic [ref=e187]: smart_toy
+                - text: Controle de IA BETA
+            - listitem [ref=e188]:
+              - link "palette Aparência" [ref=e189] [cursor=pointer]:
+                - /url: /o/37007/appearance
+                - generic [ref=e190]: palette
+                - text: Aparência
+    - generic [ref=e193]:
+      - generic [ref=e194]:
+        - img [ref=e195]
+        - text: Base de conhecimento
+      - img [ref=e197]
+  - text: "0"
+  - generic [ref=e200]:
+    - generic "Logo - Base de conhecimento" [ref=e202]:
+      - link "Base de conhecimento" [ref=e204] [cursor=pointer]:
+        - /url: /o/37007/dashboard
+    - generic [ref=e208]:
+      - button "Twygo Academy" [ref=e212] [cursor=pointer]:
+        - generic [ref=e213]: school
+      - link "Open chat" [ref=e217] [cursor=pointer]:
+        - /url: /o/37007/chats
+        - button "Open chat" [ref=e218]:
+          - img [ref=e219]
+      - button "Users" [ref=e226] [cursor=pointer]:
+        - img [ref=e227]
+      - generic [ref=e230]:
+        - link "7089847 - Base de conhecimento" [ref=e231] [cursor=pointer]:
+          - /url: javascript:void(0);
+        - generic [ref=e232]: Base de conhecimento
+      - button "Administrador G" [ref=e233] [cursor=pointer]:
+        - text: Administrador
+        - generic [ref=e234]: G
+    - text: M * * M * *
+  - generic [ref=e235]:
+    - generic [ref=e240]:
+      - generic [ref=e242]:
+        - generic [ref=e245]:
+          - generic [ref=e246]:
+            - paragraph [ref=e247]: Você está no modo BETA da funcionalidade Controle de créditos de IA. Essa funcionalidade estará disponível para você até dia 22/05.
+            - paragraph [ref=e248]: Quer mais detalhes sobre essa novidade? Veja aqui
+          - button "Responder pesquisa" [ref=e250] [cursor=pointer]
+          - button "Close" [ref=e251] [cursor=pointer]:
+            - img [ref=e252]
+        - generic [ref=e256]:
+          - generic [ref=e257]:
+            - paragraph [ref=e258]: Você está no modo BETA da funcionalidade Painéis do usuário, que estará disponível até dia 29/05.
+            - paragraph [ref=e259]: Quer relembrar os detalhes dessa novidade? Veja aqui — Beta aceito por agents.qa@claude.com
+          - generic [ref=e260]:
+            - button "Interromper BETA teste" [ref=e261] [cursor=pointer]
+            - button "Responder pesquisa" [ref=e262] [cursor=pointer]
+          - button "Close" [ref=e263] [cursor=pointer]:
+            - img [ref=e264]
+      - button "next" [ref=e269] [cursor=pointer]:
+        - img [ref=e270]
+    - generic [ref=e273]:
+      - generic [ref=e275]:
+        - list [ref=e276]:
+          - list [ref=e277]:
+            - listitem [ref=e278] [cursor=pointer]:
+              - link "leaderboard Dashboard" [ref=e279]:
+                - /url: /o/37007/dashboard
+                - generic [ref=e280]:
+                  - generic [ref=e282]: leaderboard
+                  - generic [ref=e283]: Dashboard
+            - listitem [ref=e284] [cursor=pointer]:
+              - generic [ref=e286]:
+                - generic [ref=e289]: school
+                - generic [ref=e290]: Aprendizagem
+                - generic [ref=e292]: G
+              - list [ref=e293]:
+                - listitem [ref=e294]:
+                  - link "format_list_bulleted_add Conteúdos" [ref=e295]:
+                    - /url: /o/37007/events?tab=events
+                    - generic [ref=e296]:
+                      - generic [ref=e298]: format_list_bulleted_add
+                      - generic [ref=e299]: Conteúdos
+                - listitem [ref=e300]:
+                  - link "send Compartilhamentos" [ref=e301]:
+                    - /url: /o/37007/shared_events
+                    - generic [ref=e302]:
+                      - generic [ref=e304]: send
+                      - generic [ref=e305]: Compartilhamentos
+                - listitem [ref=e306]:
+                  - link "description Registros BETA" [ref=e307]:
+                    - /url: /o/37007/records
+                    - generic [ref=e308]:
+                      - generic [ref=e310]: description
+                      - generic [ref=e311]: Registros
+                      - generic [ref=e312]: BETA
+                - listitem [ref=e313]:
+                  - link "workspace_premium Certificados" [ref=e314]:
+                    - /url: /o/37007/certificate_models
+                    - generic [ref=e315]:
+                      - generic [ref=e317]: workspace_premium
+                      - generic [ref=e318]: Certificados
+                - listitem [ref=e319]:
+                  - link "browse Modelos de conteúdo" [ref=e320]:
+                    - /url: /o/37007/content_models
+                    - generic [ref=e321]:
+                      - generic [ref=e323]: browse
+                      - generic [ref=e324]: Modelos de conteúdo
+                - listitem [ref=e325]:
+                  - link "folder_open Base de conhecimento" [ref=e326]:
+                    - /url: /o/37007/knowledge_repositories
+                    - generic [ref=e327]:
+                      - generic [ref=e329]: folder_open
+                      - generic [ref=e330]: Base de conhecimento
+            - listitem [ref=e331] [cursor=pointer]:
+              - link "group Usuários" [ref=e332]:
+                - /url: /o/37007/users
+                - generic [ref=e333]:
+                  - generic [ref=e335]: group
+                  - generic [ref=e336]: Usuários
+            - listitem [ref=e337] [cursor=pointer]:
+              - link "work Empresas" [ref=e338]:
+                - /url: /o/37007/companies
+                - generic [ref=e339]:
+                  - generic [ref=e341]: work
+                  - generic [ref=e342]: Empresas
+            - listitem [ref=e343] [cursor=pointer]:
+              - link "live_help Questionários" [ref=e344]:
+                - /url: /o/37007/question_lists
+                - generic [ref=e345]:
+                  - generic [ref=e347]: live_help
+                  - generic [ref=e348]: Questionários
+            - listitem [ref=e349] [cursor=pointer]:
+              - link "groups Comunidades" [ref=e350]:
+                - /url: /o/37007/feed
+                - generic [ref=e351]:
+                  - generic [ref=e353]: groups
+                  - generic [ref=e354]: Comunidades
+            - listitem [ref=e355] [cursor=pointer]:
+              - generic [ref=e357]:
+                - generic [ref=e360]: psychology
+                - generic [ref=e361]:
+                  - text: Skills
+                  - generic [ref=e362]: BETA
+                - generic [ref=e364]: G
+            - listitem [ref=e365] [cursor=pointer]:
+              - generic [ref=e367]:
+                - generic [ref=e370]: account_tree
+                - generic [ref=e371]: Processos
+                - generic [ref=e373]: G
+        - generic [ref=e375]: Base de conhecimento
+        - list [ref=e376]:
+          - listitem [ref=e377] [cursor=pointer]:
+            - generic [ref=e378]:
+              - generic [ref=e379]: f
+              - text: Configurações
+              - generic [ref=e380]: G
+            - text: e    s 
+      - generic [ref=e382]:
+        - generic [ref=e385]: Modelos de conteúdo > Editar modelo
+        - generic [ref=e392]:
+          - generic [ref=e393]:
+            - button "Voltar" [ref=e395] [cursor=pointer]:
+              - img [ref=e397]
+              - text: Voltar
+            - heading "Editar modelo de conteúdo" [level=2] [ref=e400]
+          - generic [ref=e403]:
+            - tablist [ref=e404]:
+              - tab "Identificação" [ref=e405] [cursor=pointer]
+              - tab "Estilo" [ref=e406] [cursor=pointer]
+              - tab "Estrutura" [ref=e407] [cursor=pointer]
+              - tab "Imagem" [ref=e408] [cursor=pointer]
+              - tab "Áudio" [ref=e409] [cursor=pointer]
+              - tab "Design" [active] [selected] [ref=e410] [cursor=pointer]
+              - tab "Compartilhar" [ref=e411] [cursor=pointer]
+            - tabpanel "Design" [ref=e413]:
+              - generic [ref=e414]:
+                - button "Regerar todos" [ref=e416] [cursor=pointer]
+                - generic [ref=e417]:
+                  - generic [ref=e418]:
+                    - button "Adicionar" [ref=e420] [cursor=pointer]:
+                      - img [ref=e422]
+                      - generic: Adicionar
+                      - img [ref=e425]
+                    - generic [ref=e427]:
+                      - generic [ref=e428]:
+                        - img [ref=e430]
+                        - textbox "Pesquise pelo nome do design" [ref=e432]
+                      - button "Filtro" [ref=e433] [cursor=pointer]:
+                        - generic [ref=e435]: filter_alt
+                        - paragraph [ref=e437]: Filtro
+                  - generic [ref=e438]:
+                    - generic [ref=e440]:
+                      - generic:
+                        - generic: drag_indicator
+                      - generic [ref=e442] [cursor=pointer]:
+                        - generic [ref=e444]:
+                          - img [ref=e446]
+                          - img "Design pendente de regeneração — o kit de marca foi atualizado" [ref=e448]:
+                            - img [ref=e449]
+                          - generic [ref=e451]:
+                            - paragraph [ref=e452]: Corpo
+                            - paragraph [ref=e453]: Design TC5 w2-1779303839848
+                        - generic [ref=e458]:
+                          - generic [ref=e459]:
+                            - paragraph [ref=e460]: Design TC5 w2-1779303839848
+                            - generic [ref=e461]: Página
+                          - paragraph [ref=e462]: Corpo
+                          - generic [ref=e464]:
+                            - generic [ref=e467]: visibility
+                            - generic [ref=e470]: edit
+                            - generic [ref=e473]: content_copy
+                            - generic [ref=e476]: delete
+                    - generic [ref=e478]:
+                      - generic:
+                        - generic: drag_indicator
+                      - generic [ref=e480] [cursor=pointer]:
+                        - generic [ref=e482]:
+                          - img [ref=e484]
+                          - img "Design pendente de regeneração — o kit de marca foi atualizado" [ref=e486]:
+                            - img [ref=e487]
+                          - generic [ref=e489]:
+                            - paragraph [ref=e490]: Capa
+                            - paragraph [ref=e491]: Capa
+                        - generic [ref=e496]:
+                          - generic [ref=e497]:
+                            - paragraph [ref=e498]: Capa
+                            - generic [ref=e499]: Aula
+                          - paragraph [ref=e500]: Capa
+                          - generic [ref=e502]:
+                            - generic [ref=e505]: visibility
+                            - generic [ref=e508]: edit
+                            - generic [ref=e511]: content_copy
+                            - generic [ref=e514]: delete
+                    - generic [ref=e516]:
+                      - generic:
+                        - generic: drag_indicator
+                      - generic [ref=e518] [cursor=pointer]:
+                        - generic [ref=e520]:
+                          - img [ref=e522]
+                          - img "Design pendente de regeneração — o kit de marca foi atualizado" [ref=e524]:
+                            - img [ref=e525]
+                          - generic [ref=e527]:
+                            - paragraph [ref=e528]: Corpo
+                            - paragraph [ref=e529]: Design TC5 w2-1779304168858
+                        - generic [ref=e534]:
+                          - generic [ref=e535]:
+                            - paragraph [ref=e536]: Design TC5 w2-1779304168858
+                            - generic [ref=e537]: Página
+                          - paragraph [ref=e538]: Corpo
+                          - generic [ref=e540]:
+                            - generic [ref=e543]: visibility
+                            - generic [ref=e546]: edit
+                            - generic [ref=e549]: content_copy
+                            - generic [ref=e552]: delete
+                    - generic [ref=e554]:
+                      - generic:
+                        - generic: drag_indicator
+                      - generic [ref=e556] [cursor=pointer]:
+                        - generic [ref=e558]:
+                          - img [ref=e560]
+                          - img "Design pendente de regeneração — o kit de marca foi atualizado" [ref=e562]:
+                            - img [ref=e563]
+                          - generic [ref=e565]:
+                            - paragraph [ref=e566]: Capa
+                            - paragraph [ref=e567]: Design AUDIT MCP
+                        - generic [ref=e572]:
+                          - generic [ref=e573]:
+                            - paragraph [ref=e574]: Design AUDIT MCP
+                            - generic [ref=e575]: Página
+                          - paragraph [ref=e576]: Capa
+                          - generic [ref=e578]:
+                            - generic [ref=e581]: visibility
+                            - generic [ref=e584]: edit
+                            - generic [ref=e587]: content_copy
+                            - generic [ref=e590]: delete
+                    - generic [ref=e592]:
+                      - generic:
+                        - generic: drag_indicator
+                      - generic [ref=e594] [cursor=pointer]:
+                        - generic [ref=e596]:
+                          - img [ref=e598]
+                          - img "Design pendente de regeneração — o kit de marca foi atualizado" [ref=e600]:
+                            - img [ref=e601]
+                          - generic [ref=e603]:
+                            - paragraph [ref=e604]: Corpo
+                            - paragraph [ref=e605]: Design TC5 w0-1779304772699
+                        - generic [ref=e610]:
+                          - generic [ref=e611]:
+                            - paragraph [ref=e612]: Design TC5 w0-1779304772699
+                            - generic [ref=e613]: Página
+                          - paragraph [ref=e614]: Corpo
+                          - generic [ref=e616]:
+                            - generic [ref=e619]: visibility
+                            - generic [ref=e622]: edit
+                            - generic [ref=e625]: content_copy
+                            - generic [ref=e628]: delete
+                    - generic [ref=e630]:
+                      - generic:
+                        - generic: drag_indicator
+                      - generic [ref=e632] [cursor=pointer]:
+                        - generic [ref=e634]:
+                          - img [ref=e636]
+                          - img "Design pendente de regeneração — o kit de marca foi atualizado" [ref=e638]:
+                            - img [ref=e639]
+                          - generic [ref=e641]:
+                            - paragraph [ref=e642]: Corpo
+                            - paragraph [ref=e643]: Design TC5 w0-1779305034083
+                        - generic [ref=e648]:
+                          - generic [ref=e649]:
+                            - paragraph [ref=e650]: Design TC5 w0-1779305034083
+                            - generic [ref=e651]: Página
+                          - paragraph [ref=e652]: Corpo
+                          - generic [ref=e654]:
+                            - generic [ref=e657]: visibility
+                            - generic [ref=e660]: edit
+                            - generic [ref=e663]: content_copy
+                            - generic [ref=e666]: delete
+                    - generic [ref=e668]:
+                      - generic:
+                        - generic: drag_indicator
+                      - generic [ref=e670] [cursor=pointer]:
+                        - generic [ref=e672]:
+                          - img [ref=e674]
+                          - img "Design pendente de regeneração — o kit de marca foi atualizado" [ref=e676]:
+                            - img [ref=e677]
+                          - generic [ref=e679]:
+                            - paragraph [ref=e680]: Introdução
+                            - paragraph [ref=e681]: Aula TC2 w0-1779305353314
+                        - generic [ref=e686]:
+                          - generic [ref=e687]:
+                            - paragraph [ref=e688]: Aula TC2 w0-1779305353314
+                            - generic [ref=e689]: Aula
+                          - paragraph [ref=e690]: Introdução
+                          - generic [ref=e692]:
+                            - generic [ref=e695]: visibility
+                            - generic [ref=e698]: edit
+                            - generic [ref=e701]: content_copy
+                            - generic [ref=e704]: delete
+                    - generic [ref=e706]:
+                      - generic:
+                        - generic: drag_indicator
+                      - generic [ref=e708] [cursor=pointer]:
+                        - generic [ref=e710]:
+                          - img [ref=e712]
+                          - img "Design pendente de regeneração — o kit de marca foi atualizado" [ref=e714]:
+                            - img [ref=e715]
+                          - generic [ref=e717]:
+                            - paragraph [ref=e718]: Corpo
+                            - paragraph [ref=e719]: Aula AUDIT MCP
+                        - generic [ref=e724]:
+                          - generic [ref=e725]:
+                            - paragraph [ref=e726]: Aula AUDIT MCP
+                            - generic [ref=e727]: Aula
+                          - paragraph [ref=e728]: Corpo
+                          - generic [ref=e730]:
+                            - generic [ref=e733]: visibility
+                            - generic [ref=e736]: edit
+                            - generic [ref=e739]: content_copy
+                            - generic [ref=e742]: delete
+                    - generic [ref=e744]:
+                      - generic:
+                        - generic: drag_indicator
+                      - generic [ref=e746] [cursor=pointer]:
+                        - generic [ref=e748]:
+                          - img [ref=e750]
+                          - img "Design pendente de regeneração — o kit de marca foi atualizado" [ref=e752]:
+                            - img [ref=e753]
+                          - generic [ref=e755]:
+                            - paragraph [ref=e756]: Introdução
+                            - paragraph [ref=e757]: Aula TC2 w1-1779305862595
+                        - generic [ref=e762]:
+                          - generic [ref=e763]:
+                            - paragraph [ref=e764]: Aula TC2 w1-1779305862595
+                            - generic [ref=e765]: Aula
+                          - paragraph [ref=e766]: Introdução
+                          - generic [ref=e768]:
+                            - generic [ref=e771]: visibility
+                            - generic [ref=e774]: edit
+                            - generic [ref=e777]: content_copy
+                            - generic [ref=e780]: delete
+                    - generic [ref=e782]:
+                      - generic:
+                        - generic: drag_indicator
+                      - generic [ref=e784] [cursor=pointer]:
+                        - generic [ref=e786]:
+                          - img [ref=e788]
+                          - img "Design pendente de regeneração — o kit de marca foi atualizado" [ref=e790]:
+                            - img [ref=e791]
+                          - generic [ref=e793]:
+                            - paragraph [ref=e794]: Introdução
+                            - paragraph [ref=e795]: Introdução
+                        - generic [ref=e800]:
+                          - generic [ref=e801]:
+                            - paragraph [ref=e802]: Introdução
+                            - generic [ref=e803]: Aula
+                          - paragraph [ref=e804]: Introdução
+                          - generic [ref=e806]:
+                            - generic [ref=e809]: visibility
+                            - generic [ref=e812]: edit
+                            - generic [ref=e815]: content_copy
+                            - generic [ref=e818]: delete
+                    - generic [ref=e820]:
+                      - generic:
+                        - generic: drag_indicator
+                      - generic [ref=e822] [cursor=pointer]:
+                        - generic [ref=e824]:
+                          - img [ref=e826]
+                          - img "Design pendente de regeneração — o kit de marca foi atualizado" [ref=e828]:
+                            - img [ref=e829]
+                          - generic [ref=e831]:
+                            - paragraph [ref=e832]: Corpo
+                            - paragraph [ref=e833]: Corpo
+                        - generic [ref=e838]:
+                          - generic [ref=e839]:
+                            - paragraph [ref=e840]: Corpo
+                            - generic [ref=e841]: Aula
+                          - paragraph [ref=e842]: Corpo
+                          - generic [ref=e844]:
+                            - generic [ref=e847]: visibility
+                            - generic [ref=e850]: edit
+                            - generic [ref=e853]: content_copy
+                            - generic [ref=e856]: delete
+                    - generic [ref=e858]:
+                      - generic:
+                        - generic: drag_indicator
+                      - generic [ref=e860] [cursor=pointer]:
+                        - generic [ref=e862]:
+                          - img [ref=e864]
+                          - img "Design pendente de regeneração — o kit de marca foi atualizado" [ref=e866]:
+                            - img [ref=e867]
+                          - generic [ref=e869]:
+                            - paragraph [ref=e870]: Encerramento
+                            - paragraph [ref=e871]: Encerramento
+                        - generic [ref=e876]:
+                          - generic [ref=e877]:
+                            - paragraph [ref=e878]: Encerramento
+                            - generic [ref=e879]: Aula
+                          - paragraph [ref=e880]: Encerramento
+                          - generic [ref=e882]:
+                            - generic [ref=e885]: visibility
+                            - generic [ref=e888]: edit
+                            - generic [ref=e891]: content_copy
+                            - generic [ref=e894]: delete
+                    - generic [ref=e896]:
+                      - generic:
+                        - generic: drag_indicator
+                      - generic [ref=e898] [cursor=pointer]:
+                        - generic [ref=e900]:
+                          - img [ref=e902]
+                          - img "Design pendente de regeneração — o kit de marca foi atualizado" [ref=e904]:
+                            - img [ref=e905]
+                          - generic [ref=e907]:
+                            - paragraph [ref=e908]: Capa
+                            - paragraph [ref=e909]: Capa
+                        - generic [ref=e914]:
+                          - generic [ref=e915]:
+                            - paragraph [ref=e916]: Capa
+                            - generic [ref=e917]: Página
+                          - paragraph [ref=e918]: Capa
+                          - generic [ref=e920]:
+                            - generic [ref=e923]: visibility
+                            - generic [ref=e926]: edit
+                            - generic [ref=e929]: content_copy
+                            - generic [ref=e932]: delete
+                    - generic [ref=e934]:
+                      - generic:
+                        - generic: drag_indicator
+                      - generic [ref=e936] [cursor=pointer]:
+                        - generic [ref=e938]:
+                          - img [ref=e940]
+                          - img "Design pendente de regeneração — o kit de marca foi atualizado" [ref=e942]:
+                            - img [ref=e943]
+                          - generic [ref=e945]:
+                            - paragraph [ref=e946]: Introdução
+                            - paragraph [ref=e947]: Introdução
+                        - generic [ref=e952]:
+                          - generic [ref=e953]:
+                            - paragraph [ref=e954]: Introdução
+                            - generic [ref=e955]: Página
+                          - paragraph [ref=e956]: Introdução
+                          - generic [ref=e958]:
+                            - generic [ref=e961]: visibility
+                            - generic [ref=e964]: edit
+                            - generic [ref=e967]: content_copy
+                            - generic [ref=e970]: delete
+                    - generic [ref=e972]:
+                      - generic:
+                        - generic: drag_indicator
+                      - generic [ref=e974] [cursor=pointer]:
+                        - generic [ref=e976]:
+                          - img [ref=e978]
+                          - img "Design pendente de regeneração — o kit de marca foi atualizado" [ref=e980]:
+                            - img [ref=e981]
+                          - generic [ref=e983]:
+                            - paragraph [ref=e984]: Corpo
+                            - paragraph [ref=e985]: Corpo
+                        - generic [ref=e990]:
+                          - generic [ref=e991]:
+                            - paragraph [ref=e992]: Corpo
+                            - generic [ref=e993]: Página
+                          - paragraph [ref=e994]: Corpo
+                          - generic [ref=e996]:
+                            - generic [ref=e999]: visibility
+                            - generic [ref=e1002]: edit
+                            - generic [ref=e1005]: content_copy
+                            - generic [ref=e1008]: delete
+                    - generic [ref=e1010]:
+                      - generic:
+                        - generic: drag_indicator
+                      - generic [ref=e1012] [cursor=pointer]:
+                        - generic [ref=e1014]:
+                          - img [ref=e1016]
+                          - img "Design pendente de regeneração — o kit de marca foi atualizado" [ref=e1018]:
+                            - img [ref=e1019]
+                          - generic [ref=e1021]:
+                            - paragraph [ref=e1022]: Encerramento
+                            - paragraph [ref=e1023]: Encerramento
+                        - generic [ref=e1028]:
+                          - generic [ref=e1029]:
+                            - paragraph [ref=e1030]: Encerramento
+                            - generic [ref=e1031]: Página
+                          - paragraph [ref=e1032]: Encerramento
+                          - generic [ref=e1034]:
+                            - generic [ref=e1037]: visibility
+                            - generic [ref=e1040]: edit
+                            - generic [ref=e1043]: content_copy
+                            - generic [ref=e1046]: delete
+                    - generic [ref=e1048]:
+                      - generic:
+                        - generic: drag_indicator
+                      - generic [ref=e1050] [cursor=pointer]:
+                        - generic [ref=e1052]:
+                          - img [ref=e1054]
+                          - img "Design pendente de regeneração — o kit de marca foi atualizado" [ref=e1056]:
+                            - img [ref=e1057]
+                          - generic [ref=e1059]:
+                            - paragraph [ref=e1060]: Corpo
+                            - paragraph [ref=e1061]: Design TC6 w2-1779303868538
+                        - generic [ref=e1066]:
+                          - generic [ref=e1067]:
+                            - paragraph [ref=e1068]: Design TC6 w2-1779303868538
+                            - generic [ref=e1069]: Página
+                          - paragraph [ref=e1070]: Corpo
+                          - generic [ref=e1072]:
+                            - generic [ref=e1075]: visibility
+                            - generic [ref=e1078]: edit
+                            - generic [ref=e1081]: content_copy
+                            - generic [ref=e1084]: delete
+                    - generic [ref=e1086]:
+                      - generic:
+                        - generic: drag_indicator
+                      - generic [ref=e1088] [cursor=pointer]:
+                        - generic [ref=e1090]:
+                          - img [ref=e1092]
+                          - img "Design pendente de regeneração — o kit de marca foi atualizado" [ref=e1094]:
+                            - img [ref=e1095]
+                          - generic [ref=e1097]:
+                            - paragraph [ref=e1098]: Corpo
+                            - paragraph [ref=e1099]: Design TC6 w0-1779304793735
+                        - generic [ref=e1104]:
+                          - generic [ref=e1105]:
+                            - paragraph [ref=e1106]: Design TC6 w0-1779304793735
+                            - generic [ref=e1107]: Página
+                          - paragraph [ref=e1108]: Corpo
+                          - generic [ref=e1110]:
+                            - generic [ref=e1113]: visibility
+                            - generic [ref=e1116]: edit
+                            - generic [ref=e1119]: content_copy
+                            - generic [ref=e1122]: delete
+                    - generic [ref=e1124]:
+                      - generic:
+                        - generic: drag_indicator
+                      - generic [ref=e1126] [cursor=pointer]:
+                        - generic [ref=e1128]:
+                          - img [ref=e1130]
+                          - img "Design pendente de regeneração — o kit de marca foi atualizado" [ref=e1132]:
+                            - img [ref=e1133]
+                          - generic [ref=e1135]:
+                            - paragraph [ref=e1136]: Corpo
+                            - paragraph [ref=e1137]: Design TC6 w0-1779304894840
+                        - generic [ref=e1142]:
+                          - generic [ref=e1143]:
+                            - paragraph [ref=e1144]: Design TC6 w0-1779304894840
+                            - generic [ref=e1145]: Página
+                          - paragraph [ref=e1146]: Corpo
+                          - generic [ref=e1148]:
+                            - generic [ref=e1151]: visibility
+                            - generic [ref=e1154]: edit
+                            - generic [ref=e1157]: content_copy
+                            - generic [ref=e1160]: delete
+                    - generic [ref=e1162]:
+                      - generic:
+                        - generic: drag_indicator
+                      - generic [ref=e1164] [cursor=pointer]:
+                        - generic [ref=e1166]:
+                          - img [ref=e1168]
+                          - img "Design pendente de regeneração — o kit de marca foi atualizado" [ref=e1170]:
+                            - img [ref=e1171]
+                          - generic [ref=e1173]:
+                            - paragraph [ref=e1174]: Corpo
+                            - paragraph [ref=e1175]: Design TC6 w3-1779305036591
+                        - generic [ref=e1180]:
+                          - generic [ref=e1181]:
+                            - paragraph [ref=e1182]: Design TC6 w3-1779305036591
+                            - generic [ref=e1183]: Página
+                          - paragraph [ref=e1184]: Corpo
+                          - generic [ref=e1186]:
+                            - generic [ref=e1189]: visibility
+                            - generic [ref=e1192]: edit
+                            - generic [ref=e1195]: content_copy
+                            - generic [ref=e1198]: delete
+                    - generic [ref=e1200]:
+                      - generic:
+                        - generic: drag_indicator
+                      - generic [ref=e1202] [cursor=pointer]:
+                        - generic [ref=e1204]:
+                          - img [ref=e1206]
+                          - img "Design pendente de regeneração — o kit de marca foi atualizado" [ref=e1208]:
+                            - img [ref=e1209]
+                          - generic [ref=e1211]:
+                            - paragraph [ref=e1212]: Corpo
+                            - paragraph [ref=e1213]: Aula TC3 w0-1779305380810
+                        - generic [ref=e1218]:
+                          - generic [ref=e1219]:
+                            - paragraph [ref=e1220]: Aula TC3 w0-1779305380810
+                            - generic [ref=e1221]: Aula
+                          - paragraph [ref=e1222]: Corpo
+                          - generic [ref=e1224]:
+                            - generic [ref=e1227]: visibility
+                            - generic [ref=e1230]: edit
+                            - generic [ref=e1233]: content_copy
+                            - generic [ref=e1236]: delete
+                    - generic [ref=e1238]:
+                      - generic:
+                        - generic: drag_indicator
+                      - generic [ref=e1240] [cursor=pointer]:
+                        - generic [ref=e1242]:
+                          - img [ref=e1244]
+                          - img "Design pendente de regeneração — o kit de marca foi atualizado" [ref=e1246]:
+                            - img [ref=e1247]
+                          - generic [ref=e1249]:
+                            - paragraph [ref=e1250]: Corpo
+                            - paragraph [ref=e1251]: Aula TC3 w0-1779305526405
+                        - generic [ref=e1256]:
+                          - generic [ref=e1257]:
+                            - paragraph [ref=e1258]: Aula TC3 w0-1779305526405
+                            - generic [ref=e1259]: Aula
+                          - paragraph [ref=e1260]: Corpo
+                          - generic [ref=e1262]:
+                            - generic [ref=e1265]: visibility
+                            - generic [ref=e1268]: edit
+                            - generic [ref=e1271]: content_copy
+                            - generic [ref=e1274]: delete
+                    - generic [ref=e1276]:
+                      - generic:
+                        - generic: drag_indicator
+                      - generic [ref=e1278] [cursor=pointer]:
+                        - generic [ref=e1280]:
+                          - img [ref=e1282]
+                          - img "Design pendente de regeneração — o kit de marca foi atualizado" [ref=e1284]:
+                            - img [ref=e1285]
+                          - img "Design TC7 w3-1779303909272" [ref=e1287]
+                        - generic [ref=e1288]:
+                          - generic [ref=e1289]:
+                            - paragraph [ref=e1290]: Design TC7 w3-1779303909272
+                            - generic [ref=e1291]: Página
+                          - paragraph [ref=e1292]: Corpo
+                          - generic [ref=e1294]:
+                            - generic [ref=e1297]: visibility
+                            - generic [ref=e1300]: edit
+                            - generic [ref=e1303]: content_copy
+                            - generic [ref=e1306]: delete
+                    - generic [ref=e1308]:
+                      - generic:
+                        - generic: drag_indicator
+                      - generic [ref=e1310] [cursor=pointer]:
+                        - generic [ref=e1312]:
+                          - img [ref=e1314]
+                          - img "Design pendente de regeneração — o kit de marca foi atualizado" [ref=e1316]:
+                            - img [ref=e1317]
+                          - img "Design TC7 w3-1779304168877" [ref=e1319]
+                        - generic [ref=e1320]:
+                          - generic [ref=e1321]:
+                            - paragraph [ref=e1322]: Design TC7 w3-1779304168877
+                            - generic [ref=e1323]: Página
+                          - paragraph [ref=e1324]: Corpo
+                          - generic [ref=e1326]:
+                            - generic [ref=e1329]: visibility
+                            - generic [ref=e1332]: edit
+                            - generic [ref=e1335]: content_copy
+                            - generic [ref=e1338]: delete
+                    - generic [ref=e1340]:
+                      - generic:
+                        - generic: drag_indicator
+                      - generic [ref=e1342] [cursor=pointer]:
+                        - generic [ref=e1344]:
+                          - img [ref=e1346]
+                          - img "Design pendente de regeneração — o kit de marca foi atualizado" [ref=e1348]:
+                            - img [ref=e1349]
+                          - img "Design TC7 w1-1779304816037" [ref=e1351]
+                        - generic [ref=e1352]:
+                          - generic [ref=e1353]:
+                            - paragraph [ref=e1354]: Design TC7 w1-1779304816037
+                            - generic [ref=e1355]: Página
+                          - paragraph [ref=e1356]: Corpo
+                          - generic [ref=e1358]:
+                            - generic [ref=e1361]: visibility
+                            - generic [ref=e1364]: edit
+                            - generic [ref=e1367]: content_copy
+                            - generic [ref=e1370]: delete
+                  - generic [ref=e1372]:
+                    - generic [ref=e1373]:
+                      - button "keyboard_double_arrow_left" [disabled] [ref=e1374]:
+                        - generic [ref=e1375]: keyboard_double_arrow_left
+                      - button "chevron_left" [disabled] [ref=e1376]:
+                        - generic [ref=e1377]: chevron_left
+                      - button "1" [ref=e1378] [cursor=pointer]
+                      - button "2" [ref=e1379] [cursor=pointer]
+                      - button "chevron_right" [ref=e1380] [cursor=pointer]:
+                        - generic [ref=e1381]: chevron_right
+                    - generic [ref=e1382]:
+                      - combobox [ref=e1383]:
+                        - option "25 por página" [selected]
+                        - option "50 por página"
+                        - option "100 por página"
+                      - generic:
+                        - img
+  - generic:
+    - region "Notifications-top"
+    - region "Notifications-top-left"
+    - region "Notifications-top-right"
+    - region "Notifications-bottom-left"
+    - region "Notifications-bottom"
+    - region "Notifications-bottom-right"
+  - generic:
+    - region "Notifications-top"
+    - region "Notifications-top-left"
+    - region "Notifications-top-right"
+    - region "Notifications-bottom-left"
+    - region "Notifications-bottom"
+    - region "Notifications-bottom-right"
+  - generic:
+    - region "Notifications-top"
+    - region "Notifications-top-left"
+    - region "Notifications-top-right"
+    - region "Notifications-bottom-left"
+    - region "Notifications-bottom"
+    - region "Notifications-bottom-right"
+  - region "Widget de chat" [ref=e1384]:
+    - iframe [ref=e1385]:
+      - button "Abrir chat ao vivo" [ref=f19e5]:
+        - img [ref=f19e8]
+        - img [ref=f19e15]
+```
+
+# Test source
+
+```ts
+  1  | import { test, expect } from '@playwright/test';
+  2  | import * as allure from 'allure-js-commons';
+  3  | import { ContentModelEditPage } from '../../../pages/ContentModelEditPage.js';
+  4  | 
+  5  | test.describe('Ações Duplicar e Drag and Drop', () => {
+  6  |   test('Drag and drop reorder designs', async ({ page }) => {
+  7  |     await allure.epic('Twygo - Modelos de conteúdo');
+  8  |     await allure.feature('Ações Duplicar e Drag and Drop');
+  9  |     await allure.story('Drag and drop reorder designs');
+  10 |     await allure.severity('critical');
+  11 | 
+  12 |     const editPage = new ContentModelEditPage(page);
+  13 | 
+  14 |     await allure.step('1. Acessar aba Design com pelo menos 2 designs', async () => {
+  15 |       await editPage.gotoFirstModelEditStructure();
+  16 |       await page.locator('[data-test-id="tab-design"]').click();
+  17 |       await page.waitForTimeout(2000);
+  18 |       // Garante ao menos 2 cards (não-drag-handle) pra ter o que reordenar
+  19 |       const cardsNonHandle = page.locator('[data-test-id^="modelos-de-conteudo-design-card-"]:not([data-test-id="modelos-de-conteudo-design-card-drag-handle"])');
+  20 |       const count = await cardsNonHandle.count();
+  21 |       expect(count, 'esperava pelo menos 2 designs pra reorder').toBeGreaterThanOrEqual(2);
+  22 |     });
+  23 | 
+  24 |     await allure.step('2. Arrastar 2º design pra primeira posição via drag handle', async () => {
+  25 |       const cardsNonHandle = page.locator('[data-test-id^="modelos-de-conteudo-design-card-"]:not([data-test-id="modelos-de-conteudo-design-card-drag-handle"])');
+  26 |       const firstCardId = await cardsNonHandle.nth(0).getAttribute('data-test-id');
+  27 |       const secondCardId = await cardsNonHandle.nth(1).getAttribute('data-test-id');
+  28 |       // Drag handle interno do 2º card
+  29 |       const secondHandle = page.locator(`[data-test-id="${secondCardId}"] [data-test-id="modelos-de-conteudo-design-card-drag-handle"]`).first();
+  30 |       const firstCardEl = page.locator(`[data-test-id="${firstCardId}"]`).first();
+> 31 |       await secondHandle.dragTo(firstCardEl);
+     |                          ^ TimeoutError: locator.dragTo: Timeout 30000ms exceeded.
+  32 |       await page.waitForTimeout(2000);
+  33 |       // Invariante: ordem mudou (cardId que era 2º agora é 1º)
+  34 |       const newFirstCardId = await cardsNonHandle.nth(0).getAttribute('data-test-id');
+  35 |       expect(newFirstCardId, 'reorder não persistiu').toBe(secondCardId);
+  36 |     });
+  37 |   });
+  38 | });
+  39 | 
+```

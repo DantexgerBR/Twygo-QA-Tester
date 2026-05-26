@@ -1,0 +1,11 @@
+{
+  "runId": "ambientes-adicionais_20260514-183619",
+  "mode": "per-suite",
+  "suiteFilter": "Ambientes adicionais",
+  "projectName": "Widgets",
+  "environment": "staging-widgets",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-14T21:36:19.523Z"
+}

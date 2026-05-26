@@ -1,0 +1,29 @@
+{
+  "runId": "criacao-de-design-de-pagina_20260520-162433",
+  "scope": "Apenas testsuite contendo \"Criação de Design de Página\"",
+  "tests": {
+    "total": 7,
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 181122
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 0,
+    "tests": 1,
+    "outOfScope": {
+      "errors": 5,
+      "warnings": 5,
+      "info": 1
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}
