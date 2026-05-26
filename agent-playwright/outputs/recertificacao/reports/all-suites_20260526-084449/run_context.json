@@ -1,0 +1,11 @@
+{
+  "runId": "all-suites_20260526-084449",
+  "mode": "all-suites",
+  "suiteFilter": null,
+  "projectName": "Recertificação",
+  "environment": "staging-base-de-conhecimento",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-26T11:44:49.939Z"
+}

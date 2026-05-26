@@ -1,0 +1,11 @@
+{
+  "runId": "comportamento-da-feature-flag-recertificacao_20260526-100510",
+  "mode": "per-suite",
+  "suiteFilter": "Comportamento da Feature Flag :recertificacao",
+  "projectName": "Recertificação",
+  "environment": "staging-base-de-conhecimento",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-26T13:05:10.155Z"
+}

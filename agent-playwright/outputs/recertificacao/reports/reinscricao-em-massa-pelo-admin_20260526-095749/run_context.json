@@ -1,0 +1,11 @@
+{
+  "runId": "reinscricao-em-massa-pelo-admin_20260526-095749",
+  "mode": "per-suite",
+  "suiteFilter": "Reinscrição em Massa pelo Admin",
+  "projectName": "Recertificação",
+  "environment": "staging-base-de-conhecimento",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-26T12:57:49.512Z"
+}

@@ -1,0 +1,532 @@
+{
+  "config": {
+    "configFile": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright/outputs/recertificacao/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "tests/auth/**/*.spec.ts",
+          "projects/recertificacao/tests/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/recertificacao/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc1-switch-aparece-com-flag-on.spec.ts",
+      "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc1-switch-aparece-com-flag-on.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Configuração de Conteúdo (Switch \"Habilitar reinscrição\")",
+          "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc1-switch-aparece-com-flag-on.spec.ts",
+          "line": 11,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC1 — Switch \"Habilitar reinscrição\" aparece com flag ON na edição de curso",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 0,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 30000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 30000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at SeedAdminPage.submitAndWaitForEditUrl (C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\SeedAdminPage.ts:240:21)\n    at SeedAdminPage.createCurso (C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\SeedAdminPage.ts:280:5)\n    at C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc1-switch-aparece-com-flag-on.spec.ts:25:17",
+                        "location": {
+                          "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\SeedAdminPage.ts",
+                          "column": 21,
+                          "line": 240
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39mprojects\\recertificacao\\pages\\SeedAdminPage.ts:240\n\n\u001b[0m \u001b[90m 238 |\u001b[39m     \u001b[36mawait\u001b[39m dismissCommonModals(\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage)\u001b[33m;\u001b[39m\n \u001b[90m 239 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetSaveButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 240 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mwaitForURL(\u001b[35m/\\/(e|contents)\\/\\d+\\/edit/\u001b[39m\u001b[33m,\u001b[39m { timeout\u001b[33m:\u001b[39m \u001b[35m30\u001b[39m_000 })\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 241 |\u001b[39m   }\n \u001b[90m 242 |\u001b[39m\n \u001b[90m 243 |\u001b[39m   \u001b[90m// ============================================================\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\SeedAdminPage.ts",
+                            "column": 21,
+                            "line": 240
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 30000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n   at projects\\recertificacao\\pages\\SeedAdminPage.ts:240\n\n  238 |     await dismissCommonModals(this.page);\n  239 |     await this.getSaveButton().click();\n> 240 |     await this.page.waitForURL(/\\/(e|contents)\\/\\d+\\/edit/, { timeout: 30_000 });\n      |                     ^\n  241 |   }\n  242 |\n  243 |   // ============================================================\n    at SeedAdminPage.submitAndWaitForEditUrl (C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\SeedAdminPage.ts:240:21)\n    at SeedAdminPage.createCurso (C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\SeedAdminPage.ts:280:5)\n    at C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc1-switch-aparece-com-flag-on.spec.ts:25:17"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-26T12:23:49.407Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-d835b--flag-ON-na-edição-de-curso-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-d835b--flag-ON-na-edição-de-curso-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-d835b--flag-ON-na-edição-de-curso-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-d835b--flag-ON-na-edição-de-curso-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\SeedAdminPage.ts",
+                        "column": 21,
+                        "line": 240
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "e050204b338df394c0ba-b5dabc3a50642051cd90",
+              "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc1-switch-aparece-com-flag-on.spec.ts",
+              "line": 46,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc2-switch-nao-aparece-com-flag-off.spec.ts",
+      "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc2-switch-nao-aparece-com-flag-off.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Configuração de Conteúdo (Switch \"Habilitar reinscrição\")",
+          "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc2-switch-nao-aparece-com-flag-off.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC2 — Switch \"Habilitar reinscrição\" NÃO aparece com flag OFF (regressão)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "requer toggle runtime da flag :recertificacao — assumido ON em staging-base-de-conhecimento. Validar manualmente OFF.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc2-switch-nao-aparece-com-flag-off.spec.ts",
+                        "line": 15,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-26T12:23:48.252Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "requer toggle runtime da flag :recertificacao — assumido ON em staging-base-de-conhecimento. Validar manualmente OFF.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc2-switch-nao-aparece-com-flag-off.spec.ts",
+                            "line": 15,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "06272ed2591d3c5599a1-64f4382a5e328d7b5821",
+              "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc2-switch-nao-aparece-com-flag-off.spec.ts",
+              "line": 20,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc3-ativar-e-salvar-persiste.spec.ts",
+      "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc3-ativar-e-salvar-persiste.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Configuração de Conteúdo (Switch \"Habilitar reinscrição\")",
+          "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc3-ativar-e-salvar-persiste.spec.ts",
+          "line": 9,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC3 — Ativar e salvar o switch persiste `has_recertification = true`",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 2,
+                      "status": "failed",
+                      "duration": 0,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 30000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 30000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at SeedAdminPage.submitAndWaitForEditUrl (C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\SeedAdminPage.ts:240:21)\n    at SeedAdminPage.createCurso (C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\SeedAdminPage.ts:280:5)\n    at C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc3-ativar-e-salvar-persiste.spec.ts:23:17",
+                        "location": {
+                          "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\SeedAdminPage.ts",
+                          "column": 21,
+                          "line": 240
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39mprojects\\recertificacao\\pages\\SeedAdminPage.ts:240\n\n\u001b[0m \u001b[90m 238 |\u001b[39m     \u001b[36mawait\u001b[39m dismissCommonModals(\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage)\u001b[33m;\u001b[39m\n \u001b[90m 239 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetSaveButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 240 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mwaitForURL(\u001b[35m/\\/(e|contents)\\/\\d+\\/edit/\u001b[39m\u001b[33m,\u001b[39m { timeout\u001b[33m:\u001b[39m \u001b[35m30\u001b[39m_000 })\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 241 |\u001b[39m   }\n \u001b[90m 242 |\u001b[39m\n \u001b[90m 243 |\u001b[39m   \u001b[90m// ============================================================\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\SeedAdminPage.ts",
+                            "column": 21,
+                            "line": 240
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 30000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n   at projects\\recertificacao\\pages\\SeedAdminPage.ts:240\n\n  238 |     await dismissCommonModals(this.page);\n  239 |     await this.getSaveButton().click();\n> 240 |     await this.page.waitForURL(/\\/(e|contents)\\/\\d+\\/edit/, { timeout: 30_000 });\n      |                     ^\n  241 |   }\n  242 |\n  243 |   // ============================================================\n    at SeedAdminPage.submitAndWaitForEditUrl (C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\SeedAdminPage.ts:240:21)\n    at SeedAdminPage.createCurso (C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\SeedAdminPage.ts:280:5)\n    at C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc3-ativar-e-salvar-persiste.spec.ts:23:17"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-26T12:23:49.425Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-ccb33-e-has-recertification-true--chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-ccb33-e-has-recertification-true--chromium\\error-context.md"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-ccb33-e-has-recertification-true--chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-ccb33-e-has-recertification-true--chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\SeedAdminPage.ts",
+                        "column": 21,
+                        "line": 240
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba81cb6a8ed721d18cdd-a3dc2048d10ff70555ff",
+              "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc3-ativar-e-salvar-persiste.spec.ts",
+              "line": 44,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc4-desativar-com-participants.spec.ts",
+      "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc4-desativar-com-participants.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Configuração de Conteúdo (Switch \"Habilitar reinscrição\")",
+          "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc4-desativar-com-participants.spec.ts",
+          "line": 9,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC4 — Desativar o switch em curso com participants reinscritos é permitido sem aviso",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 0,
+                      "error": {
+                        "message": "Error: [SeedAdminPage.setHabilitarReinscricao] Switch \"Habilitar reinscrição\" não está visível no form. Verifique se a feature flag :recertificacao está ATIVA na org. Skill: testar-feature-flag-twygo.",
+                        "stack": "Error: [SeedAdminPage.setHabilitarReinscricao] Switch \"Habilitar reinscrição\" não está visível no form. Verifique se a feature flag :recertificacao está ATIVA na org. Skill: testar-feature-flag-twygo.\n    at SeedAdminPage.setHabilitarReinscricao (C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\SeedAdminPage.ts:215:13)\n    at SeedAdminPage.createCurso (C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\SeedAdminPage.ts:278:7)\n    at C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc4-desativar-com-participants.spec.ts:28:17",
+                        "location": {
+                          "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\SeedAdminPage.ts",
+                          "column": 13,
+                          "line": 215
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39mprojects\\recertificacao\\pages\\SeedAdminPage.ts:215\n\n\u001b[0m \u001b[90m 213 |\u001b[39m       \u001b[33m.\u001b[39m\u001b[36mcatch\u001b[39m(() \u001b[33m=>\u001b[39m \u001b[36mfalse\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 214 |\u001b[39m     \u001b[36mif\u001b[39m (\u001b[33m!\u001b[39mvisible) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 215 |\u001b[39m       \u001b[36mthrow\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\n \u001b[90m     |\u001b[39m             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 216 |\u001b[39m         \u001b[32m'[SeedAdminPage.setHabilitarReinscricao] Switch \"Habilitar reinscrição\" '\u001b[39m \u001b[33m+\u001b[39m\n \u001b[90m 217 |\u001b[39m           \u001b[32m'não está visível no form. Verifique se a feature flag :recertificacao '\u001b[39m \u001b[33m+\u001b[39m\n \u001b[90m 218 |\u001b[39m           \u001b[32m'está ATIVA na org. Skill: testar-feature-flag-twygo.'\u001b[39m\u001b[33m,\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\SeedAdminPage.ts",
+                            "column": 13,
+                            "line": 215
+                          },
+                          "message": "Error: [SeedAdminPage.setHabilitarReinscricao] Switch \"Habilitar reinscrição\" não está visível no form. Verifique se a feature flag :recertificacao está ATIVA na org. Skill: testar-feature-flag-twygo.\n\n   at projects\\recertificacao\\pages\\SeedAdminPage.ts:215\n\n  213 |       .catch(() => false);\n  214 |     if (!visible) {\n> 215 |       throw new Error(\n      |             ^\n  216 |         '[SeedAdminPage.setHabilitarReinscricao] Switch \"Habilitar reinscrição\" ' +\n  217 |           'não está visível no form. Verifique se a feature flag :recertificacao ' +\n  218 |           'está ATIVA na org. Skill: testar-feature-flag-twygo.',\n    at SeedAdminPage.setHabilitarReinscricao (C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\SeedAdminPage.ts:215:13)\n    at SeedAdminPage.createCurso (C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\SeedAdminPage.ts:278:7)\n    at C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc4-desativar-com-participants.spec.ts:28:17"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-26T12:23:49.393Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-ad265-ritos-é-permitido-sem-aviso-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-ad265-ritos-é-permitido-sem-aviso-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-ad265-ritos-é-permitido-sem-aviso-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-ad265-ritos-é-permitido-sem-aviso-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\SeedAdminPage.ts",
+                        "column": 13,
+                        "line": 215
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "2ab4896513641b86a513-385b09b41406719da092",
+              "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc4-desativar-com-participants.spec.ts",
+              "line": 49,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc5-paridade-haml-react.spec.ts",
+      "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc5-paridade-haml-react.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Configuração de Conteúdo (Switch \"Habilitar reinscrição\")",
+          "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc5-paridade-haml-react.spec.ts",
+          "line": 9,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC5 — Paridade do switch entre formulário HAML e formulário React (facelift)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 0,
+                      "error": {
+                        "message": "TimeoutError: page.waitForURL: Timeout 30000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================",
+                        "stack": "TimeoutError: page.waitForURL: Timeout 30000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n    at SeedAdminPage.submitAndWaitForEditUrl (C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\SeedAdminPage.ts:240:21)\n    at SeedAdminPage.createCurso (C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\SeedAdminPage.ts:280:5)\n    at C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc5-paridade-haml-react.spec.ts:23:17",
+                        "location": {
+                          "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\SeedAdminPage.ts",
+                          "column": 21,
+                          "line": 240
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39mprojects\\recertificacao\\pages\\SeedAdminPage.ts:240\n\n\u001b[0m \u001b[90m 238 |\u001b[39m     \u001b[36mawait\u001b[39m dismissCommonModals(\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage)\u001b[33m;\u001b[39m\n \u001b[90m 239 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetSaveButton()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 240 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mwaitForURL(\u001b[35m/\\/(e|contents)\\/\\d+\\/edit/\u001b[39m\u001b[33m,\u001b[39m { timeout\u001b[33m:\u001b[39m \u001b[35m30\u001b[39m_000 })\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 241 |\u001b[39m   }\n \u001b[90m 242 |\u001b[39m\n \u001b[90m 243 |\u001b[39m   \u001b[90m// ============================================================\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\SeedAdminPage.ts",
+                            "column": 21,
+                            "line": 240
+                          },
+                          "message": "TimeoutError: page.waitForURL: Timeout 30000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n============================================================\n\n   at projects\\recertificacao\\pages\\SeedAdminPage.ts:240\n\n  238 |     await dismissCommonModals(this.page);\n  239 |     await this.getSaveButton().click();\n> 240 |     await this.page.waitForURL(/\\/(e|contents)\\/\\d+\\/edit/, { timeout: 30_000 });\n      |                     ^\n  241 |   }\n  242 |\n  243 |   // ============================================================\n    at SeedAdminPage.submitAndWaitForEditUrl (C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\SeedAdminPage.ts:240:21)\n    at SeedAdminPage.createCurso (C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\SeedAdminPage.ts:280:5)\n    at C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc5-paridade-haml-react.spec.ts:23:17"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-26T12:23:49.407Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-254b9--formulário-React-facelift--chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-254b9--formulário-React-facelift--chromium\\error-context.md"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-254b9--formulário-React-facelift--chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-254b9--formulário-React-facelift--chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\SeedAdminPage.ts",
+                        "column": 21,
+                        "line": 240
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "22e6ad991019939a6be8-54f6cefb7de56b370c20",
+              "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc5-paridade-haml-react.spec.ts",
+              "line": 44,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-05-26T12:23:12.935Z",
+    "duration": 84878.125,
+    "expected": 0,
+    "skipped": 1,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}
