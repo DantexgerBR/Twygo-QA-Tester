@@ -48,8 +48,12 @@ Convenções obrigatórias (ver CLAUDE.md seção 5):
 do prompt acima:
 
 1. Conteúdo de `.claude/prose-patterns.md` (tradução PT-BR → Playwright).
-2. Conteúdo de `inputs/recon-<slug-suite>.md` se existir (catálogo de
-   test-ids/labels da área — corta exploração live).
+2. Conteúdo de `outputs/<slug>/recon-cache/<slug-suite>.md` se existir
+   (catálogo de test-ids/labels da área — corta exploração live). É um cache
+   regenerável com TTL (7 dias default): verifique o `generatedAt` no header
+   de metadados (bloco `<!-- recon-cache ... -->` no topo) — se stale ou
+   ausente, regenere via `npm run agent:recon -- --suite "<nome>"` antes de
+   consumir, ou deixe o planner explorar live. Ver skill `roadmap-recon-cache`.
 3. Lista de Page Objects existentes em `src/pages/` + `projects/<slug>/pages/`
    com seus métodos públicos (pra reuso).
 

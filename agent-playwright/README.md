@@ -185,7 +185,7 @@ Para **cada testsuite** que você quer cobrir, rode este ciclo: recon → plan +
 npm run agent:recon -- --project widgets --suite "Listagem de painéis"
 ```
 
-Loga no app, navega na área da testsuite, captura test-ids/roles/labels e salva em `projects/<slug>/inputs/recon-<slug-suite>.md`. O planner consome isso depois e corta ~70% do tempo de exploração live.
+Loga no app, navega na área da testsuite, captura test-ids/roles/labels e salva em `outputs/<slug>/recon-cache/<slug-suite>.md` — um cache regenerável com TTL de 7 dias (gitignored). O planner consome isso depois e corta ~70% do tempo de exploração live. Re-rodar com cache fresco é no-op (use `--force` pra regenerar); cache stale (>7 dias) regenera sozinho. Limpar tudo: `npm run agent:recon:clear -- --project <slug>`.
 
 > A flag `--project` é opcional quando há só 1 projeto em `projects/` (auto-detect). Alternativa: env var (útil pra encadear múltiplos comandos sem repetir):
 >
@@ -370,7 +370,7 @@ agent-playwright/
 ├── projects/                       # 1 subpasta por projeto Twygo
 │   └── <slug>/                     # ex.: creditos-fase-02, widgets
 │       ├── project.config.json     # nome do projeto, XML, exploratório
-│       ├── inputs/                 # XML TestLink + recons gerados
+│       ├── inputs/                 # XML/MD TestLink do AT (recon migrou pra outputs/<slug>/recon-cache/)
 │       ├── specs/                  # Plans do planner (Markdown)
 │       ├── tests/features/         # Specs gerados (1 dir por testsuite)
 │       ├── pages/                  # Page Objects específicos do projeto

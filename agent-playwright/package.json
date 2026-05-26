@@ -18,6 +18,7 @@
     "agent:run": "tsx .claude/skills/twygo-test-orchestrator/orchestrator.ts",
     "agent:smoke": "tsx .claude/skills/twygo-test-orchestrator/orchestrator.ts --smoke-only",
     "agent:recon": "tsx .claude/skills/twygo-recon/recon.ts",
+    "agent:recon:clear": "tsx .claude/skills/twygo-recon/clear.ts",
     "agent:regression": "tsx .claude/skills/twygo-test-orchestrator/orchestrator.ts --regression",
     "agent:explore": "tsx .claude/skills/twygo-exploratory-validator/validator.ts",
     "agent:report": "tsx .claude/skills/twygo-report-generator/generator.ts",

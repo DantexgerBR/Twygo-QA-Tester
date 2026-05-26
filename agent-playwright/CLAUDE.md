@@ -84,7 +84,7 @@ agent-playwright/
 ├── projects/                       # 1 subpasta por projeto Twygo (creditos, widgets, ...)
 │   └── <slug>/                     # ex.: creditos-fase-02
 │       ├── project.config.json     # nome do projeto, XML, exploratory config
-│       ├── inputs/                 # XML TestLink + recons (gerados pelo recon)
+│       ├── inputs/                 # XML/MD TestLink do AT (fonte de verdade; recon migrou pra outputs/<slug>/recon-cache/)
 │       ├── specs/                  # planos salvos pelo playwright-test-planner
 │       ├── tests/features/         # specs gerados (1 dir por testsuite)
 │       ├── pages/                  # Page Objects específicos do projeto
@@ -229,7 +229,7 @@ Dois modos:
 | 1. Init | — | Lê configs, valida XML existente |
 | 1.5. **Pre-flight** *(novo)* | orquestrador | Valida configs + baseURL responde + storageState válido. Falha cedo, falha barato — antes de gastar planners |
 | 2. Parse | `twygo-xml-parser` | XML TestLink → `outputs/test-analysis.parsed.json` |
-| 2.5. **Recon** *(novo, opt-in)* | `twygo-recon` | Login + navegação na área da testsuite + dump de test-ids/labels em `inputs/recon-{slug}.md`. Planners consomem isso e pulam exploração ao vivo |
+| 2.5. **Recon** *(novo, opt-in)* | `twygo-recon` | Login + navegação na área da testsuite + dump de test-ids/labels em `outputs/<slug>/recon-cache/{slug}.md` (cache regenerável com TTL de 7 dias, gitignored — ver skill `roadmap-recon-cache`). Planners consomem isso e pulam exploração ao vivo |
 | 3. Plan | **planner** (plugin Playwright) | Para cada testcase, plano técnico baseado na prosa + recon |
 | 4. Generate | **generator** (plugin Playwright) + Playwright MCP | Spec `.spec.ts` + Page Objects + annotations Allure |
 | 5. Execute | Playwright (com `--grep` per-suite ou tudo regressivo) | Roda + grava findings exploratórios via fixture |
@@ -349,7 +349,7 @@ Definidos por `npx playwright init-agents --loop claude` (oficial Microsoft). S�
 | **`provisionar-trial-projeto-twygo`** | pre-3 | Playbook Claude+executor de 8 passos pra provisionar 1 Trial dedicada (ICP "Outros" / `icp5`) por projeto, ANTES de iniciar suite Trial. 4 pausas manuais (DB update na `organization_icps.icp5`, email unlock, feature flags, contrato) + 1 etapa Claude (wizard `/new/register/steps`). Produz `projects/<slug>/data/trial-env.json`. Pré-requisito da `testar-exclusao-dados-trial-twygo` |
 | **`testar-exclusao-dados-trial-twygo`** | 3, 4 | Fluxo canônico Sophia widget → "Excluir informações" → modal com 4 opções (SophiaTech / Admin / Usuários / Tudo). 1 Trial dedicada por projeto consumida de `data/trial-env.json` (gerado por `provisionar-trial-projeto-twygo`). Seletores `getByRole` (Sophia não tem testId), Page Object proposto `SophiaWidget` em `src/pages/`, anti-patterns (consumir Trial de outro projeto, re-inflar matriz de 5 ICPs) |
 | **`provisionar-seed`** | 3, 4, 7 | Padrão canônico de `test.beforeAll` que cria recursos via UI admin antes do test rodar; `afterAll` pareado pra cleanup. Catálogo de helpers `create<Recurso>` (curso, trilha, pacote, aluno matriculado, usuário) em `SeedAdminPage` por projeto. Naming worker-isolated, integração com fixture custom, e definição de quando `fixme` por seed ainda é legítimo (DB-only / mailer / Flipper toggle / env adicional). Generator deve detectar pré-condições "X pré-existente" no MD e converter em `beforeAll` em vez de marcar `test.fixme(true, 'seed inválido')` (anti-pattern do incidente Recertificação 2026-05-26). |
-| **`roadmap-recon-cache`** | design | Especificação não-implementada — propõe migrar recon de `inputs/` (git) pra `outputs/<slug>/recon-cache/` (regenerável + TTL) |
+| **`roadmap-recon-cache`** | design | Especificação **implementada** — recon migrou de `inputs/` (git) pra `outputs/<slug>/recon-cache/` (cache regenerável + TTL de 7 dias, gitignored, com `_meta.json` + detecção de stale). Ver `twygo-recon/SKILL.md` |
 | **`roadmap-agent-metrics`** | design | Especificação não-implementada — orchestrator emite `metrics.json` por execução; skill nova agrega trend (typecheckFirstPassRate, fixmeRate, healBlockedRate, etc) |
 
 ### 6.5. Bibliotecas npm

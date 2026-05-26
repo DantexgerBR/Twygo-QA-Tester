@@ -63,7 +63,7 @@ Se URL der 404:
 2. Enumerar sidebar items (`#menu a[href]`) com href + texto
 3. Fuzzy-match o nome da testsuite com texto dos items
 4. Se match com confiança > 0.7 → sugerir URL real
-5. Emitir diff sugerido no `inputs/recon-<slug>.md`:
+5. Emitir diff sugerido no `outputs/<slug>/recon-cache/<slug-suite>.md`:
 
 ```markdown
 > ⚠️ **URL canônica do AT inferida errada**

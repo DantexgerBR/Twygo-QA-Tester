@@ -38,6 +38,11 @@ test-results/
 # sensível, não vai pro repo.
 agent-playwright/outputs/.auth/
 agent-playwright/outputs/**/*.zip
+# Recon-cache: catálogo de test-ids/labels regenerável com TTL (7 dias).
+# Gitignored por design (roadmap-recon-cache) — é cache, não artefato de
+# revisão; regenera via `npm run agent:recon`. Substitui o antigo
+# `projects/<slug>/inputs/recon-*.md` versionado.
+agent-playwright/outputs/**/recon-cache/
 
 # ===== Outputs gerados pelo agente Tasks-QA =====
 # Planilhas .xlsx geradas por execução — não commitar

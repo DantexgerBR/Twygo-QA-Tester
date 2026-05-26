@@ -1,6 +1,6 @@
 import { chromium } from '@playwright/test';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { dirname, resolve } from 'node:path';
+import { basename, dirname, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import { createLogger } from '../../../src/utils/logger.js';
 import { FILES } from '../../../src/utils/constants.js';
@@ -8,23 +8,36 @@ import {
   getOrgId,
   getOutputPath,
   getProjectConfigPath,
-  resolveProjectPath,
 } from '../../../src/utils/environment.js';
 import { slugify } from '../../../src/utils/helpers.js';
 import type { ParsedAnalysis, ParsedTestSuite } from '../twygo-xml-parser/parser.js';
+import {
+  getReconCachePath,
+  getReconConfig,
+  readReconCache,
+  writeReconMeta,
+} from './recon-cache.js';
 
 const log = createLogger('recon');
 
 type ProjConfig = { environment: string };
 type EnvConfig = Record<string, { baseUrl: string; credentials: { email: string; password: string }; timeout: number }>;
 
-function parseFlags(): { suite?: string; urls?: string[]; project?: string } {
+function parseFlags(): {
+  suite?: string;
+  urls?: string[];
+  project?: string;
+  force: boolean;
+  useStale: boolean;
+} {
   const { values } = parseArgs({
     options: {
       suite: { type: 'string' },
       url: { type: 'string' },
       urls: { type: 'string' }, // comma-separated multiple URLs
       project: { type: 'string' },
+      force: { type: 'boolean' }, // regenera mesmo com cache fresco
+      'use-stale': { type: 'boolean' }, // mantém cache stale em vez de regenerar
     },
     strict: false,
   });
@@ -42,6 +55,8 @@ function parseFlags(): { suite?: string; urls?: string[]; project?: string } {
     suite: values.suite as string | undefined,
     urls,
     project: values.project as string | undefined,
+    force: values.force === true,
+    useStale: values['use-stale'] === true,
   };
 }
 
@@ -167,8 +182,22 @@ function buildMarkdownMulti(args: {
   suite: ParsedTestSuite | null;
   snapshots: { url: string; finalUrl: string; probe: Probe }[];
   generatedAt: string;
+  slug: string;
+  ttlHours: number;
+  twygoBaseUrl: string;
 }): string {
   const lines: string[] = [];
+  // Header de metadados (bloco de comentário) — parseado pelo recon-cache para
+  // detecção de staleness. NÃO renderiza no markdown, mas planners podem ler.
+  lines.push('<!--');
+  lines.push('recon-cache');
+  lines.push(`generatedAt: ${args.generatedAt}`);
+  lines.push(`suite: ${args.suite?.name ?? 'URL ad-hoc'}`);
+  lines.push(`slug: ${args.slug}`);
+  lines.push(`ttlHours: ${args.ttlHours}`);
+  lines.push(`twygoBaseUrl: ${args.twygoBaseUrl}`);
+  lines.push('-->');
+  lines.push('');
   lines.push(`# Reconnaissance — ${args.suite?.name ?? 'URL ad-hoc'}`);
   lines.push('');
   lines.push(`> Snapshot do DOM da área desta testsuite, capturado em ${args.generatedAt}.`);
@@ -279,7 +308,26 @@ async function main(): Promise<void> {
 
   const urls = args.urls ?? (suite ? [inferCanonicalUrl(suite)] : ['/']);
   const slug = suite ? slugify(suite.name) : slugify(urls[0]);
-  const outputPath = resolveProjectPath(`inputs/recon-${slug}.md`);
+  const outputPath = getReconCachePath(slug);
+  const { ttlHours } = getReconConfig();
+
+  // Self-check de cache: se já existe e está fresco, pular varredura (a menos
+  // que --force). Se está stale, regenerar por padrão (ou manter com --use-stale).
+  if (!args.force) {
+    const cache = readReconCache(slug);
+    if (cache.exists && !cache.stale) {
+      log.info(`Cache fresco (gerado ${cache.generatedAt}, TTL ${ttlHours}h) → ${outputPath}`);
+      log.info('Use --force para regenerar.');
+      return;
+    }
+    if (cache.exists && cache.stale && args.useStale) {
+      log.warn(`Cache stale (gerado ${cache.generatedAt}), mas --use-stale → mantendo.`);
+      return;
+    }
+    if (cache.exists && cache.stale) {
+      log.warn(`Cache stale (gerado ${cache.generatedAt}, TTL ${ttlHours}h) → regenerando.`);
+    }
+  }
 
   // Verifica storageState válido
   const storagePath = resolve(process.cwd(), 'outputs/.auth/storage.json');
@@ -323,13 +371,23 @@ async function main(): Promise<void> {
 
   if (snapshots.some((s) => s.probe.signals.hasSyncAlert)) log.warn('⚠️ Sync alert detectado em alguma URL');
 
+  const generatedAt = new Date().toISOString();
   const md = buildMarkdownMulti({
     suite,
     snapshots,
-    generatedAt: new Date().toISOString(),
+    generatedAt,
+    slug,
+    ttlHours,
+    twygoBaseUrl: env.baseUrl,
   });
   mkdirSync(dirname(outputPath), { recursive: true });
   writeFileSync(outputPath, md, 'utf-8');
+  writeReconMeta({
+    suiteSlug: slug,
+    generatedAt,
+    ttlHours,
+    filename: basename(outputPath),
+  });
   log.info(`Recon salvo → ${outputPath}`);
 }
 
