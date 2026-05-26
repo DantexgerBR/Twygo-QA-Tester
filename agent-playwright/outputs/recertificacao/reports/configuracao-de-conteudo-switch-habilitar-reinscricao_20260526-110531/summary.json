@@ -1,11 +1,11 @@
 {
-  "runId": "configuracao-de-conteudo-switch-habilitar-reinscricao_20260526-092440",
+  "runId": "configuracao-de-conteudo-switch-habilitar-reinscricao_20260526-110531",
   "scope": "Apenas testsuite contendo \"Configuração de Conteúdo (Switch \"Habilitar reinscrição\")\"",
   "tests": {
     "total": 5,
     "passed": 0,
-    "failed": 4,
-    "skipped": 1,
+    "failed": 0,
+    "skipped": 5,
     "durationMs": 0
   },
   "exploratory": {
@@ -13,11 +13,11 @@
     "warnings": 0,
     "info": 0,
     "testsuites": 1,
-    "tests": 40,
+    "tests": 44,
     "outOfScope": {
-      "errors": 136,
-      "warnings": 116,
-      "info": 2
+      "errors": 144,
+      "warnings": 124,
+      "info": 1
     },
     "activeProbes": {
       "errors": 0,

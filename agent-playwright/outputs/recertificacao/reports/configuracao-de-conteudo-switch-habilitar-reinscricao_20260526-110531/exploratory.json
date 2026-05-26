@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-05-26T12:24:38.828Z",
+  "generatedAt": "2026-05-26T14:05:29.333Z",
   "summary": {
     "errors": 0,
     "warnings": 0,
     "info": 0,
     "testsuites": 8,
-    "tests": 40,
+    "tests": 44,
     "outOfScope": {
-      "errors": 136,
-      "warnings": 116,
-      "info": 2
+      "errors": 144,
+      "warnings": 124,
+      "info": 1
     },
     "activeProbes": {
       "errors": 0,
@@ -3267,13 +3267,13 @@
       "findings": [],
       "coverage": [
         {
-          "url": "https://basedeconhecimento.stage.twygoead.com/play/event/1",
+          "url": "about:blank",
           "totalInteractive": 0,
           "visibleInteractive": 0,
           "samples": []
         },
         {
-          "url": "about:blank",
+          "url": "https://basedeconhecimento.stage.twygoead.com/play/event/1",
           "totalInteractive": 0,
           "visibleInteractive": 0,
           "samples": []
@@ -3287,17 +3287,117 @@
       ],
       "outOfScope": {
         "totals": {
-          "errors": 42,
-          "warnings": 33,
+          "errors": 50,
+          "warnings": 41,
           "info": 0
         },
         "byKind": {
+          "a11y_violation": 72,
           "console_error": 14,
-          "http_error": 5,
-          "a11y_violation": 56
+          "http_error": 5
         },
         "findings": [
           {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "about:blank",
+            "message": "[a11y/document-title] Documents must have <title> element to aid in navigation",
+            "detail": {
+              "ruleId": "document-title",
+              "impact": "serious",
+              "tags": [
+                "cat.text-alternatives",
+                "wcag2a",
+                "wcag242",
+                "TTv5",
+                "TT12.a",
+                "EN-301-549",
+                "EN-9.2.4.2",
+                "ACT",
+                "RGAAv4",
+                "RGAA-8.5.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/document-title?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html><head></head><body></body></html>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "about:blank",
+            "message": "[a11y/html-has-lang] <html> element must have a lang attribute",
+            "detail": {
+              "ruleId": "html-has-lang",
+              "impact": "serious",
+              "tags": [
+                "cat.language",
+                "wcag2a",
+                "wcag311",
+                "TTv5",
+                "TT11.a",
+                "EN-301-549",
+                "EN-9.3.1.1",
+                "ACT",
+                "RGAAv4",
+                "RGAA-8.3.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/html-has-lang?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html><head></head><body></body></html>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "about:blank",
+            "message": "[a11y/landmark-one-main] Document should have one main landmark",
+            "detail": {
+              "ruleId": "landmark-one-main",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-one-main?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html><head></head><body></body></html>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "about:blank",
+            "message": "[a11y/page-has-heading-one] Page should contain a level-one heading",
+            "detail": {
+              "ruleId": "page-has-heading-one",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/page-has-heading-one?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html><head></head><body></body></html>"
+            },
+            "inScope": false
+          },
+          {
             "kind": "console_error",
             "severity": "error",
             "url": "https://basedeconhecimento.stage.twygoead.com/dashboard_students",
@@ -3436,6 +3536,106 @@
                 "div"
               ],
               "firstNodeHtml": "<div class=\"dialog\">\n    <h1>The page you were looking for doesn't exist.</h1>\n    <p>You may have mistyped the address or the page may have moved.</p>\n  </div>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "about:blank",
+            "message": "[a11y/document-title] Documents must have <title> element to aid in navigation",
+            "detail": {
+              "ruleId": "document-title",
+              "impact": "serious",
+              "tags": [
+                "cat.text-alternatives",
+                "wcag2a",
+                "wcag242",
+                "TTv5",
+                "TT12.a",
+                "EN-301-549",
+                "EN-9.2.4.2",
+                "ACT",
+                "RGAAv4",
+                "RGAA-8.5.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/document-title?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html><head></head><body></body></html>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "about:blank",
+            "message": "[a11y/html-has-lang] <html> element must have a lang attribute",
+            "detail": {
+              "ruleId": "html-has-lang",
+              "impact": "serious",
+              "tags": [
+                "cat.language",
+                "wcag2a",
+                "wcag311",
+                "TTv5",
+                "TT11.a",
+                "EN-301-549",
+                "EN-9.3.1.1",
+                "ACT",
+                "RGAAv4",
+                "RGAA-8.3.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/html-has-lang?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html><head></head><body></body></html>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "about:blank",
+            "message": "[a11y/landmark-one-main] Document should have one main landmark",
+            "detail": {
+              "ruleId": "landmark-one-main",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-one-main?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html><head></head><body></body></html>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "about:blank",
+            "message": "[a11y/page-has-heading-one] Page should contain a level-one heading",
+            "detail": {
+              "ruleId": "page-has-heading-one",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/page-has-heading-one?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html><head></head><body></body></html>"
             },
             "inScope": false
           },
@@ -4745,6 +4945,106 @@
             "inScope": false
           },
           {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "about:blank",
+            "message": "[a11y/document-title] Documents must have <title> element to aid in navigation",
+            "detail": {
+              "ruleId": "document-title",
+              "impact": "serious",
+              "tags": [
+                "cat.text-alternatives",
+                "wcag2a",
+                "wcag242",
+                "TTv5",
+                "TT12.a",
+                "EN-301-549",
+                "EN-9.2.4.2",
+                "ACT",
+                "RGAAv4",
+                "RGAA-8.5.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/document-title?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html><head></head><body></body></html>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "about:blank",
+            "message": "[a11y/html-has-lang] <html> element must have a lang attribute",
+            "detail": {
+              "ruleId": "html-has-lang",
+              "impact": "serious",
+              "tags": [
+                "cat.language",
+                "wcag2a",
+                "wcag311",
+                "TTv5",
+                "TT11.a",
+                "EN-301-549",
+                "EN-9.3.1.1",
+                "ACT",
+                "RGAAv4",
+                "RGAA-8.3.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/html-has-lang?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html><head></head><body></body></html>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "about:blank",
+            "message": "[a11y/landmark-one-main] Document should have one main landmark",
+            "detail": {
+              "ruleId": "landmark-one-main",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-one-main?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html><head></head><body></body></html>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "about:blank",
+            "message": "[a11y/page-has-heading-one] Page should contain a level-one heading",
+            "detail": {
+              "ruleId": "page-has-heading-one",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/page-has-heading-one?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html><head></head><body></body></html>"
+            },
+            "inScope": false
+          },
+          {
             "kind": "http_error",
             "severity": "warn",
             "url": "https://basedeconhecimento.stage.twygoead.com/play/pacote-recertificacao-staging/course_registrations?recertification=true",
@@ -4862,6 +5162,106 @@
                 "div"
               ],
               "firstNodeHtml": "<div class=\"dialog\">\n    <h1>The page you were looking for doesn't exist.</h1>\n    <p>You may have mistyped the address or the page may have moved.</p>\n  </div>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "about:blank",
+            "message": "[a11y/document-title] Documents must have <title> element to aid in navigation",
+            "detail": {
+              "ruleId": "document-title",
+              "impact": "serious",
+              "tags": [
+                "cat.text-alternatives",
+                "wcag2a",
+                "wcag242",
+                "TTv5",
+                "TT12.a",
+                "EN-301-549",
+                "EN-9.2.4.2",
+                "ACT",
+                "RGAAv4",
+                "RGAA-8.5.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/document-title?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html><head></head><body></body></html>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "about:blank",
+            "message": "[a11y/html-has-lang] <html> element must have a lang attribute",
+            "detail": {
+              "ruleId": "html-has-lang",
+              "impact": "serious",
+              "tags": [
+                "cat.language",
+                "wcag2a",
+                "wcag311",
+                "TTv5",
+                "TT11.a",
+                "EN-301-549",
+                "EN-9.3.1.1",
+                "ACT",
+                "RGAAv4",
+                "RGAA-8.3.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/html-has-lang?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html><head></head><body></body></html>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "about:blank",
+            "message": "[a11y/landmark-one-main] Document should have one main landmark",
+            "detail": {
+              "ruleId": "landmark-one-main",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-one-main?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html><head></head><body></body></html>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "about:blank",
+            "message": "[a11y/page-has-heading-one] Page should contain a level-one heading",
+            "detail": {
+              "ruleId": "page-has-heading-one",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/page-has-heading-one?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html><head></head><body></body></html>"
             },
             "inScope": false
           }
@@ -5540,10 +5940,14 @@
       "findings": [],
       "coverage": [
         {
-          "url": "https://basedeconhecimento.stage.twygoead.com/play?menu_id=play",
-          "totalInteractive": 75,
-          "visibleInteractive": 18,
+          "url": "https://recertificacao-testeqa.stage.twygoead.com/play?menu_id=play",
+          "totalInteractive": 71,
+          "visibleInteractive": 17,
           "samples": [
+            {
+              "role": "link",
+              "name": "custom_url-menu"
+            },
             {
               "role": "link",
               "name": "user_panels-menu"
@@ -5558,11 +5962,7 @@
             },
             {
               "role": "link",
-              "name": "team-menu"
-            },
-            {
-              "role": "link",
-              "name": "Base de conhecimento"
+              "name": ""
             },
             {
               "role": "button",
@@ -5574,19 +5974,11 @@
             },
             {
               "role": "button",
-              "name": "Open chat"
-            },
-            {
-              "role": "button",
-              "name": "Users"
+              "name": "btn-profile"
             },
             {
               "role": "link",
-              "name": ""
-            },
-            {
-              "role": "button",
-              "name": "btn-profile"
+              "name": "custom_url-menu"
             },
             {
               "role": "link",
@@ -5601,10 +5993,6 @@
               "name": "communities-menu"
             },
             {
-              "role": "link",
-              "name": "team-menu"
-            },
-            {
               "role": "button",
               "name": "play_arrowInscreva-se"
             },
@@ -5613,8 +6001,16 @@
               "name": "Selecione um filtrokeyboard_arrow_down"
             },
             {
+              "role": "button",
+              "name": "Seus interesses"
+            },
+            {
               "role": "input",
               "name": "Busque por título ou categoria"
+            },
+            {
+              "role": "button",
+              "name": "next"
             }
           ]
         }
@@ -5623,104 +6019,66 @@
         "totals": {
           "errors": 10,
           "warnings": 5,
-          "info": 1
+          "info": 0
         },
         "byKind": {
-          "console_error": 5,
-          "a11y_violation": 11
+          "console_error": 7,
+          "a11y_violation": 8
         },
         "findings": [
           {
             "kind": "console_error",
             "severity": "error",
-            "url": "https://basedeconhecimento.stage.twygoead.com/play?menu_id=play",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/play?menu_id=play",
             "message": "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector",
             "inScope": false
           },
           {
             "kind": "console_error",
             "severity": "error",
-            "url": "https://basedeconhecimento.stage.twygoead.com/play?menu_id=play",
-            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/play?menu_id=play",
+            "message": "Error: <svg> attribute height: Expected length, \"lg\".",
             "inScope": false
           },
           {
             "kind": "console_error",
             "severity": "error",
-            "url": "https://basedeconhecimento.stage.twygoead.com/play?menu_id=play",
-            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/play?menu_id=play",
+            "message": "Error: <svg> attribute width: Expected length, \"lg\".",
             "inScope": false
           },
           {
             "kind": "console_error",
             "severity": "error",
-            "url": "https://basedeconhecimento.stage.twygoead.com/play?menu_id=play",
-            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/play?menu_id=play",
+            "message": "Error: <svg> attribute height: Expected length, \"lg\".",
             "inScope": false
           },
           {
             "kind": "console_error",
             "severity": "error",
-            "url": "https://basedeconhecimento.stage.twygoead.com/play?menu_id=play",
-            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/play?menu_id=play",
+            "message": "Error: <svg> attribute width: Expected length, \"lg\".",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/play?menu_id=play",
+            "message": "Error: <svg> attribute height: Expected length, \"lg\".",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/play?menu_id=play",
+            "message": "Error: <svg> attribute width: Expected length, \"lg\".",
             "inScope": false
           },
           {
             "kind": "a11y_violation",
             "severity": "error",
-            "url": "https://basedeconhecimento.stage.twygoead.com/play?menu_id=play",
-            "message": "[a11y/aria-allowed-attr] Elements must only use supported ARIA attributes",
-            "detail": {
-              "ruleId": "aria-allowed-attr",
-              "impact": "critical",
-              "tags": [
-                "cat.aria",
-                "wcag2a",
-                "wcag412",
-                "EN-301-549",
-                "EN-9.4.1.2",
-                "RGAAv4",
-                "RGAA-7.1.1"
-              ],
-              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-allowed-attr?application=playwright",
-              "affectedNodes": 1,
-              "firstNodeTarget": [
-                "#popover-trigger-\\:rb\\:"
-              ],
-              "firstNodeHtml": "<div id=\"popover-trigger-:rb:\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"popover-content-:rb:\" class=\"css-tz0gqg\">"
-            },
-            "inScope": false
-          },
-          {
-            "kind": "a11y_violation",
-            "severity": "error",
-            "url": "https://basedeconhecimento.stage.twygoead.com/play?menu_id=play",
-            "message": "[a11y/aria-progressbar-name] ARIA progressbar nodes must have an accessible name",
-            "detail": {
-              "ruleId": "aria-progressbar-name",
-              "impact": "serious",
-              "tags": [
-                "cat.aria",
-                "wcag2a",
-                "wcag111",
-                "EN-301-549",
-                "EN-9.1.1.1",
-                "RGAAv4",
-                "RGAA-11.1.1"
-              ],
-              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-progressbar-name?application=playwright",
-              "affectedNodes": 1,
-              "firstNodeTarget": [
-                ".chakra-progress"
-              ],
-              "firstNodeHtml": "<div class=\"chakra-progress css-120wkjd\" data-indeterminate=\"\" aria-valuemax=\"100\" aria-valuemin=\"0\" role=\"progressbar\">"
-            },
-            "inScope": false
-          },
-          {
-            "kind": "a11y_violation",
-            "severity": "error",
-            "url": "https://basedeconhecimento.stage.twygoead.com/play?menu_id=play",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/play?menu_id=play",
             "message": "[a11y/color-contrast] Elements must meet minimum color contrast ratio thresholds",
             "detail": {
               "ruleId": "color-contrast",
@@ -5738,39 +6096,18 @@
                 "RGAA-3.2.1"
               ],
               "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
-              "affectedNodes": 2,
+              "affectedNodes": 5,
               "firstNodeTarget": [
-                ".brand-hidden > .back-dashboard"
+                "#btn-profile"
               ],
-              "firstNodeHtml": "<a class=\"back-dashboard\" href=\"/o/37007/panel_viewer/dashboard\">\nBase de conhecimento\n</a>"
-            },
-            "inScope": false
-          },
-          {
-            "kind": "a11y_violation",
-            "severity": "info",
-            "url": "https://basedeconhecimento.stage.twygoead.com/play?menu_id=play",
-            "message": "[a11y/empty-heading] Headings should not be empty",
-            "detail": {
-              "ruleId": "empty-heading",
-              "impact": "minor",
-              "tags": [
-                "cat.name-role-value",
-                "best-practice"
-              ],
-              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/empty-heading?application=playwright",
-              "affectedNodes": 1,
-              "firstNodeTarget": [
-                ".chakra-heading"
-              ],
-              "firstNodeHtml": "<h2 class=\"chakra-heading css-cgsswu\"></h2>"
+              "firstNodeHtml": "<button class=\"btn btn-aluno menu-target br color\" id=\"btn-profile\" name=\"btn-profile\">\nColaborador\n<i class=\"arrow-target\"></i>\n</button>"
             },
             "inScope": false
           },
           {
             "kind": "a11y_violation",
             "severity": "error",
-            "url": "https://basedeconhecimento.stage.twygoead.com/play?menu_id=play",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/play?menu_id=play",
             "message": "[a11y/image-alt] Images must have alternative text",
             "detail": {
               "ruleId": "image-alt",
@@ -5802,7 +6139,7 @@
           {
             "kind": "a11y_violation",
             "severity": "warn",
-            "url": "https://basedeconhecimento.stage.twygoead.com/play?menu_id=play",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/play?menu_id=play",
             "message": "[a11y/landmark-one-main] Document should have one main landmark",
             "detail": {
               "ruleId": "landmark-one-main",
@@ -5823,7 +6160,7 @@
           {
             "kind": "a11y_violation",
             "severity": "warn",
-            "url": "https://basedeconhecimento.stage.twygoead.com/play?menu_id=play",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/play?menu_id=play",
             "message": "[a11y/landmark-unique] Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
             "detail": {
               "ruleId": "landmark-unique",
@@ -5835,7 +6172,7 @@
               "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
               "affectedNodes": 6,
               "firstNodeTarget": [
-                ".chakra-portal:nth-child(26) > div[aria-label=\"Notifications-top\"][role=\"region\"][aria-live=\"polite\"]"
+                ".chakra-portal:nth-child(28) > div[aria-label=\"Notifications-top\"][role=\"region\"][aria-live=\"polite\"]"
               ],
               "firstNodeHtml": "<div role=\"region\" aria-live=\"polite\" aria-label=\"Notifications-top\" id=\"chakra-toast-manager...\" style=\"position: fixed; z-i...\">"
             },
@@ -5844,7 +6181,7 @@
           {
             "kind": "a11y_violation",
             "severity": "error",
-            "url": "https://basedeconhecimento.stage.twygoead.com/play?menu_id=play",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/play?menu_id=play",
             "message": "[a11y/list] <ul> and <ol> must only directly contain <li>, <script> or <template> elements",
             "detail": {
               "ruleId": "list",
@@ -5870,7 +6207,7 @@
           {
             "kind": "a11y_violation",
             "severity": "warn",
-            "url": "https://basedeconhecimento.stage.twygoead.com/play?menu_id=play",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/play?menu_id=play",
             "message": "[a11y/meta-viewport] Zooming and scaling must not be disabled",
             "detail": {
               "ruleId": "meta-viewport",
@@ -5897,7 +6234,7 @@
           {
             "kind": "a11y_violation",
             "severity": "warn",
-            "url": "https://basedeconhecimento.stage.twygoead.com/play?menu_id=play",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/play?menu_id=play",
             "message": "[a11y/page-has-heading-one] Page should contain a level-one heading",
             "detail": {
               "ruleId": "page-has-heading-one",
@@ -5918,7 +6255,7 @@
           {
             "kind": "a11y_violation",
             "severity": "warn",
-            "url": "https://basedeconhecimento.stage.twygoead.com/play?menu_id=play",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/play?menu_id=play",
             "message": "[a11y/region] All page content should be contained by landmarks",
             "detail": {
               "ruleId": "region",
@@ -5930,11 +6267,11 @@
                 "RGAA-9.2.1"
               ],
               "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=playwright",
-              "affectedNodes": 9,
+              "affectedNodes": 12,
               "firstNodeTarget": [
-                "#mobile-logo > img[alt=\"Logo - Base de conhecimento\"][title=\"Logo - Base de conhecimento\"]"
+                "#mobile-logo > img[alt=\"Logo - Recertificação\"][title=\"Logo - Recertificação\"]"
               ],
-              "firstNodeHtml": "<img title=\"Logo - Base de conhecimento\" alt=\"Logo - Base de conhecimento\" style=\"height: 50px; align: center\" src=\"https://cdn-stage.twygo.com/assets/twygo-brand-f6d14910670a003a0ff67641a9f5e2cc7661d"
+              "firstNodeHtml": "<img title=\"Logo - Recertificação\" alt=\"Logo - Recertificação\" style=\"height: 50px; align: center\" src=\"https://cdn-stage.twygo.com/uploads/organizations_37048_medium_logo_1779798883.jpg?1779798883\">"
             },
             "inScope": false
           }

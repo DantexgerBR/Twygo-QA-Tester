@@ -1,12 +1,12 @@
-# Triage Report — Recertificação — 2026-05-26 10:06
+# Triage Report — Recertificação — 2026-05-26 11:05
 
-**Escopo**: Testsuite: Isolamento em Ambientes Adicionais · **Ambiente**: `staging-base-de-conhecimento`
+**Escopo**: Testsuite: Configuração de Conteúdo (Switch "Habilitar reinscrição") · **Ambiente**: `staging-recertificacao`
 
 ## Sumário
 
 | Total | ✅ Passed | ❌ Failed | ⊘ Skipped | Findings exploratórios |
 |---:|---:|---:|---:|---|
-| 2 | 0 | 0 | 2 | 0 erros · 0 warnings · 0 info |
+| 5 | 0 | 0 | 5 | 0 erros · 0 warnings · 0 info |
 
 > **Janela única de revisão.** Marque ☑ em UMA categoria por item.
 > Notas em PT-BR. Commit este arquivo após triagem.
@@ -26,8 +26,11 @@ Suite rodou limpa. Revise apenas a seção de exploratórios e skips abaixo (se 
 
 | TC | Tipo | Motivo |
 |---|---|---|
-| TC1 — Reinscrição num env não afeta participants no env pareado | fixme | env secundário não configurado em config/environment.json (frontmatter env_secondary: null). Bloqueio de infra — configurar staging-base-de-conhecimento-aditional + senha em .env antes de habilitar es |
-| TC2 — Toggle da flag :recertificacao no env principal NÃO afeta env secundário | fixme | env secundário não configurado em config/environment.json (frontmatter env_secondary: null). Bloqueio de infra — configurar staging-base-de-conhecimento-aditional + senha em .env antes de habilitar es |
+| TC1 — Switch "Habilitar reinscrição" aparece com flag ON na edição de curso | fixme | createCurso via UI bloqueado por HTTP 422 no env staging-base-de-conhecimento (memo project-recertificacao-seed-blocker). Mesmo com perfil Administrador ativo via popover, POST /e é rejeitado. Validar |
+| TC2 — Switch "Habilitar reinscrição" NÃO aparece com flag OFF (regressão) | fixme | requer toggle runtime da flag :recertificacao — assumido ON em staging-base-de-conhecimento. Validar manualmente OFF. |
+| TC3 — Ativar e salvar o switch persiste `has_recertification = true` | fixme | createCurso via UI bloqueado por HTTP 422 no env staging-base-de-conhecimento (memo project-recertificacao-seed-blocker). Validar manualmente permissão do user ou usar bypass via API REST. |
+| TC4 — Desativar o switch em curso com participants reinscritos é permitido sem aviso | fixme | createCurso via UI bloqueado por HTTP 422 no env staging-base-de-conhecimento (memo project-recertificacao-seed-blocker). Validar manualmente permissão do user ou usar bypass via API REST. |
+| TC5 — Paridade do switch entre formulário HAML e formulário React (facelift) | fixme | createCurso via UI bloqueado por HTTP 422 no env staging-base-de-conhecimento (memo project-recertificacao-seed-blocker). Validar manualmente permissão do user ou usar bypass via API REST. |
 
 ---
 
