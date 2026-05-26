@@ -5,7 +5,7 @@ import type { Page, Locator } from '@playwright/test';
  * Realiza polling em `video.currentTime` a cada 500ms.
  */
 export async function waitForVideoTime(
-  page: Page,
+  _page: Page,
   videoLocator: Locator,
   targetSeconds: number,
   opts: { timeoutMs?: number } = {},
@@ -31,10 +31,10 @@ export async function waitForVideoTime(
  * Retorna string vazia se o vídeo não estiver pronto (readyState < 2).
  */
 export async function captureVideoFrame(
-  page: Page,
+  _page: Page,
   videoLocator: Locator,
 ): Promise<string> {
-  return page.evaluate((video: HTMLVideoElement) => {
+  return videoLocator.evaluate((video: HTMLVideoElement) => {
     if (video.readyState < 2) return '';
     const canvas = document.createElement('canvas');
     canvas.width = video.videoWidth || 320;
@@ -43,5 +43,5 @@ export async function captureVideoFrame(
     if (!ctx) return '';
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     return canvas.toDataURL('image/jpeg', 0.8);
-  }, await videoLocator.elementHandle() as unknown as HTMLVideoElement);
+  });
 }
