@@ -1,5 +1,6 @@
 import type { Page, Locator } from '@playwright/test';
 import { BasePage } from './BasePage.js';
+import { safeWaitForURL } from '../utils/modals.js';
 
 export class LoginPage extends BasePage {
   readonly path = '/users/login';
@@ -30,11 +31,12 @@ export class LoginPage extends BasePage {
     }
     await this.emailInput.fill(email);
     await this.passwordInput.fill(password);
+    // safeWaitForURL: trackers HubSpot/Sophia seguram `load` pós-login
+    // e o waitForURL default esgota 30s. Skill safe-reload-twygo.
     await Promise.all([
-      this.page.waitForURL(
-        (url) => !url.pathname.startsWith('/users/login'),
-        { timeout: 30000 },
-      ),
+      safeWaitForURL(this.page, (url) => !url.pathname.startsWith('/users/login'), {
+        timeout: 30_000,
+      }),
       this.loginButton.click(),
     ]);
   }

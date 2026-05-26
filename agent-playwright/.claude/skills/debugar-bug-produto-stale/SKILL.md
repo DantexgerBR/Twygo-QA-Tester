@@ -1,7 +1,7 @@
 ---
 name: debugar-bug-produto-stale
-description: Diagnosticar spec marcado FAILING-BY-PRODUCT-BUG (ou equivalente) que continua red. Antes de cobrar dev, revalidar via API direta / MCP / curl que o sintoma documentado ainda acontece. Se sumiu (bug foi corrigido sem reabrir o spec), re-investigar — a causa atual pode ser outra.
-version: 1.0.0
+description: Diagnosticar spec marcado FAILING-BY-PRODUCT-BUG (ou equivalente) que continua red. Antes de cobrar dev, revalidar via API direta / MCP / curl que o sintoma documentado ainda acontece. Se sumiu (bug foi corrigido sem reabrir o spec), re-investigar — a causa atual pode ser outra. Vale também pra `test.fixme` legítimo "spec/XML desatualizado": o produto pode ter entregue a feature ausente desde o último audit.
+version: 1.1.0
 ---
 
 # debugar-bug-produto-stale
@@ -18,6 +18,13 @@ Caso real Twygo widgets, 2026-05-11 → 2026-05-13:
 - Entre 11/05 e 13/05 o servidor corrigiu silenciosamente. `GET /api/v1/o/{orgId}/panels/{panelId}/linked_menus` passou a responder 200.
 - O spec continuou red, mas em fase diferente: agora era modal "Modelo de página duplicado" no `beforeAll`.
 - Sem revalidar, o time gastaria tempo cobrando dev de um bug já fechado.
+
+Caso real Twygo base-de-conhecimento, 2026-05-19 → 2026-05-24 (mais sutil — vale `test.fixme`, não só `FAILING-BY-PRODUCT-BUG`):
+
+- TC1 e TC2 da suite "Extração de dados de repositórios" tinham `test.fixme` documentando: "botão Exportar não existe na listagem (confirmado live 2026-05-19 via chrome-devtools-mcp em /o/37007/knowledge_repositories)" e "filtro Categoria não existe no drawer (apenas Bases sem fontes e Bases sem recursos como filtros padrão)".
+- 5 dias depois, **ambos os bloqueios sumiram**: o botão apareceu com label diferente do AT ("Extrair dados" + ícone `ios_share`, não "Exportar"), e o filtro Categoria virou acessível via modo "Novo" do drawer (uma das 8 colunas filtráveis em "Opções de filtro").
+- Se ninguém tivesse rodado a skill, os TCs ficariam yellow em silêncio — o `fixme` "BLOCKED-BY-PRODUCT-BUG" gera barulho zero no relatório (Anti-pattern F enviezado: aqui o `fixme` era legítimo *na época*, mas virou stale).
+- Bônus que apareceu na re-auditoria: `data-test-id="filter-control-open-button"` foi removido do produto entre as duas datas; POM atualizado pra `#open-filter`. Audit stale captura esse tipo de drift colateral que jamais aparece num relatório porque nenhum spec quebrou em verde.
 
 ## Checklist de diagnóstico
 

@@ -281,296 +281,13 @@ def check_schema_completeness(data: dict[str, Any]) -> list[Issue]:
 
 
 # ============================================================================
-# Validações específicas de contract_version 1.1 (placeholders)
-# ============================================================================
-# Cada função aqui é chamada APENAS quando contract_version >= 1.1.
-# Implementadas progressivamente nas próximas fases do roadmap 1.1.
-# Em 2026-05-22 (Fase 0), todas retornam lista vazia — placeholders.
-
-def check_v11_rn_to_tc(data: dict[str, Any]) -> list[Issue]:
-    """v1.1 §1.1 — cada RN listada em requisitos_extraidos.md (e referenciada
-    em pré-condições/passos) precisa de pelo menos 1 TC referenciando via
-    `**RNs cobertas**`.
-
-    Heurística:
-    1. Coleta todas as RNs declaradas em `tc['rns_cobertas']` (set A)
-    2. Coleta todas as RNs mencionadas na prosa das suítes (set B), via
-       regex `RN (\\d+(?:\\.\\d+)*)` no objetivo + passos
-    3. RNs em B mas não em A → warning (potencialmente não cobertas)
-    4. Suítes sem nenhum `rns_cobertas` declarado em qualquer TC → warning
-       informativo (AT pode aproveitar para mapping explícito)
-    """
-    issues: list[Issue] = []
-    declared_rns: set[str] = set()
-    mentioned_rns: set[str] = set()
-    suites_without_rns_declarados: list[str] = []
-
-    rn_pattern = re.compile(r"\bRN\s*(\d+(?:\.\d+)*)\b", re.IGNORECASE)
-
-    for suite in data["suites"]:
-        fm = suite["frontmatter"]
-        # Coleta menções na prosa
-        prose_parts: list[str] = []
-        for pre in (fm.get("preconditions") or []):
-            prose_parts.append(str(pre))
-        for tc in suite["test_cases"]:
-            prose_parts.append(tc.get("objective", ""))
-            for step in tc["steps"]:
-                prose_parts.append(step["action"])
-                prose_parts.append(step["expected"])
-        prose = " ".join(prose_parts)
-        for m in rn_pattern.finditer(prose):
-            mentioned_rns.add(m.group(1))
-
-        # Coleta RNs declaradas pelos TCs
-        suite_has_declared = False
-        for tc in suite["test_cases"]:
-            for rn in tc.get("rns_cobertas", []):
-                declared_rns.add(str(rn).strip())
-                suite_has_declared = True
-        if not suite_has_declared:
-            suites_without_rns_declarados.append(fm["suite"])
-
-    # 1. RNs mencionadas na prosa mas não declaradas — warning por RN
-    gap = mentioned_rns - declared_rns
-    for rn in sorted(gap, key=lambda x: tuple(int(p) for p in x.split("."))):
-        issues.append((
-            "warning",
-            f"v1.1 §1.1: RN {rn} é mencionada na prosa mas nenhum TC declara "
-            f"`**RNs cobertas**` incluindo-a. Adicione a RN ao campo do TC que "
-            f"a cobre para rastreabilidade.",
-        ))
-
-    # 2. Suítes inteiras sem nenhum `rns_cobertas` — warning informativo único
-    if suites_without_rns_declarados:
-        nomes = ", ".join(f"'{n}'" for n in suites_without_rns_declarados[:5])
-        suffix = f" (+{len(suites_without_rns_declarados) - 5} mais)" if len(suites_without_rns_declarados) > 5 else ""
-        issues.append((
-            "warning",
-            f"v1.1 §1.1: {len(suites_without_rns_declarados)} suíte(s) sem nenhum "
-            f"`**RNs cobertas**` declarado em qualquer TC: {nomes}{suffix}. "
-            f"Sem mapping explícito, rastreabilidade RN→TC fica fraca.",
-        ))
-
-    return issues
-
-
-# Mapping campo → categorias obrigatórias por tipo (skill cenarios-negativos-twygo)
-_FIELD_TYPE_CATEGORIES: dict[str, set[str]] = {
-    "input": {"A", "B", "C", "D"},
-    "input texto": {"A", "B", "C", "D"},
-    "input numérico": {"A", "B", "E"},
-    "input numerico": {"A", "B", "E"},
-    "input data": {"A", "E"},
-    "textarea": {"A", "B", "C", "D"},
-    "select": {"A"},
-    "dropdown": {"A"},
-    "switch": set(),
-    "toggle": set(),
-    "file": {"A", "F", "G", "H"},
-    "upload": {"A", "F", "G", "H"},
-}
-
-
-def _extract_obrigatorios_do_catalogo(catalogs: dict[str, str]) -> list[dict[str, str]]:
-    """Extrai campos obrigatórios da seção `## Campos e validações` (markdown
-    table). Retorna lista de dicts com `name`, `type`, `required`."""
-    raw = (catalogs or {}).get("campos_e_validacoes", "") or ""
-    if not raw.strip():
-        return []
-    fields: list[dict[str, str]] = []
-    lines = [ln.strip() for ln in raw.split("\n") if ln.strip().startswith("|")]
-    if len(lines) < 2:
-        return fields
-
-    def _split(line: str) -> list[str]:
-        return [p.strip() for p in line.strip("|").split("|")]
-
-    headers = [h.lower() for h in _split(lines[0])]
-    col_name = next((i for i, h in enumerate(headers) if "campo" in h or "nome" in h or "label" in h), 0)
-    col_type = next((i for i, h in enumerate(headers) if "tipo" in h), -1)
-    col_req = next((i for i, h in enumerate(headers) if "obrigatóri" in h or "obrigatori" in h or "required" in h), -1)
-
-    for line in lines[1:]:
-        if all(set(p) <= {"-", ":"} for p in _split(line) if p):
-            continue
-        cells = _split(line)
-        if len(cells) <= max(col_name, col_type, col_req):
-            continue
-        name = cells[col_name].strip()
-        if not name or name.startswith("-"):
-            continue
-        ftype = cells[col_type].lower().strip() if col_type >= 0 else "input"
-        required_cell = cells[col_req].strip().lower() if col_req >= 0 else ""
-        is_required = required_cell.startswith("sim") or required_cell == "yes" or required_cell == "true"
-        fields.append({"name": name, "type": ftype, "required": "yes" if is_required else "no"})
-    return fields
-
-
-def _suite_prose(suite: dict[str, Any]) -> str:
-    """Concatena toda prosa de uma suíte (objetivos + passos) — útil para
-    detectar quais campos a suíte realmente interage com."""
-    parts: list[str] = []
-    for tc in suite["test_cases"]:
-        parts.append(tc.get("objective", ""))
-        for step in tc["steps"]:
-            parts.append(step["action"])
-            parts.append(step["expected"])
-    return " ".join(parts).lower()
-
-
-def check_v11_negative_coverage(suite: dict[str, Any], catalogs: dict[str, str]) -> list[Issue]:
-    """v1.1 §1.3 — cobertura mínima de cenários negativos por campo (categorias
-    A-H da skill cenarios-negativos-twygo).
-
-    Heurística refinada:
-    1. Lê catálogo `## Campos e validações` (declarado no MD)
-    2. Filtra apenas campos RELEVANTES para a suíte: aqueles cujo nome
-       aparece na prosa de algum TC (objetivo ou passos). Campo no
-       catálogo mas não mencionado na suíte é skipado (irrelevante).
-    3. Para cada campo relevante, identifica categorias obrigatórias por
-       tipo (A-H)
-    4. Procura TCs com `**Validation matrix**` cobrindo as categorias
-    5. Reporta warnings para campos relevantes cujas categorias não são
-       cobertas
-    """
-    issues: list[Issue] = []
-    fm = suite["frontmatter"]
-    suite_name = fm["suite"]
-
-    fields = _extract_obrigatorios_do_catalogo(catalogs)
-    if not fields:
-        return issues  # sem catálogo, sem o que validar
-
-    # Prosa da suíte para detectar quais campos são relevantes
-    prose = _suite_prose(suite)
-
-    # Coleta TCs com validation_matrix nesta suíte
-    suite_matrices: list[dict[str, Any]] = []
-    for tc in suite["test_cases"]:
-        if tc.get("validation_matrix"):
-            suite_matrices.append({
-                "title": tc["title"],
-                "rows": tc["validation_matrix"],
-            })
-
-    for field in fields:
-        field_name_lower = field["name"].lower()
-
-        # Filtro de relevância: campo só é relevante se a suíte menciona
-        # o nome do campo (entre aspas, com case original) na prosa
-        # Procura tanto pelo nome em aspas duplas ("Nome") quanto pelo
-        # nome em prosa (campo Nome)
-        if (
-            f'"{field_name_lower}"' not in prose
-            and f'campo "{field_name_lower}"' not in prose
-            and f'campo {field_name_lower}' not in prose
-            and field_name_lower not in prose.replace('"', '').replace("'", '')
-        ):
-            continue  # campo do catálogo não é mencionado nesta suíte
-
-        # Heurística de tipo
-        ftype = field["type"]
-        required_categories: set[str] = set()
-        for prefix, cats in _FIELD_TYPE_CATEGORIES.items():
-            if prefix in ftype:
-                required_categories |= cats
-                break
-        if not required_categories:
-            continue  # tipo não exige matriz (switch, toggle)
-
-        # Procura matriz mencionando esse campo
-        matching_matrix_rows: list[dict[str, str]] = []
-        for m in suite_matrices:
-            if field_name_lower in m["title"].lower():
-                matching_matrix_rows.extend(m["rows"])
-
-        if not matching_matrix_rows:
-            issues.append((
-                "warning",
-                f"v1.1 §1.3: Suíte '{suite_name}' menciona campo '{field['name']}' "
-                f"(tipo '{ftype}') mas nenhum TC com `**Validation matrix**` o cobre. "
-                f"Categorias obrigatórias por tipo: {sorted(required_categories)}.",
-            ))
-            continue
-
-        covered = {row.get("categoria", "").strip().upper() for row in matching_matrix_rows}
-        missing = required_categories - covered
-        if missing:
-            issues.append((
-                "warning",
-                f"v1.1 §1.3: Campo '{field['name']}' (suíte '{suite_name}') "
-                f"tem matriz mas não cobre categorias obrigatórias: "
-                f"{sorted(missing)}. Categorias cobertas: {sorted(covered)}.",
-            ))
-
-    return issues
-
-
-def check_v11_combinatorial_filters(suite: dict[str, Any]) -> list[Issue]:
-    """v1.1 §2.2 — suítes com playbook 'filtro-drawer' precisam de pelo menos
-    1 TC combinatório (2+ filtros aplicados + busca textual).
-
-    Heurística: TC combinatório é detectado quando passos do TC mencionam
-    múltiplos filtros (regex `filtro` ou `aplicar.*filtro`) E também
-    busca/pesquisa textual.
-    """
-    issues: list[Issue] = []
-    fm = suite["frontmatter"]
-    suite_name = fm["suite"]
-    playbooks = set(fm.get("playbooks") or [])
-    if "filtro-drawer" not in playbooks:
-        return issues  # suite não usa filtro-drawer; sem o que validar
-
-    # Procura TC combinatório
-    combinatorial_pattern_filter = re.compile(r"\bfiltrar?\b|\baplicar.*filtro\b", re.IGNORECASE)
-    combinatorial_pattern_busca = re.compile(r"\bbuscar?\b|\bbusca\b|\bpesquisar\b", re.IGNORECASE)
-
-    found_combinatorial = False
-    for tc in suite["test_cases"]:
-        prose_parts = [tc.get("objective", "")]
-        for step in tc["steps"]:
-            prose_parts.append(step["action"])
-        prose = " ".join(prose_parts)
-        n_filters = len(combinatorial_pattern_filter.findall(prose))
-        has_search = bool(combinatorial_pattern_busca.search(prose))
-        if n_filters >= 2 and has_search:
-            found_combinatorial = True
-            break
-
-    if not found_combinatorial:
-        issues.append((
-            "warning",
-            f"v1.1 §2.2: Suíte '{suite_name}' tem playbook 'filtro-drawer' mas "
-            f"nenhum TC combinatório (≥2 filtros + busca textual). Adicione "
-            f"pelo menos 1 TC que combine múltiplos filtros simultaneamente.",
-        ))
-
-    return issues
-
-
-# ============================================================================
 # Entrada
 # ============================================================================
 
-def validate(md_path: str | Path) -> tuple[list[str], list[str], str]:
-    """Retorna (errors, warnings, contract_version_aplicado).
-
-    O conjunto de regras é selecionado pelo `contract_version` declarado no
-    frontmatter do MD:
-      - 1.0: regras originais (anti-patterns A-H + playbooks + catálogos +
-             restrições v1 + schema)
-      - 1.1: tudo de 1.0 + verificações novas (RN→TC, negativos amplos,
-             combinatórias) — em Fase 0 (2026-05-22) ainda são placeholders.
-
-    Ver CONTRACT.md §15 para detalhes.
-    """
+def validate(md_path: str | Path) -> tuple[list[str], list[str]]:
+    """Retorna (errors, warnings)."""
     data = parse_canonical_md(md_path)
-    contract_version = data.get("contract_version", "1.0")
-
     all_issues: list[Issue] = []
-
-    # === Regras comuns a 1.0 e 1.1 ===
     for suite in data["suites"]:
         all_issues.extend(check_v1_restrictions(suite))
         all_issues.extend(check_antipatterns(suite))
@@ -578,17 +295,9 @@ def validate(md_path: str | Path) -> tuple[list[str], list[str], str]:
     all_issues.extend(check_catalogs(data))
     all_issues.extend(check_schema_completeness(data))
 
-    # === Regras adicionais de 1.1 ===
-    if contract_version == "1.1":
-        all_issues.extend(check_v11_rn_to_tc(data))
-        catalogs = data.get("catalogs") or {}
-        for suite in data["suites"]:
-            all_issues.extend(check_v11_negative_coverage(suite, catalogs))
-            all_issues.extend(check_v11_combinatorial_filters(suite))
-
     errors = [m for sev, m in all_issues if sev == "error"]
     warnings = [m for sev, m in all_issues if sev == "warning"]
-    return errors, warnings, contract_version
+    return errors, warnings
 
 
 def main() -> None:
@@ -601,12 +310,10 @@ def main() -> None:
     args = parser.parse_args()
 
     try:
-        errors, warnings, contract_version = validate(args.md_path)
+        errors, warnings = validate(args.md_path)
     except (FileNotFoundError, ValueError) as e:
         print(f"[FATAL] Parser falhou antes da validação: {e}", file=sys.stderr)
         sys.exit(1)
-
-    print(f"[INFO] contract_version aplicada: {contract_version}")
 
     if errors:
         print(f"\n=== {len(errors)} ERRO(S) — bloqueiam entrega da AT ===")

@@ -166,5 +166,33 @@
       "subscriptionPlansPath": "/admin/subscription_plans",
       "editContractPath": "/admin/edit_sys_subscription_settings/37007"
     }
+  },
+  "staging-aditional": {
+    "baseUrl": "https://stage101parceira.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_STAGING_ADITIONAL_EMAIL}",
+      "password": "${TWYGO_STAGING_ADITIONAL_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "36690",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/36690"
+    }
+  },
+  "staging-base-de-conhecimento-aditional": {
+    "baseUrl": "https://stage101parceira.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_STAGING_ADITIONAL_EMAIL}",
+      "password": "${TWYGO_STAGING_ADITIONAL_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "36690",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/36690"
+    }
   }
 }

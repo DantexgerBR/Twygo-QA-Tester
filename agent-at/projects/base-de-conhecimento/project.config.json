@@ -2,7 +2,7 @@
   "name": "Base de Conhecimento",
   "slug": "base-de-conhecimento",
   "description": "Análise de Teste do projeto 'Base de Conhecimento' da Twygo.",
-  "environment": "staging-base-de-conhecimento",
+  "environment": "staging",
   "envSecondary": null,
   "figmaPrototype": "https://www.figma.com/make/CTKjmkXlhOOkHAYeL1r57N/Base-de-conhecimento-final?p=f",
   "sourceDocs": [

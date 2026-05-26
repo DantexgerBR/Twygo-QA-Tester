@@ -27,17 +27,16 @@ Schema completo em [CONTRACT.md §4 e §5](../../../../CONTRACT.md). Resumo:
 
 ```markdown
 ---
-contract_version: 1.1               # 1.0 (legado) | 1.1 (default para projetos novos a partir de 2026-05-22)
+contract_version: 1.0
 at_version: 1
 project: <slug-do-projeto>
 project_name: "<Nome do Projeto>"
-generated_at: <ISO-8601, ex: 2026-05-22T12:34:00Z>
+generated_at: <ISO-8601, ex: 2026-05-18T12:34:00Z>
 source_docs:
   - "docs/<nome-do-arquivo>.docx"
   - "docs/<nome-da-planilha>.xlsx"
 env: <slug-do-env-principal>           # ex: staging-<slug-projeto>
 env_secondary: <slug-do-env-secundario> # opcional
-prototypeUrl: https://figma.com/...    # opcional — ativa /recon-prototipo automático (1.1+)
 totals:
   suites: <N>
   test_cases: <N>
@@ -193,19 +192,6 @@ quando detecta keyword sem catálogo correspondente preenchido.
 
 `## Dados de teste` e `## Campos e validações` são opcionais (sem keyword
 obrigatória) — preencher quando houver conteúdo relevante de `docs/`.
-
-## Escolha da `contract_version`
-
-Define qual conjunto de regras o validador aplica.
-
-| Valor | Quando usar | Comportamento |
-|---|---|---|
-| `1.0` | ATs já entregues (Base de Conhecimento, Modelos atual). Migração para 1.1 é opt-in | Regras originais: anti-patterns A-H, playbooks, catálogos condicionais, restrições v1 |
-| **`1.1` (default para projetos novos a partir de 2026-05-22)** | Projetos novos OU re-geração de AT antiga | Regras de 1.0 + validações novas (RN→TC, cobertura ampla de negativos, combinatórias mínimas, recon-prototipo automático) |
-
-**Para projetos novos**: usar **`1.1`** por default. A skill aproveita as 5 novas garantias de cobertura. Ver [CONTRACT.md §15](../../../../CONTRACT.md) para detalhes.
-
-**Para regerar AT antiga**: pode manter `1.0` (zero esforço, AT atual continua válida) OU migrar para `1.1` (esforço médio — preencher `rns_cobertas` por TC, adicionar TCs combinatórios). Migração não é obrigatória.
 
 ## Restrições v1 (CONTRACT.md v1)
 

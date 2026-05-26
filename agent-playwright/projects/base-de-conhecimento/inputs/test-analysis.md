@@ -805,3 +805,53 @@ Validar isolamento bidirecional.
    → Toast exibida: "Repositório criado com sucesso". Listagem do adicional exibe o novo repositório.
 2. Acessar a listagem no ambiente principal
    → Listagem do ambiente principal NÃO exibe o repositório criado no adicional.
+
+## TC3 — Bulk-create de repositórios com conteúdo rico no adicional não vaza pro principal
+**Prioridade**: critical
+**Tipo**: ui
+**Playbooks adicionais**: [cleanup-dados, testar-upload-de-arquivo-twygo]
+
+### Objetivo
+Validar isolamento de conteúdo rico (Fontes de conhecimento + Recursos de mídia anexados) entre tenants pareados. Cobre cenário de migração/produção onde o adicional recebe carga em massa.
+
+### Pré-condição
+Catálogo `uploadFixtures` (src/utils/test-assets.ts) carregado: PDF, DOCX, MP4 (Fontes); JPG, PNG (Recursos).
+
+### Passos
+1. Criar 10 repositórios sequencialmente no ambiente ADICIONAL (orgId 36690). Para cada repo "Bulk TC3 #{i} w{workerIndex}-{timestamp}":
+   a. Preencher Nome e Descrição → clicar Salvar
+      → Redirect pra /knowledge_repositories/{id}/edit. Toast/URL confirma persistência.
+   b. Abrir aba "Fontes de conhecimento" → clicar Adicionar → preencher Nome + anexar 1 arquivo do catálogo (alterna PDF/DOCX/MP4 entre repos) → Salvar
+      → Redirect pra /edit?tab=sources. Linha aparece na tabela de Fontes do repo.
+   c. Abrir aba "Recursos de mídia" → clicar Adicionar → preencher Nome + anexar 1 arquivo do catálogo (alterna JPG/PNG entre repos) → Salvar
+      → Redirect pra /edit?tab=resources. Linha aparece na tabela de Recursos do repo.
+2. Acessar a listagem `/knowledge_repositories` no ambiente ADICIONAL
+   → Os 10 repositórios criados aparecem na listagem (filtragem por prefixo "Bulk TC3" confirma).
+3. Acessar a listagem `/knowledge_repositories` no ambiente PRINCIPAL (orgId 36602)
+   → NENHUM dos 10 repositórios aparece (filtragem por prefixo "Bulk TC3" retorna 0 linhas).
+
+### Cleanup
+afterAll deleta os 10 repositórios via DELETE /api/v1/o/36690/knowledge_repositories/{id} (cascade exclui Fontes/Recursos anexados).
+
+## TC4 — Editar repositório no adicional re-anexando arquivo persiste e isola
+**Prioridade**: high
+**Tipo**: ui
+**Playbooks adicionais**: [cleanup-dados, testar-upload-de-arquivo-twygo]
+
+### Objetivo
+Validar que edit + re-upload no env adicional persiste no save e continua isolado do principal.
+
+### Passos
+1. Criar repositório "Editável TC4 w{workerIndex}-{timestamp}" no ADICIONAL com 1 Fonte (PDF anexado) e 1 Recurso (JPG anexado)
+   → Repositório criado com Fonte e Recurso visíveis nas respectivas abas.
+2. Voltar à listagem → editar o repo (ícone "edit" da linha) → atualizar Descrição → Salvar
+   → Toast de sucesso. Descrição atualizada após reload do form.
+3. Adicionar 1 Fonte adicional (DOCX) no mesmo repo
+   → Aba Fontes agora tem 2 linhas.
+4. Adicionar 1 Recurso adicional (PNG) no mesmo repo
+   → Aba Recursos agora tem 2 linhas.
+5. Verificar listagem no PRINCIPAL
+   → Repositório "Editável TC4 ..." NÃO aparece.
+
+### Cleanup
+afterAll deleta o repo via API (cascade exclui 2 Fontes + 2 Recursos).

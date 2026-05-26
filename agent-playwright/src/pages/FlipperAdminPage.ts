@@ -24,8 +24,13 @@ import { safeGoto } from '../utils/modals.js';
  * `SECONDARY_STORAGE_PATH` do globalSetup.
  *
  * **Regras duras** (ver skill `testar-feature-flag-twygo`):
- *  - NUNCA clicar `Fully Enable` / `Disable` no nível da flag — afeta TODAS
- *    as orgs do banco. Usar apenas `addActor`/`removeActor` no escopo da org.
+ *  - DEFAULT: usar apenas `addActor`/`removeActor` no escopo da org. Não tocar
+ *    `Fully Enable` / `Disable` global — afeta TODAS as orgs do banco.
+ *  - EXCEÇÃO carimbada: helpers `setGlobalState` / `getGlobalState` existem
+ *    para flags cujo gate de produto NÃO é actor-based (ex: `base_de_conhecimento`
+ *    está sempre Fully Enabled como switch global). Quando obrigado a usar,
+ *    SEMPRE snapshot+revert no afterAll e documentar no spec o impacto colateral
+ *    (janela em que outras orgs perdem a feature). Ver skill para checklist.
  *  - NUNCA clicar `Delete` na Danger Zone — remove a flag do sistema.
  *  - Specs que mudam estado da flag DEVEM reverter no `afterAll` (estado
  *    Flipper é compartilhado entre runs E entre projetos).
@@ -210,6 +215,105 @@ export class FlipperAdminPage extends BasePage {
   async ensureActorDisabled(actor: string): Promise<boolean> {
     if (!(await this.isActorEnabled(actor))) return false;
     await this.removeActor(actor);
+    return true;
+  }
+
+  // ─── Estado GLOBAL da flag (uso restrito — ver JSDoc da classe) ───
+  //
+  // Flipper expõe 2 botões mutuamente exclusivos no nível da flag:
+  //  - `Fully Enable` (submit name="action" value="Enable") → habilita pra
+  //    todos os actors do banco, mesmo sem entrar na lista de actors.
+  //  - `Disable` (submit name="action" value="Disable") → desabilita pra todos,
+  //    mesmo actors previamente listados deixam de "ver" a feature.
+  //
+  // A UI renderiza só UM dos dois conforme o estado atual:
+  //  - Fully Enabled → mostra `Disable`
+  //  - Disabled OU Conditionally enabled (actor-based) → mostra `Fully Enable`
+  //
+  // Ler `getGlobalState()` é seguro (read-only). Chamar `setGlobalState()`
+  // é EFETIVO em escala global do tenant — usar apenas quando a flag não
+  // tiver gate por actor (verificar antes na UI Flipper).
+
+  /**
+   * Status text da flag, normalizado. Lê o badge no canto superior direito
+   * da página (`<div class="col-auto"><span class="status bg-..."></span> Fully enabled</div>`).
+   */
+  async getGlobalState(): Promise<'fully_enabled' | 'conditionally_enabled' | 'disabled'> {
+    const text = (await this.page.locator('h4 + .col-auto').first().textContent())?.trim().toLowerCase() ?? '';
+    if (text.includes('fully enabled')) return 'fully_enabled';
+    if (text.includes('conditionally enabled')) return 'conditionally_enabled';
+    if (text.includes('disabled')) return 'disabled';
+    throw new Error(`Flipper getGlobalState: status text inesperado "${text}"`);
+  }
+
+  /** Botão `Fully Enable` (só visível quando flag NÃO está Fully Enabled). */
+  fullyEnableButton(): Locator {
+    return this.page.locator('button[type="submit"][name="action"][value="Enable"]');
+  }
+
+  /** Botão `Disable` no nível da flag (só visível quando flag está Fully Enabled). */
+  disableButton(): Locator {
+    return this.page.locator('button[type="submit"][name="action"][value="Disable"]');
+  }
+
+  /**
+   * Submete o form para mudar o estado global da flag. Idempotente — no-op
+   * se já está no estado desejado. Retorna `true` se uma alteração foi
+   * feita, `false` se já estava.
+   *
+   * **CUIDADO**: este método afeta TODAS as orgs do tenant. Usar apenas
+   * para flags cujo gate de produto não tem alternativa actor-based (ex:
+   * `base_de_conhecimento` na suíte feature-flag-habilitar-base-de-conhecimento).
+   * Sempre snapshot+revert no afterAll do spec.
+   */
+  async setGlobalState(target: 'fully_enabled' | 'disabled'): Promise<boolean> {
+    const current = await this.getGlobalState();
+    if (target === 'fully_enabled' && current === 'fully_enabled') return false;
+    if (target === 'disabled' && current === 'disabled') return false;
+
+    // Submete via `form.submit()` no contexto do browser (mesmo padrão de
+    // addActor/removeActor). `button.click()` no Flipper UI v1.3 dispatcha
+    // request mas não bate o filtro de waitForResponse de forma confiável
+    // (gotcha 1 da skill testar-feature-flag-twygo). O button alvo é
+    // identificado por `name="action"` + `value` ("Enable" pra fully_enabled,
+    // "Disable" pra disabled — texto na UI difere do value submetido).
+    const targetValue = target === 'fully_enabled' ? 'Enable' : 'Disable';
+    const responsePromise = this.page.waitForResponse(
+      (resp) =>
+        resp.url().includes('/admin/manage/features/') &&
+        resp.request().method() === 'POST',
+      { timeout: 15_000 },
+    );
+    const result = await this.page.evaluate((value) => {
+      const button = document.querySelector<HTMLButtonElement>(
+        `button[type="submit"][name="action"][value="${value}"]`,
+      );
+      if (!button) return { ok: false, error: `Button [name=action][value=${value}] not found` };
+      const form = button.closest('form');
+      if (!form) return { ok: false, error: 'Form parent of master-switch button not found' };
+      // O Flipper-UI usa `name="action"` no button, então precisamos
+      // adicionar o pair (action, value) ao form data manualmente antes
+      // do submit — `form.submit()` ignora o button que disparou.
+      const hidden = document.createElement('input');
+      hidden.type = 'hidden';
+      hidden.name = 'action';
+      hidden.value = value;
+      form.appendChild(hidden);
+      form.submit();
+      return { ok: true };
+    }, targetValue);
+    if (!result.ok) {
+      throw new Error(`Flipper setGlobalState(${target}): ${result.error}`);
+    }
+    const response = await responsePromise;
+    if (!response.ok() && response.status() !== 302 && response.status() !== 303) {
+      throw new Error(
+        `Flipper setGlobalState(${target}) retornou ${response.status()} — provável CSRF/auth.`,
+      );
+    }
+    // POST 2xx/3xx confirma que o backend persistiu. domcontentloaded da
+    // navegação pós-redirect garante UI re-renderizada.
+    await this.page.waitForLoadState('domcontentloaded');
     return true;
   }
 }

@@ -65,6 +65,14 @@ export type FlipperFlagConfig = {
  *
  * Retorna callback `revert` que deve ser chamado no `afterAll` para reverter
  * o estado original. Se nada foi mudado, `revert` é no-op.
+ *
+ * **Lida com flag em modo Fully Enabled global** (ex: `base_de_conhecimento`):
+ *  - Se `enabled=true` e flag já está Fully Enabled global → no-op idempotente
+ *    (o actor é redundante, todos os actors do banco já têm a feature).
+ *  - Se `enabled=false` e flag está Fully Enabled global → primeiro força
+ *    `Disable` (afeta TODAS as orgs do tenant!), depois sai. Revert restaura
+ *    Fully Enabled. CUIDADO: outras orgs perdem a feature durante a janela.
+ *    Use apenas quando o gate de produto não tem alternativa actor-based.
  */
 export async function ensureFlipperActor(
   browser: Browser,
@@ -77,13 +85,33 @@ export async function ensureFlipperActor(
   });
   const page = await ctx.newPage();
   let wasEnabled = false;
+  let originalGlobalState: 'fully_enabled' | 'conditionally_enabled' | 'disabled' = 'disabled';
   let snapshotTaken = false;
   try {
     const flipper = new FlipperAdminPage(page);
     await flipper.gotoFeature(config.flag);
 
-    wasEnabled = await flipper.isActorEnabled(config.actor);
+    originalGlobalState = await flipper.getGlobalState();
+    wasEnabled = originalGlobalState === 'fully_enabled' || (await flipper.isActorEnabled(config.actor));
     snapshotTaken = true;
+
+    // Se a flag está Fully Enabled global, actor-based toggle é inútil:
+    //  - enabled:true  → no-op (todos os actors já enabled implicitamente)
+    //  - enabled:false → precisa Disable global pra "esconder" da org alvo
+    if (originalGlobalState === 'fully_enabled') {
+      if (config.enabled) {
+        await ctx.close();
+        return async () => {};
+      }
+      // Disable global pra permitir testar estado OFF da org. Afeta tudo.
+      await flipper.setGlobalState('disabled');
+      await ctx.close();
+      return async () => {
+        await restoreFlipperGlobalState(browser, config, originalGlobalState);
+      };
+    }
+
+    // Estado normal actor-based: usa add/remove actor.
     const changed = config.enabled
       ? await flipper.ensureActorEnabled(config.actor)
       : await flipper.ensureActorDisabled(config.actor);
@@ -105,12 +133,81 @@ export async function ensureFlipperActor(
     // Setup falhou no meio. Tenta restaurar estado original num novo
     // contexto antes de propagar — evita state leak entre runs.
     if (snapshotTaken) {
-      await restoreFlipperActor(browser, {
-        ...config,
-        enabled: wasEnabled,
-      }).catch(() => null);
+      if (originalGlobalState === 'fully_enabled') {
+        await restoreFlipperGlobalState(browser, config, originalGlobalState).catch(() => null);
+      } else {
+        await restoreFlipperActor(browser, {
+          ...config,
+          enabled: wasEnabled,
+        }).catch(() => null);
+      }
     }
     throw err;
+  }
+}
+
+/**
+ * Força o estado global da flag (Fully Enabled / Disabled) em contexto fresco.
+ * Use em specs que precisam transicionar uma flag de gate global DURANTE
+ * a execução do teste (ex: TC3 da suite feature-flag-habilitar-base-de-conhecimento).
+ *
+ * Diferente de `ensureFlipperActor`, NÃO retorna revert — caller é responsável
+ * por restaurar estado original no afterAll. Use quando snapshot+revert já
+ * está coberto por outra chamada (ex: o `ensureFlipperActor` do beforeAll).
+ */
+export async function setFlipperGlobalState(
+  browser: Browser,
+  config: {
+    envName: string;
+    storageStatePath: string;
+    flag: string;
+    targetState: 'fully_enabled' | 'disabled';
+  },
+): Promise<void> {
+  const env = getEnvByName(config.envName);
+  const ctx = await browser.newContext({
+    storageState: config.storageStatePath,
+    baseURL: env.baseUrl,
+  });
+  const page = await ctx.newPage();
+  try {
+    const flipper = new FlipperAdminPage(page);
+    await flipper.gotoFeature(config.flag);
+    await flipper.setGlobalState(config.targetState);
+  } finally {
+    await ctx.close();
+  }
+}
+
+/**
+ * Restaura o estado global da flag (Fully Enabled / Disabled). Usado pelo
+ * revert quando `ensureFlipperActor` precisou mexer no estado global porque
+ * a flag não tinha gate actor-based.
+ */
+async function restoreFlipperGlobalState(
+  browser: Browser,
+  config: FlipperFlagConfig,
+  target: 'fully_enabled' | 'conditionally_enabled' | 'disabled',
+): Promise<void> {
+  // `conditionally_enabled` é equivalente a `disabled` no DOM (mesmo botão
+  // exposto). O revert volta pra `disabled` neste caso, perdendo o histórico
+  // de actors pré-existentes — não há API Flipper pra reconstruir estado
+  // intermediário sem listar actors um a um. Aceitável porque o cenário
+  // alvo (gate global) não usa actors em produção.
+  if (target === 'conditionally_enabled') return;
+
+  const env = getEnvByName(config.envName);
+  const ctx = await browser.newContext({
+    storageState: config.storageStatePath,
+    baseURL: env.baseUrl,
+  });
+  const page = await ctx.newPage();
+  try {
+    const flipper = new FlipperAdminPage(page);
+    await flipper.gotoFeature(config.flag);
+    await flipper.setGlobalState(target);
+  } finally {
+    await ctx.close();
   }
 }
 

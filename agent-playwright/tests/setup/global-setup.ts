@@ -6,6 +6,7 @@ import { createLogger } from '../../src/utils/logger.js';
 import { LoginPage } from '../../src/pages/LoginPage.js';
 import { loadEnvironmentConfig, loadProjectConfig } from '../../src/utils/environment.js';
 import { FILES } from '../../src/utils/constants.js';
+import { safeWaitForURL } from '../../src/utils/modals.js';
 
 const log = createLogger('global-setup');
 
@@ -77,7 +78,11 @@ async function loginAndPersist(
     const loginPage = new LoginPage(page);
     await page.goto('/users/login');
     await loginPage.login(envEntry.credentials.email, envEntry.credentials.password);
-    await page.waitForURL((url) => !url.pathname.startsWith('/users/login'), { timeout: 30_000 });
+    // safeWaitForURL: redirect pós-login espera `load`; trackers HubSpot/Sophia
+    // seguram (skill safe-reload-twygo). Já causou falha em staging-without-credits.
+    await safeWaitForURL(page, (url) => !url.pathname.startsWith('/users/login'), {
+      timeout: 30_000,
+    });
 
     mkdirSync(dirname(destinationPath), { recursive: true });
     await context.storageState({ path: destinationPath });

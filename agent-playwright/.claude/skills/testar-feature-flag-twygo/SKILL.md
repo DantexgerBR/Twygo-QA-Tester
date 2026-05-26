@@ -26,11 +26,44 @@ Para testes Twygo a única dimensão segura é **Actors** — adicionar/remover
 
 ## Catálogo de flags conhecidas
 
-| Flag | Domínio | Envs com flag ON (actor) | Envs com flag OFF |
-|---|---|---|---|
-| `paineis_do_usuario_beta_test` | Widgets / Painéis | `staging-widgets`, `staging`, demais staging principais | `staging-widgets-disabled` |
+| Flag | Domínio | Arquitetura | Envs com flag ON | Envs com flag OFF |
+|---|---|---|---|---|
+| `paineis_do_usuario_beta_test` | Widgets / Painéis | Actor-based | `staging-widgets`, `staging`, demais staging principais | `staging-widgets-disabled` |
+| `base_de_conhecimento` | Base de Conhecimento | **Global only** (Fully Enabled / Disabled — sem actor gate efetivo) | `staging`, `staging-base-de-conhecimento`, todos staging | — (precisa Disable global, ver §Exceção carimbada) |
 
 Adicione novas flags aqui quando descobrir (apenas slug de env, sem orgId).
+
+## Validar arquitetura da flag ANTES de gerar spec
+
+Audit Base de Conhecimento (2026-05-22) descobriu que `base_de_conhecimento`
+está sempre `Fully Enabled` globalmente — não tem gate actor-based no
+backend. Specs gerados assumindo `ensureFlipperActor(enabled:false)` testariam
+a flag errada e dariam falso-positivo. Pra evitar esse buraco, **antes de
+gerar spec novo de feature flag**, executar este checklist:
+
+### Passo 1 — Abrir a flag no Flipper UI live
+
+`https://<host>/admin/manage/features/<flag>` logado com user elevado.
+
+### Passo 2 — Ler o status atual e a lista de actors
+
+| Status text | Lista de actors | Arquitetura sugerida | Como testar |
+|---|---|---|---|
+| `Conditionally enabled` | 1+ actors `Organization;X` | **Actor-based** ✅ | Padrão canônico — `ensureFlipperActor` |
+| `Disabled` | Vazio | **Actor-based mas sem uso atual** ⚠️ | Confirmar com produto se gate Rails é por actor ou global; se actor, padrão canônico |
+| `Fully Enabled` | (irrelevante — todos os actors implícitos) | **Global only** ⚠️⚠️ | Provável que gate Rails NÃO consulte actor — adicionar actor não muda comportamento. Ver §Exceção carimbada |
+| `Disabled` + outra flag `<feature>_enabled` Fully Enabled | — | **Flag declarada é órfã**; gate real é outra | Atualizar `.data.ts` apontando pro gate real antes de prosseguir |
+
+### Passo 3 — Confirmar com produto se status `Fully Enabled` ou `Disabled` órfão
+
+Mensagem padrão pra produto/dev: "Estou criando spec de teste pra
+`<flag>`. No Flipper a flag está `<status>`. Pergunta: o gate em Rails
+checa `Flipper.enabled?(:<flag>, organization)` (actor-based) ou
+`Flipper.enabled?(:<flag>)` (global)? Se for global, vou ter que
+desabilitar globalmente durante o teste — ok, ou tem outra forma de
+gate por org?"
+
+Sem essa confirmação, spec pode passar/falhar por motivo errado.
 
 ## Pré-condição: user com flag de acesso elevado
 
@@ -235,16 +268,20 @@ runs subsequentes (e outros projetos) veriam estado contaminado.
 
 ## Anti-patterns
 
-### A. ❌ Clicar `Fully Enable` / `Disable` no nível da flag
+### A. ❌ Clicar `Fully Enable` / `Disable` no nível da flag (default)
 
 ```ts
-// ❌ NÃO FAZER
+// ❌ NÃO FAZER (default)
 await page.getByRole('button', { name: 'Fully Enable' }).click();
 ```
 
 Esses botões mudam o master switch da flag — habilitam/desabilitam para
 TODAS as orgs do banco. Vão afetar testes de outros projetos que
 dependem do estado oposto. Use apenas `Add an actor` / `Remove`.
+
+**Única exceção autorizada**: flags onde o gate Rails é provadamente
+global (não consulta actor). Ver §Exceção carimbada abaixo — usar via
+`FlipperAdminPage.setGlobalState` / `setFlipperGlobalState` com snapshot+revert.
 
 ### B. ❌ Clicar `Delete` na Danger Zone
 
@@ -295,6 +332,48 @@ Antes desta skill (2026-05-15), specs `transicao-flag-off-on.spec.ts` e
 toggle runtime da flag — DevOps preparar env mutável". Com Flipper UI
 acessível, esses fixme são removíveis. Anti-pattern F da §7.6 do
 CLAUDE.md aplica: skip esconde bug; reescrever com `ensureFlipperActor`.
+
+## Exceção carimbada: flags sem gate actor-based
+
+Quando o checklist da §Validar arquitetura confirma que o gate Rails da
+flag é **global** (não consulta actor), `Add an actor` no Flipper não
+muda comportamento da UI da org alvo. A única forma de testar OFF é
+clicar `Disable` no master switch — o que afeta TODAS as orgs do tenant.
+
+**Quando é aceitável**: a suite tem que testar OFF E não há alternativa
+no produto (sem gate actor-based, sem env paralelo com a flag desligada,
+sem rota de cookie/header pra simular).
+
+**Helper canônico**: `FlipperAdminPage.setGlobalState('fully_enabled' | 'disabled')`
++ `setFlipperGlobalState()` (em `src/utils/flipperFlag.ts`). `ensureFlipperActor`
+detecta automaticamente quando a flag está Fully Enabled e cai em
+`setGlobalState('disabled')` para `enabled:false`.
+
+**Checklist obrigatório no spec** quando usar:
+
+1. **Comentário acima de `test(...)`**: declarar o impacto colateral em texto
+   ("essa run desabilita `<flag>` globalmente por ~Xs — outras orgs perdem
+   a feature durante a janela") + link pra auditoria que confirmou que não
+   há alternativa.
+2. **`beforeAll` faz snapshot do estado original** via `ensureFlipperActor`
+   (que internamente faz `getGlobalState`).
+3. **`afterAll` chama o `revert` retornado pelo beforeAll** — restaura
+   estado original mesmo se o teste falhar no meio.
+4. **Janela curta**: o teste em si deve ser rápido (< 30s) para minimizar
+   exposição de outras orgs ao estado errado.
+5. **Não rodar em paralelo com outros specs que tocam a mesma flag** — em
+   `playwright.config.ts`, garantir `fullyParallel: false` ou `workers: 1`
+   para a pasta da suíte se houver risco de colisão.
+
+**Caso de uso atual**: `feature-flag-habilitar-base-de-conhecimento`
+(TC1 e TC3) — `base_de_conhecimento` é Fully Enabled global no stage10
+e não tem gate actor-based. Auditoria
+`outputs/base-de-conhecimento/auditoria-suite-feature-flag-20260522-082022.md`.
+
+**Roadmap**: pedir produto criar gate actor-based dedicado (ex:
+`habilitar_base_de_conhecimento_por_org`) que consulte
+`Flipper.enabled?(:flag, organization)`. Quando existir, migrar suite pra
+padrão canônico e remover §Exceção carimbada deste catálogo.
 
 ## Quando NÃO usar esta skill
 
