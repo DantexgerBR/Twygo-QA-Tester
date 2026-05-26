@@ -10,6 +10,8 @@ import {
   getProjectConfigPath,
 } from '../../../src/utils/environment.js';
 import { slugify } from '../../../src/utils/helpers.js';
+import { MetricsCollector } from './metrics.js';
+import type { RunMode } from '../../../src/types/metrics.js';
 import type {
   ParsedAnalysis,
   ParsedTestSuite,
@@ -261,19 +263,34 @@ async function main(): Promise<void> {
     return;
   }
 
-  // Pre-flight (1.5) — sempre, exceto se --no-preflight ou --smoke-only (que já é o smoke)
-  if (!args.noPreflight && !args.smokeOnly) {
-    const pre = await preflight();
-    if (pre !== 0) {
-      log.error('Abortando: pre-flight falhou.');
-      process.exit(pre);
-    }
+  // Coletor de métricas (design roadmap-agent-metrics). Modo e suite são
+  // resolvidos cedo; o suite só é único quando --suite casa exatamente 1.
+  const mode: RunMode = args.regression
+    ? 'regression'
+    : args.suite
+      ? 'per-suite'
+      : 'all-suites';
+  const metrics = new MetricsCollector(mode, args.suite ?? null);
+
+  // --smoke-only: roda só o smoke e sai (instrumentado como fase preflight).
+  if (args.smokeOnly) {
+    const pre = await metrics.time('preflight', preflight);
+    if (pre !== 0) metrics.addHumanIntervention();
+    metrics.flush(pre);
+    process.exit(pre);
   }
 
-  // --smoke-only: roda só o smoke e sai
-  if (args.smokeOnly) {
-    const pre = await preflight();
-    process.exit(pre);
+  // Pre-flight (1.5) — sempre, exceto se --no-preflight.
+  if (!args.noPreflight) {
+    const pre = await metrics.time('preflight', preflight);
+    if (pre !== 0) {
+      log.error('Abortando: pre-flight falhou.');
+      metrics.addHumanIntervention();
+      metrics.flush(pre);
+      process.exit(pre);
+    }
+  } else {
+    metrics.markSkipped('preflight');
   }
 
   const suites = selectSuites(parsed, args);
@@ -289,36 +306,57 @@ async function main(): Promise<void> {
     }
   }
 
-  log.info('=== Fase 5: Execução Playwright ===');
-  const playwrightExit = await runPlaywright(suites, args.regression);
-  if (playwrightExit !== 0) {
-    log.warn(
-      `Playwright finalizou com exit ${playwrightExit}. Continuando para validador + report.`,
+  let playwrightExit = 1;
+  try {
+    log.info('=== Fase 5: Execução Playwright ===');
+    playwrightExit = await metrics.time('execute', () =>
+      runPlaywright(suites, args.regression),
     );
-  }
+    // Deriva contagens (passed/failed/fixmeSkipped) do test-results.json recém-gravado.
+    metrics.attachExecuteDetails();
+    if (playwrightExit !== 0) {
+      log.warn(
+        `Playwright finalizou com exit ${playwrightExit}. Continuando para validador + report.`,
+      );
+    }
 
-  if (!args.noExplore) {
-    log.info('=== Fase 5.5: Validação Exploratória ===');
-    const exploreExit = await chainExplore();
-    if (exploreExit !== 0) log.warn(`Validador exploratório exit ${exploreExit}`);
-  }
+    if (!args.noExplore) {
+      log.info('=== Fase 5.5: Validação Exploratória ===');
+      const exploreExit = await metrics.time('validate', chainExplore);
+      if (exploreExit !== 0) log.warn(`Validador exploratório exit ${exploreExit}`);
+    } else {
+      metrics.markSkipped('validate');
+    }
 
-  if (!args.noBugReports) {
-    log.info('=== Fase 5.7: Bug Reports prontos pra task ===');
-    const bugExit = await chainBugReports();
-    if (bugExit !== 0) log.warn(`Bug-reports generator exit ${bugExit}`);
-  }
+    if (!args.noBugReports) {
+      log.info('=== Fase 5.7: Bug Reports prontos pra task ===');
+      const bugExit = await metrics.time('bug-reports', chainBugReports);
+      if (bugExit !== 0) log.warn(`Bug-reports generator exit ${bugExit}`);
+    } else {
+      metrics.markSkipped('bug-reports');
+    }
 
-  if (!args.noReport) {
-    log.info('=== Fase 6: Relatório ===');
-    const reportExit = await chainReport(suites, args.regression);
-    if (reportExit !== 0) log.warn(`Relatório exit ${reportExit}`);
-  }
+    if (!args.noReport) {
+      log.info('=== Fase 6: Relatório ===');
+      const reportExit = await metrics.time('report', () =>
+        chainReport(suites, args.regression),
+      );
+      if (reportExit !== 0) log.warn(`Relatório exit ${reportExit}`);
+    } else {
+      metrics.markSkipped('report');
+    }
 
-  if (!args.noTriage) {
-    log.info('=== Fase 6.5: Triage Report (lista dúvidas pra QA) ===');
-    const triageExit = await chainTriage(suites, args.regression);
-    if (triageExit !== 0) log.warn(`Triage exit ${triageExit}`);
+    if (!args.noTriage) {
+      log.info('=== Fase 6.5: Triage Report (lista dúvidas pra QA) ===');
+      const triageExit = await metrics.time('triage', () =>
+        chainTriage(suites, args.regression),
+      );
+      if (triageExit !== 0) log.warn(`Triage exit ${triageExit}`);
+    } else {
+      metrics.markSkipped('triage');
+    }
+  } finally {
+    metrics.flush(playwrightExit);
   }
 
   process.exit(playwrightExit);

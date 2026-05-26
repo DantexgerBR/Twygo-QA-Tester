@@ -27,6 +27,9 @@ outputs/**/test-results.json
 outputs/**/test-analysis.parsed.json
 outputs/**/allure-results/
 outputs/**/allure-report/
+# metrics.json por execução (intermediário regenerável; agregado localmente
+# pela skill agent-metrics). Alinhado com test-results.json — não versionar.
+outputs/**/metrics/
 # NÃO ignorar (gerados mas devem ser versionados):
 # - outputs/**/reports/      (Markdown self-contained com cópia dos artifacts)
 # - outputs/**/triage-report.md  (decisão QA)

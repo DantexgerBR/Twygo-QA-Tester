@@ -74,6 +74,7 @@ npm run agent:parse                    # XML TestLink → JSON
 npm run agent:suites                   # Lista as testsuites do XML parseado
 npm run agent:explore                  # Consolida findings exploratórios
 npm run agent:report                   # Gera relatório no modo all-suites
+npm run agent:metrics -- --last 10     # Trend dos KPIs do agente (skill agent-metrics)
 npm run typecheck                      # tsc --noEmit
 npm run test                           # playwright test puro (sem orquestração)
 npm run test:headed                    # Playwright com browser visível

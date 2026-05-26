@@ -24,6 +24,7 @@
     "agent:report": "tsx .claude/skills/twygo-report-generator/generator.ts",
     "agent:triage": "tsx .claude/skills/twygo-triage-report/generator.ts",
     "agent:bug-reports": "tsx .claude/skills/gerar-bug-report-de-tc-red/generator.ts",
+    "agent:metrics": "tsx .claude/skills/agent-metrics/aggregator.ts",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
