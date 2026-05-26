@@ -1,0 +1,58 @@
+# Exemplo de arquivo de validações do agent-db (formato canônico da V1).
+# Rode com:  python -m src.main --input inputs/example.validation.yaml
+#
+# Cada item em `validations` vira uma query parametrizada read-only.
+# Valores NUNCA são interpolados na string SQL — vão por bindparam.
+
+slug: creditos-fase02-logs-indexacao
+connection: default
+
+validations:
+  # 1. Presença: garante que o log da indexação foi gravado.
+  - id: log-indexacao-presente
+    type: presence
+    table: ai_indexing_logs
+    where:
+      organization_id: 36675
+    description: "Log da indexação foi gravado em ai_indexing_logs"
+
+  # 2. Count: deve haver exatamente 1 log por execução de indexação.
+  - id: um-log-por-execucao
+    type: count
+    table: ai_indexing_logs
+    where:
+      organization_id: 36675
+      status: completed
+    expect:
+      count: 1
+    description: "Deve haver 1 log de indexação concluída"
+
+  # 3. Equals: status do log deve ser 'completed'.
+  - id: status-completed
+    type: equals
+    table: ai_indexing_logs
+    column: status
+    where:
+      organization_id: 36675
+    expect:
+      value: completed
+    description: "Coluna status = 'completed' após indexação"
+
+  # 4. Absence: nenhum log gravado quando o agente está desligado (org fictícia).
+  - id: sem-log-org-desligada
+    type: absence
+    table: ai_indexing_logs
+    where:
+      organization_id: 999999
+    description: "Nenhum log quando o agente está desligado"
+
+  # 5. View definition: a view de consumo expõe as colunas esperadas.
+  - id: view-consumo-creditos
+    type: view_definition
+    table: vw_consumo_creditos
+    expect:
+      columns:
+        - organization_id
+        - total_creditos
+        - periodo
+    description: "View vw_consumo_creditos exposta com colunas esperadas"

@@ -41,11 +41,13 @@ Agente especializado em executar validações diretas em banco de dados acionada
 |---|---|
 | `CLAUDE.md` (especificação) | ✅ Completo |
 | `README.md` (este arquivo) | ✅ Visão geral |
-| Skills `db-test-executor`, `db-query-builder`, `db-report-generator` | 🚧 Esqueleto (SKILL.md presentes, scripts não implementados) |
-| Conexão MySQL + read-only guard | ❌ Pendente |
-| Templates de query por domínio (`src/queries/`) | ❌ Pendente |
-| Validators (count, presence, equals, FK, view, etc.) | ❌ Pendente |
-| Relatório HTML/JSON | ❌ Pendente |
+| Skills `db-test-executor`, `db-query-builder`, `db-report-generator` | 🚧 Esqueleto (SKILL.md presentes; lógica V1 já implementada em `src/`) |
+| Conexão MySQL + read-only guard | ✅ V1 (engine SQLAlchemy/PyMySQL + `SET SESSION TRANSACTION READ ONLY` + `MutationGuard`) |
+| Builder de queries parametrizadas (`src/queries/`) | ✅ V1 (count/select/view — `text()` + `bindparams`; templates `.sql.j2` por domínio pendentes) |
+| Validators (count, presence, absence, equals, view_definition) | ✅ V1 — `compare_orgs`/`fk_integrity`/`time_window` retornam WARN (não implementados) |
+| Relatório JSON + summary.txt | ✅ V1 (`output/{slug}_{ts}/report.json`; HTML/CSV de evidência pendentes) |
+| CLI (`python -m src.main`) | ✅ V1 (`--input`, `--output`, `--config`, `--connection`, `--check-connection`, `--fail-fast`) |
+| Parse do MD canônico (CONTRACT.md §V2) | ❌ Pendente (input V1 é `.yaml`/`.json`) |
 
 > O agente já tem **especificação detalhada** em [CLAUDE.md](CLAUDE.md). A implementação foi planejada herdando padrões do projeto-base [Twygo/migration-validator](https://github.com/Twygo/migration-validator).
 
