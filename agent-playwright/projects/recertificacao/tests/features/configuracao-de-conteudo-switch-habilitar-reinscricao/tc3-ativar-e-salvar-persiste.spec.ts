@@ -7,18 +7,12 @@ import { SeedAdminPage } from '../../../pages/SeedAdminPage.js';
 const STORAGE_PATH = resolve(process.cwd(), 'outputs/.auth/storage.json');
 
 test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', () => {
-  // Bloqueio confirmado live 2026-05-26 — ver memo
-  // [[project-recertificacao-seed-blocker]]. createCurso via UI retorna
-  // 422 mesmo com perfil Admin via popover. Detalhe em TC1 deste mesmo
-  // describe (mesma raiz).
-  test.fixme(
-    true,
-    'createCurso via UI bloqueado por HTTP 422 no env staging-base-de-conhecimento (memo project-recertificacao-seed-blocker). Validar manualmente permissão do user ou usar bypass via API REST.',
-  );
-  // Seed auto-suficiente via SeedAdminPage (skill `provisionar-seed`):
-  // beforeAll cria curso com `has_recertification = false` (pré-condição
-  // do MD); afterAll deleta o curso inteiro — revert de toggle é
-  // desnecessário porque o registro deixa de existir.
+  // Seed auto-suficiente via SeedAdminPage (skill `provisionar-seed` v1.3):
+  // beforeAll cria curso com defaults (`has_recertification = false` por
+  // omissão — switch fica em tab posterior do edit, não no form de criação).
+  // O test toggla o switch via ContentEditPage e valida persistência.
+  // afterAll deleta o curso inteiro — revert de toggle é desnecessário
+  // porque o registro deixa de existir.
   let cursoId: number;
   let cursoName: string;
 

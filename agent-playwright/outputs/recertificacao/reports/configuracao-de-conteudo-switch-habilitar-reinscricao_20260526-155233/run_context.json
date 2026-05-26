@@ -1,5 +1,5 @@
 {
-  "runId": "configuracao-de-conteudo-switch-habilitar-reinscricao_20260526-110531",
+  "runId": "configuracao-de-conteudo-switch-habilitar-reinscricao_20260526-155233",
   "mode": "per-suite",
   "suiteFilter": "Configuração de Conteúdo (Switch \"Habilitar reinscrição\")",
   "projectName": "Recertificação",
@@ -7,5 +7,5 @@
   "browsers": [
     "chromium"
   ],
-  "generatedAt": "2026-05-26T14:05:31.927Z"
+  "generatedAt": "2026-05-26T18:52:34.051Z"
 }

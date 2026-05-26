@@ -7,22 +7,15 @@ import { SeedAdminPage } from '../../../pages/SeedAdminPage.js';
 const STORAGE_PATH = resolve(process.cwd(), 'outputs/.auth/storage.json');
 
 test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', () => {
-  // Bloqueio confirmado live 2026-05-26 — ver memo
-  // [[project-recertificacao-seed-blocker]]. createCurso via UI retorna
-  // 422 mesmo com perfil Admin via popover.
-  test.fixme(
-    true,
-    'createCurso via UI bloqueado por HTTP 422 no env staging-base-de-conhecimento (memo project-recertificacao-seed-blocker). Validar manualmente permissão do user ou usar bypass via API REST.',
-  );
-  // Seed auto-suficiente via SeedAdminPage (skill `provisionar-seed`):
-  // beforeAll cria curso com `has_recertification = true`. A parte "com
-  // participants reinscritos" ainda NÃO é coberta porque
-  // `SeedAdminPage.criarAlunoMatriculado` está marcado not-implemented
-  // (requer recon live do fluxo "Adicionar aluno" — ver Page Object).
-  // Quando o helper estiver disponível, estender o beforeAll para criar
-  // participant + setar recertification_number > 0 (validação cross-suite
-  // com Suite 02). Por ora, o teste valida apenas que desativar o switch
-  // não dispara modal/aviso de bloqueio (parte do RN 2.3).
+  // Seed auto-suficiente via SeedAdminPage (skill `provisionar-seed` v1.3):
+  // beforeAll cria curso com defaults, depois abre edit e liga o switch
+  // "Habilitar reinscrição" (que vive em tab posterior do form facelift,
+  // NÃO no form de criação). A parte "com participants reinscritos"
+  // ainda NÃO é coberta porque `SeedAdminPage.criarAlunoMatriculado`
+  // está marcado not-implemented (helper canônico documentado na skill
+  // v1.3 §"Matrícula de aluno" — refatorar quando migrar Suite 02).
+  // Por ora, o teste valida apenas que desativar o switch não dispara
+  // modal/aviso de bloqueio (parte do RN 2.3).
   let cursoId: number;
   let cursoName: string;
 
@@ -32,10 +25,15 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
     const page = await context.newPage();
     try {
       const seed = new SeedAdminPage(page);
-      cursoId = await seed.createCurso({
-        name: cursoName,
-        hasRecertification: true,
-      });
+      cursoId = await seed.createCurso({ name: cursoName });
+      // Ligar o switch "Habilitar reinscrição" via ContentEditPage —
+      // skill v1.3 documenta que o switch NÃO está no form de criação
+      // (vive em tab posterior do edit).
+      const contentEdit = new ContentEditPage(page);
+      await contentEdit.openEditById(cursoId);
+      await contentEdit.setHabilitarReinscricao(true);
+      await contentEdit.save();
+      await contentEdit.expectSaveSuccess();
     } finally {
       await context.close();
     }

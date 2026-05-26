@@ -166,21 +166,6 @@ export class SeedAdminPage extends BasePage {
   }
 
   /**
-   * Localizador do textarea/input de "Descrição" no form de evento.
-   * REVISAR-RECON-LIVE: descrição em HAML legado costuma ser `<textarea
-   * id="event_description">`. Em React pode ser rich-text Plate (skill
-   * `testar-plate-editor-twygo`) — neste caso `fill` direto não funciona.
-   * Por ora, só usa o campo plain; se for Plate, caller pode pular.
-   */
-  private getDescriptionInput(): Locator {
-    // REVISAR: aguardando data-test-id estável.
-    return this.page
-      .locator('#event_description, #learning_path_description')
-      .or(this.page.getByLabel(/^Descrição$/i))
-      .first();
-  }
-
-  /**
    * Botão "Salvar" do form. Cobre input[type="submit"] (HAML) e
    * button (React) via role.
    */
@@ -245,39 +230,108 @@ export class SeedAdminPage extends BasePage {
   // ============================================================
 
   /**
-   * Cria um curso (`Event::KIND_COURSE`) via UI admin.
+   * Cria um curso (`Event::KIND_COURSE` / `kind=0`) via UI admin.
    *
-   * Rota: `/o/{orgId}/events/new` — form Rails/HAML legado (default no
-   * Twygo até 2026-05). Pós-save redireciona para `/e/{id}/edit`.
+   * **Rota canônica facelift React** (skill `provisionar-seed` v1.3,
+   * validada live 2026-05-26): `/o/{orgId}/contents/new?kind=0`.
+   * Pós-save redireciona para `/contents/{id}/edit`.
+   *
+   * **NÃO** usar `/o/{orgId}/events/new` (rota HAML legada) — retorna
+   * HTTP 422 silencioso ("The change you wanted was rejected"). A rota
+   * HAML ainda renderiza o form, mas o POST `/e` está desativado pra
+   * admins no facelift novo.
+   *
+   * Form facelift exige (validado live):
+   *  - Nome * (textbox com asterisco no accessible name)
+   *  - Tipo de experiência * (combobox autocomplete — env precisa ter
+   *    ≥1 cadastrado; em `staging-recertificacao` existe "Suite Everton CSV")
+   *  - Descrição * (rich-text dentro de `<iframe title="Editor de Rich Text">`)
+   *  - Situação * (default "Em desenvolvimento" — não mexer)
+   *  - Quem pode ver * (default "Usuários" — não mexer)
    *
    * @param data.name             obrigatório, worker-isolated recomendado
-   * @param data.hasRecertification se `true`, liga o switch antes de salvar
-   * @param data.description      opcional, ignora se form usa rich-text Plate
+   * @param data.tipoExperiencia  opcional; se omitido, escolhe a primeira
+   *                              opção da listbox do combobox
+   * @param data.description      opcional; default = texto auto-gerado
+   * @param data.hasRecertification **DEPRECATED/NO-OP** — switch "Habilitar
+   *                              reinscrição" no facelift NÃO está na tab
+   *                              "Identificação" do form de CRIAÇÃO; vive
+   *                              em tab posterior do form de EDIÇÃO
+   *                              (provavelmente "Aprovação", a confirmar
+   *                              via recon live). Caller que precise `true`
+   *                              deve chamar `ContentEditPage.setHabilitarReinscricao(true)`
+   *                              + `save()` após `createCurso` retornar.
    * @returns eventId real capturado de `page.url()` após save
    */
   async createCurso(data: {
     name: string;
     hasRecertification?: boolean;
     description?: string;
+    tipoExperiencia?: string;
   }): Promise<number> {
-    await this.ensureAdminProfile();
-    await safeGoto(this.page, `/o/${getOrgId()}/events/new`);
-    await this.getNameInput().waitFor({ state: 'visible', timeout: 15_000 });
-    await this.getNameInput().fill(data.name);
-    if (data.description) {
-      // REVISAR-RECON-LIVE: se o produto migrou a descrição para rich-text
-      // Plate, `fill` falha — caller que precise descrição rica deve
-      // estender este Page Object com helper Plate-aware (skill
-      // `testar-plate-editor-twygo`). Hoje assume textarea/input plain.
-      const desc = this.getDescriptionInput();
-      if (await desc.isVisible().catch(() => false)) {
-        await desc.fill(data.description);
-      }
-    }
     if (data.hasRecertification === true) {
-      await this.setHabilitarReinscricao(true);
+      // eslint-disable-next-line no-console -- aviso útil em seed
+      console.warn(
+        '[SeedAdminPage.createCurso] hasRecertification=true é NO-OP no v1.3 ' +
+          '(switch vive em tab posterior do edit, não no form de criação). ' +
+          'Ative manualmente: contentEditPage.setHabilitarReinscricao(true) + save() após o create.',
+      );
     }
-    await this.submitAndWaitForEditUrl();
+
+    await this.ensureAdminProfile();
+    await safeGoto(this.page, `/o/${getOrgId()}/contents/new?kind=0`);
+
+    // 1. Nome (obrigatório)
+    const nameInput = this.page.getByRole('textbox', { name: /^Nome \*/ });
+    await nameInput.waitFor({ state: 'visible', timeout: 15_000 });
+    await nameInput.fill(data.name);
+
+    // 2. Tipo de experiência (obrigatório, combobox autocomplete).
+    // O label do form facelift NÃO tem `htmlFor` vinculando ao input
+    // — `getByLabel` falha. O texto "Digite ou selecione..." é
+    // aria-describedby (não placeholder). Estratégia robusta: seletor
+    // por atributos do DOM. "Tipo de experiência" é o 1º combobox
+    // autocomplete no form Identificação (vem antes de Classificação
+    // e Categorias, que também são autocomplete).
+    // REVISAR: aguardando data-test-id estável `event-form-type-combobox`.
+    const tipoCombobox = this.page
+      .locator('input[role="combobox"][aria-autocomplete="list"]')
+      .first();
+    await tipoCombobox.waitFor({ state: 'visible', timeout: 10_000 });
+    await tipoCombobox.click();
+    const tipoOpcao = data.tipoExperiencia
+      ? this.page.getByRole('option', { name: data.tipoExperiencia, exact: true })
+      : this.page.getByRole('listbox').getByRole('option').first();
+    await tipoOpcao.waitFor({ state: 'visible', timeout: 5_000 });
+    await tipoOpcao.click();
+
+    // 3. Descrição (obrigatório, rich-text dentro de iframe).
+    // `fill` no body do iframe muta o DOM mas NÃO dispara onChange do
+    // componente React — backend valida e devolve "Descrição é
+    // obrigatório". Precisa simular digitação real: click pra focar,
+    // pressSequentially pra disparar input events, blur (Tab) pra
+    // disparar onBlur/validação.
+    const descricaoText =
+      data.description ?? `Seed automatizado — ${data.name} (createCurso v1.3).`;
+    const descricaoFrame = this.page.frameLocator(
+      'iframe[title^="Editor de Rich Text"]',
+    );
+    const descricaoBody = descricaoFrame.locator('body');
+    await descricaoBody.click();
+    await descricaoBody.pressSequentially(descricaoText, { delay: 10 });
+    // Blur disparando onChange do wrapper React (sem isso, validação inline
+    // "Descrição é obrigatório" persiste).
+    await this.page.keyboard.press('Tab');
+
+    // 4. Situação e Quem pode ver: defaults OK ("Em desenvolvimento" / "Usuários").
+
+    // 5. Salvar
+    await dismissCommonModals(this.page);
+    await this.getSaveButton().click();
+    await this.page.waitForURL(/\/o\/\d+\/contents\/\d+\/edit/, {
+      timeout: 30_000,
+    });
+
     return this.extractEventIdFromUrl();
   }
 

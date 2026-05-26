@@ -9,21 +9,13 @@ import { SeedAdminPage } from '../../../pages/SeedAdminPage.js';
 const STORAGE_PATH = resolve(process.cwd(), 'outputs/.auth/storage.json');
 
 test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', () => {
-  // Bloqueio confirmado live 2026-05-26 via Playwright MCP: createCurso
-  // via UI no env staging-base-de-conhecimento (orgId 37007) com user
-  // padrão de teste retorna HTTP 422 "The change you wanted was rejected"
-  // mesmo após trocar perfil para Administrador via popover. Form HTML
-  // do `/o/{orgId}/events/new` não expõe authenticity_token visível;
-  // Twygo provavelmente injeta CSRF via interceptor JS que o submit
-  // nativo não dispara. Necessita validação humana (memo
-  // [[project-recertificacao-seed-blocker]]): permissão do user, org
-  // alternativa, ou bypass via API REST. Skill `provisionar-seed`
-  // continua canônica — só este env+user específico tem o bloqueio.
-  test.fixme(
-    true,
-    'createCurso via UI bloqueado por HTTP 422 no env staging-base-de-conhecimento (memo project-recertificacao-seed-blocker). Mesmo com perfil Administrador ativo via popover, POST /e é rejeitado. Validar manualmente permissão do user de teste ou usar bypass via API REST.',
-  );
-  // Seed auto-suficiente via SeedAdminPage (skill `provisionar-seed`):
+  // Seed auto-suficiente via SeedAdminPage (skill `provisionar-seed` v1.3):
+  // - Rota canônica `/o/{orgId}/contents/new?kind=0` (facelift React),
+  //   validada live 2026-05-26 no env staging-recertificacao (orgId 37048,
+  //   user agents.qa@claude.com em perfil Administrador). Content criado:
+  //   ID 806852 "Validação seed via menu real".
+  // - Bloqueio anterior (422 em /events/new HAML legado) RESOLVIDO em
+  //   v1.1 da skill — era rota errada, não CSRF/permissão.
   // beforeAll cria o curso → captura eventId real → spec navega pela
   // listagem e localiza o curso pelo nome único. afterAll deleta via
   // variant *_safe idempotente.
