@@ -87,6 +87,15 @@ export async function safeGoto(
   }
 }
 
+// Nota: reauth inline em safeGoto foi removido em 2026-05-22.
+// Twygo permite UMA sessão por user — quando spec_A faz reauth, ele invalida
+// a session dos workers spec_B/C/D paralelos. Em regressões com workers > 1,
+// isso vira cascata de fails ("Sua sessão foi encerrada porque você fez login
+// em outro dispositivo"). Solução correta:
+//   - Regressões longas (>30min): rodar com --workers=1 (sequencial) ou
+//     provisionar 1 user por worker.
+//   - Suite per-suite (<30min): globalSetup 1× já cobre.
+
 export async function dismissCommonModals(
   page: Page,
   opts: { maxAttempts?: number; initialWaitMs?: number } = {},

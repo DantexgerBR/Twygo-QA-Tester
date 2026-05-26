@@ -23,7 +23,7 @@ test.describe.fixme('Sincronização e Regeração de Previews', () => {
     const editPage = new ContentModelEditPage(page);
 
     await editPage.gotoFirstModelEditStructure();
-    await page.locator('[data-test-id="tab-design"]').click();
+    await page.getByRole('tab', { name: 'Design', exact: true }).click();
     await page.waitForTimeout(2000);
     const regerarBtn = page.locator('[data-test-id="modelos-de-conteudo-design-regenerate"]');
     await regerarBtn.hover();

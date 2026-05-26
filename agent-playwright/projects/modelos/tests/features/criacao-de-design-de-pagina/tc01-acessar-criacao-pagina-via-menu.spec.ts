@@ -14,8 +14,8 @@ test.describe('Criação de Design de Página', () => {
     await allure.step('1. Abrir aba Design do modelo', async () => {
       // Reusa gotoFirstModelEditStructure mas troca pra tab Design depois
       await editPage.gotoFirstModelEditStructure();
-      await page.locator('[data-test-id="tab-design"]').click();
-      await expect(page.locator('[data-test-id="tab-design"]')).toHaveAttribute(
+      await page.getByRole('tab', { name: 'Design', exact: true }).click();
+      await expect(page.getByRole('tab', { name: 'Design', exact: true })).toHaveAttribute(
         'aria-selected',
         'true',
         { timeout: 10_000 },

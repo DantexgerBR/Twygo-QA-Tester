@@ -22,7 +22,7 @@ test.describe('Listagem e Menu de Modelos', () => {
     });
 
     await allure.step('3. Validar aba Identificação ativa por default no form', async () => {
-      const identTab = page.locator('[data-test-id="tab-identification"]');
+      const identTab = page.getByRole('tab', { name: 'Identificação', exact: true });
       await expect(identTab).toBeVisible({ timeout: 10_000 });
       await expect(identTab).toHaveAttribute('aria-selected', 'true');
     });

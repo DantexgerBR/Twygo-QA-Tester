@@ -3,27 +3,62 @@ import * as allure from 'allure-js-commons';
 import { ContentModelEditPage } from '../../../pages/ContentModelEditPage.js';
 
 test.describe('Criação de Modelo - Aba Identificação', () => {
-  test('Validar limite de 500 caracteres da Descrição', async ({ page }) => {
+  test('Validações negativas do campo Descrição (matriz B-D)', async ({ page }) => {
     await allure.epic('Twygo - Modelos de conteúdo');
     await allure.feature('Criação de Modelo - Aba Identificação');
-    await allure.story('Validar limite de 500 caracteres da Descrição');
+    await allure.story('Validações negativas do campo Descrição (matriz B-D)');
     await allure.severity('medium');
 
     const editPage = new ContentModelEditPage(page);
-    const overlongInput = 'A'.repeat(501);
+    const long500 = 'A'.repeat(500);
+    const long501 = 'A'.repeat(501);
 
-    await allure.step('1. Abrir tela de criação', async () => {
-      await editPage.gotoNew();
-    });
+    const matrix = [
+      {
+        categoria: 'B',
+        descricao: '500 caracteres (limite máximo)',
+        entrada: long500,
+        esperaTruncamento: false,
+      },
+      {
+        categoria: 'B',
+        descricao: '501 caracteres — input deve truncar em 500',
+        entrada: long501,
+        esperaTruncamento: true,
+      },
+      {
+        categoria: 'C',
+        descricao: 'acentos + especiais',
+        entrada: 'Descrição @çãõ#$% ' + Date.now(),
+        esperaTruncamento: false,
+      },
+      {
+        categoria: 'C',
+        descricao: 'quebras de linha preservadas',
+        entrada: `linha 1\nlinha 2\nlinha 3 ${Date.now()}`,
+        esperaTruncamento: false,
+      },
+      {
+        categoria: 'D',
+        descricao: 'XSS img onerror',
+        entrada: `<img src=x onerror=alert(1)> ${Date.now()}`,
+        esperaTruncamento: false,
+      },
+    ];
 
-    await allure.step('2. Preencher Descrição com 501 chars', async () => {
-      await editPage.descriptionTextarea().fill(overlongInput);
-    });
-
-    await allure.step('3. Validar truncamento OU mensagem de limite', async () => {
-      const value = await editPage.descriptionTextarea().inputValue();
-      // Invariante: ou trunca para 500 OU bloqueia além de 500.
-      expect(value.length).toBeLessThanOrEqual(500);
-    });
+    for (const row of matrix) {
+      await allure.step(`[${row.categoria}] ${row.descricao}`, async () => {
+        await editPage.gotoNew();
+        await editPage.descriptionTextarea().fill(row.entrada);
+        const valor = await editPage.descriptionTextarea().inputValue();
+        if (row.esperaTruncamento) {
+          // Trunca em 500
+          expect(valor.length, `[${row.categoria}] esperava trunc em 500`).toBeLessThanOrEqual(500);
+        } else {
+          // Preserva valor
+          expect(valor.length, `[${row.categoria}] esperava preservar input`).toBe(row.entrada.length);
+        }
+      });
+    }
   });
 });

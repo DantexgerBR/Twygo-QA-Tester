@@ -27,12 +27,9 @@ export class DesignPageEditPage {
       .first();
     await editIcon.evaluate((el: HTMLElement) => el.click());
     await expect(this.page).toHaveURL(/\/content_models\/\d+\/edit/, { timeout: 15_000 });
-    await this.page.locator('[data-test-id="tab-design"]').click();
-    await expect(this.page.locator('[data-test-id="tab-design"]')).toHaveAttribute(
-      'aria-selected',
-      'true',
-      { timeout: 10_000 },
-    );
+    const designTab = this.page.getByRole('tab', { name: 'Design', exact: true });
+    await designTab.click();
+    await expect(designTab).toHaveAttribute('aria-selected', 'true', { timeout: 10_000 });
     // Clica Adicionar (menu trigger)
     await this.page.locator('[data-test-id="content-models-design-add-menu-button"]').click();
     await this.page.waitForTimeout(500);

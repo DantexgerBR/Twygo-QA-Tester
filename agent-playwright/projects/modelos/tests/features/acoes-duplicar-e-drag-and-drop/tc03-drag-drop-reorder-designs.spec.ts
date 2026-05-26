@@ -13,7 +13,7 @@ test.describe('Ações Duplicar e Drag and Drop', () => {
 
     await allure.step('1. Acessar aba Design com pelo menos 2 designs', async () => {
       await editPage.gotoFirstModelEditStructure();
-      await page.locator('[data-test-id="tab-design"]').click();
+      await page.getByRole('tab', { name: 'Design', exact: true }).click();
       await page.waitForTimeout(2000);
       // Garante ao menos 2 cards (não-drag-handle) pra ter o que reordenar
       const cardsNonHandle = page.locator('[data-test-id^="modelos-de-conteudo-design-card-"]:not([data-test-id="modelos-de-conteudo-design-card-drag-handle"])');

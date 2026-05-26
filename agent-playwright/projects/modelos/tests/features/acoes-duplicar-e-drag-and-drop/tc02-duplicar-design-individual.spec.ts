@@ -13,8 +13,8 @@ test.describe('Ações Duplicar e Drag and Drop', () => {
 
     await allure.step('1. Acessar aba Design do modelo', async () => {
       await editPage.gotoFirstModelEditStructure();
-      await page.locator('[data-test-id="tab-design"]').click();
-      await expect(page.locator('[data-test-id="tab-design"]')).toHaveAttribute(
+      await page.getByRole('tab', { name: 'Design', exact: true }).click();
+      await expect(page.getByRole('tab', { name: 'Design', exact: true })).toHaveAttribute(
         'aria-selected',
         'true',
         { timeout: 10_000 },

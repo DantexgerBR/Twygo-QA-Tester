@@ -34,7 +34,7 @@ test.describe.fixme('Criação de Design de Aula', () => {
     });
 
     await allure.step('3. Validar listagem atualizada com a nova Aula', async () => {
-      await expect(page.locator('[data-test-id="tab-design"]')).toHaveAttribute(
+      await expect(page.getByRole('tab', { name: 'Design', exact: true })).toHaveAttribute(
         'aria-selected',
         'true',
         { timeout: 10_000 },

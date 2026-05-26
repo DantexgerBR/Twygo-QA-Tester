@@ -3,30 +3,26 @@ import * as allure from 'allure-js-commons';
 import { ContentModelEditPage } from '../../../pages/ContentModelEditPage.js';
 
 test.describe('Criação de Modelo - Aba Estrutura do Conteúdo', () => {
-  test('Carga horária obrigatória bloqueia salvamento', async ({ page }) => {
+  test('Validação obrigatoriedade da Carga horária (matriz A)', async ({ page }) => {
     await allure.epic('Twygo - Modelos de conteúdo');
     await allure.feature('Criação de Modelo - Aba Estrutura do Conteúdo');
-    await allure.story('Carga horária obrigatória bloqueia salvamento');
+    await allure.story('Validação obrigatoriedade da Carga horária (matriz A)');
     await allure.severity('critical');
 
     const editPage = new ContentModelEditPage(page);
 
-    await allure.step('1. Abrir aba Estrutura sem carga horária preenchida', async () => {
+    await allure.step('[A] Sem carga horária → save bloqueado', async () => {
       await editPage.gotoFirstModelEditStructure();
-      // Modelos seedados foram criados sem carga horária — então o save daqui
-      // deve bloquear.
-    });
-
-    await allure.step('2. Clicar Salvar e validar bloqueio (sem redirect/sem toast sucesso)', async () => {
+      // Modelos seedados ANTES do v1.1 não tinham carga horária preenchida.
+      // Save deveria bloquear. Invariante: URL não muda + sem toast sucesso.
       const urlBefore = page.url();
       await editPage.structureSave();
       await page.waitForTimeout(2000);
-      // Invariante: URL não mudou OU houve toast de erro (não-sucesso).
-      // Como toasts/alerts variam, validamos só que NÃO houve toast de sucesso.
-      const toast = page.locator('.chakra-toast').filter({ hasText: /sucesso/i });
-      await expect(toast).toHaveCount(0, { timeout: 3_000 });
-      // URL permanece na aba structure
-      expect(page.url()).toBe(urlBefore);
+      const toastSucesso = page.locator('.chakra-toast').filter({ hasText: /sucesso/i });
+      await expect(toastSucesso, '[A] esperava ausência de toast sucesso (save bloqueado)').toHaveCount(0, {
+        timeout: 3_000,
+      });
+      expect(page.url(), '[A] URL não deveria mudar quando bloqueio ativo').toBe(urlBefore);
     });
   });
 });

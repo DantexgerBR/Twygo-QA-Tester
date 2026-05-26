@@ -3,8 +3,18 @@ import { expect } from '@playwright/test';
 import { safeGoto } from '../../../src/utils/modals.js';
 import { getOrgId } from '../../../src/utils/environment.js';
 
+type TabName = 'Identificação' | 'Estilo' | 'Estrutura' | 'Imagem' | 'Áudio' | 'Design' | 'Compartilhar';
+
 export class ContentModelEditPage {
   constructor(private readonly page: Page) {}
+
+  // Helper unificado pras 7 abas de edição. Antes usávamos
+  // `[data-test-id="tab-X"]` mas em 2026-05-22 confirmamos via chrome-devtools-mcp
+  // que o produto Twygo removeu esses atributos (regressão reportada). Mudança
+  // pra getByRole + name é defensiva — aria-selected funciona igual.
+  tab(name: TabName): Locator {
+    return this.page.getByRole('tab', { name, exact: true });
+  }
 
   async gotoNew(): Promise<void> {
     await safeGoto(this.page, `/o/${getOrgId()}/content_models/new`);
@@ -17,7 +27,7 @@ export class ContentModelEditPage {
   }
 
   async expectIdentificationTabActive(): Promise<void> {
-    const tab = this.page.locator('[data-test-id="tab-identification"]');
+    const tab = this.tab('Identificação');
     await expect(tab).toBeVisible({ timeout: 30_000 });
     await expect(tab).toHaveAttribute('aria-selected', 'true');
   }
@@ -118,11 +128,7 @@ export class ContentModelEditPage {
   // ─── Aba Estilo ───
   async gotoEditStyleTab(id: number | string): Promise<void> {
     await safeGoto(this.page, `/o/${getOrgId()}/content_models/${id}/edit?tab=style`);
-    await expect(this.page.locator('[data-test-id="tab-style"]')).toHaveAttribute(
-      'aria-selected',
-      'true',
-      { timeout: 15_000 },
-    );
+    await expect(this.tab('Estilo')).toHaveAttribute('aria-selected', 'true', { timeout: 15_000 });
   }
 
   // Abre edição do 1º modelo da listagem e troca pra aba style.
@@ -136,12 +142,8 @@ export class ContentModelEditPage {
     await editIcon.evaluate((el: HTMLElement) => el.click());
     await expect(this.page).toHaveURL(/\/content_models\/\d+\/edit/, { timeout: 15_000 });
     // Click tab style
-    await this.page.locator('[data-test-id="tab-style"]').click();
-    await expect(this.page.locator('[data-test-id="tab-style"]')).toHaveAttribute(
-      'aria-selected',
-      'true',
-      { timeout: 10_000 },
-    );
+    await this.tab('Estilo').click();
+    await expect(this.tab('Estilo')).toHaveAttribute('aria-selected', 'true', { timeout: 10_000 });
   }
 
   styleAddMoreDataButton(): Locator {
@@ -172,20 +174,27 @@ export class ContentModelEditPage {
   }
 
   // ─── Aba Estrutura ───
-  async gotoFirstModelEditStructure(): Promise<void> {
+  // Antes clicava no "1º card visual" — frágil porque órfãos de testes manuais
+  // (em estado quebrado, sem tabs) ficam no topo da listagem. Agora busca um
+  // seed nominal ("Modelo Seed Ativo" por padrão) e clica no edit dele. Robusto
+  // contra ordenação e contra órfãos. Aceita substring match (seed renomeado
+  // com sufixo timestamp ainda casa).
+  async gotoFirstModelEditStructure(seedNameSubstring = 'Modelo Seed Ativo'): Promise<void> {
     await safeGoto(this.page, `/o/${getOrgId()}/content_models`);
     await this.page.waitForTimeout(1500);
+    await this.page.locator('#play-interest-search').fill(seedNameSubstring);
+    await this.page.waitForTimeout(1200);
     const editIcon = this.page
       .locator('[data-test-id="content-models-page"] [id*="-edit-element-"]')
       .first();
+    await expect(
+      editIcon,
+      `seed "${seedNameSubstring}" não encontrado na listagem — verifique env`,
+    ).toBeVisible({ timeout: 10_000 });
     await editIcon.evaluate((el: HTMLElement) => el.click());
     await expect(this.page).toHaveURL(/\/content_models\/\d+\/edit/, { timeout: 15_000 });
-    await this.page.locator('[data-test-id="tab-structure"]').click();
-    await expect(this.page.locator('[data-test-id="tab-structure"]')).toHaveAttribute(
-      'aria-selected',
-      'true',
-      { timeout: 10_000 },
-    );
+    await this.tab('Estrutura').click();
+    await expect(this.tab('Estrutura')).toHaveAttribute('aria-selected', 'true', { timeout: 10_000 });
   }
 
   // Tipo de estrutura: <select id="structure_type"> nativo.
@@ -255,12 +264,8 @@ export class ContentModelEditPage {
       .first();
     await editIcon.evaluate((el: HTMLElement) => el.click());
     await expect(this.page).toHaveURL(/\/content_models\/\d+\/edit/, { timeout: 15_000 });
-    await this.page.locator('[data-test-id="tab-image"]').click();
-    await expect(this.page.locator('[data-test-id="tab-image"]')).toHaveAttribute(
-      'aria-selected',
-      'true',
-      { timeout: 10_000 },
-    );
+    await this.tab('Imagem').click();
+    await expect(this.tab('Imagem')).toHaveAttribute('aria-selected', 'true', { timeout: 10_000 });
   }
 
   imageTitle(): Locator {
@@ -293,12 +298,8 @@ export class ContentModelEditPage {
       .first();
     await editIcon.evaluate((el: HTMLElement) => el.click());
     await expect(this.page).toHaveURL(/\/content_models\/\d+\/edit/, { timeout: 15_000 });
-    await this.page.locator('[data-test-id="tab-audio"]').click();
-    await expect(this.page.locator('[data-test-id="tab-audio"]')).toHaveAttribute(
-      'aria-selected',
-      'true',
-      { timeout: 10_000 },
-    );
+    await this.tab('Áudio').click();
+    await expect(this.tab('Áudio')).toHaveAttribute('aria-selected', 'true', { timeout: 10_000 });
   }
 
   audioTitle(): Locator {
@@ -350,5 +351,42 @@ export class ContentModelEditPage {
     } catch {
       // best-effort — cleanup não bloqueia próximo TC
     }
+  }
+
+  /**
+   * Deleta TODOS os modelos cujo nome começa com `prefix`. Útil pra cleanup
+   * massivo após matrices que criam N modelos por execução (TC4 Identificação).
+   * Itera até a busca pelo prefix não retornar mais cards.
+   */
+  async deleteAllByNamePrefix(prefix: string, maxIterations = 20): Promise<number> {
+    let deleted = 0;
+    for (let i = 0; i < maxIterations; i++) {
+      try {
+        await safeGoto(this.page, `/o/${getOrgId()}/content_models`);
+        await this.page.waitForTimeout(1500);
+        await this.page.locator('#play-interest-search').fill(prefix);
+        await this.page.waitForTimeout(1000);
+        const deleteIcon = this.page
+          .locator('[data-test-id="content-models-page"] [id*="-destroy-element-"]')
+          .first();
+        if (!(await deleteIcon.isVisible({ timeout: 2000 }).catch(() => false))) {
+          break; // nada mais pra deletar
+        }
+        await deleteIcon.evaluate((el: HTMLElement) => el.click());
+        await this.page.waitForTimeout(500);
+        for (const label of ['Excluir', 'Confirmar', 'Sim']) {
+          const btn = this.page.getByRole('button', { name: label, exact: true }).first();
+          if (await btn.isVisible({ timeout: 1500 }).catch(() => false)) {
+            await btn.evaluate((el: HTMLElement) => el.click());
+            await this.page.waitForTimeout(1500);
+            deleted++;
+            break;
+          }
+        }
+      } catch {
+        break;
+      }
+    }
+    return deleted;
   }
 }
