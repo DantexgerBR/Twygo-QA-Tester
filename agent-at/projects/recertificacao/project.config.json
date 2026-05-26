@@ -2,7 +2,7 @@
   "name": "Recertificação",
   "slug": "recertificacao",
   "description": "Análise de Teste do projeto 'Recertificação' da Twygo.",
-  "environment": "staging",
+  "environment": "staging-base-de-conhecimento",
   "envSecondary": null,
   "figmaPrototype": null,
   "sourceDocs": [
