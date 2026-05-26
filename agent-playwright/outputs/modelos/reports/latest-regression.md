@@ -1,5 +1,5 @@
 # Relatório mais recente — regression
 
-**[Abrir → `regression_20260521-180745/index.md`](regression_20260521-180745/index.md)**
+**[Abrir → `regression_20260525-111454/index.md`](regression_20260525-111454/index.md)**
 
-_Gerado em 21/05/2026, 18:07:46._
+_Gerado em 25/05/2026, 11:14:55._

@@ -1,39 +1,36 @@
-# [inconclusivo] Duplicar design individual
+# [spec-fragil] Duplicar design individual
 
-> _Categoria confiança: **baixa** — Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace_
-> _Gerado em 2026-05-20T20:16:19.927Z · commit 03b9fa7_
+> _Categoria confiança: **media** — Timeout sem HTTP error — possível wait/seletor frágil. Confirmar via chrome-mcp_
+> _Gerado em 2026-05-22T21:32:27.610Z · commit 83d0916_
 
 ## Identificação
 - **Suite**: Ações Duplicar e Drag and Drop
 - **TC**: Duplicar design individual
 - **Spec**: `projects/modelos/tests/features/acoes-duplicar-e-drag-and-drop/tc02-duplicar-design-individual.spec.ts`
-- **Erro em**: `C:\Claude\Recertificação\twygo-agents-qa\agent-playwright\projects\modelos\tests\features\acoes-duplicar-e-drag-and-drop\tc02-duplicar-design-individual.spec.ts:40:74`
-- **Status**: failed (29465ms)
+- **Erro em**: `C:\Claude\Recertificação\twygo-agents-qa\agent-playwright\projects\modelos\pages\ContentModelEditPage.ts:183:63`
+- **Status**: failed (42657ms)
 
 ## Ambiente
 - **Env**: staging-base-de-conhecimento (`https://basedeconhecimento.stage.twygoead.com/`)
 - **OrgId**: 37007
 - **Usuário**: agents.qa@claude.com
 - **Browser**: chromium
-- **Build/commit**: 03b9fa7
+- **Build/commit**: 83d0916
 
 ## Reprodução
 - **Pré-condições**: storageState pré-logado em `outputs/.auth/storage.json`, perfil Administrador.
 - **Passo-a-passo**:
-  1. 1. Acessar aba Design do modelo — ✅
-  2. 2. Duplicar 1º design (icon content_copy) — ❌ **falhou aqui**
+  1. 1. Acessar aba Design do modelo — ❌ **falhou aqui**
 - **Taxa**: 1/1 nesta execução `[REVISAR taxa real — rodar 3+ vezes]`
 
 ## Comportamento
 - **Esperado**: [REVISAR — preencher com expectedresults do XML do step que falhou]
 - **Observado**:
   ```
-  Error: esperava ao menos 1 card extra após duplicar
+  TimeoutError: locator.click: Timeout 30000ms exceeded.
+  Call log:
+    - waiting for locator('[data-test-id="tab-structure"]')
   
-  expect(received).toBeGreaterThanOrEqual(expected)
-  
-  Expected: >= 26
-  Received:    25
   ```
 
 ## Evidência técnica
@@ -57,7 +54,7 @@ _Sem HTTP 4xx/5xx capturados pela fixture exploratória nesta execução._
 - **Workaround**: nenhum identificado `[REVISAR workaround]`
 
 ## Impacto
-- **Severity sugerida**: **media** `[REVISAR severity]`
+- **Severity sugerida**: **baixa** `[REVISAR severity]`
 - **Impacto qualitativo**: desconhecido `[REVISAR impacto]`
 
 ---

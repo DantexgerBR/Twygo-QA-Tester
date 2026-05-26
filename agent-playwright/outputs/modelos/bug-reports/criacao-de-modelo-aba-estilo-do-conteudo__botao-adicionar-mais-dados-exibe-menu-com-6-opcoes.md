@@ -1,27 +1,26 @@
 # [spec-fragil] Botão "Adicionar mais dados" exibe menu com 6 opções
 
 > _Categoria confiança: **media** — Timeout sem HTTP error — possível wait/seletor frágil. Confirmar via chrome-mcp_
-> _Gerado em 2026-05-21T21:07:44.597Z · commit f90ba01_
+> _Gerado em 2026-05-22T21:32:27.610Z · commit 83d0916_
 
 ## Identificação
 - **Suite**: Criação de Modelo - Aba Estilo do Conteúdo
 - **TC**: Botão "Adicionar mais dados" exibe menu com 6 opções
 - **Spec**: `projects/modelos/tests/features/criacao-de-modelo-aba-estilo-do-conteudo/tc01-adicionar-mais-dados-menu-6-opcoes.spec.ts`
-- **Erro em**: `C:\Claude\Recertificação\twygo-agents-qa\agent-playwright\projects\modelos\pages\ContentModelEditPage.ts:162:41`
-- **Status**: failed (45093ms)
+- **Erro em**: `C:\Claude\Recertificação\twygo-agents-qa\agent-playwright\projects\modelos\pages\ContentModelEditPage.ts:139:59`
+- **Status**: failed (44699ms)
 
 ## Ambiente
 - **Env**: staging-base-de-conhecimento (`https://basedeconhecimento.stage.twygoead.com/`)
 - **OrgId**: 37007
 - **Usuário**: agents.qa@claude.com
 - **Browser**: chromium
-- **Build/commit**: f90ba01
+- **Build/commit**: 83d0916
 
 ## Reprodução
 - **Pré-condições**: storageState pré-logado em `outputs/.auth/storage.json`, perfil Administrador.
 - **Passo-a-passo**:
-  1. 1. Abrir modelo seedado na aba Estilo — ✅
-  2. 2. Clicar "Adicionar mais dados" e validar 6 opções no menu — ❌ **falhou aqui**
+  1. 1. Abrir modelo seedado na aba Estilo — ❌ **falhou aqui**
 - **Taxa**: 1/1 nesta execução `[REVISAR taxa real — rodar 3+ vezes]`
 
 ## Comportamento
@@ -30,12 +29,8 @@
   ```
   TimeoutError: locator.click: Timeout 30000ms exceeded.
   Call log:
-    - waiting for locator('[data-test-id="content-models-style-add-more-data-button"]')
-      - locator resolved to <button disabled type="button" aria-haspopup="menu" aria-expanded="false" id="menu-button-:r1j:" aria-controls="menu-list-:r1j:" data-test-id="content-models-style-add-more-data-button" class="chakra-button chakra-menu__menu-button css-7vf75e">…</button>
-    - attempting click action
-      2 × waiting for element to be visible, enabled and stable
-        - element is not enabled
-      - retrying click action
+    - waiting for locator('[data-test-id="tab-style"]')
+  
   ```
 
 ## Evidência técnica

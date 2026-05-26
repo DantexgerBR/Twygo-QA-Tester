@@ -1,42 +1,36 @@
-# [inconclusivo] Salvar Aula com dados válidos
+# [spec-fragil] Salvar Aula com dados válidos
 
-> _Categoria confiança: **baixa** — Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace_
-> _Gerado em 2026-05-22T12:13:23.587Z · commit 8d4e765_
+> _Categoria confiança: **media** — Timeout sem HTTP error — possível wait/seletor frágil. Confirmar via chrome-mcp_
+> _Gerado em 2026-05-22T21:32:27.610Z · commit 83d0916_
 
 ## Identificação
 - **Suite**: Criação de Design de Aula
 - **TC**: Salvar Aula com dados válidos
 - **Spec**: `projects/modelos/tests/features/criacao-de-design-de-aula/tc02-salvar-aula-dados-validos.spec.ts`
-- **Erro em**: `C:\Claude\Recertificação\twygo-agents-qa\agent-playwright\projects\modelos\tests\features\criacao-de-design-de-aula\tc02-salvar-aula-dados-validos.spec.ts:32:30`
-- **Status**: failed (60301ms)
+- **Erro em**: `C:\Claude\Recertificação\twygo-agents-qa\agent-playwright\projects\modelos\pages\DesignLessonEditPage.ts:27:60`
+- **Status**: failed (45085ms)
 
 ## Ambiente
 - **Env**: staging-base-de-conhecimento (`https://basedeconhecimento.stage.twygoead.com/`)
 - **OrgId**: 37007
 - **Usuário**: agents.qa@claude.com
 - **Browser**: chromium
-- **Build/commit**: 8d4e765
+- **Build/commit**: 83d0916
 
 ## Reprodução
 - **Pré-condições**: storageState pré-logado em `outputs/.auth/storage.json`, perfil Administrador.
 - **Passo-a-passo**:
-  1. 1. Abrir tela de criação Aula — ✅
-  2. 2-4. Preencher Nome + Tipo "Introdução" + Sequência — ✅
-  3. 5. Salvar e validar redirect pra aba Design da Aula — ❌ **falhou aqui**
+  1. 1. Abrir tela de criação Aula — ❌ **falhou aqui**
 - **Taxa**: 1/1 nesta execução `[REVISAR taxa real — rodar 3+ vezes]`
 
 ## Comportamento
 - **Esperado**: [REVISAR — preencher com expectedresults do XML do step que falhou]
 - **Observado**:
   ```
-  Error: expect(page).not.toHaveURL(expected) failed
-  
-  Expected pattern: not /template_designs\/new/
-  Received string: "https://basedeconhecimento.stage.twygoead.com/o/37007/content_models/7/template_designs/new?kind=lesson"
-  Timeout: 10000ms
-  
+  TimeoutError: locator.click: Timeout 30000ms exceeded.
   Call log:
-    - Expect "not toHaveURL" with timeout 10000ms
+    - waiting for locator('[data-test-id="tab-design"]')
+  
   ```
 
 ## Evidência técnica
@@ -60,7 +54,7 @@ _Sem HTTP 4xx/5xx capturados pela fixture exploratória nesta execução._
 - **Workaround**: nenhum identificado `[REVISAR workaround]`
 
 ## Impacto
-- **Severity sugerida**: **media** `[REVISAR severity]`
+- **Severity sugerida**: **baixa** `[REVISAR severity]`
 - **Impacto qualitativo**: desconhecido `[REVISAR impacto]`
 
 ---

@@ -1,36 +1,35 @@
 # [spec-fragil] Drag and drop reorder designs
 
 > _Categoria confiança: **media** — Timeout sem HTTP error — possível wait/seletor frágil. Confirmar via chrome-mcp_
-> _Gerado em 2026-05-22T12:13:23.587Z · commit 8d4e765_
+> _Gerado em 2026-05-22T21:32:27.610Z · commit 83d0916_
 
 ## Identificação
 - **Suite**: Ações Duplicar e Drag and Drop
 - **TC**: Drag and drop reorder designs
 - **Spec**: `projects/modelos/tests/features/acoes-duplicar-e-drag-and-drop/tc03-drag-drop-reorder-designs.spec.ts`
-- **Erro em**: `C:\Claude\Recertificação\twygo-agents-qa\agent-playwright\projects\modelos\tests\features\acoes-duplicar-e-drag-and-drop\tc03-drag-drop-reorder-designs.spec.ts:31:26`
-- **Status**: failed (59232ms)
+- **Erro em**: `C:\Claude\Recertificação\twygo-agents-qa\agent-playwright\projects\modelos\pages\ContentModelEditPage.ts:181:20`
+- **Status**: failed (38711ms)
 
 ## Ambiente
 - **Env**: staging-base-de-conhecimento (`https://basedeconhecimento.stage.twygoead.com/`)
 - **OrgId**: 37007
 - **Usuário**: agents.qa@claude.com
 - **Browser**: chromium
-- **Build/commit**: 8d4e765
+- **Build/commit**: 83d0916
 
 ## Reprodução
 - **Pré-condições**: storageState pré-logado em `outputs/.auth/storage.json`, perfil Administrador.
 - **Passo-a-passo**:
-  1. 1. Acessar aba Design com pelo menos 2 designs — ✅
-  2. 2. Arrastar 2º design pra primeira posição via drag handle — ❌ **falhou aqui**
+  1. 1. Acessar aba Design com pelo menos 2 designs — ❌ **falhou aqui**
 - **Taxa**: 1/1 nesta execução `[REVISAR taxa real — rodar 3+ vezes]`
 
 ## Comportamento
 - **Esperado**: [REVISAR — preencher com expectedresults do XML do step que falhou]
 - **Observado**:
   ```
-  TimeoutError: locator.dragTo: Timeout 30000ms exceeded.
+  TimeoutError: locator.evaluate: Timeout 30000ms exceeded.
   Call log:
-    - waiting for locator('[data-test-id="modelos-de-conteudo-design-card-warning"] [data-test-id="modelos-de-conteudo-design-card-drag-handle"]').first()
+    - waiting for locator('[data-test-id="content-models-page"] [id*="-edit-element-"]').first()
   
   ```
 
