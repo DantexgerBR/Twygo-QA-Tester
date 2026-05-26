@@ -1,0 +1,15 @@
+{
+  "name": "Recertificação",
+  "slug": "recertificacao",
+  "description": "Análise de Teste do projeto 'Recertificação' da Twygo.",
+  "environment": "staging",
+  "envSecondary": null,
+  "figmaPrototype": null,
+  "sourceDocs": [
+    "docs/discovery.md",
+    "docs/qa-impact-map.md",
+    "docs/QA_Only_Recertificacao_v2.xlsx"
+  ],
+  "contractVersion": "1.1",
+  "atVersion": 1
+}
