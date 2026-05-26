@@ -1,4 +1,38 @@
-import type { Page, Locator } from '@playwright/test';
+import type { Page, Locator, Route } from '@playwright/test';
+
+/**
+ * Regex de URLs de trackers/widgets externos que seguram o evento `load`
+ * em SPAs Twygo. Intercom, Segment, GA, GTM, HubSpot (chat Sophia), Hotjar
+ * e Sentry mantêm websockets/long-polling abertos, e enquanto qualquer um
+ * deles tiver requisição pendente o `page.reload()` default (que espera
+ * `load`) esgota 30s mesmo com o app principal renderizado.
+ *
+ * Exportado pra reuso fora do `safeReload` — ex: `page.route` global em
+ * `beforeAll` quando a suíte inteira é sensível a esses trackers.
+ *
+ * **Política**: bloquear sempre que segurar `load` for prejudicial e os
+ * trackers não fazem parte do que está sendo testado. NÃO usar em smoke
+ * que exatamente valida que Sophia/Intercom carrega.
+ */
+export const TRACKER_URL_PATTERN =
+  /intercom\.io|segment\.(io|com)|hotjar|googletagmanager|google-analytics|hs-scripts|hs-banner|hubspot|sentry\.io|cdn\.heapanalytics/i;
+
+/**
+ * Registra `page.route` que aborta requisições de trackers conhecidos.
+ * Idempotente — chamar várias vezes não duplica route handler (Playwright
+ * pareia handlers por referência do callback; ré-registrar com função
+ * nova cria uma camada extra, então preferimos esta função singleton).
+ *
+ * Use em `beforeAll` do teste/suite quando precisa reload estável OU
+ * sempre que registrar contexto novo via `browser.newContext()` em
+ * cleanup. `safeReload({ blockTrackers: true })` chama internamente.
+ */
+const TRACKER_BLOCK_HANDLERS = new WeakSet<Page>();
+export async function blockTrackers(page: Page): Promise<void> {
+  if (TRACKER_BLOCK_HANDLERS.has(page)) return;
+  TRACKER_BLOCK_HANDLERS.add(page);
+  await page.route(TRACKER_URL_PATTERN, (route: Route) => route.abort('blockedbyclient'));
+}
 
 /**
  * Fecha modais oportunistas que aparecem em sessões do Twygo e podem
@@ -87,14 +121,87 @@ export async function safeGoto(
   }
 }
 
-// Nota: reauth inline em safeGoto foi removido em 2026-05-22.
-// Twygo permite UMA sessão por user — quando spec_A faz reauth, ele invalida
-// a session dos workers spec_B/C/D paralelos. Em regressões com workers > 1,
-// isso vira cascata de fails ("Sua sessão foi encerrada porque você fez login
-// em outro dispositivo"). Solução correta:
-//   - Regressões longas (>30min): rodar com --workers=1 (sequencial) ou
-//     provisionar 1 user por worker.
-//   - Suite per-suite (<30min): globalSetup 1× já cobre.
+/**
+ * `page.waitForURL` seguro: força `waitUntil: 'domcontentloaded'` em vez do
+ * default `load`. Mesma causa raiz do `safeReload` — trackers externos
+ * (Intercom, HubSpot/Sophia, Segment, Hotjar, GA/GTM, Sentry) mantêm
+ * websockets/long-polling abertos, e `load` nunca dispara. O default do
+ * Playwright esgota 30s mesmo com a URL alvo já carregada.
+ *
+ * Usado pelo `globalSetup` (pós-login) e por specs que aguardam redirect
+ * (`tests/auth/`, troca de perfil, etc).
+ *
+ * **`timeout`** (default `30_000`): cap do waitForURL.
+ *
+ * Aceita os mesmos tipos de matcher do `page.waitForURL` nativo (string,
+ * RegExp, ou predicate sobre `URL`).
+ */
+export async function safeWaitForURL(
+  page: Page,
+  url: string | RegExp | ((url: URL) => boolean),
+  opts: { timeout?: number } = {},
+): Promise<void> {
+  const timeout = opts.timeout ?? 30_000;
+  await page.waitForURL(url, { waitUntil: 'domcontentloaded', timeout });
+}
+
+/**
+ * Reload seguro: `page.reload` com `waitUntil: 'domcontentloaded'` (não o
+ * default `load`) + `dismissCommonModals` imediatamente após. Em SPAs Twygo
+ * o evento `load` frequentemente nunca dispara porque trackers externos
+ * (Intercom, Segment, HubSpot/Sophia, Hotjar, GA/GTM, Sentry) mantêm
+ * websockets ou long-polling pendurados. `page.reload()` default esgota
+ * 30s mesmo com a UI renderizada.
+ *
+ * **Regra dura**: TODO `page.reload` em Page Objects/specs Twygo deve
+ * passar pelo `safeReload` — exceto specs que **validam o próprio
+ * beforeunload** (estado dirty) e contam com o reload pendurar.
+ *
+ * **`blockTrackers`** (default `false`): registra `page.route` abortando
+ * URLs do `TRACKER_URL_PATTERN`. Use quando a suíte chama reload várias
+ * vezes (POMs com retry, specs que validam persistência via F5) e o
+ * tracker já se mostrou problemático. Em smoke/login a maioria das vezes
+ * não precisa — `domcontentloaded` sozinho resolve.
+ *
+ * **`dismiss`** (default `true`): roda `dismissCommonModals` pós-reload.
+ *
+ * **`timeout`** (default `30_000`): cap do `page.reload`.
+ *
+ * Quando NÃO usar:
+ *  - Spec que valida o beforeunload disparar (`modal-navegador-alteracoes-nao-salvas`)
+ *  - Spec que valida o próprio Sophia/Intercom carregar pós-reload
+ *
+ * Documentação adicional na skill `safe-reload-twygo`.
+ */
+export async function safeReload(
+  page: Page,
+  opts: { dismiss?: boolean; timeout?: number; blockTrackers?: boolean } = {},
+): Promise<void> {
+  const dismiss = opts.dismiss ?? true;
+  const timeout = opts.timeout ?? 30_000;
+  if (opts.blockTrackers) {
+    await blockTrackers(page);
+  }
+  try {
+    await page.reload({ waitUntil: 'domcontentloaded', timeout });
+  } catch (err) {
+    const msg = (err as Error).message ?? '';
+    // Mesmo padrão de retry transitório do safeGoto — rede pode piscar
+    // durante o reload em VPN/wifi instável.
+    const isRetriable =
+      /net::ERR_(NETWORK_CHANGED|FAILED|TIMED_OUT|CONNECTION_RESET)/i.test(msg) ||
+      /Timeout \d+ms exceeded/i.test(msg);
+    if (isRetriable) {
+      await new Promise((r) => setTimeout(r, 1500));
+      await page.reload({ waitUntil: 'domcontentloaded', timeout });
+    } else {
+      throw err;
+    }
+  }
+  if (dismiss) {
+    await dismissCommonModals(page);
+  }
+}
 
 export async function dismissCommonModals(
   page: Page,

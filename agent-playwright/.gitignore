@@ -69,3 +69,11 @@ yarn-error.log*
 Thumbs.db
 
 *.tsbuildinfo
+
+# Fixtures de upload (binários) — devs depositam localmente, não versionado.
+# Catálogo em test-assets/README.md + helper em src/utils/test-assets.ts
+# (esses 2 ficam versionados). Apenas a estrutura das subpastas é preservada
+# via .gitkeep — adicione novos binários localmente sem se preocupar com push.
+test-assets/uploads/**
+!test-assets/uploads/**/
+!test-assets/uploads/**/.gitkeep
