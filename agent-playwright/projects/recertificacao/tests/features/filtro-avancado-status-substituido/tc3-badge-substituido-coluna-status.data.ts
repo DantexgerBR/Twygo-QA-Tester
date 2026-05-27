@@ -11,8 +11,10 @@
  * isolar somente linhas REPLACED e valida o badge na primeira linha
  * resultante — não depende de identificador específico.
  */
+import { fixedSeed } from '../../../data/fixed-seed.data.js';
+
 export const tc3Data = {
-  eventId: 1,
+  eventId: fixedSeed.emptyCursoId,
   expectedBadgeLabel: 'Substituído',
   // Identificador (e-mail OU nome) do participant REPLACED. Quando o seed
   // for confirmado, preencher. Vazio = spec usa a primeira linha do filtro.

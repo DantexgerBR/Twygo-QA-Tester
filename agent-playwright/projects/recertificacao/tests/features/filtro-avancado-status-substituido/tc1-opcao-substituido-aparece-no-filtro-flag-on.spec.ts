@@ -5,16 +5,10 @@ import { tc1Data } from './tc1-opcao-substituido-aparece-no-filtro-flag-on.data.
 
 test.describe('Filtro Avançado Status Substituído', () => {
   // Rota destravada em 2026-05-27 (LearningStudentsPage.goToList → /e/{id}/learning).
-  // Drawer abre OK (step 2 verde), mas o drawer "Lista de filtros" hoje só
-  // mostra filtros PADRÃO de progresso (Não iniciados, Em andamento, Concluídos)
-  // — para validar opção "Substituído" do filtro AVANÇADO de Status do certificado,
-  // precisa clicar em "+ Novo" → escolher critério "Status do certificado" →
-  // ver lista de status como opções. Refator do LearningStudentsPage com
-  // helper `openAdvancedFilterCriteria(criterion)` pendente.
-  test.fixme(
-    true,
-    'Refator pendente: drawer Lista de filtros mostra apenas filtros padrão. Validar Substituído exige fluxo "+ Novo" → critério "Status do certificado". Atualizar LearningStudentsPage com helper de drawer-novo.',
-  );
+  // Drawer "Lista de filtros" mostra filtros padrão de progresso por default.
+  // Para ver as opções de Certificado (Emitido/Pendente/Expirado/Aguardando
+  // assinatura/Substituído), navegar via "+ Novo" → critério "Certificado".
+  // Skill provisionar-seed v1.3 §filtro-avançado.
 
   test('TC1 — Opção "Substituído" aparece no filtro avançado de Status do certificado com flag ON', async ({
     page,
@@ -51,13 +45,16 @@ test.describe('Filtro Avançado Status Substituído', () => {
     await allure.step(
       '3. Inspecionar as opções do filtro → Lista contém: Emitido, Pendente, Expirado, Aguardando assinatura, Substituído',
       async () => {
+        // Navegar para criação de novo filtro → critério "Certificado"
+        // (terminologia atual do facelift, equivalente ao "Status do
+        // certificado" mencionado na AT). Após o click, todas as opções
+        // do critério aparecem em "Colunas para filtrar".
+        await learningStudents.openAdvancedFilterCriteria('Certificado');
+
         // Asserção principal (RN 23): "Substituído" presente com flag ON.
         await learningStudents.expectFilterOptionVisible(tc1Data.optionLabel, true);
 
-        // Asserções de paridade com as outras opções pré-existentes do filtro.
-        // REVISAR-FIGMA: labels exatos das demais opções confirmados via MD;
-        // se algum label tiver wording diferente no produto (ex.: "Aguardando
-        // assinatura digital"), ajustar conforme recon live.
+        // Asserções de paridade com as outras opções pré-existentes.
         for (const baseline of [
           'Emitido',
           'Pendente',

@@ -1,7 +1,7 @@
 import type { Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 import { BasePage } from '../../../src/pages/BasePage.js';
-import { safeGoto, dismissCommonModals } from '../../../src/utils/modals.js';
+import { safeGoto } from '../../../src/utils/modals.js';
 
 /**
  * Page Object da listagem de Aprendizagem ("Learning Students") do Twygo.
@@ -83,6 +83,46 @@ export class LearningStudentsPage extends BasePage {
     // "Close" em QUALQUER dialog visível, incluindo o drawer recém-aberto.
     // NPS Sofia já foi tratado no safeGoto da navegação anterior.
     await dialog.waitFor({ state: 'visible', timeout: 10_000 });
+  }
+
+  /**
+   * Abre o painel de criação de novo filtro avançado (clica "+ Novo" no
+   * drawer "Lista de filtros") e escolhe um critério da seção "Opções de
+   * filtro". Após esse fluxo, as opções do critério (ex: status do
+   * certificado) ficam visíveis no painel de edição do filtro.
+   *
+   * Pré-condição: `openFilterDrawer()` chamado antes (drawer "Lista de
+   * filtros" visível).
+   *
+   * Critérios disponíveis (validados live 2026-05-27): Participante,
+   * Progresso, Desempenho, Pontuação, Aprovação, **Certificado**, E-mail
+   * do participante, CPF do participante, Situação da inscrição, etc.
+   * "Certificado" é o critério canônico para validar a opção "Substituído"
+   * (a AT usava "Status do certificado" — terminologia legada).
+   */
+  async openAdvancedFilterCriteria(criterion: string): Promise<void> {
+    const drawer = this.page.locator('.chakra-modal__content').first();
+    await drawer.waitFor({ state: 'visible', timeout: 5_000 });
+    // Clicar "+ Novo" — é um <p>Novo</p> dentro de div clicável.
+    await drawer.getByText('Novo', { exact: true }).first().click();
+    // Painel abre em modo "Colunas para filtrar" com critérios PADRÃO
+    // (Participante, Progresso, Aprovação). Para adicionar Certificado
+    // (ou outro), clicar no botão "+ Opções de filtro" que expande lista
+    // de checkboxes com todos os critérios disponíveis.
+    const opcoesBtn = drawer.getByRole('button', { name: /Opções de filtro/i }).first();
+    await opcoesBtn.waitFor({ state: 'visible', timeout: 5_000 });
+    await opcoesBtn.click();
+    // Lista de checkboxes aparece — marcar o critério desejado.
+    const criterionLabel = drawer
+      .locator('label.chakra-checkbox')
+      .filter({ hasText: new RegExp(`^${criterion}$`) })
+      .first();
+    await criterionLabel.waitFor({ state: 'attached', timeout: 5_000 });
+    await criterionLabel.scrollIntoViewIfNeeded();
+    const isChecked = (await criterionLabel.getAttribute('data-checked')) !== null;
+    if (!isChecked) {
+      await criterionLabel.click();
+    }
   }
 
   /**

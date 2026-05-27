@@ -4,15 +4,15 @@ import { LearningStudentsPage } from '../../../pages/LearningStudentsPage.js';
 import { tc2Data } from './tc2-filtrar-por-substituido-exibe-status-4.data.js';
 
 test.describe('Filtro Avançado Status Substituído', () => {
-  // Categoria: seed-invalido (heal 2026-05-26).
-  // GET /o/37007/events/1/learning_students retornou 404 — `tc2Data.eventId = 1`
-  // é placeholder. Pré-condição requer evento com ≥1 participant em
-  // certificate_status=4 (REPLACED). Validar manualmente no env
-  // staging-base-de-conhecimento (orgId 37007) e atualizar
-  // `tc2-filtrar-por-substituido-exibe-status-4.data.ts`.
+  // Rota destravada em 2026-05-27 (LearningStudentsPage.goToList →
+  // /e/{id}/learning). Pré-condição: aluno com certificate_status=4
+  // (REPLACED) — exige fluxo de recertificação que SUBSTITUIU o cert
+  // anterior. fixme legítimo categoria "seed-ausente": seed atual
+  // (curso 806852, aluno Pendente) não cobre REPLACED. Aguarda
+  // implementação de helper recertificar-aluno em SeedAdminPage.
   test.fixme(
     true,
-    'seed inválido — eventId placeholder em tc2-filtrar-por-substituido-exibe-status-4.data.ts. Validar manualmente no env staging-base-de-conhecimento e atualizar o .data.ts.',
+    'seed-ausente: requer aluno com certificate_status=4 (REPLACED). Implementar SeedAdminPage.recertificarAlunoSubstituindoCert antes de habilitar este TC.',
   );
 
   test('TC2 — Filtrar por "Substituído" exibe apenas alunos com certificate_status = 4', async ({
@@ -35,9 +35,7 @@ test.describe('Filtro Avançado Status Substituído', () => {
       '1. Acessar a lista de aprendizagem em "/learning_students" → Lista exibe todos os alunos',
       async () => {
         await learningStudents.goToList(tc2Data.eventId);
-        await expect(page).toHaveURL(
-          /\/o\/\d+\/events\/\d+\/learning_students/,
-        );
+        await expect(page).toHaveURL(/\/e\/\d+\/learning/);
       },
     );
 

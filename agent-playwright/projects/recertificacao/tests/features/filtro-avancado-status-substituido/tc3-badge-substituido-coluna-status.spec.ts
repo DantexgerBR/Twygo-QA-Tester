@@ -4,15 +4,12 @@ import { LearningStudentsPage } from '../../../pages/LearningStudentsPage.js';
 import { tc3Data } from './tc3-badge-substituido-coluna-status.data.js';
 
 test.describe('Filtro Avançado Status Substituído', () => {
-  // Categoria: seed-invalido (heal 2026-05-26).
-  // GET /o/37007/events/1/learning_students retornou 404 — `tc3Data.eventId = 1`
-  // é placeholder. Pré-condição requer evento com ≥1 participant em
-  // certificate_status=4 (REPLACED). Validar manualmente no env
-  // staging-base-de-conhecimento (orgId 37007) e atualizar
-  // `tc3-badge-substituido-coluna-status.data.ts`.
+  // Rota destravada em 2026-05-27 (LearningStudentsPage.goToList →
+  // /e/{id}/learning). Pré-condição: aluno com certificate_status=4
+  // (REPLACED) — mesmo bloqueio do TC2.
   test.fixme(
     true,
-    'seed inválido — eventId placeholder em tc3-badge-substituido-coluna-status.data.ts. Validar manualmente no env staging-base-de-conhecimento e atualizar o .data.ts.',
+    'seed-ausente: requer aluno com certificate_status=4 (REPLACED). Mesmo bloqueio do TC2 — aguarda SeedAdminPage.recertificarAlunoSubstituindoCert.',
   );
 
   test('TC3 — Badge "Substituído" é exibido na coluna de Status para participants com certificate_status = 4', async ({
@@ -35,9 +32,7 @@ test.describe('Filtro Avançado Status Substituído', () => {
       '1. Acessar a lista de aprendizagem sem filtros aplicados → Lista é exibida',
       async () => {
         await learningStudents.goToList(tc3Data.eventId);
-        await expect(page).toHaveURL(
-          /\/o\/\d+\/events\/\d+\/learning_students/,
-        );
+        await expect(page).toHaveURL(/\/e\/\d+\/learning/);
         // Garante baseline sem filtro residual (em caso de execução em
         // sequência após TC2 que poderia ter deixado filtro aplicado).
         await learningStudents.clearFilters();

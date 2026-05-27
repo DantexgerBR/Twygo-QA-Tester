@@ -15,8 +15,10 @@
  *   `SELECT event_id FROM event_participant_infos
  *      WHERE certificate_status = 4 LIMIT 1;`
  */
+import { fixedSeed } from '../../../data/fixed-seed.data.js';
+
 export const tc2Data = {
-  eventId: 1,
+  eventId: fixedSeed.emptyCursoId,
   optionLabel: 'Substituído',
   // Texto exato do badge esperado em cada linha filtrada. Mesmo label do filtro.
   expectedBadgeLabel: 'Substituído',
