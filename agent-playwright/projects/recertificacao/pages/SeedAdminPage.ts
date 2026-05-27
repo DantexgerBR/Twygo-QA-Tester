@@ -745,34 +745,41 @@ export class SeedAdminPage extends BasePage {
     await kebab.click();
     await this.page.getByRole('menuitem', { name: /Inscrição/i }).first().click();
 
-    // Drawer/modal Chakra fullscreen abre — URL NÃO muda (continua em
-    // /events?tab=events). Heading "Lista de Participantes" + abas
-    // Confirmados/Pendentes/Cancelados + botão azul "Adicionar".
-    // Validado live 2026-05-27 via Playwright real.
+    // Tela completa "Detalhes do evento" abre — URL NÃO muda (continua em
+    // /events?tab=events). Header "Detalhes do evento" + heading h3
+    // "Lista de Participantes" + abas Confirmados/Pendentes/Cancelados +
+    // botão "Adicionar" (StaticText sem role, cursor:pointer).
+    // Validado live via MCP 2026-05-27.
     await this.page
       .getByRole('heading', { name: /Lista de Participantes/i })
       .first()
       .waitFor({ state: 'visible', timeout: 15_000 });
 
-    // BLOQUEIO ATIVO (2026-05-27): click no botão "Adicionar" (div com
-    // cursor:pointer, único no DOM, force:true) não dispara o sub-form
-    // visualmente. Hipóteses não-validadas:
-    //   (a) clique abre dropdown/menu com sub-options ("Adicionar aluno",
-    //       "Adicionar em massa", etc.) — precisa segundo click
-    //   (b) handler React requer evento sintético (pointer sequence)
-    //       que Playwright force:true não dispara
-    //   (c) elemento Adicionar não é o gatilho real — pode haver botão
-    //       oculto adjacente
-    // Aguarda validação humana do fluxo exato antes de prosseguir.
-    await this.page.getByText('Adicionar', { exact: true }).first().click({ force: true });
+    // Captura contador "Confirmados (N)" ANTES do add — pós-condição é
+    // este contador incrementar (não há toast de sucesso visível).
+    const confirmadosBefore = await this.contagemConfirmados();
 
-    // Form do participante abre. Preencher campos obrigatórios.
+    // "Adicionar" é StaticText (não button) — getByText.first() pega o
+    // elemento certo. MCP CDP click funciona; em Playwright, garantir
+    // que o elemento esteja visible antes (sem force).
+    const addBtn = this.page.getByText('Adicionar', { exact: true }).first();
+    await addBtn.waitFor({ state: 'visible', timeout: 5_000 });
+    await addBtn.click();
+
+    // Form completo abre — heading h3 "Adicionar" + 20+ campos
+    // (Informações Pessoais / Endereço / Dados Profissionais / Senha).
+    // 3 campos obrigatórios marcados com *: E-mail / Nome / Sobrenome.
+    await this.page
+      .getByRole('heading', { name: /^Adicionar$/i })
+      .first()
+      .waitFor({ state: 'visible', timeout: 10_000 });
+
     // CLAUDE.md §7.5 — getByLabel(/E-?mail/i) bate em checkbox send_copy
     // ("Desejo receber uma cópia do e-mail"). Usar getByRole('textbox')
     // que filtra só inputs de texto.
-    await this.page.getByRole('textbox', { name: /E-?mail/i }).first().fill(data.alunoEmail);
-    await this.page.getByRole('textbox', { name: 'Nome', exact: true }).fill(data.alunoFirstName);
-    await this.page.getByRole('textbox', { name: /Sobrenome/i }).fill(data.alunoLastName);
+    await this.page.getByRole('textbox', { name: /E-?mail\*/i }).first().fill(data.alunoEmail);
+    await this.page.getByRole('textbox', { name: /^Nome\*$/i }).fill(data.alunoFirstName);
+    await this.page.getByRole('textbox', { name: /^Sobrenome\*$/i }).fill(data.alunoLastName);
     if (data.dataExpiracao) {
       await this.page.getByRole('textbox', { name: /Data de expira/i }).fill(data.dataExpiracao);
     }
@@ -780,11 +787,30 @@ export class SeedAdminPage extends BasePage {
     // Salvar (botão "Salvar" — NÃO "Salvar e Novo").
     await this.page.getByRole('button', { name: 'Salvar', exact: true }).click();
 
-    // Confirma sucesso via toast.
+    // Pós-condição: volta pra "Lista de Participantes" com contador
+    // "Confirmados (N+1)". Sem toast de sucesso visível no fluxo atual.
     await this.page
-      .getByText(/Participante criado com sucesso/i)
+      .getByRole('heading', { name: /Lista de Participantes/i })
       .first()
-      .waitFor({ state: 'visible', timeout: 10_000 });
+      .waitFor({ state: 'visible', timeout: 15_000 });
+    await expect
+      .poll(async () => this.contagemConfirmados(), { timeout: 10_000 })
+      .toBeGreaterThan(confirmadosBefore);
+  }
+
+  /**
+   * Lê o contador "Confirmados (N)" da aba na tela "Lista de
+   * Participantes". Retorna 0 quando ausente/parsing falha — caller
+   * usa como baseline pra comparar após inserção.
+   */
+  private async contagemConfirmados(): Promise<number> {
+    const tabText = await this.page
+      .getByText(/Confirmados\s*\(\d+\)/i)
+      .first()
+      .textContent({ timeout: 5_000 })
+      .catch(() => '');
+    const m = tabText?.match(/\((\d+)\)/);
+    return m ? Number(m[1]) : 0;
   }
 
   /**
