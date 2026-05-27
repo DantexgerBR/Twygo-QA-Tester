@@ -11,9 +11,10 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
   // beforeAll cria curso com defaults, depois abre edit e liga o switch
   // "Habilitar reinscrição" (que vive em tab posterior do form facelift,
   // NÃO no form de criação). A parte "com participants reinscritos"
-  // ainda NÃO é coberta porque `SeedAdminPage.criarAlunoMatriculado`
-  // está marcado not-implemented (helper canônico documentado na skill
-  // v1.3 §"Matrícula de aluno" — refatorar quando migrar Suite 02).
+  // ainda NÃO é coberta — helper canônico `SeedAdminPage.matricularAluno`
+  // foi implementado em 2026-05-27 (skill v1.3 §"Matrícula de aluno"),
+  // mas o TC4 ainda só usa createCurso. Refatorar quando o spec for
+  // expandido pra cobrir cenário composto com participants reinscritos.
   // Por ora, o teste valida apenas que desativar o switch não dispara
   // modal/aviso de bloqueio (parte do RN 2.3).
   let cursoId: number;
@@ -71,8 +72,9 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
       '1. Pré-condição: curso com `has_recertification = true` (criado no beforeAll)',
       async () => {
         // REVISAR: validação cross-suite com Suite 02 — testar com participants
-        // reinscritos quando `SeedAdminPage.criarAlunoMatriculado` estiver
-        // implementado (helper hoje lança not-implemented; ver Page Object).
+        // reinscritos via `SeedAdminPage.matricularAluno` (já implementado;
+        // ver Page Object). Refatorar TC pra invocar matricularAluno +
+        // simular reinscrição quando expandir cobertura.
         await allure.tag('REVIEW_NEEDED');
         // Switch vive na tab "Acesso" do facelift.
         await contentEdit.openEditByIdInAcessoTab(cursoId);

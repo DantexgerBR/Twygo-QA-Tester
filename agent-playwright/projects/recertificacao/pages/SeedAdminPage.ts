@@ -704,109 +704,116 @@ export class SeedAdminPage extends BasePage {
   // ============================================================
 
   /**
-   * Cria matrícula (participant) num evento via UI admin.
+   * Matricula um aluno num conteúdo (curso/trilha/pacote) via drawer
+   * client-side do facelift. Validado live 2026-05-27 + skill
+   * `provisionar-seed` v1.3 §"Matrícula de aluno".
    *
-   * Fluxo (inferido do MD §321 + LearningStudentsPage):
-   *   1. Acessa `/o/{orgId}/events/{eventId}/learning_students`
-   *   2. Clica em "Adicionar aluno" (botão geralmente no topo direito)
-   *   3. Modal/drawer abre — preenche email, nome, opcional CPF
-   *   4. Salvar → participant criado, redirect ou modal fecha
+   * Fluxo canônico (URL NÃO muda durante o drawer):
+   *   1. Listagem `/events?tab=events&profile=admin` + busca pelo nome
+   *   2. Linha do conteúdo → kebab (more_vert) → "Inscrição"
+   *   3. Drawer "Lista de Participantes" abre (3 abas Confirmados/Pendentes/Cancelados)
+   *   4. Click "+ Adicionar" → form abre com E-mail/Nome/Sobrenome
+   *   5. Salvar → toast "Participante criado com sucesso"
    *
-   * REVISAR-RECON-LIVE: o trigger "Adicionar aluno" pode ter rotulações
-   * diferentes ("Inscrever aluno", "Matricular"). Validar texto exato
-   * via recon antes da primeira execução real.
+   * App reusa user existente se email bate; senão cria user inline.
    *
-   * Idealmente o usuário deveria existir antes — se não existir, o
-   * Twygo cria usuário + matrícula no mesmo fluxo (RN admin pode ter
-   * "Convidar e matricular"). Esse helper assume o caminho "matricular
-   * usuário novo via form embutido" que cobre ambos os casos.
-   *
-   * @returns participantId e userId capturados via Network ou URL.
-   *          **LIMITAÇÃO v1**: captura via URL pós-save pode não conter
-   *          os ids; nesse caso, retornamos `participantId: 0, userId: 0`
-   *          com warning — caller usa email como handle pra cleanup.
+   * Pré-condição: user em perfil Administrador (ensureAdminProfile).
    */
-  async criarAlunoMatriculado(_data: {
-    eventId: number;
-    email: string;
-    name: string;
-    cpf?: string;
-  }): Promise<{ participantId: number; userId: number }> {
-    // REVISAR-RECON-LIVE: fluxo completo de "Adicionar aluno" no
-    // learning_students não foi mapeado live. As 3 hipóteses principais:
-    //   (a) Botão "Adicionar aluno" → modal Chakra com form inline
-    //       (criar usuário + matricular num único submit)
-    //   (b) Botão "Adicionar aluno" → drawer com busca por user existente
-    //       (precisa criar user antes via criarUsuarioAluno)
-    //   (c) Link para nova página `/learning_students/new?event_id={id}`
-    //
-    // Sem validação live, não dá pra emitir código que casa com a UI
-    // real — risco de gerar spec que vai falhar em todos os 25+ TCs
-    // que dependem desse helper. Marcar como não-implementado e exigir
-    // recon live antes do primeiro uso.
-    throw new Error(
-      '[SeedAdminPage.criarAlunoMatriculado] fluxo de "Adicionar aluno" na ' +
-        'listagem learning_students não foi confirmado via recon live. ' +
-        'Hipóteses: (a) modal inline criar+matricular, (b) drawer com busca ' +
-        'de user existente, (c) nova rota /learning_students/new?event_id=X. ' +
-        'Validar live antes do primeiro uso e implementar o caminho real. ' +
-        'Workaround temporário: usar `POST /api/v1/contents/{eventId}/event_participants` ' +
-        'via page.request (mencionado em test-analysis.md §1423 e similares) ' +
-        'em vez do fluxo UI.',
-    );
+  async matricularAluno(data: {
+    contentName: string;
+    alunoEmail: string;
+    alunoFirstName: string;
+    alunoLastName: string;
+    dataExpiracao?: string;
+  }): Promise<void> {
+    await this.ensureAdminProfile();
+    await safeGoto(this.page, `/o/${getOrgId()}/events?tab=events&profile=admin`);
+
+    // Filtra pra reduzir lista a 1 row do conteúdo alvo.
+    await this.page.getByPlaceholder(/Pesquise aqui/i).fill(data.contentName);
+    const row = this.page.locator('tr, [role="row"]')
+      .filter({ hasText: data.contentName })
+      .first();
+    await row.waitFor({ state: 'visible', timeout: 10_000 });
+
+    // Kebab → Inscrição. Selector preferencial via data-test-id estável.
+    const kebab = row
+      .locator('[data-test-id^="events-"][data-test-id$="-actions-kebab"]')
+      .or(row.getByRole('button', { name: 'more_vert' }))
+      .first();
+    await kebab.scrollIntoViewIfNeeded();
+    await kebab.click();
+    await this.page.getByRole('menuitem', { name: /Inscrição/i }).first().click();
+
+    // Drawer abre. Aguarda heading "Lista de Participantes".
+    await this.page
+      .getByRole('heading', { name: /Lista de Participantes/i })
+      .first()
+      .waitFor({ state: 'visible', timeout: 10_000 });
+
+    // "Adicionar" é StaticText (não button) — getByText cobre.
+    await this.page.getByText('Adicionar', { exact: true }).first().click();
+
+    // Form do participante abre. Preencher campos obrigatórios.
+    await this.page.getByLabel(/E-?mail/i).first().fill(data.alunoEmail);
+    await this.page.getByLabel('Nome', { exact: true }).fill(data.alunoFirstName);
+    await this.page.getByLabel(/Sobrenome/i).fill(data.alunoLastName);
+    if (data.dataExpiracao) {
+      await this.page.getByLabel(/Data de expira/i).fill(data.dataExpiracao);
+    }
+
+    // Salvar (botão "Salvar" — NÃO "Salvar e Novo").
+    await this.page.getByRole('button', { name: 'Salvar', exact: true }).click();
+
+    // Confirma sucesso via toast.
+    await this.page
+      .getByText(/Participante criado com sucesso/i)
+      .first()
+      .waitFor({ state: 'visible', timeout: 10_000 });
   }
 
   /**
-   * Desinscreve participant de um evento. Necessário ANTES de deletar
-   * o evento, senão produto pode bloquear delete com erro "evento tem
-   * participants" (similar a modal "Painel em uso" — skill
-   * `limpar-dados-de-teste-twygo`).
+   * Cancela matrícula de aluno por email. Drawer Inscrição → linha do
+   * aluno na aba Confirmados → "Cancelar" → confirma modal.
    *
-   * Ordem canônica em afterAll:
-   *   1. desinscreverParticipantSafe(participantId, eventId)
-   *   2. deleteUsuarioByEmailSafe(email)
-   *   3. deleteCursoByIdSafe(eventId)
-   *
-   * Fluxo (inferido):
-   *   1. Acessa learning_students do evento
-   *   2. Localiza row do participant
-   *   3. Menu de ações da row → "Desinscrever" ou "Remover"
-   *   4. Confirma modal
-   *
-   * REVISAR-RECON-LIVE: texto exato da ação ("Desinscrever", "Remover",
-   * "Excluir") não confirmado. Tentamos as 3 variantes via regex.
+   * Idempotente (catch silencioso) — usado em `afterAll`.
    */
-  async desinscreverParticipantSafe(
-    _participantId: number,
-    eventId: number,
-  ): Promise<void> {
+  async desmatricularAlunoSafe(data: {
+    contentName: string;
+    alunoEmail: string;
+  }): Promise<void> {
     try {
-      await safeGoto(
-        this.page,
-        `/o/${getOrgId()}/events/${eventId}/learning_students`,
-      );
-      // REVISAR-RECON-LIVE: sem participantId mapeando para data-item-id
-      // estável na row, e sem garantia de que `_participantId` casa com
-      // algum atributo da DOM, este helper precisaria identificar o
-      // participant via email. O caller (afterAll) normalmente tem o
-      // email — refatorar a assinatura para receber email em vez de
-      // participantId, ou aceitar ambos.
-      //
-      // Como criarAlunoMatriculado() está marcado not-implemented,
-      // este desinscreverParticipantSafe também não tem caminho ativo
-      // de teste — mantemos como TODO consciente. Quando
-      // criarAlunoMatriculado for implementado e retornar participantId
-      // real, ajustar este método para usar o id em data-item-id da row.
-      // eslint-disable-next-line no-console -- diagnóstico em afterAll
-      console.warn(
-        '[desinscreverParticipantSafe] não implementado — precisa recon live ' +
-          'do fluxo "Desinscrever participant" + identificação da row por ' +
-          'participantId. Refatorar para aceitar email como handle.',
-      );
+      await this.ensureAdminProfile();
+      await safeGoto(this.page, `/o/${getOrgId()}/events?tab=events&profile=admin`);
+      await this.page.getByPlaceholder(/Pesquise aqui/i).fill(data.contentName);
+      const row = this.page.locator('tr, [role="row"]')
+        .filter({ hasText: data.contentName })
+        .first();
+      const kebab = row
+        .locator('[data-test-id^="events-"][data-test-id$="-actions-kebab"]')
+        .or(row.getByRole('button', { name: 'more_vert' }))
+        .first();
+      await kebab.click();
+      await this.page.getByRole('menuitem', { name: /Inscrição/i }).first().click();
+
+      // Drawer abre. Aguarda heading e localiza linha do aluno.
+      await this.page
+        .getByRole('heading', { name: /Lista de Participantes/i })
+        .first()
+        .waitFor({ state: 'visible', timeout: 5_000 });
+      const alunoRow = this.page.locator('tr, [role="row"]')
+        .filter({ hasText: data.alunoEmail })
+        .first();
+      await alunoRow.getByRole('button', { name: /cancelar/i }).click({ timeout: 5_000 });
+      // Confirmar cancelamento se modal aparecer.
+      await this.page
+        .getByRole('button', { name: /confirmar|sim/i })
+        .click({ timeout: 5_000 })
+        .catch(() => undefined);
     } catch (err) {
       // eslint-disable-next-line no-console -- diagnóstico em afterAll
       console.warn(
-        `[desinscreverParticipantSafe] Falha em event=${eventId}: ${(err as Error).message}`,
+        `[desmatricularAlunoSafe] Falha em "${data.contentName}/${data.alunoEmail}": ${(err as Error).message}`,
       );
     }
   }
