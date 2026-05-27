@@ -4,16 +4,9 @@ import { LearningStudentsPage } from '../../../pages/LearningStudentsPage.js';
 import { tc1Data } from './tc1-opcao-substituido-aparece-no-filtro-flag-on.data.js';
 
 test.describe('Filtro Avançado Status Substituído', () => {
-  // Categoria: seed-invalido (heal 2026-05-26).
-  // GET /o/37007/events/1/learning_students retornou 404 — `tc1Data.eventId = 1`
-  // é placeholder. Validar manualmente no env staging-base-de-conhecimento
-  // (orgId 37007) qual eventId tem listagem de aprendizagem habilitada
-  // (participants em diferentes certificate_status) e atualizar
-  // `tc1-opcao-substituido-aparece-no-filtro-flag-on.data.ts`.
-  test.fixme(
-    true,
-    'seed inválido — eventId placeholder em tc1-opcao-substituido-aparece-no-filtro-flag-on.data.ts. Validar manualmente no env staging-base-de-conhecimento e atualizar o .data.ts.',
-  );
+  // Categoria: resolvido em 2026-05-27 via fixedSeed.emptyCursoId (806852).
+  // Filtro avançado renderiza dropdown estático independente de participants —
+  // basta o cursoId existir e ter learning_students habilitado.
 
   test('TC1 — Opção "Substituído" aparece no filtro avançado de Status do certificado com flag ON', async ({
     page,

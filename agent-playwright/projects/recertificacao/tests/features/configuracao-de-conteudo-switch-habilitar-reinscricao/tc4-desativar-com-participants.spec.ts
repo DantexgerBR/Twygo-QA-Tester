@@ -34,6 +34,10 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
       await contentEdit.setHabilitarReinscricao(true);
       await contentEdit.save();
       await contentEdit.expectSaveSuccess();
+      // Re-grava storage atualizado pra evitar session race entre o
+      // contexto do seed e o `page` fixture do test (Twygo regenera
+      // session_id após operações de criação/save).
+      await context.storageState({ path: STORAGE_PATH });
     } finally {
       await context.close();
     }
@@ -72,7 +76,7 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
         await allure.tag('REVIEW_NEEDED');
         // Switch vive na tab "Acesso" do facelift.
         await contentEdit.openEditByIdInAcessoTab(cursoId);
-        await expect(contentEdit.getHabilitarReinscricaoSwitch()).toBeVisible();
+        await expect(contentEdit.getHabilitarReinscricaoVisible()).toBeVisible();
         expect(await contentEdit.isHabilitarReinscricaoOn()).toBe(true);
       },
     );

@@ -26,6 +26,10 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
         name: cursoName,
         hasRecertification: false,
       });
+      // Re-grava storage atualizado pra evitar session race entre o
+      // contexto do seed e o `page` fixture do test (Twygo regenera
+      // session_id após operações de criação).
+      await context.storageState({ path: STORAGE_PATH });
     } finally {
       await context.close();
     }
@@ -58,7 +62,7 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
       async () => {
         // Switch vive na tab "Acesso" do facelift (skill v1.3 §matrícula).
         await contentEdit.openEditByIdInAcessoTab(cursoId);
-        await expect(contentEdit.getHabilitarReinscricaoSwitch()).toBeVisible();
+        await expect(contentEdit.getHabilitarReinscricaoVisible()).toBeVisible();
         // Pré-condição: switch desligado (default — switch é NO-OP no createCurso).
         expect(await contentEdit.isHabilitarReinscricaoOn()).toBe(false);
       },
@@ -82,7 +86,7 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
       '4. Recarregar a edição → switch permanece ligado (has_recertification = true persistido)',
       async () => {
         await contentEdit.openEditByIdInAcessoTab(cursoId);
-        await expect(contentEdit.getHabilitarReinscricaoSwitch()).toBeVisible();
+        await expect(contentEdit.getHabilitarReinscricaoVisible()).toBeVisible();
         expect(await contentEdit.isHabilitarReinscricaoOn()).toBe(true);
       },
     );

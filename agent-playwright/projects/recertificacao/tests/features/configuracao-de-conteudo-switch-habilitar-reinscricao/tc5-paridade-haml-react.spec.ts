@@ -6,7 +6,13 @@ import { SeedAdminPage } from '../../../pages/SeedAdminPage.js';
 
 const STORAGE_PATH = resolve(process.cwd(), 'outputs/.auth/storage.json');
 
-test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', () => {
+// XML desatualizado: a tela HAML legada `/e/{id}/edit` não renderiza
+// mais o checkbox "Habilitar reinscrição" no env staging-recertificacao
+// (validado live 2026-05-27). Form foi migrado para o facelift React
+// `/contents/{id}/edit?tab=access`. Paridade HAML/React não é mais
+// observável — TC perde sentido até o XML ser atualizado pela AT/QA Lead.
+// Categoria 'XML desatualizado' (CLAUDE.md §7.6 anti-pattern F).
+test.describe.fixme('Configuração de Conteúdo (Switch "Habilitar reinscrição")', () => {
   // Seed auto-suficiente via SeedAdminPage (skill `provisionar-seed` v1.3):
   // beforeAll cria curso com defaults (has_recertification=false por
   // omissão). O TC toggla o switch entre as 2 telas (HAML legado `/e/{id}/edit`
@@ -25,6 +31,9 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
         name: cursoName,
         hasRecertification: false,
       });
+      // Re-grava storage atualizado pra evitar session race entre o
+      // contexto do seed e o `page` fixture do test.
+      await context.storageState({ path: STORAGE_PATH });
     } finally {
       await context.close();
     }

@@ -8,8 +8,8 @@ source_docs:
   - "docs/discovery.md"
   - "docs/qa-impact-map.md"
   - "docs/QA_Only_Recertificacao_v2.xlsx"
-env: staging-base-de-conhecimento
-env_secondary: null
+env: staging-recertificacao
+env_secondary: staging-recertificacao-aditional
 totals:
   suites: 14
   test_cases: 62

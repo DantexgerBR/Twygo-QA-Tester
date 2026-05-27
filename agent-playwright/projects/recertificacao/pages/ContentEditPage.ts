@@ -35,10 +35,14 @@ export class ContentEditPage extends BasePage {
 
   /**
    * Listagem de conteúdos (cursos) da organização do env atual.
-   * URL canônica: `/o/{orgId}/events`.
+   * URL canônica facelift: `/o/{orgId}/events?tab=events&profile=admin`.
+   * Sem `?tab=events`, Twygo serve UI Materialize legada (⚙️ engrenagem
+   * por row) ao invés da UI Chakra nova (botão `more_vert`/kebab).
+   * Validado live 2026-05-27 — `clickEditarFromRow` Caminho 2 depende
+   * do data-test-id `events-{id}-actions-kebab` que só existe no facelift.
    */
   async goToContentList(): Promise<void> {
-    await safeGoto(this.page, `/o/${getOrgId()}/events`);
+    await safeGoto(this.page, `/o/${getOrgId()}/events?tab=events&profile=admin`);
   }
 
   /** Edição HAML (formulário legado `_form_details.haml`). */
@@ -48,7 +52,29 @@ export class ContentEditPage extends BasePage {
 
   /** Edição React (formulário facelift `event-form.tsx`). */
   async openEditReactById(eventId: number | string): Promise<void> {
+    await safeGoto(this.page, `/contents/${eventId}/edit?tab=identification`);
+  }
+
+  /** Edição React abrindo direto na tab "Acesso" (`?tab=access`). */
+  async openEditReactAccessById(eventId: number | string): Promise<void> {
     await safeGoto(this.page, `/contents/${eventId}/edit`);
+    // Twygo facelift processa `?tab=access` de forma inconsistente entre
+    // initial load e re-render — abre na Identificação e às vezes não
+    // commuta. Estratégia robusta: ignorar query param e clicar na tab
+    // explicitamente. Aguarda tabs renderizarem (até 20s pra cobrir
+    // carregamento lento + React lazy chunks).
+    const acessoTab = this.page
+      .getByRole('tab', { name: /^Acesso$/i })
+      .or(this.page.locator('[data-test-id="tab-access"]'))
+      .first();
+    await acessoTab.waitFor({ state: 'visible', timeout: 20_000 });
+    await acessoTab.click();
+    await expect(acessoTab).toHaveAttribute('aria-selected', 'true', { timeout: 5_000 });
+    // Aguarda o label visível do checkbox-alvo renderizar.
+    await this.page
+      .getByText('Habilitar reinscrição', { exact: true })
+      .first()
+      .waitFor({ state: 'visible', timeout: 10_000 });
   }
 
   /**
@@ -64,11 +90,12 @@ export class ContentEditPage extends BasePage {
 
   /**
    * Atalho: abre edit (facelift) já navegando pra tab "Acesso" — usada
-   * pelos TCs que validam o switch "Habilitar reinscrição".
+   * pelos TCs que validam o switch "Habilitar reinscrição". Navegação
+   * direta via `?tab=access` em vez de click na tab (evita race com
+   * inicialização do React form).
    */
   async openEditByIdInAcessoTab(eventId: number | string): Promise<void> {
-    await this.openEditReactById(eventId);
-    await this.goToAcessoTab();
+    await this.openEditReactAccessById(eventId);
   }
 
   /**
@@ -77,20 +104,26 @@ export class ContentEditPage extends BasePage {
    * 2026-05-27 — seção "Inscrição" → "Permitir registro de inscrição por").
    * No HAML legado não há tabs; helper é no-op.
    *
-   * Aguarda o tabpanel ativar (URL atualiza pra `?tab=access` e role
-   * tabpanel "Acesso" fica selected).
+   * Tab tem data-test-id estável `tab-access` (validado live 2026-05-27).
+   * Aguarda o tab ficar selected + URL atualizar.
    */
   async goToAcessoTab(): Promise<void> {
-    const acessoTab = this.page.getByRole('tab', { name: /^Acesso$/i }).first();
+    const acessoTab = this.page
+      .locator('[data-test-id="tab-access"]')
+      .or(this.page.getByRole('tab', { name: /^Acesso$/i }))
+      .first();
     if (await acessoTab.isVisible({ timeout: 2_000 }).catch(() => false)) {
       await acessoTab.click();
       await this.page
         .waitForURL(/tab=access/, { timeout: 5_000 })
         .catch(() => undefined);
-      // Aguarda tabpanel renderizar (checkbox "Habilitar reinscrição" tem
-      // que estar no DOM antes do próximo step).
+      // Confirma a tab Acesso ficou selected (aria-selected=true).
+      await expect(acessoTab).toHaveAttribute('aria-selected', 'true', { timeout: 5_000 });
+      // Aguarda checkbox "Habilitar reinscrição" renderizar no DOM
+      // (label visível — input é screen-reader-only do Chakra).
       await this.page
-        .getByRole('tabpanel', { name: /^Acesso$/i })
+        .getByText('Habilitar reinscrição', { exact: true })
+        .first()
         .waitFor({ state: 'visible', timeout: 5_000 })
         .catch(() => undefined);
     }
@@ -165,21 +198,22 @@ export class ContentEditPage extends BasePage {
       await this.page.waitForURL(/\/(e\/\d+\/edit|contents\/\d+\/edit)/);
       return;
     }
-    // Caminho 2: more_vert (UI nova facelift, validada live 2026-05-26).
-    // O menu abre 11 opções; o item de edição agora se chama "Gerenciar"
-    // (não "Editar"). Botão tem text "more_vert" (Material Icons literal).
-    // Fallback CSS pra cobrir variações de acessibilidade.
+    // Caminho 2: more_vert (UI nova facelift, validada live 2026-05-27).
+    // Kebab tem `data-test-id="events-{id}-actions-kebab"` (preferencial),
+    // com fallback pra accessible name "more_vert". Item de edição é
+    // "Gerenciar" mas Chakra renderiza com ícone Material colado: text
+    // content vira "editGerenciar" — regex sem âncoras evita o miss.
     const moreVertTrigger = row
-      .getByRole('button', { name: 'more_vert' })
+      .locator('[data-test-id^="events-"][data-test-id$="-actions-kebab"]')
+      .or(row.getByRole('button', { name: 'more_vert' }))
       .or(row.locator('button:has-text("more_vert")'))
-      .or(row.locator('[role="button"]:has-text("more_vert")'))
       .first();
     if (await moreVertTrigger.isVisible({ timeout: 3_000 }).catch(() => false)) {
       await moreVertTrigger.scrollIntoViewIfNeeded();
       await moreVertTrigger.click();
       const gerenciarItem = this.page
-        .getByRole('menuitem', { name: /^Gerenciar$/i })
-        .or(this.page.getByRole('menuitem', { name: /^Editar$/i }))
+        .getByRole('menuitem', { name: /Gerenciar/i })
+        .or(this.page.getByRole('menuitem', { name: /Editar/i }))
         .first();
       await gerenciarItem.waitFor({ state: 'visible', timeout: 5_000 });
       await gerenciarItem.click();
@@ -204,18 +238,31 @@ export class ContentEditPage extends BasePage {
   // ─── Switch "Habilitar reinscrição" ─────────────────────────────────
 
   /**
-   * Locator do `<label>` do switch Chakra "Habilitar reinscrição".
-   * Preferimos o role `checkbox` (semântico, estável entre HAML e React),
-   * mas o click subsequente é via `setSwitch` no label — ver skill
-   * `interagir-switch-chakra-twygo`.
+   * Locator do checkbox HTML "Habilitar reinscrição" — no facelift v1.3+
+   * é `<input id="has_recertification">` envolvido em `<label class="chakra-checkbox">`.
+   * O input em si é screen-reader-only (1×13px com clip CSS); o label
+   * visível tem text "Habilitar reinscrição".
    *
-   * REVISAR: aguardando `data-test-id` estável (`event-has-recertification-switch`
-   * sugerido). Quando o atributo for adicionado no app, trocar este getter.
+   * Para `.check()/.uncheck()/.isChecked()` retornamos o input (Playwright
+   * resolve actionability via label automaticamente). Para `toBeVisible`
+   * use [[getHabilitarReinscricaoVisible]] que pega o label.
+   *
+   * REVISAR: aguardando `data-test-id` estável (`event-has-recertification-checkbox`
+   * sugerido). Validado live 2026-05-27 com input#has_recertification.
    */
   getHabilitarReinscricaoSwitch(): Locator {
-    // Fallback semântico — funciona em HAML e React enquanto o data-test-id
-    // não existe. Atalho para o role+name canônico definido pela prosa do MD.
-    return this.page.getByRole('checkbox', { name: /Habilitar reinscrição/i });
+    return this.page.locator('#has_recertification');
+  }
+
+  /**
+   * Locator do label visível "Habilitar reinscrição" — use para
+   * `toBeVisible` (o input em si é screen-reader-only e falha visibility).
+   */
+  getHabilitarReinscricaoVisible(): Locator {
+    return this.page
+      .locator('label.chakra-checkbox')
+      .filter({ has: this.page.locator('#has_recertification') })
+      .first();
   }
 
   /**
@@ -279,8 +326,8 @@ export class ContentEditPage extends BasePage {
   /**
    * Idempotente: só toggla se o estado atual diverge do desejado.
    * Validado live 2026-05-27 — "Habilitar reinscrição" é checkbox HTML
-   * padrão na tab "Acesso", seção "Permitir registro de inscrição por"
-   * (não Chakra switch como assumido em v1.0/v1.1 da skill).
+   * (input#has_recertification screen-reader-only com label.chakra-checkbox
+   * visível). Tab Acesso, seção "Permitir registro de inscrição por".
    */
   async setHabilitarReinscricao(enabled: boolean): Promise<void> {
     // No facelift React, checkbox vive na tab "Acesso" — navega
@@ -288,8 +335,13 @@ export class ContentEditPage extends BasePage {
     if (/\/contents\/\d+\/edit/.test(this.page.url())) {
       await this.goToAcessoTab();
     }
+    // Aguarda o LABEL visível antes de tocar no input (input é
+    // screen-reader-only, waitFor('visible') no input timeoutaria).
+    await this.getHabilitarReinscricaoVisible().waitFor({
+      state: 'visible',
+      timeout: 10_000,
+    });
     const checkbox = this.getHabilitarReinscricaoSwitch();
-    await checkbox.waitFor({ state: 'visible', timeout: 10_000 });
     if (enabled) {
       await checkbox.check();
     } else {

@@ -32,6 +32,11 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
         name: cursoName,
         hasRecertification: false, // default — TC1 só lê o switch, não toggla
       });
+      // Re-grava storage atualizado pra evitar session race entre o
+      // contexto do seed e o `page` fixture do test (Twygo regenera
+      // session_id após operações de criação — sem refresh, page do
+      // test acaba na tela de login).
+      await context.storageState({ path: STORAGE_PATH });
     } finally {
       await context.close();
     }
@@ -91,9 +96,9 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
       async () => {
         // No facelift React, o switch vive na tab "Acesso" (validado live
         // 2026-05-26 após fix de feature flag no env). Navega antes do expect.
+        // O input é screen-reader-only — checamos visibilidade pelo label.
         await contentEdit.goToAcessoTab();
-        const switchCb = contentEdit.getHabilitarReinscricaoSwitch();
-        await expect(switchCb).toBeVisible();
+        await expect(contentEdit.getHabilitarReinscricaoVisible()).toBeVisible();
       },
     );
 
@@ -101,17 +106,18 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
       '5. Hover no ícone de ajuda → tooltip de ajuda é exibido com o texto da chave I18n',
       async () => {
         const trigger = contentEdit.getHabilitarReinscricaoTooltipTrigger();
-        // REVISAR: tooltip-trigger sem data-test-id estável — fallback usa
-        // proximidade do label. Se este step falhar, capturar role+name
-        // do trigger real e ajustar `getHabilitarReinscricaoTooltipTrigger`.
+        // REVISAR: tooltip-trigger sem data-test-id estável e UI atual da
+        // facelift não expõe ícone de ajuda adjacente ao checkbox
+        // "Habilitar reinscrição" — capturar role+name do trigger real
+        // (DOM inspect ao vivo) e ajustar `getHabilitarReinscricaoTooltipTrigger`.
+        // Sem o trigger, step é informativo (sem assertion). Steps 1-4
+        // já validam a RN principal.
         await allure.tag('REVIEW_NEEDED');
-        if (await trigger.isVisible().catch(() => false)) {
+        const triggerVisible = await trigger.isVisible({ timeout: 1_000 }).catch(() => false);
+        if (triggerVisible) {
           await trigger.hover();
           const tooltip = contentEdit.getHabilitarReinscricaoTooltip();
           await expect(tooltip).toBeVisible();
-          // REVISAR-FIGMA: texto exato (chave I18n
-          // "activerecord.attributes.event.has_recertification_tooltip")
-          // ainda não confirmado — asserta apenas presença não-vazia.
           await expect(tooltip).not.toHaveText('');
         }
       },
