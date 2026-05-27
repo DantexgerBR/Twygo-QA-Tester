@@ -1,6 +1,6 @@
 # Relatório de Execução — Twygo QA
 
-**Projeto:** Recertificação · **Ambiente:** `staging-recertificacao` · **Browsers:** chromium · **Gerado em:** 27/05/2026, 02:09:41
+**Projeto:** Recertificação · **Ambiente:** `staging-recertificacao` · **Browsers:** chromium · **Gerado em:** 27/05/2026, 08:39:09
 
 > **Escopo:** Apenas testsuite contendo "Isolamento em Ambientes Adicionais"
 

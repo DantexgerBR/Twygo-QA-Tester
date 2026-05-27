@@ -1,5 +1,5 @@
 {
-  "runId": "isolamento-em-ambientes-adicionais_20260527-020941",
+  "runId": "isolamento-em-ambientes-adicionais_20260527-083909",
   "mode": "per-suite",
   "suiteFilter": "Isolamento em Ambientes Adicionais",
   "projectName": "Recertificação",
@@ -7,5 +7,5 @@
   "browsers": [
     "chromium"
   ],
-  "generatedAt": "2026-05-27T05:09:41.558Z"
+  "generatedAt": "2026-05-27T11:39:09.421Z"
 }
