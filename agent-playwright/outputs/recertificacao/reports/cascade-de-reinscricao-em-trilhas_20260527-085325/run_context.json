@@ -1,0 +1,11 @@
+{
+  "runId": "cascade-de-reinscricao-em-trilhas_20260527-085325",
+  "mode": "per-suite",
+  "suiteFilter": "Cascade de Reinscrição em Trilhas",
+  "projectName": "Recertificação",
+  "environment": "staging-recertificacao",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-27T11:53:25.700Z"
+}

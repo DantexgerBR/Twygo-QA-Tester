@@ -1,0 +1,358 @@
+{
+  "generatedAt": "2026-05-27T11:43:38.432Z",
+  "project": "recertificacao",
+  "totalRed": 4,
+  "reports": [
+    {
+      "id": "configuracao-de-conteudo-switch-habilitar-reinscricao__tc1-switch-habilitar-reinscricao-aparece-com-flag-on-na-edicao-de-curso",
+      "title": "TC1 — Switch \"Habilitar reinscrição\" aparece com flag ON na edição de curso — TimeoutError: locator.waitFor: Timeout 5000ms exceeded.",
+      "testsuite": "Configuração de Conteúdo (Switch \"Habilitar reinscrição\")",
+      "testcase": "TC1 — Switch \"Habilitar reinscrição\" aparece com flag ON na edição de curso",
+      "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc1-switch-aparece-com-flag-on.spec.ts",
+      "status": "failed",
+      "durationMs": 35320,
+      "categoriaSugerida": "spec-fragil",
+      "categoriaConfianca": "media",
+      "categoriaJustificativa": "Timeout sem HTTP error — possível wait/seletor frágil. Confirmar via chrome-mcp",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-recertificacao",
+        "baseUrl": "https://recertificacao-testeqa.stage.twygoead.com/",
+        "orgId": "37048",
+        "browser": "chromium",
+        "user": "agents.qa@claude.com"
+      },
+      "buildCommit": "b54a8c2",
+      "generatedAt": "2026-05-27T11:43:38.432Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Acessar a URL \"/o/{orgId}/dashboard\"",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "2. Navegar até a listagem de cursos da organização",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 3,
+          "action": "3. Clicar em \"Gerenciar\" no menu de ações do curso → página de edição é exibida",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "TimeoutError: locator.waitFor: Timeout 5000ms exceeded.\nCall log:\n  - waiting for getByRole('row', { name: /Curso Recertificação TC1 w0-1779882137235/i }).first().locator('img[alt=\"Options\" i], [role=\"button\"][aria-label*=\"Options\" i], [role=\"button\"][aria-label*=\"Opções\" i]').first() to be visible\n",
+      "errorLocation": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\ContentEditPage.ts:173:26",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-recertificacao-te-d835b--flag-ON-na-edição-de-curso-chromium/test-finished-1.png"
+        },
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-recertificacao-te-d835b--flag-ON-na-edição-de-curso-chromium/test-failed-2.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-recertificacao-te-d835b--flag-ON-na-edição-de-curso-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-recertificacao-te-d835b--flag-ON-na-edição-de-curso-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-recertificacao-te-d835b--flag-ON-na-edição-de-curso-chromium/error-context.md"
+        },
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-recertificacao-te-d835b--flag-ON-na-edição-de-curso-chromium/test-failed-3.png"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-recertificacao-te-d835b--flag-ON-na-edição-de-curso-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-recertificacao-te-d835b--flag-ON-na-edição-de-curso-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37048",
+        "userId": null
+      }
+    },
+    {
+      "id": "configuracao-de-conteudo-switch-habilitar-reinscricao__tc3-ativar-e-salvar-o-switch-persiste-has-recertification-true",
+      "title": "TC3 — Ativar e salvar o switch persiste `has_recertification = true` — Error: expect(locator).toBeVisible() failed",
+      "testsuite": "Configuração de Conteúdo (Switch \"Habilitar reinscrição\")",
+      "testcase": "TC3 — Ativar e salvar o switch persiste `has_recertification = true`",
+      "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc3-ativar-e-salvar-persiste.spec.ts",
+      "status": "failed",
+      "durationMs": 13621,
+      "categoriaSugerida": "inconclusivo",
+      "categoriaConfianca": "baixa",
+      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
+      "severity": "media",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-recertificacao",
+        "baseUrl": "https://recertificacao-testeqa.stage.twygoead.com/",
+        "orgId": "37048",
+        "browser": "chromium",
+        "user": "agents.qa@claude.com"
+      },
+      "buildCommit": "b54a8c2",
+      "generatedAt": "2026-05-27T11:43:38.432Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Acessar a edição de um curso com `has_recertification = false` (tab \"Acesso\")",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: expect(locator).toBeVisible() failed\n\nLocator: getByRole('checkbox', { name: /Habilitar reinscrição/i })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 10000ms\n  - waiting for getByRole('checkbox', { name: /Habilitar reinscrição/i })\n",
+      "errorLocation": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc3-ativar-e-salvar-persiste.spec.ts:61:67",
+      "network": [
+        {
+          "method": "GET",
+          "url": "https://recertificacao-testeqa.stage.twygoead.com/contents/807020/edit",
+          "status": 404,
+          "inScope": false
+        }
+      ],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-recertificacao-te-ccb33-e-has-recertification-true--chromium/test-finished-1.png"
+        },
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-recertificacao-te-ccb33-e-has-recertification-true--chromium/test-failed-2.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-recertificacao-te-ccb33-e-has-recertification-true--chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-recertificacao-te-ccb33-e-has-recertification-true--chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-recertificacao-te-ccb33-e-has-recertification-true--chromium/error-context.md"
+        },
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-recertificacao-te-ccb33-e-has-recertification-true--chromium/test-failed-3.png"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-recertificacao-te-ccb33-e-has-recertification-true--chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-recertificacao-te-ccb33-e-has-recertification-true--chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37048",
+        "userId": null
+      }
+    },
+    {
+      "id": "configuracao-de-conteudo-switch-habilitar-reinscricao__tc4-desativar-o-switch-em-curso-com-participants-reinscritos-e-permitido-sem-aviso",
+      "title": "TC4 — Desativar o switch em curso com participants reinscritos é permitido sem aviso — TimeoutError: locator.waitFor: Timeout 10000ms exceeded.",
+      "testsuite": "Configuração de Conteúdo (Switch \"Habilitar reinscrição\")",
+      "testcase": "TC4 — Desativar o switch em curso com participants reinscritos é permitido sem aviso",
+      "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc4-desativar-com-participants.spec.ts",
+      "status": "failed",
+      "durationMs": 0,
+      "categoriaSugerida": "spec-fragil",
+      "categoriaConfianca": "media",
+      "categoriaJustificativa": "Timeout sem HTTP error — possível wait/seletor frágil. Confirmar via chrome-mcp",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-recertificacao",
+        "baseUrl": "https://recertificacao-testeqa.stage.twygoead.com/",
+        "orgId": "37048",
+        "browser": "chromium",
+        "user": "agents.qa@claude.com"
+      },
+      "buildCommit": "b54a8c2",
+      "generatedAt": "2026-05-27T11:43:38.432Z",
+      "reproSteps": [],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n  - waiting for getByRole('checkbox', { name: /Habilitar reinscrição/i }) to be visible\n",
+      "errorLocation": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\ContentEditPage.ts:272:20",
+      "network": [
+        {
+          "method": "GET",
+          "url": "https://basedeconhecimento.stage.twygoead.com/e/3/edit",
+          "status": 404,
+          "inScope": false
+        }
+      ],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-recertificacao-te-ad265-ritos-é-permitido-sem-aviso-chromium/test-failed-1.png"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-recertificacao-te-ad265-ritos-é-permitido-sem-aviso-chromium/error-context.md"
+        },
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-recertificacao-te-ad265-ritos-é-permitido-sem-aviso-chromium/test-failed-2.png"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-recertificacao-te-ad265-ritos-é-permitido-sem-aviso-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-recertificacao-te-ad265-ritos-é-permitido-sem-aviso-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37048",
+        "userId": null
+      }
+    },
+    {
+      "id": "configuracao-de-conteudo-switch-habilitar-reinscricao__tc5-paridade-do-switch-entre-formulario-haml-e-formulario-react-facelift",
+      "title": "TC5 — Paridade do switch entre formulário HAML e formulário React (facelift) — Error: expect(locator).toBeVisible() failed",
+      "testsuite": "Configuração de Conteúdo (Switch \"Habilitar reinscrição\")",
+      "testcase": "TC5 — Paridade do switch entre formulário HAML e formulário React (facelift)",
+      "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc5-paridade-haml-react.spec.ts",
+      "status": "failed",
+      "durationMs": 23927,
+      "categoriaSugerida": "inconclusivo",
+      "categoriaConfianca": "baixa",
+      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
+      "severity": "media",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-recertificacao",
+        "baseUrl": "https://recertificacao-testeqa.stage.twygoead.com/",
+        "orgId": "37048",
+        "browser": "chromium",
+        "user": "agents.qa@claude.com"
+      },
+      "buildCommit": "b54a8c2",
+      "generatedAt": "2026-05-27T11:43:38.432Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Editar o curso na tela HAML, ativar o switch e salvar → has_recertification = true",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: expect(locator).toBeVisible() failed\n\nLocator: getByRole('checkbox', { name: /Habilitar reinscrição/i })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 10000ms\n  - waiting for getByRole('checkbox', { name: /Habilitar reinscrição/i })\n",
+      "errorLocation": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc5-paridade-haml-react.spec.ts:61:67",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-recertificacao-te-254b9--formulário-React-facelift--chromium/test-finished-1.png"
+        },
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-recertificacao-te-254b9--formulário-React-facelift--chromium/test-failed-2.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-recertificacao-te-254b9--formulário-React-facelift--chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-recertificacao-te-254b9--formulário-React-facelift--chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-recertificacao-te-254b9--formulário-React-facelift--chromium/error-context.md"
+        },
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-recertificacao-te-254b9--formulário-React-facelift--chromium/test-failed-3.png"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-recertificacao-te-254b9--formulário-React-facelift--chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-recertificacao-te-254b9--formulário-React-facelift--chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37048",
+        "userId": null
+      }
+    }
+  ]
+}

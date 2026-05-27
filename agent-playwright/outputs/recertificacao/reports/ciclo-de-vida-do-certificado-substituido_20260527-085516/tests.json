@@ -1,0 +1,361 @@
+{
+  "config": {
+    "configFile": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright/outputs/recertificacao/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "tests/auth/**/*.spec.ts",
+          "projects/recertificacao/tests/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/recertificacao/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\recertificacao\\tests\\features\\ciclo-de-vida-do-certificado-substituido\\tc1-novo-certificado-anteriores-replaced.spec.ts",
+      "file": "projects/recertificacao/tests/features/ciclo-de-vida-do-certificado-substituido/tc1-novo-certificado-anteriores-replaced.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Ciclo de Vida do Certificado Substituído",
+          "file": "projects/recertificacao/tests/features/ciclo-de-vida-do-certificado-substituido/tc1-novo-certificado-anteriores-replaced.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC1 — Após emitir novo certificado, anteriores são marcados em lote como REPLACED",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "requer trigger de emissão de certificado + validação DB-pure de update em lote (situation=4). Validar manualmente.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\ciclo-de-vida-do-certificado-substituido\\tc1-novo-certificado-anteriores-replaced.spec.ts",
+                        "line": 14,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T11:55:13.036Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "requer trigger de emissão de certificado + validação DB-pure de update em lote (situation=4). Validar manualmente.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\ciclo-de-vida-do-certificado-substituido\\tc1-novo-certificado-anteriores-replaced.spec.ts",
+                            "line": 14,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fc6f573d04bfbad90809-2c77bf66f7c84bb027e4",
+              "file": "projects/recertificacao/tests/features/ciclo-de-vida-do-certificado-substituido/tc1-novo-certificado-anteriores-replaced.spec.ts",
+              "line": 19,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\ciclo-de-vida-do-certificado-substituido\\tc2-worker-expires-certificates-propaga.spec.ts",
+      "file": "projects/recertificacao/tests/features/ciclo-de-vida-do-certificado-substituido/tc2-worker-expires-certificates-propaga.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Ciclo de Vida do Certificado Substituído",
+          "file": "projects/recertificacao/tests/features/ciclo-de-vida-do-certificado-substituido/tc2-worker-expires-certificates-propaga.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC2 — Worker ExpiresCertificates expira VALID e propaga para REPLACED do mesmo par",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "requer execução do worker ExpiresCertificates + validação direta no banco. Validar manualmente.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\ciclo-de-vida-do-certificado-substituido\\tc2-worker-expires-certificates-propaga.spec.ts",
+                        "line": 16,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T11:55:13.038Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "requer execução do worker ExpiresCertificates + validação direta no banco. Validar manualmente.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\ciclo-de-vida-do-certificado-substituido\\tc2-worker-expires-certificates-propaga.spec.ts",
+                            "line": 16,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "b67d52a60531b733ece4-2af330b7324f940ea3b5",
+              "file": "projects/recertificacao/tests/features/ciclo-de-vida-do-certificado-substituido/tc2-worker-expires-certificates-propaga.spec.ts",
+              "line": 21,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\ciclo-de-vida-do-certificado-substituido\\tc3-constante-certificate-replaced-4.spec.ts",
+      "file": "projects/recertificacao/tests/features/ciclo-de-vida-do-certificado-substituido/tc3-constante-certificate-replaced-4.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Ciclo de Vida do Certificado Substituído",
+          "file": "projects/recertificacao/tests/features/ciclo-de-vida-do-certificado-substituido/tc3-constante-certificate-replaced-4.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC3 — Constante CERTIFICATE_REPLACED = 4 espelhada em EventParticipant::REPLACED",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "validação de constante Rails — fora do escopo Playwright. Validar manualmente lendo o código fonte.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\ciclo-de-vida-do-certificado-substituido\\tc3-constante-certificate-replaced-4.spec.ts",
+                        "line": 15,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T11:55:13.038Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "validação de constante Rails — fora do escopo Playwright. Validar manualmente lendo o código fonte.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\ciclo-de-vida-do-certificado-substituido\\tc3-constante-certificate-replaced-4.spec.ts",
+                            "line": 15,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e4d051e58ed8875e9ba7-6eafcfae3b59024aa629",
+              "file": "projects/recertificacao/tests/features/ciclo-de-vida-do-certificado-substituido/tc3-constante-certificate-replaced-4.spec.ts",
+              "line": 20,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\ciclo-de-vida-do-certificado-substituido\\tc4-certificados-legado-permanecem-valid.spec.ts",
+      "file": "projects/recertificacao/tests/features/ciclo-de-vida-do-certificado-substituido/tc4-certificados-legado-permanecem-valid.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Ciclo de Vida do Certificado Substituído",
+          "file": "projects/recertificacao/tests/features/ciclo-de-vida-do-certificado-substituido/tc4-certificados-legado-permanecem-valid.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC4 — Certificados emitidos no fluxo legado (sem reinscrição) permanecem VALID indefinidamente",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "requer validação direta no banco — DB-pure. Validar manualmente.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\ciclo-de-vida-do-certificado-substituido\\tc4-certificados-legado-permanecem-valid.spec.ts",
+                        "line": 16,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T11:55:13.038Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "requer validação direta no banco — DB-pure. Validar manualmente.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\ciclo-de-vida-do-certificado-substituido\\tc4-certificados-legado-permanecem-valid.spec.ts",
+                            "line": 16,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "bd696ed6d5afd53a1b6c-ed6943fb617808fcb6b3",
+              "file": "projects/recertificacao/tests/features/ciclo-de-vida-do-certificado-substituido/tc4-certificados-legado-permanecem-valid.spec.ts",
+              "line": 21,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-05-27T11:54:37.927Z",
+    "duration": 35115.198000000004,
+    "expected": 0,
+    "skipped": 4,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

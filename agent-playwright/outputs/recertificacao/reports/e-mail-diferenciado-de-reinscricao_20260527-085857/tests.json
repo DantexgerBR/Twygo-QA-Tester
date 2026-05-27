@@ -1,0 +1,361 @@
+{
+  "config": {
+    "configFile": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright/outputs/recertificacao/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "tests/auth/**/*.spec.ts",
+          "projects/recertificacao/tests/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/recertificacao/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\recertificacao\\tests\\features\\e-mail-diferenciado-de-reinscricao\\tc1-recertification-number-positivo-dispara-recertification-mailer.spec.ts",
+      "file": "projects/recertificacao/tests/features/e-mail-diferenciado-de-reinscricao/tc1-recertification-number-positivo-dispara-recertification-mailer.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "E-mail Diferenciado de Reinscrição",
+          "file": "projects/recertificacao/tests/features/e-mail-diferenciado-de-reinscricao/tc1-recertification-number-positivo-dispara-recertification-mailer.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC1 — Criação de participant com `recertification_number > 0` dispara `RecertificationMailer#student_email`",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "requer infra de captura de e-mail (Mailpit/MailHog/letter_opener_web) não configurada para o projeto Recertificação. Validar manualmente via inbox de teste ou observabilidade do RecertificationMailer.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\e-mail-diferenciado-de-reinscricao\\tc1-recertification-number-positivo-dispara-recertification-mailer.spec.ts",
+                        "line": 13,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T11:58:54.159Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "requer infra de captura de e-mail (Mailpit/MailHog/letter_opener_web) não configurada para o projeto Recertificação. Validar manualmente via inbox de teste ou observabilidade do RecertificationMailer.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\e-mail-diferenciado-de-reinscricao\\tc1-recertification-number-positivo-dispara-recertification-mailer.spec.ts",
+                            "line": 13,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "b869db5b1f9a395fc3ae-aea5879eaaa86e96f9e7",
+              "file": "projects/recertificacao/tests/features/e-mail-diferenciado-de-reinscricao/tc1-recertification-number-positivo-dispara-recertification-mailer.spec.ts",
+              "line": 18,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\e-mail-diferenciado-de-reinscricao\\tc2-recertification-number-zero-usa-template-legado.spec.ts",
+      "file": "projects/recertificacao/tests/features/e-mail-diferenciado-de-reinscricao/tc2-recertification-number-zero-usa-template-legado.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "E-mail Diferenciado de Reinscrição",
+          "file": "projects/recertificacao/tests/features/e-mail-diferenciado-de-reinscricao/tc2-recertification-number-zero-usa-template-legado.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC2 — Participant com `recertification_number = 0` em fluxo de aviso de expiração usa template legado",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "requer infra de captura de e-mail (Mailpit/MailHog/letter_opener_web) não configurada para o projeto Recertificação. Validar manualmente via inbox de teste ou observabilidade do RecertificationMailer.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\e-mail-diferenciado-de-reinscricao\\tc2-recertification-number-zero-usa-template-legado.spec.ts",
+                        "line": 15,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T11:58:54.161Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "requer infra de captura de e-mail (Mailpit/MailHog/letter_opener_web) não configurada para o projeto Recertificação. Validar manualmente via inbox de teste ou observabilidade do RecertificationMailer.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\e-mail-diferenciado-de-reinscricao\\tc2-recertification-number-zero-usa-template-legado.spec.ts",
+                            "line": 15,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "bd7b808f91b8e7591792-ff851a768a6ab324f91a",
+              "file": "projects/recertificacao/tests/features/e-mail-diferenciado-de-reinscricao/tc2-recertification-number-zero-usa-template-legado.spec.ts",
+              "line": 20,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\e-mail-diferenciado-de-reinscricao\\tc3-respeita-bloqueio-mailer-block.spec.ts",
+      "file": "projects/recertificacao/tests/features/e-mail-diferenciado-de-reinscricao/tc3-respeita-bloqueio-mailer-block.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "E-mail Diferenciado de Reinscrição",
+          "file": "projects/recertificacao/tests/features/e-mail-diferenciado-de-reinscricao/tc3-respeita-bloqueio-mailer-block.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC3 — E-mail respeita bloqueio de `organization.mailer_block?`",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "requer infra de captura de e-mail (Mailpit/MailHog/letter_opener_web) não configurada para o projeto Recertificação. Validar manualmente via inbox de teste ou observabilidade do RecertificationMailer.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\e-mail-diferenciado-de-reinscricao\\tc3-respeita-bloqueio-mailer-block.spec.ts",
+                        "line": 15,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T11:58:54.161Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "requer infra de captura de e-mail (Mailpit/MailHog/letter_opener_web) não configurada para o projeto Recertificação. Validar manualmente via inbox de teste ou observabilidade do RecertificationMailer.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\e-mail-diferenciado-de-reinscricao\\tc3-respeita-bloqueio-mailer-block.spec.ts",
+                            "line": 15,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7d925d67fb664a5862ee-d5e0d531744699652115",
+              "file": "projects/recertificacao/tests/features/e-mail-diferenciado-de-reinscricao/tc3-respeita-bloqueio-mailer-block.spec.ts",
+              "line": 20,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\e-mail-diferenciado-de-reinscricao\\tc4-respeita-locale-do-aluno.spec.ts",
+      "file": "projects/recertificacao/tests/features/e-mail-diferenciado-de-reinscricao/tc4-respeita-locale-do-aluno.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "E-mail Diferenciado de Reinscrição",
+          "file": "projects/recertificacao/tests/features/e-mail-diferenciado-de-reinscricao/tc4-respeita-locale-do-aluno.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC4 — E-mail respeita locale do aluno (pt-BR/en/es)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "requer infra de captura de e-mail (Mailpit/MailHog/letter_opener_web) não configurada para o projeto Recertificação. Validar manualmente via inbox de teste ou observabilidade do RecertificationMailer.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\e-mail-diferenciado-de-reinscricao\\tc4-respeita-locale-do-aluno.spec.ts",
+                        "line": 14,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T11:58:54.161Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "requer infra de captura de e-mail (Mailpit/MailHog/letter_opener_web) não configurada para o projeto Recertificação. Validar manualmente via inbox de teste ou observabilidade do RecertificationMailer.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\e-mail-diferenciado-de-reinscricao\\tc4-respeita-locale-do-aluno.spec.ts",
+                            "line": 14,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ecfe4c65fb052d349c93-7cfc46f2eae377c8f5e7",
+              "file": "projects/recertificacao/tests/features/e-mail-diferenciado-de-reinscricao/tc4-respeita-locale-do-aluno.spec.ts",
+              "line": 19,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-05-27T11:58:18.836Z",
+    "duration": 35326.674,
+    "expected": 0,
+    "skipped": 4,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

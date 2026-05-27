@@ -1,4 +1,4 @@
-# Triage Report — Recertificação — 2026-05-27 02:09
+# Triage Report — Recertificação — 2026-05-27 09:06
 
 **Escopo**: Testsuite: Isolamento em Ambientes Adicionais · **Ambiente**: `staging-recertificacao`
 

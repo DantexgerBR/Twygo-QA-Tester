@@ -1,0 +1,11 @@
+{
+  "runId": "e-mail-diferenciado-de-reinscricao_20260527-085857",
+  "mode": "per-suite",
+  "suiteFilter": "E-mail Diferenciado de Reinscrição",
+  "projectName": "Recertificação",
+  "environment": "staging-recertificacao",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-27T11:58:57.036Z"
+}

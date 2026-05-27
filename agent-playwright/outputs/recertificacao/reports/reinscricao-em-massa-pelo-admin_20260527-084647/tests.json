@@ -1,0 +1,503 @@
+{
+  "config": {
+    "configFile": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright/outputs/recertificacao/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "tests/auth/**/*.spec.ts",
+          "projects/recertificacao/tests/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/recertificacao/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\recertificacao\\tests\\features\\reinscricao-em-massa-pelo-admin\\tc1-acao-aparece-drawer-condicoes-atendidas.spec.ts",
+      "file": "projects/recertificacao/tests/features/reinscricao-em-massa-pelo-admin/tc1-acao-aparece-drawer-condicoes-atendidas.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Reinscrição em Massa pelo Admin",
+          "file": "projects/recertificacao/tests/features/reinscricao-em-massa-pelo-admin/tc1-acao-aparece-drawer-condicoes-atendidas.spec.ts",
+          "line": 6,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC1 — Ação \"Reinscrição em massa\" aparece no drawer quando todas as condições atendidas",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed inválido — cursoIdRecertOn=3 não existe (404). Validar no env staging-base-de-conhecimento e atualizar tc1-acao-aparece-drawer-condicoes-atendidas.data.ts.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-em-massa-pelo-admin\\tc1-acao-aparece-drawer-condicoes-atendidas.spec.ts",
+                        "line": 11,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T11:46:44.534Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed inválido — cursoIdRecertOn=3 não existe (404). Validar no env staging-base-de-conhecimento e atualizar tc1-acao-aparece-drawer-condicoes-atendidas.data.ts.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-em-massa-pelo-admin\\tc1-acao-aparece-drawer-condicoes-atendidas.spec.ts",
+                            "line": 11,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9a2280bc9dbb4f482ee3-6ae920aa5690b46d31a7",
+              "file": "projects/recertificacao/tests/features/reinscricao-em-massa-pelo-admin/tc1-acao-aparece-drawer-condicoes-atendidas.spec.ts",
+              "line": 15,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\reinscricao-em-massa-pelo-admin\\tc2-acao-nao-aparece-evento-pacote.spec.ts",
+      "file": "projects/recertificacao/tests/features/reinscricao-em-massa-pelo-admin/tc2-acao-nao-aparece-evento-pacote.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Reinscrição em Massa pelo Admin",
+          "file": "projects/recertificacao/tests/features/reinscricao-em-massa-pelo-admin/tc2-acao-nao-aparece-evento-pacote.spec.ts",
+          "line": 6,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC2 — Ação \"Reinscrição em massa\" NÃO aparece em evento do tipo pacote",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed inválido — pacoteIdRecertOn=4 não existe (404). Validar no env staging-base-de-conhecimento e atualizar tc2-acao-nao-aparece-evento-pacote.data.ts.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-em-massa-pelo-admin\\tc2-acao-nao-aparece-evento-pacote.spec.ts",
+                        "line": 11,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T11:46:44.534Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed inválido — pacoteIdRecertOn=4 não existe (404). Validar no env staging-base-de-conhecimento e atualizar tc2-acao-nao-aparece-evento-pacote.data.ts.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-em-massa-pelo-admin\\tc2-acao-nao-aparece-evento-pacote.spec.ts",
+                            "line": 11,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "6038ef7cceb745db7faf-48b2549e48fb1ee1ee20",
+              "file": "projects/recertificacao/tests/features/reinscricao-em-massa-pelo-admin/tc2-acao-nao-aparece-evento-pacote.spec.ts",
+              "line": 15,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\reinscricao-em-massa-pelo-admin\\tc3-disparar-reinscricao-massa-enfileira-worker.spec.ts",
+      "file": "projects/recertificacao/tests/features/reinscricao-em-massa-pelo-admin/tc3-disparar-reinscricao-massa-enfileira-worker.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Reinscrição em Massa pelo Admin",
+          "file": "projects/recertificacao/tests/features/reinscricao-em-massa-pelo-admin/tc3-disparar-reinscricao-massa-enfileira-worker.spec.ts",
+          "line": 11,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC3 — Disparar reinscrição em massa enfileira worker e processa todos os alunos elegíveis",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed inválido — cursoIdRecertOn=3 não existe (404). Validar no env staging-base-de-conhecimento e atualizar tc3-disparar-reinscricao-massa-enfileira-worker.data.ts.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-em-massa-pelo-admin\\tc3-disparar-reinscricao-massa-enfileira-worker.spec.ts",
+                        "line": 16,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T11:46:44.534Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed inválido — cursoIdRecertOn=3 não existe (404). Validar no env staging-base-de-conhecimento e atualizar tc3-disparar-reinscricao-massa-enfileira-worker.data.ts.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-em-massa-pelo-admin\\tc3-disparar-reinscricao-massa-enfileira-worker.spec.ts",
+                            "line": 16,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e244f5f5f4683095dd51-f46affbdbd5c45586fae",
+              "file": "projects/recertificacao/tests/features/reinscricao-em-massa-pelo-admin/tc3-disparar-reinscricao-massa-enfileira-worker.spec.ts",
+              "line": 20,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\reinscricao-em-massa-pelo-admin\\tc4-worker-idempotente-pulam-ja-reinscritos.spec.ts",
+      "file": "projects/recertificacao/tests/features/reinscricao-em-massa-pelo-admin/tc4-worker-idempotente-pulam-ja-reinscritos.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Reinscrição em Massa pelo Admin",
+          "file": "projects/recertificacao/tests/features/reinscricao-em-massa-pelo-admin/tc4-worker-idempotente-pulam-ja-reinscritos.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC4 — Worker é idempotente: alunos já reinscritos na mesma janela são pulados",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "requer execução do worker Sidekiq + validação direta no banco. Cobertura UI cobre dispatch; idempotência é DB-pure. Validar manualmente.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-em-massa-pelo-admin\\tc4-worker-idempotente-pulam-ja-reinscritos.spec.ts",
+                        "line": 15,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T11:46:44.534Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "requer execução do worker Sidekiq + validação direta no banco. Cobertura UI cobre dispatch; idempotência é DB-pure. Validar manualmente.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-em-massa-pelo-admin\\tc4-worker-idempotente-pulam-ja-reinscritos.spec.ts",
+                            "line": 15,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ce48f579cb664aa9958d-798863aa11fa7b583b2d",
+              "file": "projects/recertificacao/tests/features/reinscricao-em-massa-pelo-admin/tc4-worker-idempotente-pulam-ja-reinscritos.spec.ts",
+              "line": 20,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\reinscricao-em-massa-pelo-admin\\tc5-erro-aluno-individual-nao-interrompe-lote.spec.ts",
+      "file": "projects/recertificacao/tests/features/reinscricao-em-massa-pelo-admin/tc5-erro-aluno-individual-nao-interrompe-lote.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Reinscrição em Massa pelo Admin",
+          "file": "projects/recertificacao/tests/features/reinscricao-em-massa-pelo-admin/tc5-erro-aluno-individual-nao-interrompe-lote.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC5 — Erro em aluno individual não interrompe o lote",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "requer monitoramento do worker + validação de DLQ/logs. Validar manualmente.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-em-massa-pelo-admin\\tc5-erro-aluno-individual-nao-interrompe-lote.spec.ts",
+                        "line": 18,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T11:46:44.534Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "requer monitoramento do worker + validação de DLQ/logs. Validar manualmente.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-em-massa-pelo-admin\\tc5-erro-aluno-individual-nao-interrompe-lote.spec.ts",
+                            "line": 18,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "798ff717471dcd3261e8-4d9110d32fba3201559a",
+              "file": "projects/recertificacao/tests/features/reinscricao-em-massa-pelo-admin/tc5-erro-aluno-individual-nao-interrompe-lote.spec.ts",
+              "line": 23,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\reinscricao-em-massa-pelo-admin\\tc6-flag-off-retorna-422-feature-disabled.spec.ts",
+      "file": "projects/recertificacao/tests/features/reinscricao-em-massa-pelo-admin/tc6-flag-off-retorna-422-feature-disabled.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Reinscrição em Massa pelo Admin",
+          "file": "projects/recertificacao/tests/features/reinscricao-em-massa-pelo-admin/tc6-flag-off-retorna-422-feature-disabled.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC6 — Disparo de reinscrição em massa com flag OFF retorna HTTP 422 `feature_disabled`",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "requer toggle runtime da flag :recertificacao OFF — assumido ON em staging-base-de-conhecimento. Validar manualmente HTTP 422.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-em-massa-pelo-admin\\tc6-flag-off-retorna-422-feature-disabled.spec.ts",
+                        "line": 16,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T11:46:44.534Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "requer toggle runtime da flag :recertificacao OFF — assumido ON em staging-base-de-conhecimento. Validar manualmente HTTP 422.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-em-massa-pelo-admin\\tc6-flag-off-retorna-422-feature-disabled.spec.ts",
+                            "line": 16,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ded53e45239b01a7f31f-8868ea4854b7f4e850c2",
+              "file": "projects/recertificacao/tests/features/reinscricao-em-massa-pelo-admin/tc6-flag-off-retorna-422-feature-disabled.spec.ts",
+              "line": 21,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-05-27T11:46:10.207Z",
+    "duration": 34328.052,
+    "expected": 0,
+    "skipped": 6,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

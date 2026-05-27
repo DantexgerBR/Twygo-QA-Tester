@@ -1,0 +1,29 @@
+{
+  "runId": "reinscricao-pelo-aluno-play-e-link-publico_20260527-085140",
+  "scope": "Apenas testsuite contendo \"Reinscrição pelo Aluno (Play e Link Público)\"",
+  "tests": {
+    "total": 7,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 7,
+    "durationMs": 6835
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 1,
+    "tests": 44,
+    "outOfScope": {
+      "errors": 149,
+      "warnings": 124,
+      "info": 1
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

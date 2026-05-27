@@ -1,0 +1,679 @@
+{
+  "config": {
+    "configFile": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright/outputs/recertificacao/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "tests/auth/**/*.spec.ts",
+          "projects/recertificacao/tests/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/recertificacao/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\recertificacao\\tests\\features\\reinscricao-pelo-aluno-play-e-link-publico\\tc1-banner-reinscreva-se-aluno-elegivel.spec.ts",
+      "file": "projects/recertificacao/tests/features/reinscricao-pelo-aluno-play-e-link-publico/tc1-banner-reinscreva-se-aluno-elegivel.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Reinscrição pelo Aluno (Play e Link Público)",
+          "file": "projects/recertificacao/tests/features/reinscricao-pelo-aluno-play-e-link-publico/tc1-banner-reinscreva-se-aluno-elegivel.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC1 — Botão \"Reinscreva-se\" aparece no banner do Play para aluno elegível",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed inválido — eventIdCursoElegivel=1 retorna 404. NEEDS_SEED (curso com has_recertification=true + participant elegível).",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-pelo-aluno-play-e-link-publico\\tc1-banner-reinscreva-se-aluno-elegivel.spec.ts",
+                        "line": 25,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 1648,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T11:51:35.099Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed inválido — eventIdCursoElegivel=1 retorna 404. NEEDS_SEED (curso com has_recertification=true + participant elegível).",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-pelo-aluno-play-e-link-publico\\tc1-banner-reinscreva-se-aluno-elegivel.spec.ts",
+                            "line": 25,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-7fd30-do-Play-para-aluno-elegível-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-7fd30-do-Play-para-aluno-elegível-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-7fd30-do-Play-para-aluno-elegível-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-7fd30-do-Play-para-aluno-elegível-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3a5b779a8a6a9005a80f-666ae05e57c55bd58e84",
+              "file": "projects/recertificacao/tests/features/reinscricao-pelo-aluno-play-e-link-publico/tc1-banner-reinscreva-se-aluno-elegivel.spec.ts",
+              "line": 16,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\reinscricao-pelo-aluno-play-e-link-publico\\tc2-banner-nao-aparece-aluno-inelegivel.spec.ts",
+      "file": "projects/recertificacao/tests/features/reinscricao-pelo-aluno-play-e-link-publico/tc2-banner-nao-aparece-aluno-inelegivel.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Reinscrição pelo Aluno (Play e Link Público)",
+          "file": "projects/recertificacao/tests/features/reinscricao-pelo-aluno-play-e-link-publico/tc2-banner-nao-aparece-aluno-inelegivel.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC2 — Botão \"Reinscreva-se\" NÃO aparece para aluno inelegível (sem disabled visível)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed inválido — eventIdCursoInelegivel=1 retorna 404. NEEDS_SEED (curso + participant em andamento sem expiração).",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-pelo-aluno-play-e-link-publico\\tc2-banner-nao-aparece-aluno-inelegivel.spec.ts",
+                        "line": 22,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "skipped",
+                      "duration": 1622,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T11:51:35.067Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed inválido — eventIdCursoInelegivel=1 retorna 404. NEEDS_SEED (curso + participant em andamento sem expiração).",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-pelo-aluno-play-e-link-publico\\tc2-banner-nao-aparece-aluno-inelegivel.spec.ts",
+                            "line": 22,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-79407-gível-sem-disabled-visível--chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-79407-gível-sem-disabled-visível--chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-79407-gível-sem-disabled-visível--chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-79407-gível-sem-disabled-visível--chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "30f49ea6df37f80e1cab-3d3770e395e502298060",
+              "file": "projects/recertificacao/tests/features/reinscricao-pelo-aluno-play-e-link-publico/tc2-banner-nao-aparece-aluno-inelegivel.spec.ts",
+              "line": 13,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\reinscricao-pelo-aluno-play-e-link-publico\\tc3-click-reinscreva-se-dispara-subscribe.spec.ts",
+      "file": "projects/recertificacao/tests/features/reinscricao-pelo-aluno-play-e-link-publico/tc3-click-reinscreva-se-dispara-subscribe.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Reinscrição pelo Aluno (Play e Link Público)",
+          "file": "projects/recertificacao/tests/features/reinscricao-pelo-aluno-play-e-link-publico/tc3-click-reinscreva-se-dispara-subscribe.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC3 — Click em \"Reinscreva-se\" dispara subscribe com `recertification=true` e cria novo participant",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed inválido — eventIdCursoElegivel=1 retorna 404. NEEDS_SEED (mesmo seed do TC1).",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-pelo-aluno-play-e-link-publico\\tc3-click-reinscreva-se-dispara-subscribe.spec.ts",
+                        "line": 21,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "skipped",
+                      "duration": 1606,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T11:51:35.100Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed inválido — eventIdCursoElegivel=1 retorna 404. NEEDS_SEED (mesmo seed do TC1).",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-pelo-aluno-play-e-link-publico\\tc3-click-reinscreva-se-dispara-subscribe.spec.ts",
+                            "line": 21,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-7fa9d-rue-e-cria-novo-participant-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-7fa9d-rue-e-cria-novo-participant-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-7fa9d-rue-e-cria-novo-participant-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-7fa9d-rue-e-cria-novo-participant-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "5d37c6a1dcd3fdec4f7d-2341529be0508b4ba20c",
+              "file": "projects/recertificacao/tests/features/reinscricao-pelo-aluno-play-e-link-publico/tc3-click-reinscreva-se-dispara-subscribe.spec.ts",
+              "line": 13,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\reinscricao-pelo-aluno-play-e-link-publico\\tc4-flag-off-banner-nao-aparece.spec.ts",
+      "file": "projects/recertificacao/tests/features/reinscricao-pelo-aluno-play-e-link-publico/tc4-flag-off-banner-nao-aparece.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Reinscrição pelo Aluno (Play e Link Público)",
+          "file": "projects/recertificacao/tests/features/reinscricao-pelo-aluno-play-e-link-publico/tc4-flag-off-banner-nao-aparece.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC4 — Flag OFF na org: banner do Play NÃO exibe \"Reinscreva-se\" (regressão)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "requer toggle runtime da flag :recertificacao OFF — assumido ON em staging-base-de-conhecimento. Validar manualmente.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-pelo-aluno-play-e-link-publico\\tc4-flag-off-banner-nao-aparece.spec.ts",
+                        "line": 13,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T11:51:33.918Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "requer toggle runtime da flag :recertificacao OFF — assumido ON em staging-base-de-conhecimento. Validar manualmente.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-pelo-aluno-play-e-link-publico\\tc4-flag-off-banner-nao-aparece.spec.ts",
+                            "line": 13,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "99458527559b2529cfb1-681e66068d15bfdcf0ea",
+              "file": "projects/recertificacao/tests/features/reinscricao-pelo-aluno-play-e-link-publico/tc4-flag-off-banner-nao-aparece.spec.ts",
+              "line": 18,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\reinscricao-pelo-aluno-play-e-link-publico\\tc5-post-link-publico-aluno-elegivel-cria-participant.spec.ts",
+      "file": "projects/recertificacao/tests/features/reinscricao-pelo-aluno-play-e-link-publico/tc5-post-link-publico-aluno-elegivel-cria-participant.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Reinscrição pelo Aluno (Play e Link Público)",
+          "file": "projects/recertificacao/tests/features/reinscricao-pelo-aluno-play-e-link-publico/tc5-post-link-publico-aluno-elegivel-cria-participant.spec.ts",
+          "line": 6,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC5 — POST em link público com `?recertification=true` para aluno elegível cria participant",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed inválido — packageSlug=pacote-recertificacao-staging retorna 404 e eligibleStudent é placeholder. NEEDS_SEED (pacote com link público + aluno com histórico elegível).",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-pelo-aluno-play-e-link-publico\\tc5-post-link-publico-aluno-elegivel-cria-participant.spec.ts",
+                        "line": 25,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "skipped",
+                      "duration": 1136,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T11:51:35.084Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed inválido — packageSlug=pacote-recertificacao-staging retorna 404 e eligibleStudent é placeholder. NEEDS_SEED (pacote com link público + aluno com histórico elegível).",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-pelo-aluno-play-e-link-publico\\tc5-post-link-publico-aluno-elegivel-cria-participant.spec.ts",
+                            "line": 25,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-6bff7-o-elegível-cria-participant-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-6bff7-o-elegível-cria-participant-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-6bff7-o-elegível-cria-participant-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-6bff7-o-elegível-cria-participant-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "4e521a81c6f738d27e77-cb60ad35ffd807e24ffa",
+              "file": "projects/recertificacao/tests/features/reinscricao-pelo-aluno-play-e-link-publico/tc5-post-link-publico-aluno-elegivel-cria-participant.spec.ts",
+              "line": 12,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\reinscricao-pelo-aluno-play-e-link-publico\\tc6-post-link-publico-aluno-inelegivel-erro.spec.ts",
+      "file": "projects/recertificacao/tests/features/reinscricao-pelo-aluno-play-e-link-publico/tc6-post-link-publico-aluno-inelegivel-erro.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Reinscrição pelo Aluno (Play e Link Público)",
+          "file": "projects/recertificacao/tests/features/reinscricao-pelo-aluno-play-e-link-publico/tc6-post-link-publico-aluno-inelegivel-erro.spec.ts",
+          "line": 6,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC6 — POST em link público com `recertification=true` para aluno inelegível retorna erro sem criar participant",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed inválido — packageSlug=pacote-recertificacao-staging retorna 404 e ineligibleStudent é placeholder. NEEDS_SEED (mesmo pacote do TC5 + aluno em andamento).",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-pelo-aluno-play-e-link-publico\\tc6-post-link-publico-aluno-inelegivel-erro.spec.ts",
+                        "line": 19,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "skipped",
+                      "duration": 823,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T11:51:36.682Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed inválido — packageSlug=pacote-recertificacao-staging retorna 404 e ineligibleStudent é placeholder. NEEDS_SEED (mesmo pacote do TC5 + aluno em andamento).",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-pelo-aluno-play-e-link-publico\\tc6-post-link-publico-aluno-inelegivel-erro.spec.ts",
+                            "line": 19,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-7b9af--erro-sem-criar-participant-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-7b9af--erro-sem-criar-participant-chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-7b9af--erro-sem-criar-participant-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-7b9af--erro-sem-criar-participant-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "4d465de83798460bb053-cecd876cc1d63f62392e",
+              "file": "projects/recertificacao/tests/features/reinscricao-pelo-aluno-play-e-link-publico/tc6-post-link-publico-aluno-inelegivel-erro.spec.ts",
+              "line": 9,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\reinscricao-pelo-aluno-play-e-link-publico\\tc7-post-link-publico-flag-off-404.spec.ts",
+      "file": "projects/recertificacao/tests/features/reinscricao-pelo-aluno-play-e-link-publico/tc7-post-link-publico-flag-off-404.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Reinscrição pelo Aluno (Play e Link Público)",
+          "file": "projects/recertificacao/tests/features/reinscricao-pelo-aluno-play-e-link-publico/tc7-post-link-publico-flag-off-404.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC7 — POST em link público com flag OFF retorna HTTP 404 com payload vazio (regressão)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "requer toggle runtime da flag :recertificacao OFF. Validar manualmente HTTP 404.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-pelo-aluno-play-e-link-publico\\tc7-post-link-publico-flag-off-404.spec.ts",
+                        "line": 13,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T11:51:37.127Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "requer toggle runtime da flag :recertificacao OFF. Validar manualmente HTTP 404.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-pelo-aluno-play-e-link-publico\\tc7-post-link-publico-flag-off-404.spec.ts",
+                            "line": 13,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "08d758edb33f474f3e1a-99297c99191446d2a580",
+              "file": "projects/recertificacao/tests/features/reinscricao-pelo-aluno-play-e-link-publico/tc7-post-link-publico-flag-off-404.spec.ts",
+              "line": 18,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-05-27T11:50:59.410Z",
+    "duration": 38401.689,
+    "expected": 0,
+    "skipped": 7,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
