@@ -745,21 +745,36 @@ export class SeedAdminPage extends BasePage {
     await kebab.click();
     await this.page.getByRole('menuitem', { name: /Inscrição/i }).first().click();
 
-    // Drawer abre. Aguarda heading "Lista de Participantes".
+    // Drawer/modal Chakra fullscreen abre — URL NÃO muda (continua em
+    // /events?tab=events). Heading "Lista de Participantes" + abas
+    // Confirmados/Pendentes/Cancelados + botão azul "Adicionar".
+    // Validado live 2026-05-27 via Playwright real.
     await this.page
       .getByRole('heading', { name: /Lista de Participantes/i })
       .first()
-      .waitFor({ state: 'visible', timeout: 10_000 });
+      .waitFor({ state: 'visible', timeout: 15_000 });
 
-    // "Adicionar" é StaticText (não button) — getByText cobre.
-    await this.page.getByText('Adicionar', { exact: true }).first().click();
+    // BLOQUEIO ATIVO (2026-05-27): click no botão "Adicionar" (div com
+    // cursor:pointer, único no DOM, force:true) não dispara o sub-form
+    // visualmente. Hipóteses não-validadas:
+    //   (a) clique abre dropdown/menu com sub-options ("Adicionar aluno",
+    //       "Adicionar em massa", etc.) — precisa segundo click
+    //   (b) handler React requer evento sintético (pointer sequence)
+    //       que Playwright force:true não dispara
+    //   (c) elemento Adicionar não é o gatilho real — pode haver botão
+    //       oculto adjacente
+    // Aguarda validação humana do fluxo exato antes de prosseguir.
+    await this.page.getByText('Adicionar', { exact: true }).first().click({ force: true });
 
     // Form do participante abre. Preencher campos obrigatórios.
-    await this.page.getByLabel(/E-?mail/i).first().fill(data.alunoEmail);
-    await this.page.getByLabel('Nome', { exact: true }).fill(data.alunoFirstName);
-    await this.page.getByLabel(/Sobrenome/i).fill(data.alunoLastName);
+    // CLAUDE.md §7.5 — getByLabel(/E-?mail/i) bate em checkbox send_copy
+    // ("Desejo receber uma cópia do e-mail"). Usar getByRole('textbox')
+    // que filtra só inputs de texto.
+    await this.page.getByRole('textbox', { name: /E-?mail/i }).first().fill(data.alunoEmail);
+    await this.page.getByRole('textbox', { name: 'Nome', exact: true }).fill(data.alunoFirstName);
+    await this.page.getByRole('textbox', { name: /Sobrenome/i }).fill(data.alunoLastName);
     if (data.dataExpiracao) {
-      await this.page.getByLabel(/Data de expira/i).fill(data.dataExpiracao);
+      await this.page.getByRole('textbox', { name: /Data de expira/i }).fill(data.dataExpiracao);
     }
 
     // Salvar (botão "Salvar" — NÃO "Salvar e Novo").
