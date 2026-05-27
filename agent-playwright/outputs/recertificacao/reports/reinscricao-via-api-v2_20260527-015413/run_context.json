@@ -1,0 +1,11 @@
+{
+  "runId": "reinscricao-via-api-v2_20260527-015413",
+  "mode": "per-suite",
+  "suiteFilter": "Reinscrição via API V2",
+  "projectName": "Recertificação",
+  "environment": "staging-recertificacao",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-27T04:54:13.977Z"
+}

@@ -1,0 +1,11 @@
+{
+  "runId": "ciclo-de-vida-do-certificado-substituido_20260527-015940",
+  "mode": "per-suite",
+  "suiteFilter": "Ciclo de Vida do Certificado Substituído",
+  "projectName": "Recertificação",
+  "environment": "staging-recertificacao",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-27T04:59:40.567Z"
+}

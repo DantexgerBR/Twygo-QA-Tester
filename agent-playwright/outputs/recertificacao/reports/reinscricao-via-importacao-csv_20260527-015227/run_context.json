@@ -1,0 +1,11 @@
+{
+  "runId": "reinscricao-via-importacao-csv_20260527-015227",
+  "mode": "per-suite",
+  "suiteFilter": "Reinscrição via Importação CSV",
+  "projectName": "Recertificação",
+  "environment": "staging-recertificacao",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-27T04:52:27.527Z"
+}

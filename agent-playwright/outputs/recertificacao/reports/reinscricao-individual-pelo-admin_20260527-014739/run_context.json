@@ -1,0 +1,11 @@
+{
+  "runId": "reinscricao-individual-pelo-admin_20260527-014739",
+  "mode": "per-suite",
+  "suiteFilter": "Reinscrição Individual pelo Admin",
+  "projectName": "Recertificação",
+  "environment": "staging-recertificacao",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-27T04:47:39.731Z"
+}

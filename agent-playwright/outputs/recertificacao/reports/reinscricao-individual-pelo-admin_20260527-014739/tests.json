@@ -1,0 +1,503 @@
+{
+  "config": {
+    "configFile": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright/outputs/recertificacao/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "tests/auth/**/*.spec.ts",
+          "projects/recertificacao/tests/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/recertificacao/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\recertificacao\\tests\\features\\reinscricao-individual-pelo-admin\\tc1-botao-reinscrever-visivel-aluno-elegivel.spec.ts",
+      "file": "projects/recertificacao/tests/features/reinscricao-individual-pelo-admin/tc1-botao-reinscrever-visivel-aluno-elegivel.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Reinscrição Individual pelo Admin",
+          "file": "projects/recertificacao/tests/features/reinscricao-individual-pelo-admin/tc1-botao-reinscrever-visivel-aluno-elegivel.spec.ts",
+          "line": 6,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC1 — Botão \"Reinscrever\" visível e habilitado apenas para aluno elegível",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed inválido — cursoComReinscricaoId=1 não existe (404) e e-mails são placeholders @example.com. Validar no env staging-base-de-conhecimento e atualizar tc1-botao-reinscrever-visivel-aluno-elegivel.data.ts.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-individual-pelo-admin\\tc1-botao-reinscrever-visivel-aluno-elegivel.spec.ts",
+                        "line": 13,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T04:47:36.573Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed inválido — cursoComReinscricaoId=1 não existe (404) e e-mails são placeholders @example.com. Validar no env staging-base-de-conhecimento e atualizar tc1-botao-reinscrever-visivel-aluno-elegivel.data.ts.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-individual-pelo-admin\\tc1-botao-reinscrever-visivel-aluno-elegivel.spec.ts",
+                            "line": 13,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7118a268736101438481-9e909c34b9345d0252f7",
+              "file": "projects/recertificacao/tests/features/reinscricao-individual-pelo-admin/tc1-botao-reinscrever-visivel-aluno-elegivel.spec.ts",
+              "line": 17,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\reinscricao-individual-pelo-admin\\tc2-botao-reinscrever-apenas-maior-recertification-number.spec.ts",
+      "file": "projects/recertificacao/tests/features/reinscricao-individual-pelo-admin/tc2-botao-reinscrever-apenas-maior-recertification-number.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Reinscrição Individual pelo Admin",
+          "file": "projects/recertificacao/tests/features/reinscricao-individual-pelo-admin/tc2-botao-reinscrever-apenas-maior-recertification-number.spec.ts",
+          "line": 6,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC2 — Botão \"Reinscrever\" visível apenas na linha do participant com maior recertification_number",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed inválido — cursoMultiReinscricaoId=1 não existe (404) e e-mail é placeholder @example.com. Validar no env staging-base-de-conhecimento e atualizar tc2-botao-reinscrever-apenas-maior-recertification-number.data.ts.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-individual-pelo-admin\\tc2-botao-reinscrever-apenas-maior-recertification-number.spec.ts",
+                        "line": 12,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T04:47:36.575Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed inválido — cursoMultiReinscricaoId=1 não existe (404) e e-mail é placeholder @example.com. Validar no env staging-base-de-conhecimento e atualizar tc2-botao-reinscrever-apenas-maior-recertification-number.data.ts.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-individual-pelo-admin\\tc2-botao-reinscrever-apenas-maior-recertification-number.spec.ts",
+                            "line": 12,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "516d673400df330832be-7decc051ed5f21afc1c4",
+              "file": "projects/recertificacao/tests/features/reinscricao-individual-pelo-admin/tc2-botao-reinscrever-apenas-maior-recertification-number.spec.ts",
+              "line": 16,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\reinscricao-individual-pelo-admin\\tc3-reinscrever-aluno-cria-novo-participant-zerado.spec.ts",
+      "file": "projects/recertificacao/tests/features/reinscricao-individual-pelo-admin/tc3-reinscrever-aluno-cria-novo-participant-zerado.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Reinscrição Individual pelo Admin",
+          "file": "projects/recertificacao/tests/features/reinscricao-individual-pelo-admin/tc3-reinscrever-aluno-cria-novo-participant-zerado.spec.ts",
+          "line": 6,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC3 — Reinscrever aluno individualmente cria novo participant zerado",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed inválido — cursoComReinscricaoId=1 não existe (404) e e-mail é placeholder @example.com. Validar no env staging-base-de-conhecimento e atualizar tc3-reinscrever-aluno-cria-novo-participant-zerado.data.ts.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-individual-pelo-admin\\tc3-reinscrever-aluno-cria-novo-participant-zerado.spec.ts",
+                        "line": 12,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T04:47:36.575Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed inválido — cursoComReinscricaoId=1 não existe (404) e e-mail é placeholder @example.com. Validar no env staging-base-de-conhecimento e atualizar tc3-reinscrever-aluno-cria-novo-participant-zerado.data.ts.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-individual-pelo-admin\\tc3-reinscrever-aluno-cria-novo-participant-zerado.spec.ts",
+                            "line": 12,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "be699735a3de68592f33-f7357de1388eb9e81f50",
+              "file": "projects/recertificacao/tests/features/reinscricao-individual-pelo-admin/tc3-reinscrever-aluno-cria-novo-participant-zerado.spec.ts",
+              "line": 16,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\reinscricao-individual-pelo-admin\\tc4-botao-reinscrever-disabled-has-recertification-false.spec.ts",
+      "file": "projects/recertificacao/tests/features/reinscricao-individual-pelo-admin/tc4-botao-reinscrever-disabled-has-recertification-false.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Reinscrição Individual pelo Admin",
+          "file": "projects/recertificacao/tests/features/reinscricao-individual-pelo-admin/tc4-botao-reinscrever-disabled-has-recertification-false.spec.ts",
+          "line": 6,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC4 — Botão \"Reinscrever\" fica visível mas DESABILITADO quando event.has_recertification = false",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed inválido — cursoSemReinscricaoId=2 não existe (404) e e-mail é placeholder @example.com. Validar no env staging-base-de-conhecimento e atualizar tc4-botao-reinscrever-disabled-has-recertification-false.data.ts.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-individual-pelo-admin\\tc4-botao-reinscrever-disabled-has-recertification-false.spec.ts",
+                        "line": 12,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T04:47:36.575Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed inválido — cursoSemReinscricaoId=2 não existe (404) e e-mail é placeholder @example.com. Validar no env staging-base-de-conhecimento e atualizar tc4-botao-reinscrever-disabled-has-recertification-false.data.ts.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-individual-pelo-admin\\tc4-botao-reinscrever-disabled-has-recertification-false.spec.ts",
+                            "line": 12,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "5765dcba18e5824624e7-d17f411a40a0fdabe3f7",
+              "file": "projects/recertificacao/tests/features/reinscricao-individual-pelo-admin/tc4-botao-reinscrever-disabled-has-recertification-false.spec.ts",
+              "line": 16,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\reinscricao-individual-pelo-admin\\tc5-flag-off-retorna-422-feature-disabled.spec.ts",
+      "file": "projects/recertificacao/tests/features/reinscricao-individual-pelo-admin/tc5-flag-off-retorna-422-feature-disabled.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Reinscrição Individual pelo Admin",
+          "file": "projects/recertificacao/tests/features/reinscricao-individual-pelo-admin/tc5-flag-off-retorna-422-feature-disabled.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC5 — Reinscrição com flag OFF retorna HTTP 422 feature_disabled",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "requer toggle runtime da flag :recertificacao OFF — assumido ON em staging-base-de-conhecimento. Validar manualmente HTTP 422 feature_disabled.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-individual-pelo-admin\\tc5-flag-off-retorna-422-feature-disabled.spec.ts",
+                        "line": 12,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T04:47:36.575Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "requer toggle runtime da flag :recertificacao OFF — assumido ON em staging-base-de-conhecimento. Validar manualmente HTTP 422 feature_disabled.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-individual-pelo-admin\\tc5-flag-off-retorna-422-feature-disabled.spec.ts",
+                            "line": 12,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "b7a5fef0a77aa9b1fcfc-31bbd7f701feab54bf7d",
+              "file": "projects/recertificacao/tests/features/reinscricao-individual-pelo-admin/tc5-flag-off-retorna-422-feature-disabled.spec.ts",
+              "line": 17,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\reinscricao-individual-pelo-admin\\tc6-pos-reinscricao-email-diferenciado.spec.ts",
+      "file": "projects/recertificacao/tests/features/reinscricao-individual-pelo-admin/tc6-pos-reinscricao-email-diferenciado.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Reinscrição Individual pelo Admin",
+          "file": "projects/recertificacao/tests/features/reinscricao-individual-pelo-admin/tc6-pos-reinscricao-email-diferenciado.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC6 — Após reinscrição, e-mail diferenciado é disparado (validação cross-suite)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "cross-suite com Suite 10 (Mailer) — requer infra de captura de e-mail não configurada. Validar manualmente que e-mail de reinscrição foi disparado.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-individual-pelo-admin\\tc6-pos-reinscricao-email-diferenciado.spec.ts",
+                        "line": 14,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T04:47:36.575Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "cross-suite com Suite 10 (Mailer) — requer infra de captura de e-mail não configurada. Validar manualmente que e-mail de reinscrição foi disparado.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-individual-pelo-admin\\tc6-pos-reinscricao-email-diferenciado.spec.ts",
+                            "line": 14,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e7e7a593d60d024a17bc-b594b6f0d27f86fb781b",
+              "file": "projects/recertificacao/tests/features/reinscricao-individual-pelo-admin/tc6-pos-reinscricao-email-diferenciado.spec.ts",
+              "line": 19,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-05-27T04:47:01.946Z",
+    "duration": 34630.669,
+    "expected": 0,
+    "skipped": 6,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

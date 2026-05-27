@@ -1,0 +1,11 @@
+{
+  "runId": "auditoria-via-triggers-postgresql_20260527-020752",
+  "mode": "per-suite",
+  "suiteFilter": "Auditoria via Triggers PostgreSQL",
+  "projectName": "Recertificação",
+  "environment": "staging-recertificacao",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-27T05:07:52.259Z"
+}

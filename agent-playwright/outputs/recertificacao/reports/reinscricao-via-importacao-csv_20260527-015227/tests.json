@@ -1,0 +1,574 @@
+{
+  "config": {
+    "configFile": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright/outputs/recertificacao/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "tests/auth/**/*.spec.ts",
+          "projects/recertificacao/tests/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/recertificacao/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\recertificacao\\tests\\features\\reinscricao-via-importacao-csv\\tc1-coluna-reinscrever-template-csv-flag-on.spec.ts",
+      "file": "projects/recertificacao/tests/features/reinscricao-via-importacao-csv/tc1-coluna-reinscrever-template-csv-flag-on.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Reinscrição via Importação CSV",
+          "file": "projects/recertificacao/tests/features/reinscricao-via-importacao-csv/tc1-coluna-reinscrever-template-csv-flag-on.spec.ts",
+          "line": 6,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC1 — Coluna \"Reinscrever\" aparece no template CSV com flag ON",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed inválido — eventId placeholder. Validar curso com import CSV habilitado no env staging-base-de-conhecimento.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-via-importacao-csv\\tc1-coluna-reinscrever-template-csv-flag-on.spec.ts",
+                        "line": 14,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T04:52:24.362Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed inválido — eventId placeholder. Validar curso com import CSV habilitado no env staging-base-de-conhecimento.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-via-importacao-csv\\tc1-coluna-reinscrever-template-csv-flag-on.spec.ts",
+                            "line": 14,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a8c3aa256a0514466b67-954e27763693875f19e2",
+              "file": "projects/recertificacao/tests/features/reinscricao-via-importacao-csv/tc1-coluna-reinscrever-template-csv-flag-on.spec.ts",
+              "line": 15,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\reinscricao-via-importacao-csv\\tc2-coluna-reinscrever-nao-aparece-flag-off.spec.ts",
+      "file": "projects/recertificacao/tests/features/reinscricao-via-importacao-csv/tc2-coluna-reinscrever-nao-aparece-flag-off.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Reinscrição via Importação CSV",
+          "file": "projects/recertificacao/tests/features/reinscricao-via-importacao-csv/tc2-coluna-reinscrever-nao-aparece-flag-off.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC2 — Coluna \"Reinscrever\" NÃO aparece no template CSV com flag OFF (regressão)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "requer toggle runtime da flag :recertificacao OFF. Validar manualmente.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-via-importacao-csv\\tc2-coluna-reinscrever-nao-aparece-flag-off.spec.ts",
+                        "line": 14,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T04:52:24.362Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "requer toggle runtime da flag :recertificacao OFF. Validar manualmente.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-via-importacao-csv\\tc2-coluna-reinscrever-nao-aparece-flag-off.spec.ts",
+                            "line": 14,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d23c37e2775d4d2d16fd-f18b62037683b0d52b88",
+              "file": "projects/recertificacao/tests/features/reinscricao-via-importacao-csv/tc2-coluna-reinscrever-nao-aparece-flag-off.spec.ts",
+              "line": 19,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\reinscricao-via-importacao-csv\\tc3-upload-csv-reinscrever-sim-cria-participant-reinscrito.spec.ts",
+      "file": "projects/recertificacao/tests/features/reinscricao-via-importacao-csv/tc3-upload-csv-reinscrever-sim-cria-participant-reinscrito.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Reinscrição via Importação CSV",
+          "file": "projects/recertificacao/tests/features/reinscricao-via-importacao-csv/tc3-upload-csv-reinscrever-sim-cria-participant-reinscrito.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC3 — Upload de CSV com `Reinscrever=SIM` para usuário existente cria participant reinscrito",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed inválido — eventId placeholder. Validar curso com import CSV habilitado no env staging-base-de-conhecimento.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-via-importacao-csv\\tc3-upload-csv-reinscrever-sim-cria-participant-reinscrito.spec.ts",
+                        "line": 13,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T04:52:24.362Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed inválido — eventId placeholder. Validar curso com import CSV habilitado no env staging-base-de-conhecimento.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-via-importacao-csv\\tc3-upload-csv-reinscrever-sim-cria-participant-reinscrito.spec.ts",
+                            "line": 13,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "07301379e04364d61145-2aff02da165558b27f4a",
+              "file": "projects/recertificacao/tests/features/reinscricao-via-importacao-csv/tc3-upload-csv-reinscrever-sim-cria-participant-reinscrito.spec.ts",
+              "line": 14,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\reinscricao-via-importacao-csv\\tc4-valores-aceitos-case-insensitive.spec.ts",
+      "file": "projects/recertificacao/tests/features/reinscricao-via-importacao-csv/tc4-valores-aceitos-case-insensitive.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Reinscrição via Importação CSV",
+          "file": "projects/recertificacao/tests/features/reinscricao-via-importacao-csv/tc4-valores-aceitos-case-insensitive.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC4 — Valores de `Reinscrever` aceitos (case-insensitive: SIM/sim/true/1)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed inválido — eventId placeholder. Validar curso com import CSV habilitado no env staging-base-de-conhecimento.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-via-importacao-csv\\tc4-valores-aceitos-case-insensitive.spec.ts",
+                        "line": 11,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T04:52:24.362Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed inválido — eventId placeholder. Validar curso com import CSV habilitado no env staging-base-de-conhecimento.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-via-importacao-csv\\tc4-valores-aceitos-case-insensitive.spec.ts",
+                            "line": 11,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "2cc7e5e701ae3fe057cd-9ff1001e153fba9ec182",
+              "file": "projects/recertificacao/tests/features/reinscricao-via-importacao-csv/tc4-valores-aceitos-case-insensitive.spec.ts",
+              "line": 12,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\reinscricao-via-importacao-csv\\tc5-linha-sim-conteudo-sem-has-recertification-erro.spec.ts",
+      "file": "projects/recertificacao/tests/features/reinscricao-via-importacao-csv/tc5-linha-sim-conteudo-sem-has-recertification-erro.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Reinscrição via Importação CSV",
+          "file": "projects/recertificacao/tests/features/reinscricao-via-importacao-csv/tc5-linha-sim-conteudo-sem-has-recertification-erro.spec.ts",
+          "line": 6,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC5 — Linha com `Reinscrever=SIM` em conteúdo com `has_recertification=false` registra erro estruturado",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed inválido — eventId placeholder. Validar curso com import CSV habilitado no env staging-base-de-conhecimento.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-via-importacao-csv\\tc5-linha-sim-conteudo-sem-has-recertification-erro.spec.ts",
+                        "line": 11,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T04:52:24.363Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed inválido — eventId placeholder. Validar curso com import CSV habilitado no env staging-base-de-conhecimento.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-via-importacao-csv\\tc5-linha-sim-conteudo-sem-has-recertification-erro.spec.ts",
+                            "line": 11,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1e877530ef8f09475dc1-bf9f63b3fce58e33a9d0",
+              "file": "projects/recertificacao/tests/features/reinscricao-via-importacao-csv/tc5-linha-sim-conteudo-sem-has-recertification-erro.spec.ts",
+              "line": 12,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\reinscricao-via-importacao-csv\\tc6-linha-sim-usuario-inexistente-fluxo-criacao.spec.ts",
+      "file": "projects/recertificacao/tests/features/reinscricao-via-importacao-csv/tc6-linha-sim-usuario-inexistente-fluxo-criacao.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Reinscrição via Importação CSV",
+          "file": "projects/recertificacao/tests/features/reinscricao-via-importacao-csv/tc6-linha-sim-usuario-inexistente-fluxo-criacao.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC6 — Linha com `Reinscrever=SIM` para usuário INEXISTENTE cai no fluxo normal de criação (sem reinscrição)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed inválido — eventId placeholder. Validar curso com import CSV habilitado no env staging-base-de-conhecimento.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-via-importacao-csv\\tc6-linha-sim-usuario-inexistente-fluxo-criacao.spec.ts",
+                        "line": 11,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T04:52:24.363Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed inválido — eventId placeholder. Validar curso com import CSV habilitado no env staging-base-de-conhecimento.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-via-importacao-csv\\tc6-linha-sim-usuario-inexistente-fluxo-criacao.spec.ts",
+                            "line": 11,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0587c6050d3086209043-15f0559bc4eb8c4a5449",
+              "file": "projects/recertificacao/tests/features/reinscricao-via-importacao-csv/tc6-linha-sim-usuario-inexistente-fluxo-criacao.spec.ts",
+              "line": 12,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\reinscricao-via-importacao-csv\\tc7-pos-import-emails-recertification-only.spec.ts",
+      "file": "projects/recertificacao/tests/features/reinscricao-via-importacao-csv/tc7-pos-import-emails-recertification-only.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Reinscrição via Importação CSV",
+          "file": "projects/recertificacao/tests/features/reinscricao-via-importacao-csv/tc7-pos-import-emails-recertification-only.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC7 — Pós-importação, e-mails são enviados APENAS para participants com `recertification_number > 0` criados nesta execução",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "cross-suite com Suite 10 (Mailer) — requer infra de captura de e-mail. Validar manualmente.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-via-importacao-csv\\tc7-pos-import-emails-recertification-only.spec.ts",
+                        "line": 14,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T04:52:24.363Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "cross-suite com Suite 10 (Mailer) — requer infra de captura de e-mail. Validar manualmente.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\reinscricao-via-importacao-csv\\tc7-pos-import-emails-recertification-only.spec.ts",
+                            "line": 14,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "06f691f421c022aed7eb-e050a272d5a2340288cc",
+              "file": "projects/recertificacao/tests/features/reinscricao-via-importacao-csv/tc7-pos-import-emails-recertification-only.spec.ts",
+              "line": 19,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-05-27T04:51:49.486Z",
+    "duration": 34877.687,
+    "expected": 0,
+    "skipped": 7,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

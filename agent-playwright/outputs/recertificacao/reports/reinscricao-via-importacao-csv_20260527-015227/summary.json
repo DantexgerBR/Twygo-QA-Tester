@@ -1,0 +1,29 @@
+{
+  "runId": "reinscricao-via-importacao-csv_20260527-015227",
+  "scope": "Apenas testsuite contendo \"Reinscrição via Importação CSV\"",
+  "tests": {
+    "total": 7,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 7,
+    "durationMs": 0
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 1,
+    "tests": 44,
+    "outOfScope": {
+      "errors": 149,
+      "warnings": 124,
+      "info": 1
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}
