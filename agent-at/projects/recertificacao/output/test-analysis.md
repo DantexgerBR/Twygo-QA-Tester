@@ -153,7 +153,7 @@ totals:
 | `POST` | `/api/v1/play/.../subscribe` (com `recertification=true`) | Play (aluno) | 201 | 404 |
 | `GET` | `/api/v1/play/events/:id` | Play (aluno) | 200 (com `eligibleForRecertification`) | 401 |
 | `GET` | `/learning_students` | Admin UI | 200 | — |
-| `GET` | `/e/:id/edit`, `/contents/:id/edit` | Admin UI | 200 | — |
+| `GET` | `/o/:org/contents/:id/edit?tab=identification` (default) e `?tab=access` (switch reinscrição) | Admin UI facelift React (validado live 2026-05-27); rotas `/e/:id/edit` HAML legado estão deprecated e retornam 422 no save | 200 | — |
 | Worker | `MassReenrollParticipantsWorker.perform_async(ids, options)` | Sidekiq | enfileira | — |
 | Worker | `AddParticipantToLearningPath.perform_async(participant_id, org_id, recertification)` | Sidekiq | enfileira | — |
 | Cron | `ExpiresCertificates` (diário) | Sidekiq | n/a | — |
@@ -206,11 +206,13 @@ Validar que o switch "Habilitar reinscrição" é exibido na tela de edição do
    → Dashboard padrão é exibido contendo o menu lateral.
 2. Navegar até a listagem de cursos da organização
    → Listagem de cursos é exibida com pelo menos 1 curso pré-existente.
-3. Clicar em "Editar" no menu de ações do curso
-   → Página de edição do curso é exibida na rota "/e/:id/edit" (HAML) ou "/contents/:id/edit" (React facelift).
-4. Localizar a seção "Detalhes" ou seção principal do formulário
-   → Switch "Habilitar reinscrição" está visível no formulário.
-5. Posicionar o cursor sobre o ícone de ajuda do switch "Habilitar reinscrição"
+3. Clicar no botão `more_vert` da linha do curso → "Gerenciar"
+   → Página de edição do curso é exibida na rota `/o/{orgId}/contents/{id}/edit?tab=identification` (aba "Identificação" ativa por default).
+4. Clicar na aba "Acesso" do formulário de edição
+   → URL atualiza para `?tab=access` e tabpanel "Acesso" renderiza, contendo a seção "Inscrição" → "Permitir registro de inscrição por".
+5. Localizar o checkbox "Habilitar reinscrição" dentro da seção "Permitir registro de inscrição por"
+   → Checkbox "Habilitar reinscrição" está visível no formulário (controle HTML padrão, não Chakra switch).
+6. Posicionar o cursor sobre o ícone de ajuda do checkbox "Habilitar reinscrição"
    → Tooltip de ajuda é exibido com o texto da chave I18n "activerecord.attributes.event.has_recertification_tooltip".
 
 ## TC2 — Switch "Habilitar reinscrição" NÃO aparece com flag OFF (regressão)
@@ -225,8 +227,8 @@ Validar comportamento regressivo: com a feature flag desativada, o switch "Habil
 ### Passos
 1. Desativar a feature flag `:recertificacao` para a organização via Flipper Admin
    → Feature flag fica desativada na organização atual.
-2. Acessar a tela de edição de um curso existente em "/e/{eventId}/edit"
-   → Página de edição do curso é exibida normalmente.
+2. Acessar a tela de edição de um curso existente em `/o/{orgId}/contents/{eventId}/edit?tab=access`
+   → Página de edição do curso é exibida normalmente na aba "Acesso".
 3. Inspecionar o formulário em busca do label "Habilitar reinscrição"
    → Label "Habilitar reinscrição" NÃO está presente em nenhum lugar do formulário.
 4. Salvar o curso sem alterações

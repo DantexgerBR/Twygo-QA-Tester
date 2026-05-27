@@ -107,8 +107,24 @@ export class ContentEditPage extends BasePage {
    */
   async openEditByName(name: string): Promise<void> {
     await this.goToContentList();
-    const row = this.page.getByRole('row', { name: new RegExp(name, 'i') }).first();
-    await row.waitFor({ state: 'visible' });
+    // Filtrar via campo "Pesquise aqui" reduz a lista a 1 row
+    // (mais robusto que getByRole row fuzzy match que pode falhar com
+    // accessible name composto de muitas células). Validado live 2026-05-27.
+    const searchBox = this.page.getByPlaceholder(/Pesquise aqui/i).first();
+    if (await searchBox.isVisible({ timeout: 3_000 }).catch(() => false)) {
+      await searchBox.fill(name);
+      // Aguarda a row aparecer (search filtra incrementalmente).
+      await this.page
+        .getByText(name, { exact: false })
+        .first()
+        .waitFor({ state: 'visible', timeout: 8_000 });
+    }
+    // Localiza a row que contém o nome (mais flexível que getByRole row).
+    const row = this.page
+      .locator('tr, [role="row"]')
+      .filter({ hasText: name })
+      .first();
+    await row.waitFor({ state: 'visible', timeout: 10_000 });
     await this.clickEditarFromRow(row);
   }
 
@@ -151,11 +167,15 @@ export class ContentEditPage extends BasePage {
     }
     // Caminho 2: more_vert (UI nova facelift, validada live 2026-05-26).
     // O menu abre 11 opções; o item de edição agora se chama "Gerenciar"
-    // (não "Editar"). Skill provisionar-seed v1.3 documenta.
+    // (não "Editar"). Botão tem text "more_vert" (Material Icons literal).
+    // Fallback CSS pra cobrir variações de acessibilidade.
     const moreVertTrigger = row
       .getByRole('button', { name: 'more_vert' })
+      .or(row.locator('button:has-text("more_vert")'))
+      .or(row.locator('[role="button"]:has-text("more_vert")'))
       .first();
-    if (await moreVertTrigger.isVisible({ timeout: 2_000 }).catch(() => false)) {
+    if (await moreVertTrigger.isVisible({ timeout: 3_000 }).catch(() => false)) {
+      await moreVertTrigger.scrollIntoViewIfNeeded();
       await moreVertTrigger.click();
       const gerenciarItem = this.page
         .getByRole('menuitem', { name: /^Gerenciar$/i })
@@ -163,7 +183,7 @@ export class ContentEditPage extends BasePage {
         .first();
       await gerenciarItem.waitFor({ state: 'visible', timeout: 5_000 });
       await gerenciarItem.click();
-      await this.page.waitForURL(/\/(e\/\d+\/edit|contents\/\d+\/edit)/);
+      await this.page.waitForURL(/\/contents\/\d+\/edit/, { timeout: 15_000 });
       return;
     }
     // Caminho 3: kebab Options legado HAML (`img[alt="Options"]`).

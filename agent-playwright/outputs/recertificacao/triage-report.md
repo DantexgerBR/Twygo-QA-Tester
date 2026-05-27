@@ -1,12 +1,12 @@
-# Triage Report — Recertificação — 2026-05-27 09:06
+# Triage Report — Recertificação — 2026-05-27 10:03
 
-**Escopo**: Testsuite: Isolamento em Ambientes Adicionais · **Ambiente**: `staging-recertificacao`
+**Escopo**: Testsuite: Configuração de Conteúdo (Switch "Habilitar reinscrição") · **Ambiente**: `staging-recertificacao`
 
 ## Sumário
 
 | Total | ✅ Passed | ❌ Failed | ⊘ Skipped | Findings exploratórios |
 |---:|---:|---:|---:|---|
-| 2 | 0 | 0 | 2 | 0 erros · 0 warnings · 0 info |
+| 5 | 0 | 4 | 1 | 0 erros · 0 warnings · 0 info |
 
 > **Janela única de revisão.** Marque ☑ em UMA categoria por item.
 > Notas em PT-BR. Commit este arquivo após triagem.
@@ -14,9 +14,185 @@
 
 ---
 
-## ✅ Sem falhas pra triagem
+## ❌ Falhas pra triagem
 
-Suite rodou limpa. Revise apenas a seção de exploratórios e skips abaixo (se houver).
+### [F1] Configuração de Conteúdo (Switch "Habilitar reinscrição") · "TC1 — Switch "Habilitar reinscrição" aparece com flag ON na edição de curso"
+
+- **Arquivo**: `projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc1-switch-aparece-com-flag-on.spec.ts`
+- **Status**: failed · **Duração**: 32.2s
+- **Local do erro**: `C:\Claude\Recertificação\twygo-agents-qa\agent-playwright\projects\recertificacao\pages\ContentEditPage.ts:193`
+- **🌐 URL aproximada (NÃO precisa)**: [https://recertificacao-testeqa.stage.twygoead.com/o/37048/dashboard](https://recertificacao-testeqa.stage.twygoead.com/o/37048/dashboard)
+  - URL crua (copiar): `https://recertificacao-testeqa.stage.twygoead.com/o/37048/dashboard`
+  - ⚠️ **Fonte**: link de sidebar do snapshot residual (Playwright morreu antes de capturar URL real). NÃO é a rota do teste. Abrir trace pra rota exata.
+  - 🚨 **URL não bate com escopo do teste** (nome do TC menciona painel/listagem mas URL é `https://recertificacao-testeqa.stage.twygoead.com/o/37048/dashboard`). **Possível causa**: spec configurado em rota errada OU teste navegou pra lugar inesperado. **Verifique**: abrir trace + conferir `goToList()` ou rota usada pelo spec.
+- **Última tela**: `test-artifacts\projects-recertificacao-te-d835b--flag-ON-na-edição-de-curso-chromium\test-finished-1.png`
+- **Trace**: `test-artifacts\projects-recertificacao-te-d835b--flag-ON-na-edição-de-curso-chromium\trace.zip` (abrir com `npx playwright show-trace`)
+- **Error context**: `test-artifacts\projects-recertificacao-te-d835b--flag-ON-na-edição-de-curso-chromium\error-context.md`
+
+**Erro** (truncado):
+
+```
+TimeoutError: locator.waitFor: Timeout 5000ms exceeded.
+Call log:
+  - waiting for locator('tr, [role="row"]').filter({ hasText: 'Curso Recertificação TC1 w0-1779886753359' }).first().locator('img[alt="Options" i], [role="button"][aria-label*="Options" i], [role="button"][aria-label*="Opções" i]').first() to be visible
+
+```
+
+**Steps executados**:
+
+| # | Step | Status |
+|---:|---|:---:|
+| 1 | 1. Acessar a URL "/o/{orgId}/dashboard" | ✅ |
+| 2 | 2. Navegar até a listagem de cursos da organização | ✅ |
+| 3 | 3. Clicar em "Gerenciar" no menu de ações do curso → página de edição é exibida | ❌ |
+
+**Diagnóstico do agente** (palpite, NÃO decisão): mensagem genérica — abra o trace pra diagnosticar
+
+**QA decide** (marque UM):
+
+- [ ] **Bug produto — IMPEDITIVO** — sem workaround viável. Spec fica RED. Escalar dev. Ticket: ____________
+- [ ] **Bug produto — não-impeditivo** — registrar issue + aplicar workaround temporário no spec/helper pra suite SEGUIR cobrindo comportamentos vizinhos. Workaround sugerido: ____________________ · Ticket: ____________
+- [ ] **Comportamento esperado** — produto OK. Helper/spec precisa adaptar. Especificar: ____________________
+- [ ] **Spec / seed errado** — XML/data.ts desatualizado. Especificar: ____________________
+- [ ] **Flakiness** — re-rodar 3× isolado antes de decidir
+
+**Notas QA**: ____________________________________________________________
+
+**Ticket relacionado** (opcional): ____________
+
+---
+
+### [F2] Configuração de Conteúdo (Switch "Habilitar reinscrição") · "TC3 — Ativar e salvar o switch persiste `has_recertification = true`"
+
+- **Arquivo**: `projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc3-ativar-e-salvar-persiste.spec.ts`
+- **Status**: failed · **Duração**: 13.6s
+- **Local do erro**: `C:\Claude\Recertificação\twygo-agents-qa\agent-playwright\projects\recertificacao\tests\features\configuracao-de-conteudo-switch-habilitar-reinscricao\tc3-ativar-e-salvar-persiste.spec.ts:61`
+- **🌐 URL aproximada (NÃO precisa)**: [https://recertificacao-testeqa.stage.twygoead.com/o/37048/dashboard](https://recertificacao-testeqa.stage.twygoead.com/o/37048/dashboard)
+  - URL crua (copiar): `https://recertificacao-testeqa.stage.twygoead.com/o/37048/dashboard`
+  - ⚠️ **Fonte**: link de sidebar do snapshot residual (Playwright morreu antes de capturar URL real). NÃO é a rota do teste. Abrir trace pra rota exata.
+  - 🚨 **URL não bate com escopo do teste** (nome do TC menciona painel/listagem mas URL é `https://recertificacao-testeqa.stage.twygoead.com/o/37048/dashboard`). **Possível causa**: spec configurado em rota errada OU teste navegou pra lugar inesperado. **Verifique**: abrir trace + conferir `goToList()` ou rota usada pelo spec.
+- **Última tela**: `test-artifacts\projects-recertificacao-te-ccb33-e-has-recertification-true--chromium\test-finished-1.png`
+- **Trace**: `test-artifacts\projects-recertificacao-te-ccb33-e-has-recertification-true--chromium\trace.zip` (abrir com `npx playwright show-trace`)
+- **Error context**: `test-artifacts\projects-recertificacao-te-ccb33-e-has-recertification-true--chromium\error-context.md`
+
+**Erro** (truncado):
+
+```
+Error: expect(locator).toBeVisible() failed
+
+Locator: getByRole('checkbox', { name: /Habilitar reinscrição/i })
+Expected: visible
+Timeout: 10000ms
+Error: element(s) not found
+
+Call log:
+```
+
+**Steps executados**:
+
+| # | Step | Status |
+|---:|---|:---:|
+| 1 | 1. Acessar a edição de um curso com `has_recertification = false` (tab "Acesso") | ❌ |
+
+**Diagnóstico do agente** (palpite, NÃO decisão): elemento esperado não apareceu — possível mudança de seletor, render condicional faltando ou estado pré-condição inválido
+
+**QA decide** (marque UM):
+
+- [ ] **Bug produto — IMPEDITIVO** — sem workaround viável. Spec fica RED. Escalar dev. Ticket: ____________
+- [ ] **Bug produto — não-impeditivo** — registrar issue + aplicar workaround temporário no spec/helper pra suite SEGUIR cobrindo comportamentos vizinhos. Workaround sugerido: ____________________ · Ticket: ____________
+- [ ] **Comportamento esperado** — produto OK. Helper/spec precisa adaptar. Especificar: ____________________
+- [ ] **Spec / seed errado** — XML/data.ts desatualizado. Especificar: ____________________
+- [ ] **Flakiness** — re-rodar 3× isolado antes de decidir
+
+**Notas QA**: ____________________________________________________________
+
+**Ticket relacionado** (opcional): ____________
+
+---
+
+### [F3] Configuração de Conteúdo (Switch "Habilitar reinscrição") · "TC4 — Desativar o switch em curso com participants reinscritos é permitido sem aviso"
+
+- **Arquivo**: `projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc4-desativar-com-participants.spec.ts`
+- **Status**: failed · **Duração**: 0.0s
+- **Local do erro**: `C:\Claude\Recertificação\twygo-agents-qa\agent-playwright\projects\recertificacao\pages\ContentEditPage.ts:292`
+- **🌐 URL aproximada (NÃO precisa)**: [https://recertificacao-testeqa.stage.twygoead.com/o/37048/dashboard](https://recertificacao-testeqa.stage.twygoead.com/o/37048/dashboard)
+  - URL crua (copiar): `https://recertificacao-testeqa.stage.twygoead.com/o/37048/dashboard`
+  - ⚠️ **Fonte**: link de sidebar do snapshot residual (Playwright morreu antes de capturar URL real). NÃO é a rota do teste. Abrir trace pra rota exata.
+  - 🚨 **URL não bate com escopo do teste** (nome do TC menciona painel/listagem mas URL é `https://recertificacao-testeqa.stage.twygoead.com/o/37048/dashboard`). **Possível causa**: spec configurado em rota errada OU teste navegou pra lugar inesperado. **Verifique**: abrir trace + conferir `goToList()` ou rota usada pelo spec.
+- **Última tela**: `test-artifacts\projects-recertificacao-te-ad265-ritos-é-permitido-sem-aviso-chromium\test-failed-1.png`
+- **Trace**: `test-artifacts\projects-recertificacao-te-ad265-ritos-é-permitido-sem-aviso-chromium\trace.zip` (abrir com `npx playwright show-trace`)
+- **Error context**: `test-artifacts\projects-recertificacao-te-ad265-ritos-é-permitido-sem-aviso-chromium\error-context.md`
+
+**Erro** (truncado):
+
+```
+TimeoutError: locator.waitFor: Timeout 10000ms exceeded.
+Call log:
+  - waiting for getByRole('checkbox', { name: /Habilitar reinscrição/i }) to be visible
+
+```
+
+**Diagnóstico do agente** (palpite, NÃO decisão): mensagem genérica — abra o trace pra diagnosticar
+
+**QA decide** (marque UM):
+
+- [ ] **Bug produto — IMPEDITIVO** — sem workaround viável. Spec fica RED. Escalar dev. Ticket: ____________
+- [ ] **Bug produto — não-impeditivo** — registrar issue + aplicar workaround temporário no spec/helper pra suite SEGUIR cobrindo comportamentos vizinhos. Workaround sugerido: ____________________ · Ticket: ____________
+- [ ] **Comportamento esperado** — produto OK. Helper/spec precisa adaptar. Especificar: ____________________
+- [ ] **Spec / seed errado** — XML/data.ts desatualizado. Especificar: ____________________
+- [ ] **Flakiness** — re-rodar 3× isolado antes de decidir
+
+**Notas QA**: ____________________________________________________________
+
+**Ticket relacionado** (opcional): ____________
+
+---
+
+### [F4] Configuração de Conteúdo (Switch "Habilitar reinscrição") · "TC5 — Paridade do switch entre formulário HAML e formulário React (facelift)"
+
+- **Arquivo**: `projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc5-paridade-haml-react.spec.ts`
+- **Status**: failed · **Duração**: 20.2s
+- **Local do erro**: `C:\Claude\Recertificação\twygo-agents-qa\agent-playwright\projects\recertificacao\tests\features\configuracao-de-conteudo-switch-habilitar-reinscricao\tc5-paridade-haml-react.spec.ts:61`
+- **🌐 URL aproximada (NÃO precisa)**: [https://recertificacao-testeqa.stage.twygoead.com/o/37048/dashboard](https://recertificacao-testeqa.stage.twygoead.com/o/37048/dashboard)
+  - URL crua (copiar): `https://recertificacao-testeqa.stage.twygoead.com/o/37048/dashboard`
+  - ⚠️ **Fonte**: link de sidebar do snapshot residual (Playwright morreu antes de capturar URL real). NÃO é a rota do teste. Abrir trace pra rota exata.
+  - 🚨 **URL não bate com escopo do teste** (nome do TC menciona painel/listagem mas URL é `https://recertificacao-testeqa.stage.twygoead.com/o/37048/dashboard`). **Possível causa**: spec configurado em rota errada OU teste navegou pra lugar inesperado. **Verifique**: abrir trace + conferir `goToList()` ou rota usada pelo spec.
+- **Última tela**: `test-artifacts\projects-recertificacao-te-254b9--formulário-React-facelift--chromium\test-finished-1.png`
+- **Trace**: `test-artifacts\projects-recertificacao-te-254b9--formulário-React-facelift--chromium\trace.zip` (abrir com `npx playwright show-trace`)
+- **Error context**: `test-artifacts\projects-recertificacao-te-254b9--formulário-React-facelift--chromium\error-context.md`
+
+**Erro** (truncado):
+
+```
+Error: expect(locator).toBeVisible() failed
+
+Locator: getByRole('checkbox', { name: /Habilitar reinscrição/i })
+Expected: visible
+Timeout: 10000ms
+Error: element(s) not found
+
+Call log:
+```
+
+**Steps executados**:
+
+| # | Step | Status |
+|---:|---|:---:|
+| 1 | 1. Editar o curso na tela HAML, ativar o switch e salvar → has_recertification = true | ❌ |
+
+**Diagnóstico do agente** (palpite, NÃO decisão): elemento esperado não apareceu — possível mudança de seletor, render condicional faltando ou estado pré-condição inválido
+
+**QA decide** (marque UM):
+
+- [ ] **Bug produto — IMPEDITIVO** — sem workaround viável. Spec fica RED. Escalar dev. Ticket: ____________
+- [ ] **Bug produto — não-impeditivo** — registrar issue + aplicar workaround temporário no spec/helper pra suite SEGUIR cobrindo comportamentos vizinhos. Workaround sugerido: ____________________ · Ticket: ____________
+- [ ] **Comportamento esperado** — produto OK. Helper/spec precisa adaptar. Especificar: ____________________
+- [ ] **Spec / seed errado** — XML/data.ts desatualizado. Especificar: ____________________
+- [ ] **Flakiness** — re-rodar 3× isolado antes de decidir
+
+**Notas QA**: ____________________________________________________________
+
+**Ticket relacionado** (opcional): ____________
 
 ---
 
@@ -26,8 +202,7 @@ Suite rodou limpa. Revise apenas a seção de exploratórios e skips abaixo (se 
 
 | TC | Tipo | Motivo |
 |---|---|---|
-| TC1 — Reinscrição num env não afeta participants no env pareado | fixme | env secundário não configurado em config/environment.json (frontmatter env_secondary: null). Bloqueio de infra — configurar staging-base-de-conhecimento-aditional + senha em .env antes de habilitar es |
-| TC2 — Toggle da flag :recertificacao no env principal NÃO afeta env secundário | fixme | env secundário não configurado em config/environment.json (frontmatter env_secondary: null). Bloqueio de infra — configurar staging-base-de-conhecimento-aditional + senha em .env antes de habilitar es |
+| TC2 — Switch "Habilitar reinscrição" NÃO aparece com flag OFF (regressão) | fixme | requer toggle runtime da flag :recertificacao — assumido ON em staging-base-de-conhecimento. Validar manualmente OFF. |
 
 ---
 

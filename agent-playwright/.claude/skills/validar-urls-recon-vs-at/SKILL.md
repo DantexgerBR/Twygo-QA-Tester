@@ -20,6 +20,7 @@ status: design  # design doc — implementação pendente
 | Modelos de conteúdo | `/content_templates` | `/content_models` | 404 |
 | Painéis do usuário | `/user_panels` | `/panels` (real) | 404 hipotético |
 | Repositórios | `/repositories` | `/organization_datasets` | 404 hipotético |
+| Edição de curso (Recertificação 2026-05-27) | `/e/:id/edit` (HAML legacy) | `/o/:org/contents/:id/edit?tab=identification` (facelift React) | rota HAML retorna 404 ou 422 silencioso no save. AT inferiu da prosa "Acessar a edição" sem validar live — pegou rota deprecated. Caso adicional: switch "Habilitar reinscrição" exige `?tab=access` (query param), não inferível só da prosa. |
 
 Quando recon roda com URL errada:
 - 0 test-ids capturados
