@@ -1,18 +1,17 @@
 import type { Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 import { BasePage } from '../../../src/pages/BasePage.js';
-import { getOrgId } from '../../../src/utils/environment.js';
 import { safeGoto, dismissCommonModals } from '../../../src/utils/modals.js';
 
 /**
  * Page Object da listagem de Aprendizagem ("Learning Students") do Twygo.
  *
- * Rota canônica (RN 23, suite "Filtro Avançado Status Substituído"):
- *   `/o/{orgId}/events/{eventId}/learning_students`
+ * Rota canônica (validada live 2026-05-27 — rota anterior
+ * `/o/{org}/events/{id}/learning_students` retorna 404, descontinuada):
+ *   `/e/{eventId}/learning`
  *
- * Variação observada em prosa antiga: `/learning_students?event_id={eventId}`
- * — mantida como rota alternativa para resiliência. O canônico atual usa
- * resource nested em `/events/:event_id/learning_students`.
+ * Acessível na UI via: menu kebab `data-test-id="events-{id}-actions-kebab"`
+ * → item "Aprendizagem".
  *
  * Convenções aplicadas:
  *  - `safeGoto` para cobrir NPS Sofia + outros modais oportunistas
@@ -41,13 +40,11 @@ export class LearningStudentsPage extends BasePage {
 
   /**
    * Acessa a listagem de aprendizagem de um curso/evento específico.
-   * Rota canônica: `/o/{orgId}/events/{eventId}/learning_students`.
+   * Rota canônica: `/e/{eventId}/learning` (validada live 2026-05-27).
+   * `orgId` é resolvido server-side pelo eventId.
    */
   async goToList(eventId: number | string): Promise<void> {
-    await safeGoto(
-      this.page,
-      `/o/${getOrgId()}/events/${eventId}/learning_students`,
-    );
+    await safeGoto(this.page, `/e/${eventId}/learning`);
   }
 
   // ─── Drawer de filtro avançado ──────────────────────────────────────
@@ -76,10 +73,15 @@ export class LearningStudentsPage extends BasePage {
    * Chakra modal visível), retorna sem clicar novamente.
    */
   async openFilterDrawer(): Promise<void> {
-    const dialog = this.page.getByRole('dialog').first();
+    // role=dialog ambíguo: popover de Notificações também usa role=dialog.
+    // Drawer Chakra slide-in pode renderizar fora do viewport — usar heading
+    // específico "Lista de filtros" como sinal de prontidão.
+    const dialog = this.page.getByText('Lista de filtros', { exact: true }).first();
     if (await dialog.isVisible().catch(() => false)) return;
     await this.getFilterButton().click();
-    await dismissCommonModals(this.page);
+    // NÃO chamar dismissCommonModals aqui — o último-recurso dele clica
+    // "Close" em QUALQUER dialog visível, incluindo o drawer recém-aberto.
+    // NPS Sofia já foi tratado no safeGoto da navegação anterior.
     await dialog.waitFor({ state: 'visible', timeout: 10_000 });
   }
 
@@ -98,7 +100,7 @@ export class LearningStudentsPage extends BasePage {
    */
   getStatusFilterOption(option: string): Locator {
     return this.page
-      .getByRole('dialog')
+      .locator('.chakra-modal__content')
       .first()
       .getByText(option, { exact: true });
   }

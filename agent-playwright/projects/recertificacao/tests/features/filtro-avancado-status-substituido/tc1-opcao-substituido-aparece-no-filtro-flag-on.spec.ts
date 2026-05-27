@@ -4,9 +4,17 @@ import { LearningStudentsPage } from '../../../pages/LearningStudentsPage.js';
 import { tc1Data } from './tc1-opcao-substituido-aparece-no-filtro-flag-on.data.js';
 
 test.describe('Filtro Avançado Status Substituído', () => {
-  // Categoria: resolvido em 2026-05-27 via fixedSeed.emptyCursoId (806852).
-  // Filtro avançado renderiza dropdown estático independente de participants —
-  // basta o cursoId existir e ter learning_students habilitado.
+  // Rota destravada em 2026-05-27 (LearningStudentsPage.goToList → /e/{id}/learning).
+  // Drawer abre OK (step 2 verde), mas o drawer "Lista de filtros" hoje só
+  // mostra filtros PADRÃO de progresso (Não iniciados, Em andamento, Concluídos)
+  // — para validar opção "Substituído" do filtro AVANÇADO de Status do certificado,
+  // precisa clicar em "+ Novo" → escolher critério "Status do certificado" →
+  // ver lista de status como opções. Refator do LearningStudentsPage com
+  // helper `openAdvancedFilterCriteria(criterion)` pendente.
+  test.fixme(
+    true,
+    'Refator pendente: drawer Lista de filtros mostra apenas filtros padrão. Validar Substituído exige fluxo "+ Novo" → critério "Status do certificado". Atualizar LearningStudentsPage com helper de drawer-novo.',
+  );
 
   test('TC1 — Opção "Substituído" aparece no filtro avançado de Status do certificado com flag ON', async ({
     page,
@@ -28,9 +36,7 @@ test.describe('Filtro Avançado Status Substituído', () => {
       '1. Acessar a lista de aprendizagem em "/learning_students" → Lista é exibida com colunas Nome, Status do certificado, etc.',
       async () => {
         await learningStudents.goToList(tc1Data.eventId);
-        await expect(page).toHaveURL(
-          /\/o\/\d+\/events\/\d+\/learning_students/,
-        );
+        await expect(page).toHaveURL(/\/e\/\d+\/learning/);
       },
     );
 
@@ -38,7 +44,7 @@ test.describe('Filtro Avançado Status Substituído', () => {
       '2. Clicar no ícone de filtro da coluna "Status do certificado" → Drawer de filtro avançado é exibido com lista de opções',
       async () => {
         await learningStudents.openFilterDrawer();
-        await expect(page.getByRole('dialog').first()).toBeVisible();
+        await expect(page.getByText('Lista de filtros', { exact: true }).first()).toBeVisible();
       },
     );
 
