@@ -70,7 +70,8 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
         // reinscritos quando `SeedAdminPage.criarAlunoMatriculado` estiver
         // implementado (helper hoje lança not-implemented; ver Page Object).
         await allure.tag('REVIEW_NEEDED');
-        await contentEdit.openEditById(cursoId);
+        // Switch vive na tab "Acesso" do facelift.
+        await contentEdit.openEditByIdInAcessoTab(cursoId);
         await expect(contentEdit.getHabilitarReinscricaoSwitch()).toBeVisible();
         expect(await contentEdit.isHabilitarReinscricaoOn()).toBe(true);
       },
@@ -101,8 +102,8 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
         await contentEdit.save();
         await contentEdit.expectSaveSuccess();
 
-        // Reabre para confirmar persistência do switch OFF.
-        await contentEdit.openEditById(cursoId);
+        // Reabre para confirmar persistência do switch OFF (tab "Acesso").
+        await contentEdit.openEditByIdInAcessoTab(cursoId);
         expect(await contentEdit.isHabilitarReinscricaoOn()).toBe(false);
 
         // REVISAR: assertion `participants.recertification_number > 0` no banco

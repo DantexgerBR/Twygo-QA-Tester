@@ -54,11 +54,12 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
     const contentEdit = new ContentEditPage(page);
 
     await allure.step(
-      '1. Acessar a edição de um curso com `has_recertification = false`',
+      '1. Acessar a edição de um curso com `has_recertification = false` (tab "Acesso")',
       async () => {
-        await contentEdit.openEditById(cursoId);
+        // Switch vive na tab "Acesso" do facelift (skill v1.3 §matrícula).
+        await contentEdit.openEditByIdInAcessoTab(cursoId);
         await expect(contentEdit.getHabilitarReinscricaoSwitch()).toBeVisible();
-        // Pré-condição: switch desligado (criado assim no beforeAll).
+        // Pré-condição: switch desligado (default — switch é NO-OP no createCurso).
         expect(await contentEdit.isHabilitarReinscricaoOn()).toBe(false);
       },
     );
@@ -80,7 +81,7 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
     await allure.step(
       '4. Recarregar a edição → switch permanece ligado (has_recertification = true persistido)',
       async () => {
-        await contentEdit.openEditById(cursoId);
+        await contentEdit.openEditByIdInAcessoTab(cursoId);
         await expect(contentEdit.getHabilitarReinscricaoSwitch()).toBeVisible();
         expect(await contentEdit.isHabilitarReinscricaoOn()).toBe(true);
       },

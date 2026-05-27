@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-26T18:52:31.450Z",
+  "generatedAt": "2026-05-27T04:44:59.508Z",
   "summary": {
     "errors": 0,
     "warnings": 0,
@@ -7,8 +7,8 @@
     "testsuites": 8,
     "tests": 44,
     "outOfScope": {
-      "errors": 147,
-      "warnings": 122,
+      "errors": 141,
+      "warnings": 123,
       "info": 1
     },
     "activeProbes": {
@@ -137,15 +137,10 @@
           ]
         },
         {
-          "url": "https://basedeconhecimento.stage.twygoead.com/e/2/edit",
-          "totalInteractive": 1,
-          "visibleInteractive": 1,
-          "samples": [
-            {
-              "role": "link",
-              "name": "Voltar para página inicial"
-            }
-          ]
+          "url": "https://recertificacao-testeqa.stage.twygoead.com/contents/807017/edit",
+          "totalInteractive": 0,
+          "visibleInteractive": 0,
+          "samples": []
         },
         {
           "url": "https://basedeconhecimento.stage.twygoead.com/e/3/edit",
@@ -159,22 +154,123 @@
           ]
         },
         {
-          "url": "https://recertificacao-testeqa.stage.twygoead.com/e/806858/edit",
-          "totalInteractive": 0,
-          "visibleInteractive": 0,
-          "samples": []
+          "url": "https://recertificacao-testeqa.stage.twygoead.com/e/807015/edit",
+          "totalInteractive": 172,
+          "visibleInteractive": 87,
+          "samples": [
+            {
+              "role": "link",
+              "name": "dashboard-menu"
+            },
+            {
+              "role": "link",
+              "name": "new_contents-menu"
+            },
+            {
+              "role": "link",
+              "name": "shared_events-menu"
+            },
+            {
+              "role": "link",
+              "name": "records-menu"
+            },
+            {
+              "role": "link",
+              "name": "certificates-menu"
+            },
+            {
+              "role": "link",
+              "name": "content_models-menu"
+            },
+            {
+              "role": "link",
+              "name": "knowledge_repositories-menu"
+            },
+            {
+              "role": "link",
+              "name": "users-menu"
+            },
+            {
+              "role": "link",
+              "name": "companies-menu"
+            },
+            {
+              "role": "link",
+              "name": "question_lists-menu"
+            },
+            {
+              "role": "link",
+              "name": "communities-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization_chart-menu"
+            },
+            {
+              "role": "link",
+              "name": "roles-menu"
+            },
+            {
+              "role": "link",
+              "name": "competencies-menu"
+            },
+            {
+              "role": "link",
+              "name": "succession_continuity_dashboard-menu"
+            },
+            {
+              "role": "link",
+              "name": "succession_continuity_analysis-menu"
+            },
+            {
+              "role": "link",
+              "name": "succession_continuity_actions-menu"
+            },
+            {
+              "role": "link",
+              "name": "succession_continuity_parameters-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "process_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "visualize_documentation-menu"
+            },
+            {
+              "role": "link",
+              "name": "pdi-menu"
+            },
+            {
+              "role": "link",
+              "name": "performance_development-menu"
+            }
+          ]
         }
       ],
       "outOfScope": {
         "totals": {
-          "errors": 24,
-          "warnings": 15,
+          "errors": 26,
+          "warnings": 17,
           "info": 1
         },
         "byKind": {
-          "console_error": 6,
-          "a11y_violation": 31,
-          "http_error": 3
+          "console_error": 7,
+          "a11y_violation": 35,
+          "http_error": 2
         },
         "findings": [
           {
@@ -218,9 +314,9 @@
               "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-allowed-attr?application=playwright",
               "affectedNodes": 25,
               "firstNodeTarget": [
-                "#menu-button-\\:r16\\:"
+                "#menu-button-\\:r18\\:"
               ],
-              "firstNodeHtml": "<svg viewBox=\"0 0 482.575 511.9\" focusable=\"false\" class=\"chakra-icon chakra-menu__menu-button css-1y85x2\" aria-label=\"Options\" id=\"menu-button-:r16:\" aria-expanded=\"false\" aria-haspopup=\"menu\" aria-c"
+              "firstNodeHtml": "<svg viewBox=\"0 0 482.575 511.9\" focusable=\"false\" class=\"chakra-icon chakra-menu__menu-button css-1y85x2\" aria-label=\"Options\" id=\"menu-button-:r18:\" aria-expanded=\"false\" aria-haspopup=\"menu\" aria-c"
             },
             "inScope": false
           },
@@ -302,7 +398,7 @@
                 "RGAA-3.2.1"
               ],
               "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
-              "affectedNodes": 56,
+              "affectedNodes": 51,
               "firstNodeTarget": [
                 ".css-1ow1udt.chakra-text:nth-child(1)"
               ],
@@ -430,7 +526,7 @@
               "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
               "affectedNodes": 6,
               "firstNodeTarget": [
-                ".chakra-portal:nth-child(29) > div[aria-label=\"Notifications-top\"][role=\"region\"][aria-live=\"polite\"]"
+                ".chakra-portal:nth-child(31) > div[aria-label=\"Notifications-top\"][role=\"region\"][aria-live=\"polite\"]"
               ],
               "firstNodeHtml": "<div role=\"region\" aria-live=\"polite\" aria-label=\"Notifications-top\" id=\"chakra-toast-manager...\" style=\"position: fixed; z-i...\">"
             },
@@ -513,7 +609,7 @@
               "firstNodeTarget": [
                 ".css-kjvu41"
               ],
-              "firstNodeHtml": "<button id=\"menu-button-:rl:\" aria-expanded=\"false\" aria-haspopup=\"menu\" aria-controls=\"menu-list-:rl:\" class=\"chakra-menu__menu-button css-kjvu41\">"
+              "firstNodeHtml": "<button id=\"menu-button-:rn:\" aria-expanded=\"false\" aria-haspopup=\"menu\" aria-controls=\"menu-list-:rn:\" class=\"chakra-menu__menu-button css-kjvu41\">"
             },
             "inScope": false
           },
@@ -553,7 +649,7 @@
                 "RGAA-9.2.1"
               ],
               "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=playwright",
-              "affectedNodes": 236,
+              "affectedNodes": 226,
               "firstNodeTarget": [
                 "#mobile-logo > img[alt=\"Logo - Recertificação\"][title=\"Logo - Recertificação\"]"
               ],
@@ -595,8 +691,8 @@
           {
             "kind": "http_error",
             "severity": "warn",
-            "url": "https://basedeconhecimento.stage.twygoead.com/e/2/edit",
-            "message": "HTTP 404 em GET https://basedeconhecimento.stage.twygoead.com/e/2/edit",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/contents/807017/edit",
+            "message": "HTTP 404 em GET https://recertificacao-testeqa.stage.twygoead.com/contents/807017/edit",
             "detail": {
               "status": 404,
               "method": "GET",
@@ -607,43 +703,43 @@
           {
             "kind": "console_error",
             "severity": "error",
-            "url": "https://basedeconhecimento.stage.twygoead.com/e/2/edit",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/contents/807017/edit",
             "message": "Failed to load resource: the server responded with a status of 404 ()",
             "inScope": false
           },
           {
             "kind": "a11y_violation",
             "severity": "error",
-            "url": "https://basedeconhecimento.stage.twygoead.com/e/2/edit",
-            "message": "[a11y/document-title] Documents must have <title> element to aid in navigation",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/contents/807017/edit",
+            "message": "[a11y/color-contrast] Elements must meet minimum color contrast ratio thresholds",
             "detail": {
-              "ruleId": "document-title",
+              "ruleId": "color-contrast",
               "impact": "serious",
               "tags": [
-                "cat.text-alternatives",
-                "wcag2a",
-                "wcag242",
+                "cat.color",
+                "wcag2aa",
+                "wcag143",
                 "TTv5",
-                "TT12.a",
+                "TT13.c",
                 "EN-301-549",
-                "EN-9.2.4.2",
+                "EN-9.1.4.3",
                 "ACT",
                 "RGAAv4",
-                "RGAA-8.5.1"
+                "RGAA-3.2.1"
               ],
-              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/document-title?application=playwright",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
               "affectedNodes": 1,
               "firstNodeTarget": [
-                "html"
+                "h1"
               ],
-              "firstNodeHtml": "<html>"
+              "firstNodeHtml": "<h1>The page you were looking for doesn't exist.</h1>"
             },
             "inScope": false
           },
           {
             "kind": "a11y_violation",
             "severity": "error",
-            "url": "https://basedeconhecimento.stage.twygoead.com/e/2/edit",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/contents/807017/edit",
             "message": "[a11y/html-has-lang] <html> element must have a lang attribute",
             "detail": {
               "ruleId": "html-has-lang",
@@ -671,40 +767,8 @@
           },
           {
             "kind": "a11y_violation",
-            "severity": "error",
-            "url": "https://basedeconhecimento.stage.twygoead.com/e/2/edit",
-            "message": "[a11y/image-alt] Images must have alternative text",
-            "detail": {
-              "ruleId": "image-alt",
-              "impact": "critical",
-              "tags": [
-                "cat.text-alternatives",
-                "wcag2a",
-                "wcag111",
-                "section508",
-                "section508.22.a",
-                "TTv5",
-                "TT7.a",
-                "TT7.b",
-                "EN-301-549",
-                "EN-9.1.1.1",
-                "ACT",
-                "RGAAv4",
-                "RGAA-1.1.1"
-              ],
-              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/image-alt?application=playwright",
-              "affectedNodes": 1,
-              "firstNodeTarget": [
-                "img"
-              ],
-              "firstNodeHtml": "<img src=\"https://cdn-stage.twygo.com/assets/logo-153ce4f87ac927fa04ec3c58a3845347371d4f6b1456ebac4700843faf12adad.png\">"
-            },
-            "inScope": false
-          },
-          {
-            "kind": "a11y_violation",
             "severity": "warn",
-            "url": "https://basedeconhecimento.stage.twygoead.com/e/2/edit",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/contents/807017/edit",
             "message": "[a11y/landmark-one-main] Document should have one main landmark",
             "detail": {
               "ruleId": "landmark-one-main",
@@ -725,28 +789,7 @@
           {
             "kind": "a11y_violation",
             "severity": "warn",
-            "url": "https://basedeconhecimento.stage.twygoead.com/e/2/edit",
-            "message": "[a11y/page-has-heading-one] Page should contain a level-one heading",
-            "detail": {
-              "ruleId": "page-has-heading-one",
-              "impact": "moderate",
-              "tags": [
-                "cat.semantics",
-                "best-practice"
-              ],
-              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/page-has-heading-one?application=playwright",
-              "affectedNodes": 1,
-              "firstNodeTarget": [
-                "html"
-              ],
-              "firstNodeHtml": "<html>"
-            },
-            "inScope": false
-          },
-          {
-            "kind": "a11y_violation",
-            "severity": "warn",
-            "url": "https://basedeconhecimento.stage.twygoead.com/e/2/edit",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/contents/807017/edit",
             "message": "[a11y/region] All page content should be contained by landmarks",
             "detail": {
               "ruleId": "region",
@@ -762,7 +805,7 @@
               "firstNodeTarget": [
                 "div"
               ],
-              "firstNodeHtml": "<div style=\"text-align: center; margin-top: 50px\">"
+              "firstNodeHtml": "<div class=\"dialog\">\n    <h1>The page you were looking for doesn't exist.</h1>\n    <p>You may have mistyped the address or the page may have moved.</p>\n  </div>"
             },
             "inScope": false
           },
@@ -941,28 +984,23 @@
             "inScope": false
           },
           {
-            "kind": "http_error",
+            "kind": "console_error",
             "severity": "error",
-            "url": "https://recertificacao-testeqa.stage.twygoead.com/e/806858/edit",
-            "message": "HTTP 500 em GET https://recertificacao-testeqa.stage.twygoead.com/e/806858/edit",
-            "detail": {
-              "status": 500,
-              "method": "GET",
-              "resourceType": "document"
-            },
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/e/807015/edit",
+            "message": "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector",
             "inScope": false
           },
           {
             "kind": "console_error",
             "severity": "error",
-            "url": "https://recertificacao-testeqa.stage.twygoead.com/e/806858/edit",
-            "message": "Failed to load resource: the server responded with a status of 500 ()",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/e/807015/edit",
+            "message": "This CKEditor 4.17.1 version is not secure. Consider upgrading to the latest one, 4.25.1-lts: https://ckeditor.com/ckeditor-4-support/",
             "inScope": false
           },
           {
             "kind": "a11y_violation",
             "severity": "error",
-            "url": "https://recertificacao-testeqa.stage.twygoead.com/e/806858/edit",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/e/807015/edit",
             "message": "[a11y/color-contrast] Elements must meet minimum color contrast ratio thresholds",
             "detail": {
               "ruleId": "color-contrast",
@@ -980,47 +1018,102 @@
                 "RGAA-3.2.1"
               ],
               "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
-              "affectedNodes": 1,
+              "affectedNodes": 12,
               "firstNodeTarget": [
-                "h1"
+                ".css-1ow1udt.chakra-text:nth-child(1)"
               ],
-              "firstNodeHtml": "<h1>We're sorry, but something went wrong.</h1>"
+              "firstNodeHtml": "<span class=\"chakra-text css-1ow1udt\">BETA</span>"
             },
             "inScope": false
           },
           {
             "kind": "a11y_violation",
             "severity": "error",
-            "url": "https://recertificacao-testeqa.stage.twygoead.com/e/806858/edit",
-            "message": "[a11y/html-has-lang] <html> element must have a lang attribute",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/e/807015/edit",
+            "message": "[a11y/image-alt] Images must have alternative text",
             "detail": {
-              "ruleId": "html-has-lang",
-              "impact": "serious",
+              "ruleId": "image-alt",
+              "impact": "critical",
               "tags": [
-                "cat.language",
+                "cat.text-alternatives",
                 "wcag2a",
-                "wcag311",
+                "wcag111",
+                "section508",
+                "section508.22.a",
                 "TTv5",
-                "TT11.a",
+                "TT7.a",
+                "TT7.b",
                 "EN-301-549",
-                "EN-9.3.1.1",
+                "EN-9.1.1.1",
                 "ACT",
                 "RGAAv4",
-                "RGAA-8.3.1"
+                "RGAA-1.1.1"
               ],
-              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/html-has-lang?application=playwright",
-              "affectedNodes": 1,
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/image-alt?application=playwright",
+              "affectedNodes": 2,
               "firstNodeTarget": [
-                "html"
+                ".user-image"
               ],
-              "firstNodeHtml": "<html>"
+              "firstNodeHtml": "<img class=\"user-image\" src=\"https://cdn-stage.twygo.com/images/nopic-man.jpg\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/e/807015/edit",
+            "message": "[a11y/label-title-only] Form elements should have a visible label",
+            "detail": {
+              "ruleId": "label-title-only",
+              "impact": "serious",
+              "tags": [
+                "cat.forms",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/label-title-only?application=playwright",
+              "affectedNodes": 2,
+              "firstNodeTarget": [
+                "#react-select-3-input"
+              ],
+              "firstNodeHtml": "<input class=\"creatable-select-fie...\" autocapitalize=\"none\" autocomplete=\"off\" autocorrect=\"off\" id=\"react-select-3-input\" spellcheck=\"false\" tabindex=\"0\" type=\"text\" aria-autocomplete=\"list\" aria-ex"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/e/807015/edit",
+            "message": "[a11y/label] Form elements must have labels",
+            "detail": {
+              "ruleId": "label",
+              "impact": "critical",
+              "tags": [
+                "cat.forms",
+                "wcag2a",
+                "wcag412",
+                "section508",
+                "section508.22.n",
+                "TTv5",
+                "TT5.c",
+                "EN-301-549",
+                "EN-9.4.1.2",
+                "ACT",
+                "RGAAv4",
+                "RGAA-11.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/label?application=playwright",
+              "affectedNodes": 3,
+              "firstNodeTarget": [
+                "#react-select-2-input"
+              ],
+              "firstNodeHtml": "<input class=\"creatable-select-fie...\" autocapitalize=\"none\" autocomplete=\"off\" autocorrect=\"off\" id=\"react-select-2-input\" spellcheck=\"false\" tabindex=\"0\" type=\"text\" aria-autocomplete=\"list\" aria-ex"
             },
             "inScope": false
           },
           {
             "kind": "a11y_violation",
             "severity": "warn",
-            "url": "https://recertificacao-testeqa.stage.twygoead.com/e/806858/edit",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/e/807015/edit",
             "message": "[a11y/landmark-one-main] Document should have one main landmark",
             "detail": {
               "ruleId": "landmark-one-main",
@@ -1030,18 +1123,113 @@
                 "best-practice"
               ],
               "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-one-main?application=playwright",
-              "affectedNodes": 1,
+              "affectedNodes": 2,
               "firstNodeTarget": [
                 "html"
               ],
-              "firstNodeHtml": "<html>"
+              "firstNodeHtml": "<html lang=\"en\" xml:lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\" class=\"wf-materialicons-n4-inactive wf-materialsymbolsoutlined-n4-inactive wf-inactive\" data-theme=\"light\" style=\"color-scheme: light"
             },
             "inScope": false
           },
           {
             "kind": "a11y_violation",
             "severity": "warn",
-            "url": "https://recertificacao-testeqa.stage.twygoead.com/e/806858/edit",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/e/807015/edit",
+            "message": "[a11y/landmark-unique] Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+            "detail": {
+              "ruleId": "landmark-unique",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
+              "affectedNodes": 6,
+              "firstNodeTarget": [
+                ".chakra-portal:nth-child(28) > div[aria-label=\"Notifications-top\"][role=\"region\"][aria-live=\"polite\"]"
+              ],
+              "firstNodeHtml": "<div role=\"region\" aria-live=\"polite\" aria-label=\"Notifications-top\" id=\"chakra-toast-manager...\" style=\"position: fixed; z-i...\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/e/807015/edit",
+            "message": "[a11y/list] <ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+            "detail": {
+              "ruleId": "list",
+              "impact": "serious",
+              "tags": [
+                "cat.structure",
+                "wcag2a",
+                "wcag131",
+                "EN-301-549",
+                "EN-9.1.3.1",
+                "RGAAv4",
+                "RGAA-9.3.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/list?application=playwright",
+              "affectedNodes": 2,
+              "firstNodeTarget": [
+                ".mobile-user-menu > .menu-main"
+              ],
+              "firstNodeHtml": "<ul class=\"menu-main\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/e/807015/edit",
+            "message": "[a11y/meta-viewport] Zooming and scaling must not be disabled",
+            "detail": {
+              "ruleId": "meta-viewport",
+              "impact": "moderate",
+              "tags": [
+                "cat.sensory-and-visual-cues",
+                "wcag2aa",
+                "wcag144",
+                "EN-301-549",
+                "EN-9.1.4.4",
+                "ACT",
+                "RGAAv4",
+                "RGAA-10.4.2"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/meta-viewport?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "meta[name=\"viewport\"]"
+              ],
+              "firstNodeHtml": "<meta content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui\" name=\"viewport\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/e/807015/edit",
+            "message": "[a11y/page-has-heading-one] Page should contain a level-one heading",
+            "detail": {
+              "ruleId": "page-has-heading-one",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/page-has-heading-one?application=playwright",
+              "affectedNodes": 2,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html lang=\"en\" xml:lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\" class=\"wf-materialicons-n4-inactive wf-materialsymbolsoutlined-n4-inactive wf-inactive\" data-theme=\"light\" style=\"color-scheme: light"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://recertificacao-testeqa.stage.twygoead.com/e/807015/edit",
             "message": "[a11y/region] All page content should be contained by landmarks",
             "detail": {
               "ruleId": "region",
@@ -1053,11 +1241,11 @@
                 "RGAA-9.2.1"
               ],
               "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=playwright",
-              "affectedNodes": 1,
+              "affectedNodes": 37,
               "firstNodeTarget": [
-                "div"
+                "#mobile-logo > img[alt=\"Logo - Recertificação\"][title=\"Logo - Recertificação\"]"
               ],
-              "firstNodeHtml": "<div class=\"dialog\">\n    <h1>We're sorry, but something went wrong.</h1>\n  </div>"
+              "firstNodeHtml": "<img title=\"Logo - Recertificação\" alt=\"Logo - Recertificação\" style=\"height: 50px; align: center\" src=\"https://cdn-stage.twygo.com/uploads/organizations_37048_medium_logo_1779798883.jpg?1779798883\">"
             },
             "inScope": false
           }
@@ -5914,8 +6102,8 @@
       "coverage": [
         {
           "url": "https://recertificacao-testeqa.stage.twygoead.com/play?menu_id=play",
-          "totalInteractive": 71,
-          "visibleInteractive": 17,
+          "totalInteractive": 62,
+          "visibleInteractive": 12,
           "samples": [
             {
               "role": "link",
@@ -5964,39 +6152,19 @@
             {
               "role": "link",
               "name": "communities-menu"
-            },
-            {
-              "role": "button",
-              "name": "play_arrowInscreva-se"
-            },
-            {
-              "role": "button",
-              "name": "Selecione um filtrokeyboard_arrow_down"
-            },
-            {
-              "role": "button",
-              "name": "Seus interesses"
-            },
-            {
-              "role": "input",
-              "name": "Busque por título ou categoria"
-            },
-            {
-              "role": "button",
-              "name": "next"
             }
           ]
         }
       ],
       "outOfScope": {
         "totals": {
-          "errors": 12,
-          "warnings": 5,
+          "errors": 4,
+          "warnings": 4,
           "info": 0
         },
         "byKind": {
-          "console_error": 9,
-          "a11y_violation": 8
+          "console_error": 1,
+          "a11y_violation": 7
         },
         "findings": [
           {
@@ -6004,62 +6172,6 @@
             "severity": "error",
             "url": "https://recertificacao-testeqa.stage.twygoead.com/play?menu_id=play",
             "message": "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector",
-            "inScope": false
-          },
-          {
-            "kind": "console_error",
-            "severity": "error",
-            "url": "https://recertificacao-testeqa.stage.twygoead.com/play?menu_id=play",
-            "message": "Error: <svg> attribute height: Expected length, \"lg\".",
-            "inScope": false
-          },
-          {
-            "kind": "console_error",
-            "severity": "error",
-            "url": "https://recertificacao-testeqa.stage.twygoead.com/play?menu_id=play",
-            "message": "Error: <svg> attribute width: Expected length, \"lg\".",
-            "inScope": false
-          },
-          {
-            "kind": "console_error",
-            "severity": "error",
-            "url": "https://recertificacao-testeqa.stage.twygoead.com/play?menu_id=play",
-            "message": "Error: <svg> attribute height: Expected length, \"lg\".",
-            "inScope": false
-          },
-          {
-            "kind": "console_error",
-            "severity": "error",
-            "url": "https://recertificacao-testeqa.stage.twygoead.com/play?menu_id=play",
-            "message": "Error: <svg> attribute width: Expected length, \"lg\".",
-            "inScope": false
-          },
-          {
-            "kind": "console_error",
-            "severity": "error",
-            "url": "https://recertificacao-testeqa.stage.twygoead.com/play?menu_id=play",
-            "message": "Error: <svg> attribute height: Expected length, \"lg\".",
-            "inScope": false
-          },
-          {
-            "kind": "console_error",
-            "severity": "error",
-            "url": "https://recertificacao-testeqa.stage.twygoead.com/play?menu_id=play",
-            "message": "Error: <svg> attribute width: Expected length, \"lg\".",
-            "inScope": false
-          },
-          {
-            "kind": "console_error",
-            "severity": "error",
-            "url": "https://recertificacao-testeqa.stage.twygoead.com/play?menu_id=play",
-            "message": "Error: <svg> attribute height: Expected length, \"lg\".",
-            "inScope": false
-          },
-          {
-            "kind": "console_error",
-            "severity": "error",
-            "url": "https://recertificacao-testeqa.stage.twygoead.com/play?menu_id=play",
-            "message": "Error: <svg> attribute width: Expected length, \"lg\".",
             "inScope": false
           },
           {
@@ -6083,7 +6195,7 @@
                 "RGAA-3.2.1"
               ],
               "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
-              "affectedNodes": 3,
+              "affectedNodes": 1,
               "firstNodeTarget": [
                 "#btn-profile"
               ],
@@ -6140,28 +6252,7 @@
               "firstNodeTarget": [
                 "html"
               ],
-              "firstNodeHtml": "<html lang=\"en\" xml:lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\" class=\"wf-materialicons-n4-inactive wf-materialsymbolsoutlined-n4-inactive wf-inactive\" data-theme=\"light\" style=\"color-scheme: light"
-            },
-            "inScope": false
-          },
-          {
-            "kind": "a11y_violation",
-            "severity": "warn",
-            "url": "https://recertificacao-testeqa.stage.twygoead.com/play?menu_id=play",
-            "message": "[a11y/landmark-unique] Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
-            "detail": {
-              "ruleId": "landmark-unique",
-              "impact": "moderate",
-              "tags": [
-                "cat.semantics",
-                "best-practice"
-              ],
-              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
-              "affectedNodes": 6,
-              "firstNodeTarget": [
-                ".chakra-portal:nth-child(28) > div[aria-label=\"Notifications-top\"][role=\"region\"][aria-live=\"polite\"]"
-              ],
-              "firstNodeHtml": "<div role=\"region\" aria-live=\"polite\" aria-label=\"Notifications-top\" id=\"chakra-toast-manager...\" style=\"position: fixed; z-i...\">"
+              "firstNodeHtml": "<html lang=\"en\" xml:lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\" class=\"wf-materialicons-n4-inactive wf-materialsymbolsoutlined-n4-inactive wf-inactive\">"
             },
             "inScope": false
           },
@@ -6235,7 +6326,7 @@
               "firstNodeTarget": [
                 "html"
               ],
-              "firstNodeHtml": "<html lang=\"en\" xml:lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\" class=\"wf-materialicons-n4-inactive wf-materialsymbolsoutlined-n4-inactive wf-inactive\" data-theme=\"light\" style=\"color-scheme: light"
+              "firstNodeHtml": "<html lang=\"en\" xml:lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\" class=\"wf-materialicons-n4-inactive wf-materialsymbolsoutlined-n4-inactive wf-inactive\">"
             },
             "inScope": false
           },
@@ -6254,7 +6345,7 @@
                 "RGAA-9.2.1"
               ],
               "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=playwright",
-              "affectedNodes": 10,
+              "affectedNodes": 7,
               "firstNodeTarget": [
                 "#mobile-logo > img[alt=\"Logo - Recertificação\"][title=\"Logo - Recertificação\"]"
               ],

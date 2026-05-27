@@ -52,12 +52,48 @@ export class ContentEditPage extends BasePage {
   }
 
   /**
-   * Default canônico de "abrir edição" usado pelos specs. Hoje aponta para
-   * a tela HAML — é onde a maior parte dos campos vive (Detalhes). TC5
-   * usa explicitamente os 2 helpers acima para validar paridade.
+   * Default canônico de "abrir edição" usado pelos specs. Aponta para
+   * a tela React (facelift) — única que renderiza o switch "Habilitar
+   * reinscrição" (na tab "Acesso", validado live 2026-05-26 após fix
+   * de feature flag no env). TC5 usa explicitamente os 2 helpers acima
+   * para validar paridade HAML/React.
    */
   async openEditById(eventId: number | string): Promise<void> {
-    await this.openEditHamlById(eventId);
+    await this.openEditReactById(eventId);
+  }
+
+  /**
+   * Atalho: abre edit (facelift) já navegando pra tab "Acesso" — usada
+   * pelos TCs que validam o switch "Habilitar reinscrição".
+   */
+  async openEditByIdInAcessoTab(eventId: number | string): Promise<void> {
+    await this.openEditReactById(eventId);
+    await this.goToAcessoTab();
+  }
+
+  /**
+   * Navega pra tab "Acesso" do form de edição facelift. No facelift,
+   * o checkbox "Habilitar reinscrição" vive nessa tab (validado live
+   * 2026-05-27 — seção "Inscrição" → "Permitir registro de inscrição por").
+   * No HAML legado não há tabs; helper é no-op.
+   *
+   * Aguarda o tabpanel ativar (URL atualiza pra `?tab=access` e role
+   * tabpanel "Acesso" fica selected).
+   */
+  async goToAcessoTab(): Promise<void> {
+    const acessoTab = this.page.getByRole('tab', { name: /^Acesso$/i }).first();
+    if (await acessoTab.isVisible({ timeout: 2_000 }).catch(() => false)) {
+      await acessoTab.click();
+      await this.page
+        .waitForURL(/tab=access/, { timeout: 5_000 })
+        .catch(() => undefined);
+      // Aguarda tabpanel renderizar (checkbox "Habilitar reinscrição" tem
+      // que estar no DOM antes do próximo step).
+      await this.page
+        .getByRole('tabpanel', { name: /^Acesso$/i })
+        .waitFor({ state: 'visible', timeout: 5_000 })
+        .catch(() => undefined);
+    }
   }
 
   /**
@@ -105,20 +141,37 @@ export class ContentEditPage extends BasePage {
    * Substituir por `data-test-id` estável quando dev adicionar (PR pendente).
    */
   private async clickEditarFromRow(row: Locator): Promise<void> {
-    // Caminho 1: link "Editar" direto (facelift).
+    // Caminho 1: link "Editar" direto na row (facelift antigo — pode
+    // não existir mais).
     const directLink = row.getByRole('link', { name: /Editar/i }).first();
-    if (await directLink.isVisible().catch(() => false)) {
+    if (await directLink.isVisible({ timeout: 2_000 }).catch(() => false)) {
       await directLink.click();
       await this.page.waitForURL(/\/(e\/\d+\/edit|contents\/\d+\/edit)/);
       return;
     }
-    // Caminho 2: kebab Options (HAML). Abre dropdown e clica "Editar".
+    // Caminho 2: more_vert (UI nova facelift, validada live 2026-05-26).
+    // O menu abre 11 opções; o item de edição agora se chama "Gerenciar"
+    // (não "Editar"). Skill provisionar-seed v1.3 documenta.
+    const moreVertTrigger = row
+      .getByRole('button', { name: 'more_vert' })
+      .first();
+    if (await moreVertTrigger.isVisible({ timeout: 2_000 }).catch(() => false)) {
+      await moreVertTrigger.click();
+      const gerenciarItem = this.page
+        .getByRole('menuitem', { name: /^Gerenciar$/i })
+        .or(this.page.getByRole('menuitem', { name: /^Editar$/i }))
+        .first();
+      await gerenciarItem.waitFor({ state: 'visible', timeout: 5_000 });
+      await gerenciarItem.click();
+      await this.page.waitForURL(/\/(e\/\d+\/edit|contents\/\d+\/edit)/);
+      return;
+    }
+    // Caminho 3: kebab Options legado HAML (`img[alt="Options"]`).
     const optionsTrigger = row
       .locator('img[alt="Options" i], [role="button"][aria-label*="Options" i], [role="button"][aria-label*="Opções" i]')
       .first();
     await optionsTrigger.waitFor({ state: 'visible', timeout: 5_000 });
     await optionsTrigger.click();
-    // Item "Editar" do dropdown — pode ser <a>, <li>, ou role=menuitem.
     const editarItem = this.page
       .getByRole('menuitem', { name: /^Editar$/i })
       .or(this.page.getByRole('link', { name: /^Editar$/i }))
@@ -190,30 +243,37 @@ export class ContentEditPage extends BasePage {
   }
 
   /**
-   * Estado atual do switch (lê `data-checked` do label — fonte de verdade
-   * para switches Chakra; ver skill `interagir-switch-chakra-twygo`).
+   * Estado atual do checkbox "Habilitar reinscrição". No facelift v1.3+,
+   * é um checkbox HTML padrão (não Chakra switch) — `isChecked()` direto.
+   * Navega proativamente pra tab "Acesso" no facelift antes de checar.
    */
   async isHabilitarReinscricaoOn(): Promise<boolean> {
-    const label = this.getHabilitarReinscricaoSwitchLabel();
-    if ((await label.count()) === 0) return false;
-    return (await label.getAttribute('data-checked')) !== null;
+    if (/\/contents\/\d+\/edit/.test(this.page.url())) {
+      await this.goToAcessoTab();
+    }
+    const checkbox = this.getHabilitarReinscricaoSwitch();
+    if ((await checkbox.count()) === 0) return false;
+    return checkbox.isChecked();
   }
 
   /**
-   * Idempotente: só clica se o estado atual diverge do desejado. Usa
-   * `force: true` + `scrollIntoViewIfNeeded` no `<label>` Chakra.
-   *
-   * Skill `interagir-switch-chakra-twygo` documenta o porquê (label
-   * intercepta pointer event do input oculto, scroll necessário em
-   * drawers altos).
+   * Idempotente: só toggla se o estado atual diverge do desejado.
+   * Validado live 2026-05-27 — "Habilitar reinscrição" é checkbox HTML
+   * padrão na tab "Acesso", seção "Permitir registro de inscrição por"
+   * (não Chakra switch como assumido em v1.0/v1.1 da skill).
    */
   async setHabilitarReinscricao(enabled: boolean): Promise<void> {
-    const label = this.getHabilitarReinscricaoSwitchLabel();
-    await label.waitFor({ state: 'visible' });
-    const isOn = (await label.getAttribute('data-checked')) !== null;
-    if (isOn !== enabled) {
-      await label.scrollIntoViewIfNeeded();
-      await label.click({ force: true });
+    // No facelift React, checkbox vive na tab "Acesso" — navega
+    // proativamente. Em HAML legado (`/e/{id}/edit`) helper é no-op.
+    if (/\/contents\/\d+\/edit/.test(this.page.url())) {
+      await this.goToAcessoTab();
+    }
+    const checkbox = this.getHabilitarReinscricaoSwitch();
+    await checkbox.waitFor({ state: 'visible', timeout: 10_000 });
+    if (enabled) {
+      await checkbox.check();
+    } else {
+      await checkbox.uncheck();
     }
   }
 

@@ -1,21 +1,21 @@
 # [spec-fragil] TC4 — Desativar o switch em curso com participants reinscritos é permitido sem aviso
 
 > _Categoria confiança: **media** — Timeout sem HTTP error — possível wait/seletor frágil. Confirmar via chrome-mcp_
-> _Gerado em 2026-05-26T18:52:32.581Z · commit 642f0a5_
+> _Gerado em 2026-05-27T04:45:00.546Z · commit eb1dfe7_
 
 ## Identificação
 - **Suite**: Configuração de Conteúdo (Switch "Habilitar reinscrição")
 - **TC**: TC4 — Desativar o switch em curso com participants reinscritos é permitido sem aviso
 - **Spec**: `projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc4-desativar-com-participants.spec.ts`
-- **Erro em**: `C:\Claude\Recertificação\twygo-agents-qa\agent-playwright\projects\recertificacao\pages\ContentEditPage.ts:212:17`
-- **Status**: failed (2ms)
+- **Erro em**: `C:\Claude\Recertificação\twygo-agents-qa\agent-playwright\src\pages\ProfileSwitcher.ts:52:40`
+- **Status**: failed (0ms)
 
 ## Ambiente
 - **Env**: staging-recertificacao (`https://recertificacao-testeqa.stage.twygoead.com/`)
 - **OrgId**: 37048
 - **Usuário**: agents.qa@claude.com
 - **Browser**: chromium
-- **Build/commit**: 642f0a5
+- **Build/commit**: eb1dfe7
 
 ## Reprodução
 - **Pré-condições**: storageState pré-logado em `outputs/.auth/storage.json`, perfil Administrador.
@@ -26,9 +26,9 @@
 - **Esperado**: [REVISAR — preencher com expectedresults do XML do step que falhou]
 - **Observado**:
   ```
-  TimeoutError: locator.waitFor: Timeout 30000ms exceeded.
+  TimeoutError: locator.innerText: Timeout 30000ms exceeded.
   Call log:
-    - waiting for locator('label.chakra-switch').filter({ has: getByRole('checkbox', { name: /Habilitar reinscrição/i }) }) to be visible
+    - waiting for locator('button.menu-target')
   
   ```
 
@@ -42,7 +42,6 @@
 ### Attachments
 - ![screenshot](../test-artifacts/projects-recertificacao-te-ad265-ritos-é-permitido-sem-aviso-chromium/test-failed-1.png)
 - [error-context](../test-artifacts/projects-recertificacao-te-ad265-ritos-é-permitido-sem-aviso-chromium/error-context.md)
-- ![screenshot](../test-artifacts/projects-recertificacao-te-ad265-ritos-é-permitido-sem-aviso-chromium/test-failed-2.png)
 - [error-context](../test-artifacts/projects-recertificacao-te-ad265-ritos-é-permitido-sem-aviso-chromium/error-context.md)
 - [trace](../test-artifacts/projects-recertificacao-te-ad265-ritos-é-permitido-sem-aviso-chromium/trace.zip)
 

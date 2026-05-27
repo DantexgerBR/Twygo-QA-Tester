@@ -1,56 +1,45 @@
-# [inconclusivo] TC5 — Paridade do switch entre formulário HAML e formulário React (facelift)
+# [spec-fragil] TC5 — Paridade do switch entre formulário HAML e formulário React (facelift)
 
-> _Categoria confiança: **baixa** — Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace_
-> _Gerado em 2026-05-26T18:52:32.581Z · commit 642f0a5_
+> _Categoria confiança: **media** — Timeout sem HTTP error — possível wait/seletor frágil. Confirmar via chrome-mcp_
+> _Gerado em 2026-05-27T04:45:00.546Z · commit eb1dfe7_
 
 ## Identificação
 - **Suite**: Configuração de Conteúdo (Switch "Habilitar reinscrição")
 - **TC**: TC5 — Paridade do switch entre formulário HAML e formulário React (facelift)
 - **Spec**: `projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc5-paridade-haml-react.spec.ts`
-- **Erro em**: `C:\Claude\Recertificação\twygo-agents-qa\agent-playwright\projects\recertificacao\tests\features\configuracao-de-conteudo-switch-habilitar-reinscricao\tc5-paridade-haml-react.spec.ts:61:67`
-- **Status**: failed (14003ms)
+- **Erro em**: `C:\Claude\Recertificação\twygo-agents-qa\agent-playwright\src\pages\ProfileSwitcher.ts:52:40`
+- **Status**: failed (0ms)
 
 ## Ambiente
 - **Env**: staging-recertificacao (`https://recertificacao-testeqa.stage.twygoead.com/`)
 - **OrgId**: 37048
 - **Usuário**: agents.qa@claude.com
 - **Browser**: chromium
-- **Build/commit**: 642f0a5
+- **Build/commit**: eb1dfe7
 
 ## Reprodução
 - **Pré-condições**: storageState pré-logado em `outputs/.auth/storage.json`, perfil Administrador.
 - **Passo-a-passo**:
-  1. 1. Editar o curso na tela HAML, ativar o switch e salvar → has_recertification = true — ❌ **falhou aqui**
 - **Taxa**: 1/1 nesta execução `[REVISAR taxa real — rodar 3+ vezes]`
 
 ## Comportamento
 - **Esperado**: [REVISAR — preencher com expectedresults do XML do step que falhou]
 - **Observado**:
   ```
-  Error: expect(locator).toBeVisible() failed
-  
-  Locator: getByRole('checkbox', { name: /Habilitar reinscrição/i })
-  Expected: visible
-  Timeout: 10000ms
-  Error: element(s) not found
-  
+  TimeoutError: locator.innerText: Timeout 30000ms exceeded.
   Call log:
+    - waiting for locator('button.menu-target')
+  
   ```
 
 ## Evidência técnica
 
 ### Network
-| Método | URL | Status | In-scope | Body |
-|---|---|---|---|---|
-| GET | `https://recertificacao-testeqa.stage.twygoead.com/e/806858/edit` | **500** | não | — |
+_Sem HTTP 4xx/5xx capturados pela fixture exploratória nesta execução._
 
 ### Attachments
-- ![screenshot](../test-artifacts/projects-recertificacao-te-254b9--formulário-React-facelift--chromium/test-finished-1.png)
-- ![screenshot](../test-artifacts/projects-recertificacao-te-254b9--formulário-React-facelift--chromium/test-failed-2.png)
-- [video](../test-artifacts/projects-recertificacao-te-254b9--formulário-React-facelift--chromium/video.webm)
-- [video](../test-artifacts/projects-recertificacao-te-254b9--formulário-React-facelift--chromium/video-1.webm)
+- ![screenshot](../test-artifacts/projects-recertificacao-te-254b9--formulário-React-facelift--chromium/test-failed-1.png)
 - [error-context](../test-artifacts/projects-recertificacao-te-254b9--formulário-React-facelift--chromium/error-context.md)
-- ![screenshot](../test-artifacts/projects-recertificacao-te-254b9--formulário-React-facelift--chromium/test-failed-3.png)
 - [error-context](../test-artifacts/projects-recertificacao-te-254b9--formulário-React-facelift--chromium/error-context.md)
 - [trace](../test-artifacts/projects-recertificacao-te-254b9--formulário-React-facelift--chromium/trace.zip)
 
@@ -64,7 +53,7 @@
 - **Workaround**: nenhum identificado `[REVISAR workaround]`
 
 ## Impacto
-- **Severity sugerida**: **media** `[REVISAR severity]`
+- **Severity sugerida**: **baixa** `[REVISAR severity]`
 - **Impacto qualitativo**: desconhecido `[REVISAR impacto]`
 
 ---

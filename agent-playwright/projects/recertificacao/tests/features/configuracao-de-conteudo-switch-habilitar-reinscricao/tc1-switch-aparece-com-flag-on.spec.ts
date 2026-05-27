@@ -76,19 +76,22 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
     );
 
     await allure.step(
-      '3. Clicar em "Editar" no menu de ações do curso → página de edição é exibida',
+      '3. Clicar em "Gerenciar" no menu de ações do curso → página de edição é exibida',
       async () => {
         // Localiza o curso CRIADO no beforeAll pelo nome único (worker-isolated).
-        // `openEditByName` cobre os 2 padrões de UI (kebab HAML / link direto facelift).
-        // REVISAR: seletor descoberto via heal — adicionar data-test-id estável no app via PR.
+        // `openEditByName` cobre os 3 padrões: link direto, more_vert → Gerenciar
+        // (UI nova facelift, skill provisionar-seed v1.3), kebab Options (HAML).
         await contentEdit.openEditByName(cursoName);
         await expect(page).toHaveURL(/\/(e\/\d+\/edit|contents\/\d+\/edit)/);
       },
     );
 
     await allure.step(
-      '4. Switch "Habilitar reinscrição" está visível no formulário',
+      '4. Switch "Habilitar reinscrição" está visível no formulário (tab "Acesso" do facelift)',
       async () => {
+        // No facelift React, o switch vive na tab "Acesso" (validado live
+        // 2026-05-26 após fix de feature flag no env). Navega antes do expect.
+        await contentEdit.goToAcessoTab();
         const switchCb = contentEdit.getHabilitarReinscricaoSwitch();
         await expect(switchCb).toBeVisible();
       },

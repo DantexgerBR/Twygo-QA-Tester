@@ -66,9 +66,11 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
     );
 
     await allure.step(
-      '2. Acessar o MESMO curso pela tela React → switch carrega ligado',
+      '2. Acessar o MESMO curso pela tela React → switch carrega ligado (tab "Acesso")',
       async () => {
         await contentEdit.openEditReactById(cursoId);
+        // Switch vive na tab "Acesso" do facelift (não na "Identificação").
+        await contentEdit.goToAcessoTab();
         await expect(contentEdit.getHabilitarReinscricaoSwitch()).toBeVisible();
         expect(await contentEdit.isHabilitarReinscricaoOn()).toBe(true);
       },
