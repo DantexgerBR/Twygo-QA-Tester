@@ -1,0 +1,1691 @@
+{
+  "info": {
+    "_postman_id": "e5a86ffd-2c2a-496d-a1ae-c13055479751",
+    "name": "Twygo 2.0",
+    "description": "## Preparação\n\nTodas as requisições enviadas a API do Twygo devem ser autenticadas através de um _access_token_ do tipo Bearer, que pode ser obtido através da nossa interface no link [https://twygoead.com/o/:org_id/integrations](https://twygoead.com/o/:org_id/integrations). A lacuna **:org_id** deverá ser preenchida com o ID da sua organização.\n\nA API se encontra no mesmo servidor de aplicação do Twygo, podendo ser acessada através da url.\n\n```\nhttps://www.api.twygo.com/api/v2\n\n ```\n\nO acesso as informações será validado através do _token_, afim de confirmar se o _token_ permite acesso a organização em questão.\n\n## Ações\n\n| Descrição | Método | Caminho |\n| --- | --- | --- |\n| [Listar questionários](#ed5f64df-143b-4005-b589-194234d589da) | GET | /questionnaires |\n| [Listar tentativas do questionário](#08393926-f2f7-4727-b047-6457e4c3b279) | GET | /questionnaires_attempts |\n| [Listar resposta da tentativas do questionário](#529ebba2-5dbd-4765-aeae-4372790f59aa) | GET | /answers |\n| [Listar inscrições](#e8d17a30-7487-4910-97ff-cbcfd4f6e3b3) | GET | /attendees |\n| [Listar conteúdos](#35893ccd-df06-4ab0-bc8c-38392259e5a1) | GET | /contents |\n| [Listar atividades do usuário](#a1798fb7-f9e4-417e-9118-874dcb29b516) | GET | /activities_attendees |\n| [Listar usuários](#c08d48d6-8068-4e37-8238-5cf467ee072d) | GET | /users |",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "44786282",
+    "_collection_link": "https://go.postman.co/collection/44786282-e5a86ffd-2c2a-496d-a1ae-c13055479751?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Questionários",
+      "item": [
+        {
+          "name": "Listar questionários",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token da API}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.twygo.com/api/v2/questionnaires?page={pagina}&per_page={itens_por_pagina}&name={nome_do_questionario}&created_at={data_de_criação_do_questionario}&questionnaire_id={id_do_questionário}",
+              "protocol": "https",
+              "host": [
+                "api",
+                "twygo",
+                "com"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "questionnaires"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "{pagina}",
+                  "description": "Utilizado para mudar de página"
+                },
+                {
+                  "key": "per_page",
+                  "value": "{itens_por_pagina}",
+                  "description": "Utilizado para definir quantos usuários aparecem por página limitado a 1000 por vez"
+                },
+                {
+                  "key": "name",
+                  "value": "{nome_do_questionario}",
+                  "description": "Filtrar questionários por nome (opcional)"
+                },
+                {
+                  "key": "created_at",
+                  "value": "{data_de_criação_do_questionario}",
+                  "description": "Filtrar questionários por data de criação (opcional)"
+                },
+                {
+                  "key": "questionnaire_id",
+                  "value": "{id_do_questionário}",
+                  "description": "Filtrar por ID específico do questionário (opcional)"
+                }
+              ]
+            },
+            "description": "Retorna uma lista paginada de questionários com suas respectivas perguntas e opções.\n\n## Campos da resposta\n\n### Objeto _questionnaire_\n\n| Campo | Tipo | Descrição |\n| --- | --- | --- |\n| questionnaire_id | int | Identificador único do questionário |\n| name | text | Nome do questionário |\n| type | text | Tipo do questionário, pesquisa ou prova |\n| created_at | datetime | Data e hora de criação |\n| updated_at | datetime | Data e hora da última atualização |\n| categories1 | array | Array da primeira classificação de categorias |\n| categories2 | array | Array da segunda classificação de categorias |\n\n### Objeto _question_\n\n| Campo | Tipo | Descrição |\n| --- | --- | --- |\n| question_id | int | Identificador único da pergunta |\n| sequence | int | Ordem de sequência da pergunta |\n| title | text | Título da pergunta |\n| description | text | Descrição detalhada da pergunta |\n| explanation | text | Explicação ou informação adicional |\n| type | text | Tipo da pergunta (ex: 'single', 'multiple') |\n| is_required | boolean | Se a resposta é obrigatória |\n| situation | text | Status da pergunta ('disabled' ou 'active') |\n\n### Objeto _option_\n\n| Campo | Tipo | Descrição |\n| --- | --- | --- |\n| option_id | int | Identificador único da opção |\n| description | text | Texto/descrição da opção |\n| is_correct | boolean | Se esta opção é a correta |"
+          },
+          "response": [
+            {
+              "name": "Listar questionários",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "https://api.twygo.com/api/v2/questionnaires?page=1&per_page=1",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "twygo",
+                    "com"
+                  ],
+                  "path": [
+                    "api",
+                    "v2",
+                    "questionnaires"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Tue, 14 Nov 2023 02:05:18 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "1; mode=block"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "strict-origin-when-cross-origin"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"c3f78cdf62757ccce7efa07660f4027f\""
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "max-age=0, private, must-revalidate"
+                },
+                {
+                  "key": "X-Request-Id",
+                  "value": "5e756c8d70809ce8c2f8f00d98546119"
+                },
+                {
+                  "key": "X-Runtime",
+                  "value": "0.203033"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=15724800; includeSubDomains"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": {\n        \"pagination\": {\n            \"next_page\": \"?page=2&per_page=1\"\n        },\n        \"questionnaires\": [\n            {\n                \"questionnaire_id\": 71,\n                \"name\": \"Pesquisa de Satisfação \",\n                \"type\": \"research\",\n                \"created_at\": \"2016-02-04T12:29:19.000Z\",\n                \"updated_at\": \"2020-05-12T13:22:48.000Z\",\n                \"categories1\": [],\n                \"categories2\": [],\n                \"questions\": [\n                    {\n                        \"question_id\": 1669,\n                        \"sequence\": 1,\n                        \"title\": \"Como você avalia o nosso curso ?\",\n                        \"description\": \"<p>De 1&nbsp;a 5&nbsp;onde 1&nbsp;&eacute; muito ruim e 5&nbsp;&eacute; muito bom de sua nota:</p>\\n\",\n                        \"explanation\": \"\",\n                        \"type\": \"scale\",\n                        \"is_required\": false,\n                        \"situation\": \"active\",\n                        \"options\": []\n                    },\n                    {\n                        \"question_id\": 1670,\n                        \"sequence\": 2,\n                        \"title\": \"Nos ajude a melhorar.\",\n                        \"description\": \"<p>Sugest&otilde;es de mudan&ccedil;as e melhorias:</p>\\n\",\n                        \"explanation\": \"\",\n                        \"type\": \"text\",\n                        \"is_required\": false,\n                        \"situation\": \"active\",\n                        \"options\": []\n                    },\n                    {\n                        \"question_id\": 11288,\n                        \"sequence\": 3,\n                        \"title\": \"Avalie novamente\",\n                        \"description\": \"<p>Teste</p>\\n\",\n                        \"explanation\": \"\",\n                        \"type\": \"single\",\n                        \"is_required\": false,\n                        \"situation\": \"active\",\n                        \"options\": [\n                            {\n                                \"option_id\": 67527,\n                                \"description\": \"<p>1</p>\\n\",\n                                \"is_correct\": false\n                            },\n                            {\n                                \"option_id\": 67528,\n                                \"description\": \"<p>2</p>\\n\",\n                                \"is_correct\": false\n                            },\n                            {\n                                \"option_id\": 67529,\n                                \"description\": \"<p>3</p>\\n\",\n                                \"is_correct\": false\n                            }\n                        ]\n                    },\n                    {\n                        \"question_id\": 35746,\n                        \"sequence\": 4,\n                        \"title\": \"teste\",\n                        \"description\": \"\",\n                        \"explanation\": \"\",\n                        \"type\": \"single\",\n                        \"is_required\": false,\n                        \"situation\": \"active\",\n                        \"options\": []\n                    },\n                    {\n                        \"question_id\": 90318,\n                        \"sequence\": 5,\n                        \"title\": \"\",\n                        \"description\": \"<p>dasdasdas</p>\\n\",\n                        \"explanation\": \"\",\n                        \"type\": \"single\",\n                        \"is_required\": false,\n                        \"situation\": \"active\",\n                        \"options\": [\n                            {\n                                \"option_id\": 462027,\n                                \"description\": \"<p>das</p>\\n\",\n                                \"is_correct\": false\n                            },\n                            {\n                                \"option_id\": 462028,\n                                \"description\": \"<p>das</p>\\n\",\n                                \"is_correct\": false\n                            }\n                        ]\n                    },\n                    {\n                        \"question_id\": 155653,\n                        \"sequence\": 6,\n                        \"title\": \"\",\n                        \"description\": \"<p>kjjkjnkkkjkkjjk</p>\\n\",\n                        \"explanation\": \"\",\n                        \"type\": \"multiple\",\n                        \"is_required\": true,\n                        \"situation\": \"active\",\n                        \"options\": [\n                            {\n                                \"option_id\": 715843,\n                                \"description\": \"<p>dasadsd</p>\\n\",\n                                \"is_correct\": false\n                            },\n                            {\n                                \"option_id\": 715844,\n                                \"description\": \"<p>asdadd</p>\\n\",\n                                \"is_correct\": false\n                            },\n                            {\n                                \"option_id\": 715845,\n                                \"description\": \"<p>adsadsdas</p>\\n\",\n                                \"is_correct\": false\n                            }\n                        ]\n                    },\n                    {\n                        \"question_id\": 178996,\n                        \"sequence\": 7,\n                        \"title\": \"teste\",\n                        \"description\": \"<p>dadsa</p>\\n\",\n                        \"explanation\": \"\",\n                        \"type\": \"single\",\n                        \"is_required\": false,\n                        \"situation\": \"active\",\n                        \"options\": [\n                            {\n                                \"option_id\": 791773,\n                                \"description\": \"<p>dsadsa</p>\\n\",\n                                \"is_correct\": false\n                            },\n                            {\n                                \"option_id\": 791774,\n                                \"description\": \"<p>dsadsa</p>\\n\",\n                                \"is_correct\": false\n                            }\n                        ]\n                    }\n                ]\n            }\n        ]\n    },\n    \"message\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "Listar tentativas do questionario",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token da API}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.twygo.com/api/v2/questionnaires_attempts?page={pagina}&per_page={itens_por_pagina}&questionnaire_attempt_id={id_tentativa_do_questionario}&questionnaire_id={id_questionario}&activity_id={id_atividade}&user_id={id_usuario}&attendee_id={id_inscrição}&completion_date={data_da_tentativa}",
+              "protocol": "https",
+              "host": [
+                "api",
+                "twygo",
+                "com"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "questionnaires_attempts"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "{pagina}",
+                  "description": "Utilizado para mudar de página"
+                },
+                {
+                  "key": "per_page",
+                  "value": "{itens_por_pagina}",
+                  "description": "Utilizado para definir quantos usuários aparecem por página limitado a 1000 por vez"
+                },
+                {
+                  "key": "questionnaire_attempt_id",
+                  "value": "{id_tentativa_do_questionario}",
+                  "description": "Filtrar por ID específico da tentativa (opcional)"
+                },
+                {
+                  "key": "questionnaire_id",
+                  "value": "{id_questionario}",
+                  "description": "Filtrar por ID do questionário (opcional)"
+                },
+                {
+                  "key": "activity_id",
+                  "value": "{id_atividade}",
+                  "description": "Filtrar por ID da atividade (opcional)"
+                },
+                {
+                  "key": "user_id",
+                  "value": "{id_usuario}",
+                  "description": "Filtrar por ID do usuário (opcional)"
+                },
+                {
+                  "key": "attendee_id",
+                  "value": "{id_inscrição}",
+                  "description": "Filtrar por ID do participante (opcional)"
+                },
+                {
+                  "key": "completion_date",
+                  "value": "{data_da_tentativa}",
+                  "description": "Filtrar por data de conclusão (opcional)"
+                }
+              ]
+            },
+            "description": "Retorna uma lista paginada de tentativas de questionários dos participantes.\n\n## Campos da resposta\n\n### Objeto _questionary_attempt_\n\n| Campo | Tipo | Descrição |\n| --- | --- | --- |\n| questionnary_attempt_id | int | ID da tentativa |\n| userId | int | ID do usuário |\n| activity_id | int | ID da atividade |\n| activity_attendee_id | int | ID da execução da atividade |\n| questionnaire_id | int | ID do questionário |\n| origin_organization_name | text | Nome da organização |\n| origin_corporate_name | text | Nome corporativo da organização |\n| origin_organization_id | int | ID da organização |\n| completion_date | datatime | Data da finalização da tentativa |\n| correct_answers | int | Número de respostas corretas |\n| correct_answers | int | Número de respostas corretas |\n| total_answers | int | Número de respostas realizadas |\n| required_percent_for_approval | int | Percentual mínimo par aprovação |\n| situation | text | Situação da tentativa |"
+          },
+          "response": [
+            {
+              "name": "Listar tentativas do questionario",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "https://api.twygo.com/api/v2/questionnaires_attempts?page=1&per_page=1",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "twygo",
+                    "com"
+                  ],
+                  "path": [
+                    "api",
+                    "v2",
+                    "questionnaires_attempts"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Tue, 14 Nov 2023 02:13:41 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "1; mode=block"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "strict-origin-when-cross-origin"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"df8cfef52dc2d43aad6a810f71fb180e\""
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "max-age=0, private, must-revalidate"
+                },
+                {
+                  "key": "X-Request-Id",
+                  "value": "667a80d85f27b195aeb6cbdd98c330c9"
+                },
+                {
+                  "key": "X-Runtime",
+                  "value": "0.293056"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=15724800; includeSubDomains"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": {\n        \"pagination\": {\n            \"next_page\": \"?page=2&per_page=1\"\n        },\n        \"questionary_attempts\": [\n            {\n                \"questionnary_attempt_id\": 1298,\n                \"user_id\": 5,\n                \"activity_id\": 4642,\n                \"activity_attendee_id\": 17370,\n                \"questionnaire_id\": 71,\n                \"origin_organization_name\": \"Organization 01\",\n\t\t\t\t\"origin_corporate_name\": \"Organization Coporative\",\n\t\t\t\t\"origin_organization_id\": 37179,\n                \"completion_date\": \"2016-02-10T12:30:10.000Z\",\n                \"correct_answers\": 0,\n                \"total_answers\": 2,\n                \"required_percent_for_approval\": null,\n                \"situation\": \"approved\"\n            }\n        ]\n    },\n    \"message\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "Listar respostas das tentativas do questionário",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token da API}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://api.twygo.com/api/v2/answers?page={pagina}&per_page={itens_por_pagina}&questionnaire_id={id_questionario}&questionnaire_attempt_id={id_tentativa_do_questionario}",
+              "protocol": "http",
+              "host": [
+                "api",
+                "twygo",
+                "com"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "answers"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "{pagina}",
+                  "description": "Utilizado para mudar de página"
+                },
+                {
+                  "key": "per_page",
+                  "value": "{itens_por_pagina}",
+                  "description": "Utilizado para definir quantos usuários aparecem por página limitado a 1000 por vez"
+                },
+                {
+                  "key": "questionnaire_id",
+                  "value": "{id_questionario}",
+                  "description": "Filtrar por ID do questionário (opcional)"
+                },
+                {
+                  "key": "questionnaire_attempt_id",
+                  "value": "{id_tentativa_do_questionario}",
+                  "description": "Filtrar por ID da tentativa do questionário (opcional)"
+                }
+              ]
+            },
+            "description": "Retorna uma lista paginada de respostas das tentativas de questionários.\n\n## Observações\n\n- Para questões do tipo texto, o campo `options_id` não será retornado\n    \n- O campo `situation` retornará 'correct' automaticamente para questionários do tipo pesquisa ('research')\n    \n- O campo `answer_text` retornará o texto da descrição da resposta quando disponível, caso contrário retornará o valor da resposta\n    \n\n## Campos da resposta\n\n### Objeto answer\n\n| Campo | Tipo | Descrição |\n| --- | --- | --- |\n| answer_id | int | Identificador único da resposta |\n| questionnaire_id | int | ID do questionário |\n| questionnaires_attempt_id | int | ID da tentativa do questionário |\n| question_id | int | ID da questão |\n| origin_organization_name | text | Nome da organização |\n| origin_corporate_name | text | Nome corporativo da organização |\n| origin_organization_id | int | ID da organização |\n| options_id | int | ID da opção selecionada (apenas para questões de múltipla escolha) |\n| answer_text | string | Texto da resposta ou valor selecionado |\n| situation | string | Situação da resposta ('is_waiting_review', 'correct' ou 'incorrect') |\n| answer_review | string | Comentário da revisão da resposta |\n| answer_date | datetime | Data e hora da resposta |\n\n## Situações possíveis\n\n| Situação | Descrição |\n| --- | --- |\n| is_waiting_review | Resposta aguardando revisão |\n| correct | Resposta correta ou questionário de pesquisa |\n| incorrect | Resposta incorreta |"
+          },
+          "response": [
+            {
+              "name": "Listar respostas das tentativas",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://api.twygo.com/api/v2/answers?page=1&per_page=1",
+                  "protocol": "http",
+                  "host": [
+                    "api",
+                    "twygo",
+                    "com"
+                  ],
+                  "path": [
+                    "api",
+                    "v2",
+                    "answers"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "description": "",
+                  "type": "text"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": {\n        \"pagination\": {\n            \"next_page\": \"?page=2&per_page=1\"\n        },\n        \"answers\": [\n            {\n                \"answer_id\": 47966,\n                \"questionnaire_id\": 74,\n                \"questionnaires_attempt_id\": 1289,\n                \"question_id\": 1682,\n                \"origin_organization_name\": \"Organization 01\",\n\t\t\t\t\"origin_corporate_name\": \"Organization Coporative\",\n\t\t\t\t\"origin_organization_id\": 37179,\n                \"answer_text\": null,\n                \"situation\": \"incorrect\",\n                \"answer_review\": null,\n                \"answer_date\": \"2016-02-05T17:08:26.000Z\"\n            }\n        ]\n    },\n    \"message\": null\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Inscrições",
+      "item": [
+        {
+          "name": "Listar inscrições",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token da API}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.twygo.com/api/v2/attendees?page={pagina}&per_page={itens_por_pagina}&attendee_id={id_inscrição}&user_id={id_usuário}&content_id={id_conteudo}&content_type={tipo_conteudo}",
+              "protocol": "https",
+              "host": [
+                "api",
+                "twygo",
+                "com"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "attendees"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "{pagina}"
+                },
+                {
+                  "key": "per_page",
+                  "value": "{itens_por_pagina}"
+                },
+                {
+                  "key": "attendee_id",
+                  "value": "{id_inscrição}",
+                  "description": "Filtrar por ID do participante (opcional)"
+                },
+                {
+                  "key": "user_id",
+                  "value": "{id_usuário}",
+                  "description": "Filtrar por ID do usuário (opcional)"
+                },
+                {
+                  "key": "content_id",
+                  "value": "{id_conteudo}",
+                  "description": "Filtrar por ID do conteúdo (opcional)"
+                },
+                {
+                  "key": "content_type",
+                  "value": "{tipo_conteudo}",
+                  "description": "Filtrar por tipo do conteúdo (opcional)\n\nTipos de conteúdo para filtrar:\nTrilha = learning_path\nCurso = course"
+                }
+              ]
+            },
+            "description": "Retorna uma lista paginada de participantes de conteúdos com suas informações detalhadas.\n\n## Campos da resposta\n\n### Objeto _attendee_\n\n| Campo | Tipo | Descrição |\n| --- | --- | --- |\n| attendee_id | int | Identificador único do participante |\n| user_id | int | ID do usuário |\n| content_id | int | ID do conteúdo |\n| origin_organization_name | text | Nome da organização |\n| origin_corporate_name | text | Nome corporativo da organização |\n| origin_organization_id | int | ID da organização |\n| status | string | Status do participante no conteúdo |\n| progress | decimal | Percentual de progresso no conteúdo |\n| approved_at | datetime | Data e hora da aprovação |\n| completed_at | datetime | Data e hora da conclusão |\n| score | decimal | Pontuação total ponderada |\n| questionary_average | decimal | Média dos questionários |\n| attendance_score | decimal | Pontuação de presença |\n| created_at | datetime | Data e hora de criação do registro |\n| url | string | Magic link |\n\n### Objeto _certificate_\n\n| Campo | Tipo | Descrição |\n| --- | --- | --- |\n| certificate_id | int | ID do certificado |\n| certificate_situation | string | Situação do certificado ('valid' ou 'expired') |\n| certificate_issuing_date | datetime | Data de emissão do certificado |\n| certificate_expiration_date | datetime | Data de expiração do certificado |\n| certificate_link | string | URL para acessar o certificado |\n\n## Status possíveis do participante\n\n- PENDING: Pendente\n    \n- CONFIRMED: Confirmado\n    \n- REJECTED: Rejeitado\n    \n- REVERSED: Revertido\n    \n- PAYMENT_OVERDUE: Pagamento Atrasado\n    \n- REFUND_FAILED: Reembolso Falhou\n    \n- REFUND_SOLICITATION: Solicitação de Reembolso\n    \n- REFUND_SENT: Reembolso Enviado"
+          },
+          "response": [
+            {
+              "name": "Listar inscrições",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "https://api.twygo.com/api/v2/attendees?page=1&per_page=1",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "twygo",
+                    "com"
+                  ],
+                  "path": [
+                    "api",
+                    "v2",
+                    "attendees"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "Text",
+              "header": null,
+              "cookie": [],
+              "body": "{\n    \"data\": {\n        \"pagination\": {\n            \"next_page\": \"?page=2&per_page=1\"\n        },\n        \"attendees\": [\n            {\n                \"attendee_id\": 12412,\n                \"user_id\": 6658,\n                \"content_id\": 4328,\n                \"origin_organization_name\": \"Organization 01\",\n\t\t\t\t\"origin_corporate_name\": \"Organization Coporative\",\n\t\t\t\t\"origin_organization_id\": 37179,\n                \"status\": \"confirmed\",\n                \"progress\": null,\n                \"approved_at\": null,\n                \"completed_at\": null,\n                \"score\": 0.0,\n                \"questionary_average\": null,\n                \"attendance_score\": null,\n                \"created_at\": \"2015-10-29T19:28:03.000Z\",\n                \"certificates\": []\n            }\n        ]\n    }\n }"
+            }
+          ]
+        },
+        {
+          "name": "Inscrição em conteúdos",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token da API}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.twygo.com/api/v2/attendees",
+              "protocol": "https",
+              "host": [
+                "api",
+                "twygo",
+                "com"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "attendees"
+              ]
+            },
+            "description": "Importa até 25 participantes em 10 conteúdos.\n\n## Parâmetros\n\n### participants\n\n| Campo | Tipo | Descrição |\n| --- | --- | --- |\n| email | string | Email do participante |\n| first_name | string | Nome do participante |\n| last_name | string | Sobrenome do participante |\n| cpf | string | CPF do participante |\n| rg | string | RG do participante |\n| phone1 | string | Telefone 1 do participante |\n| phone2 | string | Telefone 2 do participante |\n| cell_phone | string | Celular do participante |\n| expires_at | string | Data de expiração do participante |\n| zip_code | string | CEP do participante |\n| address | string | Endereço do participante |\n| address_number | string | Número do endereço do participante |\n| address2 | string | Complemento do endereço do participante |\n| district | string | Bairro do participante |\n| city | string | Cidade do participante |\n| state | string | Estado do participante |\n| country | string | País do participante |\n| enterprise | string | Empresa do participante |\n| comment | string | Comentário do participante |\n| status | string | Status do participante |\n| external_id | string | ID externo do participante |\n| department | string | Área do participante |\n|  |  |  |\n\n### content_ids\n\nID's dos conteúdos que o participante será importado.\n\n### Status possíveis do participante\n\n- PENDING: Pendente\n    \n- CONFIRMED: Confirmado\n    \n- REJECTED: Rejeitado"
+          },
+          "response": [
+            {
+              "name": "Inscrição em conteúdos",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"participants\": [\n      {\n        \"email\": \"teste@twygo.com.br\",\n        \"first_name\": \"Sophia\",\n        \"last_name\": \"Teste\",\n        \"cpf\": \"12345678901\",\n        \"rg\": \"259585038\",\n        \"phone1\": \"1234567890\",\n        \"phone2\": \"1234567890\",\n        \"cell_phone\": \"1234567890\",\n        \"expires_at\": \"27-04-2027\",\n        \"zip_code\": \"88161334\",\n        \"address\": \"Rua 1\",\n        \"address_number\": \"123\",\n        \"external_id\": \"12\",\n        \"address2\": \"Complemento\",\n        \"district\": \"Bairro\",\n        \"city\": \"Joinville\",\n        \"state\": \"SC\",\n        \"country\": \"Brasil\",\n        \"enterprise\": \"Twygo\",\n        \"department\": \"TI\",\n        \"business_line\": \"Testes Automatizados\",\n        \"role\": \"Testador\",\n        \"number_of_employees\": \"de 50 à 100\",\n        \"comment\": \"aluno novo\",\n        \"status\": \"1\"\n      }\n    ],\n    \"content_ids\": [1]\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://api.twygo.com/api/v2/attendees",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "twygo",
+                    "com"
+                  ],
+                  "path": [
+                    "api",
+                    "v2",
+                    "attendees"
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "Text",
+              "header": null,
+              "cookie": [],
+              "body": "{\n    \"participants\": {\n        \"contents\": {\n            \"1\": {\n                \"error\": [],\n                \"success\": [\n                    {\n                        \"email\": \"teste@twygo.com.br\",\n                        \"cpf\": \"12345678901\",\n                        \"content_id\": 1\n                    }\n                ]\n            }\n        }\n    },\n    \"errors\": []\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Conteúdos",
+      "item": [
+        {
+          "name": "Listar conteúdos",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token da API}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.twygo.com/api/v2/contents?page={pagina}&per_page={itens_por_pagina}&content_id={id_conteudo}&name={nome_conteudo}&content_type={tipo_do_conteúdo}",
+              "protocol": "https",
+              "host": [
+                "api",
+                "twygo",
+                "com"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "contents"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "{pagina}",
+                  "description": "Utilizado para mudar de página"
+                },
+                {
+                  "key": "per_page",
+                  "value": "{itens_por_pagina}",
+                  "description": "Utilizado para definir quantos usuários aparecem por página limitado a 1000 por vez "
+                },
+                {
+                  "key": "content_id",
+                  "value": "{id_conteudo}",
+                  "description": "Filtra por ID específico do conteúdo (opcional)"
+                },
+                {
+                  "key": "name",
+                  "value": "{nome_conteudo}",
+                  "description": "Filtra por nome do conteúdo (opcional)"
+                },
+                {
+                  "key": "content_type",
+                  "value": "{tipo_do_conteúdo}",
+                  "description": "Filtrar por tipo do conteúdo (opcional)\nTipos de conteúdo para filtrar:\nTrilha = learning_path\nCurso = course",
+                  "type": "text"
+                }
+              ]
+            },
+            "description": "Retorna uma lista paginada de conteúdos (eventos) com suas respectivas informações detalhadas.\n\n### Observações\n\n- O campo link é construído utilizando o domínio da organização atual\n    \n- Todos os textos de labels (situation, synchronism, etc.) são internacionalizados\n    \n\n## Campos da resposta\n\n### Objeto _contents_\n\n| Campo | Tipo | Descrição |\n| --- | --- | --- |\n| content_id | int | Identificador único do conteúdo |\n| content_type | string | Tipo do conteúdo (curso, trilha, etc) |\n| name | string | Nome do conteúdo |\n| date_time_start | datetime | Data e hora de início |\n| date_time_end | datetime | Data e hora de término |\n| publication_date | datetime | Data de publicação |\n| description | string | Descrição do conteúdo |\n| course_type | string | Tipo do curso |\n| synchronism | string | Tipo de sincronismo |\n| modality | string | Modalidade do conteúdo |\n| hours | decimal | Carga horária |\n| channel | string | Canal de distribuição |\n| class_number | string | Número da turma |\n| days_to_expire | inteiro | Dias para expiração |\n| venue | string | Local do evento |\n| situation | string | Situação do conteúdo |\n| trial_days | int | Dias de teste |\n| access_level | string | Nível de acesso |\n| value | decimal | Valor do conteúdo |\n| installments | int | Número de parcelas |\n| link | string | Link de acesso |\n\n### Objeto _category_\n\n| Campo | Tipo | Descrição |\n| --- | --- | --- |\n| category_id | int | ID da categoria |\n| name | string | Nome da categoria |\n\n### Objeto _team_\n\n| Campo | Tipo | Descrição |\n| --- | --- | --- |\n| id | int | ID do membro |\n| name | string | Nome do membro |\n| email | string | Email do membro |\n| role | string | Tipo (speake/manager) |\n\n### Objeto activity\n\n| Campo | Tipo | Descrição |\n| --- | --- | --- |\n| activity_id | int | ID da atividade |\n| status | string | Status da atividade |\n| sequence | int | Sequência da atividade |\n| activity_type | string | Tipo da atividade |\n| title | string | Título da atividade |\n| briefing | string | Descrição breve |\n| external_provider | string | Provedor externo |\n| minimum_permanence_time | int | Tempo mínimo de permanência |\n| wheight | decimal | Peso da atividade |\n| questionary_id | int | ID do questionário |\n| minimum_score | decimal | Nota mínima |\n| final_score_ratio | decimal | Proporção da nota final |\n| attempts | int | Número de tentativas permitidas |\n| question_draw | string | Método de sorteio de questões |\n| question_list_method | string | Método de listagem de questões |\n| situation | string | Situação da atividade da trilha |\n| approval_required | boolean | Obrigatório para aprovação na trilha |\n| approval_criteria | string | Critério de aprovação na trilha |"
+          },
+          "response": [
+            {
+              "name": "Listar conteúdos",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://api.twygo.com/api/v2/contents?page=1&per_page=1",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "twygo",
+                    "com"
+                  ],
+                  "path": [
+                    "api",
+                    "v2",
+                    "contents"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Mon, 20 Nov 2023 13:39:07 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "1; mode=block"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "strict-origin-when-cross-origin"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"b94d13e392e74637029d74a356b244b7\""
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "max-age=0, private, must-revalidate"
+                },
+                {
+                  "key": "X-Request-Id",
+                  "value": "b48d932effe504671f260a08a1f76aee"
+                },
+                {
+                  "key": "X-Runtime",
+                  "value": "0.266703"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=15724800; includeSubDomains"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": {\n        \"pagination\": {\n            \"next_page\": \"?page=2&per_page=1\"\n        },\n        \"contents\": [\n            {\n                \"content_id\": 4501,\n                \"content_type\": \"course\",\n                \"name\": \"Monte a Sua Universidade Corporativa.\",\n                \"date_time_start\": \"2021-12-14T00:00:00.000Z\",\n                \"date_time_end\": null,\n                \"publication_date\": null,\n                \"description\": \"<p>Como montar um curso no Twygo&nbsp;</p>\\r\\n\",\n                \"course_type\": \"Outros\",\n                \"synchronism\": \"recorded\",\n                \"modality\": \"onlineRecorded\",\n                \"hours\": 0.5,\n                \"channel\": \"\",\n                \"class_number\": \"0\",\n                \"days_to_expire\": 0,\n                \"venue\": \"online\",\n                \"email\": \"patricia@euax.com.br\",\n                \"situation\": \"released\",\n                \"trial_days\": 0,\n                \"access_level\": \"public\",\n                \"value\": \"0.0\",\n                \"installments\": null,\n                \"link\": \"app2222.twygoead.com/e/4501-monte-a-sua-universidade-corporativa\",\n                \"categories\": [],\n                \"team\": [\n                    {\n                        \"id\": 6333,\n                        \"name\": \"Suporte Suporte\",\n                        \"email\": \"fale@twygo.com\",\n                        \"role\": \"speaker\"\n                    }\n                ],\n                \"activities\": [\n                    {\n                        \"activity_id\": 4506,\n                        \"status\": \"deleted\",\n                        \"sequence\": 0,\n                        \"activity_type\": \"pdf\",\n                        \"title\": \"Como acessar o TWYGO\",\n                        \"briefing\": null,\n                        \"external_provider\": null,\n                        \"minimum_permanence_time\": null,\n                        \"wheight\": 0,\n                        \"questionary_id\": null,\n                        \"minimum_score\": null,\n                        \"final_score_ratio\": 0.0,\n                        \"attempts\": null,\n                        \"question_draw\": \"same_question\",\n                        \"question_list_method\": \"just_note\"\n                    },\n                    {\n                        \"activity_id\": 4507,\n                        \"status\": \"deleted\",\n                        \"sequence\": 1,\n                        \"activity_type\": \"text\",\n                        \"title\": \"Novo 2\",\n                        \"briefing\": null,\n                        \"external_provider\": null,\n                        \"minimum_permanence_time\": null,\n                        \"wheight\": 0,\n                        \"questionary_id\": null,\n                        \"minimum_score\": null,\n                        \"final_score_ratio\": 0.0,\n                        \"attempts\": null,\n                        \"question_draw\": \"same_question\",\n                        \"question_list_method\": \"just_note\"\n                    },\n                    {\n                        \"activity_id\": 4508,\n                        \"status\": \"deleted\",\n                        \"sequence\": 2,\n                        \"activity_type\": \"text\",\n                        \"title\": \"Novo 3\",\n                        \"briefing\": null,\n                        \"external_provider\": null,\n                        \"minimum_permanence_time\": null,\n                        \"wheight\": 0,\n                        \"questionary_id\": null,\n                        \"minimum_score\": null,\n                        \"final_score_ratio\": 0.0,\n                        \"attempts\": null,\n                        \"question_draw\": \"same_question\",\n                        \"question_list_method\": \"just_note\"\n                    },\n                    {\n                        \"activity_id\": 4509,\n                        \"status\": \"deleted\",\n                        \"sequence\": 3,\n                        \"activity_type\": \"text\",\n                        \"title\": \"Novo 4\",\n                        \"briefing\": null,\n                        \"external_provider\": null,\n                        \"minimum_permanence_time\": null,\n                        \"wheight\": 0,\n                        \"questionary_id\": null,\n                        \"minimum_score\": null,\n                        \"final_score_ratio\": 0.0,\n                        \"attempts\": null,\n                        \"question_draw\": \"same_question\",\n                        \"question_list_method\": \"just_note\"\n                    },\n                    {\n                        \"activity_id\": 4586,\n                        \"status\": \"deleted\",\n                        \"sequence\": 4,\n                        \"activity_type\": null,\n                        \"title\": \"Novo 1\",\n                        \"briefing\": null,\n                        \"external_provider\": null,\n                        \"minimum_permanence_time\": null,\n                        \"wheight\": 0,\n                        \"questionary_id\": null,\n                        \"minimum_score\": null,\n                        \"final_score_ratio\": 0.0,\n                        \"attempts\": null,\n                        \"question_draw\": null,\n                        \"question_list_method\": null\n                    },\n                    {\n                        \"activity_id\": 4587,\n                        \"status\": \"deleted\",\n                        \"sequence\": 5,\n                        \"activity_type\": null,\n                        \"title\": \"Novo 1\",\n                        \"briefing\": null,\n                        \"external_provider\": null,\n                        \"minimum_permanence_time\": null,\n                        \"wheight\": 0,\n                        \"questionary_id\": null,\n                        \"minimum_score\": null,\n                        \"final_score_ratio\": 0.0,\n                        \"attempts\": null,\n                        \"question_draw\": null,\n                        \"question_list_method\": null\n                    },\n                    {\n                        \"activity_id\": 4614,\n                        \"status\": \"released\",\n                        \"sequence\": 0,\n                        \"activity_type\": \"pdf\",\n                        \"title\": \"Criar seu login\",\n                        \"briefing\": null,\n                        \"external_provider\": null,\n                        \"minimum_permanence_time\": null,\n                        \"wheight\": 0,\n                        \"questionary_id\": null,\n                        \"minimum_score\": null,\n                        \"final_score_ratio\": 0.0,\n                        \"attempts\": null,\n                        \"question_draw\": \"same_question\",\n                        \"question_list_method\": \"just_note\"\n                    },\n                    {\n                        \"activity_id\": 4615,\n                        \"status\": \"released\",\n                        \"sequence\": 1,\n                        \"activity_type\": \"other\",\n                        \"title\": \"Como criar  sua organização ?\",\n                        \"briefing\": null,\n                        \"external_provider\": null,\n                        \"minimum_permanence_time\": null,\n                        \"wheight\": 0,\n                        \"questionary_id\": null,\n                        \"minimum_score\": null,\n                        \"final_score_ratio\": 0.0,\n                        \"attempts\": null,\n                        \"question_draw\": \"same_question\",\n                        \"question_list_method\": \"just_note\"\n                    },\n                    {\n                        \"activity_id\": 4616,\n                        \"status\": \"released\",\n                        \"sequence\": 2,\n                        \"activity_type\": \"other\",\n                        \"title\": \"Como criar um curso no Twygo\",\n                        \"briefing\": \"\",\n                        \"external_provider\": null,\n                        \"minimum_permanence_time\": null,\n                        \"wheight\": 0,\n                        \"questionary_id\": null,\n                        \"minimum_score\": null,\n                        \"final_score_ratio\": 0.0,\n                        \"attempts\": null,\n                        \"question_draw\": \"same_question\",\n                        \"question_list_method\": \"just_note\"\n                    },\n                    {\n                        \"activity_id\": 4617,\n                        \"status\": \"deleted\",\n                        \"sequence\": 3,\n                        \"activity_type\": \"external\",\n                        \"title\": \"Vídeo demonstrativo \",\n                        \"briefing\": null,\n                        \"external_provider\": null,\n                        \"minimum_permanence_time\": null,\n                        \"wheight\": 0,\n                        \"questionary_id\": null,\n                        \"minimum_score\": null,\n                        \"final_score_ratio\": 0.0,\n                        \"attempts\": null,\n                        \"question_draw\": \"same_question\",\n                        \"question_list_method\": \"just_note\"\n                    },\n                    {\n                        \"activity_id\": 4618,\n                        \"status\": \"deleted\",\n                        \"sequence\": 4,\n                        \"activity_type\": \"text\",\n                        \"title\": \"Hotsite e Pagseguro\",\n                        \"briefing\": null,\n                        \"external_provider\": null,\n                        \"minimum_permanence_time\": null,\n                        \"wheight\": 0,\n                        \"questionary_id\": null,\n                        \"minimum_score\": null,\n                        \"final_score_ratio\": 0.0,\n                        \"attempts\": null,\n                        \"question_draw\": \"same_question\",\n                        \"question_list_method\": \"just_note\"\n                    },\n                    {\n                        \"activity_id\": 4619,\n                        \"status\": \"deleted\",\n                        \"sequence\": 5,\n                        \"activity_type\": \"text\",\n                        \"title\": \"Apresentação do hotsite e PagSeguro na ferramenta \",\n                        \"briefing\": null,\n                        \"external_provider\": null,\n                        \"minimum_permanence_time\": null,\n                        \"wheight\": 0,\n                        \"questionary_id\": null,\n                        \"minimum_score\": null,\n                        \"final_score_ratio\": 0.0,\n                        \"attempts\": null,\n                        \"question_draw\": \"same_question\",\n                        \"question_list_method\": \"just_note\"\n                    },\n                    {\n                        \"activity_id\": 4620,\n                        \"status\": \"deleted\",\n                        \"sequence\": 5,\n                        \"activity_type\": \"questions\",\n                        \"title\": \"Pesquisa de Satisfação \",\n                        \"briefing\": null,\n                        \"external_provider\": null,\n                        \"minimum_permanence_time\": null,\n                        \"wheight\": 0,\n                        \"questionary_id\": null,\n                        \"minimum_score\": null,\n                        \"final_score_ratio\": 0.0,\n                        \"attempts\": null,\n                        \"question_draw\": \"same_question\",\n                        \"question_list_method\": \"just_note\"\n                    },\n                    {\n                        \"activity_id\": 5107,\n                        \"status\": \"deleted\",\n                        \"sequence\": 6,\n                        \"activity_type\": null,\n                        \"title\": \"Novo 1\",\n                        \"briefing\": null,\n                        \"external_provider\": null,\n                        \"minimum_permanence_time\": null,\n                        \"wheight\": 0,\n                        \"questionary_id\": null,\n                        \"minimum_score\": null,\n                        \"final_score_ratio\": 0.0,\n                        \"attempts\": null,\n                        \"question_draw\": null,\n                        \"question_list_method\": null\n                    },\n                    {\n                        \"activity_id\": 5108,\n                        \"status\": \"deleted\",\n                        \"sequence\": 7,\n                        \"activity_type\": null,\n                        \"title\": \"Novo 3\",\n                        \"briefing\": null,\n                        \"external_provider\": null,\n                        \"minimum_permanence_time\": null,\n                        \"wheight\": 0,\n                        \"questionary_id\": null,\n                        \"minimum_score\": null,\n                        \"final_score_ratio\": 0.0,\n                        \"attempts\": null,\n                        \"question_draw\": null,\n                        \"question_list_method\": null\n                    },\n                    {\n                        \"activity_id\": 5109,\n                        \"status\": \"deleted\",\n                        \"sequence\": 8,\n                        \"activity_type\": null,\n                        \"title\": \"Novo 4\",\n                        \"briefing\": null,\n                        \"external_provider\": null,\n                        \"minimum_permanence_time\": null,\n                        \"wheight\": 0,\n                        \"questionary_id\": null,\n                        \"minimum_score\": null,\n                        \"final_score_ratio\": 0.0,\n                        \"attempts\": null,\n                        \"question_draw\": null,\n                        \"question_list_method\": null\n                    },\n                    {\n                        \"activity_id\": 5110,\n                        \"status\": \"deleted\",\n                        \"sequence\": 6,\n                        \"activity_type\": null,\n                        \"title\": \"Novo 1\",\n                        \"briefing\": null,\n                        \"external_provider\": null,\n                        \"minimum_permanence_time\": null,\n                        \"wheight\": 0,\n                        \"questionary_id\": null,\n                        \"minimum_score\": null,\n                        \"final_score_ratio\": 0.0,\n                        \"attempts\": null,\n                        \"question_draw\": null,\n                        \"question_list_method\": null\n                    },\n                    {\n                        \"activity_id\": 5111,\n                        \"status\": \"deleted\",\n                        \"sequence\": 7,\n                        \"activity_type\": null,\n                        \"title\": \"Novo 3\",\n                        \"briefing\": null,\n                        \"external_provider\": null,\n                        \"minimum_permanence_time\": null,\n                        \"wheight\": 0,\n                        \"questionary_id\": null,\n                        \"minimum_score\": null,\n                        \"final_score_ratio\": 0.0,\n                        \"attempts\": null,\n                        \"question_draw\": null,\n                        \"question_list_method\": null\n                    },\n                    {\n                        \"activity_id\": 5112,\n                        \"status\": \"deleted\",\n                        \"sequence\": 8,\n                        \"activity_type\": null,\n                        \"title\": \"Novo 4\",\n                        \"briefing\": null,\n                        \"external_provider\": null,\n                        \"minimum_permanence_time\": null,\n                        \"wheight\": 0,\n                        \"questionary_id\": null,\n                        \"minimum_score\": null,\n                        \"final_score_ratio\": 0.0,\n                        \"attempts\": null,\n                        \"question_draw\": null,\n                        \"question_list_method\": null\n                    },\n                    {\n                        \"activity_id\": 5590,\n                        \"status\": \"released\",\n                        \"sequence\": 3,\n                        \"activity_type\": \"questions\",\n                        \"title\": \"Pesquisa de Satisfação \",\n                        \"briefing\": null,\n                        \"external_provider\": null,\n                        \"minimum_permanence_time\": null,\n                        \"wheight\": 0,\n                        \"questionary_id\": 71,\n                        \"minimum_score\": null,\n                        \"final_score_ratio\": 0.0,\n                        \"attempts\": null,\n                        \"question_draw\": \"same_question\",\n                        \"question_list_method\": \"just_note\"\n                    },\n                    {\n                        \"activity_id\": 5628,\n                        \"status\": \"released\",\n                        \"sequence\": 5,\n                        \"activity_type\": \"scorm\",\n                        \"title\": \"teste Scorm\",\n                        \"briefing\": \"\",\n                        \"external_provider\": null,\n                        \"minimum_permanence_time\": null,\n                        \"wheight\": 0,\n                        \"questionary_id\": null,\n                        \"minimum_score\": null,\n                        \"final_score_ratio\": 0.0,\n                        \"attempts\": null,\n                        \"question_draw\": \"same_question\",\n                        \"question_list_method\": \"just_note\"\n                    },\n                    {\n                        \"activity_id\": 5629,\n                        \"status\": \"released\",\n                        \"sequence\": 7,\n                        \"activity_type\": null,\n                        \"title\": \"Novo 2\",\n                        \"briefing\": null,\n                        \"external_provider\": null,\n                        \"minimum_permanence_time\": null,\n                        \"wheight\": 0,\n                        \"questionary_id\": null,\n                        \"minimum_score\": null,\n                        \"final_score_ratio\": 0.0,\n                        \"attempts\": null,\n                        \"question_draw\": null,\n                        \"question_list_method\": null\n                    },\n                    {\n                        \"activity_id\": 851682,\n                        \"status\": \"released\",\n                        \"sequence\": 6,\n                        \"activity_type\": \"questions\",\n                        \"title\": \"Novo 1\",\n                        \"briefing\": \"\",\n                        \"external_provider\": \"youtube\",\n                        \"minimum_permanence_time\": null,\n                        \"wheight\": 1,\n                        \"questionary_id\": 13263,\n                        \"minimum_score\": null,\n                        \"final_score_ratio\": 0.0,\n                        \"attempts\": null,\n                        \"question_draw\": \"same_question\",\n                        \"question_list_method\": \"just_note\"\n                    },\n                    {\n                        \"activity_id\": 2953551,\n                        \"status\": \"released\",\n                        \"sequence\": 4,\n                        \"activity_type\": \"text\",\n                        \"title\": \"Novo 1\",\n                        \"briefing\": null,\n                        \"external_provider\": null,\n                        \"minimum_permanence_time\": null,\n                        \"wheight\": 1,\n                        \"questionary_id\": null,\n                        \"minimum_score\": null,\n                        \"final_score_ratio\": 0.0,\n                        \"attempts\": null,\n                        \"question_draw\": null,\n                        \"question_list_method\": null\n                    }\n                ],\n                \"competencies\": [\n\t\t\t\t\t{\n\t\t\t\t\t\t\"competency_id\": 1,\n\t\t\t\t\t\t\"competency_title\": \"competencia top\"\n\t\t\t\t\t}\n\t\t\t\t]\n            },\n            {\n                \"content_id\": 75,\n                \"content_type\": \"learning_path\",\n                \"name\": \"trilha de teste\",\n                \"date_time_start\": null,\n                \"date_time_end\": null,\n                \"publication_date\": null,\n                \"description\": \"<p>descrição da trilha</p>\\r\\n\",\n                \"course_type\": \"Outros\",\n                \"synchronism\": \"recorded\",\n                \"modality\": \"onlineRecorded\",\n                \"hours\": 0.5,\n                \"channel\": null,\n                \"class_number\": null,\n                \"days_to_expire\": 0,\n                \"venue\": \"\",\n                \"email\": \"reggie@nader-hettinger.example\",\n                \"situation\": \"development\",\n                \"trial_days\": 0,\n                \"access_level\": \"subscribed\",\n                \"value\": null,\n                \"installments\": 1,\n                \"link\": \"link-personalizado-1.com/e/75-trilha-de-teste\",\n                \"categories\": [],\n                \"team\": [],\n                \"activities\": [\n                    {\n                        \"activity_id\": 138,\n                        \"activity_type\": \"course\",\n                        \"sequence\": 1,\n                        \"situation\": \"development\",\n                        \"approval_required\": false,\n                        \"approval_criteria\": \"by_conclusion\",\n                        \"weight\": 1\n                    }\n                ],\n                \"competencies\": []\n            }\n        ]\n    },\n    \"message\": \"success\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Listar atividades do usuário",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token da API}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.twygo.com/api/v2/activities_attendees?page={pagina}&per_page={itens_por_pagina}&activity_attendee_id={id_atividade_da_inscrição}&content_id={id_conteudo}&user_id={id_usuario}&activity_id={id_atividade}&questionary_id={id_questionário}",
+              "protocol": "https",
+              "host": [
+                "api",
+                "twygo",
+                "com"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "activities_attendees"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "{pagina}"
+                },
+                {
+                  "key": "per_page",
+                  "value": "{itens_por_pagina}"
+                },
+                {
+                  "key": "activity_attendee_id",
+                  "value": "{id_atividade_da_inscrição}",
+                  "description": "Filtrar por ID específico do registro de participação (opcional)"
+                },
+                {
+                  "key": "content_id",
+                  "value": "{id_conteudo}",
+                  "description": "Filtrar por ID do conteúdo (opcional)"
+                },
+                {
+                  "key": "user_id",
+                  "value": "{id_usuario}",
+                  "description": "Filtrar por ID do usuário (opcional)"
+                },
+                {
+                  "key": "activity_id",
+                  "value": "{id_atividade}",
+                  "description": "Filtrar por ID da atividade (opcional)"
+                },
+                {
+                  "key": "questionary_id",
+                  "value": "{id_questionário}",
+                  "description": "Filtrar por ID do questionário (opcional)"
+                }
+              ]
+            },
+            "description": "Retorna uma lista paginada de participantes e seus progressos em atividades específicas.\n\n## Campos da resposta\n\n### Objeto _activities_attendees_\n\n| Campo | Tipo | Descrição |\n| --- | --- | --- |\n| activity_attendee_id | int | Identificador único do registro de participação |\n| user_id | int | ID do usuário |\n| content_id | int | ID do conteúdo/curso |\n| activity_id | int | ID da atividade |\n| questionary_id | int | ID do questionário associado |\n| origin_organization_name | text | Nome da organização |\n| origin_corporate_name | text | Nome corporativo da organização |\n| origin_organization_id | int | ID da organização |\n| started_at | datetime | Data e hora de início da atividade |\n| concluded_at | datetime | Data e hora de conclusão da atividade |\n\n## Observações\n\n- O endpoint retorna informações sobre o progresso dos participantes em atividades específicas\n    \n- É possível rastrear quando cada participante iniciou e concluiu uma atividade"
+          },
+          "response": [
+            {
+              "name": "Listar atividades do usuário",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://api.twygo.com/api/v2/activities_attendees?page=1&per_page=1",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "twygo",
+                    "com"
+                  ],
+                  "path": [
+                    "api",
+                    "v2",
+                    "activities_attendees"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Mon, 20 Nov 2023 13:39:32 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "1; mode=block"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "strict-origin-when-cross-origin"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"65fcfe979f0175a7bc46bfdc5be42c34\""
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "max-age=0, private, must-revalidate"
+                },
+                {
+                  "key": "X-Request-Id",
+                  "value": "4f8ce4ce9b7972282b50735d683f87dc"
+                },
+                {
+                  "key": "X-Runtime",
+                  "value": "0.311188"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=15724800; includeSubDomains"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": {\n        \"pagination\": {\n            \"next_page\": \"?page=2&per_page=1\"\n        },\n        \"activities_attendees\": [\n            {\n                \"activity_attendee_id\": 46106,\n                \"user_id\": 12583,\n                \"content_id\": 5550,\n                \"activity_id\": 14887,\n                \"questionary_id\": null,\n                \"origin_organization_name\": \"Organization 01\",\n\t\t\t\t\"origin_corporate_name\": \"Organization Coporative\",\n\t\t\t\t\"origin_organization_id\": 37179,\n                \"started_at\": \"2016-12-08T11:32:58.000Z\",\n                \"concluded_at\": \"2016-12-08T16:35:38.000Z\"\n            }\n        ]\n    },\n    \"message\": \"success\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Listar likes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.twygo.com/api/v2/likes?page={pagina}&per_page={itens_por_pagina}&user_id={id_usuario}&event_id={id_conteudo}",
+              "protocol": "https",
+              "host": [
+                "api",
+                "twygo",
+                "com"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "likes"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "{pagina}",
+                  "description": "Utilizado para mudar de página"
+                },
+                {
+                  "key": "per_page",
+                  "value": "{itens_por_pagina}",
+                  "description": "Utilizado para definir quantos usuários aparecem por página limitado a 1000 por vez"
+                },
+                {
+                  "key": "user_id",
+                  "value": "{id_usuario}",
+                  "description": "Filtrar por ID do usuário (opcional)"
+                },
+                {
+                  "key": "event_id",
+                  "value": "{id_conteudo}",
+                  "description": "Filtrar por ID do conteúdo (opcional)"
+                }
+              ]
+            },
+            "description": "Retorna uma lista paginada de curtidas em conteúdos.\n\n## Observações\n\n- O campo `unliked` será nulo se a curtida ainda estiver ativa\n    \n- É possível filtrar curtidas por usuário específico ou por conteúdo específico\n    \n- O endpoint retorna tanto curtidas ativas quanto removidas, diferenciadas pelo campo `unliked`\n    \n\n## Campos da resposta\n\n### Objeto _like_\n\n| Campo | Tipo | Descrição |\n| --- | --- | --- |\n| liked | datetime | Data e hora em que o conteúdo foi curtido |\n| unliked | datetime | Data e hora em que a curtida foi removida (se aplicável) |\n| content_id | int | ID do conteúdo curtido |\n| user_id | int | ID do usuário que realizou a curtida |\n| origin_organization_name | text | Nome da organização |\n| origin_corporate_name | text | Nome corporativo da organização |\n| origin_organization_id | int | ID da organização |"
+          },
+          "response": [
+            {
+              "name": "Listar likes",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{vault:bearer-token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "https://api.twygo.com/api/v2/likes?page=1&per_page=25",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "twygo",
+                    "com"
+                  ],
+                  "path": [
+                    "api",
+                    "v2",
+                    "likes"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "25"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "X-bullet-footer-text",
+                  "value": "[\"user: matheusmazepa  AVOID eager loading detected    UserEventLike =\\u003e [:user, :event]\\n  Remove from your query: .includes([:user, :event])\"]"
+                },
+                {
+                  "key": "X-bullet-console-text",
+                  "value": "[\"user: matheusmazepa\\nAVOID eager loading detected\\n  UserEventLike =\\u003e [:user, :event]\\n  Remove from your query: .includes([:user, :event])\\nCall stack\\n  /Users/matheusmazepa/Development/euax/twygo-app-7/app/views/api/v2/likes/index.json.jbuilder:2:in `block in _app_views_api_v__likes_index_json_jbuilder___4451402704935981882_4546940'\\n  /Users/matheusmazepa/Development/euax/twygo-app-7/app/utils/presentation_helper.rb:31:in `block in present_data_with_pagination'\\n  /Users/matheusmazepa/Development/euax/twygo-app-7/app/utils/presentation_helper.rb:22:in `present_data_with_pagination'\\n  /Users/matheusmazepa/Development/euax/twygo-app-7/app/views/api/v2/likes/index.json.jbuilder:1:in `_app_views_api_v__likes_index_json_jbuilder___4451402704935981882_4546940'\\n  /Users/matheusmazepa/Development/euax/twygo-app-7/app/controllers/api/v2/likes_controller.rb:16:in `index'\\n  /Users/matheusmazepa/Development/euax/twygo-app-7/app/middleware/guardian.rb:27:in `call'\\n\\n\"]"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"f67bd99f6635a9bc7e024b0515e11556\""
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "max-age=0, private, must-revalidate"
+                },
+                {
+                  "key": "X-Request-Id",
+                  "value": "4827e77d-1346-472f-93c3-0913713e94e7"
+                },
+                {
+                  "key": "X-Runtime",
+                  "value": "0.239729"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "sameorigin"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self' 'unsafe-inline'; connect-src 'self' https: ws: wss: http: blob:; font-src 'self' fonts.googleapis.com fonts.gstatic.com data: https:; frame-src 'self' https: http: s3.amazonaws.com; img-src 'self' data: https: blob: http:; media-src 'self' https: blob: http: s3.amazonaws.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https: 0.0.0.0:9292/ localhost:9292/ www.youtube.com/iframe_api; style-src 'self' 'unsafe-inline' https: http:; style-src-elem 'self' 'unsafe-inline' 'unsafe-eval' https:; worker-src 'self' blob:"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "403"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": {\n        \"pagination\": {\n            \"next_page\": null,\n            \"previous_page\": null,\n            \"current_page\": 1,\n            \"total_pages\": 1,\n            \"total_entries\": 3\n        },\n        \"likes\": [\n            {\n                \"liked\": \"2024-12-18T20:49:53.000Z\",\n                \"unliked\": null,\n                \"content_id\": 2,\n                \"user_id\": 1,\n                \"origin_organization_name\": \"Organization 01\",\n\t\t\t\t\"origin_corporate_name\": \"Organization Coporative\",\n\t\t\t\t\"origin_organization_id\": 37179\n            },\n            {\n                \"liked\": \"2024-12-18T20:49:26.000Z\",\n                \"unliked\": \"2024-12-18T20:49:40.000Z\",\n                \"content_id\": 2,\n                \"user_id\": 1,\n                \"origin_organization_name\": \"Organization 01\",\n\t\t\t\t\"origin_corporate_name\": \"Organization Coporative\",\n\t\t\t\t\"origin_organization_id\": 37179\n            },\n            {\n                \"liked\": \"2024-12-18T20:49:24.000Z\",\n                \"unliked\": null,\n                \"content_id\": 1,\n                \"user_id\": 1,\n                \"origin_organization_name\": \"Organization 01\",\n\t\t\t\t\"origin_corporate_name\": \"Organization Coporative\",\n\t\t\t\t\"origin_organization_id\": 37179\n            }\n        ]\n    },\n    \"message\": \"success\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Listar minha lista",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.twygo.com/api/v2/bookmarks?page={pagina}&per_page={itens_por_pagina}&user_id={id_usuario}&event_id={id_conteudo}",
+              "protocol": "https",
+              "host": [
+                "api",
+                "twygo",
+                "com"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "bookmarks"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "{pagina}",
+                  "description": "Utilizado para mudar de página"
+                },
+                {
+                  "key": "per_page",
+                  "value": "{itens_por_pagina}",
+                  "description": "Utilizado para definir quantos usuários aparecem por página limitado a 1000 por vez"
+                },
+                {
+                  "key": "user_id",
+                  "value": "{id_usuario}",
+                  "description": "Filtrar por ID do usuário"
+                },
+                {
+                  "key": "event_id",
+                  "value": "{id_conteudo}",
+                  "description": "Filtrar por ID do conteúdo"
+                }
+              ]
+            },
+            "description": "Retorna uma lista paginada de conteúdos marcados como minha lista pelos usuários.\n\n## Observações\n\n- O campo `unbookmarked` será nulo se o item ainda estiver marcado como favorito\n    \n- É possível filtrar favoritos por usuário específico ou por conteúdo específico\n    \n- O endpoint retorna tanto favoritos ativos quanto removidos, diferenciados pelo campo `unbookmarked`\n    \n- Os favoritos fazem parte da funcionalidade \"Minha Playlist\" da plataforma\n    \n\n## Campos da resposta\n\n### Objeto _bookmark_\n\n| Campo | Tipo | Descrição |\n| --- | --- | --- |\n| bookmark_id | int | Identificador único do favorito |\n| user_id | int | ID do usuário que favoritou |\n| content_id | int | ID do conteúdo/evento favoritado |\n| origin_organization_name | text | Nome da organização |\n| origin_corporate_name | text | Nome corporativo da organização |\n| origin_organization_id | int | ID da organização |\n| bookmarked | datetime | Data e hora em que o conteúdo foi favoritado |\n| unbookmarked | datetime | Data e hora em que o favorito foi removido (se aplicável) |"
+          },
+          "response": [
+            {
+              "name": "Listar minha lista",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "{{vault:bearer-token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:3000/api/v2/bookmarks?page=1&per_page=25",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3000",
+                  "path": [
+                    "api",
+                    "v2",
+                    "bookmarks"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "25"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"22c4c0df95b1d644d5945ac348ca4f8e\""
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "max-age=0, private, must-revalidate"
+                },
+                {
+                  "key": "X-Request-Id",
+                  "value": "e005feeb-5219-4395-871f-e0277e159f96"
+                },
+                {
+                  "key": "X-Runtime",
+                  "value": "0.127350"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "sameorigin"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self' 'unsafe-inline'; connect-src 'self' https: ws: wss: http: blob:; font-src 'self' fonts.googleapis.com fonts.gstatic.com data: https:; frame-src 'self' https: http: s3.amazonaws.com; img-src 'self' data: https: blob: http:; media-src 'self' https: blob: http: s3.amazonaws.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https: 0.0.0.0:9292/ localhost:9292/ www.youtube.com/iframe_api; style-src 'self' 'unsafe-inline' https: http:; style-src-elem 'self' 'unsafe-inline' 'unsafe-eval' https:; worker-src 'self' blob:"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "253"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": {\n        \"pagination\": {\n            \"next_page\": null,\n            \"previous_page\": null,\n            \"current_page\": 1,\n            \"total_pages\": 1,\n            \"total_entries\": 1\n        },\n        \"bookmarks\": [\n            {\n                \"bookmark_id\": 1,\n                \"user_id\": 1,\n                \"content_id\": 2,\n                \"origin_organization_name\": \"Organization 01\",\n\t\t\t\t\"origin_corporate_name\": \"Organization Coporative\",\n\t\t\t\t\"origin_organization_id\": 37179,\n                \"bookmarked\": \"2024-12-18T20:49:43.000Z\",\n                \"unbookmarked\": null\n            }\n        ]\n    },\n    \"message\": \"success\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Criar conteúdos",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token da API}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.twygo.com/api/v2/contents",
+              "protocol": "https",
+              "host": [
+                "api",
+                "twygo",
+                "com"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "contents"
+              ]
+            },
+            "description": "Cria um conteúdo na plataforma.\n\n## Parâmetros\n\n| Campo | Tipo | Descrição |\n| --- | --- | --- |\n| content_type | int | Tipo de conteúdo |\n| name | string | Nome do conteúdo |\n| description | string | Descrição do conteúdo |\n| date_time_start | string | Data e hora de início do conteúdo |\n| date_time_end | string | Data e hora de término do conteúdo |\n| subscription_value | string | Valor do conteúdo |\n| email | string | Email do criador do conteúdo |\n| trial_days | int | Dias de teste do conteúdo |\n| mode | int | Modalidade do conteúdo |\n| place | string | Local do conteúdo |\n| installments_number | int | Número de parcelas do conteúdo |\n| inscription_access | int | Visualização do conteúdo |\n| synchronism | int | Sincronismo do conteúdo |\n| situation | int | Situação do conteúdo |\n| days_to_expire | int | Vigência do conteúdo |\n\n## Atributos permitidos:\n\n### content_type\n\n- 0: Curso\n    \n- 1: Trilha\n    \n\n### mode\n\n- 0: Presencial\n    \n- 1: Online\n    \n\n### inscription_access\n\n- 0: Inscritos\n    \n- 1: Colaborador\n    \n- 2: Usuários\n    \n- 3: Público\n    \n\n### synchronism\n\n- 0: Ao vivo\n    \n- 1: Gravado\n    \n\n### situation\n\n- 0: Em desenvolvimento\n    \n- 1: Liberado\n    \n- 2: Suspenso\n    \n\n### inscription_access\n\n- 0: Público\n    \n- 1: Privado"
+          },
+          "response": [
+            {
+              "name": "Criar conteúdos",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n\t\"content_type\": 0,\n\t\"name\": \"Curso de teste\",\n\t\"description\": \"Descrição do conteúdo\",\n\t\"date_time_start\": \"01-02-2025\",\n\t\"date_time_end\": \"03-04-2025\",\n\t\"subscription_value\": \"1099,99\",\n\t\"email\": \"sophia@teste.com\",\n\t\"trial_days\": 5,\n\t\"mode\": 1,\n    \"place\": \"online\",\n\t\"installments_number\": 12,\n\t\"inscription_access\": 0,\n\t\"synchronism\": 1,\n\t\"situation\": 0,\n\t\"days_to_expire\": 14\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://api.twygo.com/api/v2/contents",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "twygo",
+                    "com"
+                  ],
+                  "path": [
+                    "api",
+                    "v2",
+                    "contents"
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\n\t\"data\": {\n\t\t\"content\": {\n\t\t\t\"content_id\": 200,\n\t\t\t\"content_type\": \"course\",\n\t\t\t\"name\": \"Curso de teste\",\n\t\t\t\"date_time_start\": \"2025-02-01T00:00:00.000Z\",\n\t\t\t\"date_time_end\": \"2025-04-03T00:00:00.000Z\",\n\t\t\t\"description\": \"Descrição do conteúdo\",\n\t\t\t\"course_type\": \"Curso\",\n\t\t\t\"synchronism\": \"live\",\n\t\t\t\"class_number\": \"\",\n\t\t\t\"days_to_expire\": 14,\n\t\t\t\"venue\": null,\n\t\t\t\"email\": \"sophia@teste.com\",\n\t\t\t\"situation\": \"development\",\n\t\t\t\"trial_days\": 5,\n\t\t\t\"access_level\": \"subscribed\",\n\t\t\t\"value\": \"1099,99\",\n\t\t\t\"installments\": 1\n\t\t}\n\t},\n\t\"message\": \"success\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Atualizar conteúdos",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token da API}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Trilha 01 atualizada\",\n    \"description\": \"Trilha 01 descrição atualizada\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.twygo.com/api/v2/contents/110595",
+              "protocol": "https",
+              "host": [
+                "api",
+                "twygo",
+                "com"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "contents",
+                "110595"
+              ]
+            },
+            "description": "Atualizar um conteúdo na plataforma.\n\n## Parâmetros\n\n| Campo | Tipo | Descrição |\n| --- | --- | --- |\n| name | string | Nome do conteúdo |\n| description | string | Descrição do conteúdo |\n| date_time_start | string | Data e hora de início do conteúdo |\n| date_time_end | string | Data e hora de término do conteúdo |\n| subscription_value | string | Valor do conteúdo |\n| email | string | Email do criador do conteúdo |\n| trial_days | int | Dias de teste do conteúdo |\n| mode | int | Modalidade do conteúdo |\n| place | string | Local do conteúdo |\n| installments_number | int | Número de parcelas do conteúdo |\n| inscription_access | int | Visualização do conteúdo |\n| synchronism | int | Sincronismo do conteúdo |\n| situation | int | Situação do conteúdo |\n| days_to_expire | int | Vigência do conteúdo |\n\n## Atributos permitidos:\n\n### mode\n\n- 0: Presencial\n    \n- 1: Online\n    \n\n### inscription_access\n\n- 0: Inscritos\n    \n- 1: Colaborador\n    \n- 2: Usuários\n    \n- 3: Público\n    \n\n### synchronism\n\n- 0: Ao vivo\n    \n- 1: Gravado\n    \n\n### situation\n\n- 0: Em desenvolvimento\n    \n- 1: Liberado\n    \n- 2: Suspenso\n    \n\n### inscription_access\n\n- 0: Público\n    \n- 1: Privado"
+          },
+          "response": [
+            {
+              "name": "Atualizar conteúdos",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"Trilha 01 atualizada\",\n    \"description\": \"Trilha 01 descrição atualizada\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://api.twygo.com/api/v2/contents",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "twygo",
+                    "com"
+                  ],
+                  "path": [
+                    "api",
+                    "v2",
+                    "contents"
+                  ]
+                }
+              },
+              "_postman_previewlanguage": "Text",
+              "header": [],
+              "cookie": [
+                {
+                  "expires": "Invalid Date",
+                  "domain": "",
+                  "path": ""
+                }
+              ],
+              "body": "{\n\t\"data\": {\n\t\t\"content\": {\n\t\t\t\"content_id\": 110595,\n\t\t\t\"content_type\": \"learning_path\",\n\t\t\t\"name\": \"Trilha 01 atualizada\",\n\t\t\t\"description\": \"Trilha 01 descrição atualizada\",\n\t\t\t\"access_level\": \"subscribed\",\n\t\t\t\"situation\": \"released\",\n\t\t\t\"date_time_start\": null,\n\t\t\t\"date_time_end\": null,\n\t\t\t\"synchronism\": \"recorded\",\n\t\t\t\"class_number\": \"\",\n\t\t\t\"days_to_expire\": 0,\n\t\t\t\"venue\": null,\n\t\t\t\"email\": null,\n\t\t\t\"trial_days\": 0,\n\t\t\t\"value\": null,\n\t\t\t\"installments\": null\n\t\t}\n\t},\n\t\"message\": \"success\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Usuários",
+      "item": [
+        {
+          "name": "Listar usuários",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var template = `",
+                  "<style type=\"text/css\">",
+                  "    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}",
+                  "    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}",
+                  "    .tftable tr {background-color:#ffffff;}",
+                  "    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}",
+                  "    .tftable tr:hover {background-color:#e0ffff;}",
+                  "</style>",
+                  "",
+                  "<table class=\"tftable\" border=\"1\">",
+                  "    <tr>",
+                  "        <th>User ID</th>",
+                  "        <th>Name</th>",
+                  "        <th>Email</th>",
+                  "        <th>Phone</th>",
+                  "        <th>Role</th>",
+                  "    </tr>",
+                  "    ",
+                  "    {{#each response.data.users}}",
+                  "        <tr>",
+                  "            <td>{{user_id}}</td>",
+                  "            <td>{{name}}</td>",
+                  "            <td>{{email}}</td>",
+                  "            <td>{{phone}}</td>",
+                  "            <td>{{role}}</td>",
+                  "        </tr>",
+                  "    {{/each}}",
+                  "</table>",
+                  "`;",
+                  "",
+                  "function constructVisualizerPayload() {",
+                  "    return { response: pm.response.json() }",
+                  "}",
+                  "",
+                  "pm.visualizer.set(template, constructVisualizerPayload());"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token da API}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.twygo.com/api/v2/users?page={pagina}&per_page={itens_por_pagina}&user_id={id_usuario}&name={nome_usuario}&email={email_usuario}",
+              "protocol": "https",
+              "host": [
+                "api",
+                "twygo",
+                "com"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "{pagina}"
+                },
+                {
+                  "key": "per_page",
+                  "value": "{itens_por_pagina}"
+                },
+                {
+                  "key": "user_id",
+                  "value": "{id_usuario}",
+                  "description": "Filtrar por ID do usuário (opcional)"
+                },
+                {
+                  "key": "name",
+                  "value": "{nome_usuario}",
+                  "description": "Filtrar por nome do usuário (opcional)"
+                },
+                {
+                  "key": "email",
+                  "value": "{email_usuario}",
+                  "description": "Filtrar por email do usuário (opcional)"
+                }
+              ]
+            },
+            "description": "Retorna uma lista paginada de usuários com suas informações detalhadas.\n\n## Observações\n\n- O campo `situation` indica se o usuário está ativo ou inativo no sistema\n    \n- O campo `spaces` lista todas as organizações às quais o usuário tem acesso incluido ambientes adicionais\n    \n- Os documentos (CPF e RG) são retornados no formato original\n    \n\n## Campos da resposta\n\n### Objeto _user_\n\n| Campo | Tipo | Descrição |\n| --- | --- | --- |\n| user_id | int | Identificador único do usuário |\n| professional_id | int | ID do profissional associado |\n| name | string | Nome completo do usuário |\n| email | string | Email do usuário |\n| document_1 | string | CPF do usuário |\n| document_2 | string | RG do usuário |\n| enterprise | string | Empresa do usuário |\n| phone | string | Telefone principal |\n| phone_2 | string | Telefone secundário |\n| cell_phone | string | Telefone celular |\n| role | string | Cargo do usuário |\n| industry | string | Ramo de atuação do usuário |\n| cep | string | CEP do endereço |\n| address | string | Logradouro |\n| number | string | Número do endereço |\n| complement | string | Complemento do endereço |\n| neighborhood | string | Bairro |\n| city | string | Cidade |\n| state | string | Estado |\n| country | string | País |\n| department | string | Departamento |\n| situation | string | Situação do usuário ('active' ou 'inactive') |\n| created_at | datetime | Data de criação do registro |\n| updated_at | datetime | Data da última atualização |\n| url | string | Magic Link |\n\n### Objeto _space_\n\n| Campo | Tipo | Descrição |\n| --- | --- | --- |\n| space_id | int | ID da organização |\n| space_name | string | Nome da organização |"
+          },
+          "response": [
+            {
+              "name": "Listar usuários",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://api.twygo.com/api/v2/users?page=1&per_page=1",
+                  "protocol": "https",
+                  "host": [
+                    "api",
+                    "twygo",
+                    "com"
+                  ],
+                  "path": [
+                    "api",
+                    "v2",
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Date",
+                  "value": "Mon, 20 Nov 2023 13:40:03 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Transfer-Encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Accept-Encoding"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "1; mode=block"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "strict-origin-when-cross-origin"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"da07e66fe474be52e7c84e9c94587b9c\""
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "max-age=0, private, must-revalidate"
+                },
+                {
+                  "key": "X-Request-Id",
+                  "value": "041573a375bf6b1104ab24b0edaa5245"
+                },
+                {
+                  "key": "X-Runtime",
+                  "value": "1.459560"
+                },
+                {
+                  "key": "Content-Encoding",
+                  "value": "gzip"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=15724800; includeSubDomains"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": {\n        \"pagination\": {\n            \"next_page\": \"?page=2&per_page=1\"\n        },\n        \"users\": [\n            {\n                \"user_id\": 92,\n                \"name\": \"Milena Silva\",\n                \"email\": \"milena@artia.com\",\n                \"document_1\": \"\",\n                \"document_2\": \"\",\n                \"enterprise\": \"Euax\",\n                \"phone\": \"\",\n                \"phone_2\": \"(47) 3802-7390\",\n                \"cell_phone\": \"\",\n                \"role\": \"Teste\",\n                \"industry\": null,\n                \"cep\": null,\n                \"address\": \"\",\n                \"number\": \"\",\n                \"complement\": \"\",\n                \"neighborhood\": \"\",\n                \"city\": \"Jlle\",\n                \"state\": \"SC\",\n                \"country\": \"BR\",\n                \"department\": \"Vendas\",\n                \"situation\": \"active\",\n                \"created_at\": \"2012-04-17T12:00:39.000Z\",\n                \"updated_at\": \"2022-10-10T00:18:28.000Z\",\n                \"spaces\": [\n                    {\n                        \"space_id\": 318,\n                        \"space_name\": \"LEGATUS - PRODUÇÃO\"\n                    }\n                ],\n \t\t\t\t\"url\": \"/authentication/external/?token=dVnfMtXqhwox--zv7JmdL7PgrX9vvr--6DKaslM0gplcoDEIjXV8rQ%3D%3D\"\n            }\n        ]\n    },\n    \"message\": \"success\"\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "Token da API",
+      "value": "{token_de_api}"
+    }
+  ]
+}

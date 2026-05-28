@@ -5,7 +5,7 @@ JSON Schemas (draft-2020-12) para validação de responses dos endpoints testado
 ## Convenções
 
 - 1 arquivo por endpoint/resposta: `<recurso>-<acao>-response.schema.json`
-  - Ex: `mass-enrollment-response.schema.json`, `event-participants-response.schema.json`
+  - Ex: `attendees-create-response.schema.json`, `event-participants-response.schema.json`
 - Schemas seguem JSON Schema **draft-2020-12** (suportado por Ajv 8+)
 - Campos obrigatórios em `required: [...]`. Permitir `additionalProperties: true` para tolerar campos novos do backend (anti-pattern: `additionalProperties: false` quebra a cada release do backend)
 - Validação no spec via `validateAgainstSchema(body, schema)` (helper canônico em `src/utils/schema.ts`)
@@ -17,34 +17,55 @@ JSON Schemas (draft-2020-12) para validação de responses dos endpoints testado
 3. Revisar manualmente: marcar `required`, ajustar tipos, deixar `additionalProperties: true`
 4. Salvar como `<recurso>-<acao>-response.schema.json`
 
-## Exemplo
+## Exemplo (shape REAL validada live 2026-05-28)
 
 ```json
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Mass enrollment response (POST /api/v2/users/mass)",
+  "title": "Attendees create response (POST /api/v2/attendees)",
   "type": "object",
   "additionalProperties": true,
-  "required": ["data"],
+  "required": ["participants", "errors"],
   "properties": {
-    "data": {
+    "participants": {
       "type": "object",
-      "required": ["results"],
       "properties": {
-        "results": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "required": ["email", "status"],
-            "properties": {
-              "email": { "type": "string", "format": "email" },
-              "status": { "enum": ["success", "error"] },
-              "participant_id": { "type": "integer" },
-              "error": { "type": "object" }
+        "success": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["email"],
+              "properties": {
+                "email": { "type": "string" },
+                "cpf": { "type": "string" }
+              }
+            }
+          }
+        },
+        "error": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["email"],
+              "properties": {
+                "email": { "type": "string" },
+                "cpf": { "type": ["string", "null"] },
+                "error": { "type": "array", "items": { "type": "string" } }
+              }
             }
           }
         }
       }
+    },
+    "errors": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array" }
+      ]
     }
   }
 }

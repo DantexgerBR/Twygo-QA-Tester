@@ -1,9 +1,9 @@
 ---
 contract_version: 1.2
-at_version: 2
+at_version: 3
 project: recertificacao
 project_name: "Recertificação"
-generated_at: 2026-05-27T00:00:00Z
+generated_at: 2026-05-28T00:00:00Z
 source_docs:
   - "docs/discovery.md"
   - "docs/qa-impact-map.md"
@@ -32,6 +32,23 @@ totals:
 >   TC1-TC4 (api, rodam em `tests/api/`) + TC5-TC7 (ui, rodam em
 >   `tests/features/`).
 > - `at_version` bumpa de 1 → 2; `totals.test_cases` 62 → 65; `totals.steps` 211 → 214.
+>
+> **Mudanças v3 (2026-05-28 — correções pós-validação live)**:
+> - AT v2 assumia endpoint `POST /api/v2/users/mass` com body
+>   `{participants: [{email, event_id, recertification}]}`. **ERRADO**.
+> - Validação live contra `recertificacao-testeqa.stage.twygoead.com`
+>   confirmou: endpoint real é `POST /api/v2/attendees`, body é
+>   `{participants: [{email, first_name, last_name, status, recertification}],
+>   content_ids: [<event_id>]}` (content_ids GLOBAL, não por participant).
+> - Response shape real: `{participants: {success: {<id>: [...]}, error: {<id>: [...]}}, errors}`.
+> - **Feature `recertification` JÁ está implementada no backend** (devs shipparam).
+>   Regra de negócio descoberta: backend retorna 422 quando user não está
+>   APROVADO na inscrição anterior. Mensagem: "Aluno já inscrito mas não
+>   aprovado — recertificação não criada".
+> - TC1/TC3/TC4 mantêm intent original — corrigidos endpoint, body shape,
+>   response shape. TC2 reescrito para validar a regra real de negócio
+>   (422 + mensagem específica para user não aprovado).
+> - `## Endpoints (referência)` corrigida.
 >
 > **Executor primário**: todas as suítes declaram `executor: playwright`.
 > Conforme CONTRACT.md §16, testes de API rodam no mesmo agente
@@ -157,7 +174,7 @@ totals:
 |---|---|---|---|---|
 | `POST` | `/api/v1/contents/:event_id/event_participants` (com `recertification=true`) | Admin individual | 201 | 422 `feature_disabled` |
 | `POST` | `/api/v1/learning_students/action_mass` (`action_type=mass_reenroll_participants`) | Admin massa | 202 | 422 `feature_disabled` |
-| `POST` | `/api/v2/users/mass` (com array de `recertification: true` por item) | API V2 pública | 200/207 | 207 multi-status por item |
+| `POST` | `/api/v2/attendees` (com `recertification: true` por participant + `content_ids: [<event_id>]` global) | API V2 pública | 200 (todos sucessos) | 400 (payload estrutural inválido) / 422 (regra de negócio — ex: user não aprovado para recertificar) |
 | `POST` | `/play/.../course_registrations?recertification=true` | Link público | 201 | 404 (flag off) / 422 (inelegível) |
 | `POST` | `/api/v1/play/.../subscribe` (com `recertification=true`) | Play (aluno) | 201 | 404 |
 | `GET` | `/api/v1/play/events/:id` | Play (aluno) | 200 (com `eligibleForRecertification`) | 401 |
@@ -734,41 +751,40 @@ preconditions:
 
 # Reinscrição via API V2
 
-## TC1 — POST /api/v2/users/mass com `recertification=true` cria participants reinscritos (validação API)
+## TC1 — POST /api/v2/attendees com `recertification=true` para user novo retorna 200 (validação API)
 **Prioridade**: critical
 **Tipo**: api
 **Playbooks adicionais**: []
 **RNs cobertas**: [14]
 
 ### Objetivo
-Validar fluxo principal da API V2: payload com `recertification: true` por participant retorna sucesso (HTTP 200/207) com shape de response conforme contrato (RN 14). Validação UI complementar fica em TC5.
+Validar fluxo principal da API V2: payload com `recertification: true` por participant em curso elegível retorna sucesso (HTTP 200) com shape de response conforme contrato (RN 14). Validação UI complementar fica em TC5.
 
 ### Passos
-1. Preparar payload JSON `{"participants": [{"email":"aluno1@example.com", "event_id": <id_com_recertification>, "recertification": true}]}`
+1. Preparar payload JSON `{"participants": [{"email":"<email-unique>","first_name":"Aluno","last_name":"TC1","status":"1","recertification": true}], "content_ids": [<id_com_recertification>]}` — email deve ser único por run (worker+timestamp) para idempotência
    → Payload pronto.
-2. Disparar `POST /api/v2/users/mass` com o payload, autenticado com token de admin
-   → Response retorna HTTP 200 ou 207 (multi-status).
+2. Disparar `POST /api/v2/attendees` com o payload, autenticado com Bearer token (`API_TOKEN` do `.env`)
+   → Response retorna HTTP 200.
 3. Inspecionar o corpo da resposta
-   → Item correspondente ao aluno aparece com status de sucesso, com `participant_id` numérico atribuído e sem `error`. Body valida contra `schemas/mass-enrollment-response.schema.json`.
+   → Body valida contra `schemas/attendees-create-response.schema.json`. `participants.success[<content_id>]` contém 1 item com `email` matching e `cpf`. `participants.error` ausente. `errors: []`.
 
-## TC2 — Item com `recertification=true` em curso com `has_recertification=false` retorna erro por item (HTTP 207)
+## TC2 — Recertificação de user não-aprovado em curso retorna 422 com mensagem descritiva
 **Prioridade**: high
 **Tipo**: api
 **Playbooks adicionais**: []
 **RNs cobertas**: [14.1]
 
 ### Objetivo
-Validar resposta multi-status: payload misto com itens válidos e itens inválidos retorna sucessos e erros por item (RN 14.1).
+Validar regra de negócio do backend (descoberta em validação live 2026-05-28): quando `recertification: true` em payload para participant cuja inscrição anterior NÃO está aprovada, backend recusa com HTTP 422 e mensagem específica (RN 14.1). Substitui hipótese original sobre `recertification_disabled_for_event` que NÃO foi confirmada na API real.
 
 ### Passos
-1. Preparar payload JSON com 2 items:
-   item A: `{"email":"aluno_valido@example.com", "event_id": <id_com_recertification>, "recertification": true}`
-   item B: `{"email":"aluno_invalido@example.com", "event_id": <id_SEM_recertification>, "recertification": true}`
+1. Preparar payload JSON com 2 participants e 2 content_ids — todos com `recertification: true`. Emails são estáticos (TC depende de user pré-existente: `rec-v2-tc1@example.com` foi inscrito em TC1 anterior, ainda não aprovado).
+   payload: `{"participants": [{"email":"rec-v2-tc1@example.com", "first_name":"Aluno", "last_name":"TC2a", "status":"1", "recertification": true}, {"email":"rec-v2-tc3@example.com", "first_name":"Aluno", "last_name":"TC2b", "status":"1", "recertification": true}], "content_ids": [<curso_com_rec>, <curso_sem_rec>]}`
    → Payload pronto.
-2. Disparar `POST /api/v2/users/mass` autenticado
-   → Response retorna HTTP 207 (multi-status).
+2. Disparar `POST /api/v2/attendees` autenticado
+   → Response retorna HTTP 422.
 3. Inspecionar o corpo da resposta
-   → Array de resultados: item A com sucesso e participant criado; item B com erro estruturado contendo chave I18n `reenroll_participant.errors.recertification_disabled_for_event`.
+   → `participants.error[<content_id>]` contém array com items `{email, cpf, error: ["Aluno já inscrito mas não aprovado — recertificação não criada"]}`. Mensagem de erro deve conter substring "não aprovado" e "recertificação não criada".
 
 ## TC3 — Payload sem `recertification` segue fluxo legado — regressão (validação API)
 **Prioridade**: critical
@@ -780,10 +796,10 @@ Validar resposta multi-status: payload misto com itens válidos e itens inválid
 Validar compatibilidade retroativa da API V2: payloads de integrações antigas (sem chave `recertification`) retornam sucesso HTTP 200 sem erro de validação (RN 14). Validação UI complementar (confirmar `recertification_number = 0` na listagem) fica em TC6.
 
 ### Passos
-1. Preparar payload JSON antigo `{"participants": [{"email":"aluno_legado@example.com", "event_id": <id_com_recertification>}]}` (sem `recertification`)
+1. Preparar payload JSON antigo `{"participants": [{"email":"<email-unique>","first_name":"Aluno","last_name":"TC3","status":"1"}], "content_ids": [<id_com_recertification>]}` (SEM chave `recertification`) — email único por run
    → Payload pronto.
-2. Disparar `POST /api/v2/users/mass` autenticado
-   → Response retorna HTTP 200 com sucesso. Body valida contra `schemas/mass-enrollment-response.schema.json` e item correspondente tem `status: success` sem `error`.
+2. Disparar `POST /api/v2/attendees` autenticado
+   → Response retorna HTTP 200 com sucesso. Body valida contra `schemas/attendees-create-response.schema.json`. `participants.success[<content_id>]` contém 1 item correspondente ao email enviado, sem erro.
 
 ## TC4 — Com flag OFF, parâmetro `recertification` é ignorado silenciosamente (validação API)
 **Prioridade**: high
@@ -797,8 +813,8 @@ Validar compatibilidade da API V2 com flag OFF: payload com `recertification: tr
 ### Passos
 1. Desativar a feature flag `:recertificacao` para a organização via Super Admin (Flipper)
    → Flag fica OFF para a org de teste (actor `Organization;<orgId>` removido).
-2. Disparar `POST /api/v2/users/mass` com payload contendo `recertification: true` por item, autenticado
-   → Response retorna HTTP 200 com sucesso. Body valida contra `schemas/mass-enrollment-response.schema.json`. Nenhum item com `error` referenciando feature flag.
+2. Disparar `POST /api/v2/attendees` com payload `{"participants": [{"email":"<email-unique>","first_name":"Aluno","last_name":"TC4","status":"1","recertification": true}], "content_ids": [<id_com_recertification>]}` autenticado
+   → Response retorna HTTP 200 com sucesso. Body valida contra `schemas/attendees-create-response.schema.json`. `participants.error` ausente OU vazio. Campo `errors` (string ou array) não contém substring "feature_flag" nem "recertificacao_disabled".
 
 ## TC5 — Aluno reinscrito via API V2 aparece na lista de aprendizagem com `recertification_number` incrementado (validação UI)
 **Prioridade**: critical
