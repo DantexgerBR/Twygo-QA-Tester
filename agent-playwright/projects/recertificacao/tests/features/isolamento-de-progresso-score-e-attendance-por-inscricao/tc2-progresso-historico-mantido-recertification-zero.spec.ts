@@ -8,16 +8,21 @@ test.describe('Isolamento de Progresso, Score e Attendance por Inscrição', () 
   test('TC2 — Aluno NÃO reinscrito (recertification_number = 0) mantém progresso histórico após deploy', async ({
     page,
   }) => {
-    // SEED_INVALIDO: tc2Data.cursoLegadoId=2 e alunoLegadoEmail=
-    // 'aluno.legado@example.com' são placeholders. Network mostrou
-    // GET /o/37007/events/2 → 404 (curso não existe). TC valida invariante
-    // de regressão (backfill da migration preserva progresso histórico)
-    // que precisa de aluno pré-deploy real com event_content_users.
-    // event_participant_id IS NULL — só configurável via psql no env.
-    // Destrava quando o seed for criado em staging-base-de-conhecimento.
+    // fixme LEGÍTIMO (CLAUDE.md §7.6 F — categoria DB-only): este TC valida a
+    // invariante de regressão RN 27.1 — alunos PRÉ-DEPLOY com
+    // `event_content_users.event_participant_id IS NULL` continuam contando o
+    // progresso histórico (100%) para o participant recertification_number=0.
+    //
+    // A pré-condição é um ARTEFATO DE BACKFILL DA MIGRATION: registros com
+    // `event_participant_id IS NULL` só existem em dados criados ANTES do
+    // deploy de recertificação. NÃO é provisionável via UI admin (matricular
+    // um aluno hoje já grava o event_participant_id) nem via reinscrição.
+    // Validar exige inspeção direta no banco (psql/Rails console) no env
+    // staging-recertificacao (37048) — fora do escopo Playwright até agent-db
+    // (V2 do CONTRACT.md). Não é caso da skill provisionar-seed.
     test.fixme(
       true,
-      'seed inválido — cursoLegadoId=2 retorna 404 e aluno.legado@example.com é placeholder. NEEDS_SEED (aluno pré-deploy com event_participant_id IS NULL).',
+      'DB-only: requer aluno pré-deploy com event_content_users.event_participant_id IS NULL — artefato de backfill da migration, não provisionável via UI. Validar via psql/Rails console no env 37048 (agent-db V2).',
     );
     await allure.epic('Twygo - Recertificação');
     await allure.feature(
@@ -30,7 +35,7 @@ test.describe('Isolamento de Progresso, Score e Attendance por Inscrição', () 
     await allure.tag('REGRESSION_GUARD');
     await allure.parameter(
       'feature_flag',
-      ':recertificacao=ON (assumido em staging-base-de-conhecimento)',
+      ':recertificacao=ON (env staging-recertificacao 37048)',
     );
 
     await allure.step(

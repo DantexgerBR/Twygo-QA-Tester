@@ -1,23 +1,23 @@
 {
-  "runId": "isolamento-de-progresso-score-e-attendance-por-inscricao_20260526-100424",
+  "runId": "isolamento-de-progresso-score-e-attendance-por-inscricao_20260527-153038",
   "scope": "Apenas testsuite contendo \"Isolamento de Progresso, Score e Attendance por Inscrição\"",
   "tests": {
     "total": 4,
     "passed": 0,
-    "failed": 0,
-    "skipped": 4,
-    "durationMs": 2277
+    "failed": 1,
+    "skipped": 3,
+    "durationMs": 28839
   },
   "exploratory": {
     "errors": 0,
     "warnings": 0,
     "info": 0,
-    "testsuites": 1,
-    "tests": 44,
+    "testsuites": 0,
+    "tests": 1,
     "outOfScope": {
-      "errors": 144,
-      "warnings": 124,
-      "info": 2
+      "errors": 9,
+      "warnings": 5,
+      "info": 1
     },
     "activeProbes": {
       "errors": 0,

@@ -1,0 +1,463 @@
+{
+  "config": {
+    "configFile": "C:\\TwygoQA\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "C:/TwygoQA/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "C:\\TwygoQA\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/TwygoQA/twygo-agents-qa/agent-playwright/outputs/recertificacao/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/TwygoQA/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "tests/auth/**/*.spec.ts",
+          "projects/recertificacao/tests/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/recertificacao/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc1-progresso-score-attendance-zerados.spec.ts",
+      "file": "projects/recertificacao/tests/features/isolamento-de-progresso-score-e-attendance-por-inscricao/tc1-progresso-score-attendance-zerados.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Isolamento de Progresso, Score e Attendance por Inscrição",
+          "file": "projects/recertificacao/tests/features/isolamento-de-progresso-score-e-attendance-por-inscricao/tc1-progresso-score-attendance-zerados.spec.ts",
+          "line": 10,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC1 — Aluno reinscrito tem progress/score/attendance zerados na nova inscrição",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 13285,
+                      "error": {
+                        "message": "Error: BUG DE PRODUTO: POST /api/v1/o/37048/contents/806755/event_participants retornou 422 ao reinscrever aluno elegível (aprovado, 100%, cert Emitido, recertification_number=0) com a flag :recertificacao ON e o switch has_recertification ON. Body: {\"data\":null,\"message\":\"Error Inesperado\",\"status\":422}. Reinscrição individual quebrada no env 37048 — corrigir o endpoint.\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m400\u001b[39m\nReceived:   \u001b[31m422\u001b[39m",
+                        "stack": "Error: BUG DE PRODUTO: POST /api/v1/o/37048/contents/806755/event_participants retornou 422 ao reinscrever aluno elegível (aprovado, 100%, cert Emitido, recertification_number=0) com a flag :recertificacao ON e o switch has_recertification ON. Body: {\"data\":null,\"message\":\"Error Inesperado\",\"status\":422}. Reinscrição individual quebrada no env 37048 — corrigir o endpoint.\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m400\u001b[39m\nReceived:   \u001b[31m422\u001b[39m\n    at C:\\TwygoQA\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc1-progresso-score-attendance-zerados.spec.ts:112:11",
+                        "location": {
+                          "file": "C:\\TwygoQA\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc1-progresso-score-attendance-zerados.spec.ts",
+                          "column": 11,
+                          "line": 112
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 110 |\u001b[39m             \u001b[32m`Body: ${reenrollBody.slice(0, 200)}. `\u001b[39m \u001b[33m+\u001b[39m\n \u001b[90m 111 |\u001b[39m             \u001b[32m`Reinscrição individual quebrada no env 37048 — corrigir o endpoint.`\u001b[39m\u001b[33m,\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 112 |\u001b[39m         )\u001b[33m.\u001b[39mtoBeLessThan(\u001b[35m400\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m           \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 113 |\u001b[39m       }\u001b[33m,\u001b[39m\n \u001b[90m 114 |\u001b[39m     )\u001b[33m;\u001b[39m\n \u001b[90m 115 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\TwygoQA\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc1-progresso-score-attendance-zerados.spec.ts",
+                            "column": 11,
+                            "line": 112
+                          },
+                          "message": "Error: BUG DE PRODUTO: POST /api/v1/o/37048/contents/806755/event_participants retornou 422 ao reinscrever aluno elegível (aprovado, 100%, cert Emitido, recertification_number=0) com a flag :recertificacao ON e o switch has_recertification ON. Body: {\"data\":null,\"message\":\"Error Inesperado\",\"status\":422}. Reinscrição individual quebrada no env 37048 — corrigir o endpoint.\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m400\u001b[39m\nReceived:   \u001b[31m422\u001b[39m\n\n  110 |             `Body: ${reenrollBody.slice(0, 200)}. ` +\n  111 |             `Reinscrição individual quebrada no env 37048 — corrigir o endpoint.`,\n> 112 |         ).toBeLessThan(400);\n      |           ^\n  113 |       },\n  114 |     );\n  115 |\n    at C:\\TwygoQA\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc1-progresso-score-attendance-zerados.spec.ts:112:11"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Reinscrever o aluno aprovado (progress=100, cert Emitido, recertification_number=0) → novo participant com recertification_number=1",
+                          "duration": 8320,
+                          "error": {
+                            "message": "Error: BUG DE PRODUTO: POST /api/v1/o/37048/contents/806755/event_participants retornou 422 ao reinscrever aluno elegível (aprovado, 100%, cert Emitido, recertification_number=0) com a flag :recertificacao ON e o switch has_recertification ON. Body: {\"data\":null,\"message\":\"Error Inesperado\",\"status\":422}. Reinscrição individual quebrada no env 37048 — corrigir o endpoint.\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m400\u001b[39m\nReceived:   \u001b[31m422\u001b[39m",
+                            "stack": "Error: BUG DE PRODUTO: POST /api/v1/o/37048/contents/806755/event_participants retornou 422 ao reinscrever aluno elegível (aprovado, 100%, cert Emitido, recertification_number=0) com a flag :recertificacao ON e o switch has_recertification ON. Body: {\"data\":null,\"message\":\"Error Inesperado\",\"status\":422}. Reinscrição individual quebrada no env 37048 — corrigir o endpoint.\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m400\u001b[39m\nReceived:   \u001b[31m422\u001b[39m\n    at C:\\TwygoQA\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc1-progresso-score-attendance-zerados.spec.ts:112:11",
+                            "location": {
+                              "file": "C:\\TwygoQA\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc1-progresso-score-attendance-zerados.spec.ts",
+                              "column": 11,
+                              "line": 112
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 110 |\u001b[39m             \u001b[32m`Body: ${reenrollBody.slice(0, 200)}. `\u001b[39m \u001b[33m+\u001b[39m\n \u001b[90m 111 |\u001b[39m             \u001b[32m`Reinscrição individual quebrada no env 37048 — corrigir o endpoint.`\u001b[39m\u001b[33m,\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 112 |\u001b[39m         )\u001b[33m.\u001b[39mtoBeLessThan(\u001b[35m400\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m           \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 113 |\u001b[39m       }\u001b[33m,\u001b[39m\n \u001b[90m 114 |\u001b[39m     )\u001b[33m;\u001b[39m\n \u001b[90m 115 |\u001b[39m\u001b[0m"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-05-27T18:30:05.614Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\TwygoQA\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-490eb-e-zerados-na-nova-inscrição-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVjZXJ0aWZpY2HDp8OjbyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6Iklzb2xhbWVudG8gZGUgUHJvZ3Jlc3NvLCBTY29yZSBlIEF0dGVuZGFuY2UgcG9yIEluc2NyacOnw6NvIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJBbHVubyByZWluc2NyaXRvIHRlbSBwcm9ncmVzcy9zY29yZS9hdHRlbmRhbmNlIHplcmFkb3MgbmEgbm92YSBpbnNjcmnDp8OjbyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7InBhcmFtZXRlcnMiOlt7Im5hbWUiOiJjdXJzbyIsInZhbHVlIjoiQ29uc3RydWluZG8gdGltZXMgZGUgYWx0YSBwZXJmb3JtYW5jZSAoaWQgODA2NzU1KSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7InBhcmFtZXRlcnMiOlt7Im5hbWUiOiJhbHVub19lbGVnaXZlbCIsInZhbHVlIjoicmVjZXJ0aWZpY2FjYW9ldmVyMUB0d3lnby5jb20ifV19fQ=="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\TwygoQA\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-490eb-e-zerados-na-nova-inscrição-chromium\\test-failed-2.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\TwygoQA\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-490eb-e-zerados-na-nova-inscrição-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\TwygoQA\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-490eb-e-zerados-na-nova-inscrição-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\TwygoQA\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-490eb-e-zerados-na-nova-inscrição-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\TwygoQA\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-490eb-e-zerados-na-nova-inscrição-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\TwygoQA\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc1-progresso-score-attendance-zerados.spec.ts",
+                        "column": 11,
+                        "line": 112
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "63ff5443f9bbc51e60d4-51e6d8f0fccb6ac377b2",
+              "file": "projects/recertificacao/tests/features/isolamento-de-progresso-score-e-attendance-por-inscricao/tc1-progresso-score-attendance-zerados.spec.ts",
+              "line": 59,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc2-progresso-historico-mantido-recertification-zero.spec.ts",
+      "file": "projects/recertificacao/tests/features/isolamento-de-progresso-score-e-attendance-por-inscricao/tc2-progresso-historico-mantido-recertification-zero.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Isolamento de Progresso, Score e Attendance por Inscrição",
+          "file": "projects/recertificacao/tests/features/isolamento-de-progresso-score-e-attendance-por-inscricao/tc2-progresso-historico-mantido-recertification-zero.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC2 — Aluno NÃO reinscrito (recertification_number = 0) mantém progresso histórico após deploy",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "DB-only: requer aluno pré-deploy com event_content_users.event_participant_id IS NULL — artefato de backfill da migration, não provisionável via UI. Validar via psql/Rails console no env 37048 (agent-db V2).",
+                      "location": {
+                        "file": "C:\\TwygoQA\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc2-progresso-historico-mantido-recertification-zero.spec.ts",
+                        "line": 23,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "skipped",
+                      "duration": 15554,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T18:30:05.614Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "DB-only: requer aluno pré-deploy com event_content_users.event_participant_id IS NULL — artefato de backfill da migration, não provisionável via UI. Validar via psql/Rails console no env 37048 (agent-db V2).",
+                          "location": {
+                            "file": "C:\\TwygoQA\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc2-progresso-historico-mantido-recertification-zero.spec.ts",
+                            "line": 23,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\TwygoQA\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-53d5c-resso-histórico-após-deploy-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\TwygoQA\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-53d5c-resso-histórico-após-deploy-chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\TwygoQA\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-53d5c-resso-histórico-após-deploy-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\TwygoQA\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-53d5c-resso-histórico-após-deploy-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "579aecd8d5c957b4a6e9-0feb4f612946d060b6d6",
+              "file": "projects/recertificacao/tests/features/isolamento-de-progresso-score-e-attendance-por-inscricao/tc2-progresso-historico-mantido-recertification-zero.spec.ts",
+              "line": 8,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc3-indice-unique-participant-rejeita-duplicata.spec.ts",
+      "file": "projects/recertificacao/tests/features/isolamento-de-progresso-score-e-attendance-por-inscricao/tc3-indice-unique-participant-rejeita-duplicata.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Isolamento de Progresso, Score e Attendance por Inscrição",
+          "file": "projects/recertificacao/tests/features/isolamento-de-progresso-score-e-attendance-por-inscricao/tc3-indice-unique-participant-rejeita-duplicata.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC3 — Índice único `unique_participant` rejeita duplicata `(user_id, event_id, partner_rel, recertification_number)`",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "requer validação direta no banco — DB-pure fora do escopo Playwright. Validar manualmente via psql tentando INSERT duplicado e capturando 23505 unique_violation.",
+                      "location": {
+                        "file": "C:\\TwygoQA\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc3-indice-unique-participant-rejeita-duplicata.spec.ts",
+                        "line": 16,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T18:30:04.142Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "requer validação direta no banco — DB-pure fora do escopo Playwright. Validar manualmente via psql tentando INSERT duplicado e capturando 23505 unique_violation.",
+                          "location": {
+                            "file": "C:\\TwygoQA\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc3-indice-unique-participant-rejeita-duplicata.spec.ts",
+                            "line": 16,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "c3af970dae9a53f638ca-b1051bbead48b0a5cfc0",
+              "file": "projects/recertificacao/tests/features/isolamento-de-progresso-score-e-attendance-por-inscricao/tc3-indice-unique-participant-rejeita-duplicata.spec.ts",
+              "line": 21,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc4-uniqueness-email-cpf-escopa-por-recertification.spec.ts",
+      "file": "projects/recertificacao/tests/features/isolamento-de-progresso-score-e-attendance-por-inscricao/tc4-uniqueness-email-cpf-escopa-por-recertification.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Isolamento de Progresso, Score e Attendance por Inscrição",
+          "file": "projects/recertificacao/tests/features/isolamento-de-progresso-score-e-attendance-por-inscricao/tc4-uniqueness-email-cpf-escopa-por-recertification.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC4 — Validações Rails de email/cpf escopam por `[:event_id, :recertification_number]`",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "requer validação direta no banco + Rails uniqueness validator — DB-pure. Validar manualmente via Rails console executando EventParticipant.create! em sequência.",
+                      "location": {
+                        "file": "C:\\TwygoQA\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc4-uniqueness-email-cpf-escopa-por-recertification.spec.ts",
+                        "line": 15,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-27T18:30:04.143Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "requer validação direta no banco + Rails uniqueness validator — DB-pure. Validar manualmente via Rails console executando EventParticipant.create! em sequência.",
+                          "location": {
+                            "file": "C:\\TwygoQA\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc4-uniqueness-email-cpf-escopa-por-recertification.spec.ts",
+                            "line": 15,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "4301119fce538411fb52-0018a2e2705183bd9b77",
+              "file": "projects/recertificacao/tests/features/isolamento-de-progresso-score-e-attendance-por-inscricao/tc4-uniqueness-email-cpf-escopa-por-recertification.spec.ts",
+              "line": 20,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-05-27T18:29:07.954Z",
+    "duration": 89106.67700000001,
+    "expected": 0,
+    "skipped": 3,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

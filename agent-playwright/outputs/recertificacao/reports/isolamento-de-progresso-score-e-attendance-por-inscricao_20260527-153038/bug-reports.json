@@ -1,0 +1,92 @@
+{
+  "generatedAt": "2026-05-27T18:30:37.996Z",
+  "project": "recertificacao",
+  "totalRed": 1,
+  "reports": [
+    {
+      "id": "isolamento-de-progresso-score-e-attendance-por-inscricao__tc1-aluno-reinscrito-tem-progress-score-attendance-zerados-na-nova-inscricao",
+      "title": "TC1 — Aluno reinscrito tem progress/score/attendance zerados na nova inscrição — Error: BUG DE PRODUTO: POST /api/v1/o/37048/contents/806755/event_participants r",
+      "testsuite": "Isolamento de Progresso, Score e Attendance por Inscrição",
+      "testcase": "TC1 — Aluno reinscrito tem progress/score/attendance zerados na nova inscrição",
+      "file": "projects/recertificacao/tests/features/isolamento-de-progresso-score-e-attendance-por-inscricao/tc1-progresso-score-attendance-zerados.spec.ts",
+      "status": "failed",
+      "durationMs": 13285,
+      "categoriaSugerida": "inconclusivo",
+      "categoriaConfianca": "baixa",
+      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
+      "severity": "media",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-recertificacao",
+        "baseUrl": "https://recertificacao-testeqa.stage.twygoead.com/",
+        "orgId": "37048",
+        "browser": "chromium",
+        "user": "agents.richard@claude.com"
+      },
+      "buildCommit": "4bdfeb1",
+      "generatedAt": "2026-05-27T18:30:37.996Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Reinscrever o aluno aprovado (progress=100, cert Emitido, recertification_number=0) → novo participant com recertification_number=1",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: BUG DE PRODUTO: POST /api/v1/o/37048/contents/806755/event_participants retornou 422 ao reinscrever aluno elegível (aprovado, 100%, cert Emitido, recertification_number=0) com a flag :recertificacao ON e o switch has_recertification ON. Body: {\"data\":null,\"message\":\"Error Inesperado\",\"status\":422}. Reinscrição individual quebrada no env 37048 — corrigir o endpoint.\n\nexpect(received).toBeLessThan(expected)\n\nExpected: < 400\nReceived:   422",
+      "errorLocation": "C:\\TwygoQA\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc1-progresso-score-attendance-zerados.spec.ts:112:11",
+      "network": [
+        {
+          "method": "POST",
+          "url": "https://recertificacao-testeqa.stage.twygoead.com/api/v1/o/37048/contents/806755/event_participants",
+          "status": 422,
+          "inScope": false
+        }
+      ],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-recertificacao-te-490eb-e-zerados-na-nova-inscrição-chromium/test-finished-1.png"
+        },
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-recertificacao-te-490eb-e-zerados-na-nova-inscrição-chromium/test-failed-2.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-recertificacao-te-490eb-e-zerados-na-nova-inscrição-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-recertificacao-te-490eb-e-zerados-na-nova-inscrição-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-recertificacao-te-490eb-e-zerados-na-nova-inscrição-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-recertificacao-te-490eb-e-zerados-na-nova-inscrição-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37048",
+        "userId": null
+      }
+    }
+  ]
+}
