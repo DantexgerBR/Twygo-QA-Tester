@@ -3,6 +3,7 @@ import type { Browser } from '@playwright/test';
 import { resolve } from 'node:path';
 import { ProfileSwitcher } from '../pages/ProfileSwitcher.js';
 import { SeedAdminPage } from '../../projects/recertificacao/pages/SeedAdminPage.js';
+import { fixedSeed } from '../../projects/recertificacao/data/fixed-seed.data.js';
 
 /**
  * Fixtures canônicas de seed para o projeto Recertificação.
@@ -108,6 +109,33 @@ export type SeedFixtures = {
   alunoAprovadoSeed: {
     cursoId: number;
     cursoNome: string;
+    alunoEmail: string;
+    alunoSenha: string;
+    attendeeId: number | null;
+    progress: number;
+    approvedAt: string | null;
+    certificateId: number | null;
+    certificateLink: string | null;
+  };
+  /**
+   * Aluno aprovado no CURSO FIXO 807403 ("Curso com atividades").
+   * Diferença de `alunoAprovadoSeed`: NÃO cria curso novo — reusa o
+   * curso já existente em `fixed-seed.cursoComAtividadesEAprovadoEventId`
+   * que tem 10 atividades cobrindo todos os tipos (texto, página, PDF,
+   * vídeo, SCORM, aula, questionário).
+   *
+   * Cria apenas: aluno worker-isolated com senha + matrícula + completar.
+   * Custo: ~3-5min (sem o overhead de criar curso + ligar
+   * has_recertification). `has_recertification` do 807403 já está ON.
+   *
+   * Use em specs que dependem de "aluno aprovado em curso elegível para
+   * reinscrição" (Suite 2 e 3 do projeto Recertificação) — encurta o
+   * pipeline conforme sugestão do usuário em 2026-05-28.
+   *
+   * Cleanup: desmatricula aluno (não deleta o curso fixo).
+   */
+  alunoAprovadoNoCursoFixoSeed: {
+    cursoId: number;
     alunoEmail: string;
     alunoSenha: string;
     attendeeId: number | null;
@@ -284,6 +312,66 @@ export const test = base.extend<SeedFixtures>({
         certificateLink: result.certificate?.certificate_link ?? null,
       });
       // Cleanup é herdado de alunoComSenhaSeed + cursoSeed.
+    },
+    { scope: 'test' },
+  ],
+
+  alunoAprovadoNoCursoFixoSeed: [
+    async ({ browser }, use, testInfo) => {
+      const cursoId = fixedSeed.cursoComAtividadesEAprovadoEventId;
+      const wi = testInfo.workerIndex;
+      const ts = Date.now();
+      const alunoEmail = `aluno-aprovado-fixo-w${wi}-${ts}@example.com`;
+      const alunoSenha = 'Senha123!';
+      const alunoFirstName = 'AlunoAprovado';
+      const alunoLastName = `W${wi}T${ts}`;
+
+      // 1. Cria aluno com senha matriculado no curso fixo.
+      // matricularAlunoComSenha cria o usuário se não existir + matricula
+      // no curso identificado por `contentName`. O nome do curso 807403
+      // é "Curso com atividades".
+      await withAdminPage(browser, (_p, seed) =>
+        seed.matricularAlunoComSenha({
+          contentName: 'Curso com atividades',
+          alunoEmail,
+          alunoFirstName,
+          alunoLastName,
+          alunoSenha,
+        }),
+      );
+
+      // 2. Lista atividades canonicamente (admin context, fonte de verdade)
+      //    + Roda pipeline de engajamento até cert.
+      const result = await withAdminPage(browser, async (_p, seed) => {
+        const atividades = await seed.listarAtividades(cursoId);
+        const activityTitles = atividades.map((a) => a.title);
+        return seed.completarCursoComoAluno({
+          browser,
+          cursoId,
+          alunoEmail,
+          alunoSenha,
+          activityTitles,
+        });
+      });
+
+      await use({
+        cursoId,
+        alunoEmail,
+        alunoSenha,
+        attendeeId: result.attendeeId,
+        progress: result.progress,
+        approvedAt: result.approvedAt,
+        certificateId: result.certificate?.certificate_id ?? null,
+        certificateLink: result.certificate?.certificate_link ?? null,
+      });
+
+      // Cleanup: desmatricula aluno do curso fixo (não deleta o curso).
+      await withAdminPage(browser, (_p, seed) =>
+        seed.desmatricularAlunoSafe({
+          contentName: 'Curso com atividades',
+          alunoEmail,
+        }),
+      );
     },
     { scope: 'test' },
   ],

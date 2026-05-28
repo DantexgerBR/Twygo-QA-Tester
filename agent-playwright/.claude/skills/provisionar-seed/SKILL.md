@@ -1,7 +1,7 @@
 ---
 name: provisionar-seed
 description: Quando um TC Playwright declara pré-condição como "curso pré-existente", "curso com has_recertification=true", "aluno matriculado", "participant com progresso", "aluno com certificado emitido", "trilha com 3 cursos filhos", etc, o spec NÃO pode marcar `test.fixme(true, 'seed inválido')` nem depender de IDs hardcoded em `.data.ts` placeholder. Em vez disso, o spec **declara dependência via fixture canônica** (`cursoSeed`/`cursoLiberadoSeed`/`cursoComRecertificacaoSeed`/`cursoComAtividadesMarcaveisSeed`/`alunoMatriculadoSeed`/`alunoComSenhaSeed`/`alunoAprovadoSeed` em `src/fixtures/seed-fixtures.ts`) — a fixture provê o recurso (criando ou reusando) e faz cleanup automático `afterAll` via variant `*_safe`. Mapping pré-condição→fixture é tabela canônica que generator/healer consultam. Fluxo do seed cobre: criação via UI admin (rotas validadas live `/contents/new?kind=N` facelift React p/ Curso/Trilha/Pacote, `/users/new` Haml legado p/ Usuário), matrícula via lista→more_vert→"Inscrição"→drawer→"Adicionar", matrícula COM SENHA via expand h3 colapsado + scroll progressivo, configuração de curso (publicar via tab Identificação, ligar `has_recertification` via tab Acesso switch Chakra), engajamento do aluno via `/e/{id}/learn` + checkbox "Marcar como concluído" em vídeo/SCORM/Aula configurados no admin, emissão automática de cert validável via `/api/v2/attendees`. Anti-patterns proibidos: `/events/new` Haml deprecated, `/contents/{id}/learning_students` (404), `fixme` por seed quando fixture cobre. Skill define o padrão canônico — catálogo de helpers (`createCurso`/`createTrilha`/`createPacote`/`criarUsuarioAluno`/`matricularAluno`/`matricularAlunoComSenha`/`setHasRecertification`/`publicarCurso`/`completarCursoComoAluno`/`desmatricularAlunoSafe`) + login OAuth do aluno + validar cert via API V2, mapping kind→Recurso, naming worker-isolated, scope worker pra amortizar custo, quando reusar `data/fixed-seed.data.ts` (seed permanente), e quando `fixme` por seed AINDA é legítimo (DB-only/mailer/Flipper toggle). Use ao gerar/revisar QUALQUER spec novo que tenha pré-condição "X existe no env" — converter em ação automatizada via fixture.
-version: 1.6.1
+version: 1.6.2
 ---
 
 # provisionar-seed
@@ -1387,6 +1387,47 @@ novo:
   com criação via UI precisa seguir
 
 ## Histórico
+
+- **v1.6.2 (2026-05-28)**: pipeline alunoAprovadoNoCursoFixoSeed
+  destravado parcialmente:
+  - **Helper `completarCursoComoAluno` aceita `activityTitles?`**: a
+    sidebar do aluno no facelift NÃO renderiza títulos como `h2`
+    (cards Chakra com hierarchy `chakra-card > strong/heading bold`).
+    A v1.6.1 do helper procurava `h2:has-text(name)` → cards vazios →
+    aluno não interagia com nada → progress=0%. Agora caller fornece
+    `activityTitles` (obtidos via `listarAtividades` em context admin
+    ANTES do login do aluno); helper itera com `getByText(title, exact)`
+    + sobe ao card clicável. Validado live 2026-05-28: progress
+    SUBIU de 0% → **80%** + cert **5027076** emitido em 3.3min.
+  - **Helper cobre questionário** (`responderQuestionarioSeed`):
+    detecta botão "Iniciar"/"Iniciar prova", marca primeira alternativa
+    em cada pergunta, clica "Próxima/Finalizar". Funciona mesmo com
+    score baixo (curso 807403 default = 1000 tentativas).
+  - **Helper cobre scroll-to-bottom** pra Texto/Página/PDF (Twygo marca
+    como concluído quando aluno visualiza até o fim do conteúdo).
+  - **Fixture nova `alunoAprovadoNoCursoFixoSeed`** em
+    `src/fixtures/seed-fixtures.ts`: reusa curso fixo 807403 (sugerido
+    pelo usuário) — NÃO cria curso novo, NÃO precisa ligar
+    `has_recertification`. Cria aluno worker-isolated + matricula +
+    completa. Cleanup: desmatricula. Custo ~3-5min (vs ~9min de
+    `alunoAprovadoSeed` que cria curso vazio).
+  - **NOVO GAP descoberto — TC3 state-conflict**: ao completar engajamento
+    no 807403 (`has_recertification=true`), o backend produz 2 linhas
+    pro mesmo aluno em `/e/{id}/learning`:
+      * Linha 1: participant Pendente, progress 0% (provavelmente
+        recertification_number=N+1 criada automaticamente)
+      * Linha 2: participant Emitido, progress 80%, cert válido
+    `LearningStudentsPage.getRowByEmail(email).first()` pega o Pendente,
+    menu kebab sem "Iniciar reinscrição" → TC3 não dispara modal.
+    Roadmap pra resolver: `seed-roadmap-tc3-state-conflict` —
+    diagnosticar se duplicação vem de `matricularAlunoComSenha` ou da
+    auto-recertification do backend; adicionar
+    `getRowByEmail({ certState })` ou usar variant de POM por
+    recertification_number.
+  - **Lição**: pipeline cert-emitido funciona, mas estado-pós-pipeline
+    é mais rico (2 participants) do que o estado-esperado-pelo-TC
+    (1 participant cert emitido sem reinscrição pendente). Specs
+    precisam adaptar ou backend precisa documentar a auto-recertification.
 
 - **v1.6.1 (2026-05-28)**: descoberta validada live executando Suite 2:
   - **Toda a Suite 2 UI (TC1-TC4)** depende do mesmo gap —

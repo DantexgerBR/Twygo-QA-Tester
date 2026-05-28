@@ -1145,6 +1145,14 @@ export class SeedAdminPage extends BasePage {
     apiToken?: string;
     /** Timeout total pra cert (default 60s). */
     certTimeoutMs?: number;
+    /**
+     * Títulos canônicos das atividades (obtidos via `listarAtividades`
+     * no contexto admin antes desta chamada). Quando fornecido, o helper
+     * pula a heurística `h2:has-text()` e itera os títulos exatos.
+     * Mais robusto: a sidebar do aluno usa estrutura Chakra que nem
+     * sempre tem h2 — `getByText(title, exact)` resolve.
+     */
+    activityTitles?: string[];
   }): Promise<{
     attendeeId: number | null;
     progress: number;
@@ -1185,24 +1193,57 @@ export class SeedAdminPage extends BasePage {
       await alunoPage.getByRole('button', { name: /^APRENDER$/i }).click();
       await alunoPage.waitForLoadState('networkidle', { timeout: 15_000 }).catch(() => undefined);
 
-      // 4. Iterar cards de atividade da sidebar (h2 nomes curtos).
-      const cards = await alunoPage.evaluate(() =>
-        Array.from(document.querySelectorAll('h2'))
-          .filter(
-            (h) =>
-              (h as HTMLElement).offsetParent !== null &&
-              (h.textContent || '').trim().length > 0 &&
-              (h.textContent || '').trim().length < 50,
-          )
-          .map((h) => (h.textContent || '').trim()),
-      );
+      // 4. Iterar cards de atividade da sidebar.
+      //
+      // **Fonte de verdade**: lista canônica do admin (`listarAtividades`)
+      // já consultada antes do login do aluno (parâmetro `activityTitles`).
+      // Razão: a sidebar do aluno renderiza cards em estrutura React
+      // diferente do `h2:has-text()` que a v1 do helper assumia (validado
+      // live 2026-05-28 — screenshot mostra cards com hierarquia
+      // `chakra-card > heading bold`, não h2 simples).
+      //
+      // **Seletor robusto**: para cada title canônico, tenta achar o
+      // card via 3 caminhos em cascata:
+      //   1. `text=<title>` exato (Playwright resolve via texto visível)
+      //   2. Ancestor clicável mais próximo (`button | [role=button] | a`)
+      //   3. Fallback no próprio elemento de texto
+      const cards = data.activityTitles ??
+        (await alunoPage.evaluate(() =>
+          Array.from(document.querySelectorAll('h2'))
+            .filter(
+              (h) =>
+                (h as HTMLElement).offsetParent !== null &&
+                (h.textContent || '').trim().length > 0 &&
+                (h.textContent || '').trim().length < 50,
+            )
+            .map((h) => (h.textContent || '').trim()),
+        ));
       for (const name of cards) {
-        const card = alunoPage.locator(`h2:has-text("${name}")`).first();
+        // Procura pelo texto exato (qualquer tag) e sobe para o
+        // ancestor clicável. Locator `getByText` com exact:true é mais
+        // estável que seletor por tag.
+        const cardByText = alunoPage.getByText(name, { exact: true }).first();
+        const card = cardByText;
         try {
           await card.scrollIntoViewIfNeeded({ timeout: 3_000 });
           await card.click({ timeout: 5_000 });
           await alunoPage.waitForTimeout(2_000);
-          // Checkbox "Marcar como concluído" — só em vídeo/SCORM/Aula
+
+          // Scroll-to-bottom dentro do card — Twygo marca Texto/Página/PDF
+          // como concluído quando aluno visualiza até o fim. Roda scroll
+          // progressivo na área de conteúdo principal do card. Idempotente
+          // pra cards onde já há checkbox visível (vai chegar nele depois).
+          await alunoPage.evaluate(async () => {
+            const total = document.body.scrollHeight;
+            for (let y = 0; y < total; y += 500) {
+              window.scrollTo(0, y);
+              await new Promise((r) => setTimeout(r, 120));
+            }
+            window.scrollTo(0, total);
+          });
+          await alunoPage.waitForTimeout(800);
+
+          // Caminho 1: Checkbox "Marcar como concluído" — vídeo/SCORM/Aula
           // configurados com a opção no admin.
           const completoCheckbox = alunoPage
             .locator(
@@ -1213,6 +1254,21 @@ export class SeedAdminPage extends BasePage {
             await completoCheckbox.click({ force: true }).catch(() => undefined);
             await alunoPage.waitForTimeout(1_500);
           }
+
+          // Caminho 2: Questionário — botão "Iniciar" abre as perguntas.
+          // Responde primeira opção em cada pergunta e clica
+          // Próxima/Finalizar até o fim. Funciona mesmo com score baixo —
+          // a atividade fica marcada "tentada/concluída" e o Twygo
+          // permite múltiplas tentativas (curso 807403: 1000 tentativas).
+          const iniciarBtn = alunoPage
+            .getByRole('button', { name: /^Iniciar( prova| questionário)?$/i })
+            .first();
+          if (await iniciarBtn.isVisible({ timeout: 1_500 }).catch(() => false)) {
+            await iniciarBtn.click().catch(() => undefined);
+            await alunoPage.waitForTimeout(1_500);
+            await this.responderQuestionarioSeed(alunoPage);
+          }
+
           // Fecha modal de aprovação se disparar — caller já considera
           // sucesso, mas spec precisa continuar pra completar outras
           // atividades remanescentes (idempotente).
@@ -1270,6 +1326,68 @@ export class SeedAdminPage extends BasePage {
       };
     } finally {
       await lookupCtx.dispose();
+    }
+  }
+
+  /**
+   * Helper privado: itera o fluxo de questionário no /e/{id}/learn.
+   *
+   * Twygo questionário canônico: cada pergunta exibe alternativas como
+   * radio buttons + botão "Próxima"/"Próximo". Última pergunta tem
+   * "Finalizar"/"Concluir" que envia respostas e exibe modal de
+   * resultado. Estratégia: responder primeira alternativa visível em
+   * cada pergunta (chute simples). Score baixo OK — atividade fica
+   * marcada como tentada/concluída (curso 807403 tem 1000 tentativas).
+   *
+   * Loop encerra em 1 de 3 condições:
+   *  - Botão "Finalizar/Concluir" clicado (caminho normal)
+   *  - Não há mais radio buttons visíveis (questionário ended)
+   *  - Limite de iterações atingido (safety net pra evitar loop infinito)
+   */
+  private async responderQuestionarioSeed(
+    alunoPage: import('@playwright/test').Page,
+  ): Promise<void> {
+    const MAX_PERGUNTAS = 50; // safety net
+    for (let i = 0; i < MAX_PERGUNTAS; i += 1) {
+      // Marca primeira alternativa visível (radio)
+      const radio = alunoPage.locator('input[type="radio"]:visible').first();
+      const temRadio = await radio
+        .isVisible({ timeout: 1_500 })
+        .catch(() => false);
+      if (!temRadio) break;
+      await radio.check({ force: true }).catch(() => undefined);
+      await alunoPage.waitForTimeout(400);
+
+      // Procura botão de avanço/finalização
+      const finalizar = alunoPage
+        .getByRole('button', { name: /^(Finalizar|Concluir|Enviar respostas)$/i })
+        .first();
+      const proxima = alunoPage
+        .getByRole('button', { name: /^(Próxima|Próximo|Avançar)$/i })
+        .first();
+
+      if (await finalizar.isVisible({ timeout: 800 }).catch(() => false)) {
+        await finalizar.click({ force: true }).catch(() => undefined);
+        await alunoPage.waitForTimeout(2_000);
+        // Confirma modal de envio se aparecer
+        const confirmar = alunoPage
+          .getByRole('button', { name: /^(Sim|Confirmar|Enviar)$/i })
+          .first();
+        if (await confirmar.isVisible({ timeout: 1_000 }).catch(() => false)) {
+          await confirmar.click({ force: true }).catch(() => undefined);
+          await alunoPage.waitForTimeout(1_500);
+        }
+        return;
+      }
+
+      if (await proxima.isVisible({ timeout: 800 }).catch(() => false)) {
+        await proxima.click({ force: true }).catch(() => undefined);
+        await alunoPage.waitForTimeout(1_000);
+        continue;
+      }
+
+      // Sem botão de avanço — questionário pode ter terminado
+      break;
     }
   }
 
