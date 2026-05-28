@@ -1,9 +1,9 @@
 ---
-contract_version: 1.1
-at_version: 1
+contract_version: 1.2
+at_version: 2
 project: recertificacao
 project_name: "Recertificação"
-generated_at: 2026-05-25T00:00:00Z
+generated_at: 2026-05-27T00:00:00Z
 source_docs:
   - "docs/discovery.md"
   - "docs/qa-impact-map.md"
@@ -12,23 +12,32 @@ env: staging-recertificacao
 env_secondary: staging-recertificacao-aditional
 totals:
   suites: 14
-  test_cases: 62
-  steps: 211
+  test_cases: 65
+  steps: 214
 ---
 
 # Análise de Teste — Recertificação
 
-> **AT v1 (contract_version 1.1)** — escopo: 14 suítes cobrindo os 6 canais
+> **AT v2 (contract_version 1.2)** — escopo: 14 suítes cobrindo os 6 canais
 > de reinscrição (admin individual, massa, CSV, API V2, link público, Play),
 > cascade em trilhas, ciclo de vida do certificado `REPLACED`, filtro
 > avançado, e-mail diferenciado, isolamento de progresso por inscrição,
 > comportamento da feature flag `:recertificacao`, auditoria via triggers
 > PostgreSQL, e isolamento em ambientes adicionais.
 >
-> **Executor primário**: todas as suítes declaram `executor: playwright`
-> (única opção em v1 do CONTRACT). Suítes com tipo `db`/`api` rodam via
-> Playwright invocando validação secundária (V2 do contrato — manual
-> hoje).
+> **Mudanças v2 (2026-05-27 — alinhamento com CONTRACT.md v1.2 §16)**:
+> - Suíte "Reinscrição via API V2": TC1/TC3/TC4 originais combinavam passos
+>   API com verificação UI no mesmo TC. Conforme CONTRACT.md §16,
+>   `Tipo: api` e `Tipo: ui` devem ficar em TCs separados — split em
+>   TC1-TC4 (api, rodam em `tests/api/`) + TC5-TC7 (ui, rodam em
+>   `tests/features/`).
+> - `at_version` bumpa de 1 → 2; `totals.test_cases` 62 → 65; `totals.steps` 211 → 214.
+>
+> **Executor primário**: todas as suítes declaram `executor: playwright`.
+> Conforme CONTRACT.md §16, testes de API rodam no mesmo agente
+> (em `tests/api/` via `request` fixture). Suítes com TCs `Tipo: db`
+> ainda usam validação secundária via subprocess para `agent-db` (V2 do
+> CONTRACT — manual hoje).
 >
 > **Cenários transversais embutidos como playbooks**:
 > - `flipper` — toda suíte que dependa da `:recertificacao`
@@ -725,14 +734,14 @@ preconditions:
 
 # Reinscrição via API V2
 
-## TC1 — POST /api/v2/users/mass com `recertification=true` cria participants reinscritos
+## TC1 — POST /api/v2/users/mass com `recertification=true` cria participants reinscritos (validação API)
 **Prioridade**: critical
 **Tipo**: api
 **Playbooks adicionais**: []
 **RNs cobertas**: [14]
 
 ### Objetivo
-Validar fluxo principal da API V2: payload com `recertification: true` por participant cria participants reinscritos com `recertification_number` incrementado (RN 14).
+Validar fluxo principal da API V2: payload com `recertification: true` por participant retorna sucesso (HTTP 200/207) com shape de response conforme contrato (RN 14). Validação UI complementar fica em TC5.
 
 ### Passos
 1. Preparar payload JSON `{"participants": [{"email":"aluno1@example.com", "event_id": <id_com_recertification>, "recertification": true}]}`
@@ -740,9 +749,7 @@ Validar fluxo principal da API V2: payload com `recertification: true` por parti
 2. Disparar `POST /api/v2/users/mass` com o payload, autenticado com token de admin
    → Response retorna HTTP 200 ou 207 (multi-status).
 3. Inspecionar o corpo da resposta
-   → Item correspondente ao aluno aparece com status de sucesso, sem erro.
-4. Acessar a lista de aprendizagem do curso em "/learning_students?event_id={eventId}"
-   → "aluno1@example.com" aparece com `recertification_number = N+1`, `progress_score = 0`, status "Pendente".
+   → Item correspondente ao aluno aparece com status de sucesso, com `participant_id` numérico atribuído e sem `error`. Body valida contra `schemas/mass-enrollment-response.schema.json`.
 
 ## TC2 — Item com `recertification=true` em curso com `has_recertification=false` retorna erro por item (HTTP 207)
 **Prioridade**: high
@@ -763,39 +770,80 @@ Validar resposta multi-status: payload misto com itens válidos e itens inválid
 3. Inspecionar o corpo da resposta
    → Array de resultados: item A com sucesso e participant criado; item B com erro estruturado contendo chave I18n `reenroll_participant.errors.recertification_disabled_for_event`.
 
-## TC3 — Payload sem `recertification` segue fluxo legado (regressão)
+## TC3 — Payload sem `recertification` segue fluxo legado — regressão (validação API)
 **Prioridade**: critical
 **Tipo**: api
 **Playbooks adicionais**: []
 **RNs cobertas**: [14]
 
 ### Objetivo
-Validar compatibilidade retroativa: payloads de integrações antigas (sem chave `recertification`) seguem o fluxo de inscrição original (RN 14).
+Validar compatibilidade retroativa da API V2: payloads de integrações antigas (sem chave `recertification`) retornam sucesso HTTP 200 sem erro de validação (RN 14). Validação UI complementar (confirmar `recertification_number = 0` na listagem) fica em TC6.
 
 ### Passos
 1. Preparar payload JSON antigo `{"participants": [{"email":"aluno_legado@example.com", "event_id": <id_com_recertification>}]}` (sem `recertification`)
    → Payload pronto.
 2. Disparar `POST /api/v2/users/mass` autenticado
-   → Response retorna HTTP 200 com sucesso.
-3. Acessar a lista de aprendizagem
-   → "aluno_legado@example.com" aparece com `recertification_number = 0` (fluxo de inscrição original — sem reinscrição).
+   → Response retorna HTTP 200 com sucesso. Body valida contra `schemas/mass-enrollment-response.schema.json` e item correspondente tem `status: success` sem `error`.
 
-## TC4 — Com flag OFF, parâmetro `recertification` é ignorado silenciosamente
+## TC4 — Com flag OFF, parâmetro `recertification` é ignorado silenciosamente (validação API)
 **Prioridade**: high
 **Tipo**: api
 **Playbooks adicionais**: [flipper]
 **RNs cobertas**: [14.2]
 
 ### Objetivo
-Validar compatibilidade: com flag OFF na org, payload com `recertification: true` é processado como inscrição normal sem retornar erro (RN 14.2).
+Validar compatibilidade da API V2 com flag OFF: payload com `recertification: true` é processado sem retornar erro relacionado a feature flag (RN 14.2). Validação UI complementar (confirmar `recertification_number = 0` apesar do parâmetro) fica em TC7.
 
 ### Passos
-1. Desativar a feature flag `:recertificacao` para a organização
-   → Flag fica OFF.
-2. Disparar `POST /api/v2/users/mass` com payload contendo `recertification: true` por item
-   → Response retorna HTTP 200 com sucesso. Sem erro relacionado a feature flag.
-3. Acessar a lista de aprendizagem
-   → Aluno aparece com `recertification_number = 0` (parâmetro foi ignorado).
+1. Desativar a feature flag `:recertificacao` para a organização via Super Admin (Flipper)
+   → Flag fica OFF para a org de teste (actor `Organization;<orgId>` removido).
+2. Disparar `POST /api/v2/users/mass` com payload contendo `recertification: true` por item, autenticado
+   → Response retorna HTTP 200 com sucesso. Body valida contra `schemas/mass-enrollment-response.schema.json`. Nenhum item com `error` referenciando feature flag.
+
+## TC5 — Aluno reinscrito via API V2 aparece na lista de aprendizagem com `recertification_number` incrementado (validação UI)
+**Prioridade**: critical
+**Tipo**: ui
+**Playbooks adicionais**: [cleanup-dados]
+**RNs cobertas**: [14]
+
+### Objetivo
+Complementa TC1 validando o efeito da reinscrição via API V2 na UI admin. A criação do participant reinscrito é setup (API), o teste em si valida o render da lista de aprendizagem.
+
+### Passos
+1. Pré-condição (setup via API): disparar `POST /api/v2/users/mass` no `beforeAll` com payload `{"participants": [{"email":"aluno1@example.com", "event_id": <id_com_recertification>, "recertification": true}]}` autenticado
+   → Participant reinscrito criado com `recertification_number = N+1` no DB.
+2. Acessar a URL "/learning_students?event_id={eventIdComRecertification}"
+   → Listagem exibe linha de "aluno1@example.com" com colunas: `recertification_number = N+1`, `progress_score = 0`, status "Pendente".
+
+## TC6 — Aluno inscrito sem `recertification` via API V2 aparece com `recertification_number = 0` (regressão UI)
+**Prioridade**: critical
+**Tipo**: ui
+**Playbooks adicionais**: [cleanup-dados]
+**RNs cobertas**: [14]
+
+### Objetivo
+Complementa TC3 validando via UI que payload legado (sem `recertification`) preserva o fluxo de inscrição original — participant aparece com `recertification_number = 0` na lista admin.
+
+### Passos
+1. Pré-condição (setup via API): disparar `POST /api/v2/users/mass` no `beforeAll` com payload `{"participants": [{"email":"aluno_legado@example.com", "event_id": <id_com_recertification>}]}` (SEM chave `recertification`), autenticado
+   → Participant inscrito com `recertification_number = 0` (fluxo legado).
+2. Acessar a URL "/learning_students?event_id={eventIdComRecertification}"
+   → Listagem exibe linha de "aluno_legado@example.com" com `recertification_number = 0` e status "Pendente".
+
+## TC7 — Com flag OFF, aluno aparece com `recertification_number = 0` apesar do parâmetro (UI confirma RN 14.2)
+**Prioridade**: high
+**Tipo**: ui
+**Playbooks adicionais**: [flipper, cleanup-dados]
+**RNs cobertas**: [14.2]
+
+### Objetivo
+Complementa TC4 validando via UI que `recertification: true` no payload é silenciosamente ignorado quando a flag está OFF — UI confirma que o efeito de persistência reflete o estado da flag.
+
+### Passos
+1. Pré-condição (setup combinado UI+API): desativar feature flag `:recertificacao` para a org via Super Admin (Flipper) no `beforeAll`; em seguida disparar `POST /api/v2/users/mass` com payload `{"participants": [{"email":"aluno_flag_off@example.com", "event_id": <id_com_recertification>, "recertification": true}]}` autenticado. Reativar flag no `afterAll`
+   → Flag fica OFF; participant criado com `recertification_number = 0` (parâmetro `recertification` ignorado).
+2. Acessar a URL "/learning_students?event_id={eventIdComRecertification}"
+   → Listagem exibe linha de "aluno_flag_off@example.com" com `recertification_number = 0`, demonstrando que o parâmetro foi ignorado pela API quando flag OFF.
 
 ---
 
