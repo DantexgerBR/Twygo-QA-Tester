@@ -49,6 +49,18 @@ export type SeedFixtures = {
    */
   cursoLiberadoSeed: { id: number; name: string };
   /**
+   * Curso seed com `events.has_recertification = true`. Reusa
+   * `cursoSeed` e chama `setHasRecertification(id, true)` via UI admin
+   * (tab Acesso, switch Chakra). Pré-condição: feature flag
+   * `:recertificacao` ATIVA na org (kill switch RN 1). Cleanup é
+   * herdado de cursoSeed (cascata).
+   *
+   * Use em specs que validam comportamento dependente de
+   * `has_recertification = true` — fluxos de Reinscrição Individual /
+   * em Massa, banner "Reinscreva-se" no Play, e-mail diferenciado.
+   */
+  cursoComRecertificacaoSeed: { id: number; name: string };
+  /**
    * Curso seed com 4 atividades pendentes (vídeo/SCORM/Aula) configuradas
    * com "Permitir marcar concluído manualmente". Reusa `cursoSeed` +
    * exige atividades pré-existentes no curso (ver §"Catálogo" — helpers
@@ -146,6 +158,18 @@ export const test = base.extend<SeedFixtures>({
     async ({ browser, cursoSeed }, use) => {
       // Reusa cursoSeed e apenas publica (situation = Liberado).
       await withAdminPage(browser, (_p, seed) => seed.publicarCurso(cursoSeed.id));
+      await use({ id: cursoSeed.id, name: cursoSeed.name });
+      // Cleanup do curso é feito pelo cursoSeed (cascata).
+    },
+    { scope: 'test' },
+  ],
+
+  cursoComRecertificacaoSeed: [
+    async ({ browser, cursoSeed }, use) => {
+      // Reusa cursoSeed e liga has_recertification via tab Acesso.
+      await withAdminPage(browser, (_p, seed) =>
+        seed.setHasRecertification(cursoSeed.id, true),
+      );
       await use({ id: cursoSeed.id, name: cursoSeed.name });
       // Cleanup do curso é feito pelo cursoSeed (cascata).
     },

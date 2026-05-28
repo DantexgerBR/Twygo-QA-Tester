@@ -3,27 +3,20 @@
  * quando `event.has_recertification = false`" (MD §370-387).
  *
  * Pré-condições declaradas no MD (passo 1):
- *  - Curso "Curso sem Reinscrição w{workerIndex}" com `has_recertification = false`.
- *  - Ao menos 1 aluno elegível por progresso 100% no curso.
+ *  - Curso com `has_recertification = false`.
+ *  - Ao menos 1 aluno elegível matriculado no curso.
  *
- * REVISAR-SEED: depende de seed específico no env
- * `staging-base-de-conhecimento` (orgId 37007) — curso onde o switch
- * "Habilitar reinscrição" NÃO foi ativado. ID/e-mail abaixo são
- * placeholders.
+ * Pós refator 2026-05-28 (skill provisionar-seed v1.6): o cursoId e o
+ * email do aluno NÃO vêm mais daqui — vêm da fixture canônica
+ * `alunoMatriculadoSeed` que reusa `cursoSeed` (default
+ * `has_recertification = false`). Sobrou apenas o regex do tooltip,
+ * que continua sendo dado específico do TC.
  *
  * REVISAR-FIGMA: texto exato do tooltip pendente — MD §387 indica
- * "conteúdo não permite reinscrição" como provável. Regex no spec é
- * tolerante.
+ * "conteúdo não permite reinscrição" como provável. Regex tolerante
+ * cobre variações até o Figma final.
  */
 export const tc4Data = {
-  // Curso "Curso sem Reinscrição w0" com `has_recertification = false`.
-  // REVISAR-SEED: confirmar via recon ou rake task.
-  cursoSemReinscricaoId: 2,
-
-  // Aluno elegível por progresso 100% neste curso.
-  alunoElegivelEmail: 'aluno.elegivel.sem.reinscricao@example.com',
-
   // Tooltip esperado no hover (RN 4.2).
-  // REVISAR-FIGMA: texto exato pendente.
   tooltipDesabilitadoRegex: /conteúdo não permite reinscri|não permite reinscri/i,
 } as const;

@@ -4,15 +4,21 @@ import { LearningStudentsPage } from '../../../pages/LearningStudentsPage.js';
 import { tc1Data } from './tc1-botao-reinscrever-visivel-aluno-elegivel.data.js';
 
 test.describe('Reinscrição Individual pelo Admin', () => {
-  // Heal 2026-05-26: cursoComReinscricaoId=1 placeholder — GET
-  // /o/37007/events/1/learning_students retorna 404 no env
-  // staging-base-de-conhecimento, e os e-mails (aluno.elegivel.progresso@...,
-  // aluno.elegivel.certificado.expirado@..., aluno.inelegivel.em.andamento@...)
-  // não existem como seed real. Validar no env e atualizar
-  // `tc1-botao-reinscrever-visivel-aluno-elegivel.data.ts`.
+  // Skill provisionar-seed v1.6 (2026-05-28): TC1 exige 3 alunos em
+  // estados distintos (a) elegível por progresso 100% (b) elegível por
+  // cert expirado (c) inelegível em andamento. Estado (c) é coberto por
+  // `alunoMatriculadoSeed`, MAS (a) e (b) dependem de helpers ainda
+  // [NOT_IMPLEMENTED] no catálogo da skill:
+  //   - seed-roadmap-atividade-aula-1 (criar atividade pra fluxo de
+  //     completar curso → atingir progresso 100%);
+  //   - seed-roadmap-cert-expiracao-1 (forçar cert pra expired_at no
+  //     passado — exige DB write ou endpoint admin não mapeado).
+  // Quando ambos helpers forem implementados, refatorar pra usar
+  // fixtures `alunoAprovadoSeed` + `alunoComCertExpiradoSeed` (nova).
+  // Fixme legítimo §7.6 F categoria "seed-roadmap-*".
   test.fixme(
     true,
-    'seed inválido — cursoComReinscricaoId=1 não existe (404) e e-mails são placeholders @example.com. Validar no env staging-base-de-conhecimento e atualizar tc1-botao-reinscrever-visivel-aluno-elegivel.data.ts.',
+    'seed-roadmap-atividade-aula-1 + seed-roadmap-cert-expiracao-1: pré-condições "aluno progresso 100%" e "aluno cert expirado" precisam de helpers ainda não implementados. Ver skill provisionar-seed v1.6 §"Catálogo COMPLETO".',
   );
   test('TC1 — Botão "Reinscrever" visível e habilitado apenas para aluno elegível', async ({
     page,

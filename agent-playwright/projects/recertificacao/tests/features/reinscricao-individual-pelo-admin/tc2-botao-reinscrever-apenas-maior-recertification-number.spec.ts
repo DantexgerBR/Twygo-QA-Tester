@@ -4,14 +4,18 @@ import { LearningStudentsPage } from '../../../pages/LearningStudentsPage.js';
 import { tc2Data } from './tc2-botao-reinscrever-apenas-maior-recertification-number.data.js';
 
 test.describe('Reinscrição Individual pelo Admin', () => {
-  // Heal 2026-05-26: cursoMultiReinscricaoId=1 placeholder — GET
-  // /o/37007/events/1/learning_students retorna 404. E-mail
-  // aluno.multi.reinscricao@example.com também é placeholder. Validar no env
-  // staging-base-de-conhecimento e atualizar
-  // `tc2-botao-reinscrever-apenas-maior-recertification-number.data.ts`.
+  // Skill provisionar-seed v1.6 (2026-05-28): TC2 exige aluno com 2
+  // participants no mesmo curso (recertification_number 0 + 1) — ou
+  // seja, aluno que já passou por uma reinscrição. Esse estado composto
+  // não tem fixture canônica: depende de (i) curso com atividades pra
+  // completar (`seed-roadmap-atividade-aula-1`), (ii) helper de
+  // reinscrição-via-seed que crie o segundo participant
+  // (`seed-roadmap-multi-recert-1`, ainda não implementado). Catálogo
+  // completo na skill provisionar-seed §"Catálogo COMPLETO".
+  // Fixme legítimo §7.6 F categoria "seed-roadmap-*".
   test.fixme(
     true,
-    'seed inválido — cursoMultiReinscricaoId=1 não existe (404) e e-mail é placeholder @example.com. Validar no env staging-base-de-conhecimento e atualizar tc2-botao-reinscrever-apenas-maior-recertification-number.data.ts.',
+    'seed-roadmap-multi-recert-1 + seed-roadmap-atividade-aula-1: pré-condição "aluno multi-reinscrição (2 participants)" exige criar 2º participant via reinscrição, que por sua vez exige aluno aprovado (atividades + completar). Ver skill provisionar-seed v1.6.',
   );
   test('TC2 — Botão "Reinscrever" visível apenas na linha do participant com maior recertification_number', async ({
     page,

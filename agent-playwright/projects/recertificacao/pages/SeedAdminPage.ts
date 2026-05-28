@@ -4,6 +4,7 @@ import { BasePage } from '../../../src/pages/BasePage.js';
 import { ProfileSwitcher } from '../../../src/pages/ProfileSwitcher.js';
 import { getOrgId } from '../../../src/utils/environment.js';
 import { dismissCommonModals, safeGoto } from '../../../src/utils/modals.js';
+import { ContentEditPage } from './ContentEditPage.js';
 
 /**
  * Page Object de **provisionamento de seed via UI admin** para o projeto
@@ -455,6 +456,41 @@ export class SeedAdminPage extends BasePage {
       .first()
       .waitFor({ state: 'visible', timeout: 10_000 })
       .catch(() => undefined);
+  }
+
+  /**
+   * Liga/desliga o switch `events.has_recertification` via UI admin do
+   * facelift React. Delega em [[ContentEditPage]] — preserva POM
+   * (não duplica locator `#has_recertification`). Caller fixture usa
+   * este atalho pra evitar boilerplate de "abrir edit + tab Acesso +
+   * toggle + save".
+   *
+   * Pré-condições:
+   *  - Feature flag `:recertificacao` ATIVA na org (kill switch RN 1) —
+   *    sem ela, switch não renderiza e `setHabilitarReinscricao` falha
+   *    com timeout no waitFor do label visível.
+   *  - User admin logado com perfil Administrador (garantido por
+   *    `ensureAdminProfile` interno).
+   *
+   * Idempotente: `setHabilitarReinscricao` só toggla se o estado
+   * atual diverge do desejado. Validado live 2026-05-27 — switch é
+   * checkbox HTML padrão (`input#has_recertification` screen-reader-only
+   * com label visível `.chakra-checkbox`) na tab Acesso, seção
+   * "Permitir registro de inscrição por".
+   *
+   * Skill: provisionar-seed v1.6 §"Habilitar recertification em curso seed".
+   */
+  async setHasRecertification(
+    eventId: number,
+    enabled: boolean,
+  ): Promise<void> {
+    await this.ensureAdminProfile();
+    const editPage = new ContentEditPage(this.page);
+    await editPage.openEditByIdInAcessoTab(eventId);
+    await editPage.setHabilitarReinscricao(enabled);
+    await dismissCommonModals(this.page);
+    await editPage.save();
+    await editPage.expectSaveSuccess();
   }
 
   /**

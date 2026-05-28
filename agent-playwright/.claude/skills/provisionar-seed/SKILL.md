@@ -1,7 +1,7 @@
 ---
 name: provisionar-seed
-description: Quando um TC Playwright declara pré-condição como "curso pré-existente", "aluno matriculado", "participant com progresso", "aluno com certificado emitido", "trilha com 3 cursos filhos", etc, o spec NÃO pode marcar `test.fixme(true, 'seed inválido')` nem depender de IDs hardcoded em `.data.ts` placeholder. Em vez disso, o spec **declara dependência via fixture canônica** (`cursoSeed`/`alunoMatriculadoSeed`/`alunoComSenhaSeed`/`alunoAprovadoSeed` em `src/fixtures/seed-fixtures.ts`) — a fixture provê o recurso (criando ou reusando) e faz cleanup automático `afterAll` via variant `*_safe`. Mapping pré-condição→fixture é tabela canônica que generator/healer consultam. Fluxo do seed cobre: criação via UI admin (rotas validadas live `/contents/new?kind=N` facelift React p/ Curso/Trilha/Pacote, `/users/new` Haml legado p/ Usuário), matrícula via lista→more_vert→"Inscrição"→drawer→"Adicionar", matrícula COM SENHA via expand h3 colapsado + scroll progressivo, engajamento do aluno via `/e/{id}/learn` + checkbox "Marcar como concluído" em vídeo/SCORM/Aula configurados no admin, emissão automática de cert validável via `/api/v2/attendees`. Anti-patterns proibidos: `/events/new` Haml deprecated, `/contents/{id}/learning_students` (404), `fixme` por seed quando fixture cobre. Skill define o padrão canônico — catálogo de helpers (`createCurso`/`createTrilha`/`createPacote`/`criarUsuarioAluno`/`matricularAluno`/`matricularAlunoComSenha`/`completarCursoComoAluno`/`desmatricularAlunoSafe`) + login OAuth do aluno + validar cert via API V2, mapping kind→Recurso, naming worker-isolated, scope worker pra amortizar custo, quando reusar `data/fixed-seed.data.ts` (seed permanente), e quando `fixme` por seed AINDA é legítimo (DB-only/mailer/Flipper toggle). Use ao gerar/revisar QUALQUER spec novo que tenha pré-condição "X existe no env" — converter em ação automatizada via fixture.
-version: 1.5.0
+description: Quando um TC Playwright declara pré-condição como "curso pré-existente", "curso com has_recertification=true", "aluno matriculado", "participant com progresso", "aluno com certificado emitido", "trilha com 3 cursos filhos", etc, o spec NÃO pode marcar `test.fixme(true, 'seed inválido')` nem depender de IDs hardcoded em `.data.ts` placeholder. Em vez disso, o spec **declara dependência via fixture canônica** (`cursoSeed`/`cursoLiberadoSeed`/`cursoComRecertificacaoSeed`/`cursoComAtividadesMarcaveisSeed`/`alunoMatriculadoSeed`/`alunoComSenhaSeed`/`alunoAprovadoSeed` em `src/fixtures/seed-fixtures.ts`) — a fixture provê o recurso (criando ou reusando) e faz cleanup automático `afterAll` via variant `*_safe`. Mapping pré-condição→fixture é tabela canônica que generator/healer consultam. Fluxo do seed cobre: criação via UI admin (rotas validadas live `/contents/new?kind=N` facelift React p/ Curso/Trilha/Pacote, `/users/new` Haml legado p/ Usuário), matrícula via lista→more_vert→"Inscrição"→drawer→"Adicionar", matrícula COM SENHA via expand h3 colapsado + scroll progressivo, configuração de curso (publicar via tab Identificação, ligar `has_recertification` via tab Acesso switch Chakra), engajamento do aluno via `/e/{id}/learn` + checkbox "Marcar como concluído" em vídeo/SCORM/Aula configurados no admin, emissão automática de cert validável via `/api/v2/attendees`. Anti-patterns proibidos: `/events/new` Haml deprecated, `/contents/{id}/learning_students` (404), `fixme` por seed quando fixture cobre. Skill define o padrão canônico — catálogo de helpers (`createCurso`/`createTrilha`/`createPacote`/`criarUsuarioAluno`/`matricularAluno`/`matricularAlunoComSenha`/`setHasRecertification`/`publicarCurso`/`completarCursoComoAluno`/`desmatricularAlunoSafe`) + login OAuth do aluno + validar cert via API V2, mapping kind→Recurso, naming worker-isolated, scope worker pra amortizar custo, quando reusar `data/fixed-seed.data.ts` (seed permanente), e quando `fixme` por seed AINDA é legítimo (DB-only/mailer/Flipper toggle). Use ao gerar/revisar QUALQUER spec novo que tenha pré-condição "X existe no env" — converter em ação automatizada via fixture.
+version: 1.6.0
 ---
 
 # provisionar-seed
@@ -1098,6 +1098,7 @@ roadmap (ex: `seed-roadmap-pacote-1`).
 | Helper | Status | Local | Notas |
 |---|---|---|---|
 | `setHabilitarReinscricao(enabled)` | ✅ implementado | `ContentEditPage` | Tab Acesso, checkbox `#has_recertification` |
+| `setHasRecertification(eventId, enabled)` | ✅ implementado | `SeedAdminPage` | Atalho de setup — delega `ContentEditPage.openEditByIdInAcessoTab + setHabilitarReinscricao + save + expectSaveSuccess`. Idempotente. Pré-condição: flag `:recertificacao` ON na org |
 | `publicarCurso(eventId)` | ✅ implementado | `SeedAdminPage` | Tab Identificação → Situação=Liberado |
 | `setCriterioAprovacao(eventId, percentual)` | ❌ `[NOT_IMPLEMENTED]` | `SeedAdminPage` | `seed-roadmap-criterio-1`. Provavelmente tab Aprovação — exige recon live (curso 807403 default = 60%) |
 | `setQuemPodeVer(eventId, audiencia)` | ❌ `[NOT_IMPLEMENTED]` | `SeedAdminPage` | `seed-roadmap-audiencia-1`. Combobox tab Identificação: Inscritos/Colaborador/Usuários/Público |
@@ -1147,6 +1148,10 @@ fixture provê o recurso (criando ou reusando) + faz cleanup automático.
 | Fixture | O que provê | Custo aproximado | Reusa de |
 |---|---|---|---|
 | `cursoSeed` | Curso vazio worker-isolated, criado via UI | ~30s | — |
+| `trilhaSeed` | Trilha vazia worker-isolated | ~30s | — |
+| `cursoLiberadoSeed` | Curso publicado (Situação=Liberado) — visível pro aluno | ~30s + 10s | `cursoSeed` |
+| `cursoComRecertificacaoSeed` | Curso com `events.has_recertification = true` (switch ON tab Acesso) | ~30s + 15s | `cursoSeed` |
+| `cursoComAtividadesMarcaveisSeed` | Curso com atividades existentes marcadas como "permitir concluir manualmente" | ~30s + 30s | `cursoSeed` |
 | `alunoMatriculadoSeed` | Aluno matriculado num cursoSeed (sem senha) | ~30s + 30s | `cursoSeed` |
 | `alunoComSenhaSeed` | Idem + senha gravada (OAuth funciona) | ~30s + 60s | `cursoSeed` |
 | `alunoAprovadoSeed` | Idem + completou curso pelo Play até cert emitido | ~30s + 60s + 7min | `alunoComSenhaSeed` |
@@ -1181,6 +1186,8 @@ Quando o `playwright-test-generator` (ou healer/QA) lê a seção
 | Texto na pré-condição do MD | Fixture canônica | Setup interno |
 |---|---|---|
 | "Curso pré-existente" / "Curso disponível" | `cursoSeed` | `createCurso` |
+| "Curso publicado" / "Curso liberado pro aluno" | `cursoLiberadoSeed` | + `publicarCurso` |
+| "Curso com `has_recertification = true`" / "Curso com reinscrição habilitada" / "Curso elegível para reinscrição" | `cursoComRecertificacaoSeed` | + `setHasRecertification(id, true)` |
 | "Aluno matriculado num curso" / "Participant ativo" | `alunoMatriculadoSeed` | `createCurso` + `matricularAluno` |
 | "Aluno com credenciais válidas" / "Aluno pode logar" | `alunoComSenhaSeed` | + `matricularAlunoComSenha` |
 | "Aluno aprovado" / "Aluno com cert emitido" / "Progresso ≥ X%" | `alunoAprovadoSeed` | + `completarCursoComoAluno` |
@@ -1380,6 +1387,29 @@ novo:
   com criação via UI precisa seguir
 
 ## Histórico
+
+- **v1.6.0 (2026-05-28)**: destrava Suite 2 (Reinscrição Individual) e
+  qualquer suíte que dependa de `has_recertification = true`. Mudanças:
+  - **Helper novo `SeedAdminPage.setHasRecertification(eventId, enabled)`**:
+    atalho que delega `ContentEditPage.openEditByIdInAcessoTab` +
+    `setHabilitarReinscricao` + `save` + `expectSaveSuccess`. Não duplica
+    locator `#has_recertification` (preserva POM). Idempotente.
+  - **Fixture nova `cursoComRecertificacaoSeed`** em `src/fixtures/seed-fixtures.ts`:
+    herda `cursoSeed` e liga o switch. Cleanup cascateado de `cursoSeed`.
+  - **Mapping pré-condição expandido**: "Curso com `has_recertification = true`"
+    / "Curso com reinscrição habilitada" / "Curso elegível para reinscrição"
+    → `cursoComRecertificacaoSeed`. Generator deve usar essa fixture em
+    vez de marcar `seed-roadmap-recertification-1` (não é roadmap — está
+    implementado).
+  - **Catálogo de fixtures completo** (antes só listava 4): agora inclui
+    `trilhaSeed`, `cursoLiberadoSeed`, `cursoComRecertificacaoSeed`,
+    `cursoComAtividadesMarcaveisSeed` que já estavam em `seed-fixtures.ts`
+    mas não apareciam na tabela.
+  - **Origem**: recon live 2026-05-28 chrome-devtools-mcp tab Acesso do
+    facelift React `/contents/{eventId}/edit?tab=access`. Validou que
+    switch fica nesta tab (não Identificação nem Aprovação), e que
+    `ContentEditPage` já tinha todo o suporte — só faltava expor o
+    atalho de setup.
 
 - **v1.5.0 (2026-05-28)**: autonomia completa do agente + catálogo COMPLETO
   de seeds (implementados + roadmap). Mudanças:

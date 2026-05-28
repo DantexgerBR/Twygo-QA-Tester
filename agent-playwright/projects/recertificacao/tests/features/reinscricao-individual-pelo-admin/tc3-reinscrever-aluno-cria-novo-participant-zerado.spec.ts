@@ -4,14 +4,19 @@ import { LearningStudentsPage } from '../../../pages/LearningStudentsPage.js';
 import { tc3Data } from './tc3-reinscrever-aluno-cria-novo-participant-zerado.data.js';
 
 test.describe('Reinscrição Individual pelo Admin', () => {
-  // Heal 2026-05-26: cursoComReinscricaoId=1 placeholder — GET
-  // /o/37007/events/1/learning_students retorna 404. E-mail
-  // aluno.elegivel.progresso@example.com também é placeholder. Validar no env
-  // staging-base-de-conhecimento e atualizar
-  // `tc3-reinscrever-aluno-cria-novo-participant-zerado.data.ts`.
+  // Skill provisionar-seed v1.6 (2026-05-28): TC3 exige aluno elegível
+  // por progresso 100% num curso com `has_recertification = true`. A
+  // fixture `cursoComRecertificacaoSeed` cobre o switch (tab Acesso via
+  // `setHasRecertification`), MAS `alunoAprovadoSeed` num curso recém
+  // criado vazio retorna progresso=0 (sem atividades pra completar).
+  // Pré-condição "aluno elegível por progresso 100%" depende de
+  // `seed-roadmap-atividade-aula-1` (criar atividade via UI admin,
+  // ainda não implementado). Catálogo completo na skill provisionar-seed
+  // §"Catálogo COMPLETO".
+  // Fixme legítimo §7.6 F categoria "seed-roadmap-*".
   test.fixme(
     true,
-    'seed inválido — cursoComReinscricaoId=1 não existe (404) e e-mail é placeholder @example.com. Validar no env staging-base-de-conhecimento e atualizar tc3-reinscrever-aluno-cria-novo-participant-zerado.data.ts.',
+    'seed-roadmap-atividade-aula-1: pré-condição "aluno elegível por progresso 100%" exige curso com atividades pra completar — helper de criação de atividades ainda não implementado. cursoComRecertificacaoSeed cobre só o switch. Ver skill provisionar-seed v1.6.',
   );
   test('TC3 — Reinscrever aluno individualmente cria novo participant zerado', async ({
     page,
