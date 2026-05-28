@@ -1,7 +1,7 @@
 ---
 name: provisionar-seed
-description: Quando um TC Playwright declara pré-condição como "curso pré-existente", "aluno matriculado", "participant com progresso", "aluno com certificado emitido", "trilha com 3 cursos filhos", etc, o spec NÃO pode marcar `test.fixme(true, 'seed inválido')` nem depender de IDs hardcoded em `.data.ts` placeholder. Em vez disso, o spec é auto-suficiente — `beforeAll` cria os recursos via UI admin (rotas canônicas validadas live: `/contents/new?kind=N` facelift React para Curso/Trilha/Pacote; `/users/new` Haml legado para Usuário; matrícula via lista→more_vert→"Inscrição"→drawer→"Adicionar"; matrícula COM SENHA via expand h3 colapsado + scroll progressivo; engajamento do aluno via `/e/{id}/learn` + checkbox "Marcar como concluído" em vídeo/SCORM/Aula configurados; emissão automática de cert validável via `/api/v2/attendees`; NUNCA `/events/new` Haml deprecated nem `/contents/{id}/learning_students` que retorna 404), `afterAll` deleta tudo via variant `*_safe` do Page Object (link com [[limpar-dados-de-teste-twygo]]). Skill define o padrão canônico — catálogo de helpers `create<Recurso>` + `matricularAluno`/`matricularAlunoComSenha` + login OAuth do aluno + completar curso pelo Play + validar cert via API V2 — com mapping kind→Recurso, form de usuário Haml, matrícula client-side, naming worker-isolated, integração com fixture custom, e quando `fixme` por seed ainda é legítimo (DB-only/mailer/Flipper toggle). Use ao gerar/revisar QUALQUER spec novo que tenha pré-condição "X existe no env" — converter em ação automatizada no `beforeAll`.
-version: 1.4.1
+description: Quando um TC Playwright declara pré-condição como "curso pré-existente", "aluno matriculado", "participant com progresso", "aluno com certificado emitido", "trilha com 3 cursos filhos", etc, o spec NÃO pode marcar `test.fixme(true, 'seed inválido')` nem depender de IDs hardcoded em `.data.ts` placeholder. Em vez disso, o spec **declara dependência via fixture canônica** (`cursoSeed`/`alunoMatriculadoSeed`/`alunoComSenhaSeed`/`alunoAprovadoSeed` em `src/fixtures/seed-fixtures.ts`) — a fixture provê o recurso (criando ou reusando) e faz cleanup automático `afterAll` via variant `*_safe`. Mapping pré-condição→fixture é tabela canônica que generator/healer consultam. Fluxo do seed cobre: criação via UI admin (rotas validadas live `/contents/new?kind=N` facelift React p/ Curso/Trilha/Pacote, `/users/new` Haml legado p/ Usuário), matrícula via lista→more_vert→"Inscrição"→drawer→"Adicionar", matrícula COM SENHA via expand h3 colapsado + scroll progressivo, engajamento do aluno via `/e/{id}/learn` + checkbox "Marcar como concluído" em vídeo/SCORM/Aula configurados no admin, emissão automática de cert validável via `/api/v2/attendees`. Anti-patterns proibidos: `/events/new` Haml deprecated, `/contents/{id}/learning_students` (404), `fixme` por seed quando fixture cobre. Skill define o padrão canônico — catálogo de helpers (`createCurso`/`createTrilha`/`createPacote`/`criarUsuarioAluno`/`matricularAluno`/`matricularAlunoComSenha`/`completarCursoComoAluno`/`desmatricularAlunoSafe`) + login OAuth do aluno + validar cert via API V2, mapping kind→Recurso, naming worker-isolated, scope worker pra amortizar custo, quando reusar `data/fixed-seed.data.ts` (seed permanente), e quando `fixme` por seed AINDA é legítimo (DB-only/mailer/Flipper toggle). Use ao gerar/revisar QUALQUER spec novo que tenha pré-condição "X existe no env" — converter em ação automatizada via fixture.
+version: 1.5.0
 ---
 
 # provisionar-seed
@@ -1069,48 +1069,196 @@ for (let i = 0; i < 12; i++) {
 - `/api/v2/events/{X}/learning_students`
 - `/api/v2/event_students?event_id={X}&user_id={Y}`
 
-## Integração com fixtures (opcional, mas recomendado)
+## Catálogo COMPLETO de seeds (implementados + roadmap)
+
+Status de cada helper de seed disponível no projeto Recertificação. Generator/
+healer DEVE consultar antes de gerar spec — se há helper canônico, usar;
+se está `[NOT_IMPLEMENTED]`, marcar `fixme` legítimo com motivo + ID do
+roadmap (ex: `seed-roadmap-pacote-1`).
+
+### Recursos básicos (criação)
+
+| Helper | Status | Local | Notas |
+|---|---|---|---|
+| `createCurso({ name, ... })` | ✅ implementado | `SeedAdminPage` | Rota facelift `/contents/new?kind=0` |
+| `createTrilha({ name, ... })` | ✅ implementado | `SeedAdminPage` | Rota facelift `/contents/new?kind=3` |
+| `createPacote({ name, cursosIds, ... })` | ❌ `[NOT_IMPLEMENTED]` | `SeedAdminPage` | Throws com ID `seed-roadmap-pacote-1`. Rota não confirmada via recon live |
+| `criarUsuarioAluno({ email, firstName, lastName })` | ✅ implementado | `SeedAdminPage` | Rota Haml `/users/new` (não migrada pro facelift) |
+
+### Matrícula
+
+| Helper | Status | Local | Notas |
+|---|---|---|---|
+| `matricularAluno({ contentName, alunoEmail, ... })` | ✅ implementado | `SeedAdminPage` | Drawer Inscrição. URL não muda |
+| `matricularAlunoComSenha({ ..., alunoSenha })` | ✅ implementado | `SeedAdminPage` | Idem + expand h3 Senha + scroll |
+| `desmatricularAlunoSafe({ contentName, alunoEmail })` | ✅ implementado | `SeedAdminPage` | Idempotente — cleanup safe |
+
+### Configuração de curso (tabs do edit facelift)
+
+| Helper | Status | Local | Notas |
+|---|---|---|---|
+| `setHabilitarReinscricao(enabled)` | ✅ implementado | `ContentEditPage` | Tab Acesso, checkbox `#has_recertification` |
+| `publicarCurso(eventId)` | ✅ implementado | `SeedAdminPage` | Tab Identificação → Situação=Liberado |
+| `setCriterioAprovacao(eventId, percentual)` | ❌ `[NOT_IMPLEMENTED]` | `SeedAdminPage` | `seed-roadmap-criterio-1`. Provavelmente tab Aprovação — exige recon live (curso 807403 default = 60%) |
+| `setQuemPodeVer(eventId, audiencia)` | ❌ `[NOT_IMPLEMENTED]` | `SeedAdminPage` | `seed-roadmap-audiencia-1`. Combobox tab Identificação: Inscritos/Colaborador/Usuários/Público |
+| `setHabilitarChat(eventId, enabled)` | ❌ `[NOT_IMPLEMENTED]` | `SeedAdminPage` | `seed-roadmap-chat-1`. Checkbox tab Identificação |
+| `setBanner(eventId, imagemPath)` | ❌ `[NOT_IMPLEMENTED]` | `SeedAdminPage` | `seed-roadmap-banner-1`. Tab Banner — upload de imagem |
+| `setCobranca(eventId, { preco, gateway })` | ❌ `[NOT_IMPLEMENTED]` | `SeedAdminPage` | `seed-roadmap-cobranca-1`. Tab Cobrança — exige config de gateway no env |
+| `setLocalizacao(eventId, { modalidade })` | ❌ `[NOT_IMPLEMENTED]` | `SeedAdminPage` | `seed-roadmap-localizacao-1`. Tab Localização — presencial/online/híbrido |
+| `setCompartilhamento(eventId, { linkPublico })` | ❌ `[NOT_IMPLEMENTED]` | `SeedAdminPage` | `seed-roadmap-compartilhar-1`. Tab Compartilhar |
+
+### Atividades (filhas do curso)
+
+| Helper | Status | Local | Notas |
+|---|---|---|---|
+| `listarAtividades(eventId)` | ✅ implementado | `SeedAdminPage` | Lê `/e/{id}/contents` — retorna `[{ id, title, sequence }]` |
+| `configurarMarcarConcluidoManualmente(eventId, activityIds[])` | ✅ implementado | `SeedAdminPage` | Marca os 4 checkboxes `mark_completed_*` por activity |
+| `adicionarAtividadeTexto(eventId, { titulo, conteudo })` | ❌ `[NOT_IMPLEMENTED]` | `SeedAdminPage` | `seed-roadmap-atividade-texto-1`. Wizard de criação no `/e/{id}/contents/new` |
+| `adicionarAtividadePagina(eventId, { titulo, conteudo })` | ❌ `[NOT_IMPLEMENTED]` | `SeedAdminPage` | `seed-roadmap-atividade-pagina-1` |
+| `adicionarAtividadePDF(eventId, { titulo, arquivoPath })` | ❌ `[NOT_IMPLEMENTED]` | `SeedAdminPage` | `seed-roadmap-atividade-pdf-1`. Upload de PDF |
+| `adicionarAtividadeAula(eventId, { titulo, videoUrl })` | ❌ `[NOT_IMPLEMENTED]` | `SeedAdminPage` | `seed-roadmap-atividade-aula-1` |
+| `adicionarAtividadeQuestionario(eventId, { titulo, questionListId })` | ❌ `[NOT_IMPLEMENTED]` | `SeedAdminPage` | `seed-roadmap-atividade-questionario-1`. Vincula questionário pré-criado |
+
+### Engajamento do aluno
+
+| Helper | Status | Local | Notas |
+|---|---|---|---|
+| `completarCursoComoAluno({ browser, cursoId, alunoEmail, alunoSenha })` | ✅ implementado | `SeedAdminPage` | Pipeline 5 fases — login UI → APRENDER → iterar atividades → poll cert |
+| `lookupUserIdByEmail({ email, ... })` | ✅ implementado (private) | `SeedAdminPage` | Helper interno via `/api/v2/users` |
+
+### Limpeza (cleanup)
+
+| Helper | Status | Local | Notas |
+|---|---|---|---|
+| `deleteCursoByIdSafe(id)` | ✅ implementado | `SeedAdminPage` | Idempotente |
+| `deleteTrilhaByIdSafe(id)` | ✅ implementado | `SeedAdminPage` | Idempotente |
+| `deletePacoteByIdSafe(id)` | ✅ implementado | `SeedAdminPage` | Wrapper safe (mesmo se createPacote não implementado) |
+| `deleteUsuarioByEmailSafe(email)` | ✅ implementado | `SeedAdminPage` | Lookup + delete via UI admin |
+
+## Autonomia: fixtures canônicas (orchestrator → fixture → seed automático)
+
+**O agente deve ser autônomo**: quando uma suite identifica pré-condição
+"X pré-existente" no MD canônico, NÃO marca `fixme` e NÃO depende de
+intervenção manual. O spec **declara dependência via fixture name** e a
+fixture provê o recurso (criando ou reusando) + faz cleanup automático.
+
+### Fixtures implementadas (`src/fixtures/seed-fixtures.ts`)
+
+| Fixture | O que provê | Custo aproximado | Reusa de |
+|---|---|---|---|
+| `cursoSeed` | Curso vazio worker-isolated, criado via UI | ~30s | — |
+| `alunoMatriculadoSeed` | Aluno matriculado num cursoSeed (sem senha) | ~30s + 30s | `cursoSeed` |
+| `alunoComSenhaSeed` | Idem + senha gravada (OAuth funciona) | ~30s + 60s | `cursoSeed` |
+| `alunoAprovadoSeed` | Idem + completou curso pelo Play até cert emitido | ~30s + 60s + 7min | `alunoComSenhaSeed` |
+
+Cada fixture tem cleanup `afterAll` pareado: ao fim do test, recursos
+criados são deletados via variant `*_safe`.
+
+### Spec consumindo (zero código de seed no test)
 
 ```ts
-// src/fixtures/seed-fixtures.ts
-import { test as base } from './exploratory-fixture.js';
-import { SeedAdminPage } from '../../projects/<slug>/pages/SeedAdminPage.js';
-import { ProfileSwitcher } from '../pages/ProfileSwitcher.js';
+import { test, expect } from '../../../../../src/fixtures/seed-fixtures.js';
 
-const STORAGE_PATH = 'outputs/.auth/storage.json';
-
-export const test = base.extend<{
-  cursoSeed: { id: number; name: string };
-}>({
-  cursoSeed: [async ({ browser }, use) => {
-    const context = await browser.newContext({ storageState: STORAGE_PATH });
-    const page = await context.newPage();
-    await new ProfileSwitcher(page).switchTo('Administrador');
-    const seed = new SeedAdminPage(page);
-    const name = `Curso Seed w${test.info().workerIndex}-${Date.now()}`;
-    const id = await seed.createCurso({ name });
-    await context.close();
-
-    await use({ id, name });
-
-    // Cleanup
-    const ctxCleanup = await browser.newContext({ storageState: STORAGE_PATH });
-    const pageCleanup = await ctxCleanup.newPage();
-    await new ProfileSwitcher(pageCleanup).switchTo('Administrador');
-    await new SeedAdminPage(pageCleanup).deleteConteudoByIdSafe(id);
-    await ctxCleanup.close();
-  }, { scope: 'test' }],
+test('TC — Aluno aprovado vê certificado emitido', async ({
+  page,
+  alunoAprovadoSeed,
+}) => {
+  // alunoAprovadoSeed já tem: cursoId + alunoEmail/Senha + attendeeId +
+  // certificateId + progress + approvedAt — tudo pronto pra usar.
+  expect(alunoAprovadoSeed.certificateId).toBeTruthy();
+  expect(alunoAprovadoSeed.progress).toBeGreaterThanOrEqual(60);
+  // Spec foca na asserção, não no setup.
 });
 ```
 
-Spec consome:
+### Mapping pré-condição (MD canônico) → fixture / helper
+
+Quando o `playwright-test-generator` (ou healer/QA) lê a seção
+`Pré-condições` de um TC, mapeia pelas tabelas abaixo:
+
+**1. Pré-condições cobertas por fixture (autonomia plena, zero código no test)**
+
+| Texto na pré-condição do MD | Fixture canônica | Setup interno |
+|---|---|---|
+| "Curso pré-existente" / "Curso disponível" | `cursoSeed` | `createCurso` |
+| "Aluno matriculado num curso" / "Participant ativo" | `alunoMatriculadoSeed` | `createCurso` + `matricularAluno` |
+| "Aluno com credenciais válidas" / "Aluno pode logar" | `alunoComSenhaSeed` | + `matricularAlunoComSenha` |
+| "Aluno aprovado" / "Aluno com cert emitido" / "Progresso ≥ X%" | `alunoAprovadoSeed` | + `completarCursoComoAluno` |
+
+**2. Pré-condições cobertas por helper standalone (caller invoca explicitamente em beforeAll)**
+
+| Texto na pré-condição do MD | Helper | Skill |
+|---|---|---|
+| "Trilha pré-existente" | `SeedAdminPage.createTrilha` | provisionar-seed |
+| "Aluno criado (sem matrícula)" | `SeedAdminPage.criarUsuarioAluno` | provisionar-seed |
+| "Curso publicado / liberado" | `SeedAdminPage.publicarCurso` | provisionar-seed |
+| "Atividade marcável manualmente" / "Vídeo concluível pelo aluno" | `SeedAdminPage.configurarMarcarConcluidoManualmente` | provisionar-seed |
+| "Curso com switch 'Habilitar reinscrição' ON" | `ContentEditPage.setHabilitarReinscricao(true)` | configuracao-conteudo |
+| "Flag :feature ON na org" | `ensureFlipperActor` | testar-feature-flag-twygo |
+| "Funcionalidade no contrato ON" | helpers da `alterar-funcionalidade-contrato-twygo` | mesma |
+| "Token API V2 válido" | `getApiAuthHeaders` | provisionar-token-api-twygo |
+| "Organização adicional (multi-tenant)" | storageState `ADITIONAL_STORAGE_PATH` | testar-ambientes-adicionais-twygo |
+
+**3. Pré-condições NÃO cobertas (fixme legítimo + ID do roadmap)**
+
+Quando a pré-condição cair em helper marcado `[NOT_IMPLEMENTED]` no
+catálogo acima (§"Catálogo COMPLETO"), o spec PODE marcar `test.fixme`
+com mensagem padronizada:
 
 ```ts
-test('TC1 — ...', async ({ page, cursoSeed }) => {
-  await page.goto(`/o/${getOrgId()}/contents/${cursoSeed.id}/edit`);
-  // ...
+test.fixme(
+  true,
+  'seed-roadmap-pacote-1: createPacote ainda não implementado (rota não confirmada via recon). Skill provisionar-seed §"Catálogo COMPLETO".',
+);
+```
+
+Forma `seed-roadmap-<resource>-<n>` permite trackeamento — quando helper
+for implementado, busca textual remove todos os fixmes correspondentes.
+
+### Anti-pattern (manter `fixme` por seed quando fixture existe)
+
+```ts
+// ❌ ERRADO — fixme manual indo contra autonomia
+test.fixme(true, 'seed inválido — eventId placeholder');
+test('TC1', async ({ page }) => { ... });
+
+// ✅ CORRETO — fixture cuida do setup
+test('TC1', async ({ page, alunoAprovadoSeed }) => {
+  // page já está logada como admin, e alunoAprovadoSeed tem tudo pronto
 });
 ```
+
+### Promoção pra `scope: 'worker'` (cache cross-test)
+
+Por default fixtures são `scope: 'test'` (recria pra cada TC). Quando um
+spec tem múltiplos TCs que compartilham o mesmo seed (ex: 5 TCs que
+validam o mesmo aluno aprovado), promova pra worker:
+
+```ts
+// No spec
+test.describe.configure({ mode: 'serial' });  // necessário pra worker fixture
+
+const myTest = test.extend({
+  alunoAprovadoSeed: [async ({ alunoAprovadoSeed }, use) => {
+    await use(alunoAprovadoSeed);
+  }, { scope: 'worker' }],  // promove pra worker
+});
+```
+
+Amortiza ~7min do `alunoAprovadoSeed` por todos os TCs do arquivo.
+
+### Custo do seed e quando reusar `data/fixed-seed.data.ts`
+
+Pra suites cujo TC roda em <10s mas o seed leva 7min (ex: "Filtro
+Avançado Status Substituído"), prefira **seed permanente** via
+`data/fixed-seed.data.ts` (curso/aluno mantidos no env entre runs) ao
+invés de recriar a cada execução. Critério:
+
+- Suite roda <1min total → fixture dinâmica
+- Suite roda <10s × N TCs → fixed-seed
+- Seed específico do TC só (cert REPLACED, multi-inscrições) → fixed-seed
+
+
 
 ## Quando `test.fixme` por seed AINDA é legítimo
 
@@ -1154,8 +1302,14 @@ participants vinculados" (similar a modal "Painel em uso").
 
 ## Regras duras
 
+0. **SEMPRE prefira fixture canônica** (`src/fixtures/seed-fixtures.ts`)
+   sobre `beforeAll` manual. Generator/healer deve mapear pré-condição
+   do MD → fixture pela tabela acima (§"Mapping pré-condição → fixture").
+   Só usar `beforeAll` manual quando a fixture não cobre o caso (ex:
+   seed composto com 3 alunos em estados distintos).
 1. **NUNCA `test.fixme(true, 'seed inválido')`** quando o recurso é
-   criável via UI admin. Categoria §7.6 F NÃO se aplica.
+   criável via UI admin OU coberto por fixture canônica. Categoria
+   §7.6 F NÃO se aplica.
 2. **NUNCA usar `/o/{orgId}/events/new`** como rota de criar curso/trilha/pacote
    no projeto Recertificação (ou outro projeto que rode contra Twygo
    facelift) — rota Haml legada, retorna 422 silencioso. Usar SEMPRE
@@ -1227,6 +1381,37 @@ novo:
 
 ## Histórico
 
+- **v1.5.0 (2026-05-28)**: autonomia completa do agente + catálogo COMPLETO
+  de seeds (implementados + roadmap). Mudanças:
+  - **Catálogo COMPLETO documentado** com status por helper:
+    13 implementados + 14 `[NOT_IMPLEMENTED]` (rastreados via
+    `seed-roadmap-<resource>-<n>`). Generator/healer consulta antes de
+    `fixme` legítimo.
+  - **3 helpers críticos implementados** em `SeedAdminPage`:
+    - `listarAtividades(eventId)` → `[{ id, title, sequence }]` lidos
+      de `/e/{id}/contents` (`li.dd-item[data-id]`).
+    - `configurarMarcarConcluidoManualmente(eventId, activityIds[])` →
+      marca os 4 checkboxes `mark_completed_*` por activity (antes
+      feito manual via MCP).
+    - `publicarCurso(eventId)` → tab Identificação → Situação=Liberado.
+  - **`src/fixtures/seed-fixtures.ts` implementado** com 6 fixtures:
+    `cursoSeed`, `trilhaSeed`, `cursoLiberadoSeed`,
+    `cursoComAtividadesMarcaveisSeed`, `alunoMatriculadoSeed`,
+    `alunoComSenhaSeed`, `alunoAprovadoSeed` — todos com cleanup auto
+    pareado.
+  - **`SeedAdminPage.completarCursoComoAluno` consolidado** (5 fases:
+    login UI → /e/{id} → APRENDER → iterar atividades + checkbox manual
+    → poll cert via API V2). Extraído do spec one-shot.
+  - **Helper privado `lookupUserIdByEmail`** via `/api/v2/users?email=`.
+  - **Mapping pré-condição → fixture / helper** com 3 tabelas:
+    cobertas por fixture (autonomia plena), por helper standalone
+    (caller invoca em beforeAll), e `[NOT_IMPLEMENTED]` (fixme legítimo
+    com ID roadmap).
+  - **Quando reusar `data/fixed-seed.data.ts`** (seed permanente) vs
+    fixture dinâmica: critério por custo do seed vs tempo do TC.
+  - **`scope: 'worker'` documentado** pra amortizar seeds caros.
+  - **Skill `twygo-test-orchestrator` atualizada** com Anti-pattern F
+    (preferir fixture canônica sobre beforeAll manual).
 - **v1.4.1 (2026-05-28)**: cross-check pós-validação live + correções de
   documentação. Mudanças:
   - **`matricularAlunoComSenha` implementado em SeedAdminPage real**

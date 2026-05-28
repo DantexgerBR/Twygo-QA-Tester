@@ -335,6 +335,128 @@ export class SeedAdminPage extends BasePage {
     return this.extractEventIdFromUrl();
   }
 
+  // ============================================================
+  // Configuração de atividades / publicação
+  // ============================================================
+
+  /**
+   * Lista as atividades de um curso (id + título + sequence) via página
+   * `/e/{eventId}/contents` (admin). Estrutura HAML: `<li class="dd-item"
+   * data-id="X" data-title="Y" data-sequence="N">`.
+   *
+   * Validado live 2026-05-28 no curso 807403.
+   */
+  async listarAtividades(
+    eventId: number,
+  ): Promise<Array<{ id: number; title: string; sequence: number }>> {
+    await this.ensureAdminProfile();
+    await safeGoto(this.page, `/e/${eventId}/contents`);
+    return this.page.evaluate(() => {
+      return Array.from(document.querySelectorAll('li.dd-item'))
+        .filter((li) => li.getAttribute('data-id'))
+        .map((li) => ({
+          id: Number(li.getAttribute('data-id')),
+          title: li.getAttribute('data-title') ?? '',
+          sequence: Number(li.getAttribute('data-sequence') ?? 0),
+        }));
+    });
+  }
+
+  /**
+   * Ativa "Permitir marcar concluído manualmente" em N atividades de um
+   * curso. Cobre os 4 checkboxes do form HAML
+   * `/e/{eventId}/contents/{activityId}/edit`:
+   *   - `#checkmark` (geral / Aula)
+   *   - `#mark_completed_video` (vídeo arquivo)
+   *   - `#mark_completed_external` (vídeo externo / YouTube)
+   *   - `#mark_completed_scorm` (SCORM)
+   *
+   * Quando ativos, expõem checkbox "Marcar como concluído" embaixo do
+   * player do aluno em `/e/{eventId}/learn` — necessário pra completar
+   * atividades vídeo/SCORM/Aula sem assistir até o fim.
+   *
+   * Validado live 2026-05-28 no curso 807403 — 3 atividades configuradas
+   * via MCP (video arquivo 9288023, video externo 9288024, scorm 9288026)
+   * antes do pipeline emitir cert 5027067.
+   *
+   * Skill: provisionar-seed v1.5 §"Atalho descoberto live".
+   */
+  async configurarMarcarConcluidoManualmente(
+    eventId: number,
+    activityIds: number[],
+  ): Promise<void> {
+    await this.ensureAdminProfile();
+    for (const activityId of activityIds) {
+      await safeGoto(this.page, `/e/${eventId}/contents/${activityId}/edit`);
+      // Marcar via click no label (input Materialize/Chakra é hidden).
+      for (const cbid of [
+        'mark_completed_scorm',
+        'mark_completed_video',
+        'mark_completed_external',
+        'checkmark',
+      ]) {
+        const cb = this.page.locator(`#${cbid}`);
+        const count = await cb.count();
+        if (count === 0) continue;
+        const checked = await cb.isChecked().catch(() => false);
+        if (checked) continue;
+        // Click no label associado — Materialize esconde input via CSS clip.
+        await this.page
+          .locator(`label[for="${cbid}"]`)
+          .first()
+          .click()
+          .catch(() => undefined);
+      }
+      // Salvar — botão "Salvar" do form Materialize.
+      await dismissCommonModals(this.page);
+      await this.page.getByRole('button', { name: 'Salvar', exact: true }).click();
+      // Volta pra listagem de atividades.
+      await this.page
+        .waitForURL(/\/e\/\d+\/contents/, { timeout: 15_000 })
+        .catch(() => undefined);
+    }
+  }
+
+  /**
+   * Publica um curso (situation: Em desenvolvimento → Liberado) via tab
+   * Identificação do form facelift `/contents/{id}/edit?tab=identification`.
+   *
+   * Pré-condição pro aluno ver e poder acessar o curso (cursos "Em
+   * desenvolvimento" só aparecem pro admin).
+   *
+   * Combobox `Situação *` (uid validado live em ContentEditPage):
+   *   - "Em desenvolvimento" (default, value=0)
+   *   - "Liberado" (target, value=1)
+   *   - "Suspenso" (value=2)
+   *
+   * Skill: provisionar-seed v1.5 §"Publicação de curso".
+   */
+  async publicarCurso(eventId: number): Promise<void> {
+    await this.ensureAdminProfile();
+    await safeGoto(
+      this.page,
+      `/o/${getOrgId()}/contents/${eventId}/edit?tab=identification`,
+    );
+    // Aguarda tab Identificação ativa (default).
+    await this.page
+      .getByRole('combobox', { name: /Situação \*/ })
+      .first()
+      .waitFor({ state: 'visible', timeout: 10_000 });
+    await this.page
+      .getByRole('combobox', { name: /Situação \*/ })
+      .first()
+      .selectOption('Liberado');
+    await dismissCommonModals(this.page);
+    await this.page.getByRole('button', { name: 'Salvar', exact: true }).click();
+    // Confirmar via toast "salva com sucesso" ou aguardar que o select
+    // permaneça com "Liberado" pós-save.
+    await this.page
+      .getByText(/salva com sucesso|atualizada com sucesso/i)
+      .first()
+      .waitFor({ state: 'visible', timeout: 10_000 })
+      .catch(() => undefined);
+  }
+
   /**
    * Deleta curso por ID. Variant idempotente: aceita ID inexistente
    * (404 / botão ausente) sem throw — afterAll robusto.
@@ -951,6 +1073,193 @@ export class SeedAdminPage extends BasePage {
       console.warn(
         `[desmatricularAlunoSafe] Falha em "${data.contentName}/${data.alunoEmail}": ${(err as Error).message}`,
       );
+    }
+  }
+
+  // ============================================================
+  // Engajamento do aluno (completar curso → aprovação → cert)
+  // ============================================================
+
+  /**
+   * Pipeline completo de engajamento do aluno como SEED. Validado live em
+   * 2026-05-28 (commit 168ea72 + 019b588 — cert 5027067 emitido).
+   *
+   * Sequência:
+   *   1. Login OAuth (POST /oauth/token grant_type=password) → access_token
+   *   2. Login UI em context fresh (sem storageState admin)
+   *   3. Acessa `/e/{cursoId}` → APRENDER (+aceita consentimento se houver)
+   *   4. Itera cards da sidebar do player + clica checkbox "Marcar como
+   *      concluído" em atividades vídeo/SCORM/Aula que tenham config
+   *      `Permitir marcar manualmente` ativa
+   *   5. Fecha modal "Aprovação atingida" se disparar
+   *   6. Poll /api/v2/attendees até `certificates[].length > 0` (~30s)
+   *
+   * **NOTE**: o seed-aluno DEVE ter senha gravada (via `matricularAlunoComSenha`).
+   *
+   * @returns `attendee` da API V2 com `certificates[0]` populado se cert foi
+   *          emitido, ou `null` se o critério de aprovação do curso não foi
+   *          atingido (caller decide se faz fail-loud).
+   */
+  async completarCursoComoAluno(data: {
+    browser: import('@playwright/test').Browser;
+    cursoId: number;
+    alunoEmail: string;
+    alunoSenha: string;
+    baseURL?: string;
+    apiToken?: string;
+    /** Timeout total pra cert (default 60s). */
+    certTimeoutMs?: number;
+  }): Promise<{
+    attendeeId: number | null;
+    progress: number;
+    approvedAt: string | null;
+    certificate: {
+      certificate_id: number;
+      certificate_situation: string;
+      certificate_link: string;
+    } | null;
+  }> {
+    const baseURL =
+      data.baseURL || process.env.API_BASE_URL || `https://recertificacao-testeqa.stage.twygoead.com`;
+    const apiToken = data.apiToken || process.env.API_TOKEN || '';
+    const certTimeoutMs = data.certTimeoutMs ?? 60_000;
+
+    // 1. Login UI em context fresh — storageState empty pra não herdar admin.
+    const alunoCtx = await data.browser.newContext({
+      storageState: { cookies: [], origins: [] },
+    });
+    const alunoPage = await alunoCtx.newPage();
+    try {
+      await safeGoto(alunoPage, '/users/login');
+      await alunoPage.getByRole('textbox', { name: 'Login', exact: true }).fill(data.alunoEmail);
+      await alunoPage.getByRole('textbox', { name: 'Senha', exact: true }).fill(data.alunoSenha);
+      await alunoPage.getByRole('button', { name: 'Entrar', exact: true }).click();
+      await alunoPage.waitForURL((url) => !url.pathname.startsWith('/users/login'), {
+        timeout: 30_000,
+      });
+
+      // 2. Acessa o curso pela rota canônica do facelift.
+      await safeGoto(alunoPage, `/e/${data.cursoId}`);
+
+      // 3. Aceitar consentimento (RGPD) + APRENDER.
+      const aceitar = alunoPage.getByRole('button', { name: /^Aceitar$/i }).first();
+      if (await aceitar.isVisible({ timeout: 3_000 }).catch(() => false)) {
+        await aceitar.click();
+      }
+      await alunoPage.getByRole('button', { name: /^APRENDER$/i }).click();
+      await alunoPage.waitForLoadState('networkidle', { timeout: 15_000 }).catch(() => undefined);
+
+      // 4. Iterar cards de atividade da sidebar (h2 nomes curtos).
+      const cards = await alunoPage.evaluate(() =>
+        Array.from(document.querySelectorAll('h2'))
+          .filter(
+            (h) =>
+              (h as HTMLElement).offsetParent !== null &&
+              (h.textContent || '').trim().length > 0 &&
+              (h.textContent || '').trim().length < 50,
+          )
+          .map((h) => (h.textContent || '').trim()),
+      );
+      for (const name of cards) {
+        const card = alunoPage.locator(`h2:has-text("${name}")`).first();
+        try {
+          await card.scrollIntoViewIfNeeded({ timeout: 3_000 });
+          await card.click({ timeout: 5_000 });
+          await alunoPage.waitForTimeout(2_000);
+          // Checkbox "Marcar como concluído" — só em vídeo/SCORM/Aula
+          // configurados com a opção no admin.
+          const completoCheckbox = alunoPage
+            .locator(
+              'input[type="checkbox"][id*="complet"], label:has-text("Marcar como concluído")',
+            )
+            .first();
+          if (await completoCheckbox.isVisible({ timeout: 1_500 }).catch(() => false)) {
+            await completoCheckbox.click({ force: true }).catch(() => undefined);
+            await alunoPage.waitForTimeout(1_500);
+          }
+          // Fecha modal de aprovação se disparar — caller já considera
+          // sucesso, mas spec precisa continuar pra completar outras
+          // atividades remanescentes (idempotente).
+          const aprovacaoModal = alunoPage.getByText(/Aprovação atingida|Parabéns/i).first();
+          if (await aprovacaoModal.isVisible({ timeout: 1_000 }).catch(() => false)) {
+            await alunoPage
+              .getByRole('button', { name: /^Ok$/i })
+              .first()
+              .click()
+              .catch(() => undefined);
+          }
+        } catch {
+          // Card pode estar bloqueado por modal anterior — segue.
+        }
+      }
+    } finally {
+      await alunoCtx.close();
+    }
+
+    // 5. Poll API V2 /attendees até cert ser emitido (worker async ~30s).
+    const lookupCtx = await import('@playwright/test').then((pw) =>
+      pw.request.newContext({ baseURL }),
+    );
+    try {
+      const userId = await this.lookupUserIdByEmail({ email: data.alunoEmail, apiToken, baseURL });
+      if (!userId) {
+        return { attendeeId: null, progress: 0, approvedAt: null, certificate: null };
+      }
+      const deadline = Date.now() + certTimeoutMs;
+      let attendee: any = null;
+      while (Date.now() < deadline) {
+        const r = await lookupCtx.get(
+          `/api/v2/attendees?content_id=${data.cursoId}&user_id=${userId}`,
+          { headers: { Authorization: `Bearer ${apiToken}`, Accept: 'application/json' } },
+        );
+        if (r.ok()) {
+          const body = await r.json();
+          attendee = body.data?.attendees?.[0];
+          if (attendee?.certificates?.length > 0) break;
+        }
+        await new Promise((resolve) => setTimeout(resolve, 5_000));
+      }
+      const cert = attendee?.certificates?.[0];
+      return {
+        attendeeId: attendee?.attendee_id ?? null,
+        progress: Number(attendee?.progress ?? 0),
+        approvedAt: attendee?.approved_at ?? null,
+        certificate: cert
+          ? {
+              certificate_id: cert.certificate_id,
+              certificate_situation: cert.certificate_situation,
+              certificate_link: cert.certificate_link,
+            }
+          : null,
+      };
+    } finally {
+      await lookupCtx.dispose();
+    }
+  }
+
+  /**
+   * Helper privado: resolve user_id pelo email via API V2.
+   * Reaproveitado por completarCursoComoAluno (precisa do user_id pro
+   * lookup do attendee).
+   */
+  private async lookupUserIdByEmail(args: {
+    email: string;
+    apiToken: string;
+    baseURL: string;
+  }): Promise<number | null> {
+    const ctx = await import('@playwright/test').then((pw) =>
+      pw.request.newContext({ baseURL: args.baseURL }),
+    );
+    try {
+      const r = await ctx.get(
+        `/api/v2/users?email=${encodeURIComponent(args.email)}&page=1&per_page=1`,
+        { headers: { Authorization: `Bearer ${args.apiToken}`, Accept: 'application/json' } },
+      );
+      if (!r.ok()) return null;
+      const body = await r.json();
+      return body.data?.users?.[0]?.user_id ?? body.data?.users?.[0]?.id ?? null;
+    } finally {
+      await ctx.dispose();
     }
   }
 }
