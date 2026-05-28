@@ -46,25 +46,30 @@ export const fixedSeed = {
   principalOrgId: 37048,
 
   // ==========================================================================
-  // Seed da suite "Reinscrição via API V2" (tests/api/)
-  // Validado live 2026-05-28: cursos pre-existentes na org 37048 (todos sem
-  // has_recertification ainda — feature aguarda dev shippar). Quaisquer 2 dos
-  // 3 cursos abaixo servem para validar o PIPELINE (URL, body, schema).
+  // Seed da suite "Reinscrição via API V2" (tests/api/) e demais suites
+  // do projeto Recertificação que dependem do estado "aluno aprovado".
   //
-  //   806755 — "Construindo times de alta performance"
-  //   806756 — "Gestão para resultados"
-  //   806757 — "Cultura de feedback"
+  // Curso seed CANÔNICO (criado 2026-05-28 via tests/setup/seed-rec-v2-curso.spec.ts):
+  //   807400 — "Rec V2 Seed Curso (não-deletar)"
+  //   link: https://recertificacao-testeqa.stage.twygoead.com/e/807400-rec-v2-seed-curso-nao-deletar
   //
-  // Quando feature shipped, atualizar `cursoComRecertificacaoEventId` para
-  // apontar a um curso com `has_recertification=true` (criar via UI admin
-  // ou esperar curso seed específico do projeto).
+  // Pré-requisitos manuais (configurados via UI admin uma vez):
+  //   1. Switch "Habilitar reinscrição" ATIVO (tab Acesso) — pendente
+  //   2. Atividades inseridas para permitir progressão e conclusão
+  //   3. Critérios de aprovação configurados (Gerenciar → critérios)
+  //   4. Emissão automática de certificado configurada
+  //   5. Curso publicado (situation: development → released)
+  //
+  // Curso "sem recertification" para TC2 mix: usa 806755 (pre-existente) por
+  // enquanto. Quando precisar de cenário rígido "has_recertification=false",
+  // criar segundo curso seed via UI.
   // ==========================================================================
 
-  /** Content_id usado por TC1/TC3/TC4. Hoje aceita qualquer ID válido. */
-  cursoComRecertificacaoEventId: 806755 as number,
+  /** Content_id usado por TC1/TC3/TC4. Curso seed dedicado do projeto. */
+  cursoComRecertificacaoEventId: 807400 as number,
 
-  /** Content_id usado em TC2 mix. Pode ser igual ao acima até feature shipped. */
-  cursoSemRecertificacaoEventId: 806756 as number,
+  /** Content_id usado em TC2 mix. Curso pre-existente da org (sem config dedicada). */
+  cursoSemRecertificacaoEventId: 806755 as number,
 
   /**
    * Emails de teste para TCs API. Pattern: `rec-v2-tc<N>@example.com`.
