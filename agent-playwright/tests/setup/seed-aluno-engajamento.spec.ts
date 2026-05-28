@@ -86,12 +86,29 @@ test('Bootstrap aluno com senha pra fluxo de engajamento', async ({ browser }, t
     await page.getByRole('textbox', { name: /^Nome\*$/i }).fill(firstName);
     await page.getByRole('textbox', { name: /^Sobrenome\*$/i }).fill(lastName);
 
-    // 7. EXPANDIR h3 "Senha" (colapsado por default)
+    // 7. EXPANDIR h3 "Senha" (colapsado por default).
+    // Validado live 2026-05-28 via chrome-devtools-mcp:
+    //   - h3 "Senha" tem onclick="$('.create_password').toggleClass('hidden'); ..."
+    //   - Posição y≈1490px no DOM — form Twygo Materialize é grande
+    //   - state:'visible' falha pelo viewport check; o h3 só vira "attached"
+    //     no Playwright depois que o React/Materialize de fato renderiza a
+    //     seção, o que aparentemente exige scroll progressivo.
+    //   - Fix: scroll programático em window + scrollIntoViewIfNeeded.
     console.log(`[SEED] Expandindo seção Senha...`);
-    const senhaH3 = page.locator('h3').filter({ hasText: /^Senha\b/ }).first();
-    await senhaH3.waitFor({ state: 'visible', timeout: 5_000 });
+    // Scroll progressivo até o final do form pra forçar render de todos os h3.
+    await page.evaluate(async () => {
+      const total = document.body.scrollHeight;
+      for (let y = 0; y < total; y += 400) {
+        window.scrollTo(0, y);
+        await new Promise((r) => setTimeout(r, 80));
+      }
+    });
+    // Selector específico via :has-text — evita strict mode warning
+    // que o page.locator('h3', { hasText }) pode gerar com multiple matches.
+    const senhaH3 = page.locator('h3:has-text("Senha")').first();
+    await senhaH3.scrollIntoViewIfNeeded();
     await senhaH3.click();
-    // Aguarda inputs aparecerem (classe .hidden removida via toggleClass)
+    // Inputs ficam visíveis após toggleClass('hidden') no .create_password
     await page.locator('#password').waitFor({ state: 'visible', timeout: 5_000 });
 
     // 8. Preenche senha + confirmação
