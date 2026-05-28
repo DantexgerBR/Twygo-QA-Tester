@@ -792,11 +792,46 @@ atividades de tipos variados):
 | Texto              | ✅ Sim (automático)             | Clicar no card                       |
 | Página             | ✅ Sim (automático)             | Clicar no card                       |
 | Arquivo (PDF/JPG)  | ✅ Sim (automático)             | Clicar no card                       |
-| Aula               | ❌ Não — exige assistir         | Player + evento `ended` ou time-up   |
-| Vídeo (arquivo)    | ❌ Não — exige assistir          | Player do `<video>` até o fim         |
-| Vídeo (externo)    | ❌ Não — exige assistir          | YouTube/Vimeo iframe — postMessage   |
-| SCORM              | ❌ Não — exige API SCORM         | `cmi.completion_status = "completed"`|
+| Aula               | ❌ Não — exige assistir         | Config admin "checkmark" + checkbox player |
+| Vídeo (arquivo)    | ❌ Não — exige assistir          | Config admin `mark_completed_video` + checkbox |
+| Vídeo (externo)    | ❌ Não — exige assistir          | Config admin `mark_completed_external` + checkbox |
+| SCORM              | ❌ Não — exige API SCORM         | Config admin `mark_completed_scorm` + checkbox |
 | Questionário       | ❌ Não — exige responder         | Responder ≥ acerto-mínimo            |
+
+### Atalho descoberto live (2026-05-28): "Permitir marcar concluído manualmente"
+
+Cada atividade Twygo tem opção admin `Permitir marcar concluído manualmente`
+que, quando ativa, expõe checkbox `Marcar como concluído` embaixo do
+player do aluno (`/e/{id}/learn`). Isso é **a forma canônica** de
+completar atividades vídeo/SCORM/Aula em seeds — não precisa simular
+`<video>.ended` nem injetar SCORM API.
+
+**Configurar via admin** (form HAML `/e/{eventId}/contents/{contentId}/edit`):
+
+```js
+// Admin context — config single activity
+await page.goto(`/e/${eventId}/contents/${activityId}/edit`);
+for (const cbid of ['mark_completed_scorm', 'mark_completed_video',
+                    'mark_completed_external', 'checkmark']) {
+  const cb = await page.$(`#${cbid}`);
+  if (cb && !(await cb.isChecked())) {
+    await page.locator(`label[for="${cbid}"], label:has(#${cbid})`).click();
+  }
+}
+await page.locator('button[type="submit"]:has-text("Salvar")').click();
+```
+
+**Aluno marca via player** (após config):
+
+```js
+// Já navegado em /e/{id}/learn + clicou no card da atividade
+const completoCheckbox = alunoPage.locator(
+  'input[type="checkbox"][id*="complet"], label:has-text("Marcar como concluído")'
+).first();
+if (await completoCheckbox.isVisible({ timeout: 1500 }).catch(() => false)) {
+  await completoCheckbox.click({ force: true });
+}
+```
 
 **Conclusão:** seed-via-UI completa **até ~60%** num curso misto. Pra hit
 100% e disparar emissão de certificado:
@@ -860,6 +895,43 @@ expect(resp.status()).toBe(200);
 const { access_token } = await resp.json();
 await ctx.dispose();
 ```
+
+### Validar progresso + certificate via API V2
+
+```ts
+// Endpoint canônico (validado live 2026-05-28):
+const resp = await ctx.get(`/api/v2/attendees?content_id=${eventId}&user_id=${userId}`, {
+  headers: { Authorization: `Bearer ${API_TOKEN}` },
+});
+const attendee = (await resp.json()).data.attendees[0];
+// {
+//   attendee_id, user_id, content_id, content_type: 'course',
+//   status: 'confirmed', progress: 60, score: 60,
+//   approved_at: '2026-05-28T14:17:21-03:00' | null,
+//   completed_at: null | '...',  // só populado em 100%
+//   certificates: [{
+//     certificate_id, certificate_situation: 'valid',
+//     certificate_issuing_date, certificate_expiration_date,
+//     certificate_link
+//   }]
+// }
+```
+
+**Worker async:** cert é gerado ~30s após `approved_at`. Use poll:
+
+```ts
+for (let i = 0; i < 12; i++) {
+  const r = await ctx.get(`/api/v2/attendees?...`, {...});
+  const att = (await r.json()).data?.attendees?.[0];
+  if (att?.certificates?.length > 0) return att;
+  await new Promise(r => setTimeout(r, 5_000));
+}
+```
+
+**Endpoints que NÃO existem (validado 2026-05-28, retornam 404):**
+- `/api/v2/contents/{X}/event_participants`
+- `/api/v2/events/{X}/learning_students`
+- `/api/v2/event_students?event_id={X}&user_id={Y}`
 
 ## Integração com fixtures (opcional, mas recomendado)
 

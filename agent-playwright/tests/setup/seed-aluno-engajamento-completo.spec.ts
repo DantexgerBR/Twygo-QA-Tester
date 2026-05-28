@@ -308,6 +308,16 @@ test('Pipeline completo: criar + login + completar curso + cert', async ({ brows
         await card.scrollIntoViewIfNeeded({ timeout: 3_000 });
         await card.click({ timeout: 5_000 });
         await alunoPage.waitForTimeout(2_000);
+        // Tentar clicar checkbox "Marcar como concluído" ou similar — pra atividades
+        // que têm config "permitir marcar manualmente" (Aula/vídeo/SCORM).
+        const completoCheckbox = alunoPage.locator(
+          'input[type="checkbox"][id*="complet"], label:has-text("Marcar como concluído"), button:has-text("Marcar como concluído"), [class*="mark-complete"], [class*="markComplete"]'
+        ).first();
+        if (await completoCheckbox.isVisible({ timeout: 1_500 }).catch(() => false)) {
+          await completoCheckbox.click({ force: true }).catch(() => {});
+          console.log(`[FASE 5]     ✓ marcou "concluído manualmente"`);
+          await alunoPage.waitForTimeout(1_500);
+        }
       } catch (e) {
         console.log(`[FASE 5]   ✘ falhou: ${(e as Error).message.slice(0, 100)}`);
       }
@@ -319,6 +329,17 @@ test('Pipeline completo: criar + login + completar curso + cert', async ({ brows
       return m ? Number(m[1]) : null;
     });
     console.log(`[FASE 5] Progresso depois: ${progressoAfter}%`);
+
+    // Verificar modal "Aprovação atingida" — curso emitiu cert automático
+    // quando critério (60%) é atingido. Fechar o modal pra spec seguir.
+    const aprovacaoModal = alunoPage.getByText(/Aprovação atingida|Parabéns/i).first();
+    if (await aprovacaoModal.isVisible({ timeout: 2_000 }).catch(() => false)) {
+      console.log('[FASE 5] 🏆 MODAL "Aprovação atingida" detectado — cert sendo gerado!');
+      const okBtn = alunoPage.getByRole('button', { name: /^Ok$/i }).first();
+      if (await okBtn.isVisible({ timeout: 1_500 }).catch(() => false)) {
+        await okBtn.click();
+      }
+    }
 
     // Screenshot final + capturar quais atividades ficaram pendentes (não-check)
     await alunoPage.screenshot({
@@ -352,22 +373,51 @@ test('Pipeline completo: criar + login + completar curso + cert', async ({ brows
     console.log('[FASE 6] Verificando certificate_situation via API V2...');
     const certCtx = await playwrightRequest.newContext({ baseURL });
     try {
-      const lsResp = await certCtx.get(
-        `/api/v2/contents/${COURSE_ID}/event_participants?user_id=${userId}`,
+      // Endpoint canônico (testado live 2026-05-28):
+      //   /api/v2/attendees?content_id={X}&user_id={Y} → 200 ✓
+      // Outros endpoints retornam 404:
+      //   /api/v2/contents/{X}/event_participants
+      //   /api/v2/events/{X}/learning_students
+      //   /api/v2/event_students?event_id={X}&user_id={Y}
+      // Aguarda ~3s pro worker async terminar de gerar cert.
+      await new Promise((r) => setTimeout(r, 3_000));
+      const attResp = await certCtx.get(
+        `/api/v2/attendees?content_id=${COURSE_ID}&user_id=${userId}`,
         { headers: { Authorization: `Bearer ${apiToken}`, Accept: 'application/json' } },
       );
-      console.log(`[FASE 6] GET event_participants status=${lsResp.status()}`);
-      if (lsResp.ok()) {
-        const lsBody = await lsResp.json();
-        console.log(`[FASE 6] body keys: ${Object.keys(lsBody.data || {}).join(', ')}`);
-        const ep = lsBody.data?.event_participants?.[0] || lsBody.data?.participants?.[0] || lsBody.data?.attendees?.[0];
-        if (ep) {
-          console.log(`[FASE 6] event_participant: id=${ep.id ?? ep.event_participant_id}`);
-          console.log(`         certificate_situation=${ep.certificate_situation}`);
-          console.log(`         progress=${ep.progress ?? ep.progress_pct ?? '(undefined)'}`);
-        } else {
-          console.log('[FASE 6] EP body snippet:', JSON.stringify(lsBody).slice(0, 400));
-        }
+      console.log(`[FASE 6] GET /api/v2/attendees → ${attResp.status()}`);
+      // Poll até cert ser emitido (worker async, geralmente <30s).
+      let attendee: any = null;
+      let cert: any = null;
+      const maxPolls = 12;
+      for (let i = 0; i < maxPolls; i++) {
+        const r = await certCtx.get(
+          `/api/v2/attendees?content_id=${COURSE_ID}&user_id=${userId}`,
+          { headers: { Authorization: `Bearer ${apiToken}`, Accept: 'application/json' } },
+        );
+        if (!r.ok()) break;
+        const body = await r.json();
+        attendee = body.data?.attendees?.[0];
+        cert = attendee?.certificates?.[0];
+        const status = `progress=${attendee?.progress}% approved_at=${attendee?.approved_at ? 'ok' : 'pending'} certs=${attendee?.certificates?.length}`;
+        console.log(`[FASE 6]   poll ${i + 1}/${maxPolls}: ${status}`);
+        if (cert) break;
+        await new Promise((r) => setTimeout(r, 5_000));
+      }
+      if (attendee) {
+        console.log('[FASE 6] attendee final state:');
+        console.log(`         attendee_id:      ${attendee.attendee_id}`);
+        console.log(`         progress:         ${attendee.progress}%`);
+        console.log(`         status:           ${attendee.status}`);
+        console.log(`         approved_at:      ${attendee.approved_at ?? '(pending)'}`);
+        console.log(`         completed_at:     ${attendee.completed_at ?? '(pending)'}`);
+        console.log(`         score:            ${attendee.score}`);
+        console.log(`         certificates:     ${JSON.stringify(attendee.certificates)}`);
+      }
+      if (cert) {
+        console.log(`[FASE 6] 🏆 CERTIFICATE EMITTED: ${JSON.stringify(cert)}`);
+      } else {
+        console.log('[FASE 6] ⏳ Cert ainda não disponível via API após poll (worker pode demorar mais).');
       }
     } finally {
       await certCtx.dispose();
