@@ -65,7 +65,7 @@ from typing import Any
 # Allure preserva granularidade (critical/normal/normal/minor).
 # Versões do contrato suportadas. Adicionar nova versão aqui quando bumpar.
 # Ver CONTRACT.md §15 para detalhes.
-SUPPORTED_CONTRACT_VERSIONS = {"1.0", "1.1"}
+SUPPORTED_CONTRACT_VERSIONS = {"1.0", "1.1", "1.2"}
 
 
 _PRIORITY_MAP = {

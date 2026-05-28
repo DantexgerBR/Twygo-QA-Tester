@@ -318,3 +318,42 @@ enforçados pelo validador acima.
 
 Após esta skill, invocar `/generate-xmind` e `/generate-xml-testlink` para
 gerar os derivados.
+
+## Publish — propagar canonical → consumer (OBRIGATÓRIO após cada edit)
+
+CONTRACT.md §3.2 declara que consumidores (agent-playwright orchestrator,
+planner, generator) leem uma **cópia** do canonical em
+`agent-playwright/projects/<slug>/inputs/test-analysis.md`. Esquecer de
+propagar deixa o consumer lendo versão antiga **silenciosamente** —
+sem erro, com dessincronização entre AT versionada e implementação.
+
+**Ritual obrigatório**:
+
+```bash
+# Após qualquer edit em projects/<slug>/output/test-analysis.md:
+python agent-at/scripts/publish.py --project <slug>
+
+# Ou com env var:
+PROJECT=<slug> python agent-at/scripts/publish.py
+
+# Ou auto-detect (se exatamente 1 projeto):
+python agent-at/scripts/publish.py
+
+# Para inspecionar diff sem copiar:
+python agent-at/scripts/publish.py --project <slug> --dry-run
+```
+
+**Quando esse passo é dispensável**: nunca. Mesmo edits triviais (typo,
+ajuste de prioridade, novo TC) precisam ser propagados. O `publish.py`
+é idempotente (no-op quando arquivos já idênticos), então rodar sempre
+é seguro.
+
+**Caso real do incidente 2026-05-28**: AT do Recertificação foi
+atualizada at_version 1 → 2 → 3 ao longo de 2 commits, mas a cópia
+consumer ficou na at_version 1. Spec piloto continuou funcionando
+contra o AT do agent-at (eu lia direto o canonical), mas o usuário
+notou o gap. Lição: propagar IMEDIATAMENTE após edit, no mesmo PR.
+
+Skill `analyze-test` (orchestrator) e equivalente CLI devem chamar
+`publish.py` como passo final, automático. Edits manuais subsequentes
+precisam reexecutar manualmente.

@@ -147,8 +147,12 @@ agent-at/
 ├── template/
 │   └── template.xmind              # template base reutilizado por TODOS os projetos
 ├── scripts/
-│   ├── publish.sh                  # copia test-analysis.md para agent-playwright (futuro)
-│   └── regen-derivatives.py        # regenera XMind + XML a partir do MD (futuro)
+│   ├── publish.py                  # copia test-analysis.md para agent-playwright/inputs/ (CONTRACT.md §3.2)
+│   ├── md_canonical_parser.py      # parser do MD canônico (importado por md_to_*)
+│   ├── md_to_xmind.py              # MD → .xmind (derivado)
+│   ├── md_to_testlink.py           # MD → .xml TestLink (derivado)
+│   ├── validate_md_canonical.py    # validador semântico (anti-patterns + v1.2 rules)
+│   └── read_xlsx_simple.py         # helper extração planilha de quebra
 └── .claude/
     └── skills/
         ├── analyze-test/           # orquestra fluxo completo
@@ -196,7 +200,7 @@ Mesma convenção do Playwright:
 | 5. Generate XMind | `generate-xmind` | Lê MD canônico → produz `.xmind` derivado |
 | 6. Generate XML | `generate-xml-testlink` | Lê MD canônico → produz `.xml` TestLink derivado |
 | 7. Validate | (interna ao orchestrator) | Confirma os 3 arquivos batem entre si (count de TCs, prioridades, hierarquia) |
-| 8. Publish (opcional) | `scripts/publish.sh` | Copia `test-analysis.md` para `agent-playwright/projects/<slug>/inputs/` |
+| 8. Publish | `scripts/publish.py` | Copia `test-analysis.md` para `agent-playwright/projects/<slug>/inputs/`. **Obrigatório após edits** (consumer lê só a cópia). Idempotente. |
 
 **Comando único**: `/analyze-test` orquestra todas as 8 fases.
 
