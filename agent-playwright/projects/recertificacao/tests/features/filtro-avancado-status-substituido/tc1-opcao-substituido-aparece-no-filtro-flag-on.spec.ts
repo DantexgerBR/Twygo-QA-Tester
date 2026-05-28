@@ -21,7 +21,7 @@ test.describe('Filtro Avançado Status Substituído', () => {
     await allure.severity('critical');
     await allure.parameter(
       'feature_flag',
-      ':recertificacao=ON (assumido em staging-base-de-conhecimento)',
+      ':recertificacao=ON (env staging-recertificacao 37048 — confirmado live via chrome-devtools-mcp 2026-05-27)',
     );
 
     const learningStudents = new LearningStudentsPage(page);

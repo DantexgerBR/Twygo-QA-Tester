@@ -495,17 +495,22 @@ export class LearningStudentsPage extends BasePage {
 
   // ─── Reinscrição individual pelo Admin (Suite 02) ───────────────────
   //
-  // Convenções do menu de ações por linha:
-  //  - O trigger é um `<button>` (kebab/3-dots) com `aria-haspopup="menu"`.
-  //    Twygo Chakra: aria-label costuma ser "Ações" / "Opções" / "Mais
-  //    opções". Pra resiliência, casamos qualquer das 3 variantes.
+  // Convenções do menu de ações por linha (validado live 2026-05-27 em
+  // /e/{id}/learning, env 37048):
+  //  - O trigger é o botão kebab com accessible name literal `more_vert`
+  //    (ícone Material). NÃO é "Ações"/"Opções" — esses nomes nunca
+  //    existiram no facelift.
   //  - O dropdown abre como `<div role="menu">` (portal Chakra) — items
-  //    têm `role="menuitem"`. Item "Reinscrever" é a entry semântica.
+  //    têm `role="menuitem"`. Item de reinscrição é **"Iniciar reinscrição"**
+  //    (ícone `replay`), NÃO "Reinscrever".
+  //  - NÃO há modal de confirmação — o click em "Iniciar reinscrição"
+  //    dispara imediatamente `POST /api/v1/o/{org}/contents/{id}/event_participants`
+  //    com payload `{"recertification":true,"user":{"id":N}}`. Sucesso →
+  //    toast; falha → toast "Erro ao reinscrever participante".
   //
   // REVISAR: aguardando data-test-ids estáveis no app para:
   //   - `learning-student-row-actions-{userId}` (trigger por linha)
-  //   - `learning-student-action-reenroll` (item "Reinscrever")
-  //   - `reenroll-confirm-modal` (modal de confirmação)
+  //   - `learning-student-action-reenroll` (item "Iniciar reinscrição")
   // Quando os atributos forem adicionados, trocar os getters semânticos.
 
   /**
@@ -518,22 +523,35 @@ export class LearningStudentsPage extends BasePage {
   }
 
   /**
-   * Trigger do menu de ações (kebab/3-dots) na linha do aluno. Padrão
-   * Chakra: `<button>` com aria-label "Ações" / "Opções" / "Mais
-   * opções". Casamos role+name por regex para resiliência.
+   * Trigger do menu de ações (kebab) na linha do aluno. No facelift
+   * /e/{id}/learning o botão tem accessible name literal `more_vert`
+   * (validado live 2026-05-27).
    */
   getRowActionsMenuTrigger(email: string): Locator {
     return this.getRowByEmail(email)
-      .getByRole('button', { name: /(Ações|Opções|Mais|Menu)/i })
+      .getByRole('button', { name: 'more_vert' })
       .first();
   }
 
   /**
-   * Item "Reinscrever" no menu de ações aberto.
-   * Padrão Chakra: `<button role="menuitem">Reinscrever</button>`.
+   * Item "Iniciar reinscrição" (ícone `replay`) no menu de ações aberto.
+   * Validado live 2026-05-27 — o item NÃO se chama "Reinscrever".
    */
   getReinscreverMenuItem(): Locator {
-    return this.page.getByRole('menuitem', { name: /^Reinscrever$/i });
+    return this.page.getByRole('menuitem', { name: /Iniciar reinscrição/i });
+  }
+
+  /**
+   * Toast de ERRO da reinscrição individual. Texto literal observado live
+   * 2026-05-27: "Erro ao reinscrever participante" (disparado quando o
+   * `POST .../event_participants` retorna 422). `.first()` resolve
+   * strict-mode com toasts empilhados (skill `testar-toast-chakra-twygo`).
+   */
+  getReinscreverErrorToast(): Locator {
+    return this.page
+      .locator('.chakra-toast, [role="status"], [role="alert"]')
+      .filter({ hasText: /Erro ao reinscrever/i })
+      .first();
   }
 
   /**

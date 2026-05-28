@@ -24,6 +24,22 @@ export const fixedSeed = {
   emptyCursoId: 806852,
 
   /**
+   * Curso 807287 ("curso para reinscriçao") com seed REPLACED preparada:
+   * Richard Sebold (user_id 4294804) tem 5 inscrições (recert_num 0-4).
+   * Em 2026-05-28 emitimos certs sucessivos via UI admin nas inscrições
+   * recert_num=0 e recert_num=1 — resultado: recert_num=0 (id 44274543)
+   * ficou com certificate_situation=4 (REPLACED / Substituído), e
+   * recert_num=1 (id 44274544) ficou com certificate_situation=2
+   * (Emitido). Pré-condição da Suite 09 Filtro Avançado Status
+   * Substituído.
+   *
+   * Critério de aprovação do curso exige Frequência 100% — então NÃO
+   * inativar a Chamada criada em 2026-05-28 nem mexer no critério, OU a
+   * seed REPLACED é invalidada.
+   */
+  cursoComSubstituidoId: 807287,
+
+  /**
    * orgId principal do env staging-recertificacao. Embora `getOrgId()`
    * resolva isso dinamicamente, fica aqui pra docs.
    */

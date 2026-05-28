@@ -4,13 +4,12 @@ import { LearningStudentsPage } from '../../../pages/LearningStudentsPage.js';
 import { tc3Data } from './tc3-badge-substituido-coluna-status.data.js';
 
 test.describe('Filtro Avançado Status Substituído', () => {
-  // Rota destravada em 2026-05-27 (LearningStudentsPage.goToList →
-  // /e/{id}/learning). Pré-condição: aluno com certificate_status=4
-  // (REPLACED) — mesmo bloqueio do TC2.
-  test.fixme(
-    true,
-    'seed-ausente: requer aluno com certificate_status=4 (REPLACED). Mesmo bloqueio do TC2 — aguarda SeedAdminPage.recertificarAlunoSubstituindoCert.',
-  );
+  // Seed REPLACED criada em 2026-05-28 no curso 807287 ("curso para
+  // reinscriçao") — mesma seed do TC2. Richard Sebold recert_num=0
+  // (id 44274543) tem certificate_situation=4 (REPLACED / Substituído)
+  // pós-emit sucessivo dos certs em recert 0 e recert 1.
+  // O passo 3 (tooltip do badge) ainda depende de definição de design —
+  // marcado como REVISAR-FIGMA, não falha o test se ausente.
 
   test('TC3 — Badge "Substituído" é exibido na coluna de Status para participants com certificate_status = 4', async ({
     page,
@@ -23,7 +22,7 @@ test.describe('Filtro Avançado Status Substituído', () => {
     await allure.severity('normal');
     await allure.parameter(
       'feature_flag',
-      ':recertificacao=ON (assumido em staging-base-de-conhecimento)',
+      ':recertificacao=ON (env staging-recertificacao 37048)',
     );
 
     const learningStudents = new LearningStudentsPage(page);
@@ -54,6 +53,7 @@ test.describe('Filtro Avançado Status Substituído', () => {
           await expect(badge).toContainText(tc3Data.expectedBadgeLabel);
         } else {
           await learningStudents.openFilterDrawer();
+          await learningStudents.openAdvancedFilterCriteria('Certificado');
           await learningStudents.selectStatusFilter(tc3Data.expectedBadgeLabel);
           await learningStudents.applyFilters();
 
@@ -70,7 +70,7 @@ test.describe('Filtro Avançado Status Substituído', () => {
 
           const firstRowBadge = rows
             .first()
-            .locator('.chakra-badge, [class*="badge"]')
+            .locator('[data-test-id^="certificate-student-badge"]')
             .first();
           await expect(firstRowBadge).toBeVisible();
           await expect(firstRowBadge).toContainText(tc3Data.expectedBadgeLabel);
@@ -79,33 +79,18 @@ test.describe('Filtro Avançado Status Substituído', () => {
     );
 
     await allure.step(
-      '3. Posicionar o cursor sobre o badge → Tooltip explicativo é exibido (REVISAR-FIGMA)',
+      '3. Posicionar o cursor sobre o badge → Tooltip explicativo é exibido',
       async () => {
-        // REVISAR-FIGMA: texto exato do tooltip ainda não confirmado no MD —
-        // a prosa cita "REVISAR-FIGMA: confirmar tooltip". Asserta apenas
-        // presença do role=tooltip após hover, sem texto literal.
-        await allure.tag('REVIEW_NEEDED');
-
+        // Validado live 2026-05-28 (chrome-devtools-mcp): o badge tem
+        // tooltip nativo via atributo `title="Certificado substituído por
+        // uma nova versão"`. Assertamos a presença e o conteúdo do title.
         const rows = learningStudents.getParticipantRows();
         const badge = rows
           .first()
-          .locator('.chakra-badge, [class*="badge"]')
+          .locator('[data-test-id^="certificate-student-badge"]')
           .first();
-
-        if (await badge.isVisible().catch(() => false)) {
-          await badge.hover();
-          const tooltip = page.getByRole('tooltip').first();
-          // Tooltip pode não existir no componente atual — a prosa marca
-          // REVISAR-FIGMA. Trata ausência como pendência de design, não fail.
-          const tooltipVisible = await tooltip
-            .isVisible({ timeout: 3_000 })
-            .catch(() => false);
-          if (!tooltipVisible) {
-            await allure.tag('TOOLTIP_PENDING_DESIGN');
-          } else {
-            await expect(tooltip).not.toHaveText('');
-          }
-        }
+        await expect(badge).toBeVisible();
+        await expect(badge).toHaveAttribute('title', /Substitu[ií]d/i);
       },
     );
   });

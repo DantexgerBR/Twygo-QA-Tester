@@ -2,21 +2,20 @@
  * Dados específicos do TC3 — "Badge 'Substituído' é exibido na coluna de
  * Status para participants com `certificate_status = 4`".
  *
- * Pré-condição declarada no MD (suite 09): ao menos 1 aluno com
- * `certificate_status = 4` (REPLACED) no curso indicado por `eventId`.
+ * Seed criada em 2026-05-28 no curso 807287 ("curso para reinscriçao"):
+ * Richard Sebold tem 5 inscrições (recert_num 0..4). recert_num=0
+ * (id 44274543) tem certificate_situation=4 (REPLACED). Mesma seed do TC2.
  *
- * REVISAR-SEED: `participantIdentifier` é o texto que identifica a linha
- * (e-mail ou nome do aluno REPLACED). Quando o seed for criado/atualizado,
- * substituir aqui. Por ora, o spec aplica o filtro "Substituído" para
- * isolar somente linhas REPLACED e valida o badge na primeira linha
- * resultante — não depende de identificador específico.
+ * `participantIdentifier` está VAZIO de propósito: como o Richard tem 5
+ * inscrições no mesmo curso (apenas a recert_num=0 é REPLACED), filtrar
+ * por "Richard Sebold" + .first() pega uma row qualquer. O spec usa o
+ * branch alternativo: aplica filtro "Substituído", garantindo que TODA
+ * linha visível é REPLACED, e valida o badge na primeira.
  */
 import { fixedSeed } from '../../../data/fixed-seed.data.js';
 
 export const tc3Data = {
-  eventId: fixedSeed.emptyCursoId,
+  eventId: fixedSeed.cursoComSubstituidoId,
   expectedBadgeLabel: 'Substituído',
-  // Identificador (e-mail OU nome) do participant REPLACED. Quando o seed
-  // for confirmado, preencher. Vazio = spec usa a primeira linha do filtro.
   participantIdentifier: '',
 } as const;

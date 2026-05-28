@@ -4,16 +4,26 @@ import { LearningStudentsPage } from '../../../pages/LearningStudentsPage.js';
 import { tc2Data } from './tc2-filtrar-por-substituido-exibe-status-4.data.js';
 
 test.describe('Filtro Avançado Status Substituído', () => {
-  // Rota destravada em 2026-05-27 (LearningStudentsPage.goToList →
-  // /e/{id}/learning). Pré-condição: aluno com certificate_status=4
-  // (REPLACED) — exige fluxo de recertificação que SUBSTITUIU o cert
-  // anterior. fixme legítimo categoria "seed-ausente": seed atual
-  // (curso 806852, aluno Pendente) não cobre REPLACED. Aguarda
-  // implementação de helper recertificar-aluno em SeedAdminPage.
-  test.fixme(
-    true,
-    'seed-ausente: requer aluno com certificate_status=4 (REPLACED). Implementar SeedAdminPage.recertificarAlunoSubstituindoCert antes de habilitar este TC.',
-  );
+  // Seed REPLACED criada em 2026-05-28 no curso 807287 ("curso para
+  // reinscriçao") via UI admin (chrome-devtools-mcp + agents.richard@claude.com):
+  //   1. Chamada criada com Richard marcado presente nas 5 inscrições
+  //      (Frequência → 100%, critério do curso).
+  //   2. PATCH .../event_students/44274543/approve + .../44274544/approve
+  //      (toggle Aprovação na UI admin).
+  //   3. UI "Emitir certificado" em recert_num=0 → cert 5027059 emitido
+  //      (certificate_situation=2).
+  //   4. UI "Emitir certificado" em recert_num=1 → cert 5027060 emitido
+  //      e recert_num=0 flipou automaticamente para
+  //      certificate_situation=4 (REPLACED / Substituído).
+  //
+  // Confirmado via API /e/807287/learning_students:
+  //   - id 44274543 (recert 0) → cert_situation=4 (Substituído) ✓
+  //   - id 44274544 (recert 1) → cert_situation=2 (Emitido)
+  //
+  // Independente do bug 422 da reinscrição (que continua aberto no
+  // /api/v1/o/37048/contents/{id}/event_participants — ver Isolamento TC1):
+  // este TC usa as inscrições pré-existentes (recert_num 0..4 já criadas
+  // antes do bug 422), não cria novas.
 
   test('TC2 — Filtrar por "Substituído" exibe apenas alunos com certificate_status = 4', async ({
     page,
@@ -26,7 +36,7 @@ test.describe('Filtro Avançado Status Substituído', () => {
     await allure.severity('normal');
     await allure.parameter(
       'feature_flag',
-      ':recertificacao=ON (assumido em staging-base-de-conhecimento)',
+      ':recertificacao=ON (env staging-recertificacao 37048)',
     );
 
     const learningStudents = new LearningStudentsPage(page);
@@ -43,10 +53,9 @@ test.describe('Filtro Avançado Status Substituído', () => {
       '2. Abrir o filtro avançado de "Status do certificado", marcar APENAS a opção "Substituído" e aplicar → Drawer fecha, listagem refilra',
       async () => {
         await learningStudents.openFilterDrawer();
+        await learningStudents.openAdvancedFilterCriteria('Certificado');
         await learningStudents.selectStatusFilter(tc2Data.optionLabel);
         await learningStudents.applyFilters();
-        // Pós-condição: drawer fechou (dialog não está mais visível) e
-        // `#clear-filter` aparece (asserido em `applyFilters` internamente).
         await expect(page.getByRole('dialog').first()).toBeHidden();
       },
     );
