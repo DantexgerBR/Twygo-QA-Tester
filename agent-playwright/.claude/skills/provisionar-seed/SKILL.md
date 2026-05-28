@@ -1,7 +1,7 @@
 ---
 name: provisionar-seed
 description: Quando um TC Playwright declara pré-condição como "curso pré-existente", "aluno matriculado", "participant com progresso 100", "trilha com 3 cursos filhos", etc, o spec NÃO pode marcar `test.fixme(true, 'seed inválido')` nem depender de IDs hardcoded em `.data.ts` placeholder. Em vez disso, o spec é auto-suficiente — `beforeAll` cria os recursos via UI admin (rotas canônicas validadas live: `/contents/new?kind=N` facelift React para Curso/Trilha/Pacote; `/users/new` Haml legado para Usuário; matrícula via lista→more_vert→"Inscrição"→drawer→"Adicionar"; NUNCA `/events/new` Haml deprecated nem `/contents/{id}/learning_students` que retorna 404), `afterAll` deleta tudo via variant `*_safe` do Page Object (link com [[limpar-dados-de-teste-twygo]]). Skill define o padrão canônico, catálogo de helpers `create<Recurso>` esperados com mapping kind→Recurso validado live + form de usuário Haml com captura de ID via busca por email + matrícula via drawer client-side (URL não muda), naming worker-isolated, integração com fixture custom, e quando `fixme` por seed ainda é legítimo (DB-only/mailer/Flipper toggle). Use ao gerar/revisar QUALQUER spec novo que tenha pré-condição "X existe no env" — converter a pré-condição em ação automatizada no `beforeAll`.
-version: 1.3.0
+version: 1.4.0
 ---
 
 # provisionar-seed
@@ -443,6 +443,52 @@ export class SeedAdminPage extends BasePage {
   }
 
   /**
+   * Variante com SENHA — grava password do aluno pra permitir login OAuth
+   * (POST /oauth/token grant_type=password). Útil quando o seed precisa
+   * autenticar o aluno em context novo (ex: completar curso pelo Play).
+   *
+   * Características descobertas live (2026-05-28, commit c407914):
+   *  - Form Materialize tem seção **Senha** com h3 colapsado (onclick
+   *    inline jQuery: `$('.create_password').toggleClass('hidden')`)
+   *  - Posição y≈1490px do form → FORA do viewport padrão (~678 altura)
+   *  - `state:'visible'` do Playwright FALHA pelo viewport check
+   *  - `page.locator('h3', { hasText: /^Senha$/ })` quebra (strict mode
+   *    warning); usar CSS `:has-text("Senha")` é mais robusto
+   *  - Após click no h3 + scroll, inputs `#password` e
+   *    `#password_confirmation` ficam visíveis
+   */
+  async matricularAlunoComSenha(data: {
+    contentName: string;
+    alunoEmail: string;
+    alunoFirstName: string;
+    alunoLastName: string;
+    alunoSenha: string;
+    dataExpiracao?: string;
+  }): Promise<void> {
+    // ... (mesmo fluxo do matricularAluno até preencher Nome/Sobrenome) ...
+
+    // Scroll progressivo até o final do form pra forçar render dos h3s.
+    await this.page.evaluate(async () => {
+      const total = document.body.scrollHeight;
+      for (let y = 0; y < total; y += 400) {
+        window.scrollTo(0, y);
+        await new Promise((r) => setTimeout(r, 80));
+      }
+    });
+
+    // Expandir h3 Senha + preencher
+    const senhaH3 = this.page.locator('h3:has-text("Senha")').first();
+    await senhaH3.scrollIntoViewIfNeeded();
+    await senhaH3.click();
+    await this.page.locator('#password').waitFor({ state: 'visible', timeout: 5_000 });
+    await this.page.locator('#password').fill(data.alunoSenha);
+    await this.page.locator('#password_confirmation').fill(data.alunoSenha);
+
+    // Salvar + confirmar (igual matricularAluno)
+    // ...
+  }
+
+  /**
    * Cancela a matrícula de um aluno por email.
    * Drawer abre via more_vert → Inscrição. Aluno é localizado na aba Confirmados.
    */
@@ -735,6 +781,85 @@ Exemplos:
 **Por quê:** se 2 workers Playwright rodam em paralelo (ou 2 runs
 sucessivas no mesmo dia), `workerIndex` + `timestamp` garantem nomes
 únicos → zero colisão.
+
+## Engajamento do aluno (completar curso até cert) — limites do seed-via-UI
+
+Investigação live 2026-05-28 no curso 807403 ("Curso com atividades", 11
+atividades de tipos variados):
+
+| Tipo de atividade  | Marca-se completa só com click? | Como avançar via UI                  |
+|--------------------|---------------------------------|--------------------------------------|
+| Texto              | ✅ Sim (automático)             | Clicar no card                       |
+| Página             | ✅ Sim (automático)             | Clicar no card                       |
+| Arquivo (PDF/JPG)  | ✅ Sim (automático)             | Clicar no card                       |
+| Aula               | ❌ Não — exige assistir         | Player + evento `ended` ou time-up   |
+| Vídeo (arquivo)    | ❌ Não — exige assistir          | Player do `<video>` até o fim         |
+| Vídeo (externo)    | ❌ Não — exige assistir          | YouTube/Vimeo iframe — postMessage   |
+| SCORM              | ❌ Não — exige API SCORM         | `cmi.completion_status = "completed"`|
+| Questionário       | ❌ Não — exige responder         | Responder ≥ acerto-mínimo            |
+
+**Conclusão:** seed-via-UI completa **até ~60%** num curso misto. Pra hit
+100% e disparar emissão de certificado:
+
+1. **Recomendado**: criar curso seed canônico com **APENAS atividades
+   simples** (texto/página/arquivo) — 5 atividades × 20% = 100% trivial
+2. **Alternativa**: dispatchar evento `ended` no `<video>` + injetar
+   `cmi.completion_status` no SCORM API + answer questionnário
+3. **Atalho**: usar endpoint API V2 (a confirmar) tipo
+   `POST /api/v2/event_participants/{id}/complete_activity?activity_id=X`
+
+### Fluxo canônico (aluno completa curso via UI)
+
+```ts
+// 1. Login OAuth do aluno em context novo (storageState empty)
+const alunoCtx = await browser.newContext({ storageState: { cookies: [], origins: [] } });
+const alunoPage = await alunoCtx.newPage();
+await safeGoto(alunoPage, '/users/login');
+await alunoPage.getByRole('textbox', { name: 'Login' }).fill(email);
+await alunoPage.getByRole('textbox', { name: 'Senha' }).fill(senha);
+await alunoPage.getByRole('button', { name: 'Entrar' }).click();
+await alunoPage.waitForURL((url) => !url.pathname.startsWith('/users/login'));
+
+// 2. Acessar curso pelo /e/{id} (rota canônica do facelift)
+await safeGoto(alunoPage, `/e/${cursoId}`);
+
+// 3. Aceitar consentimento (se aparecer) + APRENDER
+const aceitar = alunoPage.getByRole('button', { name: /^Aceitar$/i }).first();
+if (await aceitar.isVisible({ timeout: 3_000 }).catch(() => false)) await aceitar.click();
+await alunoPage.getByRole('button', { name: /^APRENDER$/i }).click();
+// URL muda pra /e/{id}/learn
+
+// 4. Iterar cards de atividade (h2 na sidebar direita) e clicar cada um.
+//    Atividades simples avançam progresso automático.
+const activityNames = await alunoPage.evaluate(() =>
+  Array.from(document.querySelectorAll('h2'))
+    .filter((h) => (h as HTMLElement).offsetParent !== null && (h.textContent || '').length < 50)
+    .map((h) => (h.textContent || '').trim()),
+);
+for (const name of activityNames) {
+  await alunoPage.locator(`h2:has-text("${name}")`).first().click();
+  await alunoPage.waitForTimeout(2_000);
+}
+
+// 5. Validar progresso via página (text "%") ou API V2
+const progresso = await alunoPage.evaluate(() => {
+  const m = document.body.innerText.match(/(\d+)%/);
+  return m ? Number(m[1]) : 0;
+});
+```
+
+### Login OAuth do aluno (validar senha gravada)
+
+```ts
+const ctx = await playwrightRequest.newContext({ baseURL: process.env.API_BASE_URL });
+const resp = await ctx.post('/oauth/token', {
+  data: { grant_type: 'password', username: alunoEmail, password: alunoSenha },
+  headers: { 'Content-Type': 'application/json' },
+});
+expect(resp.status()).toBe(200);
+const { access_token } = await resp.json();
+await ctx.dispose();
+```
 
 ## Integração com fixtures (opcional, mas recomendado)
 
