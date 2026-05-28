@@ -799,6 +799,101 @@ export class SeedAdminPage extends BasePage {
   }
 
   /**
+   * Variante com SENHA — grava password do aluno permitindo login OAuth
+   * (POST /oauth/token grant_type=password) e login UI subsequente.
+   * Útil pra seeds que precisam autenticar o aluno em context fresh (ex:
+   * completar curso pelo Play como aluno).
+   *
+   * Características descobertas live (skill provisionar-seed v1.4+):
+   *  - Form Materialize tem seção **Senha** colapsada por default
+   *    (h3 com onclick `$('.create_password').toggleClass('hidden')`)
+   *  - h3 fica em y≈1490px → FORA do viewport padrão (~678 altura)
+   *  - `state:'visible'` do Playwright falha pelo viewport check
+   *  - `page.locator('h3', { hasText: /^Senha$/ })` quebra (strict mode);
+   *    usar `h3:has-text("Senha")` é mais robusto
+   *  - Após expand + scroll, inputs `#password` e `#password_confirmation`
+   *    ficam visíveis
+   *
+   * Validado live em tests/setup/seed-aluno-engajamento-completo.spec.ts
+   * (cert 5027067 emitido em 2026-05-28 — commit 168ea72).
+   */
+  async matricularAlunoComSenha(data: {
+    contentName: string;
+    alunoEmail: string;
+    alunoFirstName: string;
+    alunoLastName: string;
+    alunoSenha: string;
+    dataExpiracao?: string;
+  }): Promise<void> {
+    await this.ensureAdminProfile();
+    await safeGoto(this.page, `/o/${getOrgId()}/events?tab=events&profile=admin`);
+
+    await this.page.getByPlaceholder(/Pesquise aqui/i).fill(data.contentName);
+    const row = this.page.locator('tr, [role="row"]')
+      .filter({ hasText: data.contentName })
+      .first();
+    await row.waitFor({ state: 'visible', timeout: 10_000 });
+
+    const kebab = row
+      .locator('[data-test-id^="events-"][data-test-id$="-actions-kebab"]')
+      .or(row.getByRole('button', { name: 'more_vert' }))
+      .first();
+    await kebab.scrollIntoViewIfNeeded();
+    await kebab.click();
+    await this.page.getByRole('menuitem', { name: /Inscrição/i }).first().click();
+
+    await this.page
+      .getByRole('heading', { name: /Lista de Participantes/i })
+      .first()
+      .waitFor({ state: 'visible', timeout: 15_000 });
+
+    const confirmadosBefore = await this.contagemConfirmados();
+
+    const addBtn = this.page.getByText('Adicionar', { exact: true }).first();
+    await addBtn.waitFor({ state: 'visible', timeout: 5_000 });
+    await addBtn.click();
+    await this.page
+      .getByRole('heading', { name: /^Adicionar$/i })
+      .first()
+      .waitFor({ state: 'visible', timeout: 10_000 });
+
+    // Campos obrigatórios (E-mail/Nome/Sobrenome).
+    await this.page.getByRole('textbox', { name: /E-?mail\*/i }).first().fill(data.alunoEmail);
+    await this.page.getByRole('textbox', { name: /^Nome\*$/i }).fill(data.alunoFirstName);
+    await this.page.getByRole('textbox', { name: /^Sobrenome\*$/i }).fill(data.alunoLastName);
+    if (data.dataExpiracao) {
+      await this.page.getByRole('textbox', { name: /Data de expira/i }).fill(data.dataExpiracao);
+    }
+
+    // Expand seção Senha (colapsada). Scroll progressivo força render
+    // dos h3 fora do viewport (form Materialize com 20+ campos).
+    await this.page.evaluate(async () => {
+      const total = document.body.scrollHeight;
+      for (let y = 0; y < total; y += 400) {
+        window.scrollTo(0, y);
+        await new Promise((r) => setTimeout(r, 80));
+      }
+    });
+    const senhaH3 = this.page.locator('h3:has-text("Senha")').first();
+    await senhaH3.scrollIntoViewIfNeeded();
+    await senhaH3.click();
+    await this.page.locator('#password').waitFor({ state: 'visible', timeout: 5_000 });
+    await this.page.locator('#password').fill(data.alunoSenha);
+    await this.page.locator('#password_confirmation').fill(data.alunoSenha);
+
+    await dismissCommonModals(this.page);
+    await this.page.getByRole('button', { name: 'Salvar', exact: true }).click();
+
+    await this.page
+      .getByRole('heading', { name: /Lista de Participantes/i })
+      .first()
+      .waitFor({ state: 'visible', timeout: 15_000 });
+    await expect
+      .poll(async () => this.contagemConfirmados(), { timeout: 10_000 })
+      .toBeGreaterThan(confirmadosBefore);
+  }
+
+  /**
    * Lê o contador "Confirmados (N)" da aba na tela "Lista de
    * Participantes". Retorna 0 quando ausente/parsing falha — caller
    * usa como baseline pra comparar após inserção.

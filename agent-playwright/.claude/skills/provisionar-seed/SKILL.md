@@ -1,7 +1,7 @@
 ---
 name: provisionar-seed
-description: Quando um TC Playwright declara pré-condição como "curso pré-existente", "aluno matriculado", "participant com progresso 100", "trilha com 3 cursos filhos", etc, o spec NÃO pode marcar `test.fixme(true, 'seed inválido')` nem depender de IDs hardcoded em `.data.ts` placeholder. Em vez disso, o spec é auto-suficiente — `beforeAll` cria os recursos via UI admin (rotas canônicas validadas live: `/contents/new?kind=N` facelift React para Curso/Trilha/Pacote; `/users/new` Haml legado para Usuário; matrícula via lista→more_vert→"Inscrição"→drawer→"Adicionar"; NUNCA `/events/new` Haml deprecated nem `/contents/{id}/learning_students` que retorna 404), `afterAll` deleta tudo via variant `*_safe` do Page Object (link com [[limpar-dados-de-teste-twygo]]). Skill define o padrão canônico, catálogo de helpers `create<Recurso>` esperados com mapping kind→Recurso validado live + form de usuário Haml com captura de ID via busca por email + matrícula via drawer client-side (URL não muda), naming worker-isolated, integração com fixture custom, e quando `fixme` por seed ainda é legítimo (DB-only/mailer/Flipper toggle). Use ao gerar/revisar QUALQUER spec novo que tenha pré-condição "X existe no env" — converter a pré-condição em ação automatizada no `beforeAll`.
-version: 1.4.0
+description: Quando um TC Playwright declara pré-condição como "curso pré-existente", "aluno matriculado", "participant com progresso", "aluno com certificado emitido", "trilha com 3 cursos filhos", etc, o spec NÃO pode marcar `test.fixme(true, 'seed inválido')` nem depender de IDs hardcoded em `.data.ts` placeholder. Em vez disso, o spec é auto-suficiente — `beforeAll` cria os recursos via UI admin (rotas canônicas validadas live: `/contents/new?kind=N` facelift React para Curso/Trilha/Pacote; `/users/new` Haml legado para Usuário; matrícula via lista→more_vert→"Inscrição"→drawer→"Adicionar"; matrícula COM SENHA via expand h3 colapsado + scroll progressivo; engajamento do aluno via `/e/{id}/learn` + checkbox "Marcar como concluído" em vídeo/SCORM/Aula configurados; emissão automática de cert validável via `/api/v2/attendees`; NUNCA `/events/new` Haml deprecated nem `/contents/{id}/learning_students` que retorna 404), `afterAll` deleta tudo via variant `*_safe` do Page Object (link com [[limpar-dados-de-teste-twygo]]). Skill define o padrão canônico — catálogo de helpers `create<Recurso>` + `matricularAluno`/`matricularAlunoComSenha` + login OAuth do aluno + completar curso pelo Play + validar cert via API V2 — com mapping kind→Recurso, form de usuário Haml, matrícula client-side, naming worker-isolated, integração com fixture custom, e quando `fixme` por seed ainda é legítimo (DB-only/mailer/Flipper toggle). Use ao gerar/revisar QUALQUER spec novo que tenha pré-condição "X existe no env" — converter em ação automatizada no `beforeAll`.
+version: 1.4.1
 ---
 
 # provisionar-seed
@@ -465,9 +465,36 @@ export class SeedAdminPage extends BasePage {
     alunoSenha: string;
     dataExpiracao?: string;
   }): Promise<void> {
-    // ... (mesmo fluxo do matricularAluno até preencher Nome/Sobrenome) ...
+    await this.ensureAdminProfile();
+    await safeGoto(this.page, `/o/${getOrgId()}/events?tab=events&profile=admin`);
+    await this.page.getByPlaceholder(/Pesquise aqui/i).fill(data.contentName);
+    const row = this.page.locator('tr, [role="row"]')
+      .filter({ hasText: data.contentName }).first();
+    await row.waitFor({ state: 'visible', timeout: 10_000 });
 
-    // Scroll progressivo até o final do form pra forçar render dos h3s.
+    const kebab = row
+      .locator('[data-test-id^="events-"][data-test-id$="-actions-kebab"]')
+      .first();
+    await kebab.scrollIntoViewIfNeeded();
+    await kebab.click();
+    await this.page.getByRole('menuitem', { name: /Inscrição/i }).first().click();
+
+    await this.page
+      .getByRole('heading', { name: /Lista de Participantes/i }).first()
+      .waitFor({ state: 'visible', timeout: 15_000 });
+    const confirmadosBefore = await this.contagemConfirmados();
+
+    await this.page.getByText('Adicionar', { exact: true }).first().click();
+    await this.page
+      .getByRole('heading', { name: /^Adicionar$/i }).first()
+      .waitFor({ state: 'visible', timeout: 10_000 });
+
+    // 3 obrigatórios
+    await this.page.getByRole('textbox', { name: /E-?mail\*/i }).first().fill(data.alunoEmail);
+    await this.page.getByRole('textbox', { name: /^Nome\*$/i }).fill(data.alunoFirstName);
+    await this.page.getByRole('textbox', { name: /^Sobrenome\*$/i }).fill(data.alunoLastName);
+
+    // Scroll progressivo + expand h3 Senha (lazy render no Materialize)
     await this.page.evaluate(async () => {
       const total = document.body.scrollHeight;
       for (let y = 0; y < total; y += 400) {
@@ -475,8 +502,6 @@ export class SeedAdminPage extends BasePage {
         await new Promise((r) => setTimeout(r, 80));
       }
     });
-
-    // Expandir h3 Senha + preencher
     const senhaH3 = this.page.locator('h3:has-text("Senha")').first();
     await senhaH3.scrollIntoViewIfNeeded();
     await senhaH3.click();
@@ -484,8 +509,14 @@ export class SeedAdminPage extends BasePage {
     await this.page.locator('#password').fill(data.alunoSenha);
     await this.page.locator('#password_confirmation').fill(data.alunoSenha);
 
-    // Salvar + confirmar (igual matricularAluno)
-    // ...
+    await dismissCommonModals(this.page);
+    await this.page.getByRole('button', { name: 'Salvar', exact: true }).click();
+
+    await this.page
+      .getByRole('heading', { name: /Lista de Participantes/i }).first()
+      .waitFor({ state: 'visible', timeout: 15_000 });
+    await expect.poll(async () => this.contagemConfirmados(), { timeout: 10_000 })
+      .toBeGreaterThan(confirmadosBefore);
   }
 
   /**
@@ -782,7 +813,23 @@ Exemplos:
 sucessivas no mesmo dia), `workerIndex` + `timestamp` garantem nomes
 únicos → zero colisão.
 
-## Engajamento do aluno (completar curso até cert) — limites do seed-via-UI
+## Engajamento do aluno (completar curso até cert)
+
+**Specs de referência executáveis** (rodam contra
+`staging-recertificacao` orgId 37048, curso 807403):
+
+| Spec | Cobre | Como rodar |
+|------|-------|------------|
+| `tests/setup/seed-aluno-engajamento.spec.ts` | Cria aluno COM SENHA via UI + valida user_id | `RUN_SEED_ALUNO_ENGAJAMENTO=1 npx playwright test tests/setup/seed-aluno-engajamento.spec.ts` |
+| `tests/setup/seed-aluno-engajamento-completo.spec.ts` | Pipeline full (criar + OAuth + login UI + completar curso + cert via API) | `RUN_SEED_ENGAJAMENTO_COMPLETO=1 npx playwright test tests/setup/seed-aluno-engajamento-completo.spec.ts` |
+
+Cert real emitido pelo pipeline em 2026-05-28 (commit 168ea72):
+- `attendee_id: 44275031`
+- `progress: 60%`
+- `certificate_id: 5027067` (`situation: valid`)
+- Tempo total: 9.1 min (inclui poll 7×5s pro worker)
+
+
 
 Investigação live 2026-05-28 no curso 807403 ("Curso com atividades", 11
 atividades de tipos variados):
@@ -821,6 +868,41 @@ for (const cbid of ['mark_completed_scorm', 'mark_completed_video',
 await page.locator('button[type="submit"]:has-text("Salvar")').click();
 ```
 
+**Helper `configurarMarcarConcluidoManualmente(activityIds[])`** (proposto — não implementado ainda):
+
+```ts
+// SeedAdminPage.ts (futuro helper canônico)
+async configurarMarcarConcluidoManualmente(eventId: number, activityIds: number[]): Promise<void> {
+  await this.ensureAdminProfile();
+  for (const id of activityIds) {
+    await safeGoto(this.page, `/e/${eventId}/contents/${id}/edit`);
+    for (const cbid of ['mark_completed_scorm', 'mark_completed_video',
+                        'mark_completed_external', 'checkmark']) {
+      const cb = this.page.locator(`#${cbid}`);
+      if ((await cb.count()) > 0 && !(await cb.isChecked())) {
+        await this.page.locator(`label[for="${cbid}"]`).click().catch(() => {});
+      }
+    }
+    await this.page.getByRole('button', { name: 'Salvar', exact: true }).click();
+    await this.page.waitForURL(/\/e\/\d+\/contents/, { timeout: 10_000 }).catch(() => undefined);
+  }
+}
+```
+
+**Como descobrir os `activityId`** (lista todas as atividades de um curso):
+
+```ts
+await page.goto(`/e/${eventId}/contents`);
+const ids = await page.evaluate(() =>
+  Array.from(document.querySelectorAll('li.dd-item'))
+    .filter((li) => li.getAttribute('data-id'))
+    .map((li) => ({
+      id: Number(li.getAttribute('data-id')),
+      title: li.getAttribute('data-title') ?? '',
+    })),
+);
+```
+
 **Aluno marca via player** (após config):
 
 ```js
@@ -833,15 +915,31 @@ if (await completoCheckbox.isVisible({ timeout: 1500 }).catch(() => false)) {
 }
 ```
 
-**Conclusão:** seed-via-UI completa **até ~60%** num curso misto. Pra hit
-100% e disparar emissão de certificado:
+**Conclusão (atualizada 2026-05-28, cert 5027067 emitido):**
 
-1. **Recomendado**: criar curso seed canônico com **APENAS atividades
-   simples** (texto/página/arquivo) — 5 atividades × 20% = 100% trivial
-2. **Alternativa**: dispatchar evento `ended` no `<video>` + injetar
-   `cmi.completion_status` no SCORM API + answer questionnário
-3. **Atalho**: usar endpoint API V2 (a confirmar) tipo
-   `POST /api/v2/event_participants/{id}/complete_activity?activity_id=X`
+A emissão do certificado **NÃO depende de 100% de progresso** — depende
+do critério de aprovação configurado no próprio curso. Validado live no
+curso 807403 ("Curso com atividades"):
+
+  - **Critério de aprovação = 60%** (config do curso, ajustável por admin)
+  - Aluno clicou 11 atividades → progresso real 60% (texto/página/arquivo
+    auto + 2 vídeos via checkbox "marcar manualmente")
+  - Modal "Parabéns! Aprovação atingida" disparou
+  - **Cert 5027067 emitido** (situation=valid, expira em 10 dias)
+
+Caminhos para garantir aprovação:
+
+1. **Recomendado**: criar curso seed canônico com **só atividades
+   simples** (texto/página/arquivo) — todas marcam-se auto. Independe
+   de critério (mesmo 100% é trivial).
+2. **Atalho via config admin** (validado live): ativar
+   `Permitir marcar concluído manualmente` em cada atividade
+   vídeo/SCORM/Aula — expõe checkbox no player do aluno.
+3. **Ajustar critério do curso**: editar curso → setar % de aprovação
+   compatível com seed (ex: 30% = só clicar 3 texto/página).
+4. **SeedAdminPage.matricularAlunoComSenha + completar curso pelo Play**
+   é a pipeline canônica (validada em `tests/setup/seed-aluno-engajamento-completo.spec.ts`,
+   commit 168ea72).
 
 ### Fluxo canônico (aluno completa curso via UI)
 
@@ -865,7 +963,9 @@ await alunoPage.getByRole('button', { name: /^APRENDER$/i }).click();
 // URL muda pra /e/{id}/learn
 
 // 4. Iterar cards de atividade (h2 na sidebar direita) e clicar cada um.
-//    Atividades simples avançam progresso automático.
+//    Atividades simples avançam progresso automático. Para vídeo/SCORM/
+//    Aula configurados com "marcar concluído manualmente", clicar
+//    checkbox abaixo do player.
 const activityNames = await alunoPage.evaluate(() =>
   Array.from(document.querySelectorAll('h2'))
     .filter((h) => (h as HTMLElement).offsetParent !== null && (h.textContent || '').length < 50)
@@ -874,9 +974,28 @@ const activityNames = await alunoPage.evaluate(() =>
 for (const name of activityNames) {
   await alunoPage.locator(`h2:has-text("${name}")`).first().click();
   await alunoPage.waitForTimeout(2_000);
+  // Checkbox "Marcar como concluído" — só aparece em vídeo/SCORM/Aula
+  // após admin ativar a config "Permitir marcar manualmente".
+  const completoCheckbox = alunoPage.locator(
+    'input[type="checkbox"][id*="complet"], label:has-text("Marcar como concluído")'
+  ).first();
+  if (await completoCheckbox.isVisible({ timeout: 1_500 }).catch(() => false)) {
+    await completoCheckbox.click({ force: true });
+    await alunoPage.waitForTimeout(1_500);
+  }
 }
 
-// 5. Validar progresso via página (text "%") ou API V2
+// 5. Quando o critério de aprovação é atingido, modal "Parabéns!
+//    Aprovação atingida" interrompe o loop. Fechar com botão "Ok"
+//    pra continuar com remanescentes (ou parar — cert já está sendo
+//    gerado async).
+const aprovacaoModal = alunoPage.getByText(/Aprovação atingida|Parabéns/i).first();
+if (await aprovacaoModal.isVisible({ timeout: 2_000 }).catch(() => false)) {
+  console.log('🏆 Aprovação atingida — cert será emitido async');
+  await alunoPage.getByRole('button', { name: /^Ok$/i }).first().click().catch(() => {});
+}
+
+// 6. Validar progresso via página (text "%") ou API V2 (ver §"Validar progresso + certificate via API V2")
 const progresso = await alunoPage.evaluate(() => {
   const m = document.body.innerText.match(/(\d+)%/);
   return m ? Number(m[1]) : 0;
@@ -904,18 +1023,35 @@ const resp = await ctx.get(`/api/v2/attendees?content_id=${eventId}&user_id=${us
   headers: { Authorization: `Bearer ${API_TOKEN}` },
 });
 const attendee = (await resp.json()).data.attendees[0];
+// Campos completos do attendee:
 // {
-//   attendee_id, user_id, content_id, content_type: 'course',
-//   status: 'confirmed', progress: 60, score: 60,
-//   approved_at: '2026-05-28T14:17:21-03:00' | null,
-//   completed_at: null | '...',  // só populado em 100%
-//   certificates: [{
-//     certificate_id, certificate_situation: 'valid',
-//     certificate_issuing_date, certificate_expiration_date,
-//     certificate_link
+//   attendee_id:                       Number  (event_participants.id)
+//   user_id, content_id,
+//   content_type:                      'course' | 'learning_path' | 'package'
+//   origin_organization_id, origin_organization_name, origin_organization_corporate_name,
+//   status:                            'confirmed' | 'pending' | 'cancelled'
+//   progress:                          Number (0-100)
+//   score:                             Number (0-100)
+//   questionary_average:               Number — média das questões respondidas
+//   attendance_score:                  Number — % de presença (chamada)
+//   approved_at:                       ISO date | null — populado quando atinge critério
+//   completed_at:                      ISO date | null — só em 100% (concluiu TUDO)
+//   created_at:                        ISO date — quando matriculou
+//   certificates: [{                   array vazio até worker emitir
+//     certificate_id,
+//     certificate_situation:           'valid' | 'expired' | 'replaced' | 'pending'
+//     certificate_issuing_date,
+//     certificate_expiration_date,    — null se cert não expira
+//     certificate_link                 — URL pra baixar cert PDF
 //   }]
 // }
 ```
+
+**Distinção importante:**
+- `approved_at` populado = critério do curso atingido (≥ % mínima de aprovação)
+- `completed_at` populado = TODAS as atividades concluídas (100%)
+- `certificates[].certificate_situation = 'valid'` = cert emitido e válido
+- Cert pode ter `valid` mesmo com `completed_at: null` (aprovação ≠ conclusão)
 
 **Worker async:** cert é gerado ~30s após `approved_at`. Use poll:
 
@@ -1091,6 +1227,36 @@ novo:
 
 ## Histórico
 
+- **v1.4.1 (2026-05-28)**: cross-check pós-validação live + correções de
+  documentação. Mudanças:
+  - **`matricularAlunoComSenha` implementado em SeedAdminPage real**
+    (antes só doc, agora código executável no `projects/recertificacao/pages/SeedAdminPage.ts`).
+  - **Código stub completado** na skill (antes terminava com `// ... Salvar + confirmar`).
+  - **Corrigida desinformação "seed-via-UI completa até ~60%"** — cert FOI
+    emitido em 60% no curso 807403 porque o critério de aprovação do CURSO
+    é 60%. Não é limite técnico do seed.
+  - **Fluxo aluno** agora documenta modal "Aprovação atingida" + checkbox
+    "Marcar como concluído" inline no loop de atividades.
+  - **Helper admin `configurarMarcarConcluidoManualmente`** proposto
+    (assina 4 checkboxes `mark_completed_*` por activity_id).
+  - **Como descobrir activityIds** via `/e/{eventId}/contents` + `li.dd-item[data-id]`.
+  - **Campos completos do `/api/v2/attendees`** documentados (incluindo
+    `questionary_average`, `attendance_score`, `origin_organization_*`,
+    `certificate_situation` enum).
+  - **Distinção approved_at vs completed_at** documentada — aprovação ≠
+    conclusão; cert pode ser `valid` mesmo com `completed_at: null`.
+  - Specs de referência executáveis linkados (`tests/setup/seed-aluno-engajamento.spec.ts`
+    e `seed-aluno-engajamento-completo.spec.ts`).
+- **v1.4.0 (2026-05-28)**: validado live pipeline completo de engajamento
+  do aluno (criar + senha + OAuth + completar curso + cert emitido).
+  Mudanças:
+  - Nova seção "Engajamento do aluno" com tabela "tipo de atividade ×
+    marca-se com click".
+  - Variante `matricularAlunoComSenha` (h3 Senha + scroll progressivo)
+    — documentação inicial.
+  - Atalho `Permitir marcar concluído manualmente` documentado.
+  - Helper login OAuth do aluno.
+  - Endpoint canônico `/api/v2/attendees` validado live (outros 3 = 404).
 - **v1.3.0 (2026-05-26)**: validado live matrícula de aluno nos 3 tipos
   (Curso 806852, Trilha 806853, Pacote 806854) no env `staging-recertificacao`.
   Mudanças:
