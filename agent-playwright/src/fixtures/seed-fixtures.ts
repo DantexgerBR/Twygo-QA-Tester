@@ -125,7 +125,12 @@ async function withAdminPage<T>(
   const ctx = await browser.newContext({ storageState: STORAGE_PATH });
   const page = await ctx.newPage();
   try {
-    await new ProfileSwitcher(page).switchTo('Administrador');
+    // `switchToViaUrl` ao invés de `switchTo` — newPage abre about:blank e
+    // `switchTo` tenta ler `button.menu-target` (trigger do popover) antes
+    // de navegar, dando timeout 30s. `switchToViaUrl('Administrador')`
+    // navega via /o/{orgId}/events?tab=events&profile=admin que estabelece
+    // sessão admin sem depender do popover.
+    await new ProfileSwitcher(page).switchToViaUrl('Administrador');
     return await fn(page, new SeedAdminPage(page));
   } finally {
     await ctx.close();

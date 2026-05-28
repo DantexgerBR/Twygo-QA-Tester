@@ -1,7 +1,7 @@
 ---
 name: provisionar-seed
 description: Quando um TC Playwright declara pré-condição como "curso pré-existente", "curso com has_recertification=true", "aluno matriculado", "participant com progresso", "aluno com certificado emitido", "trilha com 3 cursos filhos", etc, o spec NÃO pode marcar `test.fixme(true, 'seed inválido')` nem depender de IDs hardcoded em `.data.ts` placeholder. Em vez disso, o spec **declara dependência via fixture canônica** (`cursoSeed`/`cursoLiberadoSeed`/`cursoComRecertificacaoSeed`/`cursoComAtividadesMarcaveisSeed`/`alunoMatriculadoSeed`/`alunoComSenhaSeed`/`alunoAprovadoSeed` em `src/fixtures/seed-fixtures.ts`) — a fixture provê o recurso (criando ou reusando) e faz cleanup automático `afterAll` via variant `*_safe`. Mapping pré-condição→fixture é tabela canônica que generator/healer consultam. Fluxo do seed cobre: criação via UI admin (rotas validadas live `/contents/new?kind=N` facelift React p/ Curso/Trilha/Pacote, `/users/new` Haml legado p/ Usuário), matrícula via lista→more_vert→"Inscrição"→drawer→"Adicionar", matrícula COM SENHA via expand h3 colapsado + scroll progressivo, configuração de curso (publicar via tab Identificação, ligar `has_recertification` via tab Acesso switch Chakra), engajamento do aluno via `/e/{id}/learn` + checkbox "Marcar como concluído" em vídeo/SCORM/Aula configurados no admin, emissão automática de cert validável via `/api/v2/attendees`. Anti-patterns proibidos: `/events/new` Haml deprecated, `/contents/{id}/learning_students` (404), `fixme` por seed quando fixture cobre. Skill define o padrão canônico — catálogo de helpers (`createCurso`/`createTrilha`/`createPacote`/`criarUsuarioAluno`/`matricularAluno`/`matricularAlunoComSenha`/`setHasRecertification`/`publicarCurso`/`completarCursoComoAluno`/`desmatricularAlunoSafe`) + login OAuth do aluno + validar cert via API V2, mapping kind→Recurso, naming worker-isolated, scope worker pra amortizar custo, quando reusar `data/fixed-seed.data.ts` (seed permanente), e quando `fixme` por seed AINDA é legítimo (DB-only/mailer/Flipper toggle). Use ao gerar/revisar QUALQUER spec novo que tenha pré-condição "X existe no env" — converter em ação automatizada via fixture.
-version: 1.6.0
+version: 1.6.1
 ---
 
 # provisionar-seed
@@ -1387,6 +1387,25 @@ novo:
   com criação via UI precisa seguir
 
 ## Histórico
+
+- **v1.6.1 (2026-05-28)**: descoberta validada live executando Suite 2:
+  - **Toda a Suite 2 UI (TC1-TC4)** depende do mesmo gap —
+    `seed-roadmap-atividade-aula-1`. Razão: o botão "Reinscrever" só
+    aparece na linha de aluno ELEGÍVEL (progresso 100% ou cert). Aluno
+    recém-matriculado (`alunoMatriculadoSeed` cru) tem progresso 0%,
+    nem TC4 ("botão disabled") funciona com ele.
+  - TC4 foi temporariamente refatorado em v1.6.0 pra `alunoMatriculadoSeed`
+    e reverted após observação live: asserção `expectReinscreverButtonState
+    'disabled'` falhou porque o botão simplesmente não aparece na linha
+    de aluno não-elegível.
+  - **Lição**: pré-condição "ao menos 1 aluno elegível" deve ser lida
+    como pré-condição TÉCNICA hard, não soft. Não há TC visual de Suite 2
+    que rode sem aluno aprovado.
+  - **Próximo destravo**: quando `seed-roadmap-atividade-aula-1` for
+    implementado (criar atividade via UI admin no curso seed), criar
+    fixture `alunoAprovadoSeedComCurso(cursoConfig)` que aceita
+    `{ has_recertification: boolean }` — destrava todos os 4 TCs UI da
+    Suite 2 + várias outras suites.
 
 - **v1.6.0 (2026-05-28)**: destrava Suite 2 (Reinscrição Individual) e
   qualquer suíte que dependa de `has_recertification = true`. Mudanças:

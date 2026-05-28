@@ -72,6 +72,22 @@ export const fixedSeed = {
   cursoSemRecertificacaoEventId: 806755 as number,
 
   /**
+   * Curso 807403 ("Curso com atividades") — seed compartilhado já preparado:
+   *   - has_recertification = true (validado live 2026-05-28 via chrome-devtools)
+   *   - 4 atividades configuradas (incluindo "questionario" content_id 9288027)
+   *   - 1+ aluno com cert emitido (seed-aluno-engajamento-completo gerou cert 5027067)
+   *   - Critério de aprovação 60% (default — definido por questionário "Pontuação Mínima")
+   *
+   * Use em specs que precisam ENGAJAMENTO REAL (progresso > 0%, cert emitido)
+   * sem pagar o custo de ~9min do `alunoAprovadoSeed` (que cria curso vazio).
+   * Sugerido pelo usuário em 2026-05-28 como "encurta o caminho".
+   *
+   * IMPORTANTE — NÃO deletar este curso, NÃO desligar has_recertification,
+   * NÃO mexer no critério de aprovação. Múltiplos specs assumem o estado vigente.
+   */
+  cursoComAtividadesEAprovadoEventId: 807403 as number,
+
+  /**
    * Emails de teste para TCs API. Pattern: `rec-v2-tc<N>@example.com`.
    * Curto, suite-tied, fácil de filtrar para cleanup.
    *
