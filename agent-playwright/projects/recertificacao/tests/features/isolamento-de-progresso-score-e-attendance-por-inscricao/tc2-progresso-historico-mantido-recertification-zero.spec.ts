@@ -22,7 +22,7 @@ test.describe('Isolamento de Progresso, Score e Attendance por Inscrição', () 
     // (V2 do CONTRACT.md). Não é caso da skill provisionar-seed.
     test.fixme(
       true,
-      'DB-only: requer aluno pré-deploy com event_content_users.event_participant_id IS NULL — artefato de backfill da migration, não provisionável via UI. Validar via psql/Rails console no env 37048 (agent-db V2).',
+      'DB-only: requer aluno pré-deploy com event_content_users.event_participant_id IS NULL — artefato de backfill da migration. Não provisionável via UI (criar um aluno hoje já grava event_participant_id preenchido) nem validável via menu Aprendizagem sem esse dado específico. Validar via psql/Rails console no env 37048 ou via agent-db (V2 do CONTRACT.md).',
     );
     await allure.epic('Twygo - Recertificação');
     await allure.feature(

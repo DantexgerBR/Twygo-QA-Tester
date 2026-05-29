@@ -14,7 +14,7 @@ test.describe('Isolamento de Progresso, Score e Attendance por Inscrição', () 
   // Rails console executando EventParticipant.create! em sequência.
   test.fixme(
     true,
-    'requer validação direta no banco + Rails uniqueness validator — DB-pure. Validar manualmente via Rails console executando EventParticipant.create! em sequência.',
+    'Tipo: db (MD §1426). Valida Rails uniqueness validator (scope: [:event_id, :recertification_number]) via Rails console — não observável via menu Aprendizagem (UI não expõe erros de validação do modelo diretamente; o fluxo UI normal nunca tenta duplicar email+recert_num). Executar via Rails console ou agent-db (V2 do CONTRACT.md).',
   );
 
   test('TC4 — Validações Rails de email/cpf escopam por `[:event_id, :recertification_number]`', async () => {

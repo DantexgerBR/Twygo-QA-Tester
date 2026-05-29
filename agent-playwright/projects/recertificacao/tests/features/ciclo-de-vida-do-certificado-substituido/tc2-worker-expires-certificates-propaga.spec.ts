@@ -1,72 +1,77 @@
-import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js';
+import { test, expect } from '../../../../../src/fixtures/seed-fixtures.js';
 import * as allure from 'allure-js-commons';
+import { LearningStudentsPage } from '../../../pages/LearningStudentsPage.js';
+import { tc2Data } from './tc2-worker-expires-certificates-propaga.data.js';
+
+test.describe.configure({ timeout: 15 * 60 * 1000 });
 
 test.describe('Ciclo de Vida do Certificado Substituído', () => {
-  // Decisão locked do QA (Suite 08 — MD §1057): validação cron-pure. Disparo
-  // do worker `ExpiresCertificates#expire_replaced_certificates` requer
-  // acesso a Rails console / SSH em staging + inspeção da tabela
-  // `certificates` pra confirmar transição VALID→EXPIRED e propagação
-  // REPLACED→EXPIRED no mesmo par (user_id, event_id).
+  // Decisão QA 2026-05-29: refatorado de "requer Rails console" para validação
+  // via UI usando a ação "Expirar certificado" no menu kebab da linha do aluno.
   //
-  // fixme legítimo (CLAUDE.md §7.6 F, categoria "validação secundária
-  // manual hoje"): agent-db ainda não implementado (V2 do CONTRACT.md
-  // cobrirá agent-db invocado como sub-rotina). Validar manualmente
-  // executando `ExpiresCertificates.new.perform` via Rails console e
-  // consultando o banco.
-  test.fixme(
-    true,
-    'requer execução do worker ExpiresCertificates + validação direta no banco. Validar manualmente.',
+  // Seed: fixture canônica `alunoAprovadoNoCursoFixoSeed` cria aluno
+  // worker-isolated com cert Emitido no curso 807403 — não conflita com
+  // TC4 (que usa Richard Sebold no 807287).
+  //
+  // RN 22/22.1: `ExpiresCertificates#expire_replaced_certificates` —
+  // ao expirar o cert VALID, os REPLACED do mesmo par também expiram.
+  // A ação UI "Expirar certificado" dispara esse mesmo fluxo server-side
+  // e o resultado é observável via badge "Expirado" na listagem.
+
+  test(
+    'TC2 — Worker ExpiresCertificates expira VALID e propaga para REPLACED do mesmo par',
+    { tag: '@seed-heavy' },
+    async ({ page, alunoAprovadoNoCursoFixoSeed }) => {
+      await allure.epic('Twygo - Recertificação');
+      await allure.feature('Ciclo de Vida do Certificado Substituído');
+      await allure.story(
+        'Worker ExpiresCertificates expira VALID e propaga para REPLACED do mesmo par',
+      );
+      await allure.severity('normal');
+      await allure.parameter('seed_cursoId', String(alunoAprovadoNoCursoFixoSeed.cursoId));
+      await allure.parameter('seed_alunoEmail', alunoAprovadoNoCursoFixoSeed.alunoEmail);
+
+      const learning = new LearningStudentsPage(page);
+      const cursoId = alunoAprovadoNoCursoFixoSeed.cursoId;
+      const alunoEmail = alunoAprovadoNoCursoFixoSeed.alunoEmail;
+
+      await allure.step(
+        '1. Pré-condição: aluno aprovado com cert Emitido (fixture) — linha visível na Aprendizagem',
+        async () => {
+          expect(
+            alunoAprovadoNoCursoFixoSeed.certificateId,
+            'Fixture deve produzir cert emitido',
+          ).not.toBeNull();
+          await learning.goToList(cursoId);
+          const linhaEmitida = learning.getRowByEmail(alunoEmail, {
+            certState: tc2Data.certStateAntes,
+          });
+          await expect(linhaEmitida).toBeVisible({ timeout: 15_000 });
+        },
+      );
+
+      await allure.step(
+        '2. Expirar certificado do aluno via menu kebab "Expirar certificado" → ' +
+          'RN 22: expire_replaced_certificates processa o cert VALID e propaga REPLACED do par',
+        async () => {
+          await learning.expirarCertificadoDoAluno(alunoEmail, {
+            certState: tc2Data.certStateAntes,
+          });
+        },
+      );
+
+      await allure.step(
+        '3. Verificar na Aprendizagem que a linha do aluno agora exibe badge "Expirado"',
+        async () => {
+          await page.reload();
+          await learning.goToList(cursoId);
+          const linhaExpirada = learning.getRowByEmail(alunoEmail, {
+            certState: tc2Data.expectedBadgeApos,
+          });
+          await expect(linhaExpirada).toBeVisible({ timeout: 15_000 });
+          await expect(linhaExpirada).toContainText(tc2Data.expectedBadgeApos);
+        },
+      );
+    },
   );
-
-  test('TC2 — Worker ExpiresCertificates expira VALID e propaga para REPLACED do mesmo par', async () => {
-    await allure.epic('Twygo - Recertificação');
-    await allure.feature('Ciclo de Vida do Certificado Substituído');
-    await allure.story(
-      'Worker ExpiresCertificates expira VALID e propaga para REPLACED do mesmo par',
-    );
-    await allure.severity('normal');
-    await allure.tag('DB_PURE');
-    await allure.label('executionType', 'manual');
-
-    await allure.step(
-      '1. Pré-condição: aluno com 2 certificados — 1 REPLACED (do participant recertification_number = 0) e 1 VALID (do participant recertification_number = 1) com expires_at = hoje → Estado preparado no banco.',
-      async () => {
-        // Validação manual (psql/DBeaver):
-        //   SELECT id, situation, recertification_number, expires_at
-        //   FROM certificates
-        //   WHERE user_id = <user> AND event_id = <event>
-        //   ORDER BY recertification_number ASC;
-        // Esperado: 2 rows.
-        //   - row 1 (recertification_number = 0): situation = 4 (REPLACED).
-        //   - row 2 (recertification_number = 1): situation = 2 (VALID), expires_at = CURRENT_DATE.
-        expect(true).toBe(true);
-      },
-    );
-
-    await allure.step(
-      '2. Disparar manualmente o cron ExpiresCertificates.new.perform → Worker processa.',
-      async () => {
-        // Validação manual (Rails console em staging):
-        //   ExpiresCertificates.new.perform
-        // Capturar o log de queries SQL emitidas — esperar UPDATE em
-        // lote sobre `certificates` filtrando pelo par (user_id, event_id).
-        expect(true).toBe(true);
-      },
-    );
-
-    await allure.step(
-      '3. Consultar a tabela certificates para o par (user_id, event_id) → Ambos os certificados estão com situation = 1 (EXPIRED): o que era VALID e o que era REPLACED.',
-      async () => {
-        // Validação manual (psql/DBeaver):
-        //   SELECT id, situation, recertification_number
-        //   FROM certificates
-        //   WHERE user_id = <user> AND event_id = <event>
-        //   ORDER BY recertification_number ASC;
-        // Esperado: 2 rows, ambos situation = 1 (EXPIRED).
-        //   - row 1 (recertification_number = 0): situation = 1 (era 4 REPLACED).
-        //   - row 2 (recertification_number = 1): situation = 1 (era 2 VALID).
-        expect(true).toBe(true);
-      },
-    );
-  });
 });

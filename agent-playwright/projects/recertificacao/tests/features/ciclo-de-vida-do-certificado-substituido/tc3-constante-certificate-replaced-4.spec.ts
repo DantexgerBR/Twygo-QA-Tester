@@ -2,19 +2,25 @@ import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js
 import * as allure from 'allure-js-commons';
 
 test.describe('Ciclo de Vida do Certificado Substituído', () => {
-  // Decisão locked do QA (Suite 08 — MD §1074): validação code-pure de
-  // constantes Rails (`Certificate::CERTIFICATE_REPLACED`,
+  // Decisão locked do QA (Suite 08 — MD §1074 — Tipo: db): validação
+  // code-pure de constantes Rails (`Certificate::CERTIFICATE_REPLACED`,
   // `EventParticipant::REPLACED`, `EventParticipant::CERTIFICATE_STATUS_DESCRIPTIONS`).
   // Fora do escopo Playwright — não há UI nem banco envolvido; validação
   // se dá lendo o código fonte ou via Rails console.
   //
-  // fixme legítimo (CLAUDE.md §7.6 F, categoria "validação secundária
-  // manual hoje"): validar manualmente lendo `models/certificate.rb` e
-  // `models/event_participant.rb` no repo de produto, OU executando os
-  // comandos via Rails console em staging.
+  // fixme legítimo (CLAUDE.md §7.6 F — categoria "validação secundária
+  // manual hoje"): TC declarado `Tipo: db` no MD canônico (test-analysis.md
+  // §Ciclo de Vida do Certificado Substituído TC3). Executor adequado é
+  // `agent-db` (CONTRACT.md V2 — ainda não implementado) via Rails console
+  // em staging. Validar manualmente:
+  //   Certificate::CERTIFICATE_REPLACED         # => 4
+  //   EventParticipant::REPLACED                # => 4
+  //   EventParticipant::CERTIFICATE_STATUS_DESCRIPTIONS  # => {..., 'replaced' => 4}
   test.fixme(
     true,
-    'validação de constante Rails — fora do escopo Playwright. Validar manualmente lendo o código fonte.',
+    'TC declarado Tipo: db no MD canônico (test-analysis.md §TC3). Validação de constantes Rails ' +
+      '(Certificate::CERTIFICATE_REPLACED, EventParticipant::REPLACED) exige Rails console em staging ' +
+      '— fora do escopo Playwright. Executor futuro: agent-db (CONTRACT.md V2).',
   );
 
   test('TC3 — Constante CERTIFICATE_REPLACED = 4 espelhada em EventParticipant::REPLACED', async () => {

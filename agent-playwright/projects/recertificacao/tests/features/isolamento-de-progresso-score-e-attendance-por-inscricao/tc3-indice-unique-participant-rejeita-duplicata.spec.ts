@@ -15,7 +15,7 @@ test.describe('Isolamento de Progresso, Score e Attendance por Inscrição', () 
   // OU via Rails console executando EventParticipant.create! duplicado.
   test.fixme(
     true,
-    'requer validação direta no banco — DB-pure fora do escopo Playwright. Validar manualmente via psql tentando INSERT duplicado e capturando 23505 unique_violation.',
+    'Tipo: db (MD §1409). Valida índice PostgreSQL unique_participant via psql/Rails console — não há fluxo UI que tente inserir dois participants idênticos (UI sempre incrementa recertification_number). Executar manualmente via psql INSERT duplicado esperando SQLSTATE 23505, ou via agent-db (V2 do CONTRACT.md).',
   );
 
   test('TC3 — Índice único `unique_participant` rejeita duplicata `(user_id, event_id, partner_rel, recertification_number)`', async () => {

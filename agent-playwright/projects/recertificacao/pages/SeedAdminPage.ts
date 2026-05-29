@@ -1307,18 +1307,7 @@ export class SeedAdminPage extends BasePage {
     await this.ensureAdminProfile();
     await safeGoto(this.page, `/o/${getOrgId()}/events?tab=events&profile=admin`);
 
-    await this.page.getByPlaceholder(/Pesquise aqui/i).fill(data.contentName);
-    const row = this.page.locator('tr, [role="row"]')
-      .filter({ hasText: data.contentName })
-      .first();
-    await row.waitFor({ state: 'visible', timeout: 10_000 });
-
-    const kebab = row
-      .locator('[data-test-id^="events-"][data-test-id$="-actions-kebab"]')
-      .or(row.getByRole('button', { name: 'more_vert' }))
-      .first();
-    await kebab.scrollIntoViewIfNeeded();
-    await kebab.click();
+    await this.findEventRowAndClickKebab(data.contentName);
     await this.page.getByRole('menuitem', { name: /Inscrição/i }).first().click();
 
     await this.page
@@ -1373,6 +1362,55 @@ export class SeedAdminPage extends BasePage {
   }
 
   /**
+   * Pesquisa o evento pelo nome, aguarda o React re-renderizar a tabela
+   * após o filtro (network response), re-localiza a row e clica no kebab.
+   *
+   * Motivo do helper: após `fill` no campo de pesquisa o React desmonta
+   * e remonta a `<tr>`, tornando referências capturadas antes do fill
+   * stale. `waitFor({ state: 'visible' })` pode passar com o elemento
+   * antigo ainda no DOM antes de ser substituído, e o próximo acesso
+   * (scrollIntoViewIfNeeded / click) falha com "Element is not attached
+   * to the DOM". Solução: aguardar a network response da pesquisa e só
+   * então criar um locator fresco.
+   */
+  private async findEventRowAndClickKebab(contentName: string): Promise<void> {
+    const searchInput = this.page.getByPlaceholder(/Pesquise aqui/i);
+    await searchInput.waitFor({ state: 'visible', timeout: 10_000 });
+    await searchInput.fill(contentName);
+
+    // Filtro Twygo é client-side (sem request HTTP). Aguarda o re-render
+    // estabilizar: espera por contagem de rows com o texto = 1 (filtrado).
+    // `expect.poll` re-avalia até a invariante valer ou timeout.
+    await expect
+      .poll(
+        async () =>
+          await this.page
+            .locator('tr, [role="row"]')
+            .filter({ hasText: contentName })
+            .count(),
+        { timeout: 10_000, intervals: [300, 500, 800] },
+      )
+      .toBeGreaterThanOrEqual(1);
+    // Pequeno settle adicional pra evitar race com re-render React do
+    // último frame.
+    await this.page.waitForTimeout(500);
+
+    // Re-localiza com locator fresco (após re-render do React).
+    const freshRow = this.page.locator('tr, [role="row"]')
+      .filter({ hasText: contentName })
+      .first();
+    await freshRow.waitFor({ state: 'visible', timeout: 10_000 });
+
+    const kebab = freshRow
+      .locator('[data-test-id^="events-"][data-test-id$="-actions-kebab"]')
+      .or(freshRow.getByRole('button', { name: 'more_vert' }))
+      .first();
+    await kebab.waitFor({ state: 'visible', timeout: 5_000 });
+    await kebab.scrollIntoViewIfNeeded();
+    await kebab.click();
+  }
+
+  /**
    * Lê o contador "Confirmados (N)" da aba na tela "Lista de
    * Participantes". Retorna 0 quando ausente/parsing falha — caller
    * usa como baseline pra comparar após inserção.
@@ -1400,15 +1438,7 @@ export class SeedAdminPage extends BasePage {
     try {
       await this.ensureAdminProfile();
       await safeGoto(this.page, `/o/${getOrgId()}/events?tab=events&profile=admin`);
-      await this.page.getByPlaceholder(/Pesquise aqui/i).fill(data.contentName);
-      const row = this.page.locator('tr, [role="row"]')
-        .filter({ hasText: data.contentName })
-        .first();
-      const kebab = row
-        .locator('[data-test-id^="events-"][data-test-id$="-actions-kebab"]')
-        .or(row.getByRole('button', { name: 'more_vert' }))
-        .first();
-      await kebab.click();
+      await this.findEventRowAndClickKebab(data.contentName);
       await this.page.getByRole('menuitem', { name: /Inscrição/i }).first().click();
 
       // Drawer abre. Aguarda heading e localiza linha do aluno.
