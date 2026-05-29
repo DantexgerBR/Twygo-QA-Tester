@@ -4,21 +4,22 @@ import { LearningStudentsPage } from '../../../pages/LearningStudentsPage.js';
 import { tc1Data } from './tc1-botao-reinscrever-visivel-aluno-elegivel.data.js';
 
 test.describe('Reinscrição Individual pelo Admin', () => {
-  // Skill provisionar-seed v1.6 (2026-05-28): TC1 exige 3 alunos em
-  // estados distintos (a) elegível por progresso 100% (b) elegível por
-  // cert expirado (c) inelegível em andamento. Estado (c) é coberto por
-  // `alunoMatriculadoSeed`, MAS (a) e (b) dependem de helpers ainda
-  // [NOT_IMPLEMENTED] no catálogo da skill:
-  //   - seed-roadmap-atividade-aula-1 (criar atividade pra fluxo de
-  //     completar curso → atingir progresso 100%);
-  //   - seed-roadmap-cert-expiracao-1 (forçar cert pra expired_at no
-  //     passado — exige DB write ou endpoint admin não mapeado).
-  // Quando ambos helpers forem implementados, refatorar pra usar
-  // fixtures `alunoAprovadoSeed` + `alunoComCertExpiradoSeed` (nova).
-  // Fixme legítimo §7.6 F categoria "seed-roadmap-*".
+  // Skill provisionar-seed v1.7.0 (2026-05-28): cada um dos 3 estados
+  // tem fixture/helper individual disponível:
+  //   (a) progresso 100% → `alunoAprovadoNoCursoFixoSeed`
+  //   (b) cert expirado → `alunoAprovadoNoCursoFixoSeed` + `expirarCertificadoDoAluno`
+  //   (c) em andamento → `alunoMatriculadoSeed`
+  // Falta: fixture COMPOSTA que crie 3 alunos no mesmo curso
+  // simultaneamente. Cada fixture atual é singleton por test (1 aluno
+  // worker-isolated). Pra TC1 precisamos provisionar os 3 em sequência
+  // dentro de `test.beforeAll` ou criar fixture nova
+  // `tresAlunosEmEstadosDistintosSeed`. Esforço ~30min de impl + ~15min
+  // de pipeline (3× completar curso é caro).
+  //
+  // Fixme legítimo §7.6 F categoria "seed-roadmap-fixture-composta".
   test.fixme(
     true,
-    'seed-roadmap-atividade-aula-1 + seed-roadmap-cert-expiracao-1: pré-condições "aluno progresso 100%" e "aluno cert expirado" precisam de helpers ainda não implementados. Ver skill provisionar-seed v1.6 §"Catálogo COMPLETO".',
+    'seed-roadmap-fixture-composta-3-alunos: TC1 exige 3 alunos no mesmo curso em estados distintos (a) progresso 100% (b) cert expirado (c) em andamento. v1.7.0 tem cada estado coberto individualmente, mas falta fixture composta que provisione os 3 simultaneamente. Ver skill provisionar-seed v1.7.0 §"Catálogo".',
   );
   test('TC1 — Botão "Reinscrever" visível e habilitado apenas para aluno elegível', async ({
     page,

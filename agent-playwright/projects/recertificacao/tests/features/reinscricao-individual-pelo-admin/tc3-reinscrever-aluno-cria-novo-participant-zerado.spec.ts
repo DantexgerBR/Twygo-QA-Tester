@@ -3,30 +3,30 @@ import * as allure from 'allure-js-commons';
 import { tc3Data } from './tc3-reinscrever-aluno-cria-novo-participant-zerado.data.js';
 
 test.describe('Reinscrição Individual pelo Admin', () => {
-  // Skill provisionar-seed v1.6.2 (2026-05-28): pipeline do seed
-  // funciona via `alunoAprovadoNoCursoFixoSeed` (curso 807403, cert
-  // emitido validado), MAS observação live mostrou que ao concluir
-  // engajamento no curso com `has_recertification=true`, o backend
-  // produz AUTOMATICAMENTE 2 linhas pra mesmo aluno:
-  //   - Linha 1: participant Pendente, 0% progresso (provavelmente
-  //     recertification_number=N+1 já criada pelo backend)
-  //   - Linha 2: participant Emitido, 80% progresso, cert válido
-  // TC3 assume estado de aluno com 1 participant (cert emitido) +
-  // ainda não reinscrito — esse estado NÃO é produzido pelo fluxo
-  // matricular+completar no 807403 hoje.
+  // Skill provisionar-seed v1.7.1 (2026-05-28): refator pra
+  // `alunoAprovadoNoCursoFixoSeed` + `getRowByEmail({certState: 'Emitido'})`
+  // foi tentado mas falhou — diagnóstico real é mais profundo:
+  // o backend Twygo, ao completar engajamento em curso com
+  // has_recertification=true, AUTO-RECERTIFICA o aluno criando
+  // participant "Pendente" (recert_num+1). Isso significa que após o
+  // pipeline da fixture, o aluno JÁ ESTÁ reinscrito — click "Iniciar
+  // reinscrição" no Emitido é rejeitado silenciosamente pelo backend
+  // (modal "Confirmar reinscrição" não aparece) porque o aluno NÃO PODE
+  // ser reinscrito de novo (já tem pending).
   //
-  // Próximos passos pra destravar (escolher após investigação live):
-  //  (a) Diagnosticar matricularAlunoComSenha vs duplicação backend
-  //      (auto-recertification em has_recertification=true)
-  //  (b) Adicionar `getRowByEmail({ certState: 'emitido' })` em
-  //      LearningStudentsPage pra desambiguar
-  //  (c) Usar curso SEM has_recertification ON na fase de cert, depois
-  //      ligar (mas isso pode quebrar critério de aprovação)
+  // Pra TC3 funcionar precisaríamos de aluno aprovado SEM auto-recertification
+  // pendente. Caminhos:
+  //   (a) curso com has_recertification=false na fase de cert, depois
+  //       ligar a flag → mas critério de aprovação pode quebrar
+  //   (b) cancelar/deletar o participant Pendente antes do test (endpoint
+  //       admin DELETE não mapeado)
+  //   (c) seed-roadmap-tc3-auto-recert-cancel: helper que cancele a
+  //       reinscrição automática gerada pelo backend
   //
-  // Fixme legítimo §7.6 F categoria "estado-do-seed-conflita-com-tc".
+  // Fixme legítimo §7.6 F categoria "estado-do-seed-vs-tc-conflict".
   test.fixme(
     true,
-    'seed-roadmap-tc3-state-conflict: pipeline alunoAprovadoNoCursoFixoSeed emite cert (5027076 validado) mas produz aluno com 2 participants no 807403 (Pendente + Emitido). getRowByEmail.first() pega o Pendente → menu kebab sem "Iniciar reinscrição" → modal não dispara. Ver skill provisionar-seed v1.6.2.',
+    'seed-roadmap-tc3-auto-recert-cancel: refator alunoAprovadoNoCursoFixoSeed validado live 2026-05-28 — backend auto-recertifica aluno após cert (participant Pendente criado), bloqueando click Iniciar reinscrição (modal não aparece). Precisa helper que cancele a reinscrição automática OU outra estratégia de seed.',
   );
   test('TC3 — Reinscrever aluno individualmente cria novo participant zerado', async () => {
     await allure.epic('Twygo - Recertificação');

@@ -4,7 +4,6 @@
  * Opt-in: RUN_RECON_WIZARD_ATIVIDADE=1
  */
 import { test, expect } from '../../src/fixtures/exploratory-fixture.js';
-import { fixedSeed } from '../../projects/recertificacao/data/fixed-seed.data.js';
 import { ProfileSwitcher } from '../../src/pages/ProfileSwitcher.js';
 import { ContentEditPage } from '../../projects/recertificacao/pages/ContentEditPage.js';
 
