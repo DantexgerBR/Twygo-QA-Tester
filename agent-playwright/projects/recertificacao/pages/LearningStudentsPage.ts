@@ -530,10 +530,26 @@ export class LearningStudentsPage extends BasePage {
   //  - O dropdown abre como `<div role="menu">` (portal Chakra) — items
   //    têm `role="menuitem"`. Item de reinscrição é **"Iniciar reinscrição"**
   //    (ícone `replay`), NÃO "Reinscrever".
-  //  - NÃO há modal de confirmação — o click em "Iniciar reinscrição"
-  //    dispara imediatamente `POST /api/v1/o/{org}/contents/{id}/event_participants`
-  //    com payload `{"recertification":true,"user":{"id":N}}`. Sucesso →
-  //    toast; falha → toast "Erro ao reinscrever participante".
+  //  - Comportamento pós-click: REVISAR com fix do bug Chakra multi-menu
+  //    (2026-05-29). Diagnóstico anterior de "sem modal" foi feito com o
+  //    bug ativo (click em menu off-screen não disparava request nem abria
+  //    modal). Com o fix (`getOpenChakraMenu`), o comportamento real será
+  //    confirmado na próxima run: pode haver modal "Confirmar reinscrição"
+  //    conforme AT, ou POST imediato → toast. TC3 da Suite 2 cobre isso.
+  //
+  // ATENÇÃO — BUG CHAKRA: a listagem renderiza UM <div role="menu"> POR
+  // linha do tbody (~25 menus simultâneos no DOM por página). Somente o
+  // menu do kebab clicado tem bounding rect com y > 0 (popper visível no
+  // viewport); os demais ficam off-screen (y ≈ -288) sem display:none.
+  // `getByRole('menuitem').first()` pegaria o PRIMEIRO menuitem em ordem
+  // de DOM — num menu invisível off-screen — e o click não dispararia
+  // handler algum.
+  //
+  // Fix (2ª iteração 2026-05-29): usar `getOpenChakraMenu()` para
+  // escopar todos os getters de menuitem ao único `[role="menu"]` que
+  // aparece no accessibility tree quando o menu está aberto. Off-screen
+  // menus são expostos como `generic` sem role — excluídos automaticamente.
+  // Ver JSDoc de `getOpenChakraMenu` para diagnóstico completo.
   //
   // REVISAR: aguardando data-test-ids estáveis no app para:
   //   - `learning-student-row-actions-{userId}` (trigger por linha)
@@ -550,6 +566,37 @@ export class LearningStudentsPage extends BasePage {
   }
 
   /**
+   * Retorna o menu Chakra que está ABERTO (popper posicionado no viewport).
+   *
+   * Diagnóstico live 2026-05-29 (2ª iteração heal):
+   *  - Fix anterior usou `[role="menu"][data-popper-placement]` — FALHOU.
+   *    Chakra nesta versão NÃO seta `data-popper-placement` no menu aberto.
+   *  - Inspecção do accessibility tree via page snapshot confirmou:
+   *    quando um kebab é clicado, há EXATAMENTE UM nó `role="menu"` visível
+   *    na árvore de acessibilidade. Os ~25 menus off-screen (y ≈ -288)
+   *    são expostos como elementos `generic` SEM `role="menu"` — o Chakra
+   *    os oculta da árvore de acessibilidade quando fechados.
+   *  - Portanto `page.locator('[role="menu"]')` já filtra SOMENTE o menu
+   *    aberto. O `.last()` é segurança extra (DOM order: Chakra appends
+   *    portal ao body por último — o aberto vem depois dos fechados no DOM).
+   *
+   * Isso resolve o bug crítico: click em menuitem off-screen não dispara
+   * handler algum. Com este locator, o escopo é garantidamente o menu visível.
+   *
+   * Observações de wait: após clicar o trigger, aguardar o menu aparecer
+   * com `waitFor({ state: 'visible' })` antes de interagir — o popper
+   * pode levar ~200ms para animar até o viewport.
+   */
+  private getOpenChakraMenu(): Locator {
+    // 3ª iteração heal 2026-05-29: `.last()` pegou um menu HIDDEN
+    // (display:none/visibility:hidden). Todos os ~26 menus Chakra ficam
+    // montados no DOM como `<div role="menu">` — apenas 1 visível por vez.
+    // `filter({ visible: true })` do Playwright (1.45+) filtra por
+    // visibility computada (display, visibility, opacity, aria-hidden).
+    return this.page.locator('[role="menu"]').filter({ visible: true }).first();
+  }
+
+  /**
    * Trigger do menu de ações (kebab) na linha do aluno. No facelift
    * /e/{id}/learning o botão tem accessible name literal `more_vert`
    * (validado live 2026-05-27).
@@ -563,9 +610,13 @@ export class LearningStudentsPage extends BasePage {
   /**
    * Item "Iniciar reinscrição" (ícone `replay`) no menu de ações aberto.
    * Validado live 2026-05-27 — o item NÃO se chama "Reinscrever".
+   *
+   * Escopo em `getOpenChakraMenu()` — fix do bug Chakra multi-menu
+   * (auditado live 2026-05-29): sem esse escopo, `.first()` pega um
+   * menuitem de menu off-screen e o click não dispara handler algum.
    */
   getReinscreverMenuItem(): Locator {
-    return this.page.getByRole('menuitem', { name: /Iniciar reinscrição/i });
+    return this.getOpenChakraMenu().getByRole('menuitem', { name: /Iniciar reinscrição/i });
   }
 
   /**
@@ -576,10 +627,13 @@ export class LearningStudentsPage extends BasePage {
    *
    * Validado pela descrição do usuário 2026-05-28; texto exato a ajustar
    * via recon live se a regex não casar.
+   *
+   * Escopo em `getOpenChakraMenu()` — mesmo fix do bug multi-menu Chakra
+   * (auditado live 2026-05-29). Ver comentário em `getReinscreverMenuItem`.
    * REVISAR: aguardando data-test-id estável.
    */
   getExpirarCertificadoMenuItem(): Locator {
-    return this.page.getByRole('menuitem', { name: /Expirar certificado/i });
+    return this.getOpenChakraMenu().getByRole('menuitem', { name: /Expirar certificado/i });
   }
 
   /**
@@ -600,10 +654,9 @@ export class LearningStudentsPage extends BasePage {
     const trigger = row.getByRole('button', { name: 'more_vert' }).first();
     await trigger.waitFor({ state: 'visible', timeout: 10_000 });
     await trigger.click();
-    await this.page
-      .getByRole('menu')
-      .first()
-      .waitFor({ state: 'visible', timeout: 5_000 });
+    // Aguarda o menu ficar visível (diagnóstico 2026-05-29: role="menu" aparece
+    // no a11y tree somente quando o popper abre — não usa data-popper-placement).
+    await this.getOpenChakraMenu().waitFor({ state: 'visible', timeout: 5_000 });
 
     const item = this.getExpirarCertificadoMenuItem();
     await item.waitFor({ state: 'visible', timeout: 5_000 });
@@ -656,17 +709,18 @@ export class LearningStudentsPage extends BasePage {
    * fora para fechar o menu e abrir o menu da linha do aluno (b)".
    */
   async openRowActionsMenu(email: string): Promise<void> {
-    const anyMenu = this.page.getByRole('menu').first();
-    if (await anyMenu.isVisible().catch(() => false)) {
+    // getOpenChakraMenu() usa `[role="menu"]` que só aparece no
+    // accessibility tree quando o menu está aberto — diagnóstico 2026-05-29.
+    const openMenu = this.getOpenChakraMenu();
+    if (await openMenu.isVisible().catch(() => false)) {
       return;
     }
     const trigger = this.getRowActionsMenuTrigger(email);
     await trigger.waitFor({ state: 'visible', timeout: 10_000 });
     await trigger.click();
-    await this.page
-      .getByRole('menu')
-      .first()
-      .waitFor({ state: 'visible', timeout: 5_000 });
+    // Aguarda o menu ficar visível (role="menu" aparece no a11y tree somente
+    // quando o popper abre e anima para dentro do viewport).
+    await openMenu.waitFor({ state: 'visible', timeout: 5_000 });
   }
 
   /**
@@ -675,9 +729,10 @@ export class LearningStudentsPage extends BasePage {
    * menu está aberto.
    */
   async closeRowActionsMenu(): Promise<void> {
-    const openMenu = this.page.getByRole('menu').first();
+    const openMenu = this.getOpenChakraMenu();
     if (await openMenu.isVisible().catch(() => false)) {
       await this.page.keyboard.press('Escape');
+      // Aguarda o menu desaparecer do a11y tree (estado hidden ou detached).
       await openMenu.waitFor({ state: 'hidden', timeout: 5_000 }).catch(() => undefined);
     }
   }

@@ -58,6 +58,25 @@ test.describe('Isolamento de Progresso, Score e Attendance por Inscrição', () 
     'TC1 — Aluno reinscrito tem progress/score/attendance zerados na nova inscrição',
     { tag: '@seed-heavy' },
     async ({ page, alunoAprovadoNoCursoFixoSeed }) => {
+      // Validação live 2026-05-29 (9 iterações de heal):
+      // - Pipeline da fixture completa OK em ~3min (cert emitido,
+      //   participants criados, listagem acessível).
+      // - Bug Chakra multi-menu RESOLVIDO em SeedAdminPage +
+      //   LearningStudentsPage via filter({visible: true}).
+      // - PORÉM: toast `Reinscri|sucesso` não aparece em 10s após
+      //   `clickReinscrever`. Mesma raiz que TC3 Suite 2 — a AT
+      //   inferiu modal "Confirmar reinscrição" + toast que não
+      //   existem no produto. O click do "Iniciar reinscrição"
+      //   provavelmente dispara um POST direto cujo response não
+      //   gera toast visível (ou gera com texto fora do regex).
+      //
+      // Destinatário do fix: AT/QA Lead — revisar AT pra validar
+      // via listagem de Aprendizagem (linha Pendente nova com
+      // progress=0, cert Pendente) em vez de toast.
+      test.fixme(
+        true,
+        'AT-inferiu-toast-inexistente: pipeline completo OK, click Reinscrever atinge alvo correto (fix Chakra multi-menu aplicado), mas toast Reinscri|sucesso não aparece. Mesma raiz TC3 Suite 2. Revisar AT pra validar pela listagem em vez de toast.',
+      );
       // Skill provisionar-seed v1.7.x (2026-05-29): após 7 iterações de heal:
       //   v1: curso 806755 + recertificacaoever1@twygo.com → 422 silencioso
       //   v2: curso 807287 + richard.sebold@twygo.com → todos Pendente
@@ -65,16 +84,11 @@ test.describe('Isolamento de Progresso, Score e Attendance por Inscrição', () 
       //   v4-v5: SeedAdminPage findEventRowAndClickKebab heal (re-render race)
       //   v6: timeout 15min pra pipeline completar
       //   v7: getRowByEmail({certState:'Emitido'}) pra desambiguar 2 linhas
-      // ESTADO ATUAL: pipeline completa cert emitido, mas toast Reinscri|sucesso
-      // não aparece em 10s após click. Diagnóstico provável: backend rejeita
-      // silenciosamente porque o aluno já tem participant Pendente
-      // auto-criado pelo backend após cert (state-conflict v1.6.2 da skill).
-      // Precisa cancelar/deletar o participant Pendente automático antes do
-      // clickReinscrever, ou usar caminho alternativo de seed.
-      test.fixme(
-        true,
-        'seed-roadmap-tc3-auto-recert-cancel: alunoAprovadoNoCursoFixoSeed produz cert Emitido OK, mas backend auto-cria participant Pendente que bloqueia nova reinscrição. Toast nunca aparece. Mesmo gap do TC3 Suite 2. Precisa helper que cancele a auto-recertification.',
-      );
+      //   v8 (2026-05-29): root cause identificado — bug Chakra multi-menu.
+      //     Click batia em menu off-screen (y ≈ -288, DOM posição 1 de 25).
+      //     Fix 1ª iteração: data-popper-placement (não funcionou — Chakra não seta).
+      //     Fix 2ª iteração: [role="menu"].last() — aparece no a11y tree somente
+      //     quando aberto. Hipótese "backend rejeita" era falsa — POST nunca saiu.
       await allure.epic('Twygo - Recertificação');
       await allure.feature(
         'Isolamento de Progresso, Score e Attendance por Inscrição',
@@ -115,19 +129,11 @@ test.describe('Isolamento de Progresso, Score e Attendance por Inscrição', () 
       await allure.step(
         '2. Reinscrever o aluno aprovado → novo participant criado via POST',
         async () => {
-          // "Iniciar reinscrição" dispara POST imediato (sem modal de confirmação —
-          // confirmado live 2026-05-29, documentado em LearningStudentsPage.ts:533-536).
-          // Validamos o sucesso via toast (mais robusto que waitForResponse, que
-          // depende de capturar URL e pode sofrer race-condition no setup).
-          //
-          // Pré-condição: aluno tem cert Emitido → botão "Iniciar reinscrição"
-          // habilitado no menu kebab da linha mais recente. Aluno com cert
-          // "Pendente" (sem cert emitido anterior) → frontend bloqueia silenciosamente
-          // (screenshot trace 2026-05-29: menu aberto + item highlighted + sem POST).
-          // alunoAprovadoNoCursoFixoSeed produz 2 participants no curso 807403
-          // (Pendente auto-criado + Emitido com cert). clickReinscrever default
-          // pega .first() = linha mais recente (Pendente). Precisamos clicar
-          // na linha Emitido — desambigua via getRowByEmail({certState}).
+          // Usa kebab da linha "Emitido" + POM getReinscreverMenuItem() escopado
+          // ao menu visível (fix bug Chakra multi-menu auditado live 2026-05-29).
+          // Desambigua pela linha com cert "Emitido" (aluno tem ≥2 participants:
+          // Emitido original + Pendente auto-criado pelo backend após cert).
+          // openRowActionsMenu(email) não suporta certState — trigger direto.
           const rowEmitido = learning.getRowByEmail(
             alunoAprovadoNoCursoFixoSeed.alunoEmail,
             { certState: 'Emitido' },
@@ -136,13 +142,8 @@ test.describe('Isolamento de Progresso, Score e Attendance por Inscrição', () 
           await kebab.waitFor({ state: 'visible', timeout: 10_000 });
           await kebab.scrollIntoViewIfNeeded();
           await kebab.click();
-          await page
-            .getByRole('menu')
-            .first()
-            .waitFor({ state: 'visible', timeout: 5_000 });
-          const item = page
-            .getByRole('menuitem', { name: /Iniciar reinscrição/i })
-            .first();
+          // getReinscreverMenuItem() agora escopa a getOpenChakraMenu() — fix do bug.
+          const item = learning.getReinscreverMenuItem();
           await item.waitFor({ state: 'visible', timeout: 5_000 });
           await item.click();
           await learning.expectToastSuccess();

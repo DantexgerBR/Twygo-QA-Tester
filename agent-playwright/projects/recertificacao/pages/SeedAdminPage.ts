@@ -1222,7 +1222,8 @@ export class SeedAdminPage extends BasePage {
       .first();
     await kebab.scrollIntoViewIfNeeded();
     await kebab.click();
-    await this.page.getByRole('menuitem', { name: /Inscrição/i }).first().click();
+    await this.page.locator('[role="menu"]').filter({ visible: true }).first()
+      .getByRole('menuitem', { name: /Inscrição/i }).first().click();
 
     // Tela completa "Detalhes do evento" abre — URL NÃO muda (continua em
     // /events?tab=events). Header "Detalhes do evento" + heading h3
@@ -1308,7 +1309,8 @@ export class SeedAdminPage extends BasePage {
     await safeGoto(this.page, `/o/${getOrgId()}/events?tab=events&profile=admin`);
 
     await this.findEventRowAndClickKebab(data.contentName);
-    await this.page.getByRole('menuitem', { name: /Inscrição/i }).first().click();
+    await this.page.locator('[role="menu"]').filter({ visible: true }).first()
+      .getByRole('menuitem', { name: /Inscrição/i }).first().click();
 
     await this.page
       .getByRole('heading', { name: /Lista de Participantes/i })
@@ -1439,7 +1441,8 @@ export class SeedAdminPage extends BasePage {
       await this.ensureAdminProfile();
       await safeGoto(this.page, `/o/${getOrgId()}/events?tab=events&profile=admin`);
       await this.findEventRowAndClickKebab(data.contentName);
-      await this.page.getByRole('menuitem', { name: /Inscrição/i }).first().click();
+      await this.page.locator('[role="menu"]').filter({ visible: true }).first()
+      .getByRole('menuitem', { name: /Inscrição/i }).first().click();
 
       // Drawer abre. Aguarda heading e localiza linha do aluno.
       await this.page
