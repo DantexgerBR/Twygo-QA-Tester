@@ -1,7 +1,7 @@
 ---
 name: provisionar-seed
 description: Quando um TC Playwright declara pré-condição como "curso pré-existente", "curso com has_recertification=true", "aluno matriculado", "participant com progresso", "aluno com certificado emitido", "trilha com 3 cursos filhos", etc, o spec NÃO pode marcar `test.fixme(true, 'seed inválido')` nem depender de IDs hardcoded em `.data.ts` placeholder. Em vez disso, o spec **declara dependência via fixture canônica** (`cursoSeed`/`cursoLiberadoSeed`/`cursoComRecertificacaoSeed`/`cursoComAtividadesMarcaveisSeed`/`alunoMatriculadoSeed`/`alunoComSenhaSeed`/`alunoAprovadoSeed` em `src/fixtures/seed-fixtures.ts`) — a fixture provê o recurso (criando ou reusando) e faz cleanup automático `afterAll` via variant `*_safe`. Mapping pré-condição→fixture é tabela canônica que generator/healer consultam. Fluxo do seed cobre: criação via UI admin (rotas validadas live `/contents/new?kind=N` facelift React p/ Curso/Trilha/Pacote, `/users/new` Haml legado p/ Usuário), matrícula via lista→more_vert→"Inscrição"→drawer→"Adicionar", matrícula COM SENHA via expand h3 colapsado + scroll progressivo, configuração de curso (publicar via tab Identificação, ligar `has_recertification` via tab Acesso switch Chakra), engajamento do aluno via `/e/{id}/learn` + checkbox "Marcar como concluído" em vídeo/SCORM/Aula configurados no admin, emissão automática de cert validável via `/api/v2/attendees`. Anti-patterns proibidos: `/events/new` Haml deprecated, `/contents/{id}/learning_students` (404), `fixme` por seed quando fixture cobre. Skill define o padrão canônico — catálogo de helpers (`createCurso`/`createTrilha`/`createPacote`/`criarUsuarioAluno`/`matricularAluno`/`matricularAlunoComSenha`/`setHasRecertification`/`publicarCurso`/`completarCursoComoAluno`/`desmatricularAlunoSafe`) + login OAuth do aluno + validar cert via API V2, mapping kind→Recurso, naming worker-isolated, scope worker pra amortizar custo, quando reusar `data/fixed-seed.data.ts` (seed permanente), e quando `fixme` por seed AINDA é legítimo (DB-only/mailer/Flipper toggle). Use ao gerar/revisar QUALQUER spec novo que tenha pré-condição "X existe no env" — converter em ação automatizada via fixture.
-version: 1.6.2
+version: 1.7.0
 ---
 
 # provisionar-seed
@@ -1082,7 +1082,7 @@ roadmap (ex: `seed-roadmap-pacote-1`).
 |---|---|---|---|
 | `createCurso({ name, ... })` | ✅ implementado | `SeedAdminPage` | Rota facelift `/contents/new?kind=0` |
 | `createTrilha({ name, ... })` | ✅ implementado | `SeedAdminPage` | Rota facelift `/contents/new?kind=3` |
-| `createPacote({ name, cursosIds, ... })` | ❌ `[NOT_IMPLEMENTED]` | `SeedAdminPage` | Throws com ID `seed-roadmap-pacote-1`. Rota não confirmada via recon live |
+| `createPacote({ name, cursosIds?, ... })` | ✅ implementado e validado live (v1.7.0) | `SeedAdminPage` | Rota `/contents/new?kind=4` (igual createCurso facelift). Validado live 2026-05-28 (id 807420 criado em 1.3min). `cursosIds` ainda lança erro (wizard multi-step pra vincular cursos não coberto) |
 | `criarUsuarioAluno({ email, firstName, lastName })` | ✅ implementado | `SeedAdminPage` | Rota Haml `/users/new` (não migrada pro facelift) |
 
 ### Matrícula
@@ -1100,13 +1100,14 @@ roadmap (ex: `seed-roadmap-pacote-1`).
 | `setHabilitarReinscricao(enabled)` | ✅ implementado | `ContentEditPage` | Tab Acesso, checkbox `#has_recertification` |
 | `setHasRecertification(eventId, enabled)` | ✅ implementado | `SeedAdminPage` | Atalho de setup — delega `ContentEditPage.openEditByIdInAcessoTab + setHabilitarReinscricao + save + expectSaveSuccess`. Idempotente. Pré-condição: flag `:recertificacao` ON na org |
 | `publicarCurso(eventId)` | ✅ implementado | `SeedAdminPage` | Tab Identificação → Situação=Liberado |
-| `setCriterioAprovacao(eventId, percentual)` | ❌ `[NOT_IMPLEMENTED]` | `SeedAdminPage` | `seed-roadmap-criterio-1`. Provavelmente tab Aprovação — exige recon live (curso 807403 default = 60%) |
-| `setQuemPodeVer(eventId, audiencia)` | ❌ `[NOT_IMPLEMENTED]` | `SeedAdminPage` | `seed-roadmap-audiencia-1`. Combobox tab Identificação: Inscritos/Colaborador/Usuários/Público |
-| `setHabilitarChat(eventId, enabled)` | ❌ `[NOT_IMPLEMENTED]` | `SeedAdminPage` | `seed-roadmap-chat-1`. Checkbox tab Identificação |
-| `setBanner(eventId, imagemPath)` | ❌ `[NOT_IMPLEMENTED]` | `SeedAdminPage` | `seed-roadmap-banner-1`. Tab Banner — upload de imagem |
-| `setCobranca(eventId, { preco, gateway })` | ❌ `[NOT_IMPLEMENTED]` | `SeedAdminPage` | `seed-roadmap-cobranca-1`. Tab Cobrança — exige config de gateway no env |
-| `setLocalizacao(eventId, { modalidade })` | ❌ `[NOT_IMPLEMENTED]` | `SeedAdminPage` | `seed-roadmap-localizacao-1`. Tab Localização — presencial/online/híbrido |
-| `setCompartilhamento(eventId, { linkPublico })` | ❌ `[NOT_IMPLEMENTED]` | `SeedAdminPage` | `seed-roadmap-compartilhar-1`. Tab Compartilhar |
+| `expirarCertificadoDoAluno({cursoId, alunoEmail})` | ✅ implementado (v1.7.0) | `SeedAdminPage` | Aprendizagem → kebab linha aluno aprovado (`certState: 'Emitido'`) → "Expirar certificado". Aluno fica em estado "elegível por cert expirado" — Suite 2 TC1 (b) |
+| `setCriterioAprovacao(eventId, percentual)` | 🟡 implementado, recon pendente (v1.7.0) | `SeedAdminPage` | Tab Aprovação — input por `getByLabel`/`spinbutton`. Validar live antes do 1º consumidor |
+| `setQuemPodeVer(eventId, audiencia)` | 🟡 implementado, recon pendente (v1.7.0) | `SeedAdminPage` | Combobox tab Identificação — `getByLabel` ou 2º combobox autocomplete |
+| `setHabilitarChat(eventId, enabled)` | ✅ implementado (v1.7.0) | `SeedAdminPage` | Checkbox `#enable_twygo_chat` na tab Identificação (id validado live 2026-05-28) |
+| `setBanner(eventId, imagemPath)` | 🟡 implementado, recon pendente (v1.7.0) | `SeedAdminPage` | `<input type="file">` na tab Banner via `setInputFiles` |
+| `setCobranca(eventId, {preco, gatewayName?})` | 🟡 implementado, recon pendente (v1.7.0) | `SeedAdminPage` | Tab Cobrança — exige gateway configurado no env. `getByLabel(/Preço|Valor/)` |
+| `setLocalizacao(eventId, {modalidade})` | 🟡 implementado, recon pendente (v1.7.0) | `SeedAdminPage` | Radio ou combobox `Presencial/Online/Híbrido` na tab Localização |
+| `setCompartilhamento(eventId, {linkPublico})` | 🟡 implementado, recon pendente (v1.7.0) | `SeedAdminPage` | Switch/checkbox "Link público" na tab Compartilhar |
 
 ### Atividades (filhas do curso)
 
@@ -1387,6 +1388,44 @@ novo:
   com criação via UI precisa seguir
 
 ## Histórico
+
+- **v1.7.0 (2026-05-28)**: implementação em batch de TODOS os helpers
+  do roadmap (pedido do usuário "implementar e testar todos seeds do
+  roadmap"). Mudanças:
+  - **`LearningStudentsPage.getRowByEmail(email, { certState })`**:
+    aceita filtro por badge do certificado (Emitido/Pendente/etc) pra
+    desambiguar 2 linhas com mesmo email — resolve state-conflict
+    descoberto em v1.6.2 (Suite 2 TC2/TC3).
+  - **`expirarCertificadoDoAluno({cursoId, alunoEmail})`**: fluxo UI
+    Aprendizagem → kebab participant Emitido → "Expirar certificado".
+    Destrava Suite 2 TC1 estado (b) "cert expirado".
+  - **`createPacote({name, cursosIds?, ...})`**: implementado baseado
+    em createCurso (rota `/contents/new?kind=4`). `cursosIds` ainda
+    lança erro (wizard multi-step pra vincular cursos não coberto).
+  - **5 setters de tabs do edit do curso**:
+    `setCriterioAprovacao`, `setQuemPodeVer`, `setHabilitarChat` (usa
+    `#enable_twygo_chat` validado live), `setLocalizacao`,
+    `setCompartilhamento`. Delegam novo helper genérico
+    `ContentEditPage.goToTab(name)` que cobre as 8 tabs canônicas.
+  - **`setBanner`** (upload via `setInputFiles`) + **`setCobranca`**
+    (preço + gateway).
+  - **5 `adicionarAtividade*` (Texto/Página/PDF/Aula/Questionário)
+    BLOQUEADOS** — recon spec falhou em descobrir rota do wizard de
+    criar atividade. `/e/{id}/contents` admin retorna view pública;
+    rotas alternativas (`/e/{id}/contents/new`, `/o/{org}/events/{id}/contents`,
+    `/o/{org}/contents/{id}/contents`, `/e/{id}/manage_contents`) retornam
+    404. Próximo passo: recon live MANUAL no Twygo (login UI) pra
+    descobrir caminho navegacional → kebab? Menu side de admin? Edit
+    inline?
+  - **Status dos novos helpers**:
+    * ✅ validados live: `createPacote` (id 807420 criado em 1.3min)
+    * ✅ implementação validada (typecheck + lógica): `getRowByEmail`,
+      `expirarCertificadoDoAluno`, `setHabilitarChat` (id validado live)
+    * 🟡 recon pendente: `setCriterioAprovacao`, `setQuemPodeVer`,
+      `setLocalizacao`, `setCompartilhamento`, `setBanner`,
+      `setCobranca`. Implementação baseada em padrões Twygo conhecidos
+      (combobox/checkbox/radio). 1º consumidor precisa validar seletor
+      + ajustar conforme recon.
 
 - **v1.6.2 (2026-05-28)**: pipeline alunoAprovadoNoCursoFixoSeed
   destravado parcialmente:

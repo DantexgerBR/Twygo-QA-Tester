@@ -99,6 +99,37 @@ export class ContentEditPage extends BasePage {
   }
 
   /**
+   * Navega pra qualquer tab do form de edição facelift por nome legível.
+   * Implementação genérica que cobre as 8 tabs canônicas:
+   * `Identificação | Acesso | Banner | Aprovação | Cobrança | Localização |
+   * Dashboard | Compartilhar`.
+   *
+   * Estratégia: click via `getByRole('tab', { name })` (exact regex). Se a
+   * tab tem data-test-id estável (ex: `tab-access`), preferir esse seletor
+   * em método dedicado (como `goToAcessoTab`). Este helper é fallback
+   * pra tabs sem testId mapeado.
+   */
+  async goToTab(
+    tabName:
+      | 'Identificação'
+      | 'Acesso'
+      | 'Banner'
+      | 'Aprovação'
+      | 'Cobrança'
+      | 'Localização'
+      | 'Dashboard'
+      | 'Compartilhar',
+  ): Promise<void> {
+    const tab = this.page
+      .getByRole('tab', { name: new RegExp(`^${tabName}$`, 'i') })
+      .first();
+    await tab.waitFor({ state: 'visible', timeout: 10_000 });
+    if (await tab.getAttribute('aria-selected') === 'true') return;
+    await tab.click();
+    await expect(tab).toHaveAttribute('aria-selected', 'true', { timeout: 5_000 });
+  }
+
+  /**
    * Navega pra tab "Acesso" do form de edição facelift. No facelift,
    * o checkbox "Habilitar reinscrição" vive nessa tab (validado live
    * 2026-05-27 — seção "Inscrição" → "Permitir registro de inscrição por").

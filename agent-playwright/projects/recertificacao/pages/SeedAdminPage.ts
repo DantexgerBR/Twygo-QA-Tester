@@ -5,6 +5,7 @@ import { ProfileSwitcher } from '../../../src/pages/ProfileSwitcher.js';
 import { getOrgId } from '../../../src/utils/environment.js';
 import { dismissCommonModals, safeGoto } from '../../../src/utils/modals.js';
 import { ContentEditPage } from './ContentEditPage.js';
+import { LearningStudentsPage } from './LearningStudentsPage.js';
 
 /**
  * Page Object de **provisionamento de seed via UI admin** para o projeto
@@ -480,6 +481,274 @@ export class SeedAdminPage extends BasePage {
    *
    * Skill: provisionar-seed v1.6 §"Habilitar recertification em curso seed".
    */
+  /**
+   * Expira o certificado de um aluno aprovado num curso. Atalho de seed
+   * pro fluxo UI:
+   *   1. Abre `/e/{cursoId}/learning`
+   *   2. Localiza a linha do aluno com cert EMITIDO (filtra por certState
+   *      pra ignorar linhas Pendente/Outro estado do mesmo aluno)
+   *   3. Abre menu kebab → "Expirar certificado" → confirma
+   *
+   * Pré-condição: aluno deve ter cert emitido no curso (usar
+   * `alunoAprovadoNoCursoFixoSeed` antes). Pós-condição: `certificate_situation`
+   * vira `expired` no DB, aluno fica em estado "elegível por cert expirado"
+   * (Suite 2 TC1 estado b).
+   *
+   * Skill: provisionar-seed v1.7.0 §"Expirar certificado de aluno aprovado".
+   */
+  async expirarCertificadoDoAluno(data: {
+    cursoId: number;
+    alunoEmail: string;
+  }): Promise<void> {
+    await this.ensureAdminProfile();
+    const learning = new LearningStudentsPage(this.page);
+    await learning.goToList(data.cursoId);
+    await learning.expirarCertificadoDoAluno(data.alunoEmail, {
+      certState: 'Emitido',
+    });
+  }
+
+  /**
+   * Configura banner do curso (upload de imagem). Tab "Banner".
+   *
+   * REVISAR-RECON-LIVE: estrutura da tab Banner não confirmada. Assume
+   * `<input type="file">` aceitando imagens. Pode ter regiões diferentes
+   * (banner mobile vs desktop). Validar via recon ao consumir.
+   *
+   * @param imagemPath caminho absoluto pra imagem (use helpers de
+   *                   `src/utils/test-assets.ts`, skill `testar-upload-de-arquivo-twygo`)
+   */
+  async setBanner(eventId: number, imagemPath: string): Promise<void> {
+    await this.ensureAdminProfile();
+    await safeGoto(
+      this.page,
+      `/o/${getOrgId()}/contents/${eventId}/edit?tab=banner`,
+    );
+    const editPage = new ContentEditPage(this.page);
+    await editPage.goToTab('Banner');
+    // setInputFiles funciona mesmo em <input type=file> hidden
+    const fileInput = this.page.locator('input[type="file"]').first();
+    await fileInput.waitFor({ state: 'attached', timeout: 10_000 });
+    await fileInput.setInputFiles(imagemPath);
+    // Aguarda preview/upload completar (best-effort)
+    await this.page.waitForTimeout(2_000);
+    await dismissCommonModals(this.page);
+    await editPage.save();
+    await editPage.expectSaveSuccess();
+  }
+
+  /**
+   * Configura cobrança do curso (preço + gateway). Tab "Cobrança".
+   *
+   * REVISAR-RECON-LIVE: tab Cobrança exige config de gateway no env
+   * (chave de API). Sem gateway configurado, a tab pode estar bloqueada
+   * ou exibir mensagem "Configurar gateway". Validar via recon antes
+   * do primeiro consumidor.
+   *
+   * @param data.preco          em reais (ex: 99.90)
+   * @param data.gatewayName    opcional — nome do gateway pré-configurado
+   *                            no env (ex: "PagSeguro", "Stripe")
+   */
+  async setCobranca(
+    eventId: number,
+    data: { preco: number; gatewayName?: string },
+  ): Promise<void> {
+    await this.ensureAdminProfile();
+    await safeGoto(
+      this.page,
+      `/o/${getOrgId()}/contents/${eventId}/edit?tab=billing`,
+    );
+    const editPage = new ContentEditPage(this.page);
+    await editPage.goToTab('Cobrança');
+    // Preço — assume spinbutton/textbox numérico
+    const precoInput = this.page
+      .getByLabel(/(Preço|Valor)/i)
+      .or(this.page.getByRole('spinbutton').first())
+      .first();
+    await precoInput.waitFor({ state: 'visible', timeout: 10_000 });
+    await precoInput.fill(data.preco.toFixed(2));
+    if (data.gatewayName) {
+      const gateway = this.page
+        .getByLabel(/(Gateway|Forma de pagamento)/i)
+        .first();
+      if (await gateway.isVisible({ timeout: 3_000 }).catch(() => false)) {
+        await gateway.click();
+        await this.page
+          .getByRole('option', { name: data.gatewayName, exact: true })
+          .click();
+      }
+    }
+    await dismissCommonModals(this.page);
+    await editPage.save();
+    await editPage.expectSaveSuccess();
+  }
+
+  /**
+   * Configura o "Critério de aprovação" do curso (percentual mínimo de
+   * progresso/nota pra emitir certificado). Tab "Aprovação" do facelift.
+   *
+   * REVISAR-RECON-LIVE: assumindo input numérico com label/placeholder
+   * "Critério de aprovação" ou similar. Validar via spec piloto antes
+   * do primeiro consumidor.
+   *
+   * Skill: provisionar-seed v1.7.0
+   */
+  async setCriterioAprovacao(
+    eventId: number,
+    percentual: number,
+  ): Promise<void> {
+    await this.ensureAdminProfile();
+    await safeGoto(
+      this.page,
+      `/o/${getOrgId()}/contents/${eventId}/edit?tab=approval`,
+    );
+    const editPage = new ContentEditPage(this.page);
+    await editPage.goToTab('Aprovação');
+    // Input do percentual — assumindo spinbutton ou textbox numérico.
+    // REVISAR: confirmar label exato via recon.
+    const input = this.page
+      .getByLabel(/(Critério de aprovação|Percentual mínimo|Aprovação mínima)/i)
+      .or(this.page.getByRole('spinbutton').first())
+      .first();
+    await input.waitFor({ state: 'visible', timeout: 10_000 });
+    await input.fill(String(percentual));
+    await dismissCommonModals(this.page);
+    await editPage.save();
+    await editPage.expectSaveSuccess();
+  }
+
+  /**
+   * Configura "Quem pode ver" (visibilidade/audiência) do curso. Tab
+   * "Identificação" do facelift — combobox com opções tipo:
+   * `Inscritos | Colaborador | Usuários | Público`.
+   *
+   * REVISAR-RECON-LIVE: assumindo label "Quem pode ver" / combobox
+   * autocomplete. Validar via recon.
+   */
+  async setQuemPodeVer(
+    eventId: number,
+    audiencia: 'Inscritos' | 'Colaborador' | 'Usuários' | 'Público',
+  ): Promise<void> {
+    await this.ensureAdminProfile();
+    await safeGoto(
+      this.page,
+      `/o/${getOrgId()}/contents/${eventId}/edit?tab=identification`,
+    );
+    const editPage = new ContentEditPage(this.page);
+    await editPage.goToTab('Identificação');
+    const combobox = this.page
+      .getByLabel(/(Quem pode ver|Visibilidade|Audiência)/i)
+      .or(
+        this.page
+          .locator('input[role="combobox"][aria-autocomplete="list"]')
+          .nth(1), // segundo combobox da tab (primeiro é Tipo de experiência)
+      )
+      .first();
+    await combobox.waitFor({ state: 'visible', timeout: 10_000 });
+    await combobox.click();
+    await this.page
+      .getByRole('option', { name: audiencia, exact: true })
+      .click();
+    await dismissCommonModals(this.page);
+    await editPage.save();
+    await editPage.expectSaveSuccess();
+  }
+
+  /**
+   * Liga/desliga o checkbox "Habilitar chat no conteúdo". Tab
+   * "Identificação" — checkbox HTML padrão (name=`enable_twygo_chat`,
+   * validado live 2026-05-28 via recon).
+   */
+  async setHabilitarChat(eventId: number, enabled: boolean): Promise<void> {
+    await this.ensureAdminProfile();
+    await safeGoto(
+      this.page,
+      `/o/${getOrgId()}/contents/${eventId}/edit?tab=identification`,
+    );
+    const editPage = new ContentEditPage(this.page);
+    await editPage.goToTab('Identificação');
+    const checkbox = this.page.locator('#enable_twygo_chat');
+    await checkbox.waitFor({ state: 'attached', timeout: 10_000 });
+    if (enabled) {
+      await checkbox.check();
+    } else {
+      await checkbox.uncheck();
+    }
+    await dismissCommonModals(this.page);
+    await editPage.save();
+    await editPage.expectSaveSuccess();
+  }
+
+  /**
+   * Configura modalidade na tab "Localização" (Presencial/Online/Híbrido).
+   *
+   * REVISAR-RECON-LIVE: assumindo radio ou combobox de modalidade. Validar
+   * via recon ao consumir pela primeira vez.
+   */
+  async setLocalizacao(
+    eventId: number,
+    options: { modalidade: 'Presencial' | 'Online' | 'Híbrido' },
+  ): Promise<void> {
+    await this.ensureAdminProfile();
+    await safeGoto(
+      this.page,
+      `/o/${getOrgId()}/contents/${eventId}/edit?tab=location`,
+    );
+    const editPage = new ContentEditPage(this.page);
+    await editPage.goToTab('Localização');
+    // Tenta radio primeiro, depois combobox
+    const radio = this.page
+      .getByRole('radio', { name: options.modalidade })
+      .first();
+    if (await radio.isVisible({ timeout: 3_000 }).catch(() => false)) {
+      await radio.check();
+    } else {
+      const combobox = this.page
+        .getByLabel(/(Modalidade|Tipo)/i)
+        .first();
+      await combobox.click();
+      await this.page
+        .getByRole('option', { name: options.modalidade })
+        .click();
+    }
+    await dismissCommonModals(this.page);
+    await editPage.save();
+    await editPage.expectSaveSuccess();
+  }
+
+  /**
+   * Configura compartilhamento (gerar/ler link público). Tab "Compartilhar".
+   *
+   * REVISAR-RECON-LIVE: estrutura exata da tab Compartilhar não confirmada.
+   * Assume checkbox/switch "Gerar link público" + input read-only com URL.
+   * Validar ao consumir pela primeira vez.
+   */
+  async setCompartilhamento(
+    eventId: number,
+    options: { linkPublico: boolean },
+  ): Promise<void> {
+    await this.ensureAdminProfile();
+    await safeGoto(
+      this.page,
+      `/o/${getOrgId()}/contents/${eventId}/edit?tab=share`,
+    );
+    const editPage = new ContentEditPage(this.page);
+    await editPage.goToTab('Compartilhar');
+    const toggle = this.page
+      .getByRole('switch', { name: /(Link público|Compartilhar publicamente|Tornar público)/i })
+      .or(this.page.getByRole('checkbox', { name: /(Link público|Compartilhar publicamente)/i }))
+      .first();
+    await toggle.waitFor({ state: 'attached', timeout: 10_000 });
+    if (options.linkPublico) {
+      await toggle.check();
+    } else {
+      await toggle.uncheck();
+    }
+    await dismissCommonModals(this.page);
+    await editPage.save();
+    await editPage.expectSaveSuccess();
+  }
+
   async setHasRecertification(
     eventId: number,
     enabled: boolean,
@@ -659,18 +928,70 @@ export class SeedAdminPage extends BasePage {
    * a trilha) — NÃO IMPLEMENTADO no v1. Lança erro se `cursosIds` for
    * fornecido.
    */
-  async createPacote(_data: {
+  async createPacote(data: {
     name: string;
-    cursosIds: number[];
+    cursosIds?: number[];
     hasRecertification?: boolean;
+    description?: string;
+    tipoExperiencia?: string;
   }): Promise<number> {
-    throw new Error(
-      '[SeedAdminPage.createPacote] rota de criação de pacote não confirmada ' +
-        'via recon live (hipóteses: /contents/packages/new, /packages/new, ' +
-        '/contents/new?kind=package). Vincular cursos ao pacote é wizard ' +
-        'multi-step. Validar live antes da primeira execução do TC2 da suíte 03 ' +
-        '— skill provisionar-seed §catálogo "Pacote pré-existente".',
+    if (data.cursosIds && data.cursosIds.length > 0) {
+      // Wizard multi-step de vincular cursos ainda não implementado.
+      throw new Error(
+        '[SeedAdminPage.createPacote] `cursosIds` ainda não implementado — ' +
+          'requer wizard multi-step (aba "Cursos" pós-save). Refatorar quando ' +
+          'TC2/TC3 da Suite 3 (Reinscrição em Massa) for migrado.',
+      );
+    }
+    if (data.hasRecertification === true) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        '[SeedAdminPage.createPacote] hasRecertification=true é NO-OP no v1.7 ' +
+          '(switch vive em tab posterior do edit). Ative manualmente após ' +
+          'create: setHasRecertification(id, true).',
+      );
+    }
+
+    await this.ensureAdminProfile();
+    // Mesmo wizard facelift de createCurso/createTrilha, kind=4 (Pacote).
+    await safeGoto(this.page, `/o/${getOrgId()}/contents/new?kind=4`);
+
+    // 1. Nome (obrigatório) — mesmo locator de createCurso.
+    const nameInput = this.page.getByRole('textbox', { name: /^Nome \*/ });
+    await nameInput.waitFor({ state: 'visible', timeout: 15_000 });
+    await nameInput.fill(data.name);
+
+    // 2. Tipo de experiência (obrigatório) — primeiro combobox autocomplete.
+    const tipoCombobox = this.page
+      .locator('input[role="combobox"][aria-autocomplete="list"]')
+      .first();
+    await tipoCombobox.waitFor({ state: 'visible', timeout: 10_000 });
+    await tipoCombobox.click();
+    const tipoOpcao = data.tipoExperiencia
+      ? this.page.getByRole('option', { name: data.tipoExperiencia, exact: true })
+      : this.page.getByRole('listbox').getByRole('option').first();
+    await tipoOpcao.waitFor({ state: 'visible', timeout: 5_000 });
+    await tipoOpcao.click();
+
+    // 3. Descrição (obrigatório, rich-text dentro de iframe).
+    const descricaoText =
+      data.description ?? `Seed automatizado — ${data.name} (createPacote v1.7).`;
+    const descricaoFrame = this.page.frameLocator(
+      'iframe[title^="Editor de Rich Text"]',
     );
+    const descricaoBody = descricaoFrame.locator('body');
+    await descricaoBody.click();
+    await descricaoBody.pressSequentially(descricaoText, { delay: 10 });
+    await this.page.keyboard.press('Tab');
+
+    // 4. Salvar
+    await dismissCommonModals(this.page);
+    await this.getSaveButton().click();
+    await this.page.waitForURL(/\/o\/\d+\/contents\/\d+\/edit/, {
+      timeout: 30_000,
+    });
+
+    return this.extractEventIdFromUrl();
   }
 
   /**

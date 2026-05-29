@@ -223,9 +223,36 @@ export class LearningStudentsPage extends BasePage {
   /**
    * Linha do participant identificado por e-mail (preferido) ou nome.
    * Ancora em `tbody tr` que contenha o texto.
+   *
+   * **Desambiguação por estado do certificado** (v1.6.3+): quando o aluno
+   * tem múltiplos participants no mesmo curso (típico de cursos com
+   * `has_recertification=true` — backend gera 2 linhas após
+   * recertificação: cert "Emitido" original + "Pendente" novo), use o
+   * parâmetro `certState` pra filtrar a linha específica. Sem ele,
+   * retorna a primeira linha (compatibilidade com chamadas legadas).
+   *
+   * `certState` matcha contra texto do badge da coluna Certificado:
+   * "Emitido", "Pendente", "Aprovado", "Expirado", "Substituído".
+   * Regex case-insensitive.
+   *
+   * Exemplo:
+   * ```ts
+   * // Pega a linha do participant com cert Emitido (a "aprovada")
+   * const linhaAprovada = learning.getParticipantRow(email, { certState: 'Emitido' });
+   * // Pega a linha do participant recém-reinscrito (Pendente)
+   * const linhaPendente = learning.getParticipantRow(email, { certState: 'Pendente' });
+   * ```
    */
-  getParticipantRow(identifier: string): Locator {
-    return this.page.locator('tbody tr').filter({ hasText: identifier }).first();
+  getParticipantRow(
+    identifier: string,
+    options?: { certState?: string },
+  ): Locator {
+    let row = this.page.locator('tbody tr').filter({ hasText: identifier });
+    if (options?.certState) {
+      // Filtra adicionalmente por texto do badge na própria linha.
+      row = row.filter({ hasText: new RegExp(options.certState, 'i') });
+    }
+    return row.first();
   }
 
   /**
@@ -518,8 +545,8 @@ export class LearningStudentsPage extends BasePage {
    * cima de `getParticipantRow` mais explícito sobre o critério de match
    * (e-mail vs nome). Suite 02 usa exclusivamente e-mail.
    */
-  getRowByEmail(email: string): Locator {
-    return this.getParticipantRow(email);
+  getRowByEmail(email: string, options?: { certState?: string }): Locator {
+    return this.getParticipantRow(email, options);
   }
 
   /**
@@ -539,6 +566,64 @@ export class LearningStudentsPage extends BasePage {
    */
   getReinscreverMenuItem(): Locator {
     return this.page.getByRole('menuitem', { name: /Iniciar reinscrição/i });
+  }
+
+  /**
+   * Item "Expirar certificado" no menu de ações da linha de aluno aprovado
+   * com cert emitido. Quando clicado, força `certificate_situation = expired`
+   * no participant — usado em specs que precisam de aluno em estado
+   * "elegível por cert expirado" (Suite 2 TC1 estado b).
+   *
+   * Validado pela descrição do usuário 2026-05-28; texto exato a ajustar
+   * via recon live se a regex não casar.
+   * REVISAR: aguardando data-test-id estável.
+   */
+  getExpirarCertificadoMenuItem(): Locator {
+    return this.page.getByRole('menuitem', { name: /Expirar certificado/i });
+  }
+
+  /**
+   * Fluxo completo de expirar cert: abre menu kebab da linha → clica
+   * "Expirar certificado" → confirma modal (se houver). Idempotente
+   * por padrão de menu (já aberto = no-op no open).
+   *
+   * Pré-condição: aluno na linha precisa estar APROVADO com cert
+   * EMITIDO — senão o item não aparece. Caller que tem 2 linhas
+   * (Pendente + Emitido) deve passar `certState: 'Emitido'` pra mirar
+   * a linha certa.
+   */
+  async expirarCertificadoDoAluno(
+    email: string,
+    options?: { certState?: string },
+  ): Promise<void> {
+    const row = this.getRowByEmail(email, options);
+    const trigger = row.getByRole('button', { name: 'more_vert' }).first();
+    await trigger.waitFor({ state: 'visible', timeout: 10_000 });
+    await trigger.click();
+    await this.page
+      .getByRole('menu')
+      .first()
+      .waitFor({ state: 'visible', timeout: 5_000 });
+
+    const item = this.getExpirarCertificadoMenuItem();
+    await item.waitFor({ state: 'visible', timeout: 5_000 });
+    await item.click();
+
+    // Confirmar modal se houver (texto provavelmente "Confirmar" ou "Sim").
+    const confirmBtn = this.page
+      .getByRole('button', { name: /^(Confirmar|Sim|Expirar)$/i })
+      .first();
+    if (await confirmBtn.isVisible({ timeout: 3_000 }).catch(() => false)) {
+      await confirmBtn.click();
+    }
+
+    // Aguarda toast de sucesso (best-effort — não bloqueia)
+    await this.page
+      .locator('.chakra-toast')
+      .filter({ hasText: /expirad|sucess/i })
+      .first()
+      .waitFor({ state: 'visible', timeout: 10_000 })
+      .catch(() => undefined);
   }
 
   /**
