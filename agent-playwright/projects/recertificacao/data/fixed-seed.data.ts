@@ -72,6 +72,25 @@ export const fixedSeed = {
   cursoSemRecertificacaoEventId: 806755 as number,
 
   /**
+   * Alunos pré-existentes em curso 807287 ("curso para reinscriçao") com
+   * estados estáveis — validados live 2026-05-28 via recon
+   * (`tests/setup/recon-alunos-reinscrever-habilitado.spec.ts`).
+   *
+   * Sem auto-recertification cascateando — diferente do 807403 onde a
+   * fixture alunoAprovadoNoCursoFixoSeed produz estado que bloqueia
+   * Reinscrever. Estes alunos têm botão "Iniciar reinscrição" HABILITADO
+   * no menu kebab da linha mais recente.
+   *
+   * **NÃO clicar em "Iniciar reinscrição" desses alunos em testes que
+   * não façam cleanup** — vai criar participants adicionais permanentes
+   * no env. Use email worker-isolated em paralelo quando precisar de
+   * reinscrição "limpa".
+   */
+  alunoComReinscreverHabilitado_807287: 'richard.sebold@twygo.com' as string,
+  alunoComReinscreverHabilitadoSecundario_807287: 'agents.edu@claude.com' as string,
+  alunoComReinscreverHabilitadoEmProgresso_807287: 'agents.richard@claude.com' as string,
+
+  /**
    * Curso 807403 ("Curso com atividades") — seed compartilhado já preparado:
    *   - has_recertification = true (validado live 2026-05-28 via chrome-devtools)
    *   - 4 atividades configuradas (incluindo "questionario" content_id 9288027)
