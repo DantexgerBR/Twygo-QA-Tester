@@ -1,6 +1,18 @@
 ---
 name: validar-preview-visual-twygo
 description: Padrão canônico de validação visual de imagens em Twygo — broken images, naturalWidth>0, request HTTP 200. Substitui asserts genéricos `toBeVisible()` em `<img>` que passam mesmo quando a imagem está quebrada. Use ao gerar specs Playwright para TCs cujo "Resultado esperado" envolve thumb/imagem/preview/avatar/banner sendo exibido(a) corretamente. Introduzida pelo CONTRACT.md v1.1 §1.2.
+when_to_use: |
+  - Resultado esperado do TC envolve "thumb/preview/avatar/banner exibido"
+  - Generator precisa cobrir asserção visual real (não só DOM `toBeVisible`)
+  - Auditar spec antigo que apenas usa `expect(img).toBeVisible()`
+triggers:
+  - "Thumb do modelo"
+  - "Preview do design"
+  - "Avatar do usuário"
+  - "broken images"
+  - "naturalWidth"
+  - "imagem quebrada"
+  - "banner renderizado"
 version: 1.0.0
 ---
 

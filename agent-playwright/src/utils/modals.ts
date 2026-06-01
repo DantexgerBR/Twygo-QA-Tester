@@ -264,11 +264,16 @@ export async function dismissCommonModals(
       page.locator(
         '.chakra-portal:has(#chakra-modal--body-beta-end-modal) button[aria-label="Close"]',
       ).first(),
-      // Fallback por texto (caso o ID mude):
+      // Fallback robusto (caso o ID mude): exige PRESENÇA explícita do
+      // body beta-end-modal. Restritivo pra não capturar drawer Chakra
+      // (Filtro Avançado, Inscrição em massa, etc — drawers também são
+      // role="dialog"). Regressão Suite Filtro Avançado TC4 (commit
+      // 88f26da → estado HEAD) atribuída ao fallback hasText antigo
+      // capturando drawer de filtro.
       page
-        .getByRole('dialog')
-        .filter({ hasText: /BETA teste da funcionalidade/i })
-        .getByRole('button', { name: /close|fechar/i })
+        .locator('[id*="beta-end-modal"]')
+        .locator('xpath=ancestor::*[contains(@class, "chakra-portal") or @role="dialog"][1]')
+        .locator('button[aria-label="Close"]')
         .first(),
 
       // 6. Botão "Close" genérico em qualquer dialog visível (último recurso —

@@ -98,14 +98,8 @@ test.describe('Reinscrição via API V2', () => {
     // (ex: GET /api/v2/attendees?user_id=... e verificar recertification_number).
   });
 
-  // TC2 aguarda backend publicar feature `recertification` por item (ver
-  // data.ts §"Semântica TC2 mudou"). API V2 Beta atual aceita
-  // `recertification:true` silenciosamente — status 422 chega mas sem
-  // `participants.error[content_id]` populado, e a mensagem
-  // "Aluno já inscrito mas não aprovado — recertificação não criada"
-  // ainda não é emitida. Fixme legítimo §7.6 F categoria
-  // "dependência externa fora" — destinatário é dev de backend.
-  test.fixme('TC2 — Recertificação de user não-aprovado retorna 422 com mensagem descritiva', async ({ request }) => {
+  test('TC2 — Recertificação de user não-aprovado retorna 422 com mensagem descritiva', async ({ request }) => {
+    test.fixme(true, 'dep-externa: backend API V2 Beta aceita recertification:true silenciosamente — retorna 422 mas sem populate de participants.error[content_id] e sem a mensagem "Aluno já inscrito mas não aprovado — recertificação não criada". Aguarda backend publicar feature recertification por item. Destinatário: dev de backend.');
     const client = new EventsApiClient(request);
     const response = await client.createAttendees(data.payloadTC2_misto, authHeaders);
 

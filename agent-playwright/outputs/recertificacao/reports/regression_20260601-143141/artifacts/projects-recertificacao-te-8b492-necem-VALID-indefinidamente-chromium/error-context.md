@@ -1,0 +1,1547 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: projects\recertificacao\tests\features\ciclo-de-vida-do-certificado-substituido\tc4-certificados-legado-permanecem-valid.spec.ts >> Ciclo de Vida do Certificado Substituído >> TC4 — Certificados emitidos no fluxo legado (sem reinscrição) permanecem VALID indefinidamente
+- Location: projects\recertificacao\tests\features\ciclo-de-vida-do-certificado-substituido\tc4-certificados-legado-permanecem-valid.spec.ts:24:3
+
+# Error details
+
+```
+Error: expect(locator).toBeVisible() failed
+
+Locator: locator('tbody tr').filter({ hasText: 'richard.sebold@twygo.com' }).filter({ hasText: /Emitido/i }).first()
+Expected: visible
+Timeout: 10000ms
+Error: element(s) not found
+
+Call log:
+  - Expect "toBeVisible" with timeout 10000ms
+  - waiting for locator('tbody tr').filter({ hasText: 'richard.sebold@twygo.com' }).filter({ hasText: /Emitido/i }).first()
+
+```
+
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - generic "Logo - Recertificação" [ref=e4]:
+        - img "Logo - Recertificação" [ref=e5]
+      - img [ref=e7]
+    - generic [ref=e9]:
+      - list [ref=e10]:
+        - list [ref=e11]:
+          - listitem [ref=e12]:
+            - link "leaderboard Dashboard" [ref=e13] [cursor=pointer]:
+              - /url: /o/37048/dashboard
+              - generic [ref=e14]:
+                - generic [ref=e16]: leaderboard
+                - generic [ref=e17]: Dashboard
+          - listitem [ref=e18]:
+            - generic [ref=e20]:
+              - generic [ref=e23]: school
+              - generic [ref=e24]: Aprendizagem
+            - list [ref=e25]:
+              - listitem [ref=e26]:
+                - link "format_list_bulleted_add Conteúdos" [ref=e27] [cursor=pointer]:
+                  - /url: /o/37048/events?tab=events
+                  - generic [ref=e28]:
+                    - generic [ref=e30]: format_list_bulleted_add
+                    - generic [ref=e31]: Conteúdos
+              - listitem [ref=e32]:
+                - link "send Compartilhamentos" [ref=e33] [cursor=pointer]:
+                  - /url: /o/37048/shared_events
+                  - generic [ref=e34]:
+                    - generic [ref=e36]: send
+                    - generic [ref=e37]: Compartilhamentos
+              - listitem [ref=e38]:
+                - link "description Registros BETA" [ref=e39] [cursor=pointer]:
+                  - /url: /o/37048/records
+                  - generic [ref=e40]:
+                    - generic [ref=e42]: description
+                    - generic [ref=e43]: Registros
+                    - generic [ref=e44]: BETA
+              - listitem [ref=e45]:
+                - link "workspace_premium Certificados" [ref=e46] [cursor=pointer]:
+                  - /url: /o/37048/certificate_models
+                  - generic [ref=e47]:
+                    - generic [ref=e49]: workspace_premium
+                    - generic [ref=e50]: Certificados
+              - listitem [ref=e51]:
+                - link "browse Modelos de conteúdo" [ref=e52] [cursor=pointer]:
+                  - /url: /o/37048/content_models
+                  - generic [ref=e53]:
+                    - generic [ref=e55]: browse
+                    - generic [ref=e56]: Modelos de conteúdo
+              - listitem [ref=e57]:
+                - link "folder_open Base de conhecimento" [ref=e58] [cursor=pointer]:
+                  - /url: /o/37048/knowledge_repositories
+                  - generic [ref=e59]:
+                    - generic [ref=e61]: folder_open
+                    - generic [ref=e62]: Base de conhecimento
+          - listitem [ref=e63]:
+            - link "group Usuários" [ref=e64] [cursor=pointer]:
+              - /url: /o/37048/users
+              - generic [ref=e65]:
+                - generic [ref=e67]: group
+                - generic [ref=e68]: Usuários
+          - listitem [ref=e69]:
+            - link "work Empresas" [ref=e70] [cursor=pointer]:
+              - /url: /o/37048/companies
+              - generic [ref=e71]:
+                - generic [ref=e73]: work
+                - generic [ref=e74]: Empresas
+          - listitem [ref=e75]:
+            - link "live_help Questionários" [ref=e76] [cursor=pointer]:
+              - /url: /o/37048/question_lists
+              - generic [ref=e77]:
+                - generic [ref=e79]: live_help
+                - generic [ref=e80]: Questionários
+          - listitem [ref=e81]:
+            - link "groups Comunidades" [ref=e82] [cursor=pointer]:
+              - /url: /o/37048/feed
+              - generic [ref=e83]:
+                - generic [ref=e85]: groups
+                - generic [ref=e86]: Comunidades
+          - listitem [ref=e87]:
+            - generic [ref=e89]:
+              - generic [ref=e92]: psychology
+              - generic [ref=e93]:
+                - text: Skills
+                - generic [ref=e94]: BETA
+            - list [ref=e95]:
+              - listitem [ref=e96]:
+                - link "lan Organograma" [ref=e97] [cursor=pointer]:
+                  - /url: /o/37048/organization_chart
+                  - generic [ref=e98]:
+                    - generic [ref=e100]: lan
+                    - generic [ref=e101]: Organograma
+              - listitem [ref=e102]:
+                - link "badge Funções de negócio" [ref=e103] [cursor=pointer]:
+                  - /url: /o/37048/roles
+                  - generic [ref=e104]:
+                    - generic [ref=e106]: badge
+                    - generic [ref=e107]: Funções de negócio
+              - listitem [ref=e108]:
+                - link "award_star Competências" [ref=e109] [cursor=pointer]:
+                  - /url: /o/37048/organization_chart_competencies
+                  - generic [ref=e110]:
+                    - generic [ref=e112]: award_star
+                    - generic [ref=e113]: Competências
+          - listitem [ref=e114]:
+            - generic [ref=e116]:
+              - generic [ref=e119]: person_check
+              - generic [ref=e120]:
+                - text: Continuidade e sucessão
+                - generic [ref=e121]: BETA
+            - list [ref=e122]:
+              - listitem [ref=e123]:
+                - link "pie_chart Dashboard geral" [ref=e124] [cursor=pointer]:
+                  - /url: /o/37048/succession_dashboards
+                  - generic [ref=e125]:
+                    - generic [ref=e127]: pie_chart
+                    - generic [ref=e128]: Dashboard geral
+              - listitem [ref=e129]:
+                - link "person Análise individual" [ref=e130] [cursor=pointer]:
+                  - /url: /o/37048/succession_people_analysis
+                  - generic [ref=e131]:
+                    - generic [ref=e133]: person
+                    - generic [ref=e134]: Análise individual
+              - listitem [ref=e135]:
+                - link "vital_signs Ações de resposta" [ref=e136] [cursor=pointer]:
+                  - /url: /o/37048/succession_actions
+                  - generic [ref=e137]:
+                    - generic [ref=e139]: vital_signs
+                    - generic [ref=e140]: Ações de resposta
+              - listitem [ref=e141]:
+                - link "instant_mix Parâmetros" [ref=e142] [cursor=pointer]:
+                  - /url: /o/37048/succession_initiatives
+                  - generic [ref=e143]:
+                    - generic [ref=e145]: instant_mix
+                    - generic [ref=e146]: Parâmetros
+          - listitem [ref=e147]:
+            - generic [ref=e149]:
+              - generic [ref=e152]: account_tree
+              - generic [ref=e153]: Processos
+            - list [ref=e154]:
+              - listitem [ref=e155]:
+                - link "send Repositórios" [ref=e156] [cursor=pointer]:
+                  - /url: /o/37048/organization_datasets
+                  - generic [ref=e157]:
+                    - generic [ref=e159]: send
+                    - generic [ref=e160]: Repositórios
+              - listitem [ref=e161]:
+                - link "send Arquitetura de Processos" [ref=e162] [cursor=pointer]:
+                  - /url: /o/37048/process_architecture
+                  - generic [ref=e163]:
+                    - generic [ref=e165]: send
+                    - generic [ref=e166]: Arquitetura de Processos
+              - listitem [ref=e167]:
+                - link "send Agente de Documentação" [ref=e168] [cursor=pointer]:
+                  - /url: /o/37048/process_documentations
+                  - generic [ref=e169]:
+                    - generic [ref=e171]: send
+                    - generic [ref=e172]: Agente de Documentação
+              - listitem [ref=e173]:
+                - link "send Documentos de Referência" [ref=e174] [cursor=pointer]:
+                  - /url: /o/37048/reference_documents
+                  - generic [ref=e175]:
+                    - generic [ref=e177]: send
+                    - generic [ref=e178]: Documentos de Referência
+              - listitem [ref=e179]:
+                - link "send Portal de processos" [ref=e180] [cursor=pointer]:
+                  - /url: /o/37048/visualize_documentations
+                  - generic [ref=e181]:
+                    - generic [ref=e183]: send
+                    - generic [ref=e184]: Portal de processos
+          - listitem [ref=e185]:
+            - generic [ref=e187]:
+              - generic [ref=e190]: monitoring
+              - generic [ref=e191]:
+                - text: Planos e Metas
+                - generic [ref=e192]: BETA
+            - list [ref=e193]:
+              - listitem [ref=e194]:
+                - link "track_changes PDI" [ref=e195] [cursor=pointer]:
+                  - /url: /o/37048/admin/pdis
+                  - generic [ref=e196]:
+                    - generic [ref=e198]: track_changes
+                    - generic [ref=e199]: PDI
+          - listitem [ref=e200]:
+            - generic [ref=e202]:
+              - generic [ref=e205]: groups
+              - generic [ref=e206]:
+                - text: Gestão de Time
+                - generic [ref=e207]: BETA
+            - list [ref=e208]:
+              - listitem [ref=e209]:
+                - link "trending_up Desenvolvimento" [ref=e210] [cursor=pointer]:
+                  - /url: /o/37048/cycles
+                  - generic [ref=e211]:
+                    - generic [ref=e213]: trending_up
+                    - generic [ref=e214]: Desenvolvimento
+              - listitem [ref=e215]:
+                - link "feedback Feedbacks e anotações" [ref=e216] [cursor=pointer]:
+                  - /url: /o/37048/feedback_log
+                  - generic [ref=e217]:
+                    - generic [ref=e219]: feedback
+                    - generic [ref=e220]: Feedbacks e anotações
+      - generic [ref=e221]: Recertificação
+      - list [ref=e222]:
+        - listitem [ref=e223]:
+          - generic [ref=e225]:
+            - generic [ref=e227]: f
+            - generic [ref=e228]: Configurações
+          - list [ref=e229]:
+            - listitem [ref=e230]:
+              - link "e Organização" [ref=e231] [cursor=pointer]:
+                - /url: /o/37048/edit
+                - generic [ref=e232]:
+                  - generic [ref=e234]: e
+                  - generic [ref=e235]: Organização
+            - listitem [ref=e236]:
+              - link " Menu" [ref=e237] [cursor=pointer]:
+                - /url: /o/37048/use_modes
+                - generic [ref=e238]:
+                  - generic [ref=e240]: 
+                  - generic [ref=e241]: Menu
+            - listitem [ref=e242]:
+              - link "electrical_services Integrações" [ref=e243] [cursor=pointer]:
+                - /url: /o/37048/integrations
+                - generic [ref=e244]:
+                  - generic [ref=e246]: electrical_services
+                  - generic [ref=e247]: Integrações
+            - listitem [ref=e248]:
+              - link "flash_auto Piloto automático" [ref=e249] [cursor=pointer]:
+                - /url: /o/37048/autopilots
+                - generic [ref=e250]:
+                  - generic [ref=e252]: flash_auto
+                  - generic [ref=e253]: Piloto automático
+            - listitem [ref=e254]:
+              - link " Regras do Jogo" [ref=e255] [cursor=pointer]:
+                - /url: /o/37048/game_rules
+                - generic [ref=e256]:
+                  - generic [ref=e258]: 
+                  - generic [ref=e259]: Regras do Jogo
+            - listitem [ref=e260]:
+              - link " Comunicação" [ref=e261] [cursor=pointer]:
+                - /url: /o/37048/communication
+                - generic [ref=e262]:
+                  - generic [ref=e264]: 
+                  - generic [ref=e265]: Comunicação
+            - listitem [ref=e266]:
+              - link "sell Cobrança de inscrição" [ref=e267] [cursor=pointer]:
+                - /url: /o/37048/payments
+                - generic [ref=e268]:
+                  - generic [ref=e270]: sell
+                  - generic [ref=e271]: Cobrança de inscrição
+            - listitem [ref=e272]:
+              - link "credit_card Plano e assinatura" [ref=e273] [cursor=pointer]:
+                - /url: /o/37048/subscription_plans
+                - generic [ref=e274]:
+                  - generic [ref=e276]: credit_card
+                  - generic [ref=e277]: Plano e assinatura
+            - text: s
+            - listitem [ref=e278]:
+              - link " Segurança NOVO" [ref=e279] [cursor=pointer]:
+                - /url: /o/37048/security
+                - generic [ref=e280]:
+                  - generic [ref=e282]: 
+                  - generic [ref=e283]: Segurança NOVO
+            - listitem [ref=e284]:
+              - link "smart_toy Controle de IA BETA" [ref=e285] [cursor=pointer]:
+                - /url: /o/37048/ai_consumption_analysis
+                - generic [ref=e286]:
+                  - generic [ref=e288]: smart_toy
+                  - generic [ref=e289]: Controle de IA BETA
+            - listitem [ref=e290]:
+              - link "palette Aparência" [ref=e291] [cursor=pointer]:
+                - /url: /o/37048/appearance
+                - generic [ref=e292]:
+                  - generic [ref=e294]: palette
+                  - generic [ref=e295]: Aparência
+    - generic [ref=e298]:
+      - generic [ref=e299]:
+        - img [ref=e300]
+        - text: Agents QA
+      - img [ref=e302]
+  - text: "0"
+  - generic [ref=e305]:
+    - generic "Logo - Recertificação" [ref=e307]:
+      - link "Logo - Recertificação" [ref=e308] [cursor=pointer]:
+        - /url: /o/37048/dashboard
+        - img "Logo - Recertificação" [ref=e309]
+    - generic [ref=e313]:
+      - button "Twygo Academy" [ref=e317] [cursor=pointer]:
+        - generic [ref=e318]: school
+      - link "Open chat" [ref=e322] [cursor=pointer]:
+        - /url: /o/37048/chats
+        - button "Open chat" [ref=e323]:
+          - img [ref=e324]
+      - button "Users" [ref=e331] [cursor=pointer]:
+        - img [ref=e332]
+      - generic [ref=e336]:
+        - link "7091159 - Agents QA" [ref=e337] [cursor=pointer]:
+          - /url: javascript:void(0);
+        - generic [ref=e338]: Agents QA
+      - button "Administrador G" [ref=e339] [cursor=pointer]:
+        - text: Administrador
+        - generic [ref=e340]: G
+    - text: M * * M * *
+  - generic [ref=e343]:
+    - generic [ref=e345]:
+      - list [ref=e346]:
+        - list [ref=e347]:
+          - listitem [ref=e348] [cursor=pointer]:
+            - link "leaderboard Dashboard" [ref=e349]:
+              - /url: /o/37048/dashboard
+              - generic [ref=e350]:
+                - generic [ref=e352]: leaderboard
+                - generic [ref=e353]: Dashboard
+          - listitem [ref=e354] [cursor=pointer]:
+            - generic [ref=e356]:
+              - generic [ref=e359]: school
+              - generic [ref=e360]: Aprendizagem
+              - generic [ref=e362]: G
+          - listitem [ref=e363] [cursor=pointer]:
+            - link "group Usuários" [ref=e364]:
+              - /url: /o/37048/users
+              - generic [ref=e365]:
+                - generic [ref=e367]: group
+                - generic [ref=e368]: Usuários
+          - listitem [ref=e369] [cursor=pointer]:
+            - link "work Empresas" [ref=e370]:
+              - /url: /o/37048/companies
+              - generic [ref=e371]:
+                - generic [ref=e373]: work
+                - generic [ref=e374]: Empresas
+          - listitem [ref=e375] [cursor=pointer]:
+            - link "live_help Questionários" [ref=e376]:
+              - /url: /o/37048/question_lists
+              - generic [ref=e377]:
+                - generic [ref=e379]: live_help
+                - generic [ref=e380]: Questionários
+          - listitem [ref=e381] [cursor=pointer]:
+            - link "groups Comunidades" [ref=e382]:
+              - /url: /o/37048/feed
+              - generic [ref=e383]:
+                - generic [ref=e385]: groups
+                - generic [ref=e386]: Comunidades
+          - listitem [ref=e387] [cursor=pointer]:
+            - generic [ref=e389]:
+              - generic [ref=e392]: psychology
+              - generic [ref=e393]:
+                - text: Skills
+                - generic [ref=e394]: BETA
+              - generic [ref=e396]: G
+          - listitem [ref=e397] [cursor=pointer]:
+            - generic [ref=e399]:
+              - generic [ref=e402]: person_check
+              - generic [ref=e403]:
+                - text: Continuidade e sucessão
+                - generic [ref=e404]: BETA
+              - generic [ref=e406]: G
+          - listitem [ref=e407] [cursor=pointer]:
+            - generic [ref=e409]:
+              - generic [ref=e412]: account_tree
+              - generic [ref=e413]: Processos
+              - generic [ref=e415]: G
+          - listitem [ref=e416] [cursor=pointer]:
+            - generic [ref=e418]:
+              - generic [ref=e421]: monitoring
+              - generic [ref=e422]:
+                - text: Planos e Metas
+                - generic [ref=e423]: BETA
+              - generic [ref=e425]: G
+          - listitem [ref=e426] [cursor=pointer]:
+            - generic [ref=e428]:
+              - generic [ref=e431]: groups
+              - generic [ref=e432]:
+                - text: Gestão de Time
+                - generic [ref=e433]: BETA
+              - generic [ref=e435]: G
+      - generic [ref=e437]: Recertificação
+      - list [ref=e438]:
+        - listitem [ref=e439] [cursor=pointer]:
+          - generic [ref=e441]:
+            - generic [ref=e443]: f
+            - generic [ref=e444]: Configurações
+            - generic [ref=e446]: G
+          - text: e    s 
+    - generic [ref=e448]:
+      - generic [ref=e451]: Lista de conteúdos > Aprendizagem
+      - generic [ref=e455]:
+        - generic [ref=e457]:
+          - button "Voltar" [ref=e459] [cursor=pointer]:
+            - img [ref=e461]
+            - text: Voltar
+          - heading "curso para reinscriçao" [level=2] [ref=e465]
+        - generic [ref=e468]:
+          - tablist [ref=e469]:
+            - tab "Aprendizagem" [selected] [ref=e470] [cursor=pointer]
+            - tab "Respostas de questionário" [ref=e471] [cursor=pointer]
+          - tabpanel "Aprendizagem" [ref=e473]:
+            - generic [ref=e475]:
+              - generic [ref=e477] [cursor=pointer]:
+                - generic [ref=e478]: data_exploration
+                - paragraph [ref=e479]: Ver dashboard completo
+              - generic [ref=e480]:
+                - button "Chamada" [ref=e482] [cursor=pointer]
+                - button "Ações em massa" [ref=e483] [cursor=pointer]
+                - button "ios_share Extrair dados" [ref=e484] [cursor=pointer]:
+                  - generic [ref=e485]: ios_share
+                  - text: Extrair dados
+                - generic [ref=e486]:
+                  - generic [ref=e487]:
+                    - img [ref=e489]
+                    - textbox "Pesquise aqui" [ref=e491]
+                  - generic [ref=e492]:
+                    - generic [ref=e493] [cursor=pointer]: grid_view
+                    - generic [ref=e494] [cursor=pointer]: reorder
+                  - button "Filtro" [ref=e495] [cursor=pointer]:
+                    - generic [ref=e497]: filter_alt
+                    - paragraph [ref=e499]: Filtro
+              - table [ref=e501]:
+                - rowgroup [ref=e502]:
+                  - row "Participante Progresso Desempenho Pontuação Aprovação Certificado" [ref=e503]:
+                    - columnheader [ref=e504]:
+                      - checkbox [ref=e507]
+                    - columnheader "Participante" [ref=e509] [cursor=pointer]:
+                      - generic [ref=e512]:
+                        - text: Participante
+                        - img [ref=e513]
+                    - columnheader "Progresso" [ref=e515] [cursor=pointer]:
+                      - generic [ref=e518]:
+                        - text: Progresso
+                        - img [ref=e519]
+                    - columnheader "Desempenho" [ref=e521] [cursor=pointer]:
+                      - generic [ref=e524]:
+                        - text: Desempenho
+                        - img [ref=e525]
+                    - columnheader "Pontuação" [ref=e527] [cursor=pointer]:
+                      - generic [ref=e530]:
+                        - text: Pontuação
+                        - img [ref=e531]
+                    - columnheader "Aprovação" [ref=e533] [cursor=pointer]:
+                      - generic [ref=e536]:
+                        - text: Aprovação
+                        - img [ref=e537]
+                    - columnheader "Certificado" [ref=e539] [cursor=pointer]:
+                      - generic [ref=e542]:
+                        - text: Certificado
+                        - img [ref=e543]
+                    - columnheader [ref=e545]
+                - rowgroup [ref=e546]:
+                  - row "avatar Richard Sebold richard.teste@teste.com 17 17% 100.0% 0 hourglass_empty Pendente more_vert" [ref=e547]:
+                    - cell [ref=e548]:
+                      - checkbox [ref=e550]
+                    - cell "avatar Richard Sebold richard.teste@teste.com" [ref=e552] [cursor=pointer]:
+                      - generic [ref=e553]:
+                        - img "avatar" [ref=e556]
+                        - paragraph [ref=e560]:
+                          - paragraph [ref=e561]: Richard Sebold
+                          - text: richard.teste@teste.com
+                    - cell "17 17%" [ref=e562] [cursor=pointer]:
+                      - generic [ref=e563]:
+                        - progressbar [ref=e565]
+                        - paragraph [ref=e566]: 17%
+                    - cell "100.0%" [ref=e567] [cursor=pointer]:
+                      - generic [ref=e568]: 100.0%
+                    - cell "0" [ref=e569] [cursor=pointer]:
+                      - generic [ref=e570]: "0"
+                    - cell [ref=e571]:
+                      - checkbox [ref=e573]
+                    - cell "hourglass_empty Pendente" [ref=e576]:
+                      - generic [ref=e578] [cursor=pointer]:
+                        - generic [ref=e579]: hourglass_empty
+                        - paragraph [ref=e580]: Pendente
+                    - cell "more_vert" [ref=e581]:
+                      - button "more_vert" [ref=e585] [cursor=pointer]:
+                        - generic:
+                          - generic: more_vert
+                  - row "avatar Richard Sebold richard.teste@teste.com 100 100% 100.0% 10 hourglass_empty Pendente more_vert" [ref=e586]:
+                    - cell [ref=e587]:
+                      - checkbox [ref=e589]
+                    - cell "avatar Richard Sebold richard.teste@teste.com" [ref=e591] [cursor=pointer]:
+                      - generic [ref=e592]:
+                        - img "avatar" [ref=e595]
+                        - paragraph [ref=e599]:
+                          - paragraph [ref=e600]: Richard Sebold
+                          - text: richard.teste@teste.com
+                    - cell "100 100%" [ref=e601] [cursor=pointer]:
+                      - generic [ref=e602]:
+                        - progressbar [ref=e604]
+                        - paragraph [ref=e605]: 100%
+                    - cell "100.0%" [ref=e606] [cursor=pointer]:
+                      - generic [ref=e607]: 100.0%
+                    - cell "10" [ref=e608] [cursor=pointer]:
+                      - generic [ref=e609]: "10"
+                    - cell [ref=e610]:
+                      - checkbox [ref=e612]
+                    - cell "hourglass_empty Pendente" [ref=e615]:
+                      - generic [ref=e617] [cursor=pointer]:
+                        - generic [ref=e618]: hourglass_empty
+                        - paragraph [ref=e619]: Pendente
+                    - cell "more_vert" [ref=e620]:
+                      - button "more_vert" [ref=e624] [cursor=pointer]:
+                        - generic:
+                          - generic: more_vert
+                  - row "avatar Richard Sebold richard.teste@teste.com 100 100% 100.0% 54 hourglass_empty Pendente more_vert" [ref=e625]:
+                    - cell [ref=e626]:
+                      - checkbox [ref=e628]
+                    - cell "avatar Richard Sebold richard.teste@teste.com" [ref=e630] [cursor=pointer]:
+                      - generic [ref=e631]:
+                        - img "avatar" [ref=e634]
+                        - paragraph [ref=e638]:
+                          - paragraph [ref=e639]: Richard Sebold
+                          - text: richard.teste@teste.com
+                    - cell "100 100%" [ref=e640] [cursor=pointer]:
+                      - generic [ref=e641]:
+                        - progressbar [ref=e643]
+                        - paragraph [ref=e644]: 100%
+                    - cell "100.0%" [ref=e645] [cursor=pointer]:
+                      - generic [ref=e646]: 100.0%
+                    - cell "54" [ref=e647] [cursor=pointer]:
+                      - generic [ref=e648]: "54"
+                    - cell [ref=e649]:
+                      - checkbox [ref=e651]
+                    - cell "hourglass_empty Pendente" [ref=e654]:
+                      - generic [ref=e656] [cursor=pointer]:
+                        - generic [ref=e657]: hourglass_empty
+                        - paragraph [ref=e658]: Pendente
+                    - cell "more_vert" [ref=e659]:
+                      - button "more_vert" [ref=e663] [cursor=pointer]:
+                        - generic:
+                          - generic: more_vert
+                  - row "avatar Agents Richard agents.richard@claude.com 100 100% 100.0% 10 hourglass_empty Pendente more_vert" [ref=e664]:
+                    - cell [ref=e665]:
+                      - checkbox [ref=e667]
+                    - cell "avatar Agents Richard agents.richard@claude.com" [ref=e669] [cursor=pointer]:
+                      - generic [ref=e670]:
+                        - img "avatar" [ref=e673]
+                        - paragraph [ref=e677]:
+                          - paragraph [ref=e678]: Agents Richard
+                          - text: agents.richard@claude.com
+                    - cell "100 100%" [ref=e679] [cursor=pointer]:
+                      - generic [ref=e680]:
+                        - progressbar [ref=e682]
+                        - paragraph [ref=e683]: 100%
+                    - cell "100.0%" [ref=e684] [cursor=pointer]:
+                      - generic [ref=e685]: 100.0%
+                    - cell "10" [ref=e686] [cursor=pointer]:
+                      - generic [ref=e687]: "10"
+                    - cell [ref=e688]:
+                      - checkbox [ref=e690]
+                    - cell "hourglass_empty Pendente" [ref=e693]:
+                      - generic [ref=e695] [cursor=pointer]:
+                        - generic [ref=e696]: hourglass_empty
+                        - paragraph [ref=e697]: Pendente
+                    - cell "more_vert" [ref=e698]:
+                      - button "more_vert" [ref=e702] [cursor=pointer]:
+                        - generic:
+                          - generic: more_vert
+                  - row "avatar Agents Claude agents.claude@claude.com 0 0% 100.0% 0 hourglass_empty Pendente more_vert" [ref=e703]:
+                    - cell [ref=e704]:
+                      - checkbox [ref=e706]
+                    - cell "avatar Agents Claude agents.claude@claude.com" [ref=e708] [cursor=pointer]:
+                      - generic [ref=e709]:
+                        - img "avatar" [ref=e712]
+                        - paragraph [ref=e716]:
+                          - paragraph [ref=e717]: Agents Claude
+                          - text: agents.claude@claude.com
+                    - cell "0 0%" [ref=e718] [cursor=pointer]:
+                      - generic [ref=e719]:
+                        - generic [ref=e720]:
+                          - progressbar
+                        - paragraph [ref=e721]: 0%
+                    - cell "100.0%" [ref=e722] [cursor=pointer]:
+                      - generic [ref=e723]: 100.0%
+                    - cell "0" [ref=e724] [cursor=pointer]:
+                      - generic [ref=e725]: "0"
+                    - cell [ref=e726]:
+                      - checkbox [ref=e728]
+                    - cell "hourglass_empty Pendente" [ref=e731]:
+                      - generic [ref=e733] [cursor=pointer]:
+                        - generic [ref=e734]: hourglass_empty
+                        - paragraph [ref=e735]: Pendente
+                    - cell "more_vert" [ref=e736]:
+                      - button "more_vert" [ref=e740] [cursor=pointer]:
+                        - generic:
+                          - generic: more_vert
+                  - row "avatar Agents Richard agents.richard@claude.com 100 100% 100.0% 10 hourglass_empty Pendente more_vert" [ref=e741]:
+                    - cell [ref=e742]:
+                      - checkbox [ref=e744]
+                    - cell "avatar Agents Richard agents.richard@claude.com" [ref=e746] [cursor=pointer]:
+                      - generic [ref=e747]:
+                        - img "avatar" [ref=e750]
+                        - paragraph [ref=e754]:
+                          - paragraph [ref=e755]: Agents Richard
+                          - text: agents.richard@claude.com
+                    - cell "100 100%" [ref=e756] [cursor=pointer]:
+                      - generic [ref=e757]:
+                        - progressbar [ref=e759]
+                        - paragraph [ref=e760]: 100%
+                    - cell "100.0%" [ref=e761] [cursor=pointer]:
+                      - generic [ref=e762]: 100.0%
+                    - cell "10" [ref=e763] [cursor=pointer]:
+                      - generic [ref=e764]: "10"
+                    - cell [ref=e765]:
+                      - checkbox [ref=e767]
+                    - cell "hourglass_empty Pendente" [ref=e770]:
+                      - generic [ref=e772] [cursor=pointer]:
+                        - generic [ref=e773]: hourglass_empty
+                        - paragraph [ref=e774]: Pendente
+                    - cell "more_vert" [ref=e775]:
+                      - button "more_vert" [ref=e779] [cursor=pointer]:
+                        - generic:
+                          - generic: more_vert
+                  - row "avatar Agents Richard agents.richard@claude.com 0 0% 0.0% 0 hourglass_empty Pendente more_vert" [ref=e780]:
+                    - cell [ref=e781]:
+                      - checkbox [ref=e783]
+                    - cell "avatar Agents Richard agents.richard@claude.com" [ref=e785] [cursor=pointer]:
+                      - generic [ref=e786]:
+                        - img "avatar" [ref=e789]
+                        - paragraph [ref=e793]:
+                          - paragraph [ref=e794]: Agents Richard
+                          - text: agents.richard@claude.com
+                    - cell "0 0%" [ref=e795] [cursor=pointer]:
+                      - generic [ref=e796]:
+                        - generic [ref=e797]:
+                          - progressbar
+                        - paragraph [ref=e798]: 0%
+                    - cell "0.0%" [ref=e799] [cursor=pointer]:
+                      - generic [ref=e800]: 0.0%
+                    - cell "0" [ref=e801] [cursor=pointer]:
+                      - generic [ref=e802]: "0"
+                    - cell [ref=e803]:
+                      - checkbox [ref=e805]
+                    - cell "hourglass_empty Pendente" [ref=e808]:
+                      - generic [ref=e810] [cursor=pointer]:
+                        - generic [ref=e811]: hourglass_empty
+                        - paragraph [ref=e812]: Pendente
+                    - cell "more_vert" [ref=e813]:
+                      - button "more_vert" [ref=e817] [cursor=pointer]:
+                        - generic:
+                          - generic: more_vert
+                  - row "avatar Agents Claude agents.claude@claude.com 100 100% 100.0% 60 hourglass_empty Pendente more_vert" [ref=e818]:
+                    - cell [ref=e819]:
+                      - checkbox [ref=e821]
+                    - cell "avatar Agents Claude agents.claude@claude.com" [ref=e823] [cursor=pointer]:
+                      - generic [ref=e824]:
+                        - img "avatar" [ref=e827]
+                        - paragraph [ref=e831]:
+                          - paragraph [ref=e832]: Agents Claude
+                          - text: agents.claude@claude.com
+                    - cell "100 100%" [ref=e833] [cursor=pointer]:
+                      - generic [ref=e834]:
+                        - progressbar [ref=e836]
+                        - paragraph [ref=e837]: 100%
+                    - cell "100.0%" [ref=e838] [cursor=pointer]:
+                      - generic [ref=e839]: 100.0%
+                    - cell "60" [ref=e840] [cursor=pointer]:
+                      - generic [ref=e841]: "60"
+                    - cell [ref=e842]:
+                      - checkbox [ref=e844]
+                    - cell "hourglass_empty Pendente" [ref=e847]:
+                      - generic [ref=e849] [cursor=pointer]:
+                        - generic [ref=e850]: hourglass_empty
+                        - paragraph [ref=e851]: Pendente
+                    - cell "more_vert" [ref=e852]:
+                      - button "more_vert" [ref=e856] [cursor=pointer]:
+                        - generic:
+                          - generic: more_vert
+                  - row "avatar Agents Richard agents.richard@claude.com 0 0% 0.0% 0 hourglass_empty Pendente more_vert" [ref=e857]:
+                    - cell [ref=e858]:
+                      - checkbox [ref=e860]
+                    - cell "avatar Agents Richard agents.richard@claude.com" [ref=e862] [cursor=pointer]:
+                      - generic [ref=e863]:
+                        - img "avatar" [ref=e866]
+                        - paragraph [ref=e870]:
+                          - paragraph [ref=e871]: Agents Richard
+                          - text: agents.richard@claude.com
+                    - cell "0 0%" [ref=e872] [cursor=pointer]:
+                      - generic [ref=e873]:
+                        - generic [ref=e874]:
+                          - progressbar
+                        - paragraph [ref=e875]: 0%
+                    - cell "0.0%" [ref=e876] [cursor=pointer]:
+                      - generic [ref=e877]: 0.0%
+                    - cell "0" [ref=e878] [cursor=pointer]:
+                      - generic [ref=e879]: "0"
+                    - cell [ref=e880]:
+                      - checkbox [ref=e882]
+                    - cell "hourglass_empty Pendente" [ref=e885]:
+                      - generic [ref=e887] [cursor=pointer]:
+                        - generic [ref=e888]: hourglass_empty
+                        - paragraph [ref=e889]: Pendente
+                    - cell "more_vert" [ref=e890]:
+                      - button "more_vert" [ref=e894] [cursor=pointer]:
+                        - generic:
+                          - generic: more_vert
+                  - row "avatar Agents Richard agents.richard@claude.com 0 0% 0.0% 0 hourglass_empty Pendente more_vert" [ref=e895]:
+                    - cell [ref=e896]:
+                      - checkbox [ref=e898]
+                    - cell "avatar Agents Richard agents.richard@claude.com" [ref=e900] [cursor=pointer]:
+                      - generic [ref=e901]:
+                        - img "avatar" [ref=e904]
+                        - paragraph [ref=e908]:
+                          - paragraph [ref=e909]: Agents Richard
+                          - text: agents.richard@claude.com
+                    - cell "0 0%" [ref=e910] [cursor=pointer]:
+                      - generic [ref=e911]:
+                        - generic [ref=e912]:
+                          - progressbar
+                        - paragraph [ref=e913]: 0%
+                    - cell "0.0%" [ref=e914] [cursor=pointer]:
+                      - generic [ref=e915]: 0.0%
+                    - cell "0" [ref=e916] [cursor=pointer]:
+                      - generic [ref=e917]: "0"
+                    - cell [ref=e918]:
+                      - checkbox [ref=e920]
+                    - cell "hourglass_empty Pendente" [ref=e923]:
+                      - generic [ref=e925] [cursor=pointer]:
+                        - generic [ref=e926]: hourglass_empty
+                        - paragraph [ref=e927]: Pendente
+                    - cell "more_vert" [ref=e928]:
+                      - button "more_vert" [ref=e932] [cursor=pointer]:
+                        - generic:
+                          - generic: more_vert
+                  - row "avatar Agents Richard agents.richard@claude.com 0 0% 0.0% 0 hourglass_empty Pendente more_vert" [ref=e933]:
+                    - cell [ref=e934]:
+                      - checkbox [ref=e936]
+                    - cell "avatar Agents Richard agents.richard@claude.com" [ref=e938] [cursor=pointer]:
+                      - generic [ref=e939]:
+                        - img "avatar" [ref=e942]
+                        - paragraph [ref=e946]:
+                          - paragraph [ref=e947]: Agents Richard
+                          - text: agents.richard@claude.com
+                    - cell "0 0%" [ref=e948] [cursor=pointer]:
+                      - generic [ref=e949]:
+                        - generic [ref=e950]:
+                          - progressbar
+                        - paragraph [ref=e951]: 0%
+                    - cell "0.0%" [ref=e952] [cursor=pointer]:
+                      - generic [ref=e953]: 0.0%
+                    - cell "0" [ref=e954] [cursor=pointer]:
+                      - generic [ref=e955]: "0"
+                    - cell [ref=e956]:
+                      - checkbox [ref=e958]
+                    - cell "hourglass_empty Pendente" [ref=e961]:
+                      - generic [ref=e963] [cursor=pointer]:
+                        - generic [ref=e964]: hourglass_empty
+                        - paragraph [ref=e965]: Pendente
+                    - cell "more_vert" [ref=e966]:
+                      - button "more_vert" [ref=e970] [cursor=pointer]:
+                        - generic:
+                          - generic: more_vert
+                  - row "avatar Agents Richard agents.richard@claude.com 0 0% 0.0% 0 hourglass_empty Pendente more_vert" [ref=e971]:
+                    - cell [ref=e972]:
+                      - checkbox [ref=e974]
+                    - cell "avatar Agents Richard agents.richard@claude.com" [ref=e976] [cursor=pointer]:
+                      - generic [ref=e977]:
+                        - img "avatar" [ref=e980]
+                        - paragraph [ref=e984]:
+                          - paragraph [ref=e985]: Agents Richard
+                          - text: agents.richard@claude.com
+                    - cell "0 0%" [ref=e986] [cursor=pointer]:
+                      - generic [ref=e987]:
+                        - generic [ref=e988]:
+                          - progressbar
+                        - paragraph [ref=e989]: 0%
+                    - cell "0.0%" [ref=e990] [cursor=pointer]:
+                      - generic [ref=e991]: 0.0%
+                    - cell "0" [ref=e992] [cursor=pointer]:
+                      - generic [ref=e993]: "0"
+                    - cell [ref=e994]:
+                      - checkbox [ref=e996]
+                    - cell "hourglass_empty Pendente" [ref=e999]:
+                      - generic [ref=e1001] [cursor=pointer]:
+                        - generic [ref=e1002]: hourglass_empty
+                        - paragraph [ref=e1003]: Pendente
+                    - cell "more_vert" [ref=e1004]:
+                      - button "more_vert" [ref=e1008] [cursor=pointer]:
+                        - generic:
+                          - generic: more_vert
+                  - row "avatar Agents Richard agents.richard@claude.com 0 0% 0.0% 0 hourglass_empty Pendente more_vert" [ref=e1009]:
+                    - cell [ref=e1010]:
+                      - checkbox [ref=e1012]
+                    - cell "avatar Agents Richard agents.richard@claude.com" [ref=e1014] [cursor=pointer]:
+                      - generic [ref=e1015]:
+                        - img "avatar" [ref=e1018]
+                        - paragraph [ref=e1022]:
+                          - paragraph [ref=e1023]: Agents Richard
+                          - text: agents.richard@claude.com
+                    - cell "0 0%" [ref=e1024] [cursor=pointer]:
+                      - generic [ref=e1025]:
+                        - generic [ref=e1026]:
+                          - progressbar
+                        - paragraph [ref=e1027]: 0%
+                    - cell "0.0%" [ref=e1028] [cursor=pointer]:
+                      - generic [ref=e1029]: 0.0%
+                    - cell "0" [ref=e1030] [cursor=pointer]:
+                      - generic [ref=e1031]: "0"
+                    - cell [ref=e1032]:
+                      - checkbox [ref=e1034]
+                    - cell "hourglass_empty Pendente" [ref=e1037]:
+                      - generic [ref=e1039] [cursor=pointer]:
+                        - generic [ref=e1040]: hourglass_empty
+                        - paragraph [ref=e1041]: Pendente
+                    - cell "more_vert" [ref=e1042]:
+                      - button "more_vert" [ref=e1046] [cursor=pointer]:
+                        - generic:
+                          - generic: more_vert
+                  - row "avatar Agents Richard agents.richard@claude.com 100 100% 100.0% 10 hourglass_empty Pendente more_vert" [ref=e1047]:
+                    - cell [ref=e1048]:
+                      - checkbox [ref=e1050]
+                    - cell "avatar Agents Richard agents.richard@claude.com" [ref=e1052] [cursor=pointer]:
+                      - generic [ref=e1053]:
+                        - img "avatar" [ref=e1056]
+                        - paragraph [ref=e1060]:
+                          - paragraph [ref=e1061]: Agents Richard
+                          - text: agents.richard@claude.com
+                    - cell "100 100%" [ref=e1062] [cursor=pointer]:
+                      - generic [ref=e1063]:
+                        - progressbar [ref=e1065]
+                        - paragraph [ref=e1066]: 100%
+                    - cell "100.0%" [ref=e1067] [cursor=pointer]:
+                      - generic [ref=e1068]: 100.0%
+                    - cell "10" [ref=e1069] [cursor=pointer]:
+                      - generic [ref=e1070]: "10"
+                    - cell [ref=e1071]:
+                      - checkbox [ref=e1073]
+                    - cell "hourglass_empty Pendente" [ref=e1076]:
+                      - generic [ref=e1078] [cursor=pointer]:
+                        - generic [ref=e1079]: hourglass_empty
+                        - paragraph [ref=e1080]: Pendente
+                    - cell "more_vert" [ref=e1081]:
+                      - button "more_vert" [ref=e1085] [cursor=pointer]:
+                        - generic:
+                          - generic: more_vert
+                  - row "avatar WW SS testeidnovo@teste.com 0 0% 0.0% 0 hourglass_empty Pendente more_vert" [ref=e1086]:
+                    - cell [ref=e1087]:
+                      - checkbox [ref=e1089]
+                    - cell "avatar WW SS testeidnovo@teste.com" [ref=e1091] [cursor=pointer]:
+                      - generic [ref=e1092]:
+                        - img "avatar" [ref=e1095]
+                        - paragraph [ref=e1099]:
+                          - paragraph [ref=e1100]: WW SS
+                          - text: testeidnovo@teste.com
+                    - cell "0 0%" [ref=e1101] [cursor=pointer]:
+                      - generic [ref=e1102]:
+                        - generic [ref=e1103]:
+                          - progressbar
+                        - paragraph [ref=e1104]: 0%
+                    - cell "0.0%" [ref=e1105] [cursor=pointer]:
+                      - generic [ref=e1106]: 0.0%
+                    - cell "0" [ref=e1107] [cursor=pointer]:
+                      - generic [ref=e1108]: "0"
+                    - cell [ref=e1109]:
+                      - checkbox [ref=e1111]
+                    - cell "hourglass_empty Pendente" [ref=e1114]:
+                      - generic [ref=e1116] [cursor=pointer]:
+                        - generic [ref=e1117]: hourglass_empty
+                        - paragraph [ref=e1118]: Pendente
+                    - cell "more_vert" [ref=e1119]:
+                      - button "more_vert" [ref=e1123] [cursor=pointer]:
+                        - generic:
+                          - generic: more_vert
+                  - row "avatar Agents Richard agents.richard@claude.com 100 100% 100.0% 10 hourglass_empty Pendente more_vert" [ref=e1124]:
+                    - cell [ref=e1125]:
+                      - checkbox [ref=e1127]
+                    - cell "avatar Agents Richard agents.richard@claude.com" [ref=e1129] [cursor=pointer]:
+                      - generic [ref=e1130]:
+                        - img "avatar" [ref=e1133]
+                        - paragraph [ref=e1137]:
+                          - paragraph [ref=e1138]: Agents Richard
+                          - text: agents.richard@claude.com
+                    - cell "100 100%" [ref=e1139] [cursor=pointer]:
+                      - generic [ref=e1140]:
+                        - progressbar [ref=e1142]
+                        - paragraph [ref=e1143]: 100%
+                    - cell "100.0%" [ref=e1144] [cursor=pointer]:
+                      - generic [ref=e1145]: 100.0%
+                    - cell "10" [ref=e1146] [cursor=pointer]:
+                      - generic [ref=e1147]: "10"
+                    - cell [ref=e1148]:
+                      - checkbox [ref=e1150]
+                    - cell "hourglass_empty Pendente" [ref=e1153]:
+                      - generic [ref=e1155] [cursor=pointer]:
+                        - generic [ref=e1156]: hourglass_empty
+                        - paragraph [ref=e1157]: Pendente
+                    - cell "more_vert" [ref=e1158]:
+                      - button "more_vert" [ref=e1162] [cursor=pointer]:
+                        - generic:
+                          - generic: more_vert
+                  - row "avatar Agents Richard agents.richard@claude.com 100 100% 100.0% 10 hourglass_empty Pendente more_vert" [ref=e1163]:
+                    - cell [ref=e1164]:
+                      - checkbox [ref=e1166]
+                    - cell "avatar Agents Richard agents.richard@claude.com" [ref=e1168] [cursor=pointer]:
+                      - generic [ref=e1169]:
+                        - img "avatar" [ref=e1172]
+                        - paragraph [ref=e1176]:
+                          - paragraph [ref=e1177]: Agents Richard
+                          - text: agents.richard@claude.com
+                    - cell "100 100%" [ref=e1178] [cursor=pointer]:
+                      - generic [ref=e1179]:
+                        - progressbar [ref=e1181]
+                        - paragraph [ref=e1182]: 100%
+                    - cell "100.0%" [ref=e1183] [cursor=pointer]:
+                      - generic [ref=e1184]: 100.0%
+                    - cell "10" [ref=e1185] [cursor=pointer]:
+                      - generic [ref=e1186]: "10"
+                    - cell [ref=e1187]:
+                      - checkbox [ref=e1189]
+                    - cell "hourglass_empty Pendente" [ref=e1192]:
+                      - generic [ref=e1194] [cursor=pointer]:
+                        - generic [ref=e1195]: hourglass_empty
+                        - paragraph [ref=e1196]: Pendente
+                    - cell "more_vert" [ref=e1197]:
+                      - button "more_vert" [ref=e1201] [cursor=pointer]:
+                        - generic:
+                          - generic: more_vert
+                  - row "avatar Agents Edu agents.edu@claude.com 0 0% 0.0% 0 hourglass_empty Pendente more_vert" [ref=e1202]:
+                    - cell [ref=e1203]:
+                      - checkbox [ref=e1205]
+                    - cell "avatar Agents Edu agents.edu@claude.com" [ref=e1207] [cursor=pointer]:
+                      - generic [ref=e1208]:
+                        - img "avatar" [ref=e1211]
+                        - paragraph [ref=e1215]:
+                          - paragraph [ref=e1216]: Agents Edu
+                          - text: agents.edu@claude.com
+                    - cell "0 0%" [ref=e1217] [cursor=pointer]:
+                      - generic [ref=e1218]:
+                        - generic [ref=e1219]:
+                          - progressbar
+                        - paragraph [ref=e1220]: 0%
+                    - cell "0.0%" [ref=e1221] [cursor=pointer]:
+                      - generic [ref=e1222]: 0.0%
+                    - cell "0" [ref=e1223] [cursor=pointer]:
+                      - generic [ref=e1224]: "0"
+                    - cell [ref=e1225]:
+                      - checkbox [ref=e1227]
+                    - cell "hourglass_empty Pendente" [ref=e1230]:
+                      - generic [ref=e1232] [cursor=pointer]:
+                        - generic [ref=e1233]: hourglass_empty
+                        - paragraph [ref=e1234]: Pendente
+                    - cell "more_vert" [ref=e1235]:
+                      - button "more_vert" [ref=e1239] [cursor=pointer]:
+                        - generic:
+                          - generic: more_vert
+                  - row "avatar Agents Richard agents.richard@claude.com 100 100% 100.0% 180 hourglass_empty Pendente more_vert" [ref=e1240]:
+                    - cell [ref=e1241]:
+                      - checkbox [ref=e1243]
+                    - cell "avatar Agents Richard agents.richard@claude.com" [ref=e1245] [cursor=pointer]:
+                      - generic [ref=e1246]:
+                        - img "avatar" [ref=e1249]
+                        - paragraph [ref=e1253]:
+                          - paragraph [ref=e1254]: Agents Richard
+                          - text: agents.richard@claude.com
+                    - cell "100 100%" [ref=e1255] [cursor=pointer]:
+                      - generic [ref=e1256]:
+                        - progressbar [ref=e1258]
+                        - paragraph [ref=e1259]: 100%
+                    - cell "100.0%" [ref=e1260] [cursor=pointer]:
+                      - generic [ref=e1261]: 100.0%
+                    - cell "180" [ref=e1262] [cursor=pointer]:
+                      - generic [ref=e1263]: "180"
+                    - cell [ref=e1264]:
+                      - checkbox [ref=e1266]
+                    - cell "hourglass_empty Pendente" [ref=e1269]:
+                      - generic [ref=e1271] [cursor=pointer]:
+                        - generic [ref=e1272]: hourglass_empty
+                        - paragraph [ref=e1273]: Pendente
+                    - cell "more_vert" [ref=e1274]:
+                      - button "more_vert" [ref=e1278] [cursor=pointer]:
+                        - generic:
+                          - generic: more_vert
+                  - row "avatar Agents Edu agents.edu@claude.com 100 100% 100.0% 120 hourglass_empty Pendente more_vert" [ref=e1279]:
+                    - cell [ref=e1280]:
+                      - checkbox [ref=e1282]
+                    - cell "avatar Agents Edu agents.edu@claude.com" [ref=e1284] [cursor=pointer]:
+                      - generic [ref=e1285]:
+                        - img "avatar" [ref=e1288]
+                        - paragraph [ref=e1292]:
+                          - paragraph [ref=e1293]: Agents Edu
+                          - text: agents.edu@claude.com
+                    - cell "100 100%" [ref=e1294] [cursor=pointer]:
+                      - generic [ref=e1295]:
+                        - progressbar [ref=e1297]
+                        - paragraph [ref=e1298]: 100%
+                    - cell "100.0%" [ref=e1299] [cursor=pointer]:
+                      - generic [ref=e1300]: 100.0%
+                    - cell "120" [ref=e1301] [cursor=pointer]:
+                      - generic [ref=e1302]: "120"
+                    - cell [ref=e1303]:
+                      - checkbox [ref=e1305]
+                    - cell "hourglass_empty Pendente" [ref=e1308]:
+                      - generic [ref=e1310] [cursor=pointer]:
+                        - generic [ref=e1311]: hourglass_empty
+                        - paragraph [ref=e1312]: Pendente
+                    - cell "more_vert" [ref=e1313]:
+                      - button "more_vert" [ref=e1317] [cursor=pointer]:
+                        - generic:
+                          - generic: more_vert
+                  - row "avatar Agents Edu agents.edu@claude.com 100 100% 100.0% 120 hourglass_empty Pendente more_vert" [ref=e1318]:
+                    - cell [ref=e1319]:
+                      - checkbox [ref=e1321]
+                    - cell "avatar Agents Edu agents.edu@claude.com" [ref=e1323] [cursor=pointer]:
+                      - generic [ref=e1324]:
+                        - img "avatar" [ref=e1327]
+                        - paragraph [ref=e1331]:
+                          - paragraph [ref=e1332]: Agents Edu
+                          - text: agents.edu@claude.com
+                    - cell "100 100%" [ref=e1333] [cursor=pointer]:
+                      - generic [ref=e1334]:
+                        - progressbar [ref=e1336]
+                        - paragraph [ref=e1337]: 100%
+                    - cell "100.0%" [ref=e1338] [cursor=pointer]:
+                      - generic [ref=e1339]: 100.0%
+                    - cell "120" [ref=e1340] [cursor=pointer]:
+                      - generic [ref=e1341]: "120"
+                    - cell [ref=e1342]:
+                      - checkbox [ref=e1344]
+                    - cell "hourglass_empty Pendente" [ref=e1347]:
+                      - generic [ref=e1349] [cursor=pointer]:
+                        - generic [ref=e1350]: hourglass_empty
+                        - paragraph [ref=e1351]: Pendente
+                    - cell "more_vert" [ref=e1352]:
+                      - button "more_vert" [ref=e1356] [cursor=pointer]:
+                        - generic:
+                          - generic: more_vert
+                  - row "avatar Agents Richard agents.richard@claude.com 90 90% 100.0% 180 hourglass_empty Pendente more_vert" [ref=e1357]:
+                    - cell [ref=e1358]:
+                      - checkbox [ref=e1360]
+                    - cell "avatar Agents Richard agents.richard@claude.com" [ref=e1362] [cursor=pointer]:
+                      - generic [ref=e1363]:
+                        - img "avatar" [ref=e1366]
+                        - paragraph [ref=e1370]:
+                          - paragraph [ref=e1371]: Agents Richard
+                          - text: agents.richard@claude.com
+                    - cell "90 90%" [ref=e1372] [cursor=pointer]:
+                      - generic [ref=e1373]:
+                        - progressbar [ref=e1375]
+                        - paragraph [ref=e1376]: 90%
+                    - cell "100.0%" [ref=e1377] [cursor=pointer]:
+                      - generic [ref=e1378]: 100.0%
+                    - cell "180" [ref=e1379] [cursor=pointer]:
+                      - generic [ref=e1380]: "180"
+                    - cell [ref=e1381]:
+                      - checkbox [ref=e1383]
+                    - cell "hourglass_empty Pendente" [ref=e1386]:
+                      - generic [ref=e1388] [cursor=pointer]:
+                        - generic [ref=e1389]: hourglass_empty
+                        - paragraph [ref=e1390]: Pendente
+                    - cell "more_vert" [ref=e1391]:
+                      - button "more_vert" [ref=e1395] [cursor=pointer]:
+                        - generic:
+                          - generic: more_vert
+                  - row "avatar Agents Richard agents.richard@claude.com 90 90% 100.0% 180 hourglass_empty Pendente more_vert" [ref=e1396]:
+                    - cell [ref=e1397]:
+                      - checkbox [ref=e1399]
+                    - cell "avatar Agents Richard agents.richard@claude.com" [ref=e1401] [cursor=pointer]:
+                      - generic [ref=e1402]:
+                        - img "avatar" [ref=e1405]
+                        - paragraph [ref=e1409]:
+                          - paragraph [ref=e1410]: Agents Richard
+                          - text: agents.richard@claude.com
+                    - cell "90 90%" [ref=e1411] [cursor=pointer]:
+                      - generic [ref=e1412]:
+                        - progressbar [ref=e1414]
+                        - paragraph [ref=e1415]: 90%
+                    - cell "100.0%" [ref=e1416] [cursor=pointer]:
+                      - generic [ref=e1417]: 100.0%
+                    - cell "180" [ref=e1418] [cursor=pointer]:
+                      - generic [ref=e1419]: "180"
+                    - cell [ref=e1420]:
+                      - checkbox [ref=e1422]
+                    - cell "hourglass_empty Pendente" [ref=e1425]:
+                      - generic [ref=e1427] [cursor=pointer]:
+                        - generic [ref=e1428]: hourglass_empty
+                        - paragraph [ref=e1429]: Pendente
+                    - cell "more_vert" [ref=e1430]:
+                      - button "more_vert" [ref=e1434] [cursor=pointer]:
+                        - generic:
+                          - generic: more_vert
+                  - row "avatar Agents Richard agents.richard@claude.com 100 100% 100.0% 180 hourglass_empty Pendente more_vert" [ref=e1435]:
+                    - cell [ref=e1436]:
+                      - checkbox [ref=e1438]
+                    - cell "avatar Agents Richard agents.richard@claude.com" [ref=e1440] [cursor=pointer]:
+                      - generic [ref=e1441]:
+                        - img "avatar" [ref=e1444]
+                        - paragraph [ref=e1448]:
+                          - paragraph [ref=e1449]: Agents Richard
+                          - text: agents.richard@claude.com
+                    - cell "100 100%" [ref=e1450] [cursor=pointer]:
+                      - generic [ref=e1451]:
+                        - progressbar [ref=e1453]
+                        - paragraph [ref=e1454]: 100%
+                    - cell "100.0%" [ref=e1455] [cursor=pointer]:
+                      - generic [ref=e1456]: 100.0%
+                    - cell "180" [ref=e1457] [cursor=pointer]:
+                      - generic [ref=e1458]: "180"
+                    - cell [ref=e1459]:
+                      - checkbox [ref=e1461]
+                    - cell "hourglass_empty Pendente" [ref=e1464]:
+                      - generic [ref=e1466] [cursor=pointer]:
+                        - generic [ref=e1467]: hourglass_empty
+                        - paragraph [ref=e1468]: Pendente
+                    - cell "more_vert" [ref=e1469]:
+                      - button "more_vert" [ref=e1473] [cursor=pointer]:
+                        - generic:
+                          - generic: more_vert
+                  - row "avatar Richard Sebold richard.sebold@twygo.com 100 100% 100.0% 150 hourglass_empty Pendente more_vert" [ref=e1474]:
+                    - cell [ref=e1475]:
+                      - checkbox [ref=e1477]
+                    - cell "avatar Richard Sebold richard.sebold@twygo.com" [ref=e1479] [cursor=pointer]:
+                      - generic [ref=e1480]:
+                        - img "avatar" [ref=e1483]
+                        - paragraph [ref=e1487]:
+                          - paragraph [ref=e1488]: Richard Sebold
+                          - text: richard.sebold@twygo.com
+                    - cell "100 100%" [ref=e1489] [cursor=pointer]:
+                      - generic [ref=e1490]:
+                        - progressbar [ref=e1492]
+                        - paragraph [ref=e1493]: 100%
+                    - cell "100.0%" [ref=e1494] [cursor=pointer]:
+                      - generic [ref=e1495]: 100.0%
+                    - cell "150" [ref=e1496] [cursor=pointer]:
+                      - generic [ref=e1497]: "150"
+                    - cell [ref=e1498]:
+                      - checkbox [ref=e1500]
+                    - cell "hourglass_empty Pendente" [ref=e1503]:
+                      - generic [ref=e1505] [cursor=pointer]:
+                        - generic [ref=e1506]: hourglass_empty
+                        - paragraph [ref=e1507]: Pendente
+                    - cell "more_vert" [ref=e1508]:
+                      - button "more_vert" [ref=e1512] [cursor=pointer]:
+                        - generic:
+                          - generic: more_vert
+              - generic [ref=e1514]:
+                - generic [ref=e1515]:
+                  - button "keyboard_double_arrow_left" [disabled] [ref=e1516]:
+                    - generic [ref=e1517]: keyboard_double_arrow_left
+                  - button "chevron_left" [disabled] [ref=e1518]:
+                    - generic [ref=e1519]: chevron_left
+                  - button "1" [ref=e1520] [cursor=pointer]
+                  - button "2" [ref=e1521] [cursor=pointer]
+                  - button "chevron_right" [ref=e1522] [cursor=pointer]:
+                    - generic [ref=e1523]: chevron_right
+                - generic [ref=e1524]:
+                  - combobox [ref=e1525]:
+                    - option "25 por página" [selected]
+                    - option "50 por página"
+                    - option "100 por página"
+                  - generic:
+                    - img
+  - generic:
+    - region "Notifications-top"
+    - region "Notifications-top-left"
+    - region "Notifications-top-right"
+    - region "Notifications-bottom-left"
+    - region "Notifications-bottom"
+    - region "Notifications-bottom-right"
+  - generic:
+    - region "Notifications-top"
+    - region "Notifications-top-left"
+    - region "Notifications-top-right"
+    - region "Notifications-bottom-left"
+    - region "Notifications-bottom"
+    - region "Notifications-bottom-right"
+  - generic:
+    - region "Notifications-top"
+    - region "Notifications-top-left"
+    - region "Notifications-top-right"
+    - region "Notifications-bottom-left"
+    - region "Notifications-bottom"
+    - region "Notifications-bottom-right"
+  - generic:
+    - generic [ref=e1526] [cursor=pointer]: workspace_premium
+    - img [ref=e1529] [cursor=pointer]
+    - img [ref=e1533] [cursor=pointer]
+    - generic [ref=e1535] [cursor=pointer]: emoji_events
+    - generic [ref=e1536] [cursor=pointer]: mail
+    - generic [ref=e1539] [cursor=pointer]: chat_add_on
+    - img [ref=e1542] [cursor=pointer]
+    - generic [ref=e1544] [cursor=pointer]: replay
+  - generic:
+    - generic [ref=e1545] [cursor=pointer]: workspace_premium
+    - img [ref=e1548] [cursor=pointer]
+    - img [ref=e1552] [cursor=pointer]
+    - generic [ref=e1554] [cursor=pointer]: emoji_events
+    - generic [ref=e1555] [cursor=pointer]: mail
+    - generic [ref=e1558] [cursor=pointer]: chat_add_on
+    - img [ref=e1561] [cursor=pointer]
+    - generic [ref=e1563] [cursor=pointer]: replay
+  - generic:
+    - generic [ref=e1564] [cursor=pointer]: workspace_premium
+    - img [ref=e1567] [cursor=pointer]
+    - img [ref=e1571] [cursor=pointer]
+    - generic [ref=e1573] [cursor=pointer]: emoji_events
+    - generic [ref=e1574] [cursor=pointer]: mail
+    - generic [ref=e1577] [cursor=pointer]: chat_add_on
+    - img [ref=e1580] [cursor=pointer]
+    - generic [ref=e1582] [cursor=pointer]: replay
+  - generic:
+    - generic [ref=e1583] [cursor=pointer]: workspace_premium
+    - img [ref=e1586] [cursor=pointer]
+    - img [ref=e1590] [cursor=pointer]
+    - generic [ref=e1592] [cursor=pointer]: emoji_events
+    - generic [ref=e1593] [cursor=pointer]: mail
+    - generic [ref=e1596] [cursor=pointer]: chat_add_on
+    - img [ref=e1599] [cursor=pointer]
+    - generic [ref=e1601] [cursor=pointer]: replay
+  - generic:
+    - generic [ref=e1602] [cursor=pointer]: workspace_premium
+    - img [ref=e1605] [cursor=pointer]
+    - img [ref=e1609] [cursor=pointer]
+    - generic [ref=e1611] [cursor=pointer]: emoji_events
+    - generic [ref=e1612] [cursor=pointer]: mail
+    - generic [ref=e1615] [cursor=pointer]: chat_add_on
+    - img [ref=e1618] [cursor=pointer]
+    - generic [ref=e1620] [cursor=pointer]: replay
+  - generic:
+    - generic [ref=e1621] [cursor=pointer]: workspace_premium
+    - img [ref=e1624] [cursor=pointer]
+    - img [ref=e1628] [cursor=pointer]
+    - generic [ref=e1630] [cursor=pointer]: emoji_events
+    - generic [ref=e1631] [cursor=pointer]: mail
+    - generic [ref=e1634] [cursor=pointer]: chat_add_on
+    - img [ref=e1637] [cursor=pointer]
+    - generic [ref=e1639] [cursor=pointer]: replay
+  - generic:
+    - generic [ref=e1640] [cursor=pointer]: workspace_premium
+    - img [ref=e1643] [cursor=pointer]
+    - img [ref=e1647] [cursor=pointer]
+    - generic [ref=e1649] [cursor=pointer]: emoji_events
+    - generic [ref=e1650] [cursor=pointer]: mail
+    - generic [ref=e1653] [cursor=pointer]: chat_add_on
+    - img [ref=e1656] [cursor=pointer]
+    - generic [ref=e1658] [cursor=pointer]: replay
+  - generic:
+    - generic [ref=e1659] [cursor=pointer]: workspace_premium
+    - img [ref=e1662] [cursor=pointer]
+    - img [ref=e1666] [cursor=pointer]
+    - generic [ref=e1668] [cursor=pointer]: emoji_events
+    - generic [ref=e1669] [cursor=pointer]: mail
+    - generic [ref=e1672] [cursor=pointer]: chat_add_on
+    - img [ref=e1675] [cursor=pointer]
+    - generic [ref=e1677] [cursor=pointer]: replay
+  - generic:
+    - generic [ref=e1678] [cursor=pointer]: workspace_premium
+    - img [ref=e1681] [cursor=pointer]
+    - img [ref=e1685] [cursor=pointer]
+    - generic [ref=e1687] [cursor=pointer]: emoji_events
+    - generic [ref=e1688] [cursor=pointer]: mail
+    - generic [ref=e1691] [cursor=pointer]: chat_add_on
+    - img [ref=e1694] [cursor=pointer]
+    - generic [ref=e1696] [cursor=pointer]: replay
+  - generic:
+    - generic [ref=e1697] [cursor=pointer]: workspace_premium
+    - img [ref=e1700] [cursor=pointer]
+    - img [ref=e1704] [cursor=pointer]
+    - generic [ref=e1706] [cursor=pointer]: emoji_events
+    - generic [ref=e1707] [cursor=pointer]: mail
+    - generic [ref=e1710] [cursor=pointer]: chat_add_on
+    - img [ref=e1713] [cursor=pointer]
+    - generic [ref=e1715] [cursor=pointer]: replay
+  - generic:
+    - generic [ref=e1716] [cursor=pointer]: workspace_premium
+    - img [ref=e1719] [cursor=pointer]
+    - img [ref=e1723] [cursor=pointer]
+    - generic [ref=e1725] [cursor=pointer]: emoji_events
+    - generic [ref=e1726] [cursor=pointer]: mail
+    - generic [ref=e1729] [cursor=pointer]: chat_add_on
+    - img [ref=e1732] [cursor=pointer]
+    - generic [ref=e1734] [cursor=pointer]: replay
+  - generic:
+    - generic [ref=e1735] [cursor=pointer]: workspace_premium
+    - img [ref=e1738] [cursor=pointer]
+    - img [ref=e1742] [cursor=pointer]
+    - generic [ref=e1744] [cursor=pointer]: emoji_events
+    - generic [ref=e1745] [cursor=pointer]: mail
+    - generic [ref=e1748] [cursor=pointer]: chat_add_on
+    - img [ref=e1751] [cursor=pointer]
+    - generic [ref=e1753] [cursor=pointer]: replay
+  - generic:
+    - generic [ref=e1754] [cursor=pointer]: workspace_premium
+    - img [ref=e1757] [cursor=pointer]
+    - img [ref=e1761] [cursor=pointer]
+    - generic [ref=e1763] [cursor=pointer]: emoji_events
+    - generic [ref=e1764] [cursor=pointer]: mail
+    - generic [ref=e1767] [cursor=pointer]: chat_add_on
+    - img [ref=e1770] [cursor=pointer]
+    - generic [ref=e1772] [cursor=pointer]: replay
+  - generic:
+    - generic [ref=e1773] [cursor=pointer]: workspace_premium
+    - img [ref=e1776] [cursor=pointer]
+    - img [ref=e1780] [cursor=pointer]
+    - generic [ref=e1782] [cursor=pointer]: emoji_events
+    - generic [ref=e1783] [cursor=pointer]: mail
+    - generic [ref=e1786] [cursor=pointer]: chat_add_on
+    - img [ref=e1789] [cursor=pointer]
+    - generic [ref=e1791] [cursor=pointer]: replay
+  - generic:
+    - generic [ref=e1792] [cursor=pointer]: workspace_premium
+    - img [ref=e1795] [cursor=pointer]
+    - img [ref=e1799] [cursor=pointer]
+    - generic [ref=e1801] [cursor=pointer]: emoji_events
+    - generic [ref=e1802] [cursor=pointer]: mail
+    - generic [ref=e1805] [cursor=pointer]: chat_add_on
+    - img [ref=e1808] [cursor=pointer]
+    - generic [ref=e1810] [cursor=pointer]: replay
+  - generic:
+    - generic [ref=e1811] [cursor=pointer]: workspace_premium
+    - img [ref=e1814] [cursor=pointer]
+    - img [ref=e1818] [cursor=pointer]
+    - generic [ref=e1820] [cursor=pointer]: emoji_events
+    - generic [ref=e1821] [cursor=pointer]: mail
+    - generic [ref=e1824] [cursor=pointer]: chat_add_on
+    - img [ref=e1827] [cursor=pointer]
+    - generic [ref=e1829] [cursor=pointer]: replay
+  - generic:
+    - generic [ref=e1830] [cursor=pointer]: workspace_premium
+    - img [ref=e1833] [cursor=pointer]
+    - img [ref=e1837] [cursor=pointer]
+    - generic [ref=e1839] [cursor=pointer]: emoji_events
+    - generic [ref=e1840] [cursor=pointer]: mail
+    - generic [ref=e1843] [cursor=pointer]: chat_add_on
+    - img [ref=e1846] [cursor=pointer]
+    - generic [ref=e1848] [cursor=pointer]: replay
+  - generic:
+    - generic [ref=e1849] [cursor=pointer]: workspace_premium
+    - img [ref=e1852] [cursor=pointer]
+    - img [ref=e1856] [cursor=pointer]
+    - generic [ref=e1858] [cursor=pointer]: emoji_events
+    - generic [ref=e1859] [cursor=pointer]: mail
+    - generic [ref=e1862] [cursor=pointer]: chat_add_on
+    - img [ref=e1865] [cursor=pointer]
+    - generic [ref=e1867] [cursor=pointer]: replay
+  - generic:
+    - generic [ref=e1868] [cursor=pointer]: workspace_premium
+    - img [ref=e1871] [cursor=pointer]
+    - img [ref=e1875] [cursor=pointer]
+    - generic [ref=e1877] [cursor=pointer]: emoji_events
+    - generic [ref=e1878] [cursor=pointer]: mail
+    - generic [ref=e1881] [cursor=pointer]: chat_add_on
+    - img [ref=e1884] [cursor=pointer]
+    - generic [ref=e1886] [cursor=pointer]: replay
+  - generic:
+    - generic [ref=e1887] [cursor=pointer]: workspace_premium
+    - img [ref=e1890] [cursor=pointer]
+    - img [ref=e1894] [cursor=pointer]
+    - generic [ref=e1896] [cursor=pointer]: emoji_events
+    - generic [ref=e1897] [cursor=pointer]: mail
+    - generic [ref=e1900] [cursor=pointer]: chat_add_on
+    - img [ref=e1903] [cursor=pointer]
+    - generic [ref=e1905] [cursor=pointer]: replay
+  - generic:
+    - generic [ref=e1906] [cursor=pointer]: workspace_premium
+    - img [ref=e1909] [cursor=pointer]
+    - img [ref=e1913] [cursor=pointer]
+    - generic [ref=e1915] [cursor=pointer]: emoji_events
+    - generic [ref=e1916] [cursor=pointer]: mail
+    - generic [ref=e1919] [cursor=pointer]: chat_add_on
+    - img [ref=e1922] [cursor=pointer]
+    - generic [ref=e1924] [cursor=pointer]: replay
+  - generic:
+    - generic [ref=e1925] [cursor=pointer]: workspace_premium
+    - img [ref=e1928] [cursor=pointer]
+    - img [ref=e1932] [cursor=pointer]
+    - generic [ref=e1934] [cursor=pointer]: emoji_events
+    - generic [ref=e1935] [cursor=pointer]: mail
+    - generic [ref=e1938] [cursor=pointer]: chat_add_on
+    - img [ref=e1941] [cursor=pointer]
+    - generic [ref=e1943] [cursor=pointer]: replay
+  - generic:
+    - generic [ref=e1944] [cursor=pointer]: workspace_premium
+    - img [ref=e1947] [cursor=pointer]
+    - img [ref=e1951] [cursor=pointer]
+    - generic [ref=e1953] [cursor=pointer]: emoji_events
+    - generic [ref=e1954] [cursor=pointer]: mail
+    - generic [ref=e1957] [cursor=pointer]: chat_add_on
+    - img [ref=e1960] [cursor=pointer]
+    - generic [ref=e1962] [cursor=pointer]: replay
+  - generic:
+    - generic [ref=e1963] [cursor=pointer]: workspace_premium
+    - img [ref=e1966] [cursor=pointer]
+    - img [ref=e1970] [cursor=pointer]
+    - generic [ref=e1972] [cursor=pointer]: emoji_events
+    - generic [ref=e1973] [cursor=pointer]: mail
+    - generic [ref=e1976] [cursor=pointer]: chat_add_on
+    - img [ref=e1979] [cursor=pointer]
+    - generic [ref=e1981] [cursor=pointer]: replay
+  - generic:
+    - generic [ref=e1982] [cursor=pointer]: workspace_premium
+    - img [ref=e1985] [cursor=pointer]
+    - img [ref=e1989] [cursor=pointer]
+    - generic [ref=e1991] [cursor=pointer]: emoji_events
+    - generic [ref=e1992] [cursor=pointer]: mail
+    - generic [ref=e1995] [cursor=pointer]: chat_add_on
+    - img [ref=e1998] [cursor=pointer]
+    - generic [ref=e2000] [cursor=pointer]: replay
+```
+
+# Test source
+
+```ts
+  1   | import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js';
+  2   | import * as allure from 'allure-js-commons';
+  3   | import { LearningStudentsPage } from '../../../pages/LearningStudentsPage.js';
+  4   | import { tc4Data } from './tc4-certificados-legado-permanecem-valid.data.js';
+  5   | 
+  6   | test.describe('Ciclo de Vida do Certificado Substituído', () => {
+  7   |   // Decisão QA 2026-05-29: refatorado de DB-pure para validação via UI.
+  8   |   //
+  9   |   // O RN 20/21 especifica que `replace_previous_certificates_bulk` só atua
+  10  |   // quando há nova emissão pelo mesmo par (user_id, event_id). Sem nova emissão,
+  11  |   // o cert vigente permanece VALID indefinidamente.
+  12  |   //
+  13  |   // Estratégia de UI: Richard Sebold (curso 807287) tem recert_num=1 com cert
+  14  |   // "Emitido" (VALID). Esse cert PERMANECE "Emitido" porque não houve ainda
+  15  |   // uma reinscrição recert_num=2 + emissão que o substituiria. O TC valida:
+  16  |   //   (a) linha "Emitido" de Richard continua visível e com badge "Emitido"
+  17  |   //   (b) Richard NÃO aparece no filtro "Substituído" para esse cert vigente
+  18  |   // Evidência de que cert só vira REPLACED quando uma nova emissão ocorre.
+  19  |   //
+  20  |   // REVISAR-SEED: se Richard Sebold não tiver linha "Emitido" no env
+  21  |   // (TC2 nunca altera o cert de Richard — usa agents.edu@claude.com),
+  22  |   // verificar via /e/807287/learning se recert_num=1 ainda está em estado VALID.
+  23  | 
+  24  |   test('TC4 — Certificados emitidos no fluxo legado (sem reinscrição) permanecem VALID indefinidamente', async ({
+  25  |     page,
+  26  |   }) => {
+  27  |     await allure.epic('Twygo - Recertificação');
+  28  |     await allure.feature('Ciclo de Vida do Certificado Substituído');
+  29  |     await allure.story(
+  30  |       'Certificados emitidos no fluxo legado (sem reinscrição) permanecem VALID indefinidamente',
+  31  |     );
+  32  |     await allure.severity('normal');
+  33  |     await allure.parameter(
+  34  |       'feature_flag',
+  35  |       ':recertificacao=ON (env staging-recertificacao 37048)',
+  36  |     );
+  37  |     await allure.parameter('seed', `curso ${tc4Data.eventId}, aluno ${tc4Data.alunoLegadoEmail}`);
+  38  | 
+  39  |     const learningStudents = new LearningStudentsPage(page);
+  40  | 
+  41  |     await allure.step(
+  42  |       '1. Pré-condição: aluno com recertification_number = 0 aprovado e VALID emitido → ' +
+  43  |         'acessar lista de aprendizagem e verificar que a linha do aluno legado existe',
+  44  |       async () => {
+  45  |         await learningStudents.goToList(tc4Data.eventId);
+  46  |         await expect(page).toHaveURL(/\/e\/\d+\/learning/);
+  47  |         // Sem filtro residual de execuções anteriores.
+  48  |         await learningStudents.clearFilters();
+  49  | 
+  50  |         const linhaAluno = learningStudents.getRowByEmail(tc4Data.alunoLegadoEmail);
+  51  |         const visible = await linhaAluno.isVisible({ timeout: 10_000 }).catch(() => false);
+  52  |         if (!visible) {
+  53  |           // REVISAR-SEED: Richard Sebold não encontrado na lista. Possível que:
+  54  |           //   a) Aluno foi desmatriculado do curso 807287.
+  55  |           //   b) Estado do cert de recert_num=1 mudou (expirado/substituído
+  56  |           //      por uma nova reinscrição não prevista). TC2 NÃO afeta Richard
+  57  |           //      (usa agents.edu@claude.com). Recon via /e/807287/learning.
+  58  |           test.fail(
+  59  |             true,
+  60  |             `Pré-condição quebrada: aluno "${tc4Data.alunoLegadoEmail}" não encontrado na lista. ` +
+  61  |               'Verificar estado do cert de Richard Sebold (recert_num=1) no env.',
+  62  |           );
+  63  |           return;
+  64  |         }
+  65  |         await expect(linhaAluno).toBeVisible();
+  66  |       },
+  67  |     );
+  68  | 
+  69  |     await allure.step(
+  70  |       '2. Verificar que a linha do aluno legado exibe badge "Emitido" (VALID) → ' +
+  71  |         'RN 20/21: sem reinscrição, o cert original permanece situation=2 (VALID); ' +
+  72  |         'replace_previous_certificates_bulk não foi acionado',
+  73  |       async () => {
+  74  |         const linhaEmitida = learningStudents.getRowByEmail(tc4Data.alunoLegadoEmail, {
+  75  |           certState: tc4Data.expectedBadge,
+  76  |         });
+> 77  |         await expect(linhaEmitida).toBeVisible({ timeout: 10_000 });
+      |                                    ^ Error: expect(locator).toBeVisible() failed
+  78  |         await expect(linhaEmitida).toContainText(tc4Data.expectedBadge);
+  79  |       },
+  80  |     );
+  81  | 
+  82  |     await allure.step(
+  83  |       '3. Aplicar filtro "Substituído" e confirmar que a linha "Emitido" do aluno NÃO aparece → ' +
+  84  |         'invariante de regressão: o cert vigente (recert_num=1) NÃO foi marcado REPLACED — ' +
+  85  |         'apenas certs efetivamente substituídos (recert_num=0) aparecem no filtro',
+  86  |       async () => {
+  87  |         await learningStudents.openFilterDrawer();
+  88  |         await learningStudents.openAdvancedFilterCriteria('Certificado');
+  89  |         await learningStudents.selectStatusFilter(tc4Data.unexpectedBadge);
+  90  |         await learningStudents.applyFilters();
+  91  | 
+  92  |         // Após filtrar por "Substituído", a linha "Emitido" do aluno NÃO deve aparecer.
+  93  |         // Richard pode aparecer com a linha "Substituído" (recert_num=0 — o cert antigo
+  94  |         // que virou REPLACED em TC1). O que NÃO pode existir é uma linha com badge
+  95  |         // "Emitido" nos resultados de "Substituído" — isso significaria que o cert
+  96  |         // vigente foi incorretamente marcado REPLACED.
+  97  |         const linhaEmitidaNoFiltroSubstituido = learningStudents.getRowByEmail(
+  98  |           tc4Data.alunoLegadoEmail,
+  99  |           { certState: tc4Data.expectedBadge }, // filtro adicional: só rows com "Emitido"
+  100 |         );
+  101 |         await expect(linhaEmitidaNoFiltroSubstituido).toHaveCount(0, { timeout: 10_000 });
+  102 |       },
+  103 |     );
+  104 |   });
+  105 | 
+  106 |   // CLAUDE.md §7.6 G: passo 3 aplica filtro — limpar após execução para
+  107 |   // não contaminar próximos specs no mesmo contexto de página.
+  108 |   test.afterEach(async ({ page }) => {
+  109 |     const learningStudents = new LearningStudentsPage(page);
+  110 |     await learningStudents.clearFilters().catch(() => undefined);
+  111 |   });
+  112 | });
+  113 | 
+```

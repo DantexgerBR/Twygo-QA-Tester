@@ -1,6 +1,19 @@
 ---
 name: trocar-perfil-twygo
 description: Como alternar entre perfis Twygo (Administrador / Aluno / Colaborador / Instrutor / Gestor) em specs Playwright. O switch é uma navegação client-side via popover de perfil no canto superior direito — não exige credencial nova nem storageState secundário. Use sempre que um TC exigir validar visão Aluno (dashboard de aluno, widgets, listagem de cursos visíveis ao aluno) ou outra persona, e nunca marque `test.fixme` por "falta credencial do perfil X" sem antes verificar o switch UI.
+when_to_use: |
+  - TC exige validar visão Aluno (dashboard, widgets, cursos visíveis ao aluno)
+  - TC requer persona Colaborador / Instrutor / Gestor
+  - Spec marcado `fixme` "falta credencial do perfil X" — antes de aceitar
+triggers:
+  - "trocar perfil"
+  - "perfil Aluno"
+  - "visão Aluno"
+  - "btn-aluno"
+  - "menu-target"
+  - "popover de perfil"
+  - "alternar perfil"
+  - "persona"
 version: 1.0.0
 ---
 

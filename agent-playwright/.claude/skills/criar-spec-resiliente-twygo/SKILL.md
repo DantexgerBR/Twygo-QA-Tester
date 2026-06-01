@@ -1,6 +1,20 @@
 ---
 name: criar-spec-resiliente-twygo
 description: Princípios pra generator/healer emitir specs Playwright Twygo que não viram flaky. Cobre asserção por invariante (não por count exato do seed), timeouts explícitos pós-hydration de SPA Chakra/React, retry transparente de rede via safeGoto, independência de ordem de cards/rows, e localização correta de testId em void elements + escopo pra evitar strict-mode violations. Use sempre que gerar/corrigir spec novo OU ao revisar spec existente que falhou e quer entender se é falha real ou só fragilidade do código de teste.
+when_to_use: |
+  - Generator emitindo `.spec.ts` novo a partir do MD/XML
+  - Healer consertando spec que falhou — antes de trocar seletor, validar fragilidade
+  - Code review de spec antes de mergear
+  - Spec passa local mas falha em CI ou alterna sem mudança de código
+triggers:
+  - "spec flaky"
+  - "asserção frágil"
+  - "count exato do seed"
+  - "strict-mode violation"
+  - "hydration"
+  - "safeGoto"
+  - "invariante"
+  - "void elements"
 version: 1.1.0
 ---
 
@@ -361,6 +375,14 @@ for "sim", aplique o fix correspondente:
 7. **Existe `modal.getByRole('combobox')` ou `modal.getByText('X')`
    em escopo amplo?** → verificar via DOM live quantos elementos
    matcham; se ≥2, criar helper de sub-bloco no Page Object.
+
+## Quando NÃO usar
+
+- Spec já está verde e estável — refactor preventivo não é necessário a menos que esteja flaky em runs sucessivos (use [[twygo-triage-report]] pra categorizar antes).
+- Falha é causada por bug de produto (HTTP 4xx/5xx, mensagem real do backend) — não é fragilidade do spec; use [[debugar-via-network-e-console]] e relate como bug.
+- Spec testa endpoint API direto (`tests/api/`) — princípios aqui são de hydration/locator UI; use [[testar-api-twygo]] + [[validar-schema-api-twygo]].
+- Falha é por seed ausente / aluno não-elegível / curso sem atividades — não é spec frágil; use [[provisionar-seed]].
+- Falha é por modal oportunista (NPS Sofia, banner BETA) — use [[fechar-modais-twygo]] / [[tratar-modal-beta-end-twygo]] antes de aplicar Princípio 2.
 
 ## Skills relacionadas
 

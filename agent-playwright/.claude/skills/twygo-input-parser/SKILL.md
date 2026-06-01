@@ -1,6 +1,16 @@
 ---
 name: twygo-input-parser
 description: Dispatcher unificado para o passo de parse (Fase 2 do orchestrator). Detecta o formato do arquivo de entrada (.md canônico ou .xml TestLink legado) e delega ao parser correspondente. Output JSON segue mesma forma estrutural, permitindo coexistência sem flag-day durante a migração para o MD canônico (CONTRACT.md v1).
+when_to_use: |
+  - Substitui o `agent:parse` antigo (hardcoded para XML)
+  - Auto-detect de .md ou .xml em `inputs/`
+  - Fase 2 do orchestrator
+triggers:
+  - "agent:parse"
+  - "twygo-input-parser"
+  - "auto-detect parser"
+  - "MD vs XML"
+  - "Fase 2 parse"
 version: 1.0.0
 ---
 

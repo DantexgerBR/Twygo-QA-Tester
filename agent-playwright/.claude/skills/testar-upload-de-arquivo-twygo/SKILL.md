@@ -1,6 +1,18 @@
 ---
 name: testar-upload-de-arquivo-twygo
 description: Como testar fluxos Twygo de upload de arquivo via front (PDF, DOCX, JPG, PNG). Cobre catálogo compartilhado em `test-assets/uploads/`, helper tipado `uploadFixtures` em `src/utils/test-assets.ts`, padrão Playwright `setInputFiles()` para `<input type="file">` (funciona mesmo com input hidden/display:none — não precisa clicar no botão), await de indexação assíncrona (Base de Conhecimento e similares), cleanup obrigatório em `afterAll` (deletar arquivo subido), e anti-patterns (gerar arquivo em runtime, hardcodar path, mockar fs.writeFile). Use sempre que XML descrever upload de arquivo OU asserção sobre conteúdo indexado após upload.
+when_to_use: |
+  - XML/AT descreve upload de arquivo (PDF/DOCX/JPG/PNG)
+  - Asserção valida conteúdo indexado após upload (Base de Conhecimento)
+  - Generator precisa cobrir fluxo Selecionar arquivo + indexação assíncrona
+triggers:
+  - "upload de arquivo"
+  - "setInputFiles"
+  - "uploadFixtures"
+  - "test-assets/uploads"
+  - "Base de Conhecimento"
+  - "input type=file"
+  - "indexação assíncrona"
 version: 1.0.0
 ---
 

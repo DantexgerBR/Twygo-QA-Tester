@@ -1,6 +1,19 @@
 ---
 name: debugar-smoke-login
 description: Sequência de diagnóstico quando o smoke do agente Playwright (`npm run agent:smoke`) falha no `globalSetup` com `TimeoutError: locator.fill: Timeout 30000ms exceeded` em `LoginPage.login()`. Cobre as 4 causas-raiz típicas (ambiente fora, .env incompleto, layout mudou, storageState corrompido). Use quando aparecer "Smoke test falhou — não vou prosseguir" ou timeout no textbox `Login`/`Senha`.
+when_to_use: |
+  - `npm run agent:smoke` falha no `globalSetup`
+  - `TimeoutError: locator.fill` em textbox Login/Senha
+  - Output mostra "Smoke test falhou — não vou prosseguir"
+  - Storage corrompido / login falhando no boot
+triggers:
+  - "Smoke test falhou"
+  - "globalSetup"
+  - "LoginPage.login"
+  - "textbox Login"
+  - "textbox Senha"
+  - "agent:smoke"
+  - "TimeoutError locator.fill"
 version: 1.0.0
 ---
 

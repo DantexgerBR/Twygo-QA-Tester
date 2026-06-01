@@ -1,0 +1,11 @@
+{
+  "runId": "isolamento-de-progresso-score-e-attendance-por-inscricao_20260529-095123",
+  "mode": "per-suite",
+  "suiteFilter": "Isolamento de Progresso, Score e Attendance por Inscrição",
+  "projectName": "Recertificação",
+  "environment": "staging-recertificacao",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-05-29T12:51:23.630Z"
+}

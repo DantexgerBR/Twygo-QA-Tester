@@ -1,5 +1,5 @@
 # Relatório mais recente — all-suites
 
-**[Abrir → `all-suites_20260526-084449/index.md`](all-suites_20260526-084449/index.md)**
+**[Abrir → `all-suites_20260528-164619/index.md`](all-suites_20260528-164619/index.md)**
 
-_Gerado em 26/05/2026, 08:44:49._
+_Gerado em 28/05/2026, 16:46:19._

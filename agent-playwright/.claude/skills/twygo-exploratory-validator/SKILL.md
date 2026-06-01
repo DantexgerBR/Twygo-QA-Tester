@@ -1,6 +1,18 @@
 ---
 name: twygo-exploratory-validator
 description: Agrega findings exploratórios da execução Playwright (console errors, HTTP 4xx/5xx, broken images, violations a11y axe-core, snapshot de elementos interativos) por testsuite. Em modo regressivo, exporta também attachments Allure-compatíveis.
+when_to_use: |
+  - Pós-execução Playwright, antes de gerar relatório final
+  - Consolidar `outputs/exploratory/*.json` em `exploratory-findings.json`
+  - Modo regressivo precisa exportar attachments Allure-compatíveis
+triggers:
+  - "exploratory-findings.json"
+  - "agent:validate-exploratory"
+  - "console errors"
+  - "broken images"
+  - "axe-core"
+  - "a11y violations"
+  - "fixture exploratória"
 version: 2.0.0
 ---
 

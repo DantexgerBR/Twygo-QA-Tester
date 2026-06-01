@@ -1,0 +1,29 @@
+{
+  "runId": "isolamento-em-ambientes-adicionais_20260601-090212",
+  "scope": "Apenas testsuite contendo \"Isolamento em Ambientes Adicionais\"",
+  "tests": {
+    "total": 2,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 2,
+    "durationMs": 0
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 0,
+    "tests": 81,
+    "outOfScope": {
+      "errors": 583,
+      "warnings": 305,
+      "info": 18
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

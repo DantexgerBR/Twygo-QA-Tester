@@ -1,10 +1,33 @@
 ---
 name: testar-api-twygo
-description: Como testar endpoints REST/GraphQL Twygo a partir do agent-playwright usando `request` fixture (sem browser). Cobre quando usar request fixture vs `page.evaluate` (helper `src/utils/api.ts`), organização canônica de `tests/api/` + `api/` (clientes HTTP estilo POM) + `schemas/` (JSON Schemas Ajv), padrão de spec, combinação com playbooks UI (Flipper, Super Admin) no setup, idempotência via emails únicos por run, naming e anti-patterns. Use sempre que TC tem `**Tipo**: api` no MD canônico, OU quando spec novo precisar disparar request HTTP cru com schema validation. Patterns validados live em 2026-05-28 contra recertificacao-testeqa.stage.twygoead.com (CONTRACT.md §16, v1.2).
-version: 1.1.0
+description: Padrão canônico de teste de API Twygo no agent-playwright via `request` fixture (sem browser). Organização `tests/api/` + clientes HTTP em `api/` + JSON Schemas em `schemas/`. Skill principal da trinca API; auth e schema têm skills irmãs.
+when_to_use: |
+  - TC tem `**Tipo**: api` no MD canônico
+  - Spec novo precisa disparar request HTTP cru com schema validation
+  - Você está estruturando organização de `tests/api/` num projeto novo
+triggers:
+  - "Tipo: api"
+  - "request fixture"
+  - "tests/api"
+  - "EventsApiClient"
+  - "POST /api/v2"
+  - "GET /api/v2"
+  - "Bearer"
+  - "Authorization header"
+  - "JSON Schema"
+  - "validateAgainstSchema"
+version: 1.2.0
 ---
 
 # testar-api-twygo
+
+> **Trinca API** — 3 skills cobrem aspectos complementares do mesmo
+> domínio. Esta é a skill **principal** (padrão/organização). Skills
+> irmãs:
+> - [[provisionar-token-api-twygo]] — como obter `Authorization` header
+> - [[validar-schema-api-twygo]] — como validar response via Ajv
+>
+> Consultar as 3 antes de gerar/healear spec API. INDEX.md categoria `api`.
 
 ## Semântica Twygo
 

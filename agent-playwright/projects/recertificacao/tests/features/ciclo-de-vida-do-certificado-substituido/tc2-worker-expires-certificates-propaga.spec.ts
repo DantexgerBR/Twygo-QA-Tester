@@ -18,7 +18,21 @@ test.describe('Ciclo de Vida do Certificado Substituído', () => {
   // A ação UI "Expirar certificado" dispara esse mesmo fluxo server-side
   // e o resultado é observável via badge "Expirado" na listagem.
 
-  test(
+  /**
+   * @fixme dep-externa: TC valida worker ExpiresCertificates (RN 22/22.1) que
+   *        propaga expiração do par VALID→REPLACED. Refatorado de "Rails
+   *        console" para UI ação "Expirar certificado", mas a propagação
+   *        server-side (REPLACED também expira) não é diretamente observável
+   *        via UI listagem na linha do aluno — fixture cria aluno
+   *        worker-isolated SEM par REPLACED prévio (fixture só emite 1 cert).
+   *        Para validar de fato a propagação, exige seed com 2+ certs no par
+   *        (1 REPLACED + 1 VALID). Aguarda fixture composta OU agent-db (V2).
+   *
+   *        Sintaxe `test.fixme(title, options, cb)` é proposital: evita que
+   *        a fixture `alunoAprovadoNoCursoFixoSeed` (~3min de setup) rode
+   *        quando o teste está pulado.
+   */
+  test.fixme(
     'TC2 — Worker ExpiresCertificates expira VALID e propaga para REPLACED do mesmo par',
     { tag: '@seed-heavy' },
     async ({ page, alunoAprovadoNoCursoFixoSeed }) => {

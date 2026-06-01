@@ -4,14 +4,17 @@ import { CsvImportPage } from '../../../pages/CsvImportPage.js';
 import { tc1Data } from './tc1-coluna-reinscrever-template-csv-flag-on.data.js';
 
 test.describe('Reinscrição via Importação CSV', () => {
-  // REVISAR: seed inválido — `tc1Data.eventId = 2` retorna HTTP 404 em
-  // `/o/37007/events/2/import_participants` (não existe curso 2 na org de
-  // staging-base-de-conhecimento). Adicionalmente, a rota `import_participants`
-  // ainda está marcada `REVISAR-FIGMA` no MD — confirmar URL real do app via
-  // chrome-devtools-mcp e atualizar `CsvImportPage.goToImport` + `.data.ts`
-  // com eventId real de curso com `has_recertification = true`. Validado live
-  // no env staging-base-de-conhecimento durante run 2026-05-26.
-  test.fixme(true, 'seed inválido — eventId placeholder. Validar curso com import CSV habilitado no env staging-base-de-conhecimento.');
+  // Refatoração 2026-06-01 (Pacote C #6) tentada via fixture
+  // `cursoComRecertificacaoSeed` (skill `provisionar-seed`). REVERTIDA
+  // porque `SeedAdminPage.setHasRecertification` (chamado pela fixture)
+  // hoje falha em `openEditReactAccessById` — timeout 20s no `waitFor`
+  // da tab Acesso. Tabs aparecem no snapshot pós-erro mas state lento
+  // (3 toasts "Identificação salva" durante setup → re-render do React).
+  // Modal beta-end NÃO é a causa (dismiss adicional não resolveu).
+  // Próximo: investigar load state do facelift via trace.zip, OU
+  // refatorar `setHasRecertification` pra esperar toast desaparecer
+  // antes do próximo step.
+  test.fixme(true, 'seed-roadmap-bloqueio-canonical: refactor pra fixture cursoComRecertificacaoSeed (válida em si) bloqueado por bug state-dependent em SeedAdminPage.setHasRecertification → openEditReactAccessById (tab Acesso não fica visible em 20s após save com toast pendente). Reverte ao fixme até bug canonical do helper ser corrigido.');
   test('TC1 — Coluna "Reinscrever" aparece no template CSV com flag ON', async ({
     page,
   }) => {

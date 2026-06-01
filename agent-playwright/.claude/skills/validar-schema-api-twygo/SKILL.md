@@ -1,10 +1,26 @@
 ---
 name: validar-schema-api-twygo
-description: Como validar response da API Twygo contra JSON Schema (draft-2020-12) em specs de `tests/api/`. Cobre organização de `projects/<slug>/schemas/`, naming canônico, como gerar schema a partir de exemplo real, uso do helper `validateAgainstSchema()` em `src/utils/schema.ts` (Ajv 8 + ajv-formats), padrões Twygo recorrentes (envelope `{ data: {...} }`, paginação, multi-status 207, error shapes), pretty error messages e quando NÃO usar (`Tipo: ui` puro). Use sempre que TC `Tipo: api` precisar assertar shape de response, OU quando spec falhar com mensagem genérica `expected X to equal Y` em body de response.
-version: 1.0.0
+description: Validar response API Twygo contra JSON Schema draft-2020-12. Helper `validateAgainstSchema()` em `src/utils/schema.ts` (Ajv 8 + ajv-formats). Padrões envelope, paginação, multi-status 207, error shapes. Skill irmã da trinca API.
+when_to_use: |
+  - TC `Tipo: api` precisa assertar shape de response
+  - Spec falhou com `expected X to equal Y` em body de response
+  - Você está criando `schemas/<recurso>-<acao>-response.schema.json`
+triggers:
+  - "validateAgainstSchema"
+  - "JSON Schema"
+  - "Ajv"
+  - "ajv-formats"
+  - "schemas/"
+  - "expected X to equal Y"
+  - "draft-2020-12"
+  - "additionalProperties"
+version: 1.1.0
 ---
 
 # validar-schema-api-twygo
+
+> **Trinca API** — Skill irmã. Para padrão geral, ver [[testar-api-twygo]].
+> Para auth, ver [[provisionar-token-api-twygo]].
 
 ## Semântica Twygo
 

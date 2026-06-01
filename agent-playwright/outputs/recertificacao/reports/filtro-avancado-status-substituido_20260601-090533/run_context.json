@@ -1,0 +1,11 @@
+{
+  "runId": "filtro-avancado-status-substituido_20260601-090533",
+  "mode": "per-suite",
+  "suiteFilter": "Filtro Avançado Status Substituído",
+  "projectName": "Recertificação",
+  "environment": "staging-recertificacao",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-06-01T12:05:33.097Z"
+}

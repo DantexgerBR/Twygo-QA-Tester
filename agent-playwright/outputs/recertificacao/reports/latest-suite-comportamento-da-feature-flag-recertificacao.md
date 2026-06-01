@@ -1,5 +1,5 @@
 # Relatório mais recente — comportamento-da-feature-flag-recertificacao
 
-**[Abrir → `comportamento-da-feature-flag-recertificacao_20260527-090209/index.md`](comportamento-da-feature-flag-recertificacao_20260527-090209/index.md)**
+**[Abrir → `comportamento-da-feature-flag-recertificacao_20260601-085835/index.md`](comportamento-da-feature-flag-recertificacao_20260601-085835/index.md)**
 
-_Gerado em 27/05/2026, 09:02:09._
+_Gerado em 01/06/2026, 08:58:35._

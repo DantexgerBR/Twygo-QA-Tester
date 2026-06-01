@@ -1,6 +1,16 @@
 ---
 name: twygo-triage-report
 description: Gera um único `outputs/<slug>/triage-report.md` com cada falha estruturada para revisão batch do QA — XML diz X, helper tentou Y, parou em Z, screenshot inline, checkboxes "bug produto / comportamento esperado / spec errado / flakiness". Substitui ciclos de pergunta turn-by-turn por uma janela única de triagem. Decisão do QA persiste em arquivo versionado e vira input pra próxima rodada do agente.
+when_to_use: |
+  - Após `agent:run` terminar com 1+ falha, antes do agente sair "consertando"
+  - QA Lead precisa categorizar batch de TCs vermelhos em bug/spec/flakiness
+  - Antes de delegar healer — produz arquivo decisório versionado
+triggers:
+  - "triage-report.md"
+  - "agent:triage"
+  - "bug produto / comportamento / spec errado / flakiness"
+  - "decisão QA Lead"
+  - "categorizar fails"
 version: 1.0.0
 ---
 

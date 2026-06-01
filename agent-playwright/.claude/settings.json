@@ -9,6 +9,15 @@
             "command": "node .claude/hooks/pre-git-sync.cjs"
           }
         ]
+      },
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/pre-edit-skill-gate.cjs"
+          }
+        ]
       }
     ]
   }

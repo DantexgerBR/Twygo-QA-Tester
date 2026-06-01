@@ -1,6 +1,20 @@
 ---
 name: pull-antes-de-commit-push
 description: Antes de cada `git commit` ou `git push` numa branch com upstream tracking, rodar `git fetch` + análise de impacto + decisão de integração ANTES de mexer no histórico local. Evita acumular commits behind silenciosamente e detecta sobreposição com working tree/commits ahead. Skill enforça protocolo de sync e fornece checklist de impactos (arquivos sensíveis, sobreposição direta, classes de risco). Use sempre que o usuário pedir "commitar", "fazer push", "atualizar branch", "sincronizar", ou quando você estiver pra emitir `git commit`/`git push` por iniciativa.
+when_to_use: |
+  - Usuário pede "commitar", "fazer push", "atualizar branch", "sincronizar"
+  - Você está pra emitir `git commit`/`git push` por iniciativa em branch compartilhada
+  - Após sessão longa sem ter feito fetch — antes de qualquer push
+triggers:
+  - "commitar"
+  - "fazer push"
+  - "atualizar branch"
+  - "sincronizar branch"
+  - "git fetch"
+  - "git pull"
+  - "behind"
+  - "ahead"
+  - "upstream tracking"
 version: 1.0.0
 ---
 

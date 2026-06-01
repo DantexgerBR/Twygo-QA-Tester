@@ -1,6 +1,18 @@
 ---
 name: debugar-generator-travado
 description: O subagent `playwright-test-generator` (do plugin oficial Microsoft) trava silenciosamente em `generator_setup_page` depois de uma execução longa do planner na mesma sessão MCP — sem produzir output, sem timeout, sem erro. Use quando o generator estiver rodando há >10min sem nenhum output visível, ou quando você dispatch 2 generators paralelos e ambos ficaram "running" indefinidamente.
+when_to_use: |
+  - `playwright-test-generator` rodando >10min sem output visível
+  - Dispatch de 2+ generators paralelos travou todos em `running`
+  - `TaskOutput(block=false)` mostra `not_ready` indefinidamente
+  - TaskStop forçado mostra trace parado antes de `generator_setup_page`
+triggers:
+  - "generator_setup_page"
+  - "playwright-test-generator travado"
+  - "TaskOutput not_ready"
+  - "subagent travado"
+  - "MCP playwright-test"
+  - "feedback_parallel_mcp_limit"
 version: 1.0.0
 ---
 

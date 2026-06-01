@@ -1,6 +1,19 @@
 ---
 name: testar-beforeunload-dialog-twygo
 description: Specs Twygo que clicam "Cancelar" / "Sair" / botão de saída em forms com alterações pendentes disparam o **beforeunload dialog NATIVO do browser** — não modal Chakra. O `click()` Playwright FICA PENDURADO até o dialog ser resolvido. Handler precisa chamar `dialog.dismiss()` (ou `dialog.accept()`) DENTRO do callback, antes do `click()` retornar. Documenta o padrão canônico, anti-pattern típico (handler que só marca boolean), e validação via chrome-devtools-mcp. Use ao gerar/corrigir specs Twygo que testam "cancelar edição com alterações", "navegação com form dirty", "fechar wizard a meio caminho".
+when_to_use: |
+  - Spec timeouta em `locator.click()` no botão "Cancelar"/"Sair" de form dirty
+  - TC valida "cancelar edição com alterações" / "navegação com form dirty"
+  - Wizard/form com alteração pendente que o usuário tenta abandonar
+triggers:
+  - "beforeunload"
+  - "dialog.dismiss"
+  - "dialog.accept"
+  - "form dirty"
+  - "cancelar com alterações"
+  - "performing click action"
+  - "browser-handle-dialog"
+  - "native dialog"
 version: 1.0.0
 ---
 

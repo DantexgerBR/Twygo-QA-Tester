@@ -1,6 +1,18 @@
 ---
 name: testar-exclusao-dados-trial-twygo
 description: Como testar o fluxo "Excluir informações" do widget Sophia em orgs Trial Twygo — ícone Sophia (canto inferior esquerdo) → popover → "Excluir informações" → modal com 4 opções de exclusão (SophiaTech / Admin / Usuários / Tudo) → Excluir. Spec único por projeto rodando contra 1 Trial dedicada (ICP "Outros", provisionada via `provisionar-trial-projeto-twygo`). Cada projeto tem sua própria Trial porque a exclusão zera o env — não há como compartilhar entre projetos. Use sempre que um projeto Twygo precisar validar reset/exclusão de dados em org Trial — repete-se em quase todo projeto porque trial é o ciclo de vida típico do produto.
+when_to_use: |
+  - Projeto Twygo precisa validar reset/exclusão de dados em org Trial
+  - TC valida "Excluir informações" via widget Sophia
+  - Validar exclusão SophiaTech / Admin / Usuários / Tudo numa Trial
+triggers:
+  - "Excluir informações"
+  - "widget Sophia"
+  - "SophiaTech"
+  - "Trial reset"
+  - "exclusão Trial"
+  - "trial-env.json"
+  - "icp5"
 version: 1.4.0
 ---
 

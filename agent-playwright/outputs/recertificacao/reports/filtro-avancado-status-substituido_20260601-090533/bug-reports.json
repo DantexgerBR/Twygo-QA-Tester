@@ -1,0 +1,95 @@
+{
+  "generatedAt": "2026-06-01T12:05:31.251Z",
+  "project": "recertificacao",
+  "totalRed": 1,
+  "reports": [
+    {
+      "id": "filtro-avancado-status-substituido__tc4-opcao-substituido-nao-aparece-no-filtro-com-flag-off-regressao",
+      "title": "TC4 — Opção \"Substituído\" NÃO aparece no filtro com flag OFF (regressão) — TimeoutError: locator.click: Timeout 30000ms exceeded.",
+      "testsuite": "Filtro Avançado Status Substituído",
+      "testcase": "TC4 — Opção \"Substituído\" NÃO aparece no filtro com flag OFF (regressão)",
+      "file": "projects/recertificacao/tests/features/filtro-avancado-status-substituido/tc4-opcao-substituido-nao-aparece-flag-off-regressao.spec.ts",
+      "status": "failed",
+      "durationMs": 52144,
+      "categoriaSugerida": "modal-nao-tratado",
+      "categoriaConfianca": "alta",
+      "categoriaJustificativa": "Click interceptado — overlay/modal por cima do alvo",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-recertificacao",
+        "baseUrl": "https://recertificacao-testeqa.stage.twygoead.com/",
+        "orgId": "37048",
+        "browser": "chromium",
+        "user": "agents.qa@claude.com"
+      },
+      "buildCommit": "62d85ed",
+      "generatedAt": "2026-06-01T12:05:31.251Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Desativar a feature flag `:recertificacao` → Flag OFF",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "2. Acessar a lista de aprendizagem e abrir o filtro avançado de Status do certificado → Drawer de filtro é exibido",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('#open-filter')\n    - locator resolved to <button type=\"button\" id=\"open-filter\" class=\"chakra-button css-it72td\" data-test-id=\"filter-control-open-button\">…</button>\n  - attempting click action\n    2 × waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-1u2cvaz\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\n    - retrying click action\n    - waiting 20ms\n    2 × waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view i …[+631 chars]",
+      "errorLocation": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\LearningStudentsPage.ts:81:34",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-recertificacao-te-2dce4-tro-com-flag-OFF-regressão--chromium/test-finished-1.png"
+        },
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-recertificacao-te-2dce4-tro-com-flag-OFF-regressão--chromium/test-failed-2.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-recertificacao-te-2dce4-tro-com-flag-OFF-regressão--chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-recertificacao-te-2dce4-tro-com-flag-OFF-regressão--chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-recertificacao-te-2dce4-tro-com-flag-OFF-regressão--chromium/error-context.md"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-recertificacao-te-2dce4-tro-com-flag-OFF-regressão--chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-recertificacao-te-2dce4-tro-com-flag-OFF-regressão--chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37048",
+        "userId": null
+      }
+    }
+  ]
+}

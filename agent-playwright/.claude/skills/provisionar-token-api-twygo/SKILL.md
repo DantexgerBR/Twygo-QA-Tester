@@ -1,10 +1,26 @@
 ---
 name: provisionar-token-api-twygo
-description: Como obter token de acesso à API Twygo (V1/V2) em specs de `tests/api/`. Cobre 3 modos canônicos (`fixed_token` para token pré-gerado em `.env`, `oauth_password` para `POST /oauth/token` em runtime, `super_admin_generated` reservado para futuro), seleção via `API_AUTH_MODE`, helper canônico `getApiAuthHeaders()` em `src/utils/api-auth.ts` com cache de token por sessão. Resolve o REVISAR clássico das ATs de API (`Token de acesso à API V2 disponível (REVISAR: como obter token em staging)`). Use sempre que spec de API precisar de header `Authorization`, ANTES de marcar `test.fixme` por "falta token".
-version: 1.0.0
+description: Como obter token Authorization para specs `tests/api/`. 3 modos canônicos (`fixed_token`/.env, `oauth_password`/runtime, `super_admin_generated`/futuro), helper `getApiAuthHeaders()` em `src/utils/api-auth.ts` com cache. Skill irmã da trinca API.
+when_to_use: |
+  - Spec API precisa de header `Authorization: Bearer ...`
+  - Você vê `test.fixme` por "falta token" / "REVISAR: como obter token"
+  - Setup `beforeAll` precisa popular `authHeaders` fixture
+triggers:
+  - "Authorization"
+  - "Bearer token"
+  - "API_AUTH_MODE"
+  - "getApiAuthHeaders"
+  - "oauth_password"
+  - "fixed_token"
+  - "401 Unauthorized"
+  - "REVISAR: como obter token"
+version: 1.1.0
 ---
 
 # provisionar-token-api-twygo
+
+> **Trinca API** — Skill irmã. Para padrão geral de teste API, ver
+> [[testar-api-twygo]]. Para validar response, ver [[validar-schema-api-twygo]].
 
 ## Semântica Twygo
 

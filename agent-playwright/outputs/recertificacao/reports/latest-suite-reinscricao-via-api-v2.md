@@ -1,5 +1,5 @@
 # Relatório mais recente — reinscricao-via-api-v2
 
-**[Abrir → `reinscricao-via-api-v2_20260527-084952/index.md`](reinscricao-via-api-v2_20260527-084952/index.md)**
+**[Abrir → `reinscricao-via-api-v2_20260528-200327/index.md`](reinscricao-via-api-v2_20260528-200327/index.md)**
 
-_Gerado em 27/05/2026, 08:49:52._
+_Gerado em 28/05/2026, 20:03:27._

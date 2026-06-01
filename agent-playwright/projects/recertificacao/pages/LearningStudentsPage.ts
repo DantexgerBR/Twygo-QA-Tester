@@ -588,11 +588,12 @@ export class LearningStudentsPage extends BasePage {
    * pode levar ~200ms para animar até o viewport.
    */
   private getOpenChakraMenu(): Locator {
-    // 3ª iteração heal 2026-05-29: `.last()` pegou um menu HIDDEN
-    // (display:none/visibility:hidden). Todos os ~26 menus Chakra ficam
-    // montados no DOM como `<div role="menu">` — apenas 1 visível por vez.
-    // `filter({ visible: true })` do Playwright (1.45+) filtra por
-    // visibility computada (display, visibility, opacity, aria-hidden).
+    // 4ª iteração 2026-06-01: filter({visible:true}) + first() —
+    // Playwright auto-wait re-tenta enquanto o menu anima (~200ms).
+    // `.or(.last())` foi rejeitado pois durante animação o último menu
+    // pode ser um off-screen (rect.y < 0) e o click bypassaria handler.
+    // Manter `:visible` puro garante que só menu computado-visível é
+    // considerado (display, visibility, opacity, aria-hidden todos checados).
     return this.page.locator('[role="menu"]').filter({ visible: true }).first();
   }
 

@@ -54,29 +54,29 @@ test.describe('Isolamento de Progresso, Score e Attendance por Inscrição', () 
     });
   });
 
-  test(
+  /**
+   * @fixme AT-inferiu-toast-inexistente: pipeline completo OK, click
+   *        Reinscrever atinge alvo correto (fix Chakra multi-menu
+   *        aplicado), mas toast Reinscri|sucesso não aparece. Mesma raiz
+   *        TC3 Suite 2. Destinatário: AT/QA Lead — revisar AT pra
+   *        validar pela listagem (linha Pendente nova com progress=0,
+   *        cert Pendente) em vez de toast.
+   *
+   *        Validação live 2026-05-29 (9 iterações de heal): pipeline da
+   *        fixture completa em ~3min, Chakra multi-menu resolvido via
+   *        filter({visible:true}). Toast `Reinscri|sucesso` não vem em
+   *        10s pós `clickReinscrever` — POST disparado direto sem toast
+   *        visível (ou texto fora do regex).
+   *
+   *        Sintaxe `test.fixme(title, options, cb)` é proposital: evita
+   *        que a fixture `alunoAprovadoNoCursoFixoSeed` (~3min de setup)
+   *        rode quando o teste está pulado. Trade-off: motivo aparece
+   *        "[REVISAR]" no report — ler este JSDoc.
+   */
+  test.fixme(
     'TC1 — Aluno reinscrito tem progress/score/attendance zerados na nova inscrição',
     { tag: '@seed-heavy' },
     async ({ page, alunoAprovadoNoCursoFixoSeed }) => {
-      // Validação live 2026-05-29 (9 iterações de heal):
-      // - Pipeline da fixture completa OK em ~3min (cert emitido,
-      //   participants criados, listagem acessível).
-      // - Bug Chakra multi-menu RESOLVIDO em SeedAdminPage +
-      //   LearningStudentsPage via filter({visible: true}).
-      // - PORÉM: toast `Reinscri|sucesso` não aparece em 10s após
-      //   `clickReinscrever`. Mesma raiz que TC3 Suite 2 — a AT
-      //   inferiu modal "Confirmar reinscrição" + toast que não
-      //   existem no produto. O click do "Iniciar reinscrição"
-      //   provavelmente dispara um POST direto cujo response não
-      //   gera toast visível (ou gera com texto fora do regex).
-      //
-      // Destinatário do fix: AT/QA Lead — revisar AT pra validar
-      // via listagem de Aprendizagem (linha Pendente nova com
-      // progress=0, cert Pendente) em vez de toast.
-      test.fixme(
-        true,
-        'AT-inferiu-toast-inexistente: pipeline completo OK, click Reinscrever atinge alvo correto (fix Chakra multi-menu aplicado), mas toast Reinscri|sucesso não aparece. Mesma raiz TC3 Suite 2. Revisar AT pra validar pela listagem em vez de toast.',
-      );
       // Skill provisionar-seed v1.7.x (2026-05-29): após 7 iterações de heal:
       //   v1: curso 806755 + recertificacaoever1@twygo.com → 422 silencioso
       //   v2: curso 807287 + richard.sebold@twygo.com → todos Pendente

@@ -1,6 +1,22 @@
 ---
 name: provisionar-seed
-description: Quando um TC Playwright declara pré-condição como "curso pré-existente", "curso com has_recertification=true", "aluno matriculado", "participant com progresso", "aluno com certificado emitido", "trilha com 3 cursos filhos", etc, o spec NÃO pode marcar `test.fixme(true, 'seed inválido')` nem depender de IDs hardcoded em `.data.ts` placeholder. Em vez disso, o spec **declara dependência via fixture canônica** (`cursoSeed`/`cursoLiberadoSeed`/`cursoComRecertificacaoSeed`/`cursoComAtividadesMarcaveisSeed`/`alunoMatriculadoSeed`/`alunoComSenhaSeed`/`alunoAprovadoSeed` em `src/fixtures/seed-fixtures.ts`) — a fixture provê o recurso (criando ou reusando) e faz cleanup automático `afterAll` via variant `*_safe`. Mapping pré-condição→fixture é tabela canônica que generator/healer consultam. Fluxo do seed cobre: criação via UI admin (rotas validadas live `/contents/new?kind=N` facelift React p/ Curso/Trilha/Pacote, `/users/new` Haml legado p/ Usuário), matrícula via lista→more_vert→"Inscrição"→drawer→"Adicionar", matrícula COM SENHA via expand h3 colapsado + scroll progressivo, configuração de curso (publicar via tab Identificação, ligar `has_recertification` via tab Acesso switch Chakra), engajamento do aluno via `/e/{id}/learn` + checkbox "Marcar como concluído" em vídeo/SCORM/Aula configurados no admin, emissão automática de cert validável via `/api/v2/attendees`. Anti-patterns proibidos: `/events/new` Haml deprecated, `/contents/{id}/learning_students` (404), `fixme` por seed quando fixture cobre. Skill define o padrão canônico — catálogo de helpers (`createCurso`/`createTrilha`/`createPacote`/`criarUsuarioAluno`/`matricularAluno`/`matricularAlunoComSenha`/`setHasRecertification`/`publicarCurso`/`completarCursoComoAluno`/`desmatricularAlunoSafe`) + login OAuth do aluno + validar cert via API V2, mapping kind→Recurso, naming worker-isolated, scope worker pra amortizar custo, quando reusar `data/fixed-seed.data.ts` (seed permanente), e quando `fixme` por seed AINDA é legítimo (DB-only/mailer/Flipper toggle). Use ao gerar/revisar QUALQUER spec novo que tenha pré-condição "X existe no env" — converter em ação automatizada via fixture.
+description: Pré-condição "X pré-existente" vira fixture canônica em `src/fixtures/seed-fixtures.ts` (cursoSeed, alunoAprovadoSeed, etc), criada via UI admin com cleanup automático. NUNCA `test.fixme(true, 'seed inválido')` nem IDs hardcoded em `.data.ts`.
+when_to_use: |
+  - Pré-condição do TC menciona "curso pré-existente"/"aluno matriculado"/"trilha com X"
+  - Generator está pra emitir `test.fixme(true, 'seed inválido')` ou `eventId placeholder`
+  - Spec usa IDs hardcoded em `.data.ts` que retornam 404
+  - Healer detectou `404 GET /events/{N}` em TC com seed
+triggers:
+  - "seed inválido"
+  - "curso pré-existente"
+  - "aluno matriculado"
+  - "cursoSeed"
+  - "alunoMatriculadoSeed"
+  - "has_recertification"
+  - "cursoComRecertificacaoSeed"
+  - "/contents/new"
+  - "eventId placeholder"
+  - "createCurso"
 version: 1.7.1
 ---
 
@@ -1375,6 +1391,14 @@ novo:
 4. Spec final usa fixture custom OU describe-local beforeAll/afterAll.
 5. Generator deve incluir `ProfileSwitcher.switchTo('Administrador')`
    no beforeAll se o helper criar via UI admin.
+
+## Quando NÃO usar
+
+- TC roda inteiramente em API V2 sem UI (use [[testar-api-twygo]] + fixture HTTP, não UI admin para provisionar via REST direto).
+- Pré-condição exige DB write direto, worker assíncrono (job de queue), Flipper toggle ou config de env adicional — sem caminho UI admin. Aí `test.fixme` categoria §7.6 F com motivo específico é legítimo.
+- Recurso já está disponível como seed permanente em `data/fixed-seed.data.ts` (ex: curso 807403 do projeto Recertificação) — reuse direto em vez de recriar.
+- Spec valida tela de login / fluxo sem auth — não tem pré-condição de domínio (curso, aluno, trilha), só DOM.
+- TC é 100% read-only de listagem GENÉRICA do env (qualquer org, qualquer estado serve) — sem invariante específica do recurso.
 
 ## Skills relacionadas
 

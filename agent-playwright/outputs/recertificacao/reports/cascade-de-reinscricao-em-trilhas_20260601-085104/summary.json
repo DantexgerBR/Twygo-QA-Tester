@@ -1,0 +1,29 @@
+{
+  "runId": "cascade-de-reinscricao-em-trilhas_20260601-085104",
+  "scope": "Apenas testsuite contendo \"Cascade de Reinscrição em Trilhas\"",
+  "tests": {
+    "total": 4,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 4,
+    "durationMs": 0
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 0,
+    "tests": 78,
+    "outOfScope": {
+      "errors": 551,
+      "warnings": 293,
+      "info": 16
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

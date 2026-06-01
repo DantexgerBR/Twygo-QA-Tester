@@ -2,7 +2,7 @@ import type { Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 import { BasePage } from '../../../src/pages/BasePage.js';
 import { getOrgId } from '../../../src/utils/environment.js';
-import { safeGoto } from '../../../src/utils/modals.js';
+import { dismissCommonModals, safeGoto } from '../../../src/utils/modals.js';
 
 /**
  * Page Object da tela de edição de Conteúdo (curso / trilha) no Twygo.
@@ -144,6 +144,14 @@ export class ContentEditPage extends BasePage {
       .or(this.page.getByRole('tab', { name: /^Acesso$/i }))
       .first();
     if (await acessoTab.isVisible({ timeout: 2_000 }).catch(() => false)) {
+      // Modal beta-end pode reaparecer no /contents/{id}/edit após o
+      // createCurso (validado live 2026-06-01: portal Chakra intercepta
+      // click na tab Acesso). Dismiss antes + aguarda portal sumir.
+      await dismissCommonModals(this.page, { initialWaitMs: 1_500 });
+      await this.page
+        .locator('.chakra-portal:has(#chakra-modal--body-beta-end-modal)')
+        .waitFor({ state: 'hidden', timeout: 5_000 })
+        .catch(() => null);
       await acessoTab.click();
       await this.page
         .waitForURL(/tab=access/, { timeout: 5_000 })

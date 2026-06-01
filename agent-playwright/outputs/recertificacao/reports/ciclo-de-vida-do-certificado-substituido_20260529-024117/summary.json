@@ -1,0 +1,29 @@
+{
+  "runId": "ciclo-de-vida-do-certificado-substituido_20260529-024117",
+  "scope": "Apenas testsuite contendo \"Ciclo de Vida do Certificado Substituído\"",
+  "tests": {
+    "total": 4,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 1,
+    "durationMs": 250052
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 1,
+    "tests": 78,
+    "outOfScope": {
+      "errors": 575,
+      "warnings": 293,
+      "info": 16
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

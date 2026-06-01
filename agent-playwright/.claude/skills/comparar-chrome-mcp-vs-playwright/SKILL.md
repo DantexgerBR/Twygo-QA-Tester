@@ -1,6 +1,19 @@
 ---
 name: comparar-chrome-mcp-vs-playwright
 description: Fluxo de auditoria pra quando um spec Playwright Twygo falha. Reproduz o mesmo cenário via chrome-devtools-mcp (que simula humano via CDP — clique físico, mouse real, sem state shared) e compara passo-a-passo com o que o Playwright fez. Heurística canônica categoriza a falha em flakiness/bug-produto/spec-errado/ok antes de tocar no código. Use no triage de testes vermelhos antes de pedir healer pra "consertar".
+when_to_use: |
+  - Spec Playwright falhou — antes de pedir healer pra consertar, validar primeiro
+  - Triage batch — categorizar quais fails são bug/flakiness/seed errado
+  - Bug intermitente (passou local, falhou CI ou alterna sem padrão claro)
+  - Antes de aplicar fix em spec vermelho
+triggers:
+  - "spec falhou"
+  - "bug intermitente"
+  - "passou local falhou CI"
+  - "chrome-devtools-mcp"
+  - "ground truth"
+  - "triage de fails"
+  - "categorizar falha"
 version: 1.0.0
 ---
 

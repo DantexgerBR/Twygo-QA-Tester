@@ -1,6 +1,17 @@
 ---
 name: twygo-test-orchestrator
 description: Orquestra o ciclo completo de geração e execução de testes Playwright a partir do JSON parseado do XML TestLink. Delega planejamento, geração e healing aos subagentes do plugin oficial Playwright (playwright-test-planner / playwright-test-generator / playwright-test-healer) com contexto Twygo. Suporta modo per-suite (dia-a-dia) e modo regressivo (CI).
+when_to_use: |
+  - QA precisa gerar/executar/consertar specs a partir do AT
+  - Cenário per-suite (dia-a-dia) ou regressivo (CI)
+  - Antes de invocar planner/generator/healer manualmente
+triggers:
+  - "agent:suite"
+  - "agent:regression"
+  - "agent:run"
+  - "orchestrator"
+  - "Fase 3 4 5"
+  - "ciclo completo planner generator"
 version: 1.0.0
 ---
 
@@ -306,3 +317,11 @@ PR aberto em github.com/Twygo/twygo-agents-qa  # URL retornada ao QA
 5. **Não** modificar `inputs/` ou `outputs/` durante a orquestração (somente `outputs/` é gravado pelos sub-skills).
 6. Healer **só** corrige seletor/timing/asserção. Para mudanças de intenção,
    o XML do AT precisa ser atualizado primeiro.
+
+## Quando NÃO usar
+
+- Você quer apenas RODAR specs existentes sem regerar — use `npx playwright test` direto + [[twygo-report-generator]] manual via `npm run agent:report`.
+- Você quer apenas CONSERTAR 1 spec quebrado sem regerar a suite inteira — invoque `playwright-test-healer` direto via `subagent_type` (skip Etapas 1-4 do orchestrator).
+- Você está triando falhas batch (categorizar bug-produto / spec-frágil / flakiness) — use [[twygo-triage-report]] + [[comparar-chrome-mcp-vs-playwright]] antes de decidir healer.
+- Você quer auditar/diff de update upstream dos subagents oficiais (planner/generator/healer) — use [[atualizar-agents-oficiais]], que NÃO depende do orchestrator.
+- Tarefa é exploratória (recon de área nova do produto sem TCs ainda) — use [[twygo-recon]] standalone; orchestrator só roda quando há `test-analysis.parsed.json`.

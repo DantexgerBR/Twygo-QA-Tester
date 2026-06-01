@@ -1,6 +1,18 @@
 ---
 name: debugar-chat-widget-hubspot
 description: O widget HubSpot Chat (`<iframe id="hubspot-conversations-iframe" data-test-id="chat-widget-iframe">` num container `widget-align-right` no canto inferior direito) ocasionalmente intercepta clicks em botões do app — mesmo botões longe do canto. O error log mostra `<iframe ... id="hubspot-conversations-iframe"> from <div role="region" class="widget-align-right" aria-label="Widget de chat" id="hubspot-messages-iframe-container">...subtree intercepts pointer events`. Use quando spec falhar com timeout em click e o trace mencionar `hubspot-messages-iframe-container` ou `chat-widget-iframe` no subtree de interceptação.
+when_to_use: |
+  - Spec falha com `locator.click: Timeout` e trace cita `hubspot-conversations-iframe`
+  - Call log mostra `subtree intercepts pointer events` apontando `widget-align-right`
+  - Click em botão distante do canto inferior direito falha sem motivo aparente
+triggers:
+  - "hubspot-conversations-iframe"
+  - "chat-widget-iframe"
+  - "hubspot-messages-iframe-container"
+  - "widget-align-right"
+  - "Widget de chat"
+  - "subtree intercepts pointer events"
+  - "HubSpot Chat"
 version: 1.0.0
 ---
 
