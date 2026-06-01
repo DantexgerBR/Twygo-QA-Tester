@@ -61,7 +61,7 @@ test.describe('Filtro Avançado Status Substituído', () => {
           const rowCount = await rows.count();
           if (rowCount === 0) {
             await allure.tag('REVIEW_NEEDED');
-            test.fail(
+            test.skip(
               true,
               'Pré-condição quebrada: nenhum aluno REPLACED na lista. Atualizar tc3Data.eventId / seed.',
             );

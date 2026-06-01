@@ -250,7 +250,28 @@ export async function dismissCommonModals(
       page.getByRole('button', { name: /Continuar mesmo assim/i }).first(),
       page.getByRole('link', { name: /Continuar mesmo assim/i }).first(),
 
-      // 5. Botão "Close" genérico em qualquer dialog visível (último recurso —
+      // 5. Modal "beta-end" — pesquisa de encerramento do beta de painéis do
+      //    usuário. Título: "O BETA teste da funcionalidade painéis do usuário
+      //    chegou ao fim! Conta pra gente como foi sua experiência". Aparece de
+      //    forma assíncrona após navegar em qualquer página admin do staging.
+      //    id Chakra: "chakra-modal--body-beta-end-modal". Dismiss: botão X
+      //    (aria-label="Close") no header do modal.
+      //    Descoberto via screenshot de falha 2026-06-01 — TC1/3/4 da Suite
+      //    "Configuração de Conteúdo (Switch 'Habilitar reinscrição')".
+      //    Seletor por CSS: localiza qualquer botão Close dentro do Chakra
+      //    portal que contém o body beta-end-modal. Mais robusto que filtrar
+      //    por texto quando aria-hidden está ativo no background.
+      page.locator(
+        '.chakra-portal:has(#chakra-modal--body-beta-end-modal) button[aria-label="Close"]',
+      ).first(),
+      // Fallback por texto (caso o ID mude):
+      page
+        .getByRole('dialog')
+        .filter({ hasText: /BETA teste da funcionalidade/i })
+        .getByRole('button', { name: /close|fechar/i })
+        .first(),
+
+      // 6. Botão "Close" genérico em qualquer dialog visível (último recurso —
       //    cobre modais novos não mapeados; se fechar coisa errada, o teste
       //    falha logo depois e o ajuste é específico por nome).
       page.getByRole('dialog').getByRole('button', { name: /^close$/i }).first(),

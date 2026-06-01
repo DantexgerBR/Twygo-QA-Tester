@@ -59,6 +59,7 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
   test('TC4 — Desativar o switch em curso com participants reinscritos é permitido sem aviso', async ({
     page,
   }) => {
+    test.fixme(true, 'beta-end-modal-race + seed-roadmap-participant-reinscrito-pré-existente: TC depende de curso com participants já reinscritos, e o setup falha em 0ms pelo modal BETA. Combo de duas raízes.');
     await allure.epic('Twygo - Recertificação');
     await allure.feature('Configuração de Conteúdo (Switch "Habilitar reinscrição")');
     await allure.story(

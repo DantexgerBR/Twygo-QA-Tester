@@ -283,9 +283,28 @@ export class SeedAdminPage extends BasePage {
     await this.ensureAdminProfile();
     await safeGoto(this.page, `/o/${getOrgId()}/contents/new?kind=0`);
 
+    // Modal "beta-end" ("O BETA teste da funcionalidade painéis do usuário chegou
+    // ao fim!") aparece de forma assíncrona após a navegação — o safeGoto inicial
+    // pode não capturá-lo porque o modal só monta alguns segundos após
+    // domcontentloaded. Dismissamos novamente com janela maior (3s) antes de
+    // interagir com o form.
+    await dismissCommonModals(this.page, { initialWaitMs: 3_000 });
+
     // 1. Nome (obrigatório)
     const nameInput = this.page.getByRole('textbox', { name: /^Nome \*/ });
     await nameInput.waitFor({ state: 'visible', timeout: 15_000 });
+    // Dismissal robusto antes do fill — o modal beta-end pode abrir
+    // assincronamente APÓS o waitFor retornar. Quando ele abre, o Chakra
+    // adiciona aria-hidden="true" ao background e getByRole('textbox') deixa
+    // de resolver (ARIA-aware). Aqui: (a) dismiss com janela de 1.5s pra
+    // capturar o modal se ele ainda não apareceu; (b) aguarda explicitamente
+    // o container Chakra-portal do beta-end-modal sumir do DOM.
+    await dismissCommonModals(this.page, { initialWaitMs: 1_500 });
+    // Garantia extra: aguarda que nenhum overlay Chakra esteja interceptando.
+    await this.page
+      .locator('.chakra-portal:has(#chakra-modal--body-beta-end-modal)')
+      .waitFor({ state: 'hidden', timeout: 5_000 })
+      .catch(() => null); // Sem modal → resolve imediato; timeout → ignora e segue
     await nameInput.fill(data.name);
 
     // 2. Tipo de experiência (obrigatório, combobox autocomplete).
@@ -300,6 +319,15 @@ export class SeedAdminPage extends BasePage {
       .locator('input[role="combobox"][aria-autocomplete="list"]')
       .first();
     await tipoCombobox.waitFor({ state: 'visible', timeout: 10_000 });
+    // Dismiss de segurança antes do click — o modal beta-end pode reaparecer
+    // entre o fill do nome e o click no combobox (comportamento assíncrono
+    // confirmado via screenshot TC4 2026-06-01). Aguarda portal desaparecer
+    // antes de tentar o click (mesmo padrão da seção "Nome" acima).
+    await dismissCommonModals(this.page, { initialWaitMs: 1_500 });
+    await this.page
+      .locator('.chakra-portal:has(#chakra-modal--body-beta-end-modal)')
+      .waitFor({ state: 'hidden', timeout: 5_000 })
+      .catch(() => null);
     await tipoCombobox.click();
     const tipoOpcao = data.tipoExperiencia
       ? this.page.getByRole('option', { name: data.tipoExperiencia, exact: true })
