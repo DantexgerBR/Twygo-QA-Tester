@@ -17,7 +17,7 @@ triggers:
   - "/contents/new"
   - "eventId placeholder"
   - "createCurso"
-version: 1.7.1
+version: 2.0.0
 ---
 
 # provisionar-seed
@@ -49,6 +49,75 @@ criando content ID 806852). Ver §Anti-pattern (rota errada) abaixo.
 recurso é criável via UI admin, crie via UI no `beforeAll`. Só marque
 `fixme` por seed quando o recurso **não tem caminho UI** (worker async,
 Flipper toggle, DB write direto, env adicional config).
+
+## v2.0 — Princípio: Zero Hardcoded (2026-06-03)
+
+**Diretriz forte do usuário**: a partir de v2.0, **NENHUM ID/URL específico
+de env vive em código de produção**. Todos os recursos consumidos por
+specs são resolvidos em **runtime** via:
+
+1. **Fixtures dinâmicas** (`projects/<slug>/fixtures/seed-fixtures.ts`) —
+   criam recursos no `beforeAll` usando `SeedAdminPage` + UI admin, retornam
+   o **handle** (id + nome + outros campos). O spec consome o handle, não
+   um ID literal.
+2. **Naming worker-isolated** (`<Tipo> Seed w<workerIndex>-<timestamp>`) —
+   o nome carrega informação suficiente pra cleanup de orfãos via parser
+   de timestamp.
+3. **Cleanup automático**: `afterAll` pareado via variant `*_safe` do POM.
+   Crash do worker / timeout / Ctrl+C deixam orfãos — destrava via script
+   `scripts/cleanup-env-orphans.ts` (cron-friendly, threshold 24h).
+
+### Regras duras v2.0
+
+1. **Proibido `<recurso>Id` literal em `.data.ts`** (nem `cursoId: 807400`,
+   nem `alunoEmail: 'aluno@example.com'` quando o aluno precisa ser
+   criado/matriculado). Constantes-de-domínio que casariam **só** em um env
+   específico são anti-pattern.
+   - Exceção: aluno **real-fixo da org** usado em recon (Richard Sebold em
+     staging-recertificacao 807287) pra TCs que validam estado pré-existente
+     SEM cleanup. Documentar no `.data.ts` com `// NÃO clicar em ações que
+     alteram estado — sem cleanup nesta linha`.
+2. **Proibido `page.goto('/o/${getOrgId()}/events/<id-literal>/...')`** —
+   sempre `cursoSeed.id` ou `alunoAprovadoSeed.cursoId`. Se o spec precisa
+   de uma rota que só existe pra recurso pré-existente, **migre pra fixture
+   dinâmica primeiro**.
+3. **Fixtures vivem em `projects/<slug>/fixtures/`**, NÃO em `src/fixtures/`.
+   Fixtures consomem POM específico do projeto (`SeedAdminPage` é
+   per-projeto) — colocar em `src/fixtures/` criaria import quebrado em
+   outros projetos. Para fixtures realmente genéricas (cross-projeto), o
+   POM precisa ser genérico (em `src/pages/`) primeiro.
+4. **Toda fixture nova **DEVE** declarar afterAll explícito ou herdar
+   cleanup via dependência (cursoLiberadoSeed herda de cursoSeed que
+   deleta o curso).
+5. **Naming pattern obrigatório**: `<Tipo> Seed w${testInfo.workerIndex}-${Date.now()}`
+   pra recursos; `<aluno-tipo>-w${wi}-${ts}@example.com` pra emails. O
+   parser de `cleanup-env-orphans.ts` depende do sufixo `w<int>-<timestamp>`.
+
+### Migração v1.x → v2.0 (incidente 2026-06-01 → 2026-06-03)
+
+- **Removido**: `fixed-seed.data.ts` (não totalmente — alguns IDs de
+  cenários "estado pré-existente sem cleanup" sobreviveram em §"Exceção"
+  acima, marcados explicitamente).
+- **Removido**: fixture `alunoAprovadoNoCursoFixoSeed` (curso 807403
+  hardcoded). Substituída por `alunoAprovadoSeed` (curso dinâmico via
+  cascata `cursoSeed → cursoComAtividadesMarcaveisSeed → alunoComSenhaSeed`).
+- **Movido**: `src/fixtures/seed-fixtures.ts` → `projects/recertificacao/fixtures/seed-fixtures.ts`.
+- **Novo**: `scripts/cleanup-env-orphans.ts` — `npm run agent:cleanup-orphans
+  -- --apply` deleta recursos `Seed-*-w*-<ts>` com idade > 24h.
+
+### Quando o fixed-seed AINDA é legítimo
+
+Categorias residuais que sobreviveram a v2.0:
+
+| Categoria | Exemplo | Por quê |
+|---|---|---|
+| **Estado pré-existente sem cleanup** | Curso 807287 ("curso para reinscriçao") + Richard Sebold | TC valida read-only sobre estado configurado manualmente uma vez (cert REPLACED + REPLACED + EMITIDO). Recriar via UI exigiria 5+ ciclos de aprovação + delete de chamadas — não compensa |
+| **Curso vazio compartilhado read-only** | `emptyCursoId: 806852` | TC só precisa que a URL retorne 200. Sem cleanup. Sem alteração de estado. |
+| **orgId principal** | `principalOrgId: 37048` | Já resolvido via `getOrgId()` mas mantido em `.data.ts` pra docs |
+
+Toda outra "constante" vira fixture.
+
+
 
 ## Pré-condições para qualquer createX
 
@@ -1412,6 +1481,35 @@ novo:
   com criação via UI precisa seguir
 
 ## Histórico
+
+- **v2.0.0 (2026-06-03)**: princípio "Zero Hardcoded" — refatoração
+  guiada pelo usuário (diretriz: "precisamos remover hard-coded e
+  locais onde há referência de rota(url) específica e IDs especificos
+  e deixar com que seja criado no momento do seed"). Mudanças:
+  - **Seção nova `## v2.0 — Princípio: Zero Hardcoded`** no topo da skill,
+    com 5 regras duras (proibir `cursoId: <literal>` em `.data.ts`,
+    proibir `page.goto('/events/<id-literal>/...')`, fixtures em
+    `projects/<slug>/fixtures/`, afterAll obrigatório, naming
+    `w<wi>-<ts>` obrigatório).
+  - **Fixture `alunoAprovadoNoCursoFixoSeed` REMOVIDA** (era acoplada ao
+    curso 807403 hardcoded). Substituída por `alunoAprovadoSeed`
+    (cascata 100% dinâmica: `cursoSeed` → `cursoComAtividadesMarcaveisSeed`
+    → `alunoComSenhaSeed` → `alunoAprovadoSeed`).
+  - **Fixtures movidas** de `src/fixtures/seed-fixtures.ts` →
+    `projects/recertificacao/fixtures/seed-fixtures.ts` (eram per-projeto
+    mascaradas de genérico — importavam `SeedAdminPage` específico
+    do projeto Recertificação, anti-pattern).
+  - **`fixed-seed.data.ts` reduzido** de ~15 fields pra 3 categorias
+    legítimas residuais: estado pré-existente sem cleanup (Richard
+    Sebold + curso 807287 read-only), curso vazio compartilhado
+    (806852), orgId principal (37048). Toda outra "constante" virou
+    fixture.
+  - **Novo script `scripts/cleanup-env-orphans.ts`** (Phase 6 do roadmap)
+    + npm task `agent:cleanup-orphans`. Parser de timestamp do sufixo
+    `w<int>-<ts>` deleta recursos > 24h. Dry-run default; `--apply`
+    pra deletar. Cobre worst-case de crash/timeout deixando orfão.
+  - **Especificada quando "fixed seed" AINDA é legítimo** — 3
+    categorias residuais documentadas como exceção, NÃO regra.
 
 - **v1.7.1 (2026-05-28)**: recon parcial do caminho "kebab Atividades"
   na lista de conteúdos (info nova do usuário). Mudanças:

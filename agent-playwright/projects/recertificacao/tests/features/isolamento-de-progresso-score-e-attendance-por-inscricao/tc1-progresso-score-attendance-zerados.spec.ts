@@ -1,4 +1,4 @@
-import { test, expect } from '../../../../../src/fixtures/seed-fixtures.js';
+import { test, expect } from '../../../fixtures/seed-fixtures.js';
 import * as allure from 'allure-js-commons';
 import { ensureFlipperActor } from '../../../../../src/utils/flipperFlag.js';
 import { getOrgId } from '../../../../../src/utils/environment.js';
@@ -27,7 +27,7 @@ test.describe('Isolamento de Progresso, Score e Attendance por Inscrição', () 
   //   "Pendente" (não "Emitido"). Screenshot trace 2026-05-29 confirmou
   //   menu aberto + item highlighted mas sem POST saindo.
   //
-  // v3 (2026-05-29): migrado para `alunoAprovadoNoCursoFixoSeed` — aluno
+  // v3 (2026-05-29): migrado para `alunoAprovadoSeed` — aluno
   //   worker-isolated com cert EMITIDO no curso 807403 ("Curso com atividades",
   //   has_recertification=true). Pré-condição correta: cert Emitido → botão
   //   Reinscrever habilitado → POST disparado → toast de sucesso.
@@ -36,7 +36,7 @@ test.describe('Isolamento de Progresso, Score e Attendance por Inscrição', () 
   // menu Aprendizagem (admin-side), não banco. TC1 valida que novo participant
   // aparece na listagem com progress=0 após reinscrição.
   //
-  // NOTA CLEANUP: fixture alunoAprovadoNoCursoFixoSeed desmatricula o aluno
+  // NOTA CLEANUP: fixture alunoAprovadoSeed desmatricula o aluno
   // ao final — mas participants criados pela reinscrição permanecem no env
   // (sem UI de "deletar participant"). Sem impacto real: aluno é worker-isolated
   // (email único por run) — não conflita com outras runs.
@@ -69,18 +69,18 @@ test.describe('Isolamento de Progresso, Score e Attendance por Inscrição', () 
    *        visível (ou texto fora do regex).
    *
    *        Sintaxe `test.fixme(title, options, cb)` é proposital: evita
-   *        que a fixture `alunoAprovadoNoCursoFixoSeed` (~3min de setup)
+   *        que a fixture `alunoAprovadoSeed` (~3min de setup)
    *        rode quando o teste está pulado. Trade-off: motivo aparece
    *        "[REVISAR]" no report — ler este JSDoc.
    */
   test.fixme(
     'TC1 — Aluno reinscrito tem progress/score/attendance zerados na nova inscrição',
     { tag: '@seed-heavy' },
-    async ({ page, alunoAprovadoNoCursoFixoSeed }) => {
+    async ({ page, alunoAprovadoSeed }) => {
       // Skill provisionar-seed v1.7.x (2026-05-29): após 7 iterações de heal:
       //   v1: curso 806755 + recertificacaoever1@twygo.com → 422 silencioso
       //   v2: curso 807287 + richard.sebold@twygo.com → todos Pendente
-      //   v3: alunoAprovadoNoCursoFixoSeed → matriculou OK, fixture completou
+      //   v3: alunoAprovadoSeed → matriculou OK, fixture completou
       //   v4-v5: SeedAdminPage findEventRowAndClickKebab heal (re-render race)
       //   v6: timeout 15min pra pipeline completar
       //   v7: getRowByEmail({certState:'Emitido'}) pra desambiguar 2 linhas
@@ -99,29 +99,29 @@ test.describe('Isolamento de Progresso, Score e Attendance por Inscrição', () 
       await allure.severity('critical');
       await allure.parameter(
         'curso',
-        `Curso com atividades (id ${alunoAprovadoNoCursoFixoSeed.cursoId})`,
+        `Curso com atividades (id ${alunoAprovadoSeed.cursoId})`,
       );
-      await allure.parameter('aluno_elegivel', alunoAprovadoNoCursoFixoSeed.alunoEmail);
+      await allure.parameter('aluno_elegivel', alunoAprovadoSeed.alunoEmail);
 
       const learning = new LearningStudentsPage(page);
 
       await allure.step(
         '1. Pré-condição: aluno aprovado com cert Emitido está na listagem — botão Reinscrever habilitado',
         async () => {
-          // alunoAprovadoNoCursoFixoSeed criou aluno worker-isolated, completou
+          // alunoAprovadoSeed criou aluno worker-isolated, completou
           // o curso 807403 e emitiu cert. O aluno tem 1 participant com cert
           // "Emitido" — condição necessária para o botão "Iniciar reinscrição"
           // estar habilitado no menu kebab (backend exige cert Emitido/Expirado
           // para aceitar reinscrição).
           expect(
-            alunoAprovadoNoCursoFixoSeed.certificateId,
-            'alunoAprovadoNoCursoFixoSeed deve ter cert emitido — sem cert o botão Reinscrever fica disabled',
+            alunoAprovadoSeed.certificateId,
+            'alunoAprovadoSeed deve ter cert emitido — sem cert o botão Reinscrever fica disabled',
           ).not.toBeNull();
 
-          await learning.goToList(alunoAprovadoNoCursoFixoSeed.cursoId);
+          await learning.goToList(alunoAprovadoSeed.cursoId);
           await expect(
-            learning.getRowByEmail(alunoAprovadoNoCursoFixoSeed.alunoEmail),
-            `Aluno elegível ${alunoAprovadoNoCursoFixoSeed.alunoEmail} deve aparecer na listagem de Aprendizagem do curso ${alunoAprovadoNoCursoFixoSeed.cursoId}`,
+            learning.getRowByEmail(alunoAprovadoSeed.alunoEmail),
+            `Aluno elegível ${alunoAprovadoSeed.alunoEmail} deve aparecer na listagem de Aprendizagem do curso ${alunoAprovadoSeed.cursoId}`,
           ).toBeVisible({ timeout: 15_000 });
         },
       );
@@ -135,7 +135,7 @@ test.describe('Isolamento de Progresso, Score e Attendance por Inscrição', () 
           // Emitido original + Pendente auto-criado pelo backend após cert).
           // openRowActionsMenu(email) não suporta certState — trigger direto.
           const rowEmitido = learning.getRowByEmail(
-            alunoAprovadoNoCursoFixoSeed.alunoEmail,
+            alunoAprovadoSeed.alunoEmail,
             { certState: 'Emitido' },
           );
           const kebab = rowEmitido.getByRole('button', { name: 'more_vert' }).first();
@@ -162,7 +162,7 @@ test.describe('Isolamento de Progresso, Score e Attendance por Inscrição', () 
           // Decisão usuário 2026-05-29: validação via UI admin (listagem de Aprendizagem)
           // em vez de banco.
           const linhaPendente = learning.getRowByEmail(
-            alunoAprovadoNoCursoFixoSeed.alunoEmail,
+            alunoAprovadoSeed.alunoEmail,
             { certState: 'Pendente' },
           );
           await expect(linhaPendente, 'Linha do novo participant (cert Pendente) deve aparecer após reinscrição').toBeVisible({
@@ -185,7 +185,7 @@ test.describe('Isolamento de Progresso, Score e Attendance por Inscrição', () 
           // porque a transição Emitido→Substituído pode ser assíncrona.
           const todasLinhasAluno = page
             .locator('tbody tr')
-            .filter({ hasText: alunoAprovadoNoCursoFixoSeed.alunoEmail });
+            .filter({ hasText: alunoAprovadoSeed.alunoEmail });
           const countAluno = await todasLinhasAluno.count();
           expect(
             countAluno,

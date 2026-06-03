@@ -88,23 +88,11 @@ export const fixedSeed = {
    */
   alunoComReinscreverHabilitado_807287: 'richard.sebold@twygo.com' as string,
   alunoComReinscreverHabilitadoSecundario_807287: 'agents.edu@claude.com' as string,
-  alunoComReinscreverHabilitadoEmProgresso_807287: 'agents.richard@claude.com' as string,
-
-  /**
-   * Curso 807403 ("Curso com atividades") — seed compartilhado já preparado:
-   *   - has_recertification = true (validado live 2026-05-28 via chrome-devtools)
-   *   - 4 atividades configuradas (incluindo "questionario" content_id 9288027)
-   *   - 1+ aluno com cert emitido (seed-aluno-engajamento-completo gerou cert 5027067)
-   *   - Critério de aprovação 60% (default — definido por questionário "Pontuação Mínima")
-   *
-   * Use em specs que precisam ENGAJAMENTO REAL (progresso > 0%, cert emitido)
-   * sem pagar o custo de ~9min do `alunoAprovadoSeed` (que cria curso vazio).
-   * Sugerido pelo usuário em 2026-05-28 como "encurta o caminho".
-   *
-   * IMPORTANTE — NÃO deletar este curso, NÃO desligar has_recertification,
-   * NÃO mexer no critério de aprovação. Múltiplos specs assumem o estado vigente.
-   */
-  cursoComAtividadesEAprovadoEventId: 807403 as number,
+  // REMOVIDOS na refactor v2.0 (sem consumer após migração):
+  //   - alunoComReinscreverHabilitadoEmProgresso_807287 (0 specs)
+  //   - cursoComAtividadesEAprovadoEventId: 807403 (era usado por alunoAprovadoNoCursoFixoSeed
+  //     que foi deletada — específico do env staging-recertificacao 37048,
+  //     anti-pattern. Use fixture alunoAprovadoSeed que cria curso dinâmico.)
 
   /**
    * Emails de teste para TCs API. Pattern: `rec-v2-tc<N>@example.com`.

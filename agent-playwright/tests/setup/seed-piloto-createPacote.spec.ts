@@ -3,7 +3,7 @@
  * Opt-in: RUN_SEED_PILOTO_CREATE_PACOTE=1
  */
 import { expect } from '@playwright/test';
-import { test } from '../../src/fixtures/seed-fixtures.js';
+import { test } from '../../projects/recertificacao/fixtures/seed-fixtures.js';
 import type { Browser } from '@playwright/test';
 import { resolve } from 'node:path';
 import { ProfileSwitcher } from '../../src/pages/ProfileSwitcher.js';

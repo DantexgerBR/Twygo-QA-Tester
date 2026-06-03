@@ -1,4 +1,4 @@
-import { test, expect } from '../../../../../src/fixtures/seed-fixtures.js';
+import { test, expect } from '../../../fixtures/seed-fixtures.js';
 import * as allure from 'allure-js-commons';
 import { LearningStudentsPage } from '../../../pages/LearningStudentsPage.js';
 import { tc2Data } from './tc2-worker-expires-certificates-propaga.data.js';
@@ -9,7 +9,7 @@ test.describe('Ciclo de Vida do Certificado Substituído', () => {
   // Decisão QA 2026-05-29: refatorado de "requer Rails console" para validação
   // via UI usando a ação "Expirar certificado" no menu kebab da linha do aluno.
   //
-  // Seed: fixture canônica `alunoAprovadoNoCursoFixoSeed` cria aluno
+  // Seed: fixture canônica `alunoAprovadoSeed` cria aluno
   // worker-isolated com cert Emitido no curso 807403 — não conflita com
   // TC4 (que usa Richard Sebold no 807287).
   //
@@ -29,31 +29,31 @@ test.describe('Ciclo de Vida do Certificado Substituído', () => {
    *        (1 REPLACED + 1 VALID). Aguarda fixture composta OU agent-db (V2).
    *
    *        Sintaxe `test.fixme(title, options, cb)` é proposital: evita que
-   *        a fixture `alunoAprovadoNoCursoFixoSeed` (~3min de setup) rode
+   *        a fixture `alunoAprovadoSeed` (~3min de setup) rode
    *        quando o teste está pulado.
    */
   test.fixme(
     'TC2 — Worker ExpiresCertificates expira VALID e propaga para REPLACED do mesmo par',
     { tag: '@seed-heavy' },
-    async ({ page, alunoAprovadoNoCursoFixoSeed }) => {
+    async ({ page, alunoAprovadoSeed }) => {
       await allure.epic('Twygo - Recertificação');
       await allure.feature('Ciclo de Vida do Certificado Substituído');
       await allure.story(
         'Worker ExpiresCertificates expira VALID e propaga para REPLACED do mesmo par',
       );
       await allure.severity('normal');
-      await allure.parameter('seed_cursoId', String(alunoAprovadoNoCursoFixoSeed.cursoId));
-      await allure.parameter('seed_alunoEmail', alunoAprovadoNoCursoFixoSeed.alunoEmail);
+      await allure.parameter('seed_cursoId', String(alunoAprovadoSeed.cursoId));
+      await allure.parameter('seed_alunoEmail', alunoAprovadoSeed.alunoEmail);
 
       const learning = new LearningStudentsPage(page);
-      const cursoId = alunoAprovadoNoCursoFixoSeed.cursoId;
-      const alunoEmail = alunoAprovadoNoCursoFixoSeed.alunoEmail;
+      const cursoId = alunoAprovadoSeed.cursoId;
+      const alunoEmail = alunoAprovadoSeed.alunoEmail;
 
       await allure.step(
         '1. Pré-condição: aluno aprovado com cert Emitido (fixture) — linha visível na Aprendizagem',
         async () => {
           expect(
-            alunoAprovadoNoCursoFixoSeed.certificateId,
+            alunoAprovadoSeed.certificateId,
             'Fixture deve produzir cert emitido',
           ).not.toBeNull();
           await learning.goToList(cursoId);

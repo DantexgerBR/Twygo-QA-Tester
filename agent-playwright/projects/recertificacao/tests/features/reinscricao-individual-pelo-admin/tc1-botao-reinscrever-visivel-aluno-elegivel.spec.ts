@@ -6,8 +6,8 @@ import { tc1Data } from './tc1-botao-reinscrever-visivel-aluno-elegivel.data.js'
 test.describe('Reinscrição Individual pelo Admin', () => {
   // Skill provisionar-seed v1.7.0 (2026-05-28): cada um dos 3 estados
   // tem fixture/helper individual disponível:
-  //   (a) progresso 100% → `alunoAprovadoNoCursoFixoSeed`
-  //   (b) cert expirado → `alunoAprovadoNoCursoFixoSeed` + `expirarCertificadoDoAluno`
+  //   (a) progresso 100% → `alunoAprovadoSeed`
+  //   (b) cert expirado → `alunoAprovadoSeed` + `expirarCertificadoDoAluno`
   //   (c) em andamento → `alunoMatriculadoSeed`
   // Falta: fixture COMPOSTA que crie 3 alunos no mesmo curso
   // simultaneamente. Cada fixture atual é singleton por test (1 aluno
