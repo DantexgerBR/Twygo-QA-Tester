@@ -3,8 +3,8 @@
 Uso: python read_xlsx_simple.py <path-to-xlsx>
 """
 import sys
-import xml.etree.ElementTree as ET
 import zipfile
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 NS = {'s': 'http://schemas.openxmlformats.org/spreadsheetml/2006/main'}

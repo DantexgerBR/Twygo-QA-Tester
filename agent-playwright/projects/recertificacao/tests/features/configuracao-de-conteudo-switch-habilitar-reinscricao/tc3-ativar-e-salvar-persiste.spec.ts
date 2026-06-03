@@ -7,18 +7,12 @@ import { SeedAdminPage } from '../../../pages/SeedAdminPage.js';
 const STORAGE_PATH = resolve(process.cwd(), 'outputs/.auth/storage.json');
 
 test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', () => {
-  // Bloqueio confirmado live 2026-05-26 — ver memo
-  // [[project-recertificacao-seed-blocker]]. createCurso via UI retorna
-  // 422 mesmo com perfil Admin via popover. Detalhe em TC1 deste mesmo
-  // describe (mesma raiz).
-  test.fixme(
-    true,
-    'createCurso via UI bloqueado por HTTP 422 no env staging-base-de-conhecimento (memo project-recertificacao-seed-blocker). Validar manualmente permissão do user ou usar bypass via API REST.',
-  );
-  // Seed auto-suficiente via SeedAdminPage (skill `provisionar-seed`):
-  // beforeAll cria curso com `has_recertification = false` (pré-condição
-  // do MD); afterAll deleta o curso inteiro — revert de toggle é
-  // desnecessário porque o registro deixa de existir.
+  // Seed auto-suficiente via SeedAdminPage (skill `provisionar-seed` v1.3):
+  // beforeAll cria curso com defaults (`has_recertification = false` por
+  // omissão — switch fica em tab posterior do edit, não no form de criação).
+  // O test toggla o switch via ContentEditPage e valida persistência.
+  // afterAll deleta o curso inteiro — revert de toggle é desnecessário
+  // porque o registro deixa de existir.
   let cursoId: number;
   let cursoName: string;
 
@@ -32,6 +26,10 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
         name: cursoName,
         hasRecertification: false,
       });
+      // Re-grava storage atualizado pra evitar session race entre o
+      // contexto do seed e o `page` fixture do test (Twygo regenera
+      // session_id após operações de criação).
+      await context.storageState({ path: STORAGE_PATH });
     } finally {
       await context.close();
     }
@@ -60,11 +58,12 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
     const contentEdit = new ContentEditPage(page);
 
     await allure.step(
-      '1. Acessar a edição de um curso com `has_recertification = false`',
+      '1. Acessar a edição de um curso com `has_recertification = false` (tab "Acesso")',
       async () => {
-        await contentEdit.openEditById(cursoId);
-        await expect(contentEdit.getHabilitarReinscricaoSwitch()).toBeVisible();
-        // Pré-condição: switch desligado (criado assim no beforeAll).
+        // Switch vive na tab "Acesso" do facelift (skill v1.3 §matrícula).
+        await contentEdit.openEditByIdInAcessoTab(cursoId);
+        await expect(contentEdit.getHabilitarReinscricaoVisible()).toBeVisible();
+        // Pré-condição: switch desligado (default — switch é NO-OP no createCurso).
         expect(await contentEdit.isHabilitarReinscricaoOn()).toBe(false);
       },
     );
@@ -86,8 +85,8 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
     await allure.step(
       '4. Recarregar a edição → switch permanece ligado (has_recertification = true persistido)',
       async () => {
-        await contentEdit.openEditById(cursoId);
-        await expect(contentEdit.getHabilitarReinscricaoSwitch()).toBeVisible();
+        await contentEdit.openEditByIdInAcessoTab(cursoId);
+        await expect(contentEdit.getHabilitarReinscricaoVisible()).toBeVisible();
         expect(await contentEdit.isHabilitarReinscricaoOn()).toBe(true);
       },
     );

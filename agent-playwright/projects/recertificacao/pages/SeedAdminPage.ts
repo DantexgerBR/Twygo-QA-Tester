@@ -166,21 +166,6 @@ export class SeedAdminPage extends BasePage {
   }
 
   /**
-   * Localizador do textarea/input de "Descrição" no form de evento.
-   * REVISAR-RECON-LIVE: descrição em HAML legado costuma ser `<textarea
-   * id="event_description">`. Em React pode ser rich-text Plate (skill
-   * `testar-plate-editor-twygo`) — neste caso `fill` direto não funciona.
-   * Por ora, só usa o campo plain; se for Plate, caller pode pular.
-   */
-  private getDescriptionInput(): Locator {
-    // REVISAR: aguardando data-test-id estável.
-    return this.page
-      .locator('#event_description, #learning_path_description')
-      .or(this.page.getByLabel(/^Descrição$/i))
-      .first();
-  }
-
-  /**
    * Botão "Salvar" do form. Cobre input[type="submit"] (HAML) e
    * button (React) via role.
    */
@@ -245,40 +230,231 @@ export class SeedAdminPage extends BasePage {
   // ============================================================
 
   /**
-   * Cria um curso (`Event::KIND_COURSE`) via UI admin.
+   * Cria um curso (`Event::KIND_COURSE` / `kind=0`) via UI admin.
    *
-   * Rota: `/o/{orgId}/events/new` — form Rails/HAML legado (default no
-   * Twygo até 2026-05). Pós-save redireciona para `/e/{id}/edit`.
+   * **Rota canônica facelift React** (skill `provisionar-seed` v1.3,
+   * validada live 2026-05-26): `/o/{orgId}/contents/new?kind=0`.
+   * Pós-save redireciona para `/contents/{id}/edit`.
+   *
+   * **NÃO** usar `/o/{orgId}/events/new` (rota HAML legada) — retorna
+   * HTTP 422 silencioso ("The change you wanted was rejected"). A rota
+   * HAML ainda renderiza o form, mas o POST `/e` está desativado pra
+   * admins no facelift novo.
+   *
+   * Form facelift exige (validado live):
+   *  - Nome * (textbox com asterisco no accessible name)
+   *  - Tipo de experiência * (combobox autocomplete — env precisa ter
+   *    ≥1 cadastrado; em `staging-recertificacao` existe "Suite Everton CSV")
+   *  - Descrição * (rich-text dentro de `<iframe title="Editor de Rich Text">`)
+   *  - Situação * (default "Em desenvolvimento" — não mexer)
+   *  - Quem pode ver * (default "Usuários" — não mexer)
    *
    * @param data.name             obrigatório, worker-isolated recomendado
-   * @param data.hasRecertification se `true`, liga o switch antes de salvar
-   * @param data.description      opcional, ignora se form usa rich-text Plate
+   * @param data.tipoExperiencia  opcional; se omitido, escolhe a primeira
+   *                              opção da listbox do combobox
+   * @param data.description      opcional; default = texto auto-gerado
+   * @param data.hasRecertification **DEPRECATED/NO-OP** — switch "Habilitar
+   *                              reinscrição" no facelift NÃO está na tab
+   *                              "Identificação" do form de CRIAÇÃO; vive
+   *                              em tab posterior do form de EDIÇÃO
+   *                              (provavelmente "Aprovação", a confirmar
+   *                              via recon live). Caller que precise `true`
+   *                              deve chamar `ContentEditPage.setHabilitarReinscricao(true)`
+   *                              + `save()` após `createCurso` retornar.
    * @returns eventId real capturado de `page.url()` após save
    */
   async createCurso(data: {
     name: string;
     hasRecertification?: boolean;
     description?: string;
+    tipoExperiencia?: string;
   }): Promise<number> {
-    await this.ensureAdminProfile();
-    await safeGoto(this.page, `/o/${getOrgId()}/events/new`);
-    await this.getNameInput().waitFor({ state: 'visible', timeout: 15_000 });
-    await this.getNameInput().fill(data.name);
-    if (data.description) {
-      // REVISAR-RECON-LIVE: se o produto migrou a descrição para rich-text
-      // Plate, `fill` falha — caller que precise descrição rica deve
-      // estender este Page Object com helper Plate-aware (skill
-      // `testar-plate-editor-twygo`). Hoje assume textarea/input plain.
-      const desc = this.getDescriptionInput();
-      if (await desc.isVisible().catch(() => false)) {
-        await desc.fill(data.description);
-      }
-    }
     if (data.hasRecertification === true) {
-      await this.setHabilitarReinscricao(true);
+      // eslint-disable-next-line no-console -- aviso útil em seed
+      console.warn(
+        '[SeedAdminPage.createCurso] hasRecertification=true é NO-OP no v1.3 ' +
+          '(switch vive em tab posterior do edit, não no form de criação). ' +
+          'Ative manualmente: contentEditPage.setHabilitarReinscricao(true) + save() após o create.',
+      );
     }
-    await this.submitAndWaitForEditUrl();
+
+    await this.ensureAdminProfile();
+    await safeGoto(this.page, `/o/${getOrgId()}/contents/new?kind=0`);
+
+    // 1. Nome (obrigatório)
+    const nameInput = this.page.getByRole('textbox', { name: /^Nome \*/ });
+    await nameInput.waitFor({ state: 'visible', timeout: 15_000 });
+    await nameInput.fill(data.name);
+
+    // 2. Tipo de experiência (obrigatório, combobox autocomplete).
+    // O label do form facelift NÃO tem `htmlFor` vinculando ao input
+    // — `getByLabel` falha. O texto "Digite ou selecione..." é
+    // aria-describedby (não placeholder). Estratégia robusta: seletor
+    // por atributos do DOM. "Tipo de experiência" é o 1º combobox
+    // autocomplete no form Identificação (vem antes de Classificação
+    // e Categorias, que também são autocomplete).
+    // REVISAR: aguardando data-test-id estável `event-form-type-combobox`.
+    const tipoCombobox = this.page
+      .locator('input[role="combobox"][aria-autocomplete="list"]')
+      .first();
+    await tipoCombobox.waitFor({ state: 'visible', timeout: 10_000 });
+    await tipoCombobox.click();
+    const tipoOpcao = data.tipoExperiencia
+      ? this.page.getByRole('option', { name: data.tipoExperiencia, exact: true })
+      : this.page.getByRole('listbox').getByRole('option').first();
+    await tipoOpcao.waitFor({ state: 'visible', timeout: 5_000 });
+    await tipoOpcao.click();
+
+    // 3. Descrição (obrigatório, rich-text dentro de iframe).
+    // `fill` no body do iframe muta o DOM mas NÃO dispara onChange do
+    // componente React — backend valida e devolve "Descrição é
+    // obrigatório". Precisa simular digitação real: click pra focar,
+    // pressSequentially pra disparar input events, blur (Tab) pra
+    // disparar onBlur/validação.
+    const descricaoText =
+      data.description ?? `Seed automatizado — ${data.name} (createCurso v1.3).`;
+    const descricaoFrame = this.page.frameLocator(
+      'iframe[title^="Editor de Rich Text"]',
+    );
+    const descricaoBody = descricaoFrame.locator('body');
+    await descricaoBody.click();
+    await descricaoBody.pressSequentially(descricaoText, { delay: 10 });
+    // Blur disparando onChange do wrapper React (sem isso, validação inline
+    // "Descrição é obrigatório" persiste).
+    await this.page.keyboard.press('Tab');
+
+    // 4. Situação e Quem pode ver: defaults OK ("Em desenvolvimento" / "Usuários").
+
+    // 5. Salvar
+    await dismissCommonModals(this.page);
+    await this.getSaveButton().click();
+    await this.page.waitForURL(/\/o\/\d+\/contents\/\d+\/edit/, {
+      timeout: 30_000,
+    });
+
     return this.extractEventIdFromUrl();
+  }
+
+  // ============================================================
+  // Configuração de atividades / publicação
+  // ============================================================
+
+  /**
+   * Lista as atividades de um curso (id + título + sequence) via página
+   * `/e/{eventId}/contents` (admin). Estrutura HAML: `<li class="dd-item"
+   * data-id="X" data-title="Y" data-sequence="N">`.
+   *
+   * Validado live 2026-05-28 no curso 807403.
+   */
+  async listarAtividades(
+    eventId: number,
+  ): Promise<Array<{ id: number; title: string; sequence: number }>> {
+    await this.ensureAdminProfile();
+    await safeGoto(this.page, `/e/${eventId}/contents`);
+    return this.page.evaluate(() => {
+      return Array.from(document.querySelectorAll('li.dd-item'))
+        .filter((li) => li.getAttribute('data-id'))
+        .map((li) => ({
+          id: Number(li.getAttribute('data-id')),
+          title: li.getAttribute('data-title') ?? '',
+          sequence: Number(li.getAttribute('data-sequence') ?? 0),
+        }));
+    });
+  }
+
+  /**
+   * Ativa "Permitir marcar concluído manualmente" em N atividades de um
+   * curso. Cobre os 4 checkboxes do form HAML
+   * `/e/{eventId}/contents/{activityId}/edit`:
+   *   - `#checkmark` (geral / Aula)
+   *   - `#mark_completed_video` (vídeo arquivo)
+   *   - `#mark_completed_external` (vídeo externo / YouTube)
+   *   - `#mark_completed_scorm` (SCORM)
+   *
+   * Quando ativos, expõem checkbox "Marcar como concluído" embaixo do
+   * player do aluno em `/e/{eventId}/learn` — necessário pra completar
+   * atividades vídeo/SCORM/Aula sem assistir até o fim.
+   *
+   * Validado live 2026-05-28 no curso 807403 — 3 atividades configuradas
+   * via MCP (video arquivo 9288023, video externo 9288024, scorm 9288026)
+   * antes do pipeline emitir cert 5027067.
+   *
+   * Skill: provisionar-seed v1.5 §"Atalho descoberto live".
+   */
+  async configurarMarcarConcluidoManualmente(
+    eventId: number,
+    activityIds: number[],
+  ): Promise<void> {
+    await this.ensureAdminProfile();
+    for (const activityId of activityIds) {
+      await safeGoto(this.page, `/e/${eventId}/contents/${activityId}/edit`);
+      // Marcar via click no label (input Materialize/Chakra é hidden).
+      for (const cbid of [
+        'mark_completed_scorm',
+        'mark_completed_video',
+        'mark_completed_external',
+        'checkmark',
+      ]) {
+        const cb = this.page.locator(`#${cbid}`);
+        const count = await cb.count();
+        if (count === 0) continue;
+        const checked = await cb.isChecked().catch(() => false);
+        if (checked) continue;
+        // Click no label associado — Materialize esconde input via CSS clip.
+        await this.page
+          .locator(`label[for="${cbid}"]`)
+          .first()
+          .click()
+          .catch(() => undefined);
+      }
+      // Salvar — botão "Salvar" do form Materialize.
+      await dismissCommonModals(this.page);
+      await this.page.getByRole('button', { name: 'Salvar', exact: true }).click();
+      // Volta pra listagem de atividades.
+      await this.page
+        .waitForURL(/\/e\/\d+\/contents/, { timeout: 15_000 })
+        .catch(() => undefined);
+    }
+  }
+
+  /**
+   * Publica um curso (situation: Em desenvolvimento → Liberado) via tab
+   * Identificação do form facelift `/contents/{id}/edit?tab=identification`.
+   *
+   * Pré-condição pro aluno ver e poder acessar o curso (cursos "Em
+   * desenvolvimento" só aparecem pro admin).
+   *
+   * Combobox `Situação *` (uid validado live em ContentEditPage):
+   *   - "Em desenvolvimento" (default, value=0)
+   *   - "Liberado" (target, value=1)
+   *   - "Suspenso" (value=2)
+   *
+   * Skill: provisionar-seed v1.5 §"Publicação de curso".
+   */
+  async publicarCurso(eventId: number): Promise<void> {
+    await this.ensureAdminProfile();
+    await safeGoto(
+      this.page,
+      `/o/${getOrgId()}/contents/${eventId}/edit?tab=identification`,
+    );
+    // Aguarda tab Identificação ativa (default).
+    await this.page
+      .getByRole('combobox', { name: /Situação \*/ })
+      .first()
+      .waitFor({ state: 'visible', timeout: 10_000 });
+    await this.page
+      .getByRole('combobox', { name: /Situação \*/ })
+      .first()
+      .selectOption('Liberado');
+    await dismissCommonModals(this.page);
+    await this.page.getByRole('button', { name: 'Salvar', exact: true }).click();
+    // Confirmar via toast "salva com sucesso" ou aguardar que o select
+    // permaneça com "Liberado" pós-save.
+    await this.page
+      .getByText(/salva com sucesso|atualizada com sucesso/i)
+      .first()
+      .waitFor({ state: 'visible', timeout: 10_000 })
+      .catch(() => undefined);
   }
 
   /**
@@ -323,7 +499,7 @@ export class SeedAdminPage extends BasePage {
           .isVisible({ timeout: 3_000 })
           .catch(() => false);
         if (!triggerVisible) {
-           
+          // eslint-disable-next-line no-console -- diagnóstico em afterAll
           console.warn(
             `[deleteCursoByIdSafe] Botão "Excluir" não encontrado para curso id=${id}. ` +
               `Possível mudança de UI ou curso já deletado — cleanup no-op.`,
@@ -354,7 +530,7 @@ export class SeedAdminPage extends BasePage {
         .waitForURL(/\/o\/\d+\/events(\?|$|\/)/, { timeout: 15_000 })
         .catch(() => undefined);
     } catch (err) {
-       
+      // eslint-disable-next-line no-console -- diagnóstico em afterAll
       console.warn(
         `[deleteCursoByIdSafe] Falha ao deletar curso id=${id}: ${(err as Error).message}`,
       );
@@ -597,7 +773,7 @@ export class SeedAdminPage extends BasePage {
         .isVisible({ timeout: 5_000 })
         .catch(() => false);
       if (!rowVisible) {
-         
+        // eslint-disable-next-line no-console -- diagnóstico em afterAll
         console.warn(
           `[deleteUsuarioByEmailSafe] Usuário "${email}" não encontrado — cleanup no-op.`,
         );
@@ -612,7 +788,7 @@ export class SeedAdminPage extends BasePage {
           .getByRole('button', { name: /(Ações|Opções|Mais)/i })
           .first();
         if (!(await actions.isVisible().catch(() => false))) {
-           
+          // eslint-disable-next-line no-console -- diagnóstico em afterAll
           console.warn(
             `[deleteUsuarioByEmailSafe] Trigger de ações não encontrado para "${email}".`,
           );
@@ -638,7 +814,7 @@ export class SeedAdminPage extends BasePage {
       // Aguarda row sair da listagem.
       await expect(row).toHaveCount(0, { timeout: 10_000 }).catch(() => undefined);
     } catch (err) {
-       
+      // eslint-disable-next-line no-console -- diagnóstico em afterAll
       console.warn(
         `[deleteUsuarioByEmailSafe] Falha ao deletar "${email}": ${(err as Error).message}`,
       );
@@ -650,110 +826,440 @@ export class SeedAdminPage extends BasePage {
   // ============================================================
 
   /**
-   * Cria matrícula (participant) num evento via UI admin.
+   * Matricula um aluno num conteúdo (curso/trilha/pacote) via drawer
+   * client-side do facelift. Validado live 2026-05-27 + skill
+   * `provisionar-seed` v1.3 §"Matrícula de aluno".
    *
-   * Fluxo (inferido do MD §321 + LearningStudentsPage):
-   *   1. Acessa `/o/{orgId}/events/{eventId}/learning_students`
-   *   2. Clica em "Adicionar aluno" (botão geralmente no topo direito)
-   *   3. Modal/drawer abre — preenche email, nome, opcional CPF
-   *   4. Salvar → participant criado, redirect ou modal fecha
+   * Fluxo canônico (URL NÃO muda durante o drawer):
+   *   1. Listagem `/events?tab=events&profile=admin` + busca pelo nome
+   *   2. Linha do conteúdo → kebab (more_vert) → "Inscrição"
+   *   3. Drawer "Lista de Participantes" abre (3 abas Confirmados/Pendentes/Cancelados)
+   *   4. Click "+ Adicionar" → form abre com E-mail/Nome/Sobrenome
+   *   5. Salvar → toast "Participante criado com sucesso"
    *
-   * REVISAR-RECON-LIVE: o trigger "Adicionar aluno" pode ter rotulações
-   * diferentes ("Inscrever aluno", "Matricular"). Validar texto exato
-   * via recon antes da primeira execução real.
+   * App reusa user existente se email bate; senão cria user inline.
    *
-   * Idealmente o usuário deveria existir antes — se não existir, o
-   * Twygo cria usuário + matrícula no mesmo fluxo (RN admin pode ter
-   * "Convidar e matricular"). Esse helper assume o caminho "matricular
-   * usuário novo via form embutido" que cobre ambos os casos.
-   *
-   * @returns participantId e userId capturados via Network ou URL.
-   *          **LIMITAÇÃO v1**: captura via URL pós-save pode não conter
-   *          os ids; nesse caso, retornamos `participantId: 0, userId: 0`
-   *          com warning — caller usa email como handle pra cleanup.
+   * Pré-condição: user em perfil Administrador (ensureAdminProfile).
    */
-  async criarAlunoMatriculado(_data: {
-    eventId: number;
-    email: string;
-    name: string;
-    cpf?: string;
-  }): Promise<{ participantId: number; userId: number }> {
-    // REVISAR-RECON-LIVE: fluxo completo de "Adicionar aluno" no
-    // learning_students não foi mapeado live. As 3 hipóteses principais:
-    //   (a) Botão "Adicionar aluno" → modal Chakra com form inline
-    //       (criar usuário + matricular num único submit)
-    //   (b) Botão "Adicionar aluno" → drawer com busca por user existente
-    //       (precisa criar user antes via criarUsuarioAluno)
-    //   (c) Link para nova página `/learning_students/new?event_id={id}`
-    //
-    // Sem validação live, não dá pra emitir código que casa com a UI
-    // real — risco de gerar spec que vai falhar em todos os 25+ TCs
-    // que dependem desse helper. Marcar como não-implementado e exigir
-    // recon live antes do primeiro uso.
-    throw new Error(
-      '[SeedAdminPage.criarAlunoMatriculado] fluxo de "Adicionar aluno" na ' +
-        'listagem learning_students não foi confirmado via recon live. ' +
-        'Hipóteses: (a) modal inline criar+matricular, (b) drawer com busca ' +
-        'de user existente, (c) nova rota /learning_students/new?event_id=X. ' +
-        'Validar live antes do primeiro uso e implementar o caminho real. ' +
-        'Workaround temporário: usar `POST /api/v1/contents/{eventId}/event_participants` ' +
-        'via page.request (mencionado em test-analysis.md §1423 e similares) ' +
-        'em vez do fluxo UI.',
-    );
+  async matricularAluno(data: {
+    contentName: string;
+    alunoEmail: string;
+    alunoFirstName: string;
+    alunoLastName: string;
+    dataExpiracao?: string;
+  }): Promise<void> {
+    await this.ensureAdminProfile();
+    await safeGoto(this.page, `/o/${getOrgId()}/events?tab=events&profile=admin`);
+
+    // Filtra pra reduzir lista a 1 row do conteúdo alvo.
+    await this.page.getByPlaceholder(/Pesquise aqui/i).fill(data.contentName);
+    const row = this.page.locator('tr, [role="row"]')
+      .filter({ hasText: data.contentName })
+      .first();
+    await row.waitFor({ state: 'visible', timeout: 10_000 });
+
+    // Kebab → Inscrição. Selector preferencial via data-test-id estável.
+    const kebab = row
+      .locator('[data-test-id^="events-"][data-test-id$="-actions-kebab"]')
+      .or(row.getByRole('button', { name: 'more_vert' }))
+      .first();
+    await kebab.scrollIntoViewIfNeeded();
+    await kebab.click();
+    await this.page.getByRole('menuitem', { name: /Inscrição/i }).first().click();
+
+    // Tela completa "Detalhes do evento" abre — URL NÃO muda (continua em
+    // /events?tab=events). Header "Detalhes do evento" + heading h3
+    // "Lista de Participantes" + abas Confirmados/Pendentes/Cancelados +
+    // botão "Adicionar" (StaticText sem role, cursor:pointer).
+    // Validado live via MCP 2026-05-27.
+    await this.page
+      .getByRole('heading', { name: /Lista de Participantes/i })
+      .first()
+      .waitFor({ state: 'visible', timeout: 15_000 });
+
+    // Captura contador "Confirmados (N)" ANTES do add — pós-condição é
+    // este contador incrementar (não há toast de sucesso visível).
+    const confirmadosBefore = await this.contagemConfirmados();
+
+    // "Adicionar" é StaticText (não button) — getByText.first() pega o
+    // elemento certo. MCP CDP click funciona; em Playwright, garantir
+    // que o elemento esteja visible antes (sem force).
+    const addBtn = this.page.getByText('Adicionar', { exact: true }).first();
+    await addBtn.waitFor({ state: 'visible', timeout: 5_000 });
+    await addBtn.click();
+
+    // Form completo abre — heading h3 "Adicionar" + 20+ campos
+    // (Informações Pessoais / Endereço / Dados Profissionais / Senha).
+    // 3 campos obrigatórios marcados com *: E-mail / Nome / Sobrenome.
+    await this.page
+      .getByRole('heading', { name: /^Adicionar$/i })
+      .first()
+      .waitFor({ state: 'visible', timeout: 10_000 });
+
+    // CLAUDE.md §7.5 — getByLabel(/E-?mail/i) bate em checkbox send_copy
+    // ("Desejo receber uma cópia do e-mail"). Usar getByRole('textbox')
+    // que filtra só inputs de texto.
+    await this.page.getByRole('textbox', { name: /E-?mail\*/i }).first().fill(data.alunoEmail);
+    await this.page.getByRole('textbox', { name: /^Nome\*$/i }).fill(data.alunoFirstName);
+    await this.page.getByRole('textbox', { name: /^Sobrenome\*$/i }).fill(data.alunoLastName);
+    if (data.dataExpiracao) {
+      await this.page.getByRole('textbox', { name: /Data de expira/i }).fill(data.dataExpiracao);
+    }
+
+    // Salvar (botão "Salvar" — NÃO "Salvar e Novo").
+    await this.page.getByRole('button', { name: 'Salvar', exact: true }).click();
+
+    // Pós-condição: volta pra "Lista de Participantes" com contador
+    // "Confirmados (N+1)". Sem toast de sucesso visível no fluxo atual.
+    await this.page
+      .getByRole('heading', { name: /Lista de Participantes/i })
+      .first()
+      .waitFor({ state: 'visible', timeout: 15_000 });
+    await expect
+      .poll(async () => this.contagemConfirmados(), { timeout: 10_000 })
+      .toBeGreaterThan(confirmadosBefore);
   }
 
   /**
-   * Desinscreve participant de um evento. Necessário ANTES de deletar
-   * o evento, senão produto pode bloquear delete com erro "evento tem
-   * participants" (similar a modal "Painel em uso" — skill
-   * `limpar-dados-de-teste-twygo`).
+   * Variante com SENHA — grava password do aluno permitindo login OAuth
+   * (POST /oauth/token grant_type=password) e login UI subsequente.
+   * Útil pra seeds que precisam autenticar o aluno em context fresh (ex:
+   * completar curso pelo Play como aluno).
    *
-   * Ordem canônica em afterAll:
-   *   1. desinscreverParticipantSafe(participantId, eventId)
-   *   2. deleteUsuarioByEmailSafe(email)
-   *   3. deleteCursoByIdSafe(eventId)
+   * Características descobertas live (skill provisionar-seed v1.4+):
+   *  - Form Materialize tem seção **Senha** colapsada por default
+   *    (h3 com onclick `$('.create_password').toggleClass('hidden')`)
+   *  - h3 fica em y≈1490px → FORA do viewport padrão (~678 altura)
+   *  - `state:'visible'` do Playwright falha pelo viewport check
+   *  - `page.locator('h3', { hasText: /^Senha$/ })` quebra (strict mode);
+   *    usar `h3:has-text("Senha")` é mais robusto
+   *  - Após expand + scroll, inputs `#password` e `#password_confirmation`
+   *    ficam visíveis
    *
-   * Fluxo (inferido):
-   *   1. Acessa learning_students do evento
-   *   2. Localiza row do participant
-   *   3. Menu de ações da row → "Desinscrever" ou "Remover"
-   *   4. Confirma modal
-   *
-   * REVISAR-RECON-LIVE: texto exato da ação ("Desinscrever", "Remover",
-   * "Excluir") não confirmado. Tentamos as 3 variantes via regex.
+   * Validado live em tests/setup/seed-aluno-engajamento-completo.spec.ts
+   * (cert 5027067 emitido em 2026-05-28 — commit 168ea72).
    */
-  async desinscreverParticipantSafe(
-    _participantId: number,
-    eventId: number,
-  ): Promise<void> {
+  async matricularAlunoComSenha(data: {
+    contentName: string;
+    alunoEmail: string;
+    alunoFirstName: string;
+    alunoLastName: string;
+    alunoSenha: string;
+    dataExpiracao?: string;
+  }): Promise<void> {
+    await this.ensureAdminProfile();
+    await safeGoto(this.page, `/o/${getOrgId()}/events?tab=events&profile=admin`);
+
+    await this.page.getByPlaceholder(/Pesquise aqui/i).fill(data.contentName);
+    const row = this.page.locator('tr, [role="row"]')
+      .filter({ hasText: data.contentName })
+      .first();
+    await row.waitFor({ state: 'visible', timeout: 10_000 });
+
+    const kebab = row
+      .locator('[data-test-id^="events-"][data-test-id$="-actions-kebab"]')
+      .or(row.getByRole('button', { name: 'more_vert' }))
+      .first();
+    await kebab.scrollIntoViewIfNeeded();
+    await kebab.click();
+    await this.page.getByRole('menuitem', { name: /Inscrição/i }).first().click();
+
+    await this.page
+      .getByRole('heading', { name: /Lista de Participantes/i })
+      .first()
+      .waitFor({ state: 'visible', timeout: 15_000 });
+
+    const confirmadosBefore = await this.contagemConfirmados();
+
+    const addBtn = this.page.getByText('Adicionar', { exact: true }).first();
+    await addBtn.waitFor({ state: 'visible', timeout: 5_000 });
+    await addBtn.click();
+    await this.page
+      .getByRole('heading', { name: /^Adicionar$/i })
+      .first()
+      .waitFor({ state: 'visible', timeout: 10_000 });
+
+    // Campos obrigatórios (E-mail/Nome/Sobrenome).
+    await this.page.getByRole('textbox', { name: /E-?mail\*/i }).first().fill(data.alunoEmail);
+    await this.page.getByRole('textbox', { name: /^Nome\*$/i }).fill(data.alunoFirstName);
+    await this.page.getByRole('textbox', { name: /^Sobrenome\*$/i }).fill(data.alunoLastName);
+    if (data.dataExpiracao) {
+      await this.page.getByRole('textbox', { name: /Data de expira/i }).fill(data.dataExpiracao);
+    }
+
+    // Expand seção Senha (colapsada). Scroll progressivo força render
+    // dos h3 fora do viewport (form Materialize com 20+ campos).
+    await this.page.evaluate(async () => {
+      const total = document.body.scrollHeight;
+      for (let y = 0; y < total; y += 400) {
+        window.scrollTo(0, y);
+        await new Promise((r) => setTimeout(r, 80));
+      }
+    });
+    const senhaH3 = this.page.locator('h3:has-text("Senha")').first();
+    await senhaH3.scrollIntoViewIfNeeded();
+    await senhaH3.click();
+    await this.page.locator('#password').waitFor({ state: 'visible', timeout: 5_000 });
+    await this.page.locator('#password').fill(data.alunoSenha);
+    await this.page.locator('#password_confirmation').fill(data.alunoSenha);
+
+    await dismissCommonModals(this.page);
+    await this.page.getByRole('button', { name: 'Salvar', exact: true }).click();
+
+    await this.page
+      .getByRole('heading', { name: /Lista de Participantes/i })
+      .first()
+      .waitFor({ state: 'visible', timeout: 15_000 });
+    await expect
+      .poll(async () => this.contagemConfirmados(), { timeout: 10_000 })
+      .toBeGreaterThan(confirmadosBefore);
+  }
+
+  /**
+   * Lê o contador "Confirmados (N)" da aba na tela "Lista de
+   * Participantes". Retorna 0 quando ausente/parsing falha — caller
+   * usa como baseline pra comparar após inserção.
+   */
+  private async contagemConfirmados(): Promise<number> {
+    const tabText = await this.page
+      .getByText(/Confirmados\s*\(\d+\)/i)
+      .first()
+      .textContent({ timeout: 5_000 })
+      .catch(() => '');
+    const m = tabText?.match(/\((\d+)\)/);
+    return m ? Number(m[1]) : 0;
+  }
+
+  /**
+   * Cancela matrícula de aluno por email. Drawer Inscrição → linha do
+   * aluno na aba Confirmados → "Cancelar" → confirma modal.
+   *
+   * Idempotente (catch silencioso) — usado em `afterAll`.
+   */
+  async desmatricularAlunoSafe(data: {
+    contentName: string;
+    alunoEmail: string;
+  }): Promise<void> {
     try {
-      await safeGoto(
-        this.page,
-        `/o/${getOrgId()}/events/${eventId}/learning_students`,
-      );
-      // REVISAR-RECON-LIVE: sem participantId mapeando para data-item-id
-      // estável na row, e sem garantia de que `_participantId` casa com
-      // algum atributo da DOM, este helper precisaria identificar o
-      // participant via email. O caller (afterAll) normalmente tem o
-      // email — refatorar a assinatura para receber email em vez de
-      // participantId, ou aceitar ambos.
-      //
-      // Como criarAlunoMatriculado() está marcado not-implemented,
-      // este desinscreverParticipantSafe também não tem caminho ativo
-      // de teste — mantemos como TODO consciente. Quando
-      // criarAlunoMatriculado for implementado e retornar participantId
-      // real, ajustar este método para usar o id em data-item-id da row.
-       
-      console.warn(
-        '[desinscreverParticipantSafe] não implementado — precisa recon live ' +
-          'do fluxo "Desinscrever participant" + identificação da row por ' +
-          'participantId. Refatorar para aceitar email como handle.',
-      );
+      await this.ensureAdminProfile();
+      await safeGoto(this.page, `/o/${getOrgId()}/events?tab=events&profile=admin`);
+      await this.page.getByPlaceholder(/Pesquise aqui/i).fill(data.contentName);
+      const row = this.page.locator('tr, [role="row"]')
+        .filter({ hasText: data.contentName })
+        .first();
+      const kebab = row
+        .locator('[data-test-id^="events-"][data-test-id$="-actions-kebab"]')
+        .or(row.getByRole('button', { name: 'more_vert' }))
+        .first();
+      await kebab.click();
+      await this.page.getByRole('menuitem', { name: /Inscrição/i }).first().click();
+
+      // Drawer abre. Aguarda heading e localiza linha do aluno.
+      await this.page
+        .getByRole('heading', { name: /Lista de Participantes/i })
+        .first()
+        .waitFor({ state: 'visible', timeout: 5_000 });
+      const alunoRow = this.page.locator('tr, [role="row"]')
+        .filter({ hasText: data.alunoEmail })
+        .first();
+      await alunoRow.getByRole('button', { name: /cancelar/i }).click({ timeout: 5_000 });
+      // Confirmar cancelamento se modal aparecer.
+      await this.page
+        .getByRole('button', { name: /confirmar|sim/i })
+        .click({ timeout: 5_000 })
+        .catch(() => undefined);
     } catch (err) {
-       
+      // eslint-disable-next-line no-console -- diagnóstico em afterAll
       console.warn(
-        `[desinscreverParticipantSafe] Falha em event=${eventId}: ${(err as Error).message}`,
+        `[desmatricularAlunoSafe] Falha em "${data.contentName}/${data.alunoEmail}": ${(err as Error).message}`,
       );
+    }
+  }
+
+  // ============================================================
+  // Engajamento do aluno (completar curso → aprovação → cert)
+  // ============================================================
+
+  /**
+   * Pipeline completo de engajamento do aluno como SEED. Validado live em
+   * 2026-05-28 (commit 168ea72 + 019b588 — cert 5027067 emitido).
+   *
+   * Sequência:
+   *   1. Login OAuth (POST /oauth/token grant_type=password) → access_token
+   *   2. Login UI em context fresh (sem storageState admin)
+   *   3. Acessa `/e/{cursoId}` → APRENDER (+aceita consentimento se houver)
+   *   4. Itera cards da sidebar do player + clica checkbox "Marcar como
+   *      concluído" em atividades vídeo/SCORM/Aula que tenham config
+   *      `Permitir marcar manualmente` ativa
+   *   5. Fecha modal "Aprovação atingida" se disparar
+   *   6. Poll /api/v2/attendees até `certificates[].length > 0` (~30s)
+   *
+   * **NOTE**: o seed-aluno DEVE ter senha gravada (via `matricularAlunoComSenha`).
+   *
+   * @returns `attendee` da API V2 com `certificates[0]` populado se cert foi
+   *          emitido, ou `null` se o critério de aprovação do curso não foi
+   *          atingido (caller decide se faz fail-loud).
+   */
+  async completarCursoComoAluno(data: {
+    browser: import('@playwright/test').Browser;
+    cursoId: number;
+    alunoEmail: string;
+    alunoSenha: string;
+    baseURL?: string;
+    apiToken?: string;
+    /** Timeout total pra cert (default 60s). */
+    certTimeoutMs?: number;
+  }): Promise<{
+    attendeeId: number | null;
+    progress: number;
+    approvedAt: string | null;
+    certificate: {
+      certificate_id: number;
+      certificate_situation: string;
+      certificate_link: string;
+    } | null;
+  }> {
+    const baseURL =
+      data.baseURL || process.env.API_BASE_URL || `https://recertificacao-testeqa.stage.twygoead.com`;
+    const apiToken = data.apiToken || process.env.API_TOKEN || '';
+    const certTimeoutMs = data.certTimeoutMs ?? 60_000;
+
+    // 1. Login UI em context fresh — storageState empty pra não herdar admin.
+    const alunoCtx = await data.browser.newContext({
+      storageState: { cookies: [], origins: [] },
+    });
+    const alunoPage = await alunoCtx.newPage();
+    try {
+      await safeGoto(alunoPage, '/users/login');
+      await alunoPage.getByRole('textbox', { name: 'Login', exact: true }).fill(data.alunoEmail);
+      await alunoPage.getByRole('textbox', { name: 'Senha', exact: true }).fill(data.alunoSenha);
+      await alunoPage.getByRole('button', { name: 'Entrar', exact: true }).click();
+      await alunoPage.waitForURL((url) => !url.pathname.startsWith('/users/login'), {
+        timeout: 30_000,
+      });
+
+      // 2. Acessa o curso pela rota canônica do facelift.
+      await safeGoto(alunoPage, `/e/${data.cursoId}`);
+
+      // 3. Aceitar consentimento (RGPD) + APRENDER.
+      const aceitar = alunoPage.getByRole('button', { name: /^Aceitar$/i }).first();
+      if (await aceitar.isVisible({ timeout: 3_000 }).catch(() => false)) {
+        await aceitar.click();
+      }
+      await alunoPage.getByRole('button', { name: /^APRENDER$/i }).click();
+      await alunoPage.waitForLoadState('networkidle', { timeout: 15_000 }).catch(() => undefined);
+
+      // 4. Iterar cards de atividade da sidebar (h2 nomes curtos).
+      const cards = await alunoPage.evaluate(() =>
+        Array.from(document.querySelectorAll('h2'))
+          .filter(
+            (h) =>
+              (h as HTMLElement).offsetParent !== null &&
+              (h.textContent || '').trim().length > 0 &&
+              (h.textContent || '').trim().length < 50,
+          )
+          .map((h) => (h.textContent || '').trim()),
+      );
+      for (const name of cards) {
+        const card = alunoPage.locator(`h2:has-text("${name}")`).first();
+        try {
+          await card.scrollIntoViewIfNeeded({ timeout: 3_000 });
+          await card.click({ timeout: 5_000 });
+          await alunoPage.waitForTimeout(2_000);
+          // Checkbox "Marcar como concluído" — só em vídeo/SCORM/Aula
+          // configurados com a opção no admin.
+          const completoCheckbox = alunoPage
+            .locator(
+              'input[type="checkbox"][id*="complet"], label:has-text("Marcar como concluído")',
+            )
+            .first();
+          if (await completoCheckbox.isVisible({ timeout: 1_500 }).catch(() => false)) {
+            await completoCheckbox.click({ force: true }).catch(() => undefined);
+            await alunoPage.waitForTimeout(1_500);
+          }
+          // Fecha modal de aprovação se disparar — caller já considera
+          // sucesso, mas spec precisa continuar pra completar outras
+          // atividades remanescentes (idempotente).
+          const aprovacaoModal = alunoPage.getByText(/Aprovação atingida|Parabéns/i).first();
+          if (await aprovacaoModal.isVisible({ timeout: 1_000 }).catch(() => false)) {
+            await alunoPage
+              .getByRole('button', { name: /^Ok$/i })
+              .first()
+              .click()
+              .catch(() => undefined);
+          }
+        } catch {
+          // Card pode estar bloqueado por modal anterior — segue.
+        }
+      }
+    } finally {
+      await alunoCtx.close();
+    }
+
+    // 5. Poll API V2 /attendees até cert ser emitido (worker async ~30s).
+    const lookupCtx = await import('@playwright/test').then((pw) =>
+      pw.request.newContext({ baseURL }),
+    );
+    try {
+      const userId = await this.lookupUserIdByEmail({ email: data.alunoEmail, apiToken, baseURL });
+      if (!userId) {
+        return { attendeeId: null, progress: 0, approvedAt: null, certificate: null };
+      }
+      const deadline = Date.now() + certTimeoutMs;
+      let attendee: any = null;
+      while (Date.now() < deadline) {
+        const r = await lookupCtx.get(
+          `/api/v2/attendees?content_id=${data.cursoId}&user_id=${userId}`,
+          { headers: { Authorization: `Bearer ${apiToken}`, Accept: 'application/json' } },
+        );
+        if (r.ok()) {
+          const body = await r.json();
+          attendee = body.data?.attendees?.[0];
+          if (attendee?.certificates?.length > 0) break;
+        }
+        await new Promise((resolve) => setTimeout(resolve, 5_000));
+      }
+      const cert = attendee?.certificates?.[0];
+      return {
+        attendeeId: attendee?.attendee_id ?? null,
+        progress: Number(attendee?.progress ?? 0),
+        approvedAt: attendee?.approved_at ?? null,
+        certificate: cert
+          ? {
+              certificate_id: cert.certificate_id,
+              certificate_situation: cert.certificate_situation,
+              certificate_link: cert.certificate_link,
+            }
+          : null,
+      };
+    } finally {
+      await lookupCtx.dispose();
+    }
+  }
+
+  /**
+   * Helper privado: resolve user_id pelo email via API V2.
+   * Reaproveitado por completarCursoComoAluno (precisa do user_id pro
+   * lookup do attendee).
+   */
+  private async lookupUserIdByEmail(args: {
+    email: string;
+    apiToken: string;
+    baseURL: string;
+  }): Promise<number | null> {
+    const ctx = await import('@playwright/test').then((pw) =>
+      pw.request.newContext({ baseURL: args.baseURL }),
+    );
+    try {
+      const r = await ctx.get(
+        `/api/v2/users?email=${encodeURIComponent(args.email)}&page=1&per_page=1`,
+        { headers: { Authorization: `Bearer ${args.apiToken}`, Accept: 'application/json' } },
+      );
+      if (!r.ok()) return null;
+      const body = await r.json();
+      return body.data?.users?.[0]?.user_id ?? body.data?.users?.[0]?.id ?? null;
+    } finally {
+      await ctx.dispose();
     }
   }
 }

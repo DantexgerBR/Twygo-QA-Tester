@@ -1,18 +1,17 @@
 import type { Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 import { BasePage } from '../../../src/pages/BasePage.js';
-import { getOrgId } from '../../../src/utils/environment.js';
-import { safeGoto, dismissCommonModals } from '../../../src/utils/modals.js';
+import { safeGoto } from '../../../src/utils/modals.js';
 
 /**
  * Page Object da listagem de Aprendizagem ("Learning Students") do Twygo.
  *
- * Rota canônica (RN 23, suite "Filtro Avançado Status Substituído"):
- *   `/o/{orgId}/events/{eventId}/learning_students`
+ * Rota canônica (validada live 2026-05-27 — rota anterior
+ * `/o/{org}/events/{id}/learning_students` retorna 404, descontinuada):
+ *   `/e/{eventId}/learning`
  *
- * Variação observada em prosa antiga: `/learning_students?event_id={eventId}`
- * — mantida como rota alternativa para resiliência. O canônico atual usa
- * resource nested em `/events/:event_id/learning_students`.
+ * Acessível na UI via: menu kebab `data-test-id="events-{id}-actions-kebab"`
+ * → item "Aprendizagem".
  *
  * Convenções aplicadas:
  *  - `safeGoto` para cobrir NPS Sofia + outros modais oportunistas
@@ -41,13 +40,11 @@ export class LearningStudentsPage extends BasePage {
 
   /**
    * Acessa a listagem de aprendizagem de um curso/evento específico.
-   * Rota canônica: `/o/{orgId}/events/{eventId}/learning_students`.
+   * Rota canônica: `/e/{eventId}/learning` (validada live 2026-05-27).
+   * `orgId` é resolvido server-side pelo eventId.
    */
   async goToList(eventId: number | string): Promise<void> {
-    await safeGoto(
-      this.page,
-      `/o/${getOrgId()}/events/${eventId}/learning_students`,
-    );
+    await safeGoto(this.page, `/e/${eventId}/learning`);
   }
 
   // ─── Drawer de filtro avançado ──────────────────────────────────────
@@ -76,11 +73,56 @@ export class LearningStudentsPage extends BasePage {
    * Chakra modal visível), retorna sem clicar novamente.
    */
   async openFilterDrawer(): Promise<void> {
-    const dialog = this.page.getByRole('dialog').first();
+    // role=dialog ambíguo: popover de Notificações também usa role=dialog.
+    // Drawer Chakra slide-in pode renderizar fora do viewport — usar heading
+    // específico "Lista de filtros" como sinal de prontidão.
+    const dialog = this.page.getByText('Lista de filtros', { exact: true }).first();
     if (await dialog.isVisible().catch(() => false)) return;
     await this.getFilterButton().click();
-    await dismissCommonModals(this.page);
+    // NÃO chamar dismissCommonModals aqui — o último-recurso dele clica
+    // "Close" em QUALQUER dialog visível, incluindo o drawer recém-aberto.
+    // NPS Sofia já foi tratado no safeGoto da navegação anterior.
     await dialog.waitFor({ state: 'visible', timeout: 10_000 });
+  }
+
+  /**
+   * Abre o painel de criação de novo filtro avançado (clica "+ Novo" no
+   * drawer "Lista de filtros") e escolhe um critério da seção "Opções de
+   * filtro". Após esse fluxo, as opções do critério (ex: status do
+   * certificado) ficam visíveis no painel de edição do filtro.
+   *
+   * Pré-condição: `openFilterDrawer()` chamado antes (drawer "Lista de
+   * filtros" visível).
+   *
+   * Critérios disponíveis (validados live 2026-05-27): Participante,
+   * Progresso, Desempenho, Pontuação, Aprovação, **Certificado**, E-mail
+   * do participante, CPF do participante, Situação da inscrição, etc.
+   * "Certificado" é o critério canônico para validar a opção "Substituído"
+   * (a AT usava "Status do certificado" — terminologia legada).
+   */
+  async openAdvancedFilterCriteria(criterion: string): Promise<void> {
+    const drawer = this.page.locator('.chakra-modal__content').first();
+    await drawer.waitFor({ state: 'visible', timeout: 5_000 });
+    // Clicar "+ Novo" — é um <p>Novo</p> dentro de div clicável.
+    await drawer.getByText('Novo', { exact: true }).first().click();
+    // Painel abre em modo "Colunas para filtrar" com critérios PADRÃO
+    // (Participante, Progresso, Aprovação). Para adicionar Certificado
+    // (ou outro), clicar no botão "+ Opções de filtro" que expande lista
+    // de checkboxes com todos os critérios disponíveis.
+    const opcoesBtn = drawer.getByRole('button', { name: /Opções de filtro/i }).first();
+    await opcoesBtn.waitFor({ state: 'visible', timeout: 5_000 });
+    await opcoesBtn.click();
+    // Lista de checkboxes aparece — marcar o critério desejado.
+    const criterionLabel = drawer
+      .locator('label.chakra-checkbox')
+      .filter({ hasText: new RegExp(`^${criterion}$`) })
+      .first();
+    await criterionLabel.waitFor({ state: 'attached', timeout: 5_000 });
+    await criterionLabel.scrollIntoViewIfNeeded();
+    const isChecked = (await criterionLabel.getAttribute('data-checked')) !== null;
+    if (!isChecked) {
+      await criterionLabel.click();
+    }
   }
 
   /**
@@ -98,7 +140,7 @@ export class LearningStudentsPage extends BasePage {
    */
   getStatusFilterOption(option: string): Locator {
     return this.page
-      .getByRole('dialog')
+      .locator('.chakra-modal__content')
       .first()
       .getByText(option, { exact: true });
   }
@@ -453,17 +495,22 @@ export class LearningStudentsPage extends BasePage {
 
   // ─── Reinscrição individual pelo Admin (Suite 02) ───────────────────
   //
-  // Convenções do menu de ações por linha:
-  //  - O trigger é um `<button>` (kebab/3-dots) com `aria-haspopup="menu"`.
-  //    Twygo Chakra: aria-label costuma ser "Ações" / "Opções" / "Mais
-  //    opções". Pra resiliência, casamos qualquer das 3 variantes.
+  // Convenções do menu de ações por linha (validado live 2026-05-27 em
+  // /e/{id}/learning, env 37048):
+  //  - O trigger é o botão kebab com accessible name literal `more_vert`
+  //    (ícone Material). NÃO é "Ações"/"Opções" — esses nomes nunca
+  //    existiram no facelift.
   //  - O dropdown abre como `<div role="menu">` (portal Chakra) — items
-  //    têm `role="menuitem"`. Item "Reinscrever" é a entry semântica.
+  //    têm `role="menuitem"`. Item de reinscrição é **"Iniciar reinscrição"**
+  //    (ícone `replay`), NÃO "Reinscrever".
+  //  - NÃO há modal de confirmação — o click em "Iniciar reinscrição"
+  //    dispara imediatamente `POST /api/v1/o/{org}/contents/{id}/event_participants`
+  //    com payload `{"recertification":true,"user":{"id":N}}`. Sucesso →
+  //    toast; falha → toast "Erro ao reinscrever participante".
   //
   // REVISAR: aguardando data-test-ids estáveis no app para:
   //   - `learning-student-row-actions-{userId}` (trigger por linha)
-  //   - `learning-student-action-reenroll` (item "Reinscrever")
-  //   - `reenroll-confirm-modal` (modal de confirmação)
+  //   - `learning-student-action-reenroll` (item "Iniciar reinscrição")
   // Quando os atributos forem adicionados, trocar os getters semânticos.
 
   /**
@@ -476,22 +523,35 @@ export class LearningStudentsPage extends BasePage {
   }
 
   /**
-   * Trigger do menu de ações (kebab/3-dots) na linha do aluno. Padrão
-   * Chakra: `<button>` com aria-label "Ações" / "Opções" / "Mais
-   * opções". Casamos role+name por regex para resiliência.
+   * Trigger do menu de ações (kebab) na linha do aluno. No facelift
+   * /e/{id}/learning o botão tem accessible name literal `more_vert`
+   * (validado live 2026-05-27).
    */
   getRowActionsMenuTrigger(email: string): Locator {
     return this.getRowByEmail(email)
-      .getByRole('button', { name: /(Ações|Opções|Mais|Menu)/i })
+      .getByRole('button', { name: 'more_vert' })
       .first();
   }
 
   /**
-   * Item "Reinscrever" no menu de ações aberto.
-   * Padrão Chakra: `<button role="menuitem">Reinscrever</button>`.
+   * Item "Iniciar reinscrição" (ícone `replay`) no menu de ações aberto.
+   * Validado live 2026-05-27 — o item NÃO se chama "Reinscrever".
    */
   getReinscreverMenuItem(): Locator {
-    return this.page.getByRole('menuitem', { name: /^Reinscrever$/i });
+    return this.page.getByRole('menuitem', { name: /Iniciar reinscrição/i });
+  }
+
+  /**
+   * Toast de ERRO da reinscrição individual. Texto literal observado live
+   * 2026-05-27: "Erro ao reinscrever participante" (disparado quando o
+   * `POST .../event_participants` retorna 422). `.first()` resolve
+   * strict-mode com toasts empilhados (skill `testar-toast-chakra-twygo`).
+   */
+  getReinscreverErrorToast(): Locator {
+    return this.page
+      .locator('.chakra-toast, [role="status"], [role="alert"]')
+      .filter({ hasText: /Erro ao reinscrever/i })
+      .first();
   }
 
   /**

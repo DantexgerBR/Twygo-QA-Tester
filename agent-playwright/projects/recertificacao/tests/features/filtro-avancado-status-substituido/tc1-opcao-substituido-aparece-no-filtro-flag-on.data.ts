@@ -4,18 +4,15 @@
  *
  * Pré-condição declarada no MD (suite 09):
  *  - Feature flag `:recertificacao` ATIVA
- *  - Pelo menos 1 aluno com certificado VALID/REPLACED/EXPIRED/PENDING
  *  - Lista de aprendizagem em "/learning_students" para um curso pré-existente
  *
- * `eventId` aponta para um curso pré-existente no env
- * `staging-base-de-conhecimento` (orgId 37007) que tenha learning_students
- * habilitado e participants em diferentes certificate_status.
- *
- * REVISAR-SEED: validar id real via recon live ou consulta SQL:
- *   `SELECT e.id FROM events e WHERE e.organization_id = 37007 LIMIT 1;`
- * Quando o seed do env for re-criado, atualizar este valor.
+ * Usa `fixedSeed.emptyCursoId` (curso permanente do env staging-recertificacao,
+ * orgId 37048). O filtro avançado renderiza mesmo sem participants — o teste
+ * só inspeciona o dropdown de opções de Status, não o conteúdo da lista.
  */
+import { fixedSeed } from '../../../data/fixed-seed.data.js';
+
 export const tc1Data = {
-  eventId: 1,
+  eventId: fixedSeed.emptyCursoId,
   optionLabel: 'Substituído',
 } as const;

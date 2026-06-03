@@ -4,16 +4,11 @@ import { LearningStudentsPage } from '../../../pages/LearningStudentsPage.js';
 import { tc1Data } from './tc1-opcao-substituido-aparece-no-filtro-flag-on.data.js';
 
 test.describe('Filtro Avançado Status Substituído', () => {
-  // Categoria: seed-invalido (heal 2026-05-26).
-  // GET /o/37007/events/1/learning_students retornou 404 — `tc1Data.eventId = 1`
-  // é placeholder. Validar manualmente no env staging-base-de-conhecimento
-  // (orgId 37007) qual eventId tem listagem de aprendizagem habilitada
-  // (participants em diferentes certificate_status) e atualizar
-  // `tc1-opcao-substituido-aparece-no-filtro-flag-on.data.ts`.
-  test.fixme(
-    true,
-    'seed inválido — eventId placeholder em tc1-opcao-substituido-aparece-no-filtro-flag-on.data.ts. Validar manualmente no env staging-base-de-conhecimento e atualizar o .data.ts.',
-  );
+  // Rota destravada em 2026-05-27 (LearningStudentsPage.goToList → /e/{id}/learning).
+  // Drawer "Lista de filtros" mostra filtros padrão de progresso por default.
+  // Para ver as opções de Certificado (Emitido/Pendente/Expirado/Aguardando
+  // assinatura/Substituído), navegar via "+ Novo" → critério "Certificado".
+  // Skill provisionar-seed v1.3 §filtro-avançado.
 
   test('TC1 — Opção "Substituído" aparece no filtro avançado de Status do certificado com flag ON', async ({
     page,
@@ -26,7 +21,7 @@ test.describe('Filtro Avançado Status Substituído', () => {
     await allure.severity('critical');
     await allure.parameter(
       'feature_flag',
-      ':recertificacao=ON (assumido em staging-base-de-conhecimento)',
+      ':recertificacao=ON (env staging-recertificacao 37048 — confirmado live via chrome-devtools-mcp 2026-05-27)',
     );
 
     const learningStudents = new LearningStudentsPage(page);
@@ -35,9 +30,7 @@ test.describe('Filtro Avançado Status Substituído', () => {
       '1. Acessar a lista de aprendizagem em "/learning_students" → Lista é exibida com colunas Nome, Status do certificado, etc.',
       async () => {
         await learningStudents.goToList(tc1Data.eventId);
-        await expect(page).toHaveURL(
-          /\/o\/\d+\/events\/\d+\/learning_students/,
-        );
+        await expect(page).toHaveURL(/\/e\/\d+\/learning/);
       },
     );
 
@@ -45,20 +38,23 @@ test.describe('Filtro Avançado Status Substituído', () => {
       '2. Clicar no ícone de filtro da coluna "Status do certificado" → Drawer de filtro avançado é exibido com lista de opções',
       async () => {
         await learningStudents.openFilterDrawer();
-        await expect(page.getByRole('dialog').first()).toBeVisible();
+        await expect(page.getByText('Lista de filtros', { exact: true }).first()).toBeVisible();
       },
     );
 
     await allure.step(
       '3. Inspecionar as opções do filtro → Lista contém: Emitido, Pendente, Expirado, Aguardando assinatura, Substituído',
       async () => {
+        // Navegar para criação de novo filtro → critério "Certificado"
+        // (terminologia atual do facelift, equivalente ao "Status do
+        // certificado" mencionado na AT). Após o click, todas as opções
+        // do critério aparecem em "Colunas para filtrar".
+        await learningStudents.openAdvancedFilterCriteria('Certificado');
+
         // Asserção principal (RN 23): "Substituído" presente com flag ON.
         await learningStudents.expectFilterOptionVisible(tc1Data.optionLabel, true);
 
-        // Asserções de paridade com as outras opções pré-existentes do filtro.
-        // REVISAR-FIGMA: labels exatos das demais opções confirmados via MD;
-        // se algum label tiver wording diferente no produto (ex.: "Aguardando
-        // assinatura digital"), ajustar conforme recon live.
+        // Asserções de paridade com as outras opções pré-existentes.
         for (const baseline of [
           'Emitido',
           'Pendente',

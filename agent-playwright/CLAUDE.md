@@ -21,13 +21,18 @@ Você é um **Engenheiro de Qualidade Sênior** especializado na plataforma Twyg
 operando como **orquestrador inteligente** entre análises de teste em formato
 TestLink e suítes Playwright executáveis.
 
-**Entrada**: XML TestLink padrão (gerado pelo agente AT a partir de XMind),
-contendo `<testsuite>`/`<testcase>`/`<step>` com `<actions>` e
-`<expectedresults>` em **prosa em PT-BR**.
+**Entrada**: MD canônico (`test-analysis.md` — CONTRACT.md v1+) ou XML TestLink
+legado, com `<testsuite>`/`<testcase>`/`<step>` em **prosa PT-BR**.
 
-**Saída**: código TypeScript Playwright (Page Objects + specs) versionado +
-relatório híbrido (HTML estruturado per-suite no dia-a-dia, Allure no
-regressivo via GH Pages).
+**Saída**: código TypeScript Playwright (Page Objects + specs UI + specs API +
+clientes HTTP + JSON Schemas) versionado + relatório híbrido (HTML estruturado
+per-suite no dia-a-dia, Allure no regressivo via GH Pages).
+
+**Escopo a partir de CONTRACT.md v1.2 (2026-05-27)**: este agente executa
+**tanto UI quanto API**. TCs `Tipo: api` vivem em `tests/api/` e usam o
+`request` fixture do Playwright + Ajv para validação de schema. TCs `Tipo: ui`
+seguem em `tests/features/`. `agent-api` separado foi avaliado e descartado
+(CONTRACT.md §16).
 
 Geração assistida por LLM, **runtime determinístico**.
 
@@ -86,8 +91,12 @@ agent-playwright/
 │       ├── project.config.json     # nome do projeto, XML, exploratory config
 │       ├── inputs/                 # XML/MD TestLink do AT (fonte de verdade; recon migrou pra outputs/<slug>/recon-cache/)
 │       ├── specs/                  # planos salvos pelo playwright-test-planner
-│       ├── tests/features/         # specs gerados (1 dir por testsuite)
-│       ├── pages/                  # Page Objects específicos do projeto
+│       ├── tests/
+│       │   ├── features/           # specs UI gerados (1 dir por testsuite) — TCs Tipo: ui
+│       │   └── api/                # NOVO em v1.2 — specs API (1 dir por testsuite) — TCs Tipo: api
+│       ├── pages/                  # Page Objects UI específicos do projeto
+│       ├── api/                    # NOVO em v1.2 — clientes HTTP (estilo POM, mas para REST/GraphQL)
+│       ├── schemas/                # NOVO em v1.2 — JSON Schemas para validação de response (consumidos por Ajv)
 │       └── utils/                  # testIds.ts e helpers específicos
 │
 ├── src/                            # infra compartilhada — genérico Twygo
@@ -352,11 +361,15 @@ Definidos por `npx playwright init-agents --loop claude` (oficial Microsoft). S�
 | **`roadmap-recon-cache`** | design | Especificação **implementada** — recon migrou de `inputs/` (git) pra `outputs/<slug>/recon-cache/` (cache regenerável + TTL de 7 dias, gitignored, com `_meta.json` + detecção de stale). Ver `twygo-recon/SKILL.md` |
 | **`roadmap-agent-metrics`** | design | Especificação **implementada** — orchestrator emite `outputs/<slug>/metrics/<runId>.json` por execução (durações por fase + contagens passed/failed/fixmeSkipped + `fixmeRate`/`humanInterventionRate`). Schema em `src/types/metrics.ts`, emissão via `MetricsCollector` (`twygo-test-orchestrator/metrics.ts`). KPIs de subagent (plannerMsPerTestcase/typecheckFirstPassRate/healValidatorBlockedRate) ficam `null` — rodam em sessão interativa, fora do orchestrator. Agregação na skill `agent-metrics` |
 | **`agent-metrics`** | observabilidade | Agrega o histórico de `metrics.json` (gitignored) e imprime trend dos KPIs do agente em tabela ASCII. `npm run agent:metrics -- --project <slug> [--last N | --since 30d | --metric <nome> | --compare a,b]`. Implementa a parte de agregação do design `roadmap-agent-metrics` |
+| **`testar-api-twygo`** | 3, 4, 7 | NOVO em v1.2 — Convenções de teste de API no PW: quando usar `request` fixture, organização de `tests/api/`, padrão de API Client em `api/`, combinar com playbooks UI (Flipper, Super Admin) no setup, naming, asserções via Ajv. Anti-patterns (hardcode de payload, ausência de schema validation, mistura UI+API no mesmo TC) |
+| **`provisionar-token-api-twygo`** | pre-3, 4 | NOVO em v1.2 — Resolve provisionar token de acesso API Twygo V2. 3 modos: `fixed_token` (`.env`), `oauth_password` (POST `/oauth/token`), `super_admin_generated` (via UI Super Admin). Define padrão de fixture `authHeaders` + cache de token por sessão. Cobre o REVISAR clássico das ATs de API |
+| **`validar-schema-api-twygo`** | 4, 7 | NOVO em v1.2 — Padrão de uso do helper Ajv em `src/utils/schema.ts`: organização de `schemas/` por endpoint, naming (`<recurso>-<acao>-response.schema.json`), como gerar schema a partir de exemplo de response real, pretty error messages |
 
 ### 6.5. Bibliotecas npm
 
 `@playwright/test` · `@axe-core/playwright` · `allure-playwright` ·
-`allure-commandline` · `fast-xml-parser`
+`allure-commandline` · `fast-xml-parser` ·
+`ajv` + `ajv-formats` (NOVO em v1.2 — validação de JSON Schema em testes de API)
 
 ---
 
@@ -375,6 +388,9 @@ Definidos por `npx playwright init-agents --loop claude` (oficial Microsoft). S�
 11. **Healer só corrige seletor / timing / asserção** — nunca altera intenção do teste.
 12. **Não inventar mapeamento de prosa** — se não bate com `.claude/prose-patterns.md`, marcar `// REVISAR` e seguir, **não chutar**.
 13. **Não marcar `test.fixme(true, 'seed inválido')` quando o recurso é criável via UI admin** — converter pré-condição em `beforeAll` que cria + `afterAll` que limpa (skill [`provisionar-seed`](.claude/skills/provisionar-seed/SKILL.md)). `fixme` por seed só vale quando exige DB write direto, worker assíncrono, Flipper toggle ou env config — categoria §7.6 F com motivo específico.
+14. **(NOVO em v1.2) Testes de API ficam em `tests/api/`, separados dos UI em `tests/features/`.** Rodam via `playwright test --project api` (sem browser). NUNCA misturar ações UI e requests HTTP no mesmo TC — se o AT descreve isso, separar em 2 TCs (`Tipo: ui` + `Tipo: api`) conforme CONTRACT.md §16.
+15. **(NOVO em v1.2) Toda response de API testada DEVE ser validada contra JSON Schema** em `projects/<slug>/schemas/`. Asserção mínima: `expect(response.status()).toBe(...)` + `validateAgainstSchema(await response.json(), schema)`. Helper canônico em `src/utils/schema.ts`. Anti-pattern: `expect(body).toEqual({...})` com hardcode — usa schema para tolerar campos novos do backend sem quebrar.
+16. **(NOVO em v1.2) Cliente HTTP de API vive em `projects/<slug>/api/<Recurso>ApiClient.ts`** (estilo POM, mas para REST). Specs em `tests/api/` chamam métodos do cliente, **não fazem `request.post()` direto** — preserva o princípio de POM (§2.4) aplicado à API.
 
 ---
 

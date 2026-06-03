@@ -17,6 +17,7 @@ import re
 import sys
 from pathlib import Path
 
+
 # Padrão de ID Dev: "Dev 1.1", "Dev 2.10", etc.
 DEV_ID_PATTERN = re.compile(r"\b(Dev\s+\d+(?:\.\d+)?)\b", re.IGNORECASE)
 

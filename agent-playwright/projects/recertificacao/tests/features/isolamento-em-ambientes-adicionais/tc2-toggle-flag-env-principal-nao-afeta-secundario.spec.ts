@@ -2,18 +2,21 @@ import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js
 import * as allure from 'allure-js-commons';
 
 test.describe('Isolamento em Ambientes Adicionais', () => {
-  // Decisão locked do QA (Suite 14): o frontmatter da suíte declara
-  // `env_secondary: null` e não há env adicional pareado configurado em
-  // `config/environment.json` para o projeto Recertificação. Sem o pareamento
-  // `staging-base-de-conhecimento` ↔ `staging-base-de-conhecimento-aditional`
-  // declarado, o Flipper toggle por org não pode ser validado cross-tenant.
+  // env adicional `staging-recertificacao-aditional` (orgId 37050) ESTÁ
+  // configurado em `config/environment.json` + `.env` (2026-05-27).
+  // Storage `outputs/.auth/storage-aditional.json` é gerado pelo globalSetup.
   //
-  // fixme legítimo (CLAUDE.md §7.6 F, categoria "dependência externa fora"):
-  // bloqueio de infra — configurar env adicional + credenciais antes de
-  // habilitar este TC. Destinatário: DevOps/QA Lead.
+  // fixme legítimo (CLAUDE.md §7.6 F, categoria "Flipper toggle runtime
+  // cross-tenant"): exige toggle live da flag `:recertificacao` no Flipper
+  // Admin (`/admin/manage/features/recertificacao`) APENAS pra orgId 37048
+  // (principal), assertion no principal (switch ausente) E no adicional
+  // (switch presente), depois revert obrigatório. Requer FlipperAdminPage
+  // (skill `testar-feature-flag-twygo`) + helper cross-tenant não
+  // implementados. Destinatário: implementar quando Categoria B (Suite 13)
+  // estabilizar — esse TC é o caso mais complexo da família Flipper.
   test.fixme(
     true,
-    'env secundário não configurado em config/environment.json (frontmatter env_secondary: null). Bloqueio de infra — configurar staging-base-de-conhecimento-aditional + senha em .env antes de habilitar este TC.',
+    'Exige toggle runtime da flag :recertificacao no Flipper Admin escopado por orgId + assertion cross-tenant (2 contextos com storage/baseURL distintos). Bloqueado por FlipperAdminPage não implementado + complexidade cross-tenant.',
   );
 
   test('TC2 — Toggle da flag :recertificacao no env principal NÃO afeta env secundário', async ({
@@ -29,7 +32,7 @@ test.describe('Isolamento em Ambientes Adicionais', () => {
     await allure.label('executionType', 'manual');
     await allure.parameter(
       'env_secondary',
-      'null (não configurado em config/environment.json)',
+      'staging-recertificacao-aditional (orgId 37050) — toggle Flipper cross-tenant pendente',
     );
 
     await allure.step(

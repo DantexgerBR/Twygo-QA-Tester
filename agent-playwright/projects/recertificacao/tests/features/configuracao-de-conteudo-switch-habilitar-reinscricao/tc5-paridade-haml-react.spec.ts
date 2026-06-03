@@ -6,17 +6,17 @@ import { SeedAdminPage } from '../../../pages/SeedAdminPage.js';
 
 const STORAGE_PATH = resolve(process.cwd(), 'outputs/.auth/storage.json');
 
-test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', () => {
-  // Bloqueio confirmado live 2026-05-26 — ver memo
-  // [[project-recertificacao-seed-blocker]]. createCurso via UI retorna
-  // 422 mesmo com perfil Admin via popover.
-  test.fixme(
-    true,
-    'createCurso via UI bloqueado por HTTP 422 no env staging-base-de-conhecimento (memo project-recertificacao-seed-blocker). Validar manualmente permissão do user ou usar bypass via API REST.',
-  );
-  // Seed auto-suficiente via SeedAdminPage (skill `provisionar-seed`):
-  // beforeAll cria curso com `has_recertification = false` para o TC
-  // togglar entre as 2 telas (HAML e React) e validar paridade do
+// XML desatualizado: a tela HAML legada `/e/{id}/edit` não renderiza
+// mais o checkbox "Habilitar reinscrição" no env staging-recertificacao
+// (validado live 2026-05-27). Form foi migrado para o facelift React
+// `/contents/{id}/edit?tab=access`. Paridade HAML/React não é mais
+// observável — TC perde sentido até o XML ser atualizado pela AT/QA Lead.
+// Categoria 'XML desatualizado' (CLAUDE.md §7.6 anti-pattern F).
+test.describe.fixme('Configuração de Conteúdo (Switch "Habilitar reinscrição")', () => {
+  // Seed auto-suficiente via SeedAdminPage (skill `provisionar-seed` v1.3):
+  // beforeAll cria curso com defaults (has_recertification=false por
+  // omissão). O TC toggla o switch entre as 2 telas (HAML legado `/e/{id}/edit`
+  // e React facelift `/contents/{id}/edit`) e valida paridade do
   // atributo `events.has_recertification`. afterAll deleta o curso.
   let cursoId: number;
   let cursoName: string;
@@ -31,6 +31,9 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
         name: cursoName,
         hasRecertification: false,
       });
+      // Re-grava storage atualizado pra evitar session race entre o
+      // contexto do seed e o `page` fixture do test.
+      await context.storageState({ path: STORAGE_PATH });
     } finally {
       await context.close();
     }
@@ -72,9 +75,11 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
     );
 
     await allure.step(
-      '2. Acessar o MESMO curso pela tela React → switch carrega ligado',
+      '2. Acessar o MESMO curso pela tela React → switch carrega ligado (tab "Acesso")',
       async () => {
         await contentEdit.openEditReactById(cursoId);
+        // Switch vive na tab "Acesso" do facelift (não na "Identificação").
+        await contentEdit.goToAcessoTab();
         await expect(contentEdit.getHabilitarReinscricaoSwitch()).toBeVisible();
         expect(await contentEdit.isHabilitarReinscricaoOn()).toBe(true);
       },

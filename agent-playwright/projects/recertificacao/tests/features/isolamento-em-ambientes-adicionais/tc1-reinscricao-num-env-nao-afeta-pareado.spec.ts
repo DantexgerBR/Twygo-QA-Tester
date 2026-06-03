@@ -2,21 +2,19 @@ import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js
 import * as allure from 'allure-js-commons';
 
 test.describe('Isolamento em Ambientes Adicionais', () => {
-  // Decisão locked do QA (Suite 14): o frontmatter da suíte declara
-  // `env_secondary: null` e não há env adicional pareado configurado em
-  // `config/environment.json` para o projeto Recertificação (catálogo da
-  // skill `testar-ambientes-adicionais-twygo` lista apenas `staging-widgets`
-  // pareado em 2026-05). Sem `staging-base-de-conhecimento-aditional` em
-  // `environment.json` + credenciais TWYGO_*_ADITIONAL_* em `.env`, não há
-  // como criar `outputs/.auth/storage-aditional.json` nem resolver `baseURL`
-  // do tenant pareado.
+  // env adicional `staging-recertificacao-aditional` (orgId 37050) ESTÁ
+  // configurado em `config/environment.json` + `.env` (2026-05-27).
+  // Storage `outputs/.auth/storage-aditional.json` é gerado pelo globalSetup.
   //
-  // fixme legítimo (CLAUDE.md §7.6 F, categoria "dependência externa fora"):
-  // bloqueio de infra — configurar env adicional + credenciais antes de
-  // habilitar este TC. Destinatário: DevOps/QA Lead.
+  // fixme legítimo (CLAUDE.md §7.6 F, categoria "DB pura"): os passos 1 e 3
+  // exigem `SELECT COUNT(*) FROM event_participants WHERE user_id = X` em
+  // 2 bancos distintos — validação cross-tenant fora do escopo Playwright
+  // (ver CONTRACT.md §validador secundário). Quando agent-db estiver
+  // implementado, este TC pode ser convertido em validação API+DB.
+  // Destinatário: agent-db (futuro).
   test.fixme(
     true,
-    'env secundário não configurado em config/environment.json (frontmatter env_secondary: null). Bloqueio de infra — configurar staging-base-de-conhecimento-aditional + senha em .env antes de habilitar este TC.',
+    'Passos 1 e 3 são DB-pura cross-tenant (SELECT COUNT em 2 bancos). Fora do escopo Playwright — aguarda agent-db. Env aditional já configurado.',
   );
 
   test('TC1 — Reinscrição num env não afeta participants no env pareado', async ({
@@ -32,7 +30,7 @@ test.describe('Isolamento em Ambientes Adicionais', () => {
     await allure.label('executionType', 'manual');
     await allure.parameter(
       'env_secondary',
-      'null (não configurado em config/environment.json)',
+      'staging-recertificacao-aditional (orgId 37050) — DB validation pendente em agent-db',
     );
 
     await allure.step(

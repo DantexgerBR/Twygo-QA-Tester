@@ -7,22 +7,16 @@ import { SeedAdminPage } from '../../../pages/SeedAdminPage.js';
 const STORAGE_PATH = resolve(process.cwd(), 'outputs/.auth/storage.json');
 
 test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', () => {
-  // Bloqueio confirmado live 2026-05-26 — ver memo
-  // [[project-recertificacao-seed-blocker]]. createCurso via UI retorna
-  // 422 mesmo com perfil Admin via popover.
-  test.fixme(
-    true,
-    'createCurso via UI bloqueado por HTTP 422 no env staging-base-de-conhecimento (memo project-recertificacao-seed-blocker). Validar manualmente permissão do user ou usar bypass via API REST.',
-  );
-  // Seed auto-suficiente via SeedAdminPage (skill `provisionar-seed`):
-  // beforeAll cria curso com `has_recertification = true`. A parte "com
-  // participants reinscritos" ainda NÃO é coberta porque
-  // `SeedAdminPage.criarAlunoMatriculado` está marcado not-implemented
-  // (requer recon live do fluxo "Adicionar aluno" — ver Page Object).
-  // Quando o helper estiver disponível, estender o beforeAll para criar
-  // participant + setar recertification_number > 0 (validação cross-suite
-  // com Suite 02). Por ora, o teste valida apenas que desativar o switch
-  // não dispara modal/aviso de bloqueio (parte do RN 2.3).
+  // Seed auto-suficiente via SeedAdminPage (skill `provisionar-seed` v1.3):
+  // beforeAll cria curso com defaults, depois abre edit e liga o switch
+  // "Habilitar reinscrição" (que vive em tab posterior do form facelift,
+  // NÃO no form de criação). A parte "com participants reinscritos"
+  // ainda NÃO é coberta — helper canônico `SeedAdminPage.matricularAluno`
+  // foi implementado em 2026-05-27 (skill v1.3 §"Matrícula de aluno"),
+  // mas o TC4 ainda só usa createCurso. Refatorar quando o spec for
+  // expandido pra cobrir cenário composto com participants reinscritos.
+  // Por ora, o teste valida apenas que desativar o switch não dispara
+  // modal/aviso de bloqueio (parte do RN 2.3).
   let cursoId: number;
   let cursoName: string;
 
@@ -32,10 +26,19 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
     const page = await context.newPage();
     try {
       const seed = new SeedAdminPage(page);
-      cursoId = await seed.createCurso({
-        name: cursoName,
-        hasRecertification: true,
-      });
+      cursoId = await seed.createCurso({ name: cursoName });
+      // Ligar o switch "Habilitar reinscrição" via ContentEditPage —
+      // skill v1.3 documenta que o switch NÃO está no form de criação
+      // (vive em tab posterior do edit).
+      const contentEdit = new ContentEditPage(page);
+      await contentEdit.openEditById(cursoId);
+      await contentEdit.setHabilitarReinscricao(true);
+      await contentEdit.save();
+      await contentEdit.expectSaveSuccess();
+      // Re-grava storage atualizado pra evitar session race entre o
+      // contexto do seed e o `page` fixture do test (Twygo regenera
+      // session_id após operações de criação/save).
+      await context.storageState({ path: STORAGE_PATH });
     } finally {
       await context.close();
     }
@@ -69,11 +72,13 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
       '1. Pré-condição: curso com `has_recertification = true` (criado no beforeAll)',
       async () => {
         // REVISAR: validação cross-suite com Suite 02 — testar com participants
-        // reinscritos quando `SeedAdminPage.criarAlunoMatriculado` estiver
-        // implementado (helper hoje lança not-implemented; ver Page Object).
+        // reinscritos via `SeedAdminPage.matricularAluno` (já implementado;
+        // ver Page Object). Refatorar TC pra invocar matricularAluno +
+        // simular reinscrição quando expandir cobertura.
         await allure.tag('REVIEW_NEEDED');
-        await contentEdit.openEditById(cursoId);
-        await expect(contentEdit.getHabilitarReinscricaoSwitch()).toBeVisible();
+        // Switch vive na tab "Acesso" do facelift.
+        await contentEdit.openEditByIdInAcessoTab(cursoId);
+        await expect(contentEdit.getHabilitarReinscricaoVisible()).toBeVisible();
         expect(await contentEdit.isHabilitarReinscricaoOn()).toBe(true);
       },
     );
@@ -103,8 +108,8 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
         await contentEdit.save();
         await contentEdit.expectSaveSuccess();
 
-        // Reabre para confirmar persistência do switch OFF.
-        await contentEdit.openEditById(cursoId);
+        // Reabre para confirmar persistência do switch OFF (tab "Acesso").
+        await contentEdit.openEditByIdInAcessoTab(cursoId);
         expect(await contentEdit.isHabilitarReinscricaoOn()).toBe(false);
 
         // REVISAR: assertion `participants.recertification_number > 0` no banco

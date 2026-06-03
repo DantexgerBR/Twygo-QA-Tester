@@ -36,37 +36,73 @@ pasta `projects/<slug>/docs/`. Ao final, um arquivo
 `projects/<slug>/output/requisitos_extraidos.md` será gerado com todas as
 informações consolidadas (intermediário — input do `generate-md-canonical`).
 
-## Etapa 2.5: Recon visual de protótipo (opcional, RECOMENDADO)
+## Etapa 2.5: Recon de protótipo (CONTRACT.md v1.1: AUTOMÁTICA)
 
-Se o projeto tem **protótipo navegável** (Figma Make / Embed / outros),
-invocar a skill `/recon-visual` para extrair textos literais reais da UI
-(labels, botões, toasts, modais, dropdowns).
+A partir de `contract_version: 1.1`, esta etapa é **default automática
+com fallback gracioso** (Opção C aprovada em 2026-05-22). Histórico
+mostrou que opt-in não foi usado — projetos pularam recon e bugs reais
+escaparam.
 
-```
-/recon-visual --project <slug>
-```
+### Quando roda automaticamente
 
-A skill produz `projects/<slug>/output/recon-visual.md` — consumido pelo
-`/generate-md-canonical` para preencher os catálogos do MD canônico
-(`## Textos literais`, `## Modais relevantes`, etc.) sem inferência.
+Se `agent-at/projects/<slug>/project.config.json` tem `prototypeUrl`
+preenchido, a Etapa 2.5 invoca `/recon-prototipo` automaticamente entre
+`read-docs` e o planejamento da estrutura.
 
-**Escopo desta etapa**: apenas protótipos. **NÃO acessa Stage real** —
-recon de Stage fica para o agent-playwright durante execução
-(skill `twygo-recon`). Razão: ATs podem ser produzidas antes do projeto
-estar em Stage; fonte autoritativa de design é Discovery + protótipo.
+### Fallback gracioso
 
-**Quando pular**:
-- Nenhum protótipo disponível
-- Protótipo privado e sem link público
+Falhas conhecidas **não travam** o `/analyze-test`:
 
-Pulando esta etapa, `/generate-md-canonical` marcará `// REVISAR-FIGMA`
-em todos os textos inferidos. **Pular custa horas depois** — recon
-visual aqui economiza retrabalho no agent-playwright.
+| Falha | Comportamento |
+|---|---|
+| MCP playwright não disponível | SKIP + warning "iniciar Claude Code dentro de agent-at/" |
+| Protótipo exige login (Figma File privado) | SKIP + warning "login required" |
+| Timeout > 30s | SKIP + warning "timeout" |
+| `prototypeUrl` ausente | SKIP silencioso |
 
-**Divergência protótipo vs Discovery**: se o protótipo mostra algo
-diferente do que a Discovery descreve, o protótipo é geralmente a fonte
-mais recente. Documentar a divergência e seguir o protótipo, ou
-perguntar ao QA Lead se ambíguo.
+Em todos os casos, `/analyze-test` prossegue. AT terá `// REVISAR-FIGMA`
+nos catálogos não cobertos.
+
+### Override manual
+
+- Setar `prototypeUrl: null` no `project.config.json`
+- Rodar `/analyze-test --no-recon`
+
+### Skill agora chamada `/recon-prototipo`
+
+Renomeada de `/recon-visual` em v1.1 para refletir escopo (protótipos,
+não Stage). Campo `figmaPrototype` continua aceito como alias de
+`prototypeUrl` (compatibilidade com configs 1.0).
+
+A skill produz `projects/<slug>/output/recon-prototipo.md` consumido
+pelo `/generate-md-canonical` para preencher os catálogos do MD canônico
+sem inferência. Status do recon (`complete`/`partial`/`skipped`) fica no
+header do arquivo.
+
+### Cache inteligente
+
+Recon roda apenas se cache > 7 dias OU `prototypeUrl` mudou. Override:
+flag `--refresh-recon`.
+
+### Escopo
+
+**Apenas protótipos**. **NÃO acessa Stage real** — recon de Stage fica
+para `agent-playwright/.claude/skills/twygo-recon` durante execução.
+Razão: ATs podem ser produzidas antes do Stage estar pronto; fonte
+autoritativa de design é Discovery + protótipo.
+
+### Divergência protótipo vs Discovery
+
+Se o protótipo mostra algo diferente do que a Discovery descreve, o
+protótipo é geralmente a fonte mais recente. Documentar a divergência
+no recon-prototipo.md §6 e seguir o protótipo, ou perguntar ao QA Lead
+se ambíguo.
+
+### Em contract_version 1.0 (legado)
+
+Etapa 2.5 continua **opt-in explícito** (não-automática). Manter
+compatibilidade com ATs antigas. Skill ainda existe como
+`recon-visual` (alias) ou `recon-prototipo`.
 
 ## Etapa 3: Definição da estrutura de suítes
 

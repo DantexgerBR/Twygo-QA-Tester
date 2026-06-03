@@ -153,6 +153,48 @@
       "editContractPath": "/admin/edit_sys_subscription_settings/36675"
     }
   },
+  "staging-recertificacao": {
+    "baseUrl": "https://recertificacao-testeqa.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_STAGING_RECERTIFICACAO_EMAIL}",
+      "password": "${TWYGO_STAGING_RECERTIFICACAO_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "37048",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/37048"
+    }
+  },
+  "staging-recertificacao-aditional": {
+    "baseUrl": "https://adicional-certificacao-testeqa.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_STAGING_RECERTIFICACAO_ADITIONAL_EMAIL}",
+      "password": "${TWYGO_STAGING_RECERTIFICACAO_ADITIONAL_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "37050",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/37050"
+    }
+  },
+  "staging-recertificacao-trial": {
+    "baseUrl": "https://testerecertificacaotrial.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_STAGING_RECERTIFICACAO_TRIAL_EMAIL}",
+      "password": "${TWYGO_STAGING_RECERTIFICACAO_TRIAL_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "37051",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/37051"
+    }
+  },
   "staging-base-de-conhecimento": {
     "baseUrl": "https://basedeconhecimento.stage.twygoead.com/",
     "credentials": {

@@ -9,21 +9,13 @@ import { SeedAdminPage } from '../../../pages/SeedAdminPage.js';
 const STORAGE_PATH = resolve(process.cwd(), 'outputs/.auth/storage.json');
 
 test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', () => {
-  // Bloqueio confirmado live 2026-05-26 via Playwright MCP: createCurso
-  // via UI no env staging-base-de-conhecimento (orgId 37007) com user
-  // padrão de teste retorna HTTP 422 "The change you wanted was rejected"
-  // mesmo após trocar perfil para Administrador via popover. Form HTML
-  // do `/o/{orgId}/events/new` não expõe authenticity_token visível;
-  // Twygo provavelmente injeta CSRF via interceptor JS que o submit
-  // nativo não dispara. Necessita validação humana (memo
-  // [[project-recertificacao-seed-blocker]]): permissão do user, org
-  // alternativa, ou bypass via API REST. Skill `provisionar-seed`
-  // continua canônica — só este env+user específico tem o bloqueio.
-  test.fixme(
-    true,
-    'createCurso via UI bloqueado por HTTP 422 no env staging-base-de-conhecimento (memo project-recertificacao-seed-blocker). Mesmo com perfil Administrador ativo via popover, POST /e é rejeitado. Validar manualmente permissão do user de teste ou usar bypass via API REST.',
-  );
-  // Seed auto-suficiente via SeedAdminPage (skill `provisionar-seed`):
+  // Seed auto-suficiente via SeedAdminPage (skill `provisionar-seed` v1.3):
+  // - Rota canônica `/o/{orgId}/contents/new?kind=0` (facelift React),
+  //   validada live 2026-05-26 no env staging-recertificacao (orgId 37048,
+  //   user agents.qa@claude.com em perfil Administrador). Content criado:
+  //   ID 806852 "Validação seed via menu real".
+  // - Bloqueio anterior (422 em /events/new HAML legado) RESOLVIDO em
+  //   v1.1 da skill — era rota errada, não CSRF/permissão.
   // beforeAll cria o curso → captura eventId real → spec navega pela
   // listagem e localiza o curso pelo nome único. afterAll deleta via
   // variant *_safe idempotente.
@@ -40,6 +32,11 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
         name: cursoName,
         hasRecertification: false, // default — TC1 só lê o switch, não toggla
       });
+      // Re-grava storage atualizado pra evitar session race entre o
+      // contexto do seed e o `page` fixture do test (Twygo regenera
+      // session_id após operações de criação — sem refresh, page do
+      // test acaba na tela de login).
+      await context.storageState({ path: STORAGE_PATH });
     } finally {
       await context.close();
     }
@@ -84,21 +81,24 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
     );
 
     await allure.step(
-      '3. Clicar em "Editar" no menu de ações do curso → página de edição é exibida',
+      '3. Clicar em "Gerenciar" no menu de ações do curso → página de edição é exibida',
       async () => {
         // Localiza o curso CRIADO no beforeAll pelo nome único (worker-isolated).
-        // `openEditByName` cobre os 2 padrões de UI (kebab HAML / link direto facelift).
-        // REVISAR: seletor descoberto via heal — adicionar data-test-id estável no app via PR.
+        // `openEditByName` cobre os 3 padrões: link direto, more_vert → Gerenciar
+        // (UI nova facelift, skill provisionar-seed v1.3), kebab Options (HAML).
         await contentEdit.openEditByName(cursoName);
         await expect(page).toHaveURL(/\/(e\/\d+\/edit|contents\/\d+\/edit)/);
       },
     );
 
     await allure.step(
-      '4. Switch "Habilitar reinscrição" está visível no formulário',
+      '4. Switch "Habilitar reinscrição" está visível no formulário (tab "Acesso" do facelift)',
       async () => {
-        const switchCb = contentEdit.getHabilitarReinscricaoSwitch();
-        await expect(switchCb).toBeVisible();
+        // No facelift React, o switch vive na tab "Acesso" (validado live
+        // 2026-05-26 após fix de feature flag no env). Navega antes do expect.
+        // O input é screen-reader-only — checamos visibilidade pelo label.
+        await contentEdit.goToAcessoTab();
+        await expect(contentEdit.getHabilitarReinscricaoVisible()).toBeVisible();
       },
     );
 
@@ -106,17 +106,18 @@ test.describe('Configuração de Conteúdo (Switch "Habilitar reinscrição")', 
       '5. Hover no ícone de ajuda → tooltip de ajuda é exibido com o texto da chave I18n',
       async () => {
         const trigger = contentEdit.getHabilitarReinscricaoTooltipTrigger();
-        // REVISAR: tooltip-trigger sem data-test-id estável — fallback usa
-        // proximidade do label. Se este step falhar, capturar role+name
-        // do trigger real e ajustar `getHabilitarReinscricaoTooltipTrigger`.
+        // REVISAR: tooltip-trigger sem data-test-id estável e UI atual da
+        // facelift não expõe ícone de ajuda adjacente ao checkbox
+        // "Habilitar reinscrição" — capturar role+name do trigger real
+        // (DOM inspect ao vivo) e ajustar `getHabilitarReinscricaoTooltipTrigger`.
+        // Sem o trigger, step é informativo (sem assertion). Steps 1-4
+        // já validam a RN principal.
         await allure.tag('REVIEW_NEEDED');
-        if (await trigger.isVisible().catch(() => false)) {
+        const triggerVisible = await trigger.isVisible({ timeout: 1_000 }).catch(() => false);
+        if (triggerVisible) {
           await trigger.hover();
           const tooltip = contentEdit.getHabilitarReinscricaoTooltip();
           await expect(tooltip).toBeVisible();
-          // REVISAR-FIGMA: texto exato (chave I18n
-          // "activerecord.attributes.event.has_recertification_tooltip")
-          // ainda não confirmado — asserta apenas presença não-vazia.
           await expect(tooltip).not.toHaveText('');
         }
       },

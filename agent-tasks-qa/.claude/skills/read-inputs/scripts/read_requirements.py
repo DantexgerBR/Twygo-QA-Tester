@@ -17,6 +17,7 @@ import re
 import sys
 from pathlib import Path
 
+
 # Padrões de RN: aceita "RN 1", "RN 1.2", "RN 10.3", "[RN 5]", "(RN 2.1)", etc.
 RN_PATTERN = re.compile(r"\b(RN\s+\d+(?:\.\d+)?)\b", re.IGNORECASE)
 

@@ -91,6 +91,20 @@ Para cada testcase planejado:
        O spec só importa e referencia (`data.envId`). Convenção em CLAUDE.md
        §3.1. Generator deve emitir o `.data.ts` SEMPRE que o teste tiver ≥1
        constante de domínio — mesmo que seja só uma. Não inline.
+     - **F. Pré-condição via fixture canônica (NÃO `test.fixme` por seed).**
+       Quando o MD declara `Pré-condições` que envolvam recurso pré-existente,
+       generator DEVE mapear pra fixture em `src/fixtures/seed-fixtures.ts`
+       seguindo a tabela canônica da skill [[provisionar-seed]] §"Mapping
+       pré-condição → fixture":
+       - "Curso/Trilha/Pacote pré-existente" → `cursoSeed`
+       - "Aluno matriculado" → `alunoMatriculadoSeed`
+       - "Aluno pode logar" → `alunoComSenhaSeed`
+       - "Aluno aprovado / cert emitido / progresso ≥ X" → `alunoAprovadoSeed`
+       Import: `import { test, expect } from '<...>/src/fixtures/seed-fixtures.js'`.
+       Spec consome via destruturação: `async ({ page, alunoAprovadoSeed })`.
+       Cleanup é automático (fixture afterAll). PROIBIDO `test.fixme(true,
+       'seed inválido')` quando fixture canônica cobre — §7.6 F deixa de
+       aplicar a partir da v1.5 da skill.
 2. Annotations Allure obrigatórias no início de cada `test()`:
    ```ts
    await allure.epic(`Twygo - ${projectName}`);                    // do projectName em config
