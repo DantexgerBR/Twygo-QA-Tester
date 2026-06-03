@@ -1,12 +1,18 @@
 /**
- * Cleanup de recursos seed orfãos no env staging-recertificacao.
+ * Cleanup de recursos seed orfãos — cross-projeto Twygo.
  *
- * Phase 6 do roadmap "zero hardcoded" (2026-06-03). Fixtures dinâmicas
- * (cursoSeed, trilhaSeed, alunoComSenhaSeed, alunoAprovadoSeed) criam
+ * Phase 6 do roadmap "zero hardcoded" (2026-06-03), generalizado v2.1
+ * (2026-06-03). Fixtures dinâmicas do pool genérico (`cursoSeed`,
+ * `trilhaSeed`, `alunoComSenhaSeed`, `alunoAprovadoSeed` etc) criam
  * recursos com nome worker-isolated `<Tipo> Seed w<workerIndex>-<timestamp>`.
  * Quando um cleanup `afterAll` falha por crash do worker, timeout, ou run
  * interrompida (Ctrl+C, OOM), o recurso fica orfão no env. Sem este script,
  * o env acumula linearmente.
+ *
+ * **Cross-projeto**: usa `SeedAdminPageBase` (genérico Twygo em `src/pages/`),
+ * funciona em qualquer projeto que tenha seguido o naming worker-isolated
+ * canônico. Env alvo é resolvido por `PROJECT` env var → `getOrgId()` /
+ * `getBaseUrl()`.
  *
  * **Política de retenção**: recursos com timestamp > 24h são considerados
  * orfãos (uma run normal não dura > 1h). Recursos < 24h podem ser de uma
@@ -34,7 +40,7 @@
  */
 import { chromium } from '@playwright/test';
 import { resolve } from 'node:path';
-import { SeedAdminPage } from '../projects/recertificacao/pages/SeedAdminPage.js';
+import { SeedAdminPageBase } from '../src/pages/SeedAdminPageBase.js';
 import { getBaseUrl, getOrgId } from '../src/utils/environment.js';
 import { safeGoto } from '../src/utils/modals.js';
 
@@ -132,7 +138,7 @@ async function main(): Promise<void> {
   const browser = await chromium.launch({ headless: true });
   const ctx = await browser.newContext({ storageState: STORAGE_PATH });
   const page = await ctx.newPage();
-  const seed = new SeedAdminPage(page);
+  const seed = new SeedAdminPageBase(page);
 
   try {
     const orphans = await listOrphans(page, cutoffMs);

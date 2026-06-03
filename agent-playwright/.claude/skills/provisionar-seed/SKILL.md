@@ -17,7 +17,7 @@ triggers:
   - "/contents/new"
   - "eventId placeholder"
   - "createCurso"
-version: 2.0.0
+version: 2.1.0
 ---
 
 # provisionar-seed
@@ -104,6 +104,113 @@ specs são resolvidos em **runtime** via:
 - **Movido**: `src/fixtures/seed-fixtures.ts` → `projects/recertificacao/fixtures/seed-fixtures.ts`.
 - **Novo**: `scripts/cleanup-env-orphans.ts` — `npm run agent:cleanup-orphans
   -- --apply` deleta recursos `Seed-*-w*-<ts>` com idade > 24h.
+
+### Como projeto novo herda o pool (v2.1)
+
+Em v2.1 a infraestrutura genérica vive em `src/` e cada projeto especializa
+o que precisa. Arquitetura em camadas:
+
+```
+src/pages/SeedAdminPageBase.ts          # POM genérico Twygo
+src/fixtures/seed-fixtures-base.ts      # fixtures genéricas (cursoSeed, alunoAprovadoSeed, ...)
+
+projects/<slug>/pages/SeedAdminPage.ts        # extends Base + helpers do domínio
+projects/<slug>/fixtures/seed-fixtures.ts     # baseTest.extend + fixtures específicas
+```
+
+**Receita pra projeto novo `<slug>`** (~30min se o projeto não precisa de
+helpers específicos):
+
+**Passo 1 — POM**: se o projeto NÃO tem helper admin específico (ex: setter
+de feature flag), pode usar `SeedAdminPageBase` direto e pular este passo.
+Se tem, crie `projects/<slug>/pages/SeedAdminPage.ts`:
+
+```ts
+import type { Page } from '@playwright/test';
+import { SeedAdminPageBase } from '../../../src/pages/SeedAdminPageBase.js';
+
+export class SeedAdminPage extends SeedAdminPageBase {
+  constructor(page: Page) { super(page); }
+
+  async setMinhaFlagEspecifica(id: number, enabled: boolean): Promise<void> {
+    // ... usa this.ensureAdminProfile() (protected), this.page, getOrgId() ...
+  }
+}
+```
+
+Helpers `protected` herdados que podem ser usados na subclass:
+`ensureAdminProfile`, `getNameInput`, `getSaveButton`,
+`submitAndWaitForEditUrl`, `setHabilitarReinscricao` (no-op em projetos
+sem flag :recertificacao), `findEventRowAndClickKebab`.
+
+**Passo 2 — Fixtures**: se o projeto NÃO tem fixture específica, pode usar
+`src/fixtures/seed-fixtures-base.ts` direto. Se tem, crie
+`projects/<slug>/fixtures/seed-fixtures.ts`:
+
+```ts
+import { test as baseTest } from '../../../src/fixtures/seed-fixtures-base.js';
+import type { Browser } from '@playwright/test';
+import { resolve } from 'node:path';
+import { ProfileSwitcher } from '../../../src/pages/ProfileSwitcher.js';
+import { SeedAdminPage } from '../pages/SeedAdminPage.js';
+
+const STORAGE_PATH = resolve(process.cwd(), 'outputs/.auth/storage.json');
+
+export type MinhasFixtures = {
+  meuRecursoEspecifico: { id: number; name: string };
+};
+
+async function withAdminPage<T>(
+  browser: Browser,
+  fn: (page: import('@playwright/test').Page, seed: SeedAdminPage) => Promise<T>,
+): Promise<T> {
+  const ctx = await browser.newContext({ storageState: STORAGE_PATH });
+  const page = await ctx.newPage();
+  try {
+    await new ProfileSwitcher(page).switchToViaUrl('Administrador');
+    return await fn(page, new SeedAdminPage(page));
+  } finally { await ctx.close(); }
+}
+
+export const test = baseTest.extend<MinhasFixtures>({
+  meuRecursoEspecifico: [
+    async ({ browser, cursoSeed }, use) => {
+      // ... reusa cursoSeed (genérico do Base) + adiciona setup específico
+      await withAdminPage(browser, (_p, seed) =>
+        seed.setMinhaFlagEspecifica(cursoSeed.id, true),
+      );
+      await use({ id: cursoSeed.id, name: cursoSeed.name });
+      // Cleanup do curso herdado de cursoSeed (cascata).
+    },
+    { scope: 'test' },
+  ],
+});
+
+export { expect } from '@playwright/test';
+```
+
+**Passo 3 — Specs**: importam de `projects/<slug>/fixtures/seed-fixtures.ts`
+e ganham automaticamente acesso ao pool herdado + fixtures específicas:
+
+```ts
+import { test, expect } from '../../../fixtures/seed-fixtures.js';
+
+test('TC1', async ({ page, cursoSeed, meuRecursoEspecifico }) => {
+  // cursoSeed do pool Base + meuRecursoEspecifico do projeto
+});
+```
+
+**Cleanup automático**: o script `agent-playwright/scripts/cleanup-env-orphans.ts`
+usa `SeedAdminPageBase` (cross-projeto) e funciona em qualquer env Twygo
+contanto que `PROJECT=<slug>` esteja setado (resolve `getOrgId`/`getBaseUrl`
+via `config/environment.json`). Naming `w<wi>-<ts>` é convenção universal —
+qualquer projeto que use as fixtures Base ganha cleanup "de graça".
+
+**Quando promover fixture específica → Base**: se um segundo projeto começa a
+precisar da mesma fixture, **mova pra `seed-fixtures-base.ts`**. Antes
+disso, manter no projeto específico (YAGNI). Mesmo critério vale pra
+métodos do POM (promover do `SeedAdminPage` projeto → `SeedAdminPageBase`
+quando 2º consumidor aparece).
 
 ### Quando o fixed-seed AINDA é legítimo
 
@@ -1481,6 +1588,38 @@ novo:
   com criação via UI precisa seguir
 
 ## Histórico
+
+- **v2.1.0 (2026-06-03)**: stratification cross-projeto. Demanda do
+  usuário: "precisamos deixar preparado para os próximos projetos
+  utilizar o seed". Mudanças:
+  - **Novo `src/pages/SeedAdminPageBase.ts`** — POM genérico Twygo com
+    todos os métodos cross-projeto (createCurso/Trilha/Pacote,
+    criarUsuarioAluno, matricularAluno*, delete*Safe, publicarCurso,
+    listarAtividades, configurarMarcarConcluidoManualmente,
+    completarCursoComoAluno + helpers `protected` reutilizáveis).
+    Helpers herdados pelos sub-POMs: ensureAdminProfile, getNameInput,
+    getSaveButton, submitAndWaitForEditUrl, findEventRowAndClickKebab,
+    setHabilitarReinscricao.
+  - **Novo `src/fixtures/seed-fixtures-base.ts`** — fixtures genéricas
+    (cursoSeed, trilhaSeed, cursoLiberadoSeed,
+    cursoComAtividadesMarcaveisSeed, alunoMatriculadoSeed,
+    alunoComSenhaSeed, alunoAprovadoSeed). Usa SeedAdminPageBase.
+  - **Refactor `projects/recertificacao/pages/SeedAdminPage.ts`** —
+    agora extends SeedAdminPageBase + adiciona apenas helpers
+    específicos (setHasRecertification, expirarCertificadoDoAluno,
+    set*Banner/Cobranca/CriterioAprovacao/QuemPodeVer/HabilitarChat/
+    Localizacao/Compartilhamento — estes últimos delegam ContentEditPage
+    per-projeto; candidatos a Base quando 2º consumidor aparecer).
+  - **Refactor `projects/recertificacao/fixtures/seed-fixtures.ts`** —
+    agora `baseTest.extend` apenas com `cursoComRecertificacaoSeed`
+    (específico). Herda 7 fixtures genéricas do Base automaticamente.
+  - **Refactor `scripts/cleanup-env-orphans.ts`** — usa SeedAdminPageBase
+    (cross-projeto). Funciona em qualquer projeto via `PROJECT=<slug>`.
+  - **Nova seção `## Como projeto novo herda o pool (v2.1)`** —
+    receita 3-passos pra projeto novo (POM extends Base + fixtures
+    `baseTest.extend` + specs importam do `projects/<slug>/fixtures/`).
+  - **Regra de promoção**: fixture/método específico → Base quando 2º
+    consumidor aparece (YAGNI até lá).
 
 - **v2.0.0 (2026-06-03)**: princípio "Zero Hardcoded" — refatoração
   guiada pelo usuário (diretriz: "precisamos remover hard-coded e
