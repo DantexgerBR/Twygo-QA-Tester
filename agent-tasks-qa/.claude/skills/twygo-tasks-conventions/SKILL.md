@@ -126,6 +126,29 @@ Tabela base:
 - **Reduzir** quando: page object já existe / fixture reutilizável já implementada / padrão de teste estabelecido.
 - **Aumentar** quando: cenário inédito / múltiplos sistemas envolvidos / regras de negócio com muitas variações.
 
+### Fator de automação por agente
+
+A tabela base acima reflete **escrita manual** de testes Playwright. Neste monorepo a
+execução é conduzida por agentes (`agent-playwright` gera specs, `agent-at` gera
+análise/XMind/XML). O esforço humano real por atividade é **recon live
+(rotas/seletores/comportamentos) + revisar specs gerados + rodar/estabilizar +
+diagnosticar bugs reais** — substancialmente menor que codar à mão.
+
+Aplicar **fator ~0,4–0,5×** sobre a tabela base, com **pisos**:
+
+- **Piso ~2h** por atividade real (recon + review + estabilização têm custo fixo).
+- **~3–4h** para fluxos com muito estado, integração externa ou alto risco (ex.: lazy
+  migration, contrato cross-projeto, query recursiva).
+- **Análise de testes**: o `agent-at` automatiza a geração; humano valida →
+  reduzir proporcionalmente (ex.: 16h manual → ~10h).
+
+**Não** aplicar o fator quando: cenário 100% inédito sem page object nem fixture (a
+primeira atividade que constrói a base reutilizável paga mais), ou validação fora do
+E2E (DB/API/manual).
+
+> Caso real (Mapa de Competências, 2026-06-02): quebra de 25 atividades + análise caiu
+> de **154h (manual) → 96h (agente)**, ~38% de redução.
+
 > "Buffer de retrabalho" **NÃO existe mais** — nunca incluir.
 
 ## 5. Descrições Padrão (atividades fixas)

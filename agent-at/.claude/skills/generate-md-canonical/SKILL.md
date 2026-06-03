@@ -105,6 +105,7 @@ preconditions:
 **Prioridade**: critical | high | medium | low
 **Tipo**: ui | api | db | mixed
 **Playbooks adicionais**: []
+**RNs cobertas**: 1, 2.1          # v1.1 — NÚMEROS PUROS, sem prefixo "RN". Aceita também lista: [1, 2.1]
 
 # Convenção v1.2 sobre `Tipo`:
 # - `ui`    — TC com ações em UI, vai em tests/features/ no agent-playwright
@@ -139,6 +140,11 @@ preconditions:
 10. **Catálogo de Modais** — incluir EXATAMENTE título, body e botões com texto literal
 11. **Cada passo autocontido** — nunca "repetir passo 3"
 12. **Combinar 2 ações num passo é proibido** — quebrar em 2 passos
+13. **`**RNs cobertas**` em NÚMEROS PUROS** (v1.1) — declarar por TC como `**RNs cobertas**: 1, 2.1`
+    (ou `[1, 2.1]`), **sem** o prefixo `RN`. O `validate_md_canonical.py` casa a prosa via
+    `RN (\d+(?:\.\d+)*)` e compara só o número; escrever `RN 1` no campo gera mismatch e dispara
+    o warning "RN X mencionada na prosa mas nenhum TC declara". Todo TC deve declarar as RNs que cobre
+    (rastreabilidade RN→TC da v1.1 §1.1).
 
 ## Mapeamento de prioridade (decisão 2026-05-19)
 
