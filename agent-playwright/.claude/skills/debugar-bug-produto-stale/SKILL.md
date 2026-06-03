@@ -1,6 +1,18 @@
 ---
 name: debugar-bug-produto-stale
 description: Diagnosticar spec marcado FAILING-BY-PRODUCT-BUG (ou equivalente) que continua red. Antes de cobrar dev, revalidar via API direta / MCP / curl que o sintoma documentado ainda acontece. Se sumiu (bug foi corrigido sem reabrir o spec), re-investigar — a causa atual pode ser outra.
+when_to_use: |
+  - Spec com comentário `// FAILING-BY-PRODUCT-BUG` ou `// BLOCKED-BY-PRODUCT-BUG` continua red
+  - `test.fixme` legítimo de seed ausente/flag off — re-checar se o bloqueio sumiu
+  - Antes de cobrar dev sobre bug "antigo" sem reproduzir o endpoint
+triggers:
+  - "FAILING-BY-PRODUCT-BUG"
+  - "BLOCKED-BY-PRODUCT-BUG"
+  - "bug stale"
+  - "bug fechado"
+  - "spec continua red"
+  - "revalidar via curl"
+  - "fixme legítimo"
 version: 1.0.0
 ---
 

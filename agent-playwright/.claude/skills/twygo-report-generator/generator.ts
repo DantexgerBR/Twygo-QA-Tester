@@ -714,12 +714,26 @@ function indexTcNumbersByName(parsed: ParsedAnalysis): Map<string, string> {
 }
 
 /**
+ * Remove prefixo `TC<N> — ` / `TC<N> · ` / `TC<N> - ` do início do título
+ * do test (caso o generator tenha incluído). Specs antigos (widgets, etc)
+ * usam título puro; specs novos (Recertificação) prefixam `TC<N> — `.
+ * O `xmlByName` indexa pelo nome puro do parsed.json → lookup precisa
+ * dessa normalização pra casar.
+ */
+function stripTcPrefix(name: string): string {
+  return name.trim().replace(/^TC\d+\s*[—·\-]\s*/i, '').trim();
+}
+
+/**
  * Formata `TC<n> · <name>` se houver TC#, ou `<name>` como fallback.
  * Usado em index.md, tests.md e playwright-summary.md para prefixar TC#.
+ * Também faz strip de prefixo TC# já presente no nome (evita duplicar
+ * `TC1 · TC1 — ...` quando o spec já incluiu o prefixo).
  */
 function formatTcTitle(name: string, tcNumbers: Map<string, string>): string {
-  const tc = tcNumbers.get(name.trim());
-  return tc ? `${tc} · ${name}` : name;
+  const stripped = stripTcPrefix(name);
+  const tc = tcNumbers.get(stripped);
+  return tc ? `${tc} · ${stripped}` : name;
 }
 
 function xmlSuiteOrder(parsed: ParsedAnalysis | null): string[] {
@@ -800,11 +814,11 @@ function renderIndexMd(args: {
   if (args.failedTests.length === 0) {
     lines.push(`> ✅ **Nenhuma falha registrada** — todos os ${t.total} caso(s) executado(s) foram aprovados.`);
   } else {
-    const criticalFails = args.failedTests.filter((ft) => args.xmlByName.get(ft.testcase.trim())?.importance === 3);
+    const criticalFails = args.failedTests.filter((ft) => args.xmlByName.get(stripTcPrefix(ft.testcase))?.importance === 3);
     lines.push(`> ❌ **${args.failedTests.length} caso(s) com falha precisam de atenção${criticalFails.length > 0 ? ` (${criticalFails.length} crítico${criticalFails.length === 1 ? '' : 's'})` : ''}**`);
     lines.push('>');
     for (const ft of args.failedTests.slice(0, 8)) {
-      const xml = args.xmlByName.get(ft.testcase.trim());
+      const xml = args.xmlByName.get(stripTcPrefix(ft.testcase));
       const sev = xml ? severityLabel(xml.importance) : '';
       const failedStep = ft.failedStepIndex !== null ? ft.steps[ft.failedStepIndex] : null;
       const rawErr = failedStep?.errorMessage ?? ft.errorMessage ?? '';
@@ -1495,7 +1509,7 @@ function renderTestsMd(args: {
     lines.push('');
 
     for (const t of tests) {
-      const xml = args.xmlByName.get(t.testcase.trim());
+      const xml = args.xmlByName.get(stripTcPrefix(t.testcase));
       const sev = xml ? severityLabel(xml.importance) : '';
       const anchorId = slugify(t.testcase);
       lines.push(`### ${statusLabel(t.status)} · ${formatTcTitle(t.testcase, args.tcNumbers)} ${sev ? `· ${sev}` : ''}`);

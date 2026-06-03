@@ -1,6 +1,18 @@
 ---
 name: atualizar-agents-oficiais
 description: Atualiza os 3 subagents oficiais Playwright (.claude/agents/playwright-test-{planner,generator,healer}.md) re-rodando `npx playwright init-agents --loop=claude` e mostrando o diff pra QA aprovar antes de aceitar. Use quando o Playwright lançou versão nova, o changelog do plugin oficial menciona melhorias nos subagents, ou aparece bug em planner/generator/healer já corrigido upstream.
+when_to_use: |
+  - Release notes do Playwright/plugin mencionam melhoria em planner/generator/healer
+  - Subagent oficial apresentando bug suspeitamente corrigido upstream
+  - Manutenção periódica (>2 meses sem update) ou antes de projeto novo grande
+triggers:
+  - "init-agents"
+  - "atualizar subagents"
+  - "playwright-test-planner"
+  - "playwright-test-generator"
+  - "playwright-test-healer"
+  - "atualizar plugin Playwright"
+  - "upstream Microsoft"
 version: 1.0.0
 ---
 

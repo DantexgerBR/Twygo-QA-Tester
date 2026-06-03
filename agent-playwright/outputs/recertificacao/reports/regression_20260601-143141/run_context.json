@@ -1,0 +1,11 @@
+{
+  "runId": "regression_20260601-143141",
+  "mode": "regression",
+  "suiteFilter": null,
+  "projectName": "Recertificação",
+  "environment": "staging-recertificacao",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-06-01T17:31:41.353Z"
+}

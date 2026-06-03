@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Attendees create response (POST /api/v2/attendees)",
+  "description": "Shape REAL validado live em 2026-05-28 contra recertificacao-testeqa.stage.twygoead.com. Difere da Postman doc V2 Beta (que mostrava `.contents` no path) — real tem `success` e `error` diretamente sob `participants`, indexados por content_id. Errors em payload estrutural inválido vem como string single em `errors`; errors por linha em multi-status validation vem como array de {line, errors[]}.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["participants", "errors"],
+  "properties": {
+    "participants": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "success": {
+          "type": "object",
+          "description": "Map de content_id → array de participants inscritos com sucesso",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true,
+              "required": ["email"],
+              "properties": {
+                "email": { "type": "string" },
+                "cpf": { "type": "string" }
+              }
+            }
+          }
+        },
+        "error": {
+          "type": "object",
+          "description": "Map de content_id → array de participants que falharam (presente apenas quando há falhas). Shape validado live 2026-05-28: {email, cpf, error: [mensagens]}",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true,
+              "required": ["email"],
+              "properties": {
+                "email": { "type": "string" },
+                "cpf": { "type": ["string", "null"] },
+                "error": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "errors": {
+      "description": "Erros globais (não-por-item). Em payload estrutural inválido vem como string única; em validation por linha vem como array.",
+      "oneOf": [
+        { "type": "string" },
+        {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "line": { "type": "integer" },
+              "errors": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "message": {
+      "description": "Campo opcional usado em outros endpoints V2 (ex: GET /contents). Aqui não aparece tipicamente.",
+      "type": ["string", "null"]
+    }
+  }
+}

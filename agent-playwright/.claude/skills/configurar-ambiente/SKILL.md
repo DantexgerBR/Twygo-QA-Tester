@@ -1,6 +1,20 @@
 ---
 name: configurar-ambiente
 description: Guia o usuário no setup inicial do agent-playwright — copia .env.example para .env, valida credenciais Twygo, instala deps, baixa Chromium, roda smoke. Use quando o usuário disser "como configuro", "primeiro setup", "preciso rodar isso", "o que falta pra rodar", ou der erro tipo `Variável de ambiente "TWYGO_*" referenciada... mas não definida`.
+when_to_use: |
+  - Primeiro uso da máquina, clone fresco, deps ainda não instaladas
+  - Erro de credenciais (`TWYGO_STAGING_PASSWORD` referenciada mas não definida)
+  - Erro de browser (`Executable doesn't exist... npx playwright install`)
+  - QA novo no time perguntando "como rodo isso?"
+triggers:
+  - "como configuro"
+  - "primeiro setup"
+  - "Variável de ambiente"
+  - "TWYGO_STAGING_PASSWORD"
+  - "playwright install"
+  - "browserType.launch"
+  - ".env"
+  - "smoke falhou"
 version: 1.0.0
 ---
 

@@ -76,14 +76,74 @@ hardcodar orgId em spec ou comentário.
 > ajustar a tabela de preços ativa (afeta TODAS as orgs), faça reverso ao
 > final do teste — esse banco é compartilhado.
 
+## 3.7. Padrões de API (TCs `Tipo: api` — request fixture)
+
+A partir de CONTRACT.md v1.2 (2026-05-27), testes de API rodam no mesmo
+agente em `tests/api/<suite>.spec.ts`, com `playwright test --project=api`
+(sem browser). Quando TC declara `**Tipo**: api` no MD canônico, prosa
+mapeia para `request` fixture + cliente HTTP em `projects/<slug>/api/`.
+
+### Ações HTTP (prosa em `### Passos` → Playwright)
+
+| Padrão de prosa | Playwright |
+|---|---|
+| "Preparar payload JSON `{...}`" | declarar constante em `<test-case>.data.ts` (NÃO inline no spec) |
+| "Disparar `POST /api/v2/...`" / "Realizar `POST ...`" / "Enviar request POST" | `await client.<metodo>(payload, authHeaders)` (chamar método do `<Recurso>ApiClient`) |
+| "Disparar `GET /api/v2/...`" | `await client.<getMethod>(params, authHeaders)` |
+| "Autenticado com token de admin" / "Autenticado" | headers vêm de `await getApiAuthHeaders()` no `beforeAll` (skill `provisionar-token-api-twygo`) |
+| "Desativar a feature flag `:<flag>` para a organização" (setup de TC api) | `await ensureFlipperActor(browser, {...enabled: false})` no `beforeAll` — `chromium.launch()` manual + `storageStatePath` (skill `testar-feature-flag-twygo`) |
+| "Ativar a feature flag `:<flag>` para a organização" | mesma chamada, `enabled: true` |
+| "Inspecionar o corpo da resposta" | `const body = await response.json()` + asserções abaixo |
+
+### Asserções HTTP (prosa em `→` → Playwright)
+
+| Padrão de prosa | Playwright |
+|---|---|
+| "Response retorna HTTP `<código>`" / "Retorna HTTP `<X>`" | `expect(response.status()).toBe(X)` |
+| "Response retorna HTTP `<X>` ou `<Y>`" | `expect([X, Y]).toContain(response.status())` |
+| "Body valida contra `schemas/<arquivo>.schema.json`" | `validateAgainstSchema<T>(body, schema, '<contexto>')` (skill `validar-schema-api-twygo`) |
+| "Body contém [campo] com valor [X]" | `expect(body.<path>).toBe(X)` (após `validateAgainstSchema` — narrow type) |
+| "Array de resultados: item A com sucesso, item B com erro" | `find()` por email + `expect(item.status).toBe(...)` por item |
+| "Sem `error`" / "Sem erro" | `expect(item.error).toBeUndefined()` |
+| "Erro estruturado contendo chave I18n `<key>`" | `expect(JSON.stringify(item.error)).toContain('<key>')` |
+| "`participant_id` numérico atribuído" | `expect(item.participant_id).toBeGreaterThan(0)` |
+| "Nenhum item com `error` referenciando feature flag" | `expect(JSON.stringify(item.error ?? {}).toLowerCase()).not.toContain('feature_flag')` |
+
+### Imports canônicos
+
+```ts
+import { test, expect } from '@playwright/test';
+import { <Recurso>ApiClient, type <Recurso>ResponseBody } from '../../api/<Recurso>ApiClient.js';
+import { getApiAuthHeaders } from '../../../../src/utils/api-auth.js';
+import { validateAgainstSchema } from '../../../../src/utils/schema.js';
+import responseSchema from '../../schemas/<arquivo>.schema.json' with { type: 'json' };
+import { <suiteSlug>Data as data } from './<suite-slug>.data.js';
+```
+
+### Anti-patterns específicos de API (proibidos em specs gerados)
+
+| Anti-pattern | Errado | Certo |
+|---|---|---|
+| `request.post()` direto no spec | `await request.post('/api/v2/...', { data })` | `await client.<metodo>(data, authHeaders)` (regra dura #16) |
+| Hardcodar payload no spec | `await client.create({ email: 'foo@x.com' })` | `await client.create(data.payloadTC1, authHeaders)` |
+| Skip schema validation | `expect(response.status()).toBe(200)` + fim | `expect(...) + validateAgainstSchema(body, schema, ...)` (regra dura #15) |
+| Hardcodar token | `{ Authorization: 'Bearer eyJ...' }` | `await getApiAuthHeaders()` |
+| Misturar UI+API no mesmo TC | `await request.post(...) + await page.goto(...)` no mesmo `test()` | separar em 2 TCs no MD (`Tipo: ui` + `Tipo: api`) — CONTRACT.md §16 |
+
+Skills detalhadas:
+- [`testar-api-twygo`](../skills/testar-api-twygo/SKILL.md) (skill principal)
+- [`provisionar-token-api-twygo`](../skills/provisionar-token-api-twygo/SKILL.md)
+- [`validar-schema-api-twygo`](../skills/validar-schema-api-twygo/SKILL.md)
+
 ## 4. Quando a prosa pede algo fora do escopo Playwright puro
 
 | Cenário na prosa | O que fazer |
 |---|---|
-| "Verificar feature flag" | Não testar a flag em si; assumir o estado descrito em `<preconditions>` e logar a expectativa via `allure.parameter('feature_flag', '...')` |
+| "Verificar feature flag" | Não testar a flag em si; assumir o estado descrito em `<preconditions>` e logar a expectativa via `allure.parameter('feature_flag', '...')`. **Em TCs `Tipo: api`** que precisam toggar a flag no setup, ver §3.7 (`ensureFlipperActor`) |
 | "Verificar comportamento mobile" | Usar `test.use({ viewport: ... })` + executar contra o viewport apropriado |
-| "Verificar via API" | Out-of-scope para este agente. Logar `// TODO: API test em outro agente` e seguir |
+| "Verificar via API" | **Mudou em v1.2**: agora em escopo. Se TC marcado `Tipo: api`, ver §3.7. Se TC `Tipo: ui` que precisa consumir API durante o teste (ex: `page.waitForResponse`), opcional validar schema |
 | "Verificar comportamento de email/SMS" | Out-of-scope. Asserir no estado da UI imediatamente após o trigger e marcar `allure.tag('NEEDS_INTEGRATION_TEST')` |
+| "Verificar via DB" / "Asserir registro no banco" | TCs `Tipo: db` → executor `agent-db` via subprocess (V2 do CONTRACT — manual hoje). TCs `Tipo: mixed` UI+DB → setup UI + invocação `agent-db` para asserção secundária |
 
 ## 4.5. Lendo dados do ambiente (host, orgId) — sem hardcode
 

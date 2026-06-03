@@ -69,3 +69,17 @@ yarn-error.log*
 Thumbs.db
 
 *.tsbuildinfo
+
+# Python venv + cache para tools/api-catalog/ (utilities ad-hoc).
+# Tools rodam em runtime Python isolado do TS — venv e __pycache__ locais.
+tools/**/.venv/
+tools/**/__pycache__/
+tools/**/*.pyc
+
+# Fixtures de upload (binários) — devs depositam localmente, não versionado.
+# Catálogo em test-assets/README.md + helper em src/utils/test-assets.ts
+# (esses 2 ficam versionados). Apenas a estrutura das subpastas é preservada
+# via .gitkeep — adicione novos binários localmente sem se preocupar com push.
+test-assets/uploads/**
+!test-assets/uploads/**/
+!test-assets/uploads/**/.gitkeep

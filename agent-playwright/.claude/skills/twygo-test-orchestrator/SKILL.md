@@ -1,6 +1,17 @@
 ---
 name: twygo-test-orchestrator
 description: Orquestra o ciclo completo de geração e execução de testes Playwright a partir do JSON parseado do XML TestLink. Delega planejamento, geração e healing aos subagentes do plugin oficial Playwright (playwright-test-planner / playwright-test-generator / playwright-test-healer) com contexto Twygo. Suporta modo per-suite (dia-a-dia) e modo regressivo (CI).
+when_to_use: |
+  - QA precisa gerar/executar/consertar specs a partir do AT
+  - Cenário per-suite (dia-a-dia) ou regressivo (CI)
+  - Antes de invocar planner/generator/healer manualmente
+triggers:
+  - "agent:suite"
+  - "agent:regression"
+  - "agent:run"
+  - "orchestrator"
+  - "Fase 3 4 5"
+  - "ciclo completo planner generator"
 version: 1.0.0
 ---
 
@@ -91,6 +102,20 @@ Para cada testcase planejado:
        O spec só importa e referencia (`data.envId`). Convenção em CLAUDE.md
        §3.1. Generator deve emitir o `.data.ts` SEMPRE que o teste tiver ≥1
        constante de domínio — mesmo que seja só uma. Não inline.
+     - **F. Pré-condição via fixture canônica (NÃO `test.fixme` por seed).**
+       Quando o MD declara `Pré-condições` que envolvam recurso pré-existente,
+       generator DEVE mapear pra fixture em `src/fixtures/seed-fixtures.ts`
+       seguindo a tabela canônica da skill [[provisionar-seed]] §"Mapping
+       pré-condição → fixture":
+       - "Curso/Trilha/Pacote pré-existente" → `cursoSeed`
+       - "Aluno matriculado" → `alunoMatriculadoSeed`
+       - "Aluno pode logar" → `alunoComSenhaSeed`
+       - "Aluno aprovado / cert emitido / progresso ≥ X" → `alunoAprovadoSeed`
+       Import: `import { test, expect } from '<...>/src/fixtures/seed-fixtures.js'`.
+       Spec consome via destruturação: `async ({ page, alunoAprovadoSeed })`.
+       Cleanup é automático (fixture afterAll). PROIBIDO `test.fixme(true,
+       'seed inválido')` quando fixture canônica cobre — §7.6 F deixa de
+       aplicar a partir da v1.5 da skill.
 2. Annotations Allure obrigatórias no início de cada `test()`:
    ```ts
    await allure.epic(`Twygo - ${projectName}`);                    // do projectName em config
@@ -292,3 +317,11 @@ PR aberto em github.com/Twygo/twygo-agents-qa  # URL retornada ao QA
 5. **Não** modificar `inputs/` ou `outputs/` durante a orquestração (somente `outputs/` é gravado pelos sub-skills).
 6. Healer **só** corrige seletor/timing/asserção. Para mudanças de intenção,
    o XML do AT precisa ser atualizado primeiro.
+
+## Quando NÃO usar
+
+- Você quer apenas RODAR specs existentes sem regerar — use `npx playwright test` direto + [[twygo-report-generator]] manual via `npm run agent:report`.
+- Você quer apenas CONSERTAR 1 spec quebrado sem regerar a suite inteira — invoque `playwright-test-healer` direto via `subagent_type` (skip Etapas 1-4 do orchestrator).
+- Você está triando falhas batch (categorizar bug-produto / spec-frágil / flakiness) — use [[twygo-triage-report]] + [[comparar-chrome-mcp-vs-playwright]] antes de decidir healer.
+- Você quer auditar/diff de update upstream dos subagents oficiais (planner/generator/healer) — use [[atualizar-agents-oficiais]], que NÃO depende do orchestrator.
+- Tarefa é exploratória (recon de área nova do produto sem TCs ainda) — use [[twygo-recon]] standalone; orchestrator só roda quando há `test-analysis.parsed.json`.

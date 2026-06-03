@@ -1,6 +1,20 @@
 ---
 name: auto-auditar-fails-via-devtools
 description: Quando uma run de Playwright termina com 3+ falhas OU >40% de fails com erros genéricos (timeout, "mensagem genérica", elemento não visível, click não acionável), AGENTE proativamente dispara auditoria via chrome-devtools-mcp pra confirmar se é flakiness/spec frágil vs bug produto. Se chrome-mcp ✅ em N TCs, agente PROPÕE melhorias concretas nas suites Playwright + lista patches sugeridos antes de aplicar. Evita ciclos de "agente chuta fix → quebra mais coisa → QA gasta hora".
+when_to_use: |
+  - Run termina com 3+ TCs vermelhos numa mesma suite
+  - >40% das execuções falhando com erros genéricos (timeout, locator não actionable)
+  - 2+ fails com mensagem genérica do tipo `TimeoutError`/`not visible`/`not actionable`
+  - QA pede "audita esses fails", "compara o que tá rolando no chrome"
+triggers:
+  - "3+ falhas"
+  - "auditar fails"
+  - "chrome-devtools-mcp"
+  - "TimeoutError"
+  - "not actionable"
+  - "ERR_NETWORK_CHANGED"
+  - "agente chuta fix"
+  - "mensagem genérica"
 version: 1.0.0
 ---
 

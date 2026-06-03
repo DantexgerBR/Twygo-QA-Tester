@@ -1,6 +1,21 @@
 ---
 name: fechar-modais-twygo
 description: Como tratar modais oportunistas do Twygo (NPS Sofia "Em uma escala de 1 a 10", banner de sessão duplicada "Continuar mesmo assim", popups de feature) que aparecem em cima da UI principal e bloqueiam interações em specs Playwright. Use quando um spec falhar com timeout em click/fill que parece "elemento estava lá mas não clicou", e o screenshot da falha mostrar dialog/modal por cima do conteúdo.
+when_to_use: |
+  - Spec falha com timeout em click — screenshot mostra dialog/modal por cima
+  - "elemento estava lá mas não clicou"
+  - Após `page.goto` aparece overlay escuro + dialog branco no centro
+  - Adicionar novo Page Object que faz navegação
+triggers:
+  - "NPS Sofia"
+  - "Pergunte depois"
+  - "Em uma escala de 1 a 10"
+  - "Continuar mesmo assim"
+  - "dismissCommonModals"
+  - "safeGoto"
+  - "modal interceptando"
+  - "dialog não fecha"
+  - "overlay escuro"
 version: 1.0.0
 ---
 
@@ -121,3 +136,11 @@ Antes desta skill: cada spec resolvia individualmente (alguns specs do creditos-
 ## Anti-pattern relacionado (CLAUDE.md §7.6)
 
 Quando você adicionar `dismissCommonModals(page)` num Page Object, **NÃO** adicione comentário tipo `// fecha modal NPS` (anti-pattern D — comentário WHAT). O nome do método já é auto-explicativo. Comentário só vai se for invariante não-óbvia (ex: "modal só aparece em first login da org").
+
+## Quando NÃO usar
+
+- Erro é "Você não tem permissão para acessar esta página" — não é modal, é falta de perfil Admin. Use [[trocar-perfil-twygo]] + `ProfileSwitcher.switchTo('Administrador')`.
+- Modal interceptando é o modal "BETA teste da funcionalidade Painéis" — use [[tratar-modal-beta-end-twygo]] (CSS ID estável `#beta-end-modal`, não NPS Sofia).
+- Modal é dialog NATIVO `beforeunload` do browser (click em "Cancelar" de form dirty trava `click()`) — use [[testar-beforeunload-dialog-twygo]] com `page.on('dialog', ...)`.
+- Modal é drawer Chakra (slide-in lateral) que faz parte do fluxo do TC — não fechar; interagir com ele. Drawer com `role="dialog"` mas slide-in NÃO é oportunista.
+- Click falha em elemento sem overlay no screenshot — investigar locator/timing primeiro via [[debugar-via-network-e-console]] antes de assumir modal.

@@ -1,6 +1,18 @@
 ---
 name: testar-ambientes-adicionais-twygo
 description: Como testar funcionalidades Twygo em "ambientes adicionais" — env multi-tenant pareado a um principal. Cobre semântica (orgs separadas mas contrato compartilhado), config (subscription_plans editáveis APENAS via orgId do principal), feature flags por env, storage state pareado (`-aditional`), padrão de teste de isolamento de dados, e POM com `orgIdOverride`. Use sempre que XML descrever "ambiente adicional" ou suite mencionar isolamento entre tenants pareados.
+when_to_use: |
+  - XML/AT descreve "ambiente adicional" ou pareamento de orgs
+  - Suite valida isolamento de dados entre tenants
+  - Spec precisa operar em env `-aditional` ou principal com fixture pareada
+triggers:
+  - "ambiente adicional"
+  - "-aditional"
+  - "orgIdOverride"
+  - "tenant pareado"
+  - "isolamento de dados"
+  - "storage-aditional.json"
+  - "contrato compartilhado"
 version: 1.0.0
 ---
 

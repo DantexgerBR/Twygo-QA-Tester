@@ -1,0 +1,29 @@
+{
+  "runId": "regression_20260601-143141",
+  "scope": "Regressivo completo (todas as testsuites)",
+  "tests": {
+    "total": 68,
+    "passed": 7,
+    "failed": 3,
+    "skipped": 58,
+    "durationMs": 235125
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 15,
+    "tests": 93,
+    "outOfScope": {
+      "errors": 591,
+      "warnings": 336,
+      "info": 17
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

@@ -1,6 +1,20 @@
 ---
 name: testar-feature-flag-twygo
 description: Como testar features Twygo gated por feature flag Flipper (`/admin/manage/features/<flag>`). Cobre toggle via Flipper-UI (Add/Remove actor `Organization;<orgId>`), helper POM `FlipperAdminPage` + utilitário `ensureFlipperActor`, padrão `beforeAll`/`afterAll` para setup reversível, pré-condição de user com flag elevada, e anti-patterns (Fully Enable / Disable / Delete proibidos — afetam todas as orgs). Use sempre que XML descrever transição de flag on↔off OU spec precisar habilitar/desabilitar feature em runtime, OU quando ver `fixme` "requer toggle runtime da flag" em spec existente.
+when_to_use: |
+  - XML/AT descreve transição de feature flag on↔off
+  - Spec precisa habilitar/desabilitar feature Flipper em runtime
+  - Existe `test.fixme` "requer toggle runtime da flag" no spec
+  - Cenário requer ligar/desligar flag pra uma org específica
+triggers:
+  - "flipper"
+  - "feature flag"
+  - "/admin/manage/features"
+  - "ensureFlipperActor"
+  - "actor Organization"
+  - "FlipperAdminPage"
+  - "requer toggle runtime"
+  - "Fully Enable"
 version: 1.0.0
 ---
 

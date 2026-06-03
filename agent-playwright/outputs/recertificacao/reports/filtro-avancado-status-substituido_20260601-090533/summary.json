@@ -1,0 +1,29 @@
+{
+  "runId": "filtro-avancado-status-substituido_20260601-090533",
+  "scope": "Apenas testsuite contendo \"Filtro Avançado Status Substituído\"",
+  "tests": {
+    "total": 4,
+    "passed": 3,
+    "failed": 1,
+    "skipped": 0,
+    "durationMs": 245523
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 1,
+    "tests": 81,
+    "outOfScope": {
+      "errors": 578,
+      "warnings": 305,
+      "info": 18
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

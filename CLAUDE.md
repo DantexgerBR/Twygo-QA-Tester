@@ -5,13 +5,17 @@
 > traz convenções operacionais que valem em todos.
 >
 > **Agentes ativos**: `agent-at/` (Python — análise de teste),
-> `agent-playwright/` (TypeScript + Playwright — E2E), `agent-db/`
-> (Python — validações em banco; esqueleto).
+> `agent-playwright/` (TypeScript + Playwright — E2E **UI e API**),
+> `agent-db/` (Python — validações em banco; esqueleto).
 >
 > **Agentes planejados** (entram conforme maturidade): `agent-tasks-qa`
-> (quebra de atividades), `agent-api` (validações REST/GraphQL),
-> `agent-pentest` (testes de segurança), `agent-docs-qa` (documentação
-> de usabilidade). Ver §Mapa do ecossistema abaixo.
+> (quebra de atividades), `agent-pentest` (testes de segurança),
+> `agent-docs-qa` (documentação de usabilidade). Ver §Mapa do ecossistema
+> abaixo.
+>
+> **Nota histórica**: `agent-api` foi avaliado e descartado em 2026-05-27
+> (CONTRACT.md §16). Testes de API rodam no `agent-playwright` via
+> `request` fixture em `tests/api/`.
 
 ## Mapa do ecossistema
 
@@ -20,8 +24,8 @@ Os agentes se organizam em **4 categorias** por papel no fluxo de QA:
 | Categoria | Agentes | Operação |
 |---|---|---|
 | **Upstream** (produzem para outros) | `agent-tasks-qa` (futuro), `agent-at` | Recebem entrada humana (docs Discovery, Spike, planilhas), produzem artefato canônico para downstream |
-| **Executor primário** (1 por suíte) | `agent-playwright`, `agent-api`, `agent-db`, `agent-pentest` | Cada suíte na AT declara qual é executor. Roda CLI próprio. Pode invocar validadores secundários |
-| **Validador acionável** (modo sub-rotina) | `agent-api`, `agent-db` | Mesmos agentes acima em modo sub-rotina, quando outro executor declara validação secundária. Comunicação por filesystem + CLI |
+| **Executor primário** (1 por suíte) | `agent-playwright` (UI **e API**), `agent-db`, `agent-pentest` (futuro) | Cada suíte na AT declara qual é executor. Roda CLI próprio. Pode invocar validadores secundários |
+| **Validador acionável** (modo sub-rotina) | `agent-db` | DB invocado por subprocess+filesystem quando spec PW declara validação secundária. API valida **inline** no próprio spec PW (sem IPC) |
 | **Produtor de docs de usabilidade** | `agent-docs-qa` (futuro) | Produz documentação para usuário final do produto |
 
 Topologia visual:
@@ -35,20 +39,26 @@ Topologia visual:
                     ▼
             agent-at                  [canônica = MD; deriva XMind + XML TestLink]
                     │
-   ┌────────────────┼────────────────┬─────────────────┐
-   ▼                ▼                ▼                 ▼
-agent-playwright agent-api       agent-db        agent-pentest
-(UI E2E)         (REST/GraphQL)  (DB validation) (segurança/OWASP)
-   │                │                │                 │
-   │  (validação secundária via filesystem + CLI)       │
-   └────────►◄──────┴────────────────┘                  │
-        agent-api / agent-db podem ser invocados        │
-        como sub-rotina por executor primário           │
-                                                        │
-   ─────────────────────────────────────────────────────┘
+   ┌────────────────┼────────────────┐
+   ▼                ▼                ▼
+agent-playwright              agent-db        agent-pentest
+(UI E2E + API)                (DB validation) (segurança/OWASP — futuro)
+   │                             │                 │
+   │ tests/features/   API inline│                 │
+   │ tests/api/        (request) │                 │
+   │                             │                 │
+   │  (validação secundária via filesystem + CLI)  │
+   └────────────────────►◄───────┘                 │
+        agent-db pode ser invocado                 │
+        como sub-rotina por executor primário      │
+                                                   │
+   ────────────────────────────────────────────────┘
 
 agent-docs-qa   [independente; produz docs de usabilidade do produto;
                  input/output a definir quando criar]
+
+Nota: agent-api foi descartado em 2026-05-27 (CONTRACT.md §16). API
+testing vive em agent-playwright/tests/api/ usando request fixture.
 ```
 
 > **Detalhes do contrato entre agentes**: [CONTRACT.md](CONTRACT.md).
@@ -63,12 +73,13 @@ Tudo o que `agent-at` produz e os demais agentes consomem segue o
 - **XMind** e **XML TestLink** são **derivados** gerados automaticamente
   pelo `agent-at` a partir do MD. XMind serve à visualização QA; XML
   importa no TestLink para fluxo manual.
-- Consumidores (Playwright, [V2] API, DB, Pentest) leem **apenas o MD**.
+- Consumidores (Playwright, DB, [futuro] Pentest) leem **apenas o MD**.
 - **Edições manuais** são autorizadas **apenas no MD** — XMind e XML são
   regenerados.
-- **Executor primário** (`playwright`/`api`/`db`/`pentest`) é declarado
-  no frontmatter da suíte no MD. Não aparece no XMind/XML — fluxo manual
-  é agnóstico de agente automatizado.
+- **Executor primário** (`playwright`/`db`/`pentest`) é declarado no
+  frontmatter da suíte no MD. Não aparece no XMind/XML — fluxo manual é
+  agnóstico de agente automatizado. **Suítes de API são executadas pelo
+  `agent-playwright`** (em `tests/api/`) — não há valor de enum `api`.
 
 Quando este CLAUDE.md ou qualquer CLAUDE.md de agente divergir do
 CONTRACT.md, o **CONTRACT.md vence** — abrir PR de alinhamento.
@@ -309,7 +320,7 @@ tabela de "Gotchas conhecidos via Network").
 
 ## Anatomia de um agente novo
 
-Quando criar um agente novo do monorepo (ex.: `agent-tasks-qa`, `agent-api`,
+Quando criar um agente novo do monorepo (ex.: `agent-tasks-qa`,
 `agent-pentest`), seguir a **estrutura mínima canônica** abaixo. Não
 inventar arquitetura — clonar do `agent-playwright` (referência madura) e
 adaptar à stack escolhida.

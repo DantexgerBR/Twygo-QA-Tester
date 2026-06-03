@@ -27,7 +27,7 @@ Schema completo em [CONTRACT.md §4 e §5](../../../../CONTRACT.md). Resumo:
 
 ```markdown
 ---
-contract_version: 1.1               # 1.0 (legado) | 1.1 (default para projetos novos a partir de 2026-05-22)
+contract_version: 1.2               # 1.0 (legado) | 1.1 (hardening de cobertura) | 1.2 (default para projetos novos a partir de 2026-05-27 — API consolidada no agent-playwright)
 at_version: 1
 project: <slug-do-projeto>
 project_name: "<Nome do Projeto>"
@@ -90,7 +90,7 @@ totals:
 
 ---
 suite: <Nome da Suíte>
-executor: playwright            # playwright | api | db | pentest
+executor: playwright            # playwright | db | pentest (v1.2+: `api` removido — testes API rodam em playwright/tests/api/)
 org: principal                  # chave simbólica — opcional, default `principal`
 playbooks:                      # opcional — slugs canônicos da CONTRACT.md §6
   - <playbook-slug>
@@ -105,6 +105,13 @@ preconditions:
 **Prioridade**: critical | high | medium | low
 **Tipo**: ui | api | db | mixed
 **Playbooks adicionais**: []
+
+# Convenção v1.2 sobre `Tipo`:
+# - `ui`    — TC com ações em UI, vai em tests/features/ no agent-playwright
+# - `api`   — TC 100% HTTP request/response, vai em tests/features/api/ no agent-playwright
+# - `db`    — TC com asserção em banco, executor agent-db (subprocess do agent-playwright)
+# - `mixed` — RESERVADO para UI+DB raros (ex: trigger Postgres disparado por ação UI).
+#             NÃO USAR para UI+API — separar em 2 TCs (`Tipo: ui` + `Tipo: api`).
 
 ### Objetivo
 <Prosa descrevendo o que o TC valida e por quê.>
@@ -194,25 +201,49 @@ quando detecta keyword sem catálogo correspondente preenchido.
 `## Dados de teste` e `## Campos e validações` são opcionais (sem keyword
 obrigatória) — preencher quando houver conteúdo relevante de `docs/`.
 
+### `## Endpoints (referência)` — regra v1.2 (mais estrita)
+
+A partir de `contract_version: 1.2`, esta seção é **obrigatória** quando o
+AT contém **≥1 TC com `Tipo: api` ou `Tipo: mixed`** (independente da
+keyword na prosa). O validador deve enforçar:
+
+- Se algum TC declara `**Tipo**: api` → seção `## Endpoints (referência)`
+  presente E listando o(s) endpoint(s) referenciado(s) nos passos
+- Cada endpoint citado nos passos (`POST /api/v2/...`) deve aparecer na
+  tabela com método, URL, status de sucesso, status de erro principal
+
+**Por quê**: a seção alimenta diretamente os clientes HTTP em
+`agent-playwright/projects/<slug>/api/` e os JSON Schemas em `schemas/`.
+Sem ela, generator inventa endpoints ou força recon caro.
+
 ## Escolha da `contract_version`
 
 Define qual conjunto de regras o validador aplica.
 
 | Valor | Quando usar | Comportamento |
 |---|---|---|
-| `1.0` | ATs já entregues (Base de Conhecimento, Modelos atual). Migração para 1.1 é opt-in | Regras originais: anti-patterns A-H, playbooks, catálogos condicionais, restrições v1 |
-| **`1.1` (default para projetos novos a partir de 2026-05-22)** | Projetos novos OU re-geração de AT antiga | Regras de 1.0 + validações novas (RN→TC, cobertura ampla de negativos, combinatórias mínimas, recon-prototipo automático) |
+| `1.0` | ATs já entregues (Base de Conhecimento, Modelos atual). Migração para 1.1/1.2 é opt-in | Regras originais: anti-patterns A-H, playbooks, catálogos condicionais |
+| `1.1` | Projetos novos entre 2026-05-22 e 2026-05-27 | Regras de 1.0 + validações novas (RN→TC, cobertura ampla de negativos, combinatórias mínimas, recon-prototipo automático) |
+| **`1.2` (default para projetos novos a partir de 2026-05-27)** | Projetos novos OU re-geração de AT | Regras de 1.1 + consolidação de API no agent-playwright (executor `api` removido, `## Endpoints` obrigatório quando há TC `Tipo: api`, UI+API split em 2 TCs) |
 
-**Para projetos novos**: usar **`1.1`** por default. A skill aproveita as 5 novas garantias de cobertura. Ver [CONTRACT.md §15](../../../../CONTRACT.md) para detalhes.
+**Para projetos novos**: usar **`1.2`** por default. Aproveita a integração de API no agent-playwright. Ver [CONTRACT.md §16](../../../../CONTRACT.md) para detalhes.
 
-**Para regerar AT antiga**: pode manter `1.0` (zero esforço, AT atual continua válida) OU migrar para `1.1` (esforço médio — preencher `rns_cobertas` por TC, adicionar TCs combinatórios). Migração não é obrigatória.
+**Para regerar AT antiga**: pode manter `1.0`/`1.1` (zero esforço) OU migrar para `1.2` (esforço baixo — separar TCs UI+API existentes, preencher `## Endpoints`). Migração não é obrigatória mas recomendada para projetos com TCs API.
 
-## Restrições v1 (CONTRACT.md v1)
+## Restrições por versão
 
-- `executor` aceita **apenas** `playwright`. `api`/`db`/`pentest` ficam para V2
-  quando os agentes correspondentes rodarem standalone.
-- `type` aceita `ui`/`api`/`db`. `mixed` é reservado para V2 (validações
-  secundárias).
+### v1.0 / v1.1 (legado)
+
+- `executor`: aceita `playwright | api | db | pentest` (mas só `playwright` é executável hoje)
+- `Tipo`: aceita `ui | api | db | mixed`
+
+### v1.2 (atual)
+
+- `executor`: aceita **apenas** `playwright | db | pentest` — valor `api` foi removido (testes de API rodam em `tests/api/` do `agent-playwright` via `--project api`, não em agente separado)
+- `Tipo`: aceita `ui | api | db | mixed`, MAS:
+  - `Tipo: mixed` é **reservado para UI+DB** (raro). NÃO usar para UI+API.
+  - TCs que combinam ações UI e requests HTTP devem ser **separados em 2 TCs** (`Tipo: ui` + `Tipo: api`).
+- `## Endpoints (referência)` é **obrigatório** quando ≥1 TC tem `Tipo: api`.
 - Tentar usar valor não-permitido dispara `ValueError` no parser
   (`md_canonical_parser.py`).
 
@@ -287,3 +318,42 @@ enforçados pelo validador acima.
 
 Após esta skill, invocar `/generate-xmind` e `/generate-xml-testlink` para
 gerar os derivados.
+
+## Publish — propagar canonical → consumer (OBRIGATÓRIO após cada edit)
+
+CONTRACT.md §3.2 declara que consumidores (agent-playwright orchestrator,
+planner, generator) leem uma **cópia** do canonical em
+`agent-playwright/projects/<slug>/inputs/test-analysis.md`. Esquecer de
+propagar deixa o consumer lendo versão antiga **silenciosamente** —
+sem erro, com dessincronização entre AT versionada e implementação.
+
+**Ritual obrigatório**:
+
+```bash
+# Após qualquer edit em projects/<slug>/output/test-analysis.md:
+python agent-at/scripts/publish.py --project <slug>
+
+# Ou com env var:
+PROJECT=<slug> python agent-at/scripts/publish.py
+
+# Ou auto-detect (se exatamente 1 projeto):
+python agent-at/scripts/publish.py
+
+# Para inspecionar diff sem copiar:
+python agent-at/scripts/publish.py --project <slug> --dry-run
+```
+
+**Quando esse passo é dispensável**: nunca. Mesmo edits triviais (typo,
+ajuste de prioridade, novo TC) precisam ser propagados. O `publish.py`
+é idempotente (no-op quando arquivos já idênticos), então rodar sempre
+é seguro.
+
+**Caso real do incidente 2026-05-28**: AT do Recertificação foi
+atualizada at_version 1 → 2 → 3 ao longo de 2 commits, mas a cópia
+consumer ficou na at_version 1. Spec piloto continuou funcionando
+contra o AT do agent-at (eu lia direto o canonical), mas o usuário
+notou o gap. Lição: propagar IMEDIATAMENTE após edit, no mesmo PR.
+
+Skill `analyze-test` (orchestrator) e equivalente CLI devem chamar
+`publish.py` como passo final, automático. Edits manuais subsequentes
+precisam reexecutar manualmente.

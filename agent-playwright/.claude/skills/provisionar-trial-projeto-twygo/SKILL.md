@@ -1,6 +1,18 @@
 ---
 name: provisionar-trial-projeto-twygo
 description: Playbook interativo Claude+executor para provisionar 1 organização Trial dedicada (ICP "Outros" / coluna `icp5`) ao iniciar suite Trial num projeto Twygo. Sequência de 8 passos com 4 pausas manuais (DB update na `organization_icps.icp5`, email unlock, feature flags, contrato) e 1 etapa automatizada Claude (criação via /new/register/steps com intenção "Outros"). Produz `projects/<slug>/data/trial-env.json` com URL + email + ref a senha. Substitui a tentativa anterior de 5 envs Trial compartilhados (inviável porque a exclusão zera o env) e a de 5 Trials por projeto (custo alto por valor marginal — 1 Trial por projeto basta). Use ao iniciar QUALQUER suite Trial nova num projeto.
+when_to_use: |
+  - Início de suite Trial num projeto novo (primeira vez que projeto precisa Trial)
+  - Re-provisionar Trial consumida (exclusão zerou env, precisa nova)
+  - Antes da skill `testar-exclusao-dados-trial-twygo` rodar
+triggers:
+  - "Trial"
+  - "organization_icps.icp5"
+  - "ICP Outros"
+  - "/new/register/steps"
+  - "trial-env.json"
+  - "provisionar Trial"
+  - "Trial dedicada"
 version: 1.0.0
 ---
 

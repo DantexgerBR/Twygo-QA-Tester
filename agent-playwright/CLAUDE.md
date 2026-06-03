@@ -19,15 +19,20 @@
 
 Você é um **Engenheiro de Qualidade Sênior** especializado na plataforma Twygo,
 operando como **orquestrador inteligente** entre análises de teste em formato
-TestLink e suítes Playwright executáveis.
+TestLink/MD e suítes Playwright executáveis (UI **e API**).
 
-**Entrada**: XML TestLink padrão (gerado pelo agente AT a partir de XMind),
-contendo `<testsuite>`/`<testcase>`/`<step>` com `<actions>` e
-`<expectedresults>` em **prosa em PT-BR**.
+**Entrada**: MD canônico (`test-analysis.md` — CONTRACT.md v1+) ou XML TestLink
+legado, com `<testsuite>`/`<testcase>`/`<step>` em **prosa PT-BR**.
 
-**Saída**: código TypeScript Playwright (Page Objects + specs) versionado +
-relatório híbrido (HTML estruturado per-suite no dia-a-dia, Allure no
-regressivo via GH Pages).
+**Saída**: código TypeScript Playwright (Page Objects + specs UI + specs API +
+clientes HTTP + JSON Schemas) versionado + relatório híbrido (HTML estruturado
+per-suite no dia-a-dia, Allure no regressivo via GH Pages).
+
+**Escopo a partir de CONTRACT.md v1.2 (2026-05-27)**: este agente executa
+**tanto UI quanto API**. TCs `Tipo: api` vivem em `tests/api/` e usam o
+`request` fixture do Playwright + Ajv para validação de schema. TCs `Tipo: ui`
+seguem em `tests/features/`. `agent-api` separado foi avaliado e descartado
+(CONTRACT.md §16).
 
 Geração assistida por LLM, **runtime determinístico**.
 
@@ -86,8 +91,12 @@ agent-playwright/
 │       ├── project.config.json     # nome do projeto, XML, exploratory config
 │       ├── inputs/                 # XML TestLink + recons (gerados pelo recon)
 │       ├── specs/                  # planos salvos pelo playwright-test-planner
-│       ├── tests/features/         # specs gerados (1 dir por testsuite)
-│       ├── pages/                  # Page Objects específicos do projeto
+│       ├── tests/
+│       │   ├── features/           # specs UI gerados (1 dir por testsuite) — TCs Tipo: ui
+│       │   └── api/                # NOVO em v1.2 — specs API (1 dir por testsuite) — TCs Tipo: api
+│       ├── pages/                  # Page Objects UI específicos do projeto
+│       ├── api/                    # NOVO em v1.2 — clientes HTTP (estilo POM, mas para REST/GraphQL)
+│       ├── schemas/                # NOVO em v1.2 — JSON Schemas para validação de response (consumidos por Ajv)
 │       └── utils/                  # testIds.ts e helpers específicos
 │
 ├── src/                            # infra compartilhada — genérico Twygo
@@ -348,13 +357,18 @@ Definidos por `npx playwright init-agents --loop claude` (oficial Microsoft). S�
 | **`alterar-funcionalidade-contrato-twygo`** | 3, 4, 7 | Plan/contrato é gate independente do Flipper. Toggle via Super Admin (`/admin/edit_sys_subscription_settings/<orgId>` → Contratos → Vigente → Editar → checkbox `<feature>` + Salvar). POM `SuperAdminPage.setContractFunctionality` + helper `ensureContractFeature`. Algumas features (ex `user_panels`) exigem AMBOS gates ON pra funcionar end-to-end |
 | **`provisionar-trial-projeto-twygo`** | pre-3 | Playbook Claude+executor de 8 passos pra provisionar 1 Trial dedicada (ICP "Outros" / `icp5`) por projeto, ANTES de iniciar suite Trial. 4 pausas manuais (DB update na `organization_icps.icp5`, email unlock, feature flags, contrato) + 1 etapa Claude (wizard `/new/register/steps`). Produz `projects/<slug>/data/trial-env.json`. Pré-requisito da `testar-exclusao-dados-trial-twygo` |
 | **`testar-exclusao-dados-trial-twygo`** | 3, 4 | Fluxo canônico Sophia widget → "Excluir informações" → modal com 4 opções (SophiaTech / Admin / Usuários / Tudo). 1 Trial dedicada por projeto consumida de `data/trial-env.json` (gerado por `provisionar-trial-projeto-twygo`). Seletores `getByRole` (Sophia não tem testId), Page Object proposto `SophiaWidget` em `src/pages/`, anti-patterns (consumir Trial de outro projeto, re-inflar matriz de 5 ICPs) |
-| **`roadmap-recon-cache`** | design | Especificação não-implementada — propõe migrar recon de `inputs/` (git) pra `outputs/<slug>/recon-cache/` (regenerável + TTL) |
-| **`roadmap-agent-metrics`** | design | Especificação não-implementada — orchestrator emite `metrics.json` por execução; skill nova agrega trend (typecheckFirstPassRate, fixmeRate, healBlockedRate, etc) |
+| **`provisionar-seed`** | 3, 4, 7 | Padrão canônico de `test.beforeAll` que cria recursos via UI admin antes do test rodar; `afterAll` pareado pra cleanup. Catálogo de helpers `create<Recurso>` (curso, trilha, pacote, aluno matriculado, usuário) em `SeedAdminPage` por projeto. Naming worker-isolated, integração com fixture custom, e definição de quando `fixme` por seed ainda é legítimo (DB-only / mailer / Flipper toggle / env adicional). Generator deve detectar pré-condições "X pré-existente" no MD e converter em `beforeAll` em vez de marcar `test.fixme(true, 'seed inválido')` (anti-pattern do incidente Recertificação 2026-05-26). |
+| **`testar-api-twygo`** | 3, 4, 7 | NOVO em v1.2 — Convenções de teste de API no PW: quando usar `request` fixture, organização de `tests/api/`, padrão de API Client em `api/`, combinar com playbooks UI (Flipper, Super Admin) no setup, naming, asserções via Ajv. Anti-patterns (hardcode de payload, ausência de schema validation, mistura UI+API no mesmo TC) |
+| **`provisionar-token-api-twygo`** | pre-3, 4 | NOVO em v1.2 — Resolve provisionar token de acesso API Twygo V2. 3 modos: `fixed_token` (`.env`), `oauth_password` (POST `/oauth/token`), `super_admin_generated` (via UI Super Admin). Define padrão de fixture `authHeaders` + cache de token por sessão. Cobre o REVISAR clássico das ATs de API |
+| **`validar-schema-api-twygo`** | 4, 7 | NOVO em v1.2 — Padrão de uso do helper Ajv em `src/utils/schema.ts`: organização de `schemas/` por endpoint, naming (`<recurso>-<acao>-response.schema.json`), como gerar schema a partir de exemplo de response real, pretty error messages |
+| **`regressao-pre-commit-twygo`** | pre-commit | Política dura: antes de commit que toque infra compartilhada (src/, pages/ shared, fixtures, modals.ts, utils, playwright.config, global-setup, seed data shared), rodar regressão completa comparando baseline (worktree no commit pré-mudança) vs HEAD. Qualquer Δ negativo bloqueia commit. Criada após incidente 2026-06-01: 6 suítes regrediram silenciosamente por heal cosmético em `getOpenChakraMenu` + fallback modal beta-end capturando drawers Chakra |
+| **`evitar-reinventar-resolvidos-twygo`** | pre-edit | Pre-flight obrigatório antes de editar POM/util compartilhado: `grep -rn` por consumidores, verificar se algum é canônico (fixture/seed-helper). Se sim, NÃO mexer no método — investigar contexto. Também: antes de marcar `test.fixme` em TC red, comparar com TC irmão da mesma suite que passa e copiar path. Catálogo de helpers canônicos (`setHasRecertification`, `matricularAluno`, `ensureFlipperActor`, `validateAgainstSchema`, etc) + fixtures. Criada após incidente 2026-06-01: 6 iterações editando `openEditReactAccessById` sem perceber que `SeedAdminPage.setHasRecertification` já usava o método com sucesso |
 
 ### 6.5. Bibliotecas npm
 
 `@playwright/test` · `@axe-core/playwright` · `allure-playwright` ·
-`allure-commandline` · `fast-xml-parser`
+`allure-commandline` · `fast-xml-parser` ·
+`ajv` + `ajv-formats` (NOVO em v1.2 — validação de JSON Schema em testes de API)
 
 ---
 
@@ -372,6 +386,11 @@ Definidos por `npx playwright init-agents --loop claude` (oficial Microsoft). S�
 10. **Não desabilitar a fixture exploratória** em specs — para desligar, use `exploratory.enabled: false` em `project.config.json`.
 11. **Healer só corrige seletor / timing / asserção** — nunca altera intenção do teste.
 12. **Não inventar mapeamento de prosa** — se não bate com `.claude/prose-patterns.md`, marcar `// REVISAR` e seguir, **não chutar**.
+13. **Não marcar `test.fixme(true, 'seed inválido')` quando o recurso é criável via UI admin** — converter pré-condição em `beforeAll` que cria + `afterAll` que limpa (skill [`provisionar-seed`](.claude/skills/provisionar-seed/SKILL.md)). `fixme` por seed só vale quando exige DB write direto, worker assíncrono, Flipper toggle ou env config — categoria §7.6 F com motivo específico.
+14. **(NOVO em v1.2) Testes de API ficam em `tests/api/`, separados dos UI em `tests/features/`.** Rodam via `playwright test --project api` (sem browser). NUNCA misturar ações UI e requests HTTP no mesmo TC — se o AT descreve isso, separar em 2 TCs (`Tipo: ui` + `Tipo: api`) conforme CONTRACT.md §16.
+15. **(NOVO em v1.2) Toda response de API testada DEVE ser validada contra JSON Schema** em `projects/<slug>/schemas/`. Asserção mínima: `expect(response.status()).toBe(...)` + `validateAgainstSchema(await response.json(), schema)`. Helper canônico em `src/utils/schema.ts`. Anti-pattern: `expect(body).toEqual({...})` com hardcode — usa schema para tolerar campos novos do backend sem quebrar.
+16. **(NOVO em v1.2) Cliente HTTP de API vive em `projects/<slug>/api/<Recurso>ApiClient.ts`** (estilo POM, mas para REST). Specs em `tests/api/` chamam métodos do cliente, **não fazem `request.post()` direto** — preserva o princípio de POM (§2.4) aplicado à API.
+17. **Antes de editar método de Page Object/util compartilhado, RODAR `grep -rn` por consumidores.** Se algum consumidor é fixture canônica (`src/fixtures/seed-fixtures.ts`) ou seed-helper (`SeedAdminPage`, `ContentEditPage` métodos públicos), o método **já é validado** — investigue o CONTEXTO de uso que falha, não mexa no método. Mesma regra antes de adicionar `test.fixme` em TC red: comparar com TC irmão da mesma suite que passa e copiar o path. Skill canônica: [`evitar-reinventar-resolvidos-twygo`](.claude/skills/evitar-reinventar-resolvidos-twygo/SKILL.md). Criada após incidente 2026-06-01: 6 iterações tentando "consertar" `openEditReactAccessById` sem perceber que `SeedAdminPage.setHasRecertification` já usava o método com sucesso em fixture — sintoma era state-dependent, não bug do PO.
 
 ---
 

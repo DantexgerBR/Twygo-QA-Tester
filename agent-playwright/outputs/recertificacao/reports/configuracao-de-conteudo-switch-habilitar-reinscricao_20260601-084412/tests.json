@@ -1,0 +1,670 @@
+{
+  "config": {
+    "configFile": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright/outputs/recertificacao/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "projects/recertificacao/tests/features/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright/outputs/recertificacao/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "api",
+        "name": "api",
+        "testDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "projects/recertificacao/tests/api/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/recertificacao/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc1-switch-aparece-com-flag-on.spec.ts",
+      "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc1-switch-aparece-com-flag-on.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Configuração de Conteúdo (Switch \"Habilitar reinscrição\")",
+          "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc1-switch-aparece-com-flag-on.spec.ts",
+          "line": 11,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC1 — Switch \"Habilitar reinscrição\" aparece com flag ON na edição de curso",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 75752,
+                      "error": {
+                        "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-test-id=\"tab-access\"]').or(getByRole('tab', { name: /^Acesso$/i })).first()\u001b[22m\n\u001b[2m    - locator resolved to <button role=\"tab\" name=\"access\" type=\"button\" tabindex=\"-1\" data-index=\"1\" aria-disabled=\"false\" id=\"tabs-:rs:--tab-1\" aria-selected=\"false\" data-tab-name=\"access\" data-test-id=\"tab-access\" class=\"chakra-tabs__tab css-fuqmym\" aria-controls=\"tabs-:rs:--tabpanel-1\">Acesso</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div role=\"group\" class=\"chakra-form-control css-1kxonj9\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div role=\"group\" class=\"chakra-form-control css-1kxonj9\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-1u2cvaz\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  13 × retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div role=\"group\" class=\"chakra-form-control css-1kxonj9\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div role=\"group\" class=\"chakra-form-control css-1kxonj9\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-1u2cvaz\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-1u2cvaz\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n",
+                        "stack": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-test-id=\"tab-access\"]').or(getByRole('tab', { name: /^Acesso$/i })).first()\u001b[22m\n\u001b[2m    - locator resolved to <button role=\"tab\" name=\"access\" type=\"button\" tabindex=\"-1\" data-index=\"1\" aria-disabled=\"false\" id=\"tabs-:rs:--tab-1\" aria-selected=\"false\" data-tab-name=\"access\" data-test-id=\"tab-access\" class=\"chakra-tabs__tab css-fuqmym\" aria-controls=\"tabs-:rs:--tabpanel-1\">Acesso</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div role=\"group\" class=\"chakra-form-control css-1kxonj9\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div role=\"group\" class=\"chakra-form-control css-1kxonj9\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-1u2cvaz\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  13 × retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div role=\"group\" class=\"chakra-form-control css-1kxonj9\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div role=\"group\" class=\"chakra-form-control css-1kxonj9\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-1u2cvaz\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-1u2cvaz\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\n    at ContentEditPage.goToAcessoTab (C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\ContentEditPage.ts:147:23)\n    at C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc1-switch-aparece-com-flag-on.spec.ts:100:9",
+                        "location": {
+                          "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\ContentEditPage.ts",
+                          "column": 23,
+                          "line": 147
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39mprojects\\recertificacao\\pages\\ContentEditPage.ts:147\n\n\u001b[0m \u001b[90m 145 |\u001b[39m       \u001b[33m.\u001b[39mfirst()\u001b[33m;\u001b[39m\n \u001b[90m 146 |\u001b[39m     \u001b[36mif\u001b[39m (\u001b[36mawait\u001b[39m acessoTab\u001b[33m.\u001b[39misVisible({ timeout\u001b[33m:\u001b[39m \u001b[35m2\u001b[39m_000 })\u001b[33m.\u001b[39m\u001b[36mcatch\u001b[39m(() \u001b[33m=>\u001b[39m \u001b[36mfalse\u001b[39m)) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 147 |\u001b[39m       \u001b[36mawait\u001b[39m acessoTab\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 148 |\u001b[39m       \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\n \u001b[90m 149 |\u001b[39m         \u001b[33m.\u001b[39mwaitForURL(\u001b[35m/tab=access/\u001b[39m\u001b[33m,\u001b[39m { timeout\u001b[33m:\u001b[39m \u001b[35m5\u001b[39m_000 })\n \u001b[90m 150 |\u001b[39m         \u001b[33m.\u001b[39m\u001b[36mcatch\u001b[39m(() \u001b[33m=>\u001b[39m undefined)\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\ContentEditPage.ts",
+                            "column": 23,
+                            "line": 147
+                          },
+                          "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-test-id=\"tab-access\"]').or(getByRole('tab', { name: /^Acesso$/i })).first()\u001b[22m\n\u001b[2m    - locator resolved to <button role=\"tab\" name=\"access\" type=\"button\" tabindex=\"-1\" data-index=\"1\" aria-disabled=\"false\" id=\"tabs-:rs:--tab-1\" aria-selected=\"false\" data-tab-name=\"access\" data-test-id=\"tab-access\" class=\"chakra-tabs__tab css-fuqmym\" aria-controls=\"tabs-:rs:--tabpanel-1\">Acesso</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div role=\"group\" class=\"chakra-form-control css-1kxonj9\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div role=\"group\" class=\"chakra-form-control css-1kxonj9\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-1u2cvaz\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  13 × retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div role=\"group\" class=\"chakra-form-control css-1kxonj9\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div role=\"group\" class=\"chakra-form-control css-1kxonj9\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-1u2cvaz\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-1u2cvaz\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\n\n   at projects\\recertificacao\\pages\\ContentEditPage.ts:147\n\n  145 |       .first();\n  146 |     if (await acessoTab.isVisible({ timeout: 2_000 }).catch(() => false)) {\n> 147 |       await acessoTab.click();\n      |                       ^\n  148 |       await this.page\n  149 |         .waitForURL(/tab=access/, { timeout: 5_000 })\n  150 |         .catch(() => undefined);\n    at ContentEditPage.goToAcessoTab (C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\ContentEditPage.ts:147:23)\n    at C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc1-switch-aparece-com-flag-on.spec.ts:100:9"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [
+                        {
+                          "text": "[deleteCursoByIdSafe] Botão \"Excluir\" não encontrado para curso id=807447. Possível mudança de UI ou curso já deletado — cleanup no-op.\n"
+                        }
+                      ],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar a URL \"/o/{orgId}/dashboard\"",
+                          "duration": 10155
+                        },
+                        {
+                          "title": "2. Navegar até a listagem de cursos da organização",
+                          "duration": 10810
+                        },
+                        {
+                          "title": "3. Clicar em \"Gerenciar\" no menu de ações do curso → página de edição é exibida",
+                          "duration": 19963
+                        },
+                        {
+                          "title": "4. Switch \"Habilitar reinscrição\" está visível no formulário (tab \"Acesso\" do facelift)",
+                          "duration": 30452,
+                          "error": {
+                            "message": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-test-id=\"tab-access\"]').or(getByRole('tab', { name: /^Acesso$/i })).first()\u001b[22m\n\u001b[2m    - locator resolved to <button role=\"tab\" name=\"access\" type=\"button\" tabindex=\"-1\" data-index=\"1\" aria-disabled=\"false\" id=\"tabs-:rs:--tab-1\" aria-selected=\"false\" data-tab-name=\"access\" data-test-id=\"tab-access\" class=\"chakra-tabs__tab css-fuqmym\" aria-controls=\"tabs-:rs:--tabpanel-1\">Acesso</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div role=\"group\" class=\"chakra-form-control css-1kxonj9\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div role=\"group\" class=\"chakra-form-control css-1kxonj9\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-1u2cvaz\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  13 × retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div role=\"group\" class=\"chakra-form-control css-1kxonj9\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div role=\"group\" class=\"chakra-form-control css-1kxonj9\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-1u2cvaz\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-1u2cvaz\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n",
+                            "stack": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-test-id=\"tab-access\"]').or(getByRole('tab', { name: /^Acesso$/i })).first()\u001b[22m\n\u001b[2m    - locator resolved to <button role=\"tab\" name=\"access\" type=\"button\" tabindex=\"-1\" data-index=\"1\" aria-disabled=\"false\" id=\"tabs-:rs:--tab-1\" aria-selected=\"false\" data-tab-name=\"access\" data-test-id=\"tab-access\" class=\"chakra-tabs__tab css-fuqmym\" aria-controls=\"tabs-:rs:--tabpanel-1\">Acesso</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div role=\"group\" class=\"chakra-form-control css-1kxonj9\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div role=\"group\" class=\"chakra-form-control css-1kxonj9\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-1u2cvaz\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  13 × retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div role=\"group\" class=\"chakra-form-control css-1kxonj9\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div role=\"group\" class=\"chakra-form-control css-1kxonj9\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-1u2cvaz\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div tabindex=\"-1\" class=\"chakra-modal__content-container css-1u2cvaz\">…</div> from <div class=\"chakra-portal\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\n    at ContentEditPage.goToAcessoTab (C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\ContentEditPage.ts:147:23)\n    at C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc1-switch-aparece-com-flag-on.spec.ts:100:9",
+                            "location": {
+                              "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\ContentEditPage.ts",
+                              "column": 23,
+                              "line": 147
+                            },
+                            "snippet": "\u001b[90m   at \u001b[39mprojects\\recertificacao\\pages\\ContentEditPage.ts:147\n\n\u001b[0m \u001b[90m 145 |\u001b[39m       \u001b[33m.\u001b[39mfirst()\u001b[33m;\u001b[39m\n \u001b[90m 146 |\u001b[39m     \u001b[36mif\u001b[39m (\u001b[36mawait\u001b[39m acessoTab\u001b[33m.\u001b[39misVisible({ timeout\u001b[33m:\u001b[39m \u001b[35m2\u001b[39m_000 })\u001b[33m.\u001b[39m\u001b[36mcatch\u001b[39m(() \u001b[33m=>\u001b[39m \u001b[36mfalse\u001b[39m)) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 147 |\u001b[39m       \u001b[36mawait\u001b[39m acessoTab\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 148 |\u001b[39m       \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\n \u001b[90m 149 |\u001b[39m         \u001b[33m.\u001b[39mwaitForURL(\u001b[35m/tab=access/\u001b[39m\u001b[33m,\u001b[39m { timeout\u001b[33m:\u001b[39m \u001b[35m5\u001b[39m_000 })\n \u001b[90m 150 |\u001b[39m         \u001b[33m.\u001b[39m\u001b[36mcatch\u001b[39m(() \u001b[33m=>\u001b[39m undefined)\u001b[33m;\u001b[39m\u001b[0m"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-06-01T11:41:50.846Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-d835b--flag-ON-na-edição-de-curso-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVjZXJ0aWZpY2HDp8OjbyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNvbmZpZ3VyYcOnw6NvIGRlIENvbnRlw7pkbyAoU3dpdGNoIFwiSGFiaWxpdGFyIHJlaW5zY3Jpw6fDo29cIikifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJTd2l0Y2ggXCJIYWJpbGl0YXIgcmVpbnNjcmnDp8Ojb1wiIGFwYXJlY2UgY29tIGZsYWcgT04gbmEgZWRpw6fDo28gZGUgY3Vyc28ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7InBhcmFtZXRlcnMiOlt7Im5hbWUiOiJmZWF0dXJlX2ZsYWciLCJ2YWx1ZSI6IjpyZWNlcnRpZmljYWNhbz1PTiAoYXNzdW1pZG8gZW0gc3RhZ2luZy1iYXNlLWRlLWNvbmhlY2ltZW50bykifV19fQ=="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-d835b--flag-ON-na-edição-de-curso-chromium\\test-failed-2.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-d835b--flag-ON-na-edição-de-curso-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-d835b--flag-ON-na-edição-de-curso-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-d835b--flag-ON-na-edição-de-curso-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-d835b--flag-ON-na-edição-de-curso-chromium\\test-failed-3.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-d835b--flag-ON-na-edição-de-curso-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-d835b--flag-ON-na-edição-de-curso-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\ContentEditPage.ts",
+                        "column": 23,
+                        "line": 147
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "e050204b338df394c0ba-b5dabc3a50642051cd90",
+              "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc1-switch-aparece-com-flag-on.spec.ts",
+              "line": 57,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc2-switch-nao-aparece-com-flag-off.spec.ts",
+      "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc2-switch-nao-aparece-com-flag-off.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Configuração de Conteúdo (Switch \"Habilitar reinscrição\")",
+          "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc2-switch-nao-aparece-com-flag-off.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC2 — Switch \"Habilitar reinscrição\" NÃO aparece com flag OFF (regressão)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "requer toggle runtime da flag :recertificacao — assumido ON em staging-base-de-conhecimento. Validar manualmente OFF.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc2-switch-nao-aparece-com-flag-off.spec.ts",
+                        "line": 15,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-01T11:41:49.573Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "requer toggle runtime da flag :recertificacao — assumido ON em staging-base-de-conhecimento. Validar manualmente OFF.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc2-switch-nao-aparece-com-flag-off.spec.ts",
+                            "line": 15,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "06272ed2591d3c5599a1-64f4382a5e328d7b5821",
+              "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc2-switch-nao-aparece-com-flag-off.spec.ts",
+              "line": 20,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc3-ativar-e-salvar-persiste.spec.ts",
+      "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc3-ativar-e-salvar-persiste.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Configuração de Conteúdo (Switch \"Habilitar reinscrição\")",
+          "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc3-ativar-e-salvar-persiste.spec.ts",
+          "line": 9,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC3 — Ativar e salvar o switch persiste `has_recertification = true`",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 2,
+                      "status": "failed",
+                      "duration": 25226,
+                      "error": {
+                        "message": "TimeoutError: locator.waitFor: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('tab', { name: /^Acesso$/i }).or(locator('[data-test-id=\"tab-access\"]')).first() to be visible\u001b[22m\n",
+                        "stack": "TimeoutError: locator.waitFor: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('tab', { name: /^Acesso$/i }).or(locator('[data-test-id=\"tab-access\"]')).first() to be visible\u001b[22m\n\n    at ContentEditPage.openEditReactAccessById (C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\ContentEditPage.ts:70:21)\n    at ContentEditPage.openEditByIdInAcessoTab (C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\ContentEditPage.ts:98:5)\n    at C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc3-ativar-e-salvar-persiste.spec.ts:64:9",
+                        "location": {
+                          "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\ContentEditPage.ts",
+                          "column": 21,
+                          "line": 70
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39mprojects\\recertificacao\\pages\\ContentEditPage.ts:70\n\n\u001b[0m \u001b[90m 68 |\u001b[39m       \u001b[33m.\u001b[39mor(\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mlocator(\u001b[32m'[data-test-id=\"tab-access\"]'\u001b[39m))\n \u001b[90m 69 |\u001b[39m       \u001b[33m.\u001b[39mfirst()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 70 |\u001b[39m     \u001b[36mawait\u001b[39m acessoTab\u001b[33m.\u001b[39mwaitFor({ state\u001b[33m:\u001b[39m \u001b[32m'visible'\u001b[39m\u001b[33m,\u001b[39m timeout\u001b[33m:\u001b[39m \u001b[35m20\u001b[39m_000 })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 71 |\u001b[39m     \u001b[36mawait\u001b[39m acessoTab\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 72 |\u001b[39m     \u001b[36mawait\u001b[39m expect(acessoTab)\u001b[33m.\u001b[39mtoHaveAttribute(\u001b[32m'aria-selected'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'true'\u001b[39m\u001b[33m,\u001b[39m { timeout\u001b[33m:\u001b[39m \u001b[35m5\u001b[39m_000 })\u001b[33m;\u001b[39m\n \u001b[90m 73 |\u001b[39m     \u001b[90m// Aguarda o label visível do checkbox-alvo renderizar.\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\ContentEditPage.ts",
+                            "column": 21,
+                            "line": 70
+                          },
+                          "message": "TimeoutError: locator.waitFor: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('tab', { name: /^Acesso$/i }).or(locator('[data-test-id=\"tab-access\"]')).first() to be visible\u001b[22m\n\n\n   at projects\\recertificacao\\pages\\ContentEditPage.ts:70\n\n  68 |       .or(this.page.locator('[data-test-id=\"tab-access\"]'))\n  69 |       .first();\n> 70 |     await acessoTab.waitFor({ state: 'visible', timeout: 20_000 });\n     |                     ^\n  71 |     await acessoTab.click();\n  72 |     await expect(acessoTab).toHaveAttribute('aria-selected', 'true', { timeout: 5_000 });\n  73 |     // Aguarda o label visível do checkbox-alvo renderizar.\n    at ContentEditPage.openEditReactAccessById (C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\ContentEditPage.ts:70:21)\n    at ContentEditPage.openEditByIdInAcessoTab (C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\ContentEditPage.ts:98:5)\n    at C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc3-ativar-e-salvar-persiste.spec.ts:64:9"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [
+                        {
+                          "text": "[deleteCursoByIdSafe] Botão \"Excluir\" não encontrado para curso id=807446. Possível mudança de UI ou curso já deletado — cleanup no-op.\n"
+                        }
+                      ],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar a edição de um curso com `has_recertification = false` (tab \"Acesso\")",
+                          "duration": 22068,
+                          "error": {
+                            "message": "TimeoutError: locator.waitFor: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('tab', { name: /^Acesso$/i }).or(locator('[data-test-id=\"tab-access\"]')).first() to be visible\u001b[22m\n",
+                            "stack": "TimeoutError: locator.waitFor: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('tab', { name: /^Acesso$/i }).or(locator('[data-test-id=\"tab-access\"]')).first() to be visible\u001b[22m\n\n    at ContentEditPage.openEditReactAccessById (C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\ContentEditPage.ts:70:21)\n    at ContentEditPage.openEditByIdInAcessoTab (C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\ContentEditPage.ts:98:5)\n    at C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc3-ativar-e-salvar-persiste.spec.ts:64:9",
+                            "location": {
+                              "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\ContentEditPage.ts",
+                              "column": 21,
+                              "line": 70
+                            },
+                            "snippet": "\u001b[90m   at \u001b[39mprojects\\recertificacao\\pages\\ContentEditPage.ts:70\n\n\u001b[0m \u001b[90m 68 |\u001b[39m       \u001b[33m.\u001b[39mor(\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mlocator(\u001b[32m'[data-test-id=\"tab-access\"]'\u001b[39m))\n \u001b[90m 69 |\u001b[39m       \u001b[33m.\u001b[39mfirst()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 70 |\u001b[39m     \u001b[36mawait\u001b[39m acessoTab\u001b[33m.\u001b[39mwaitFor({ state\u001b[33m:\u001b[39m \u001b[32m'visible'\u001b[39m\u001b[33m,\u001b[39m timeout\u001b[33m:\u001b[39m \u001b[35m20\u001b[39m_000 })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 71 |\u001b[39m     \u001b[36mawait\u001b[39m acessoTab\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 72 |\u001b[39m     \u001b[36mawait\u001b[39m expect(acessoTab)\u001b[33m.\u001b[39mtoHaveAttribute(\u001b[32m'aria-selected'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'true'\u001b[39m\u001b[33m,\u001b[39m { timeout\u001b[33m:\u001b[39m \u001b[35m5\u001b[39m_000 })\u001b[33m;\u001b[39m\n \u001b[90m 73 |\u001b[39m     \u001b[90m// Aguarda o label visível do checkbox-alvo renderizar.\u001b[39m\u001b[0m"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-06-01T11:41:50.818Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-ccb33-e-has-recertification-true--chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVjZXJ0aWZpY2HDp8OjbyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNvbmZpZ3VyYcOnw6NvIGRlIENvbnRlw7pkbyAoU3dpdGNoIFwiSGFiaWxpdGFyIHJlaW5zY3Jpw6fDo29cIikifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJBdGl2YXIgZSBzYWx2YXIgbyBzd2l0Y2ggcGVyc2lzdGUgYGhhc19yZWNlcnRpZmljYXRpb24gPSB0cnVlYCJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-ccb33-e-has-recertification-true--chromium\\test-failed-2.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-ccb33-e-has-recertification-true--chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-ccb33-e-has-recertification-true--chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-ccb33-e-has-recertification-true--chromium\\error-context.md"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-ccb33-e-has-recertification-true--chromium\\test-failed-3.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-ccb33-e-has-recertification-true--chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-ccb33-e-has-recertification-true--chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\ContentEditPage.ts",
+                        "column": 21,
+                        "line": 70
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba81cb6a8ed721d18cdd-a3dc2048d10ff70555ff",
+              "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc3-ativar-e-salvar-persiste.spec.ts",
+              "line": 50,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc4-desativar-com-participants.spec.ts",
+      "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc4-desativar-com-participants.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Configuração de Conteúdo (Switch \"Habilitar reinscrição\")",
+          "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc4-desativar-com-participants.spec.ts",
+          "line": 9,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC4 — Desativar o switch em curso com participants reinscritos é permitido sem aviso",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 0,
+                      "error": {
+                        "message": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('label.chakra-checkbox').filter({ has: locator('#has_recertification') }).first() to be visible\u001b[22m\n",
+                        "stack": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('label.chakra-checkbox').filter({ has: locator('#has_recertification') }).first() to be visible\u001b[22m\n\n    at ContentEditPage.setHabilitarReinscricao (C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\ContentEditPage.ts:371:49)\n    at C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc4-desativar-com-participants.spec.ts:35:7",
+                        "location": {
+                          "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\ContentEditPage.ts",
+                          "column": 49,
+                          "line": 371
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39mprojects\\recertificacao\\pages\\ContentEditPage.ts:371\n\n\u001b[0m \u001b[90m 369 |\u001b[39m     \u001b[90m// Aguarda o LABEL visível antes de tocar no input (input é\u001b[39m\n \u001b[90m 370 |\u001b[39m     \u001b[90m// screen-reader-only, waitFor('visible') no input timeoutaria).\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 371 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mgetHabilitarReinscricaoVisible()\u001b[33m.\u001b[39mwaitFor({\n \u001b[90m     |\u001b[39m                                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 372 |\u001b[39m       state\u001b[33m:\u001b[39m \u001b[32m'visible'\u001b[39m\u001b[33m,\u001b[39m\n \u001b[90m 373 |\u001b[39m       timeout\u001b[33m:\u001b[39m \u001b[35m10\u001b[39m_000\u001b[33m,\u001b[39m\n \u001b[90m 374 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\ContentEditPage.ts",
+                            "column": 49,
+                            "line": 371
+                          },
+                          "message": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('label.chakra-checkbox').filter({ has: locator('#has_recertification') }).first() to be visible\u001b[22m\n\n\n   at projects\\recertificacao\\pages\\ContentEditPage.ts:371\n\n  369 |     // Aguarda o LABEL visível antes de tocar no input (input é\n  370 |     // screen-reader-only, waitFor('visible') no input timeoutaria).\n> 371 |     await this.getHabilitarReinscricaoVisible().waitFor({\n      |                                                 ^\n  372 |       state: 'visible',\n  373 |       timeout: 10_000,\n  374 |     });\n    at ContentEditPage.setHabilitarReinscricao (C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\ContentEditPage.ts:371:49)\n    at C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc4-desativar-com-participants.spec.ts:35:7"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [
+                        {
+                          "text": "[deleteCursoByIdSafe] Botão \"Excluir\" não encontrado para curso id=807448. Possível mudança de UI ou curso já deletado — cleanup no-op.\n"
+                        }
+                      ],
+                      "retry": 0,
+                      "startTime": "2026-06-01T11:41:50.803Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-ad265-ritos-é-permitido-sem-aviso-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-ad265-ritos-é-permitido-sem-aviso-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-ad265-ritos-é-permitido-sem-aviso-chromium\\test-failed-2.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-ad265-ritos-é-permitido-sem-aviso-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-ad265-ritos-é-permitido-sem-aviso-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\pages\\ContentEditPage.ts",
+                        "column": 49,
+                        "line": 371
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "2ab4896513641b86a513-385b09b41406719da092",
+              "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc4-desativar-com-participants.spec.ts",
+              "line": 59,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc5-paridade-haml-react.spec.ts",
+      "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc5-paridade-haml-react.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Configuração de Conteúdo (Switch \"Habilitar reinscrição\")",
+          "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc5-paridade-haml-react.spec.ts",
+          "line": 15,
+          "column": 15,
+          "specs": [
+            {
+              "title": "TC5 — Paridade do switch entre formulário HAML e formulário React (facelift)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc5-paridade-haml-react.spec.ts",
+                        "line": 15,
+                        "column": 15
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-01T11:41:49.576Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\configuracao-de-conteudo-switch-habilitar-reinscricao\\tc5-paridade-haml-react.spec.ts",
+                            "line": 15,
+                            "column": 15
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "22e6ad991019939a6be8-54f6cefb7de56b370c20",
+              "file": "projects/recertificacao/tests/features/configuracao-de-conteudo-switch-habilitar-reinscricao/tc5-paridade-haml-react.spec.ts",
+              "line": 54,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-06-01T11:41:11.594Z",
+    "duration": 177038.141,
+    "expected": 0,
+    "skipped": 2,
+    "unexpected": 3,
+    "flaky": 0
+  }
+}

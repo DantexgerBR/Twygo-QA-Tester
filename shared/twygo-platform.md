@@ -355,11 +355,14 @@ Declarar playbook `beforeunload`.
 | Agente | Onde linkar |
 |---|---|
 | `agent-at` | `CLAUDE.md §10` (já linka) — consulta durante geração da AT |
-| `agent-playwright` | `CLAUDE.md §7.5` — manter referência cruzada; específicos PW continuam lá |
+| `agent-playwright` | `CLAUDE.md §7.5` — manter referência cruzada; específicos PW continuam lá. **Cobre testes UI e API** (a partir de CONTRACT.md v1.2) — auth e convenções de URL aplicáveis a ambos |
 | `agent-db` | `CLAUDE.md §3` (quando ativar) — convenções de URL e Super Admin |
-| `agent-api` (futuro) | seu CLAUDE.md — auth, convenções de URL |
 | `agent-pentest` (futuro) | seu CLAUDE.md — escopo, contexto Twygo |
 | `agent-tasks-qa` (futuro) | seu CLAUDE.md — contexto Twygo pra quebra de atividades |
+
+> **Nota histórica**: `agent-api` (futuro) foi avaliado e descartado em
+> 2026-05-27 (CONTRACT.md §16). Testes de API rodam no `agent-playwright`
+> via `request` fixture em `tests/api/`.
 
 ---
 
@@ -369,3 +372,4 @@ Declarar playbook `beforeunload`.
 |---|---|---|
 | 2026-05-18 | Documento criado, extraído de `agent-playwright/CLAUDE.md §7.5` | CONTRACT.md v1, decisão de relaxar regra "nada na raiz" |
 | 2026-05-18 | Valores concretos (hosts, orgIds, emails) removidos. Documento passa a descrever apenas convenções/sufixos/semântica. Valores reais ficam em `.env`/environment.json | Revisão de segurança — git versionado não deve carregar infra interna |
+| 2026-05-27 | Remoção da linha `agent-api (futuro)` na §11. agent-playwright passa a cobrir testes UI e API | CONTRACT.md v1.2 §16 — agent-api descartado em favor de integração no agent-playwright |

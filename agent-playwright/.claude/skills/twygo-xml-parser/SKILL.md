@@ -1,6 +1,16 @@
 ---
 name: twygo-xml-parser
 description: Lê um XML em formato TestLink (testsuite > testcase > steps com actions/expectedresults em prosa PT-BR) e produz um JSON estruturado que o orquestrador consome. Não interpreta a prosa — apenas estrutura.
+when_to_use: |
+  - Input ainda é XML TestLink legado (projeto pré-CONTRACT.md v1)
+  - Orchestrator precisa converter XML pra JSON estruturado
+  - Você está mantendo compatibilidade com formato antigo (fallback)
+triggers:
+  - "XML TestLink"
+  - "test-analysis.parsed.json"
+  - "fast-xml-parser"
+  - "agent:parse-xml"
+  - "testsuite testcase steps"
 version: 2.0.0
 ---
 

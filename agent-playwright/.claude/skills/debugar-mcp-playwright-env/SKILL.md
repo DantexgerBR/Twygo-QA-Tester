@@ -1,6 +1,17 @@
 ---
 name: debugar-mcp-playwright-env
 description: O MCP server `playwright-test` (do plugin oficial Microsoft) é spawnado uma única vez por sessão Claude Code e não re-lê `.env` nem variáveis exportadas via Bash depois disso. Em monorepo com múltiplos projetos (creditos-fase-02 + widgets), invocar `playwright-test-planner` ou `playwright-test-generator` falha com `Múltiplos projetos em projects/: ... Use --project <slug> ou export PROJECT=<slug>`. Use quando aparecer esse erro mesmo após você ter exportado `PROJECT` ou editado `.env`.
+when_to_use: |
+  - Tool MCP `playwright-test` falha com "Múltiplos projetos em projects/"
+  - Exportou `PROJECT=<slug>` mas o erro persiste em chamadas subsequentes
+  - Editou `.env` no meio de uma sessão Claude e MCP não reconhece
+triggers:
+  - "Múltiplos projetos em projects"
+  - "Use --project"
+  - "export PROJECT="
+  - "MCP server spawnado"
+  - "playwright-test MCP"
+  - "não re-lê .env"
 version: 1.0.0
 ---
 

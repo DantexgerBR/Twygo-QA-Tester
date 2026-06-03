@@ -1,6 +1,19 @@
 ---
 name: gerar-bug-report-de-tc-red
-description: Para cada TC que terminou red (failed/timedOut) numa execução Playwright, monta um registro de bug-report estruturado pronto para virar task — Network/Console/payload já coletados pela fixture exploratória + steps/erro/attachments do Playwright + heurísticas para severity/regressão/taxa. Output em `outputs/<slug>/bug-reports.json` + `outputs/<slug>/bug-reports/<test-slug>.md` (um por TC red), prontos pra QA revisar e abrir issue. Use sempre que executar suite/regressivo e quiser que o relatório já entregue bug-reports preenchidos, sem precisar reabrir cada test-artifact manualmente. v1.1 — campos `categoriaSugerida` + `categoriaConfianca` + `categoriaJustificativa` agora são propagados pelo `twygo-report-generator` v3.4+ para o bloco `🐛 Pronto para registro de bug` do `tests.md`, com cabeçalho destacado + próximas ações sugeridas por categoria. Schema do JSON mantido — apenas apresentação no consumer.
+description: Para cada TC red, monta bug-report estruturado em `outputs/<slug>/bug-reports/*.md` + json — Network/Console + steps/erro/attachments + categoria sugerida (bug-produto/spec-frágil/modal-não-tratado/flakiness/inconclusivo) com confiança. v1.1 propaga categoria pro tests.md.
+when_to_use: |
+  - Após rodar Playwright e ter 1+ TC red em `outputs/<slug>/test-results.json`
+  - Quer entregar bug-reports preenchidos sem reabrir cada test-artifact manual
+  - Antes de gerar report final via `twygo-report-generator`
+triggers:
+  - "bug-report"
+  - "agent:bug-reports"
+  - "categoriaSugerida"
+  - "TC red"
+  - "failed timedOut"
+  - "Pronto para registro de bug"
+  - "categoriaConfianca"
+  - "bug-reports.json"
 version: 1.1.0
 ---
 

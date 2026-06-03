@@ -1,6 +1,23 @@
 ---
 name: debugar-via-network-e-console
 description: Ao diagnosticar qualquer bug/erro de UI Twygo, abrir DevTools Network + Console ANTES de chutar causa. Filtro por endpoint + status. Frontend Twygo frequentemente engole respostas 4xx/5xx silenciosamente — sintoma é "click sem efeito" mas o servidor já gritou na network. Skill define ritual e checklist.
+when_to_use: |
+  - "Click no botão/switch não faz nada"
+  - "Formulário não submete"
+  - "Tela mostra dado antigo após save"
+  - "Toast/modal não aparece quando deveria"
+  - Spec falha em poll esperando state mudar
+  - Antes de chutar causa de qualquer bug de UI
+triggers:
+  - "click sem efeito"
+  - "formulário não submete"
+  - "422 silencioso"
+  - "frontend engoliu erro"
+  - "DevTools Network"
+  - "Console error"
+  - "HTTP 4xx"
+  - "HTTP 5xx"
+  - "list_network_requests"
 version: 1.0.0
 ---
 
@@ -137,6 +154,14 @@ Esses 4 padrões cobrem ~70% dos bugs vistos em diagnóstico de QA Twygo nos úl
 ## Ritual em 1 frase
 
 > **Antes de chutar causa de bug de UI, abre DevTools. Network + Console. 5 segundos olhando body do request. Aí sim formula hipótese.**
+
+## Quando NÃO usar
+
+- Bug está no SPEC (assertion errada, locator inválido, encadeamento `getByTestId().getByPlaceholder()` em void element) — Network não vai ajudar; abrir `trace.zip` da run primeiro via `npx playwright show-trace`.
+- Erro é "Timeout 30s aguardando hydration" sem request 4xx/5xx — é timing pós-hydration, use [[criar-spec-resiliente-twygo]] Princípio 2 (timeouts explícitos pós-hydration).
+- Erro vem do typecheck / lint / build — não há request HTTP envolvido. Resolve com `tsc`/`eslint`.
+- Spec usa `page.route()` mockando request — Network real não dispara; debugar o handler mock direto.
+- Sintoma é "modal interceptando click" (screenshot mostra overlay) — não é problema HTTP, é [[fechar-modais-twygo]] ou [[tratar-modal-beta-end-twygo]].
 
 ## Skills relacionadas
 

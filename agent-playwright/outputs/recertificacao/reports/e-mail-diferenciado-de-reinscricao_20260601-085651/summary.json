@@ -1,0 +1,29 @@
+{
+  "runId": "e-mail-diferenciado-de-reinscricao_20260601-085651",
+  "scope": "Apenas testsuite contendo \"E-mail Diferenciado de Reinscrição\"",
+  "tests": {
+    "total": 4,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 4,
+    "durationMs": 0
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 0,
+    "tests": 81,
+    "outOfScope": {
+      "errors": 583,
+      "warnings": 305,
+      "info": 18
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

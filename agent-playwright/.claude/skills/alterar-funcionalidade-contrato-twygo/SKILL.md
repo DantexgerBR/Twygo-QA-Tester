@@ -1,6 +1,20 @@
 ---
 name: alterar-funcionalidade-contrato-twygo
 description: Como ativar/desativar funcionalidades em contratos Twygo via Super Admin (`/admin/edit_sys_subscription_settings/<orgId>` → aba Contratos → contrato Vigente → Editar → multiselect Funcionalidades → checkbox + Salvar). Plan/contrato é gate independente do Flipper feature flag — algumas features (ex: Painéis do usuário) requerem ambos ligados pra funcionar. Use sempre que spec falhar com modal "Opção não disponível no seu plano" OU XML pedir cenário com feature gated por plan, e antes de assumir bloqueio por Flipper.
+when_to_use: |
+  - Spec falha com modal "Ops! Essa opção não está disponível no seu plano"
+  - TC requer feature gated por contrato/plan (ex: `user_panels`, Painéis do usuário)
+  - Você precisa togglar funcionalidade do contrato Vigente de uma org via Super Admin
+  - Antes de assumir bloqueio por Flipper, confirmar se gate é plan/contrato
+triggers:
+  - "Opção não está disponível no seu plano"
+  - "Funcionalidades"
+  - "edit_sys_subscription_settings"
+  - "contrato Vigente"
+  - "setContractFunctionality"
+  - "ensureContractFeature"
+  - "plan vs flag"
+  - "page_model"
 version: 1.0.0
 ---
 

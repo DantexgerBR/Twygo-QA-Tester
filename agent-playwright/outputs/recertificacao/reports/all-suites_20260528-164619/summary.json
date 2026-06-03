@@ -1,0 +1,29 @@
+{
+  "runId": "all-suites_20260528-164619",
+  "scope": "Todas as testsuites (modo padrão)",
+  "tests": {
+    "total": 64,
+    "passed": 6,
+    "failed": 6,
+    "skipped": 52,
+    "durationMs": 225391
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 9,
+    "tests": 62,
+    "outOfScope": {
+      "errors": 257,
+      "warnings": 186,
+      "info": 5
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}
