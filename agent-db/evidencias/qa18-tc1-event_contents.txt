@@ -1,0 +1,8 @@
+# QA 1.8 TC1 — event_contents (65 colunas)
+colunas suspeitas de rascunho/versionamento: NENHUMA
+is_draft presente?             False
+parent_event_content_id?       False
+
+VEREDITO TC1: PASSOU (rascunho NAO implementado — regressao ok)
+
+todas as colunas: id, event_id, title, description, briefing, duration, status, parent_id, depth, sequence, created_at, updated_at, archive_id, content_type, file_security, video_url, question_list_id, question_list_method, minimum_score, attempts, question_params, question_draw, event_content_path, is_processed, scorm_index, scorm_path, final_score_ratio, scorm_structure, mark_completed, schedule_subject, schedule_description, schedule_starttime, schedule_endtime, schedule_timezone, webinar_key, webinar_type, webinar_id, reminder, reminder_unit, reminder_time, send_gotowebinar_updates, notify_participants, schedule_status, controll_bar, metadata, external_type, public_message_room_id, enable_public_chat, disable_public_chat_at_end, is_public_chat_open, scorm_upload_status, game_key, enable_minimum_permanence_time, minimum_permanence_time, content_duration, narrator_script, update_by_user_id, already_used_sophia_script, allow_pause_minimum_permanence_time, ai_sync_status, ai_context, reference_id, youtube_player_type, display_label, display_icon

@@ -1,0 +1,20 @@
+### conversations (12 colunas): id, organization_id, created_by_id, organization_dataset_id, agent, created_at, updated_at, process_id, reference_document_id, event_id, user_id, context_type
+   tem user_id? SIM
+   tem event_id? SIM
+   tem studio_partition_id? nao
+   tem summary? nao
+   tem last_message_at? nao
+   tem title? nao
+
+### messages (9 colunas): id, content, role, organization_id, conversation_id, created_by_id, created_at, updated_at, studio_partition_id
+   tem user_id? nao
+   tem event_id? nao
+   tem studio_partition_id? SIM
+   tem summary? nao
+   tem last_message_at? nao
+   tem title? nao
+
+### conversations do curso 807533, por usuario:
+    (nenhuma conversa nesse curso)
+   total conversas no 807533: 0 | usuarios distintos: 0
+   -> se ha multiplos user_id distintos, confirma historico ESCOPADO POR USUARIO (TC11)
