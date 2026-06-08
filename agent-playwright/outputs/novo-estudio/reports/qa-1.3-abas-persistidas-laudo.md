@@ -151,7 +151,7 @@ lembram a última aba aberta: não há drag & drop de abas (sem ícone no hover,
 drag, arrastar não reordena e não dispara request de persistência) e a última aba aberta NÃO
 é restaurada (volta sempre em Identificação). As demais entregas do estúdio estão presentes
 no mesmo build — a ausência é específica desta (rotear pra dev, não pra deploy/infra).
-Link: 
+Link: https://app2.artia.com/a/4874953/f/6386039/activities/33004862
 2) P1 [Novo estúdio de criação] Ordem das abas e última aba não são salvas no banco (modelo
 de dados não suporta escopo por curso): validado read-only no MySQL twygo_db_rc; a tabela
 `user_course_preferences` EXISTE (tab_order JSON + last_tab varchar) mas está VAZIA (0 linhas)
@@ -159,6 +159,7 @@ de dados não suporta escopo por curso): validado read-only no MySQL twygo_db_rc
 suportar persistência por usuário × curso, mas o schema atual não tem coluna `event_id` (há
 UNIQUE(user_id)) e `last_tab` é 1 valor por usuário. Ajuste paralelo no caso de teste de banco:
 a query precisa apontar pra estrutura real (hoje filtra por `event_id`, que não existe).
+Link: https://app2.artia.com/a/4874953/f/6386039/activities/33004865
 Gotcha pro dev: no curso seed, "Tipo de experiência" (obrigatório) vazio faz o Salvar falhar
 SILENCIOSAMENTE (sem toast de erro global) — vale UX de aviso.
 :: Evidência(s) ::
