@@ -66,10 +66,11 @@ Tentativa de reforçar o TC11 (histórico por usuário) pela fonte de verdade no
    recarregável, títulos automáticos, atalho de abertura e mobile fullscreen.
 2. **Bug objetivo**: **Ctrl+J não fecha o drawer** (toggle quebrado — TC4/TC32).
 3. **Bloco TC23–TC31 (UI do protótipo)**: o drawer implementado é mais simples que o
-   especificado — sem subtítulo, sem card de contexto, sem as 3 ações rápidas literais,
-   sem Expandir painel/Minimizar/Configurar API key, placeholder e hint diferentes.
-   Mesmo padrão das divergências confirmadas antes pelo dev — **sugerido confirmar antes
-   de abrir retrabalho** (pode ser doc do protótipo desatualizada OU entrega pendente).
+   especificado. **CONFIRMADO PELO DEV (Alexandre, 08/06): NÃO é bug** — não era pra ficar
+   100% igual ao protótipo (várias coisas eram ilustrativas) e o projeto ainda não foi
+   concluído. Atualizar a AT pra refletir a UI real. **Follow-up (não-bug):** revalidar as
+   **ações rápidas** (TC26) depois que o Jeiel finalizar a implementação — se ficar só
+   "Adicionar atividades sobre…" aí sim estaria errado. Alinhar com Adri/João via Edu.
 4. **TC9/TC10** caem na ausência do copiloto fora da aba Atividades (retrabalho R8 já
    criado no 19708).
 5. **7 TCs exigem GERAÇÃO de IA** (TC8, TC15, TC16, TC18–TC21) — não executados pra não
@@ -116,11 +117,10 @@ Link:
 2) TC5/TC6/TC29 (largura 66% sem expandir) já cobertos pelo retrabalho do copiloto
 (padrão dev: 50% + expandir 100%). TC9/TC10 (conversa por aba) caem no retrabalho do
 copiloto ausente nas outras abas (19708).
-3) CONFIRMAR COM DEV antes de retrabalho — bloco de UI do protótipo ausente (TC23-TC31):
-sem subtítulo "Cria atividades com aprovação", sem card de contexto "Curso com N atividades
-criadas", ações rápidas diferentes (só "Adicionar atividades sobre…"), placeholder/hint do
-input diferentes, Enviar não desabilita vazio, sem botões Expandir painel/Minimizar/
-Configurar API key. 4) TC17: botão "Salvar como novo" não existe (pré-condição cita
+3) Bloco de UI do protótipo (TC23-TC31): CONFIRMADO PELO DEV (Alexandre, 08/06) que NÃO é
+bug — não era pra ficar igual ao protótipo (itens ilustrativos) e o projeto não foi concluído.
+Sem retrabalho; atualizar a AT. Follow-up (não-bug): revalidar as ações rápidas (TC26) após o
+Jeiel finalizar a implementação. 4) TC17: botão "Salvar como novo" não existe (pré-condição cita
 #R16-P3 — confirmar escopo). 5) Créditos de IA: solicitar recarga pra executar os 7 TCs
 de geração (roteiro manual no laudo).
 :: Evidência(s) ::

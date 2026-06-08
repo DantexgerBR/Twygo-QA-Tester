@@ -1,7 +1,10 @@
 # Retrabalhos — QA 1.9 (Operar copiloto e histórico por usuário) — formato Artia
 
 > Ambiente: 🧪 Stage org 37061, curso 807533. Card de execução PASSOU; falhas viram retrabalho.
-> Cobertura auditada: 22 ❌ do laudo, todos mapeados (defeitos + dupes referenciados + pendências).
+> Cobertura auditada: 22 ❌ do laudo, todos mapeados.
+> ⚠️ CONTEXTO (dev Alexandre, 08/06): o Novo Estúdio **ainda não foi concluído** — vários pontos
+> que surgem **não são bug, são partes ainda não implementadas**. Alinhar com Adri/João (via Edu)
+> antes de tratar divergência como defeito. Por isso o bloco TC23–31 foi reclassificado (não é bug).
 > Evidências: https://github.com/DantexgerBR/twygo-playwright-tests/tree/main/evidencias/novo_estudio_recon
 
 ---
@@ -26,26 +29,18 @@ Ctrl+J deve alternar (abrir e fechar) o drawer do copiloto.
 
 ---
 
-## P3 [Novo estúdio de criação] UI do copiloto diverge do protótipo (header, boas-vindas, ações rápidas, input, sem Expandir/Minimizar/Configurar API key)
+## ~~TC23–TC31 — UI do copiloto diverge do protótipo~~ → NÃO É BUG (confirmado pelo dev)
 
-Cobre: TC23, TC24, TC25, TC26, TC27, TC30, TC31 — CONFIRMAR COM DEV (pode ser doc do protótipo desatualizada)
+Cobre: TC23, TC24, TC25, TC26, TC27, TC30, TC31 — **SEM retrabalho**
 
-:: Incidente identificado ::
-O drawer implementado é mais simples que o especificado na AT:
-- Header "Copiloto do Estúdio", sem o subtítulo "Cria atividades com aprovação" (TC23);
-- Boas-vindas "Como posso te ajudar?" em vez do texto da AT (TC24);
-- Sem o card de contexto "Curso com N atividades criadas." (TC25);
-- Só a ação rápida "Adicionar atividades sobre…" (AT esperava 3 ações específicas) (TC26);
-- Placeholder/hint do input diferentes e botão Enviar não desabilita com campo vazio (TC27);
-- Sem botões Minimizar (TC30) e Configurar API key (TC31).
-Mesmo padrão de divergência que o dev já confirmou antes em outras RNs — pode ser doc do protótipo desatualizada OU entrega pendente.
+**Confirmado pelo dev (Alexandre Kumagae, 08/06):** está OK do jeito que está — não era pra
+ficar 100% igual ao protótipo; várias coisas eram só ilustrativas. O projeto ainda não foi
+concluído, então esses pontos **não são bug** — são partes ainda não implementadas / decisões
+de design. Atualizar a AT pra refletir a UI real.
 
-:: Passo a passo para reprodução ::
-» Abrir o copiloto no Estúdio do curso 807533
-» Comparar header, boas-vindas, card de contexto, ações rápidas, input e botões com a AT (TC23–TC31)
-
-:: Comportamento esperado ::
-Confirmar com dev/produto a fonte da verdade: se a UI atual é a correta, atualizar a AT; se o protótipo é o alvo, implementar os elementos faltantes.
+**Acompanhamento (não é bug, é follow-up):** depois que o Jeiel finalizar a implementação,
+revalidar as **ações rápidas** (TC26) — hoje só existe "Adicionar atividades sobre…"; se
+permanecer só essa após a entrega, aí sim estaria errado. Alinhar com Adri/João (via Edu).
 
 ---
 
