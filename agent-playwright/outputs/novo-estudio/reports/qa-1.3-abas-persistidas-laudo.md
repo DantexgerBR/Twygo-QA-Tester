@@ -145,20 +145,20 @@ Gerenciar/Editar" (12 TCs) na org 37061, curso 807533, com 2 usuários (regra mu
 3 ✅ (renomeação — "Gerenciar curso" não existe mais; salvamento independente por aba;
 política de descarte ao trocar de aba) e 9 ❌, tratados no retrabalho abaixo.
 :: Obs ::
-Retrabalho criado:
-1) RN 3 ausente (TC2/TC3/TC6 e, por consequência, TC4/TC5/TC7/TC8/TC11): não há drag & drop
-de abas (sem ícone no hover, sem atributos de drag, arrastar não reordena e não dispara
-request de persistência) e a última aba aberta NÃO é restaurada (volta sempre em
-Identificação). Leitura cruzada: as RNs 2/4/6 estão presentes neste mesmo build — a
-ausência é específica da RN 3 (rotear pra dev, não pra deploy/infra).
+Retrabalhos criados:
+1) P1 [Novo estúdio de criação] Abas da edição de curso não reordenam por arraste e não
+lembram a última aba aberta: não há drag & drop de abas (sem ícone no hover, sem atributo de
+drag, arrastar não reordena e não dispara request de persistência) e a última aba aberta NÃO
+é restaurada (volta sempre em Identificação). As demais entregas do estúdio estão presentes
+no mesmo build — a ausência é específica desta (rotear pra dev, não pra deploy/infra).
 Link: 
-2) TC12 (banco) — não cumpre a RN documentada (persistir por usuário × curso): validado
-read-only no MySQL twygo_db_rc; a tabela `user_course_preferences` EXISTE (tab_order JSON +
-last_tab varchar) mas está VAZIA (0 linhas) → o front não persiste nada (fonte de verdade,
-bate com o Network). Pela RN documentada o back-end também precisa suportar o escopo por
-curso, mas o schema atual não tem coluna `event_id` (há UNIQUE(user_id)) e `last_tab` é 1
-valor por usuário — então o filtro `event_id` do TC12 é impossível e last_tab não comporta
-por-curso. Ajuste paralelo: a query do TC12 na AT precisa apontar pra estrutura real.
+2) P1 [Novo estúdio de criação] Ordem das abas e última aba não são salvas no banco (modelo
+de dados não suporta escopo por curso): validado read-only no MySQL twygo_db_rc; a tabela
+`user_course_preferences` EXISTE (tab_order JSON + last_tab varchar) mas está VAZIA (0 linhas)
+→ o front não persiste nada (fonte de verdade, bate com o Network). O back-end também precisa
+suportar persistência por usuário × curso, mas o schema atual não tem coluna `event_id` (há
+UNIQUE(user_id)) e `last_tab` é 1 valor por usuário. Ajuste paralelo no caso de teste de banco:
+a query precisa apontar pra estrutura real (hoje filtra por `event_id`, que não existe).
 Gotcha pro dev: no curso seed, "Tipo de experiência" (obrigatório) vazio faz o Salvar falhar
 SILENCIOSAMENTE (sem toast de erro global) — vale UX de aviso.
 :: Evidência(s) ::

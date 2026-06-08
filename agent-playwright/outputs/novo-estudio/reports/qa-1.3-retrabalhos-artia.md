@@ -5,7 +5,11 @@
 
 ---
 
-## Retrabalho 1 — Edição de curso: abas não reordenam por arraste e não lembram a última aba aberta
+## P1 [Novo estúdio de criação] Abas da edição de curso não reordenam por arraste e não lembram a última aba aberta
+
+> Prioridade P1 (doc "Classificação de Prioridade de Bugs"): bug em RC herda a prioridade da
+> entrega (geralmente P0/P1); não é P0 (não derruba sistema, não bloqueia QA, sem perda de
+> dado). Rebaixar pra P2 se o time tratar reordenar/última-aba como conveniência de baixo impacto.
 
 :: Incidente identificado ::
 Na tela "Editar curso", a RN 3 não está implementada: não é possível reordenar as abas por
@@ -29,7 +33,11 @@ de sessão, e ao reabrir o curso a UI deve carregar na última aba usada.
 
 ---
 
-## Retrabalho 2 — Edição de curso: ordem das abas e última aba não são salvas no banco (modelo de dados não suporta escopo por curso)
+## P1 [Novo estúdio de criação] Ordem das abas e última aba não são salvas no banco (modelo de dados não suporta escopo por curso)
+
+> Prioridade P1 (doc "Classificação de Prioridade de Bugs"): bug em RC herda a prioridade da
+> entrega (geralmente P0/P1); não é P0 (sem perda de dado / sistema no ar). Envolve mudança de
+> modelo de dados (migration) — o PO pode reavaliar. Rebaixar pra P2 se tratado como conveniência.
 
 :: Incidente identificado ::
 A persistência em banco exigida pela RN 3 não acontece. Validação read-only no MySQL
