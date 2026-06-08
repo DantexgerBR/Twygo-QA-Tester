@@ -50,6 +50,22 @@ Alinhar AT e schema: confirmar se o delete deve ser CASCADE e se display_label d
 
 ---
 
+## P3 [Novo estúdio de criação] Pendência de execução — validações de banco em DynamoDB e migrations não cobertas
+
+Cobre: TC8, TC9 (DynamoDB), TC11 (rails migrate) — NÃO é bug; exige acesso fora do MySQL
+
+:: Incidente identificado ::
+Três TCs da suíte não puderam ser executados com acesso read-only ao MySQL: TC8 (tabela DynamoDB `studio_checkpoints`), TC9 (tabela DynamoDB `messages`) e TC11 (migrations reversíveis up/down, que exigem o app Rails). Não é defeito de produto — é cobertura pendente por falta de acesso.
+
+:: Passo a passo para reprodução ::
+» TC8/TC9: acessar o console DynamoDB do ambiente Stage e conferir as tabelas/atributos
+» TC11: no ambiente Rails, rodar db:migrate:down e db:migrate:up de uma migration nova
+
+:: Comportamento esperado ::
+TC8/TC9: tabelas DynamoDB presentes com as chaves/atributos da AT. TC11: migrations sobem e descem sem erro. Validar via acesso ao DynamoDB e ao Rails. Destinatário: infra/dev.
+
+---
+
 ## (TC4) user_course_preferences sem event_id — NÃO duplicar
 
 O TC4 (tabela sem `event_id`, só `UNIQUE(user_id)`) é a MESMA falha já reportada no retrabalho de banco do **QA 1.3 / RN 3** ("Ordem das abas e última aba não são salvas no banco — modelo não suporta escopo por curso"). Vincular a esse card existente em vez de abrir novo.
