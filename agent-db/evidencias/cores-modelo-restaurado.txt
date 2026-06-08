@@ -1,0 +1,4 @@
+# brand_colors brand_id=1435 (org 37061, event 807573) — rotulo: restaurado
+  pos 0 | Primária     | #9349DE   | updated_at=2026-06-08 16:43:10.388621
+  pos 1 | Secundária   | #1F2041   | updated_at=2026-06-03 16:52:06.551389
+  pos 2 | Terciária    | #CEE0EF   | updated_at=2026-06-03 16:52:06.565984
