@@ -5,7 +5,7 @@
 
 ---
 
-## Retrabalho 1 — RN 3 não funciona na tela (reordenar abas + última aba)
+## Retrabalho 1 — Edição de curso: abas não reordenam por arraste e não lembram a última aba aberta
 
 :: Incidente identificado ::
 Na tela "Editar curso", a RN 3 não está implementada: não é possível reordenar as abas por
@@ -29,7 +29,7 @@ de sessão, e ao reabrir o curso a UI deve carregar na última aba usada.
 
 ---
 
-## Retrabalho 2 — RN 3 não persiste no banco (TC12) e schema diverge da RN
+## Retrabalho 2 — Edição de curso: ordem das abas e última aba não são salvas no banco (modelo de dados não suporta escopo por curso)
 
 :: Incidente identificado ::
 A persistência em banco exigida pela RN 3 não acontece. Validação read-only no MySQL
