@@ -1,0 +1,63 @@
+# Suite Tabelas do Banco — twygo_db_rc (read-only) — 08/06/2026
+
+[TC1] studio_generation_partitions: ❌ FALHOU (faltam: ['lock_active', 'applied_to_event_content_at', 'approved_by', 'trace_id'])
+     id                               bigint                   null=NO
+     event_content_id                 int                      null=NO
+     status                           int                      null=NO
+     artifact_type                    int                      null=NO
+     result_data                      json                     null=YES
+     lock_active                      <AUSENTE>
+     applied_to_event_content_at      <AUSENTE>
+     approved_by                      <AUSENTE>
+     trace_id                         <AUSENTE>
+     created_at                       datetime(6)              null=NO
+     updated_at                       datetime(6)              null=NO
+
+[TC2] activity_summaries: ❌ FALHOU (faltam: ['id'])
+     id                               <AUSENTE>
+     event_content_id                 int                      null=NO
+     summary_one_line                 text                     null=YES
+     key_takeaways                    json                     null=YES
+     glossary_introduced              json                     null=YES
+     created_at                       datetime(6)              null=NO
+     updated_at                       datetime(6)              null=NO
+
+[TC3] org_generation_preferences: ❌ TABELA NAO EXISTE
+
+[TC4] user_course_preferences: ❌ FALHOU (faltam: ['event_id'])
+     id                               bigint                   null=NO
+     user_id                          int                      null=NO
+     event_id                         <AUSENTE>
+     tab_order                        json                     null=YES
+     last_tab                         varchar(255)             null=YES
+     created_at                       datetime(6)              null=NO
+     updated_at                       datetime(6)              null=NO
+
+[TC5] conversations: ✅ PASSOU
+     organization_dataset_id          bigint                   null=YES
+     event_id                         int                      null=YES
+     user_id                          int                      null=YES
+     context_type                     int                      null=NO
+
+[TC6] messages: ✅ PASSOU
+     studio_partition_id              bigint                   null=YES
+
+[TC7] event_contents: ✅ PASSOU
+     display_label                    varchar(255)             null=YES
+     display_icon                     varchar(255)             null=YES
+
+[TC10] FKs:
+   studio_generation_partitions: [{"cn": "fk_rails_2190934cfa", "col": "conversation_id", "rt": "conversations", "rc": "id"}, {"cn": "fk_rails_2a48a2907a", "col": "event_id", "rt": "events", "rc": "id"}, {"cn": "fk_rails_2c48c9914c", "col": "organization_id", "rt": "organizations", "rc": "id"}, {"cn": "fk_rails_b45ac3135f", "col": "event_content_id", "rt": "event_contents", "rc": "id"}]
+      delete_rule: [{"cn": "fk_rails_2190934cfa", "DELETE_RULE": "NO ACTION"}, {"cn": "fk_rails_2a48a2907a", "DELETE_RULE": "NO ACTION"}, {"cn": "fk_rails_2c48c9914c", "DELETE_RULE": "NO ACTION"}, {"cn": "fk_rails_b45ac3135f", "DELETE_RULE": "NO ACTION"}]
+   user_course_preferences: [{"cn": "fk_rails_b7f7aec34f", "col": "user_id", "rt": "users", "rc": "id"}]
+      delete_rule: [{"cn": "fk_rails_b7f7aec34f", "DELETE_RULE": "NO ACTION"}]
+--- CROSS-CHECKS (anti-falso-positivo) ---
+TC2 activity_summaries: PK = event_content_id (nao tem coluna "id" por design; 1:1 com event_content). -> PASSOU (falso positivo corrigido).
+TC3: tabela existe como "org_ai_preferences" (AT chamou de org_generation_preferences = nome desatualizado).
+     colunas: organization_id, image_provider, voice_persona, per_context_overrides(json), created_at, updated_at
+     (sem audio_provider separado — provavelmente em per_context_overrides). -> existe; reconciliar nome/colunas na AT.
+TC1 studio_generation_partitions colunas REAIS: id, organization_id, event_id, event_content_id, conversation_id,
+     artifact_type, status, result_data, retry_count, created_at, updated_at.
+     AT esperava lock_active/applied_to_event_content_at/approved_by/trace_id (NENHUMA existe) + so event_content_id.
+     -> tabela existe e funcional; AT desatualizada (reconciliar), nao e bug de produto.
+TC10 delete_rule das FKs = NO ACTION (AT esperava ON DELETE CASCADE em event_content_id) -> divergencia/reconciliar.
