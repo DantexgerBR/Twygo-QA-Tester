@@ -1,0 +1,52 @@
+# TC12 — user_course_preferences (RN 3 / Artia 19707)
+# gerado em 2026-06-08T12:28:07.086789+00:00 (UTC) — read-only
+# banco: twygo_db_rc (MySQL 8.0.45) @ twygo-rc
+
+[1] Ambiente confere:
+   org 37061 -> [{'id': 37061, 'name': 'novoestudio'}]
+   event 807533 -> [{'id': 807533, 'name': 'Construindo times de alta performance', 'organization_id': 37061}]
+
+[2] Schema de user_course_preferences:
+     id             bigint           null=NO
+     user_id        int              null=NO
+     tab_order      json             null=YES
+     last_tab       varchar(255)     null=YES
+     created_at     datetime(6)      null=NO
+     updated_at     datetime(6)      null=NO
+   -> NAO ha coluna event_id/course_id: escopo e apenas user_id (por usuario global)
+
+[3] Conteudo:
+   total de linhas = 0
+   amostra: (vazia)
+
+[4] Usuario de teste (confirma que existe, mas nao tem preferencia gravada):
+      {"id": 1495, "first_name": " Antonio dante", "email": "dantebrosa@hotmail.com"}
+      {"id": 18402, "first_name": "GELSON ", "email": "gelson_cruz@estudante.sc.senai.br"}
+      {"id": 19940, "first_name": "edenilson", "email": "edenilson_medeiros@estudante.sc.senai.br"}
+      {"id": 20868, "first_name": "Dante", "email": "dante.zschaber@globalsegmg.com.br"}
+      {"id": 30692, "first_name": "Dante", "email": "dante.ogo@gmail.com"}
+      {"id": 31768, "first_name": "sidney", "email": "estudantepr11@gmail.com"}
+      {"id": 402552, "first_name": "Maicon", "email": "maicon.dante@nitryx.com"}
+      {"id": 431081, "first_name": "Ilton", "email": "ilton.prandi@estudante.fien.edu.br"}
+      {"id": 433643, "first_name": "fernando", "email": "fernando.pinas@idsestudantes.com"}
+      {"id": 446329, "first_name": "luiz", "email": "luizcarloscomandante@hotmail.com"}
+   prefs do user 1495: (nenhuma)
+[5] DDL autoritativo (SHOW CREATE TABLE):
+CREATE TABLE `user_course_preferences` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `tab_order` json DEFAULT NULL,
+  `last_tab` varchar(255) DEFAULT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_user_course_preferences_on_user_id` (`user_id`),
+  CONSTRAINT `fk_rails_b7f7aec34f` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB
+
+Leitura do DDL:
+- UNIQUE(user_id) => no maximo 1 linha por usuario (sem dimensao de curso em coluna).
+- last_tab (1 varchar por linha) => estruturalmente por-usuario-global, NAO por curso (divergente do TC6).
+- tab_order (json) => PODE codificar ordem por curso dentro do JSON (ex.: {"807533": [...]}).
+  Indecidivel com a tabela vazia -> confirmar design com produto.
+- TC12 pede WHERE user_id=X AND event_id=Y -> event_id nao existe -> query impossivel como escrita.
