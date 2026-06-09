@@ -1,6 +1,6 @@
 ---
 name: break-qa-tasks
-description: Orquestra o fluxo completo de quebra de atividades de QA para reuniões de planejamento. Lê documentação da pasta docs/ (Discovery/Spike .docx e planilha de Dev .xlsx), gera atividades de QA com estimativas baseadas em Playwright, e produz duas planilhas .xlsx em output/. Use quando o usuário solicitar quebra de atividades de QA para um novo projeto Twygo.
+description: Orquestra o fluxo completo de quebra de atividades de QA para reuniões de planejamento. Lê documentação de projects/<slug>/docs/ (Discovery/Spike .docx e planilha de Dev .xlsx), gera atividades de QA com estimativas baseadas em Playwright, e produz duas planilhas .xlsx em projects/<slug>/output/. Use quando o usuário solicitar quebra de atividades de QA para um novo projeto Twygo.
 disable-model-invocation: true
 allowed-tools: Read Write Edit Bash Glob Grep
 ---
@@ -9,15 +9,32 @@ allowed-tools: Read Write Edit Bash Glob Grep
 
 Você é o agente Tasks-QA da Twygo. Siga este fluxo ao ser invocado:
 
+## Etapa 0: Descobrir o projeto ativo
+
+Antes de tudo, resolver o `<slug>` do projeto (mesma convenção de `agent-at` e
+`agent-playwright`). Todos os caminhos do fluxo são **relativos a
+`projects/<slug>/`**:
+
+1. Flag `--project <slug>` passada na invocação → usa esse slug.
+2. Variável de ambiente `PROJECT=<slug>`.
+3. Auto-detect: se há **exatamente 1** subpasta em `projects/`, usa ela.
+4. Erro explícito: listar as subpastas de `projects/` e pedir a flag `--project`.
+
+> **Legado**: se não houver `projects/` (repositório antigo) mas existir
+> `docs/` na raiz, opere no modo plano antigo (`docs/` + `output/` na raiz) e
+> **alerte** que o projeto deveria migrar para `projects/<slug>/`.
+
+A partir daqui, `<slug>` está resolvido e usado em todos os caminhos.
+
 ## Etapa 1: Verificação do Ambiente
 
-1. Verificar se `docs/` contém arquivos. Se vazia, solicitar ao usuário que deposite os arquivos e aguardar.
+1. Verificar se `projects/<slug>/docs/` contém arquivos. Se vazia, solicitar ao usuário que deposite os arquivos e aguardar.
 2. Verificar se existe pelo menos um `.docx` (documento de requisitos) e um `.xlsx` (planilha de Dev). Se faltar algum, informar e aguardar.
-3. Criar `output/` se não existir. **Não apagar** arquivos de projetos antigos automaticamente — apenas sobrescrever os do projeto atual.
+3. Criar `projects/<slug>/output/` se não existir. **Não apagar** arquivos de projetos antigos automaticamente — apenas sobrescrever os do projeto atual.
 
 ## Etapa 2: Leitura dos Inputs
 
-Invocar a skill `/read-inputs` para ler todos os arquivos da pasta `docs/`. Ao final, você terá em memória (ou em `output/inputs_extraidos.md` se persistido):
+Invocar a skill `/read-inputs` para ler todos os arquivos da pasta `projects/<slug>/docs/`. Ao final, você terá em memória (ou em `projects/<slug>/output/inputs_extraidos.md` se persistido):
 
 - **RNs**: ID + texto de cada Regra de Negócio
 - **Atividades de Dev**: tipo, título, descrição (com RNs associadas), esforço, bloco
@@ -121,7 +138,10 @@ Invocar a skill `/generate-qa-sheet` passando:
 - Lista de atividades finais fixas
 - Nome do projeto (para nome dos arquivos)
 
-Saída em `output/`:
+> Passar à skill `/generate-qa-sheet` o diretório de saída explícito
+> `--output-dir projects/<slug>/output`.
+
+Saída em `projects/<slug>/output/`:
 - `QA_Atividades_<NomeProjeto>_Complementada.xlsx`
 - `QA_Only_<NomeProjeto>.xlsx`
 
@@ -157,8 +177,8 @@ Formato sugerido:
 - ⚠️ Aba `produto` sem `account_id` — preencher manualmente no gestor.
 
 **Arquivos:**
-- `output/QA_Atividades_<NomeProjeto>_Complementada.xlsx`
-- `output/QA_Only_<NomeProjeto>.xlsx`
+- `projects/<slug>/output/QA_Atividades_<NomeProjeto>_Complementada.xlsx`
+- `projects/<slug>/output/QA_Only_<NomeProjeto>.xlsx`
 ```
 
 ## Checklist de Qualidade (verificar ANTES de entregar)
@@ -172,5 +192,5 @@ Formato sugerido:
 - [ ] Deploy = 1h
 - [ ] Estimativas calibradas pela estrutura existente em `agent-playwright/`
 - [ ] Casos especiais alertados ao usuário
-- [ ] Duas planilhas geradas em `output/`
+- [ ] Duas planilhas geradas em `projects/<slug>/output/`
 - [ ] Resumo em Markdown apresentado
