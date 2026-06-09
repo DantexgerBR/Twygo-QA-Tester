@@ -1,0 +1,11 @@
+{
+  "name": "Desempenho e Feedback",
+  "slug": "desempenho-feedback",
+  "description": "Análise de Teste do projeto 'Desempenho e Feedback' da Twygo.",
+  "environment": "staging-desempenho",
+  "envSecondary": "staging-desempenho-aditional",
+  "figmaPrototype": null,
+  "sourceDocs": [],
+  "contractVersion": "1.1",
+  "atVersion": 1
+}
