@@ -46,3 +46,27 @@ de histórico novas do Estúdio.
   errado (conversations/messages do copiloto são DynamoDB; org_generation_preferences
   é PostgreSQL; studio_generation_partitions não recebe escrita).
 - Crédito de IA **não** era o gargalo (foi liberado e o copiloto funcionou).
+
+## Atualização (mesma sessão, após liberar créditos + ativar o Estúdio)
+- **Gate real do Estúdio = outra feature flag Flipper** (confirmado pelo QA/dono do
+  ambiente), **não** a `creation_studio` (que está OFF). → responde direto a pergunta
+  em aberto da **QA 1.15**.
+- Ao **ativar o Estúdio na Trial 37062**, o ambiente **re-semeou/alterou**: o curso
+  807605 ("Construindo times…") **deixou de existir** (`SELECT ... WHERE id=807605` → 0)
+  e surgiram events novos (807644–807648: "Roxo", "Dashboard", "Aula expositiva"… —
+  parecem modelos de página, não cursos).
+- Em seguida a **listagem de Conteúdos ficou VAZIA** ("Não há dados para exibir") —
+  a Trial ficou **sem nenhum curso**. Sem curso não há Estúdio para abrir → não há
+  como disparar geração → `ai_generation_tasks` (org 37062) permaneceu **0**.
+- `ai_generation_tasks` (tabela MySQL org-scoped, NÃO listada na AT) existe e seria
+  populável por uma geração real; o **chat** do copiloto sozinho não escreve nela.
+- **Bloqueio do E2E**: ambiente (Trial sem curso + ativação re-semeando) + a UI do
+  Estúdio é frágil para dirigir headless. Para fechar: sessão **interativa** — criar
+  um curso → disparar geração (popular ai_generation_tasks) → excluir → reconsultar.
+
+## Veredito 1.18 (mantém)
+❌ Falhou — não executável até o fim neste ambiente/sessão. Evidência read-only forte +
+descobertas acima. Bloqueios reais para fechar: (a) DynamoDB + PostgreSQL inacessíveis,
+(b) mecanismo de "exclusão de organização" (vs reset Sophia) a confirmar, (c) AT com
+mapeamento tabela→datastore errado, (d) Trial precisa de curso + geração para popular as
+tabelas novas verificáveis no MySQL.
