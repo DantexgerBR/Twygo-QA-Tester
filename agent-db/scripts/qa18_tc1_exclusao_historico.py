@@ -11,7 +11,8 @@ import sys
 from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8")
 BASE = Path(__file__).resolve().parents[1]
-ORG = 37061
+import os
+ORG = int(os.environ.get("ORG_ID", "37061"))
 SCHEMA = "twygo_db_rc"
 
 # tabelas do Objetivo da 1.18 (MySQL novas + estendidas). DynamoDB fica fora.
