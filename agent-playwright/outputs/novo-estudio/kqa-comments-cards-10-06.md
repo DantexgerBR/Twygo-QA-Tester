@@ -1,0 +1,121 @@
+# Comentários KQA — cards Novo Estúdio (reconfirmado ao vivo 10/06/2026)
+
+Org 37061 (`novoestudio.stage.twygoead.com`) · curso 807533 "Construindo times de alta performance".
+Rota real do Estúdio: `/o/37061/contents/807533/edit?tab=studio` (aba "Atividades").
+
+---
+
+## Card 19716 — QA 1.12 Renderizar versão publicada de forma assíncrona
+
+```
+⇝ QA ⇜
+:: Teste ::
+❌ Falhou
+:: Ambiente ::
+🧪 Stage
+:: Validação ::
+Reconfirmado ao vivo em 10/06 (org 37061, curso 807533). A suíte (12 TCs) parte
+toda do gatilho "Publicar alterações" no topo do Estúdio, que dispara o render
+assíncrono da versão publicada. Esse botão NÃO existe na UI: varredura por texto
+e aria-label em botões/links/menuitems retornou 0 ocorrências de "Publicar". O
+topo só tem "Voltar", "Visualizar como aluno", "Abrir copiloto" e ações por
+atividade ("Concluir geração com IA", "Editar"). Sem o gatilho, os 12 TCs são
+inexecutáveis.
+:: Obs ::
+Funcionalidade de publicação/render assíncrono ausente nesta entrega — NÃO é bug
+(projeto em andamento; #R12 é P2 no Discovery). A alinhar com João Miguel Gorski.
+Ressalva honesta: checagem read-only; não testei se "Publicar" só apareceria após
+uma edição pendente (gating por dirty-state) — confirmar com o dev. TC10 (logs) já
+estava bloqueado na própria AT (logging não implementado).
+:: Evidência(s) ::
+- estudio-real-807533.png (10/06 — topo do Estúdio sem "Publicar")
+- recon-1.12-estudio.png (09/06)
+- recon-renderizar-versao-publicada.md
+```
+
+---
+
+## Card 19719 — QA 1.15 Coexistir com tela antiga via rota nova e feature flag
+
+```
+⇝ QA ⇜
+:: Teste ::
+✅ Passou
+:: Ambiente ::
+🧪 Stage
+:: Validação ::
+Reconfirmado ao vivo em 10/06. A rota nova do Estúdio carrega e funciona (aba
+"Atividades" em /o/37061/contents/807533/edit?tab=studio → layout 3 colunas) —
+TC1 e TC4 ✅. PORÉM a mecânica central da suíte (coexistência/gating via feature
+flag Flipper "creation_studio") NÃO se confirma: a flag está Disabled (No actors
+enabled, 0% of actors/time) e mesmo assim o Estúdio funciona; e não há rota antiga
+distinta — /o/37061/events/807533/edit/activities retorna HTTP 404.
+:: Obs ::
+Execução concluída (2 TCs ✅); as demais validações viram alinhamento/retrabalho.
+HEADLINE pro dev (João): qual é o gate real do Estúdio hoje? (flag promovida?
+contrato sys_subscription_functionalities? outra flag?). Sem isso, os TCs de
+roteamento-por-flag e estado-OFF (TC2, TC3, TC5–TC11) não são testáveis como a AT
+especifica. Não cravado como bug — divergência de premissa a alinhar (projeto em
+andamento). TC10 é métrica de CS (dashboard externo).
+:: Evidência(s) ::
+- flipper-creation_studio.png (flag Disabled)
+- rota-antiga-activities.png (HTTP 404)
+- estudio-real-807533.png (Estúdio carrega com a flag OFF)
+- recon-coexistir-rota-flag.md
+```
+
+---
+
+## Card 19720 — QA 1.16 Duplicar curso a partir do Estúdio
+
+```
+⇝ QA ⇜
+:: Teste ::
+❌ Falhou
+:: Ambiente ::
+🧪 Stage
+:: Validação ::
+Reconfirmado ao vivo em 10/06. A suíte (12 TCs) parte do botão "Salvar como novo"
+no menu secundário do topo do Estúdio. Esse controle NÃO existe: varredura por
+"Salvar como novo", "Duplicar" e "Publicar" retornou 0 ocorrências; o topo só tem
+"Voltar", "Visualizar como aluno", "Abrir copiloto" e ações por atividade. Não há
+menu secundário de duplicação. Sem o gatilho, os 12 TCs são inexecutáveis.
+:: Obs ::
+Duplicação a partir do Estúdio ("Salvar como novo") ausente nesta entrega — NÃO é
+bug (projeto em andamento; #R16 é P3 "se der tempo" no Discovery). Coerente com a
+1.12 (mesma ausência de menu secundário do topo). A alinhar com João.
+:: Evidência(s) ::
+- estudio-real-807533.png (10/06 — topo do Estúdio sem "Salvar como novo")
+- recon-1.16-estudio.png (09/06)
+- recon-duplicar-curso.md
+```
+
+---
+
+## Card 19722 — QA 1.18 Exclusão do Banco Histórico (Tipo: db)
+
+```
+⇝ QA ⇜
+:: Teste ::
+❌ Falhou
+:: Ambiente ::
+🧪 Stage
+:: Validação ::
+Análise de viabilidade reconfirmada em 10/06. O TC valida que, ao excluir uma
+organização, os registros somem das tabelas de histórico (studio_generation_
+partitions, activity_summaries, org_generation_preferences, user_course_
+preferences, conversations, messages, event_contents + studio_checkpoints/messages
+no DynamoDB). NÃO executável neste ambiente por 3 bloqueios independentes: (1) a
+exclusão é destrutiva — exige uma org descartável (Trial) povoada e então excluída,
+inviável na org principal 37061; (2) tabelas em 3 bancos (MySQL + PostgreSQL +
+DynamoDB) — sem acesso a PostgreSQL nem DynamoDB; (3) o agent-playwright não tem
+credenciais de banco (.env sem DB_*) e o agent-db é esqueleto.
+:: Obs ::
+NÃO é falha de produto — é bloqueio de execução. Executor real é o agent-db
+(CONTRACT.md) quando houver acesso aos 3 bancos + uma org descartável excluída.
+Inconsistência na AT a revisar: o objetivo cita "MySQL" e os passos citam
+"PostgreSQL" para as mesmas tabelas. A suíte de Logs relacionada já está bloqueada
+na AT (logging não implementado — dev Jeiel, 08/06).
+:: Evidência(s) ::
+- recon-exclusao-banco-historico.md
+```
