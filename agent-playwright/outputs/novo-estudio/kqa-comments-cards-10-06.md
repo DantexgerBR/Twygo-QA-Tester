@@ -101,21 +101,23 @@ bug (projeto em andamento; #R16 é P3 "se der tempo" no Discovery). Coerente com
 :: Ambiente ::
 🧪 Stage
 :: Validação ::
-Análise de viabilidade reconfirmada em 10/06. O TC valida que, ao excluir uma
-organização, os registros somem das tabelas de histórico (studio_generation_
-partitions, activity_summaries, org_generation_preferences, user_course_
-preferences, conversations, messages, event_contents + studio_checkpoints/messages
-no DynamoDB). NÃO executável neste ambiente por 3 bloqueios independentes: (1) a
-exclusão é destrutiva — exige uma org descartável (Trial) povoada e então excluída,
-inviável na org principal 37061; (2) tabelas em 3 bancos (MySQL + PostgreSQL +
-DynamoDB) — sem acesso a PostgreSQL nem DynamoDB; (3) o agent-playwright não tem
-credenciais de banco (.env sem DB_*) e o agent-db é esqueleto.
+Validação de banco read-only executada em 10/06 no MySQL twygo_db_rc (org 37061) via
+pymysql. Das 9 tabelas do TC: 6 existem no MySQL (studio_generation_partitions,
+activity_summaries, user_course_preferences, conversations, messages, event_contents);
+org_generation_preferences NÃO está no MySQL (provável PostgreSQL); studio_checkpoints
+e messages(Dynamo) ficam no DynamoDB. Baseline da org 37061 nas tabelas org-scoped:
+studio_generation_partitions=0, conversations=0, messages=0. A asserção do TC ("após
+excluir a org, os registros somem") NÃO é executável read-only: exige um E2E destrutivo
+(criar org descartável → popular → excluir → reconsultar) + acesso ao DynamoDB e à
+tabela em PostgreSQL.
 :: Obs ::
-NÃO é falha de produto — é bloqueio de execução. Executor real é o agent-db
-(CONTRACT.md) quando houver acesso aos 3 bancos + uma org descartável excluída.
-Inconsistência na AT a revisar: o objetivo cita "MySQL" e os passos citam
-"PostgreSQL" para as mesmas tabelas. A suíte de Logs relacionada já está bloqueada
-na AT (logging não implementado — dev Jeiel, 08/06).
+NÃO é falha de produto — é limite de execução. Read-only confirma schema + baseline,
+não prova a deleção. Para fechar de fato: provisionar org Trial descartável, povoar
+com dados de Estúdio/copiloto, excluí-la e reconsultar. Inconsistência da AT confirmada
+com dado real: o objetivo diz "MySQL" e os passos dizem "PostgreSQL" —
+org_generation_preferences realmente não está no MySQL.
 :: Evidência(s) ::
+- qa18-tc1-exclusao-historico.txt (consulta read-only MySQL, baseline org 37061)
+- qa18_tc1_exclusao_historico.py (script da consulta)
 - recon-exclusao-banco-historico.md
 ```
