@@ -52,11 +52,12 @@ enabled, 0% of actors/time) e mesmo assim o Estúdio funciona; e não há rota a
 distinta — /o/37061/events/807533/edit/activities retorna HTTP 404.
 :: Obs ::
 Execução concluída (2 TCs ✅); as demais validações viram alinhamento/retrabalho.
-HEADLINE pro dev (João): qual é o gate real do Estúdio hoje? (flag promovida?
-contrato sys_subscription_functionalities? outra flag?). Sem isso, os TCs de
-roteamento-por-flag e estado-OFF (TC2, TC3, TC5–TC11) não são testáveis como a AT
-especifica. Não cravado como bug — divergência de premissa a alinhar (projeto em
-andamento). TC10 é métrica de CS (dashboard externo).
+GATE REAL IDENTIFICADO (10/06, confirmado com o QA dono do ambiente): o Estúdio é
+gateado por OUTRA feature flag Flipper — NÃO a "creation_studio" (que está OFF). Logo
+os TCs de roteamento-por-flag e estado-OFF (TC2, TC3, TC5–TC11) precisam ser reescritos
+apontando para a flag correta; e a AT/skill que assumem "creation_studio" estão
+desatualizadas. Não é bug — divergência de premissa, agora resolvida. TC10 é métrica
+de CS (dashboard externo). A confirmar com João o nome exato da flag.
 :: Evidência(s) ::
 - flipper-creation_studio.png (flag Disabled)
 - rota-antiga-activities.png (HTTP 404)
@@ -112,10 +113,17 @@ excluir a org, os registros somem") NÃO é executável read-only: exige um E2E 
 tabela em PostgreSQL.
 :: Obs ::
 NÃO é falha de produto — é limite de execução. Read-only confirma schema + baseline,
-não prova a deleção. Para fechar de fato: provisionar org Trial descartável, povoar
-com dados de Estúdio/copiloto, excluí-la e reconsultar. Inconsistência da AT confirmada
-com dado real: o objetivo diz "MySQL" e os passos dizem "PostgreSQL" —
-org_generation_preferences realmente não está no MySQL.
+não prova a deleção. Inconsistência da AT confirmada com dado real: o objetivo diz
+"MySQL" e os passos dizem "PostgreSQL" — org_generation_preferences realmente não está
+no MySQL.
+TENTATIVA DE E2E (10/06, Trial 37062): com créditos + Estúdio ativado, descobri que
+(1) o histórico do copiloto grava no DynamoDB (as tabelas MySQL conversations/messages
+da AT são LEGADO — sem linha nova desde 2025); (2) "Sophia → Excluir informações → Tudo"
+é RESET DE DADOS (DELETE /delete_trial_data), não exclusão de organização; (3) ativar
+o Estúdio re-semeou a Trial e ela ficou sem cursos, bloqueando a geração. FECHAMENTO
+AGENDADO PARA 11/06 em sessão interativa (criar curso → gerar → popular
+ai_generation_tasks → excluir → reconsultar) + necessário acesso a DynamoDB/PostgreSQL.
+Detalhes em findings.md.
 :: Evidência(s) ::
 - qa18-tc1-exclusao-historico.txt (consulta read-only MySQL, baseline org 37061)
 - qa18_tc1_exclusao_historico.py (script da consulta)
