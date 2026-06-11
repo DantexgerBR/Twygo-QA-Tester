@@ -1,0 +1,7 @@
+# events remanescentes org 37062 (colunas: id, name, kind, status, deleted_at, created_at)
+
+  - {'id': '807644', 'name': 'Dashboard', 'kind': '9', 'status': '2', 'deleted_at': 'None', 'created_at': '2026-06-03 17:13:40'}
+  - {'id': '807645', 'name': 'Roxo', 'kind': '7', 'status': '2', 'deleted_at': 'None', 'created_at': '2026-06-03 17:13:46'}
+  - {'id': '807646', 'name': 'Aula expositiva', 'kind': '8', 'status': '1', 'deleted_at': 'None', 'created_at': '2026-06-03 17:13:47'}
+  - {'id': '807647', 'name': 'Trilha modular', 'kind': '8', 'status': '1', 'deleted_at': 'None', 'created_at': '2026-06-03 17:13:47'}
+  - {'id': '807648', 'name': 'Pílula de conteúdo', 'kind': '8', 'status': '1', 'deleted_at': 'None', 'created_at': '2026-06-03 17:13:47'}

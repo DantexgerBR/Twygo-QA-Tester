@@ -70,3 +70,15 @@ descobertas acima. Bloqueios reais para fechar: (a) DynamoDB + PostgreSQL inaces
 (b) mecanismo de "exclusão de organização" (vs reset Sophia) a confirmar, (c) AT com
 mapeamento tabela→datastore errado, (d) Trial precisa de curso + geração para popular as
 tabelas novas verificáveis no MySQL.
+
+## FECHAMENTO 11/06 — E2E completo executado
+
+Ciclo: curso 807899 → atividade Page 9295604 → geração roteiro via copiloto
+(`ai_generation_tasks`=1, completed) → baseline MySQL → Sophia "Todas informações"
+(`DELETE /delete_trial_data` → 204, provado na rede) → reconsulta.
+
+**Resultado**: events do usuário + event_contents APAGADOS (cascata ok, UI vazia);
+**`ai_generation_tasks` RETIDA e ÓRFÃ** (única tabela MySQL nova que a feature
+escreve — não entra na cascata; pode ser retenção intencional p/ auditoria, a
+alinhar). Sobram na org 5 events de template do sistema (kinds 7/8/9). Veredito
+final ❌ (0/1 TCs) — laudo: `reports/qa-1.18-exclusao-banco-historico-laudo.md`.

@@ -93,7 +93,7 @@ bug (projeto em andamento; #R16 é P3 "se der tempo" no Discovery). Coerente com
 
 ---
 
-## Card 19722 — QA 1.18 Exclusão do Banco Histórico (Tipo: db)
+## Card 19722 — QA 1.18 Exclusão do Banco Histórico (Tipo: db) — FINAL 11/06
 
 ```
 ⇝ QA ⇜
@@ -102,30 +102,30 @@ bug (projeto em andamento; #R16 é P3 "se der tempo" no Discovery). Coerente com
 :: Ambiente ::
 🧪 Stage
 :: Validação ::
-Validação de banco read-only executada em 10/06 no MySQL twygo_db_rc (org 37061) via
-pymysql. Das 9 tabelas do TC: 6 existem no MySQL (studio_generation_partitions,
-activity_summaries, user_course_preferences, conversations, messages, event_contents);
-org_generation_preferences NÃO está no MySQL (provável PostgreSQL); studio_checkpoints
-e messages(Dynamo) ficam no DynamoDB. Baseline da org 37061 nas tabelas org-scoped:
-studio_generation_partitions=0, conversations=0, messages=0. A asserção do TC ("após
-excluir a org, os registros somem") NÃO é executável read-only: exige um E2E destrutivo
-(criar org descartável → popular → excluir → reconsultar) + acesso ao DynamoDB e à
-tabela em PostgreSQL.
+E2E destrutivo COMPLETO executado em 11/06 na Trial 37062: criei curso (807899) +
+atividade Page (9295604) no Estúdio, disparei geração de IA real (roteiro) via
+copiloto — populou ai_generation_tasks=1 (status completed) —, tirei baseline no
+MySQL twygo_db_rc, executei Sophia → "Excluir informações" → "Todas informações"
+(DELETE /api/v1/o/37062/delete_trial_data → HTTP 204, comprovado na rede) e
+reconsultei. Resultado: events do usuário e event_contents foram APAGADOS (1→0,
+cascata ok; UI vazia), MAS ai_generation_tasks foi RETIDA e ficou ÓRFÃ (aponta
+pra curso/atividade que não existem mais). É a única tabela MySQL nova que a
+feature realmente escreve — e não entra na cascata de exclusão.
 :: Obs ::
-NÃO é falha de produto — é limite de execução. Read-only confirma schema + baseline,
-não prova a deleção. Inconsistência da AT confirmada com dado real: o objetivo diz
-"MySQL" e os passos dizem "PostgreSQL" — org_generation_preferences realmente não está
-no MySQL.
-TENTATIVA DE E2E (10/06, Trial 37062): com créditos + Estúdio ativado, descobri que
-(1) o histórico do copiloto grava no DynamoDB (as tabelas MySQL conversations/messages
-da AT são LEGADO — sem linha nova desde 2025); (2) "Sophia → Excluir informações → Tudo"
-é RESET DE DADOS (DELETE /delete_trial_data), não exclusão de organização; (3) ativar
-o Estúdio re-semeou a Trial e ela ficou sem cursos, bloqueando a geração. FECHAMENTO
-AGENDADO PARA 11/06 em sessão interativa (criar curso → gerar → popular
-ai_generation_tasks → excluir → reconsultar) + necessário acesso a DynamoDB/PostgreSQL.
-Detalhes em findings.md.
+Não cravo bug: a retenção pode ser intencional (auditoria/billing — a linha carrega
+ai_consumption_id) e o mecanismo disponível testado foi RESET de dados de Trial, não
+"exclusão de organização" como descreve o TC — a alinhar com João (se a intenção é
+apagar → retrabalho; se é reter → corrigir AT). Das 9 tabelas do TC: 4 não recebem
+escrita da feature (conversations/messages MySQL são legado — copiloto grava DynamoDB;
+studio_generation_partitions vazia global; user_course_preferences sem coluna de
+evento/org) e 3 estão fora do alcance (studio_checkpoints + messages no DynamoDB;
+org_generation_preferences no PostgreSQL). AT precisa de correção no mapeamento
+tabela→datastore + incluir ai_generation_tasks. Detalhes no laudo
+qa-1.18-exclusao-banco-historico-laudo.md.
 :: Evidência(s) ::
-- qa18-tc1-exclusao-historico.txt (consulta read-only MySQL, baseline org 37061)
-- qa18_tc1_exclusao_historico.py (script da consulta)
-- recon-exclusao-banco-historico.md
+- evidencias-1106/ (28 prints: criação, geração, modal Sophia, pós-exclusão)
+- qa18-tc1-org-scoped-37062-baseline-pre-exclusao-1106.txt / -pos-exclusao-1106.txt
+- qa18-ai-generation-tasks-37062-baseline-pre-exclusao-1106.txt / -pos-exclusao-1106.txt
+- qa18-events-restantes-37062-pos-exclusao-1106.txt
+Evidência no link: (preencher com commit)
 ```
