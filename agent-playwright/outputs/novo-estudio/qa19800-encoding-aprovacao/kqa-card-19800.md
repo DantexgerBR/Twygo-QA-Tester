@@ -32,5 +32,5 @@ está comprovado na UI + no dado da manhã). Curso 807902 é descartável na Tri
 - 02-chat-pos-disparo.png / chat-completo.txt (encoding íntegro)
 - 03-card-validacao.png (card aguardando Aprovar/Regerar/Rejeitar)
 - 04-estado-final.png
-Evidência no link: (preencher com commit)
+Evidência no link: https://github.com/DantexgerBR/Twygo-QA-Tester/commit/007fbd2b56d8615ccfc0c48b8e300fd94da5843e
 ```
