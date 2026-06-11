@@ -22,7 +22,7 @@ drawer do copiloto e Ctrl+J novamente FECHOU — o toggle funciona nos dois sent
 :: Evidência(s) ::
 - qa_lote_1106_desktop/19847-ctrlj-abriu.png
 - qa_lote_1106_desktop/19847-ctrlj-fechou.png
-Evidência no link: (commit)
+Evidência no link: https://github.com/DantexgerBR/Twygo-QA-Tester/commit/893cdf969511800bbbab3a306f529a0b3df26e12
 ```
 
 ---
@@ -42,7 +42,7 @@ idêntico ao padrão confirmado com o dev em 05/06.
 :: Evidência(s) ::
 - qa_lote_1106_desktop/19821-drawer-aberto.png (50%)
 - qa_lote_1106_desktop/19821-drawer-expandido.png (100%)
-Evidência no link: (commit)
+Evidência no link: https://github.com/DantexgerBR/Twygo-QA-Tester/commit/893cdf969511800bbbab3a306f529a0b3df26e12
 ```
 
 ---
@@ -63,7 +63,7 @@ Campo restaurado para "PDF Estampado" ao final (estado original preservado).
 :: Evidência(s) ::
 - qa_lote_1106_desktop/19826-form-salvo.png
 - qa_lote_1106_desktop/19826-lista.png
-Evidência no link: (commit)
+Evidência no link: https://github.com/DantexgerBR/Twygo-QA-Tester/commit/893cdf969511800bbbab3a306f529a0b3df26e12
 ```
 
 ---
@@ -89,7 +89,7 @@ Como o defeito era intermitente, recomendo manter atenção em regressivo.
 - qa19846_pagina_conteudo/01-form-preenchido.png
 - qa19846_pagina_conteudo/02-reabertura-1.png (conteúdo carregado)
 - qa19846_pagina_conteudo/03-pos-save-sem-alterar.png (preservado)
-Evidência no link: (commit)
+Evidência no link: https://github.com/DantexgerBR/Twygo-QA-Tester/commit/893cdf969511800bbbab3a306f529a0b3df26e12
 ```
 
 ---
@@ -111,7 +111,7 @@ Aprendizagem » Conteúdos NÃO exibe mais o toast de bloqueio e navega para
 Card sem PR vinculado; comportamento esperado comprovado no ambiente.
 :: Evidência(s) ::
 - qa_lote_1106_desktop/19809-criar-com-ia.png
-Evidência no link: (commit)
+Evidência no link: https://github.com/DantexgerBR/Twygo-QA-Tester/commit/893cdf969511800bbbab3a306f529a0b3df26e12
 ```
 
 ---
@@ -133,7 +133,7 @@ nenhum momento da criação.
 :: Evidência(s) ::
 - qa19812_aba_sem_flag/criacao-contents-new-kind-course.png
 - qa19812_aba_sem_flag/criacao-contents-new-kind-0.png
-Evidência no link: (commit)
+Evidência no link: https://github.com/DantexgerBR/Twygo-QA-Tester/commit/893cdf969511800bbbab3a306f529a0b3df26e12
 ```
 
 ---
@@ -165,7 +165,7 @@ escopo todo.
 - qa_lote_1106_responsivo/360-tab-preview.png (alternância funcionando)
 - qa_lote_1106_responsivo/360-tab-copiloto-clique-fisico.png (toque interceptado)
 - qa_lote_1106_responsivo/360-tab-copiloto-clique-esquerda.png
-Evidência no link: (commit)
+Evidência no link: https://github.com/DantexgerBR/Twygo-QA-Tester/commit/893cdf969511800bbbab3a306f529a0b3df26e12
 ```
 
 ---
@@ -192,7 +192,7 @@ estender o breakpoint.
 - qa_lote_1106_responsivo/estudio-1024x600.png (desktop espremido + scroll)
 - qa_lote_1106_responsivo/estudio-768x1024.png (ok)
 - qa_lote_1106_responsivo/estudio-360x740.png (ok)
-Evidência no link: (commit)
+Evidência no link: https://github.com/DantexgerBR/Twygo-QA-Tester/commit/893cdf969511800bbbab3a306f529a0b3df26e12
 ```
 
 ---
@@ -216,5 +216,5 @@ Card sem PR vinculado — fix aparentemente ainda não desenvolvido (coerente co
 resultado). RN 2 prevê colapsar para ícones E ocultar inteiramente.
 :: Evidência(s) ::
 - qa_lote_1106_desktop/19814-menu-lateral.png
-Evidência no link: (commit)
+Evidência no link: https://github.com/DantexgerBR/Twygo-QA-Tester/commit/893cdf969511800bbbab3a306f529a0b3df26e12
 ```
