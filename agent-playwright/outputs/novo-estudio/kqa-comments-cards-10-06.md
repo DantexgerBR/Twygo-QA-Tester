@@ -127,5 +127,5 @@ qa-1.18-exclusao-banco-historico-laudo.md.
 - qa18-tc1-org-scoped-37062-baseline-pre-exclusao-1106.txt / -pos-exclusao-1106.txt
 - qa18-ai-generation-tasks-37062-baseline-pre-exclusao-1106.txt / -pos-exclusao-1106.txt
 - qa18-events-restantes-37062-pos-exclusao-1106.txt
-Evidência no link: (preencher com commit)
+Evidência no link: https://github.com/DantexgerBR/Twygo-QA-Tester/commit/4497fb428d69fd52b31c99d9df77493ca38437f0
 ```
