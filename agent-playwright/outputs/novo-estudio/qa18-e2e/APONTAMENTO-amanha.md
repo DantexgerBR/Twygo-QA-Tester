@@ -1,5 +1,21 @@
 # Apontamento — fechar QA 1.18 (Exclusão do Banco Histórico) amanhã (11/06)
 
+## ⏩ PROGRESSO 11/06 (sessão da manhã)
+
+Passos 1 e 2 do plano CONCLUÍDOS via Playwright (evidências em `evidencias-1106/`):
+- **Curso criado na Trial 37062**: id **807899** "QA 1.18 E2E - curso descartavel 1106"
+  (form legado `/contents/new?kind=course`; gotchas: Tipo de experiência react-select
+  obrigatório + Descrição CKEditor só sincroniza via API `CKEDITOR.setData`).
+- **Atividade Page criada no Estúdio**: event_content_id **9295604** "QA118-GERACAO roteiro"
+  (badge "3 pendentes").
+- **Geração de roteiro DISPARADA e ENFILEIRADA** via popover de pendências → linha
+  `roteiro` → copiloto confirmou: "🚀 Disparei a geração do roteiro… A tarefa está em
+  andamento" (sem RAG — org sem base de conhecimento). Deve popular `ai_generation_tasks`.
+
+**BLOQUEIO ATUAL**: VPN desligada → MySQL `twygo-rc` inacessível. Faltam os passos:
+baseline (confirmar `ai_generation_tasks > 0`) → Sophia "Excluir Tudo" → reconsulta.
+NÃO executar a exclusão antes do baseline.
+
 Status hoje (10/06): **❌ em aberto** — investigação concluída, falta só o E2E destrutivo
 final. Tudo abaixo já está preparado; amanhã é executar.
 

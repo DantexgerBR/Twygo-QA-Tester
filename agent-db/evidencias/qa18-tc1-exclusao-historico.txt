@@ -1,12 +1,12 @@
-# QA 1.18 TC1 — Exclusao do Banco Historico (READ-ONLY, schema twygo_db_rc, org 37061)
+# QA 1.18 TC1 — Exclusao do Banco Historico (READ-ONLY, schema twygo_db_rc, org 37062)
 
-[studio_generation_partitions] existe | col_org=organization_id | total=0 | org 37061=0
-[activity_summaries] existe | SEM coluna org direta | escopo provavel via ['event_content_id'] | total=27
+[studio_generation_partitions] existe | col_org=organization_id | total=0 | org 37062=0
+[activity_summaries] existe | SEM coluna org direta | escopo provavel via ['event_content_id'] | total=28
 [org_generation_preferences] -> NAO EXISTE em twygo_db_rc (pode estar em outro datastore)
 [user_course_preferences] existe | SEM coluna org direta | escopo provavel via ['user_id'] | total=0
-[conversations] existe | col_org=organization_id | total=76 | org 37061=0
-[messages] existe | col_org=organization_id | total=393 | org 37061=0
-[event_contents] existe | SEM coluna org direta | escopo provavel via ['event_id'] | total=1838254
+[conversations] existe | col_org=organization_id | total=76 | org 37062=0
+[messages] existe | col_org=organization_id | total=393 | org 37062=0
+[event_contents] existe | SEM coluna org direta | escopo provavel via ['event_id'] | total=1838282
 
 DynamoDB (fora do MySQL, nao validavel aqui): studio_checkpoints, messages
 
