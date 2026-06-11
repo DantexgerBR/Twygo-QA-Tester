@@ -26,5 +26,5 @@ escopo deste retrabalho.
 - 02-destino-trilha.png (kind=3 → "Nova trilha")
 - 03-destino-pacote.png (kind=4 → "Novo pacote")
 - 04-destino-curso.png (kind=0 → "Novo curso", regressão ok)
-Evidência no link: (preencher com commit)
+Evidência no link: https://github.com/DantexgerBR/Twygo-QA-Tester/commit/32b5a27fd514e3f0bc164da90363a7fba4e7af52
 ```
