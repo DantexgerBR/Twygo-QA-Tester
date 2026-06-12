@@ -1,0 +1,25 @@
+{
+  "card": 19915,
+  "env": "https://novoestudio.stage.twygoead.com",
+  "org": "37061",
+  "content": "807533",
+  "formUrl": "/o/37061/studio/activities/9296199/edit?type=games&eventId=807533",
+  "estadoInicial": {
+    "existe": true,
+    "checked": true,
+    "disabledAttr": true,
+    "ariaDisabled": "true",
+    "dataDisabled": true
+  },
+  "aposTentativaDesativar": {
+    "existe": true,
+    "checked": true,
+    "disabledAttr": true,
+    "ariaDisabled": "true",
+    "dataDisabled": true
+  },
+  "tooltipBloqueio": false,
+  "novoId": "9296199",
+  "seedExcluida": true,
+  "passou": true
+}

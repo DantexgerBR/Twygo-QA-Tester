@@ -1,0 +1,45 @@
+{
+  "card": 19855,
+  "quiz": "9288197",
+  "env": "https://novoestudio.stage.twygoead.com",
+  "org": "37061",
+  "content": "807533",
+  "configOriginal": {
+    "achou": true,
+    "value": "0",
+    "options": [
+      {
+        "value": "0",
+        "text": "Exibir mesmas perguntas nas tentativas"
+      },
+      {
+        "value": "1",
+        "text": "Exibir perguntas diferentes nas tentativas"
+      },
+      {
+        "value": "2",
+        "text": "Exibir perguntas aleatórias"
+      },
+      {
+        "value": "3",
+        "text": "Exibir todas as perguntas"
+      }
+    ]
+  },
+  "opcaoAleatoria": {
+    "value": "2",
+    "text": "Exibir perguntas aleatórias"
+  },
+  "avisoComAleatorio": {
+    "avisoExiste": true,
+    "avisoVisivel": true,
+    "avisoTexto": "Questões em ordem aleatóriaAs questões irão aparecer em sequência diferente a cada tentativa."
+  },
+  "revertido": true,
+  "avisoSemAleatorio": {
+    "avisoExiste": false,
+    "avisoVisivel": false,
+    "avisoTexto": null
+  },
+  "passou": true
+}

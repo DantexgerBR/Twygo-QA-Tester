@@ -1,0 +1,83 @@
+{
+  "card": 19827,
+  "env": "https://novoestudio.stage.twygoead.com",
+  "org": "37061",
+  "content": "807533",
+  "semSelecao": {
+    "existe": true,
+    "disabled": false
+  },
+  "paiSelecionado": {
+    "existe": true,
+    "disabled": false
+  },
+  "formAposEditarPai": {
+    "abriu": true,
+    "testId": "studio-activity-form-page",
+    "url": "/o/37061/studio/activities/9288189/edit?type=external&eventId=807533"
+  },
+  "subSelecionada": {
+    "existe": true,
+    "disabled": false
+  },
+  "formAposEditarSub": {
+    "abriu": true,
+    "testId": "studio-activity-form-page",
+    "url": "/o/37061/studio/activities/9288190/edit?type=pdf&eventId=807533"
+  },
+  "tiposDisponiveis": [
+    {
+      "tid": "creation-studio-type-selector-close",
+      "txt": ""
+    },
+    {
+      "tid": "creation-studio-type-selector-section-content",
+      "txt": "ConteúdoTextoConteúdo em texto simples o"
+    },
+    {
+      "tid": "creation-studio-type-selector-text",
+      "txt": "TextoConteúdo em texto simples ou format"
+    },
+    {
+      "tid": "creation-studio-type-selector-page",
+      "txt": "PáginaConteúdo rico com blocos editáveis"
+    },
+    {
+      "tid": "creation-studio-type-selector-lesson",
+      "txt": "AulaAula com slides e partes sequenciais"
+    },
+    {
+      "tid": "creation-studio-type-selector-pdf",
+      "txt": "PDF EstampadoDocumento PDF para leitura"
+    },
+    {
+      "tid": "creation-studio-type-selector-video",
+      "txt": "Vídeo uploadFaça upload de um vídeo"
+    },
+    {
+      "tid": "creation-studio-type-selector-external",
+      "txt": "Vídeo externoLink para vídeo externo (Yo"
+    },
+    {
+      "tid": "creation-studio-type-selector-other",
+      "txt": "ArquivosUpload de arquivos para download"
+    },
+    {
+      "tid": "creation-studio-type-selector-section-interaction",
+      "txt": "Interação e avaliaçãoQuestionárioAvaliaç"
+    },
+    {
+      "tid": "creation-studio-type-selector-questions",
+      "txt": "QuestionárioAvaliação com perguntas e re"
+    },
+    {
+      "tid": "creation-studio-type-selector-scorm",
+      "txt": "SCORMPacote SCORM compatível"
+    },
+    {
+      "tid": "creation-studio-type-selector-games",
+      "txt": "GamesAtividade gamificada interativa"
+    }
+  ],
+  "passou": true
+}

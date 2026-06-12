@@ -1,0 +1,29 @@
+{
+  "card": 19853,
+  "env": "https://novoestudio.stage.twygoead.com",
+  "org": "37061",
+  "content": "807533",
+  "formUrl": "/o/37061/studio/activities/9296201/edit?type=page&eventId=807533",
+  "novoId": "9296201",
+  "abasForm": [
+    {
+      "txt": "Dados",
+      "tid": "creation-studio-page-form-tab-data"
+    },
+    {
+      "txt": "Conteúdo",
+      "tid": "creation-studio-page-form-tab-content"
+    }
+  ],
+  "medidas": {
+    "contemPrimeiraLinha": true,
+    "topoDaPrimeiraLinha": 451,
+    "alturaViewport": 900,
+    "visivelNoViewport": true,
+    "clipAncestorTop": 429,
+    "clipadaPeloAncestral": false,
+    "texto": "INICIO-19853 A Biologia Celular, ou Citologia, e o ramo da b"
+  },
+  "seedExcluida": true,
+  "passou": true
+}

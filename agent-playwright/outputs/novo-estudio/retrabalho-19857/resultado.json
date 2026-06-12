@@ -1,0 +1,31 @@
+{
+  "card": 19857,
+  "env": "https://novoestudio.stage.twygoead.com",
+  "org": "37061",
+  "content": "807533",
+  "novoId": "9296204",
+  "textoExtensoes": [
+    "Enviar arquivoArquivo *Formato aceito: .zip, .zip.Tamanho máximo: 500 MB.upload_fileArraste o arquivo ou clique para selecionarEnviar",
+    "Arquivo *Formato aceito: .zip, .zip.Tamanho máximo: 500 MB.upload_fileArraste o arquivo ou clique para selecionarEnviar",
+    "Arquivo *Formato aceito: .zip, .zip.Tamanho máximo: 500 MB.upload_fileArraste o arquivo ou clique para selecionar",
+    "Arquivo *Formato aceito: .zip, .zip.Tamanho máximo: 500 MB.",
+    "Formato aceito: .zip, .zip.Tamanho máximo: 500 MB.",
+    "Formato aceito: .zip, .zip."
+  ],
+  "zipDuplicado": true,
+  "uploadApareceu": true,
+  "urlAposSalvar": "/o/37061/contents/807533/edit?tab=studio",
+  "toast": null,
+  "liberada": true,
+  "previewAdmin": {
+    "scormCarregouNoIframe": false,
+    "temErroPagina": false,
+    "temIframe": 0,
+    "paneResumo": "QA-19857-SCORMConteúdo10 PontosConcluir geração com IAEditarhourglassO conteúdo ainda está em processamento e logo estará disponível aqui.refreshRecarregar"
+  },
+  "alunoAchouAtividade": true,
+  "alunoScormCarregou": true,
+  "alunoTemErro": false,
+  "seedExcluida": true,
+  "passou": false
+}
