@@ -21,5 +21,5 @@ A PR 10650 trocou o dnd-kit por drag-and-drop HTML5 nativo: a zona onde se solta
 - 04-apos-restauracao.png (estrutura original restaurada)
 - resultado.json (estruturas antes/depois + requests de Network com payloads)
 - validar-retrabalho-19838.mjs (script da validação)
-Evidência no link: <COMMIT_URL>
+Evidência no link: https://github.com/DantexgerBR/Twygo-QA-Tester/tree/project/novo-estudio/agent-playwright/outputs/novo-estudio/retrabalho-19838
 ```
