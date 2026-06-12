@@ -1,0 +1,78 @@
+{
+  "card": 19836,
+  "env": "https://novoestudio.stage.twygoead.com",
+  "org": "37061",
+  "content": "807533",
+  "ordemAntes": [
+    "1:Conteúdo 1",
+    "2:Conteúdo 2",
+    "3:Conteúdo 3",
+    "4:Avaliação do curso",
+    "5:seed-video-59641",
+    "6:Titulo para pagina"
+  ],
+  "ordemDepoisUI": [
+    "1:Conteúdo 2",
+    "2:Conteúdo 3",
+    "3:Conteúdo 1",
+    "4:Avaliação do curso",
+    "5:seed-video-59641",
+    "6:Titulo para pagina"
+  ],
+  "atualizouImediato": true,
+  "requestsDoDrag": [
+    {
+      "t": "2026-06-12T12:30:16.782Z",
+      "method": "PATCH",
+      "url": "https://novoestudio.stage.twygoead.com/api/v1/o/37061/studio/courses/807533/activities/reorder",
+      "body": "{\"activity_id\":9288189,\"new_parent_id\":null,\"position\":3}"
+    },
+    {
+      "t": "2026-06-12T12:30:17.108Z",
+      "status": 200,
+      "url": "https://novoestudio.stage.twygoead.com/api/v1/o/37061/studio/courses/807533/activities/reorder"
+    }
+  ],
+  "ordemAposReload": [
+    "1:Conteúdo 2",
+    "2:Conteúdo 3",
+    "3:Conteúdo 1",
+    "4:Avaliação do curso",
+    "5:seed-video-59641",
+    "6:Titulo para pagina"
+  ],
+  "persistiu": true,
+  "ordemFinal": [
+    "1:Conteúdo 1",
+    "2:Conteúdo 2",
+    "3:Conteúdo 3",
+    "4:Avaliação do curso",
+    "5:seed-video-59641",
+    "6:Titulo para pagina"
+  ],
+  "restaurada": true,
+  "networkCompleta": [
+    {
+      "t": "2026-06-12T12:30:16.782Z",
+      "method": "PATCH",
+      "url": "https://novoestudio.stage.twygoead.com/api/v1/o/37061/studio/courses/807533/activities/reorder",
+      "body": "{\"activity_id\":9288189,\"new_parent_id\":null,\"position\":3}"
+    },
+    {
+      "t": "2026-06-12T12:30:17.108Z",
+      "status": 200,
+      "url": "https://novoestudio.stage.twygoead.com/api/v1/o/37061/studio/courses/807533/activities/reorder"
+    },
+    {
+      "t": "2026-06-12T12:30:27.780Z",
+      "method": "PATCH",
+      "url": "https://novoestudio.stage.twygoead.com/api/v1/o/37061/studio/courses/807533/activities/reorder",
+      "body": "{\"activity_id\":9288189,\"new_parent_id\":null,\"position\":1}"
+    },
+    {
+      "t": "2026-06-12T12:30:28.095Z",
+      "status": 200,
+      "url": "https://novoestudio.stage.twygoead.com/api/v1/o/37061/studio/courses/807533/activities/reorder"
+    }
+  ]
+}

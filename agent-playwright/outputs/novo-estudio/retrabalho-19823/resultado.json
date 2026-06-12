@@ -1,0 +1,144 @@
+{
+  "card": 19823,
+  "env": "https://novoestudio.stage.twygoead.com",
+  "org": "37061",
+  "content": "807533",
+  "ordemInicialA": [
+    "tab-identification",
+    "tab-modelo",
+    "tab-access",
+    "tab-banner",
+    "tab-approval",
+    "tab-charge",
+    "tab-location",
+    "tab-dashboard",
+    "tab-share",
+    "tab-studio"
+  ],
+  "atributos": {
+    "modelo": {
+      "draggable": "true",
+      "temHandle": true,
+      "handleAria": "Arrastar aba",
+      "handleOpacity": "0"
+    },
+    "identification": {
+      "draggable": null,
+      "temHandle": false,
+      "handleAria": null,
+      "handleOpacity": null
+    },
+    "banner": {
+      "draggable": "true",
+      "temHandle": true,
+      "handleAria": "Arrastar aba",
+      "handleOpacity": "0"
+    }
+  },
+  "hoverModeloOpacity": "1",
+  "iconeNoHoverModelo": true,
+  "identificacaoTravada": true,
+  "ordemAposDrag": [
+    "tab-identification",
+    "tab-access",
+    "tab-banner",
+    "tab-modelo",
+    "tab-approval",
+    "tab-charge",
+    "tab-location",
+    "tab-dashboard",
+    "tab-share",
+    "tab-studio"
+  ],
+  "ordemMudou": true,
+  "requestsDoDrag": [
+    {
+      "t": "2026-06-12T12:35:30.301Z",
+      "method": "PATCH",
+      "url": "https://novoestudio.stage.twygoead.com/api/v1/o/37061/studio/courses/807533/user_preferences",
+      "body": "{\"tab_order\":[\"identification\",\"access\",\"banner\",\"modelo\",\"approval\",\"charge\",\"location\",\"dashboard\",\"share\",\"studio\"]}"
+    },
+    {
+      "t": "2026-06-12T12:35:30.493Z",
+      "status": 200,
+      "url": "https://novoestudio.stage.twygoead.com/api/v1/o/37061/studio/courses/807533/user_preferences"
+    }
+  ],
+  "ordemAposReload": [
+    "tab-identification",
+    "tab-access",
+    "tab-banner",
+    "tab-modelo",
+    "tab-approval",
+    "tab-charge",
+    "tab-location",
+    "tab-dashboard",
+    "tab-share",
+    "tab-studio"
+  ],
+  "ordemPersistiu": true,
+  "abaAoVoltar": "tab-banner",
+  "lastTabRestaurada": true,
+  "ordemUserB": [
+    "tab-identification",
+    "tab-modelo",
+    "tab-access",
+    "tab-banner",
+    "tab-approval",
+    "tab-charge",
+    "tab-location",
+    "tab-dashboard",
+    "tab-share",
+    "tab-studio"
+  ],
+  "abaAtivaUserB": "tab-identification",
+  "userBNaoHerdouOrdemDeA": true,
+  "cleanupOrdem": [
+    "tab-identification",
+    "tab-modelo",
+    "tab-access",
+    "tab-banner",
+    "tab-approval",
+    "tab-charge",
+    "tab-location",
+    "tab-dashboard",
+    "tab-share",
+    "tab-studio"
+  ],
+  "cleanupOk": true,
+  "networkCompleta": [
+    {
+      "t": "2026-06-12T12:35:30.301Z",
+      "method": "PATCH",
+      "url": "https://novoestudio.stage.twygoead.com/api/v1/o/37061/studio/courses/807533/user_preferences",
+      "body": "{\"tab_order\":[\"identification\",\"access\",\"banner\",\"modelo\",\"approval\",\"charge\",\"location\",\"dashboard\",\"share\",\"studio\"]}"
+    },
+    {
+      "t": "2026-06-12T12:35:30.493Z",
+      "status": 200,
+      "url": "https://novoestudio.stage.twygoead.com/api/v1/o/37061/studio/courses/807533/user_preferences"
+    },
+    {
+      "t": "2026-06-12T12:35:41.528Z",
+      "method": "PATCH",
+      "url": "https://novoestudio.stage.twygoead.com/api/v1/o/37061/studio/courses/807533/user_preferences",
+      "body": "{\"last_tab\":\"banner\"}"
+    },
+    {
+      "t": "2026-06-12T12:35:41.733Z",
+      "status": 200,
+      "url": "https://novoestudio.stage.twygoead.com/api/v1/o/37061/studio/courses/807533/user_preferences"
+    },
+    {
+      "t": "2026-06-12T12:36:21.488Z",
+      "method": "PATCH",
+      "url": "https://novoestudio.stage.twygoead.com/api/v1/o/37061/studio/courses/807533/user_preferences",
+      "body": "{\"tab_order\":[\"identification\",\"modelo\",\"access\",\"banner\",\"approval\",\"charge\",\"location\",\"dashboard\",\"share\",\"studio\"]}"
+    },
+    {
+      "t": "2026-06-12T12:36:21.672Z",
+      "status": 200,
+      "url": "https://novoestudio.stage.twygoead.com/api/v1/o/37061/studio/courses/807533/user_preferences"
+    }
+  ]
+}

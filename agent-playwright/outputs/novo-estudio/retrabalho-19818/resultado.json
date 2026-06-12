@@ -1,0 +1,35 @@
+{
+  "card": 19818,
+  "env": "https://novoestudio.stage.twygoead.com",
+  "org": "37061",
+  "content": "807533",
+  "seedTitle": "ARIA-19818-run1",
+  "badgeTexto": "3 pendentes",
+  "popover": {
+    "headerText": "Clique em um item pendente para gerar com o copiloto:RoteiropendenteConteúdopendenteImagempendente",
+    "rows": [
+      {
+        "testId": "studio-pending-artifacts-row-roteiro",
+        "tag": "BUTTON",
+        "text": "Roteiropendente",
+        "ariaLabel": "Roteiro, pendente. Clique para gerar com o copiloto."
+      },
+      {
+        "testId": "studio-pending-artifacts-row-conteudo_pagina",
+        "tag": "BUTTON",
+        "text": "Conteúdopendente",
+        "ariaLabel": "Conteúdo, pendente. Clique para gerar com o copiloto."
+      },
+      {
+        "testId": "studio-pending-artifacts-row-imagem",
+        "tag": "BUTTON",
+        "text": "Imagempendente",
+        "ariaLabel": "Imagem, pendente. Clique para gerar com o copiloto."
+      }
+    ]
+  },
+  "totalLinhas": 3,
+  "linhasComAriaCorreto": 3,
+  "todasTemAria": true,
+  "erro": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-test-id=\"creation-studio-preview-delete-dialog\"]') to be visible\u001b[22m\n"
+}
