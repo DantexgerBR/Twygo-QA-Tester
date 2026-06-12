@@ -1,0 +1,120 @@
+{
+  "card": 19961,
+  "env": "https://novoestudio.stage.twygoead.com",
+  "org": "37061",
+  "content": "807533",
+  "m360": {
+    "barra": {
+      "existe": true,
+      "visivel": true,
+      "noRodape": true,
+      "viewport": "360x740",
+      "tabs": [
+        {
+          "testId": "creation-studio-mobile-tab-list",
+          "label": "Atividades",
+          "ativa": true
+        },
+        {
+          "testId": "creation-studio-mobile-tab-preview",
+          "label": "Pré-visualização",
+          "ativa": false
+        },
+        {
+          "testId": "creation-studio-mobile-tab-copilot",
+          "label": "Copiloto",
+          "ativa": false
+        }
+      ]
+    },
+    "inicial": {
+      "lista": true,
+      "preview": false,
+      "copiloto": false
+    },
+    "aposTabPreview": {
+      "vis": {
+        "lista": false,
+        "preview": true,
+        "copiloto": false
+      },
+      "barra": [
+        {
+          "testId": "creation-studio-mobile-tab-list",
+          "label": "Atividades",
+          "ativa": false
+        },
+        {
+          "testId": "creation-studio-mobile-tab-preview",
+          "label": "Pré-visualização",
+          "ativa": true
+        },
+        {
+          "testId": "creation-studio-mobile-tab-copilot",
+          "label": "Copiloto",
+          "ativa": false
+        }
+      ]
+    },
+    "aposTabCopilot": {
+      "vis": {
+        "lista": false,
+        "preview": true,
+        "copiloto": true
+      },
+      "barra": [
+        {
+          "testId": "creation-studio-mobile-tab-list",
+          "label": "Atividades",
+          "ativa": false
+        },
+        {
+          "testId": "creation-studio-mobile-tab-preview",
+          "label": "Pré-visualização",
+          "ativa": false
+        },
+        {
+          "testId": "creation-studio-mobile-tab-copilot",
+          "label": "Copiloto",
+          "ativa": true
+        }
+      ]
+    },
+    "aposVoltarLista": {
+      "vis": {
+        "lista": true,
+        "preview": false,
+        "copiloto": false
+      },
+      "contextoPreservado": true,
+      "primeiroTitulo": "Conteúdo 1",
+      "titulo2": "Conteúdo 1"
+    }
+  },
+  "m767": {
+    "barra": {
+      "existe": true,
+      "visivel": true,
+      "noRodape": true,
+      "viewport": "767x740",
+      "tabs": [
+        {
+          "testId": "creation-studio-mobile-tab-list",
+          "label": "Atividades",
+          "ativa": true
+        },
+        {
+          "testId": "creation-studio-mobile-tab-preview",
+          "label": "Pré-visualização",
+          "ativa": false
+        },
+        {
+          "testId": "creation-studio-mobile-tab-copilot",
+          "label": "Copiloto",
+          "ativa": false
+        }
+      ]
+    }
+  },
+  "passou": true
+}

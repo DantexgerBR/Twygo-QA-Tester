@@ -1,0 +1,31 @@
+{
+  "card": 19813,
+  "env": "https://novoestudio.stage.twygoead.com",
+  "org": "37061",
+  "content": "807533",
+  "v1024": {
+    "viewport": "1024x600",
+    "scrollWidth": 1128,
+    "clientWidth": 1024,
+    "temScrollHorizontal": true,
+    "barraRodape": false,
+    "shellWidth": 932
+  },
+  "v1280": {
+    "viewport": "1280x720",
+    "scrollWidth": 1363,
+    "clientWidth": 1280,
+    "temScrollHorizontal": true,
+    "barraRodape": false,
+    "shellWidth": 1005
+  },
+  "v1440": {
+    "viewport": "1440x900",
+    "scrollWidth": 1456,
+    "clientWidth": 1440,
+    "temScrollHorizontal": true,
+    "barraRodape": false,
+    "shellWidth": 1138
+  },
+  "passou": false
+}
