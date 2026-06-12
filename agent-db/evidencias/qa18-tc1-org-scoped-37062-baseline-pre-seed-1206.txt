@@ -1,0 +1,12 @@
+# QA 1.18 TC1 — contagem ORG-SCOPED (org 37062, schema twygo_db_rc)
+
+  events (cursos da org)                     = 6
+  event_contents (via events)                = 1
+  activity_summaries (via ec->events)        = 0
+  user_course_preferences (via event)        = 0
+  conversations (organization_id)            = 0
+  messages (organization_id)                 = 0
+  studio_generation_partitions (org)         = 0
+
+(conversations/messages/studio_generation_partitions sao geradas por IA;
+ a Trial 37062 esta SEM creditos -> nao populaveis por enquanto.)

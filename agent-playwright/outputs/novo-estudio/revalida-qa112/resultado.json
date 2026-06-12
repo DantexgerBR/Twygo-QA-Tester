@@ -1,0 +1,1202 @@
+{
+  "lesson": "9295161",
+  "estadoInicial": {
+    "botoes": [
+      "school",
+      "Administrador",
+      "Voltar",
+      "Dados",
+      "Conteúdo",
+      "addAdicionar parte",
+      "Salvar e regerar",
+      "Salvar como rascunho",
+      "Cancelar"
+    ],
+    "badges": []
+  },
+  "aposRascunho": {
+    "estado": {
+      "botoes": [
+        "school",
+        "Administrador",
+        "Voltar",
+        "Dados",
+        "Conteúdo",
+        "addAdicionar parte",
+        "Salvar e regerar",
+        "Salvar como rascunho",
+        "Cancelar"
+      ],
+      "badges": []
+    },
+    "rede": [
+      {
+        "t": "2026-06-12T14:25:26.628Z",
+        "m": "POST",
+        "url": "/api/v1/o/37061/e/807533/event_content/9295161/save_activity_by_type",
+        "body": "{\"activity_type\":\"lesson\",\"design_editor_config\":{\"layout\":0,\"canva_content\":{\"id\":\"FNBV2cvt60cCUVsRkSFNG\",\"type\":\"VIDEO\",\"duration\":15000,\"name\":\"\",\"frame\":{\"width\":1920,\"height\":1080,\"orientation_format_value\":0,\"has_activities_list\":false,\"show_only_main_activities\":false},\"scenes\":[{\"id\":\"OyTJ5e"
+      },
+      {
+        "t": "2026-06-12T14:25:26.932Z",
+        "status": 200,
+        "url": "/api/v1/o/37061/e/807533/event_content/9295161/save_activity_by_type"
+      },
+      {
+        "t": "2026-06-12T14:25:28.871Z",
+        "m": "POST",
+        "url": "https://bam.nr-data.net/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=16473&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3&af=err,spa,xhr,stn,ins&ap=596&be=738&fe=5401&dc=294&perf=%7B%22timing%22:%7B%22of%22:1781274312397,%22n%22:0,%22u%22:746,%22ue%22:746,%22f%22:0,%22dn%22:0,%22dne%22:0,%22c%22:0,%22s%22:0,%22ce%22:0,%22rq%22:1,%22rp%22:739,%22rpe%22:994,%22di%22:1015,%22ds%22:1020,%22de%22:1032,%22dc%22:6133,%22l%22:6135,%22le%22:6139%7D,%22navigation%22:%7B%7D%7D&fp=984&fcp=984",
+        "body": "{\"ja\":{\"webdriverDetected\":true}}"
+      },
+      {
+        "t": "2026-06-12T14:25:29.158Z",
+        "status": 200,
+        "url": "https://bam.nr-data.net/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=16473&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3&af=err,spa,xhr,stn,ins&ap=596&be=738&fe=5401&dc=294&perf=%7B%22timing%22:%7B%22of%22:1781274312397,%22n%22:0,%22u%22:746,%22ue%22:746,%22f%22:0,%22dn%22:0,%22dne%22:0,%22c%22:0,%22s%22:0,%22ce%22:0,%22rq%22:1,%22rp%22:739,%22rpe%22:994,%22di%22:1015,%22ds%22:1020,%22de%22:1032,%22dc%22:6133,%22l%22:6135,%22le%22:6139%7D,%22navigation%22:%7B%7D%7D&fp=984&fcp=984"
+      },
+      {
+        "t": "2026-06-12T14:25:29.159Z",
+        "m": "POST",
+        "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=16761&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3",
+        "body": "bel.6;e,'fp,rc,5;5,'pageUrl,'https://novoestudio.stage.twygoead.com/o/37061/studio/activities/9295161/edit;5,'net-etype,'4g;6,'net-dlink,10.;6,'cls,0.27223103084276407;7,'webdriverDetected;e,'fi,6zp,8;5,'type,'pointerdown;5,'eventTarget,'button#tabs-:rt:--tab-1.chakra-tabs__tab.css-fuqmym;5,'loadSta"
+      },
+      {
+        "t": "2026-06-12T14:25:29.160Z",
+        "m": "POST",
+        "url": "https://bam.nr-data.net/jserrors/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=16762&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3&pve=1",
+        "body": "{\"err\":[{\"params\":{\"stackHash\":94834675,\"exceptionClass\":\"UncaughtError\",\"request_uri\":\"/o/37061/studio/activities/9295161/edit\",\"message\":\"Unhandled Promise Rejection: play() failed because the user didn't interact with the document first. https://goo.gl/xX8pDD\",\"stack_trace\":\"UncaughtError: Unhand"
+      },
+      {
+        "t": "2026-06-12T14:25:29.160Z",
+        "m": "POST",
+        "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=16763&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3",
+        "body": "bel.7;1,k,,4qi,,,'initialPageLoad,'https://novoestudio.stage.twygoead.com/o/37061/studio/activities/9295161/edit,,1,,,,gk,!!'f3056cbe-9567-4afc-82be-c3c7a9b39c8e,'1,rc,rc;7,'webdriverDetected;2,1,qz,20,,,'POST,,'www.google.com:443,'/ccm/collect,,,1,'4,!!!;5,'ajaxRequest.id,'40e772c0-8fa2-4db6-a434-7"
+      },
+      {
+        "t": "2026-06-12T14:25:29.161Z",
+        "m": "POST",
+        "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=16763&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3",
+        "body": "bel.7;2,1,5r7,43,,,'POST,5o,'a.clarity.ms:443,'/collect,blt,,,'0,!!!;5,'ajaxRequest.id,'be80a19c-42fc-4196-b1a1-71ec2e8fc295;2,1,1ag,6n,,,0,5o,'px.ads.linkedin.com:443,'/wa/,168,,1,3,!!!;5,4,'ee95d01d-4687-4615-94b9-211328a46b24;2,1,352,3j,,,0,5o,1,2,2kmp,,,3,!!!;5,4,'a4713476-1f3b-4db1-9b9d-402665b"
+      },
+      {
+        "t": "2026-06-12T14:25:29.161Z",
+        "m": "POST",
+        "url": "https://bam.nr-data.net/ins/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=16764&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3",
+        "body": "{\"ins\":[{\"timestamp\":1781274320021,\"pageUrl\":\"https://novoestudio.stage.twygoead.com/o/37061/studio/activities/9295161/edit\",\"currentUrl\":\"https://novoestudio.stage.twygoead.com/o/37061/studio/activities/9295161/edit\",\"eventType\":\"UserAction\",\"action\":\"click\",\"actionCount\":1,\"actionDuration\":0,\"acti"
+      },
+      {
+        "t": "2026-06-12T14:25:29.284Z",
+        "status": 200,
+        "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=16761&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3"
+      },
+      {
+        "t": "2026-06-12T14:25:29.296Z",
+        "status": 200,
+        "url": "https://bam.nr-data.net/jserrors/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=16762&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3&pve=1"
+      },
+      {
+        "t": "2026-06-12T14:25:29.296Z",
+        "status": 200,
+        "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=16763&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3"
+      },
+      {
+        "t": "2026-06-12T14:25:29.297Z",
+        "status": 200,
+        "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=16763&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3"
+      },
+      {
+        "t": "2026-06-12T14:25:29.299Z",
+        "status": 204,
+        "url": "https://bam.nr-data.net/ins/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=16764&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3"
+      }
+    ],
+    "url": "/o/37061/studio/activities/9295161/edit?type=lesson&eventId=807533"
+  },
+  "estadoPosRascunho": {
+    "botoes": [
+      "school",
+      "Administrador",
+      "Voltar",
+      "Dados",
+      "Conteúdo",
+      "addAdicionar parte",
+      "Salvar e regerar",
+      "Salvar como rascunho",
+      "Cancelar"
+    ],
+    "badges": []
+  },
+  "renderBtnTexto": "Salvar e regerar",
+  "aposRender": {
+    "estado": {
+      "botoes": [
+        "school",
+        "Administrador",
+        "Voltar",
+        "Identificação",
+        "Modelo",
+        "Acesso",
+        "Banner",
+        "Aprovação",
+        "Cobrança",
+        "Localização",
+        "Dashboard",
+        "Compartilhar",
+        "Atividades",
+        "Adicionar",
+        "Ir",
+        "Concluir geração com IA",
+        "Recalcular progresso",
+        "Recalcular pontuação",
+        "Visualizar como aluno"
+      ],
+      "badges": [
+        "3 pendentes",
+        "5 pendentes"
+      ]
+    },
+    "rede": [
+      {
+        "t": "2026-06-12T14:25:34.961Z",
+        "m": "POST",
+        "url": "/api/v1/o/37061/e/807533/event_content/9295161/save_activity_by_type",
+        "body": "{\"activity_type\":\"lesson\",\"design_editor_config\":{\"layout\":0,\"canva_content\":{\"id\":\"PFZdgQE4DGU_b1YBqViRz\",\"type\":\"VIDEO\",\"duration\":15000,\"name\":\"\",\"frame\":{\"width\":1920,\"height\":1080,\"orientation_format_value\":0,\"has_activities_list\":false,\"show_only_main_activities\":false},\"scenes\":[{\"id\":\"OyTJ5e"
+      },
+      {
+        "t": "2026-06-12T14:25:35.325Z",
+        "status": 200,
+        "url": "/api/v1/o/37061/e/807533/event_content/9295161/save_activity_by_type"
+      },
+      {
+        "t": "2026-06-12T14:25:36.115Z",
+        "m": "POST",
+        "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885za20gzb78814578zd78814578&_p=1781274313339&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAAAAGQC&are=1&cid=1138758957.1781274306&frm=0&ir=1&pscdl=noapi&rcb=4&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=4&tag_exp=115616985~115938465~115938468~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&dt=Dom%C3%ADnio%20padr%C3%A3o&en=user_engagement&_et=22699&tfd=23713",
+        "body": null
+      },
+      {
+        "t": "2026-06-12T14:25:36.116Z",
+        "m": "POST",
+        "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=23715&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3",
+        "body": "bel.6;e,'lcp,t4,e;6,'timeToFirstByte,738.8000000000466;6,'resourceLoadDelay,0.;6,'resourceLoadDuration,0.;6,'resourceLoadTime,0.;6,'elementRenderDelay,309.19999999995343;6,'size,9899.;5,'eid,'page-breadcrumb;5,'elTag,'DIV;5,'element,'#page-breadcrumb;5,'pageUrl,'https://novoestudio.stage.twygoead.co"
+      },
+      {
+        "t": "2026-06-12T14:25:36.116Z",
+        "m": "POST",
+        "url": "https://bam.nr-data.net/jserrors/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=23715&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3",
+        "body": "{\"sm\":[{\"params\":{\"name\":\"Generic/LoaderType/spa/Detected\"},\"stats\":{\"c\":1}},{\"params\":{\"name\":\"Generic/DistMethod/CDN/Detected\"},\"stats\":{\"c\":1}},{\"params\":{\"name\":\"Generic/Runtime/Browser/Detected\"},\"stats\":{\"c\":1}},{\"params\":{\"name\":\"Framework/Jquery/Detected\"},\"stats\":{\"c\":1}},{\"params\":{\"name\":"
+      },
+      {
+        "t": "2026-06-12T14:25:36.116Z",
+        "m": "POST",
+        "url": "https://bam.nr-data.net/jserrors/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=23715&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3",
+        "body": "{\"xhr\":[{\"params\":{\"method\":\"POST\",\"hostname\":\"bam.nr-data.net\",\"port\":\"443\",\"protocol\":\"https\",\"host\":\"bam.nr-data.net:443\",\"pathname\":\"/events/1/NRJS-9eb7d7839e467b923f5\",\"status\":200},\"metrics\":{\"count\":3,\"txSize\":{\"t\":4043,\"min\":305,\"max\":3169,\"sos\":10459347,\"c\":3},\"rxSize\":{\"t\":72,\"min\":24,\"max"
+      },
+      {
+        "t": "2026-06-12T14:25:36.116Z",
+        "m": "POST",
+        "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=23716&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3",
+        "body": "bel.7;2,1,azd,7k,,,'POST,5o,'px.ads.linkedin.com:443,'/wa/,1ag,,1,'0,!!!;5,'ajaxRequest.id,'186d1972-8e4c-4885-acda-68b0961e8717;2,1,-5,7z,,,0,5k,'novoestudio.stage.twygoead.com:443,'/api/v1/o/37061/e/807533/event_content/9295161/save_activity_by_type,xo,13,,3,'13905c5f3a0d7643,'9ab9170081198a198a98"
+      },
+      {
+        "t": "2026-06-12T14:25:36.116Z",
+        "m": "POST",
+        "url": "https://bam.nr-data.net/ins/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=23716&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3",
+        "body": "{\"ins\":[{\"timestamp\":1781274325169,\"pageUrl\":\"https://novoestudio.stage.twygoead.com/o/37061/studio/activities/9295161/edit\",\"currentUrl\":\"https://novoestudio.stage.twygoead.com/o/37061/studio/activities/9295161/edit\",\"eventType\":\"UserAction\",\"action\":\"scrollend\",\"actionCount\":1,\"actionDuration\":0,\""
+      },
+      {
+        "t": "2026-06-12T14:25:36.120Z",
+        "m": "POST",
+        "url": "https://www.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885za20gzb78814578zd78814578&_p=1781274313339&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAAAAGQC&are=1&cid=1138758957.1781274306&frm=0&ir=1&pscdl=noapi&rcb=4&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=3&_s=4&tag_exp=115616985%7E115938465%7E115938468%7E119456239%7E119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&dt=Dom%C3%ADnio+padr%C3%A3o&en=user_engagement&_et=22699&tfd=23713",
+        "body": null
+      },
+      {
+        "t": "2026-06-12T14:25:36.302Z",
+        "m": "POST",
+        "url": "https://www.google.com/ccm/collect?rcb=7&frm=0&ae=g&auid=218603287.1781274306&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&dr=novoestudio.stage.twygoead.com&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit&scrsrc=www.googletagmanager.com&rnd=88755392.1781274336&navt=n&npa=0&ep.ads_data_redaction=0&gtm=45He66a1v78814578za200zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616986~115938465~115938468~119456239~119456247&apve=1&apvf=f&apvc=1&tft=1781274336301&tfd=976",
+        "body": null
+      },
+      {
+        "t": "2026-06-12T14:25:36.319Z",
+        "m": "POST",
+        "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885z878814578za20gzb78814578zd78814578&_p=1781274336279&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAAAAGQC&are=1&cid=1138758957.1781274306&ec_mode=a&frm=0&ir=1&pscdl=noapi&rcb=2&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=1&tag_exp=115616985~115938465~115938468~118012009~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&dr=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&tfd=990",
+        "body": null
+      },
+      {
+        "t": "2026-06-12T14:25:36.319Z",
+        "m": "POST",
+        "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885z878814578za20gzb78814578zd78814578&_p=1781274336279&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAACAGQC&are=1&cid=1138758957.1781274306&ec_mode=a&frm=0&ir=1&pscdl=noapi&rcb=2&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=2&tag_exp=115616985~115938465~115938468~118012009~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&dr=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&_et=1&tfd=993",
+        "body": null
+      },
+      {
+        "t": "2026-06-12T14:25:36.331Z",
+        "m": "POST",
+        "url": "https://www.google.com/rmkt/collect/940863039/?random=1781274336327&cv=11&fst=1781274336327&fmt=8&bg=ffffff&guid=ON&async=1&gtm=45be66a1v9178419319z878814578za20gzb78814578zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938465~115938469~119456239~119456247&u_w=1440&u_h=900&url=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&ref=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&rcb=8&frm=0&tiba=Dom%C3%ADnio%20padr%C3%A3o&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=218603287.1781274306&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uamb=0&uam=&uap=Windows&uapv=19.0.0&uaw=0&_tu=CA&ept=68&gcp=5",
+        "body": null
+      },
+      {
+        "t": "2026-06-12T14:25:36.331Z",
+        "m": "POST",
+        "url": "https://www.google.com/ccm/collect?rcb=8&frm=0&ae=g&auid=218603287.1781274306&dt=Dom%C3%ADnio%20padr%C3%A3o&dr=novoestudio.stage.twygoead.com&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit&scrsrc=www.googletagmanager.com&rnd=88755392.1781274336&navt=n&npa=0&_tu=CA&gtm=45be66a1v9178419319z878814578za20gzb78814578zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938465~115938469~119456239~119456247&apve=1&apvf=f&apvc=0&tids=AW-940863039&tid=AW-940863039&tft=1781274336331&tfd=1006",
+        "body": null
+      },
+      {
+        "t": "2026-06-12T14:25:36.389Z",
+        "status": 200,
+        "url": "https://www.google.com/ccm/collect?rcb=7&frm=0&ae=g&auid=218603287.1781274306&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&dr=novoestudio.stage.twygoead.com&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit&scrsrc=www.googletagmanager.com&rnd=88755392.1781274336&navt=n&npa=0&ep.ads_data_redaction=0&gtm=45He66a1v78814578za200zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616986~115938465~115938468~119456239~119456247&apve=1&apvf=f&apvc=1&tft=1781274336301&tfd=976"
+      },
+      {
+        "t": "2026-06-12T14:25:36.405Z",
+        "status": 204,
+        "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885z878814578za20gzb78814578zd78814578&_p=1781274336279&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAACAGQC&are=1&cid=1138758957.1781274306&ec_mode=a&frm=0&ir=1&pscdl=noapi&rcb=2&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=2&tag_exp=115616985~115938465~115938468~118012009~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&dr=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&_et=1&tfd=993"
+      },
+      {
+        "t": "2026-06-12T14:25:36.405Z",
+        "status": 204,
+        "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885z878814578za20gzb78814578zd78814578&_p=1781274336279&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAAAAGQC&are=1&cid=1138758957.1781274306&ec_mode=a&frm=0&ir=1&pscdl=noapi&rcb=2&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=1&tag_exp=115616985~115938465~115938468~118012009~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&dr=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&tfd=990"
+      },
+      {
+        "t": "2026-06-12T14:25:36.405Z",
+        "status": 200,
+        "url": "https://www.google.com/ccm/collect?rcb=8&frm=0&ae=g&auid=218603287.1781274306&dt=Dom%C3%ADnio%20padr%C3%A3o&dr=novoestudio.stage.twygoead.com&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit&scrsrc=www.googletagmanager.com&rnd=88755392.1781274336&navt=n&npa=0&_tu=CA&gtm=45be66a1v9178419319z878814578za20gzb78814578zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938465~115938469~119456239~119456247&apve=1&apvf=f&apvc=0&tids=AW-940863039&tid=AW-940863039&tft=1781274336331&tfd=1006"
+      },
+      {
+        "t": "2026-06-12T14:25:36.405Z",
+        "status": 200,
+        "url": "https://www.google.com/rmkt/collect/940863039/?random=1781274336327&cv=11&fst=1781274336327&fmt=8&bg=ffffff&guid=ON&async=1&gtm=45be66a1v9178419319z878814578za20gzb78814578zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938465~115938469~119456239~119456247&u_w=1440&u_h=900&url=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&ref=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&rcb=8&frm=0&tiba=Dom%C3%ADnio%20padr%C3%A3o&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=218603287.1781274306&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uamb=0&uam=&uap=Windows&uapv=19.0.0&uaw=0&_tu=CA&ept=68&gcp=5"
+      },
+      {
+        "t": "2026-06-12T14:25:37.837Z",
+        "m": "POST",
+        "url": "https://bam.nr-data.net/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2511&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=36df57f47594b922&af=err,spa,xhr,stn,ins&ap=632&be=777&fe=1061&dc=287&fsh=1&perf=%7B%22timing%22:%7B%22of%22:1781274335325,%22n%22:0,%22u%22:788,%22ue%22:788,%22f%22:0,%22dn%22:0,%22dne%22:0,%22c%22:0,%22s%22:0,%22ce%22:0,%22rq%22:1,%22rp%22:778,%22rpe%22:1031,%22di%22:1040,%22ds%22:1045,%22de%22:1064,%22dc%22:1834,%22l%22:1834,%22le%22:1838%7D,%22navigation%22:%7B%7D%7D&fp=972&fcp=972",
+        "body": "{\"ja\":{\"webdriverDetected\":true}}"
+      },
+      {
+        "t": "2026-06-12T14:25:37.971Z",
+        "status": 200,
+        "url": "https://bam.nr-data.net/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2511&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=36df57f47594b922&af=err,spa,xhr,stn,ins&ap=632&be=777&fe=1061&dc=287&fsh=1&perf=%7B%22timing%22:%7B%22of%22:1781274335325,%22n%22:0,%22u%22:788,%22ue%22:788,%22f%22:0,%22dn%22:0,%22dne%22:0,%22c%22:0,%22s%22:0,%22ce%22:0,%22rq%22:1,%22rp%22:778,%22rpe%22:1031,%22di%22:1040,%22ds%22:1045,%22de%22:1064,%22dc%22:1834,%22l%22:1834,%22le%22:1838%7D,%22navigation%22:%7B%7D%7D&fp=972&fcp=972"
+      },
+      {
+        "t": "2026-06-12T14:25:37.971Z",
+        "m": "POST",
+        "url": "https://bam.nr-data.net/browser/blobs?browser_monitoring_key=NRJS-9eb7d7839e467b923f5&type=BrowserSessionChunk&app_id=1071860387&protocol_version=0&timestamp=1781274333812&attributes=entityGuid%3DNDc5NzY3OXxCUk9XU0VSfEFQUExJQ0FUSU9OfDExMzQ2OTM4NTA%26harvestId%3D0c7b4cb2af1997c0_36df57f47594b922_1%26trace.firstTimestamp%3D1781274333812%26trace.lastTimestamp%3D1781274335650%26trace.nodes%3D164%26trace.originTimestamp%3D1781274333812%26agentVersion%3D1.316.0%26firstSessionHarvest%3Dtrue%26ptid%3D36df57f47594b922%26session%3D0c7b4cb2af1997c0%26currentUrl%3D/o/37061/contents/807533/edit",
+        "body": "[{\"n\":\"unloadEventStart\",\"s\":788,\"e\":788,\"o\":\"document\",\"t\":\"timing\"},{\"n\":\"unloadEventEnd\",\"s\":788,\"e\":788,\"o\":\"document\",\"t\":\"timing\"},{\"n\":\"domInteractive\",\"s\":1040,\"e\":1040,\"o\":\"document\",\"t\":\"timing\"},{\"n\":\"domContentLoadedEventStart\",\"s\":1045,\"e\":1045,\"o\":\"document\",\"t\":\"timing\"},{\"n\":\"domCont"
+      },
+      {
+        "t": "2026-06-12T14:25:37.971Z",
+        "m": "POST",
+        "url": "https://bam.nr-data.net/browser/blobs?browser_monitoring_key=NRJS-9eb7d7839e467b923f5&type=BrowserSessionChunk&app_id=1071860387&protocol_version=0&timestamp=1781274334831&attributes=entityGuid%3DNDc5NzY3OXxCUk9XU0VSfEFQUExJQ0FUSU9OfDExMzQ2OTM4NTA%26harvestId%3D0c7b4cb2af1997c0_36df57f47594b922_2%26trace.firstTimestamp%3D1781274334831%26trace.lastTimestamp%3D1781274335626%26trace.nodes%3D130%26trace.originTimestamp%3D1781274333812%26agentVersion%3D1.316.0%26ptid%3D36df57f47594b922%26session%3D0c7b4cb2af1997c0%26currentUrl%3D/o/37061/contents/807533/edit",
+        "body": "[{\"n\":\"script\",\"s\":1072,\"e\":1213,\"o\":\"https://cdn-stage.twygo.com:443/vite/assets/index-CdZVGJef.min.js\",\"t\":\"resource\"},{\"n\":\"script\",\"s\":1072,\"e\":1214,\"o\":\"https://cdn-stage.twygo.com:443/vite/assets/chunk-6QYXN73V-C_lKZ3-O.min.js\",\"t\":\"resource\"},{\"n\":\"script\",\"s\":1072,\"e\":1216,\"o\":\"https://cdn-s"
+      },
+      {
+        "t": "2026-06-12T14:25:37.971Z",
+        "m": "POST",
+        "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2646&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=36df57f47594b922&ht=1",
+        "body": "bel.6;e,'fp,r0,5;5,'pageUrl,'https://novoestudio.stage.twygoead.com/o/37061/contents/807533/edit;5,'net-etype,'4g;6,'net-dlink,10.;6,'cls,0.04501693244170096;7,'webdriverDetected;e,'fcp,r0,8;6,'timeToFirstByte,777.8999999999069;6,'firstByteToFCP,194.10000000009313;5,'loadState,'loading;5,1,2;5,3,4;6"
+      },
+      {
+        "t": "2026-06-12T14:25:37.972Z",
+        "m": "POST",
+        "url": "https://bam.nr-data.net/jserrors/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2646&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=36df57f47594b922&ht=1",
+        "body": "{\"xhr\":[{\"params\":{\"hostname\":\"www.google.com\",\"port\":\"443\",\"protocol\":\"https\",\"host\":\"www.google.com:443\",\"pathname\":\"/ccm/collect\",\"method\":\"POST\",\"status\":0},\"metrics\":{\"count\":2,\"txSize\":{\"t\":0,\"min\":0,\"max\":0,\"sos\":0,\"c\":2},\"rxSize\":{\"c\":2},\"duration\":{\"t\":161,\"min\":73,\"max\":88,\"sos\":13073,\"c\":"
+      },
+      {
+        "t": "2026-06-12T14:25:37.972Z",
+        "m": "POST",
+        "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2646&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=36df57f47594b922&ht=1",
+        "body": "bel.7;1,b,,1f1,,,'initialPageLoad,'https://novoestudio.stage.twygoead.com/o/37061/contents/807533/edit,'https://novoestudio.stage.twygoead.com/o/37061/studio/activities/9295161/edit,1,,,,hk,!!'415d50ce-7967-400f-9223-3edc0c22e3e7,'1,r0,r0;7,'isFirstOfSession;7,'webdriverDetected;2,1,r4,2g,,,'POST,,'"
+      },
+      {
+        "t": "2026-06-12T14:25:37.973Z",
+        "m": "POST",
+        "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2647&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=36df57f47594b922&ht=1",
+        "body": "bel.7;2,1,1fm,7l,,,'POST,5o,'px.ads.linkedin.com:443,'/wa/,bs,,1,'0,!!!;5,'ajaxRequest.id,'d626981e-69aa-4db3-897a-88f3679d2bd3;2,1,b5,4y,,,0,5o,'a.clarity.ms:443,'/collect,6pyl,,,3,!!!;5,4,'0bf04bc7-4d97-4990-8fca-41dceccbffc8;2,1,ay,8g,,,'GET,5k,'novoestudio.stage.twygoead.com:443,'/api/v1/o/37061"
+      },
+      {
+        "t": "2026-06-12T14:25:37.974Z",
+        "m": "POST",
+        "url": "https://bam.nr-data.net/browser/blobs?browser_monitoring_key=NRJS-9eb7d7839e467b923f5&type=BrowserSessionChunk&app_id=1071860387&protocol_version=0&timestamp=1781274334784&attributes=entityGuid%3DNDc5NzY3OXxCUk9XU0VSfEFQUExJQ0FUSU9OfDExMzQ2OTM4NTA%26harvestId%3D0c7b4cb2af1997c0_36df57f47594b922_3%26trace.firstTimestamp%3D1781274334784%26trace.lastTimestamp%3D1781274336450%26trace.nodes%3D137%26trace.originTimestamp%3D1781274333812%26agentVersion%3D1.316.0%26ptid%3D36df57f47594b922%26session%3D0c7b4cb2af1997c0%26currentUrl%3D/o/37061/contents/807533/edit",
+        "body": "[{\"n\":\"script\",\"s\":1085,\"e\":1551,\"o\":\"https://cdn-stage.twygo.com:443/vite/assets/style-modal-DtNNeZXS.min.js\",\"t\":\"resource\"},{\"n\":\"script\",\"s\":1085,\"e\":1548,\"o\":\"https://cdn-stage.twygo.com:443/vite/assets/index-BlhPzxEe.min.js\",\"t\":\"resource\"},{\"n\":\"script\",\"s\":1085,\"e\":1549,\"o\":\"https://cdn-stag"
+      },
+      {
+        "t": "2026-06-12T14:25:38.112Z",
+        "status": 200,
+        "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2646&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=36df57f47594b922&ht=1"
+      },
+      {
+        "t": "2026-06-12T14:25:38.112Z",
+        "status": 200,
+        "url": "https://bam.nr-data.net/jserrors/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2646&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=36df57f47594b922&ht=1"
+      },
+      {
+        "t": "2026-06-12T14:25:38.112Z",
+        "status": 200,
+        "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2647&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=36df57f47594b922&ht=1"
+      },
+      {
+        "t": "2026-06-12T14:25:38.112Z",
+        "status": 200,
+        "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2646&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=36df57f47594b922&ht=1"
+      },
+      {
+        "t": "2026-06-12T14:25:38.259Z",
+        "status": 200,
+        "url": "https://bam.nr-data.net/browser/blobs?browser_monitoring_key=NRJS-9eb7d7839e467b923f5&type=BrowserSessionChunk&app_id=1071860387&protocol_version=0&timestamp=1781274333812&attributes=entityGuid%3DNDc5NzY3OXxCUk9XU0VSfEFQUExJQ0FUSU9OfDExMzQ2OTM4NTA%26harvestId%3D0c7b4cb2af1997c0_36df57f47594b922_1%26trace.firstTimestamp%3D1781274333812%26trace.lastTimestamp%3D1781274335650%26trace.nodes%3D164%26trace.originTimestamp%3D1781274333812%26agentVersion%3D1.316.0%26firstSessionHarvest%3Dtrue%26ptid%3D36df57f47594b922%26session%3D0c7b4cb2af1997c0%26currentUrl%3D/o/37061/contents/807533/edit"
+      },
+      {
+        "t": "2026-06-12T14:25:38.263Z",
+        "status": 200,
+        "url": "https://bam.nr-data.net/browser/blobs?browser_monitoring_key=NRJS-9eb7d7839e467b923f5&type=BrowserSessionChunk&app_id=1071860387&protocol_version=0&timestamp=1781274334831&attributes=entityGuid%3DNDc5NzY3OXxCUk9XU0VSfEFQUExJQ0FUSU9OfDExMzQ2OTM4NTA%26harvestId%3D0c7b4cb2af1997c0_36df57f47594b922_2%26trace.firstTimestamp%3D1781274334831%26trace.lastTimestamp%3D1781274335626%26trace.nodes%3D130%26trace.originTimestamp%3D1781274333812%26agentVersion%3D1.316.0%26ptid%3D36df57f47594b922%26session%3D0c7b4cb2af1997c0%26currentUrl%3D/o/37061/contents/807533/edit"
+      },
+      {
+        "t": "2026-06-12T14:25:38.264Z",
+        "status": 200,
+        "url": "https://bam.nr-data.net/browser/blobs?browser_monitoring_key=NRJS-9eb7d7839e467b923f5&type=BrowserSessionChunk&app_id=1071860387&protocol_version=0&timestamp=1781274334784&attributes=entityGuid%3DNDc5NzY3OXxCUk9XU0VSfEFQUExJQ0FUSU9OfDExMzQ2OTM4NTA%26harvestId%3D0c7b4cb2af1997c0_36df57f47594b922_3%26trace.firstTimestamp%3D1781274334784%26trace.lastTimestamp%3D1781274336450%26trace.nodes%3D137%26trace.originTimestamp%3D1781274333812%26agentVersion%3D1.316.0%26ptid%3D36df57f47594b922%26session%3D0c7b4cb2af1997c0%26currentUrl%3D/o/37061/contents/807533/edit"
+      },
+      {
+        "t": "2026-06-12T14:25:41.324Z",
+        "m": "POST",
+        "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885za20gzb78814578zd78814578&_p=1781274336279&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EEAAAGQC&ae=a&are=1&cid=1138758957.1781274306&frm=0&ir=1&pscdl=noapi&rcb=2&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=3&tag_exp=115616985~115938465~115938468~118012009~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&dr=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&dt=Dom%C3%ADnio%20padr%C3%A3o&_tu=CA&en=scroll&epn.percent_scrolled=90&_et=3&tfd=5998",
+        "body": null
+      },
+      {
+        "t": "2026-06-12T14:25:41.395Z",
+        "status": 204,
+        "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885za20gzb78814578zd78814578&_p=1781274336279&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EEAAAGQC&ae=a&are=1&cid=1138758957.1781274306&frm=0&ir=1&pscdl=noapi&rcb=2&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=3&tag_exp=115616985~115938465~115938468~118012009~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&dr=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&dt=Dom%C3%ADnio%20padr%C3%A3o&_tu=CA&en=scroll&epn.percent_scrolled=90&_et=3&tfd=5998"
+      }
+    ],
+    "url": "/o/37061/contents/807533/edit?tab=studio"
+  },
+  "statusTimeline": [
+    {
+      "t": 0,
+      "renderiz": true,
+      "pronto": false,
+      "rascunho": false,
+      "temVideo": false,
+      "resumo": "GENTMP-Lesson-1781119981664Aula10 PontosLoading...Renderizando...Concluir geração com IAEditarlockEste conteúdo ainda não foi liberado para estudo."
+    },
+    {
+      "t": 54,
+      "renderiz": false,
+      "pronto": true,
+      "rascunho": false,
+      "temVideo": false,
+      "resumo": "GENTMP-Lesson-1781119981664Aula10 PontosProntoConcluir geração com IAEditarlockEste conteúdo ainda não foi liberado para estudo."
+    }
+  ],
+  "networkCompleta": [
+    {
+      "t": "2026-06-12T14:25:04.342Z",
+      "m": "POST",
+      "url": "/users/login",
+      "body": "utf8=%E2%9C%93&authenticity_token=uTZAFir01nfQgz2OcO_jxM54OIoHI82Yzar6WpDr9xv3YElaxmkfkTD5KdwFj5opVTJA127cOJdDpamn3wx5bQ&user%5Bremember_me%5D=true&user%5Borigin_controller%5D=sessions&user%5Bemail%5D=agents.qa%40claude.com&user%5Bpassword%5D=123456"
+    },
+    {
+      "t": "2026-06-12T14:25:04.676Z",
+      "status": 302,
+      "url": "/users/login"
+    },
+    {
+      "t": "2026-06-12T14:25:06.077Z",
+      "m": "POST",
+      "url": "https://www.google.com/ccm/collect?rcb=17&frm=0&ae=g&auid=218603287.1781274306&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&dr=novoestudio.stage.twygoead.com&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fuse_mode_itens%2F366710%2Fembed&scrsrc=www.googletagmanager.com&rnd=390340850.1781274306&navt=n&npa=0&ep.ads_data_redaction=0&gtm=45He66a1v78814578za200zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938465~115938468~119456239~119456247&apve=1&apvf=f&apvc=1&tft=1781274306076&tfd=1734",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:06.213Z",
+      "status": 200,
+      "url": "https://www.google.com/ccm/collect?rcb=17&frm=0&ae=g&auid=218603287.1781274306&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&dr=novoestudio.stage.twygoead.com&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fuse_mode_itens%2F366710%2Fembed&scrsrc=www.googletagmanager.com&rnd=390340850.1781274306&navt=n&npa=0&ep.ads_data_redaction=0&gtm=45He66a1v78814578za200zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938465~115938468~119456239~119456247&apve=1&apvf=f&apvc=1&tft=1781274306076&tfd=1734"
+    },
+    {
+      "t": "2026-06-12T14:25:06.353Z",
+      "m": "POST",
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885z878814578za20gzb78814578zd78814578&_p=1781274305663&_gaz=1&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAAAAGAC&are=1&cid=1138758957.1781274306&ec_mode=a&frm=0&ir=1&pscdl=noapi&rcb=4&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=1&tag_exp=115938465~115938469~119456239~119456247&sid=1781274306&sct=1&seg=0&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fuse_mode_itens%2F366710%2Fembed%3Fmenu_id%3Dboas-vindas&dr=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fusers%2Flogin&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&_fv=1&_nsi=1&_ss=1&tfd=2005",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:06.353Z",
+      "m": "POST",
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885z878814578za20gzb78814578zd78814578&_p=1781274305663&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAACAGQC&are=1&cid=1138758957.1781274306&ec_mode=a&frm=0&ir=1&pscdl=noapi&rcb=4&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=2&tag_exp=115938465~115938469~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fuse_mode_itens%2F366710%2Fembed%3Fmenu_id%3Dboas-vindas&dr=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fusers%2Flogin&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&_et=3&tfd=2009",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:06.514Z",
+      "status": 204,
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885z878814578za20gzb78814578zd78814578&_p=1781274305663&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAACAGQC&are=1&cid=1138758957.1781274306&ec_mode=a&frm=0&ir=1&pscdl=noapi&rcb=4&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=2&tag_exp=115938465~115938469~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fuse_mode_itens%2F366710%2Fembed%3Fmenu_id%3Dboas-vindas&dr=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fusers%2Flogin&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&_et=3&tfd=2009"
+    },
+    {
+      "t": "2026-06-12T14:25:06.520Z",
+      "status": 204,
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885z878814578za20gzb78814578zd78814578&_p=1781274305663&_gaz=1&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAAAAGAC&are=1&cid=1138758957.1781274306&ec_mode=a&frm=0&ir=1&pscdl=noapi&rcb=4&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=1&tag_exp=115938465~115938469~119456239~119456247&sid=1781274306&sct=1&seg=0&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fuse_mode_itens%2F366710%2Fembed%3Fmenu_id%3Dboas-vindas&dr=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fusers%2Flogin&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&_fv=1&_nsi=1&_ss=1&tfd=2005"
+    },
+    {
+      "t": "2026-06-12T14:25:07.535Z",
+      "m": "POST",
+      "url": "https://www.google.com/rmkt/collect/940863039/?random=1781274307524&cv=11&fst=1781274307524&fmt=8&bg=ffffff&guid=ON&async=1&gtm=45be66a1v9178419319z878814578za20gzb78814578zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616985~115938465~115938468~117776793~119456239~119456247&u_w=1440&u_h=900&url=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fuse_mode_itens%2F366710%2Fembed%3Fmenu_id%3Dboas-vindas&ref=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fusers%2Flogin&rcb=19&frm=0&tiba=Dom%C3%ADnio%20padr%C3%A3o&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=218603287.1781274306&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uamb=0&uam=&uap=Windows&uapv=19.0.0&uaw=0&_tu=CA&ept=68&gcp=5",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:07.535Z",
+      "m": "POST",
+      "url": "https://www.google.com/ccm/collect?rcb=19&frm=0&ae=g&auid=218603287.1781274306&dt=Dom%C3%ADnio%20padr%C3%A3o&dr=novoestudio.stage.twygoead.com&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fuse_mode_itens%2F366710%2Fembed&scrsrc=www.googletagmanager.com&rnd=390340850.1781274306&navt=n&npa=0&_tu=CA&gtm=45be66a1v9178419319z878814578za20gzb78814578zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616985~115938465~115938468~117776793~119456239~119456247&apve=1&apvf=f&apvc=0&tids=AW-940863039&tid=AW-940863039&tft=1781274307534&tfd=3193",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:07.624Z",
+      "status": 200,
+      "url": "https://www.google.com/ccm/collect?rcb=19&frm=0&ae=g&auid=218603287.1781274306&dt=Dom%C3%ADnio%20padr%C3%A3o&dr=novoestudio.stage.twygoead.com&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fuse_mode_itens%2F366710%2Fembed&scrsrc=www.googletagmanager.com&rnd=390340850.1781274306&navt=n&npa=0&_tu=CA&gtm=45be66a1v9178419319z878814578za20gzb78814578zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616985~115938465~115938468~117776793~119456239~119456247&apve=1&apvf=f&apvc=0&tids=AW-940863039&tid=AW-940863039&tft=1781274307534&tfd=3193"
+    },
+    {
+      "t": "2026-06-12T14:25:07.645Z",
+      "status": 200,
+      "url": "https://www.google.com/rmkt/collect/940863039/?random=1781274307524&cv=11&fst=1781274307524&fmt=8&bg=ffffff&guid=ON&async=1&gtm=45be66a1v9178419319z878814578za20gzb78814578zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616985~115938465~115938468~117776793~119456239~119456247&u_w=1440&u_h=900&url=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fuse_mode_itens%2F366710%2Fembed%3Fmenu_id%3Dboas-vindas&ref=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fusers%2Flogin&rcb=19&frm=0&tiba=Dom%C3%ADnio%20padr%C3%A3o&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=218603287.1781274306&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uamb=0&uam=&uap=Windows&uapv=19.0.0&uaw=0&_tu=CA&ept=68&gcp=5"
+    },
+    {
+      "t": "2026-06-12T14:25:11.377Z",
+      "m": "POST",
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885za20gzb78814578zd78814578&_p=1781274305663&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EEAAAGQC&ae=a&are=1&cid=1138758957.1781274306&frm=0&ir=1&pscdl=noapi&rcb=4&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=3&tag_exp=115938465~115938469~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fuse_mode_itens%2F366710%2Fembed%3Fmenu_id%3Dboas-vindas&dr=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fusers%2Flogin&dt=Dom%C3%ADnio%20padr%C3%A3o&_tu=CA&en=scroll&epn.percent_scrolled=90&_et=7&tfd=7035",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:11.444Z",
+      "status": 204,
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885za20gzb78814578zd78814578&_p=1781274305663&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EEAAAGQC&ae=a&are=1&cid=1138758957.1781274306&frm=0&ir=1&pscdl=noapi&rcb=4&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=3&tag_exp=115938465~115938469~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fuse_mode_itens%2F366710%2Fembed%3Fmenu_id%3Dboas-vindas&dr=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fusers%2Flogin&dt=Dom%C3%ADnio%20padr%C3%A3o&_tu=CA&en=scroll&epn.percent_scrolled=90&_et=7&tfd=7035"
+    },
+    {
+      "t": "2026-06-12T14:25:13.181Z",
+      "m": "POST",
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885za20gzb78814578zd78814578&_p=1781274305663&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAAAAGQC&are=1&cid=1138758957.1781274306&frm=0&ir=1&pscdl=noapi&rcb=4&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=4&tag_exp=115938465~115938469~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fuse_mode_itens%2F366710%2Fembed%3Fmenu_id%3Dboas-vindas&dr=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fusers%2Flogin&dt=Dom%C3%ADnio%20padr%C3%A3o&en=user_engagement&_et=1592&tfd=8800",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:13.186Z",
+      "m": "POST",
+      "url": "https://www.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885za20gzb78814578zd78814578&_p=1781274305663&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAAAAGQC&are=1&cid=1138758957.1781274306&frm=0&ir=1&pscdl=noapi&rcb=4&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=3&_s=4&tag_exp=115938465%7E115938469%7E119456239%7E119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fuse_mode_itens%2F366710%2Fembed%3Fmenu_id%3Dboas-vindas&dr=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fusers%2Flogin&dt=Dom%C3%ADnio+padr%C3%A3o&en=user_engagement&_et=1592&tfd=8800",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:13.369Z",
+      "m": "POST",
+      "url": "https://www.google.com/ccm/collect?rcb=14&frm=0&ae=g&auid=218603287.1781274306&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit&scrsrc=www.googletagmanager.com&rnd=1166798419.1781274313&navt=n&npa=0&ep.ads_data_redaction=0&gtm=45He66a1v78814578za200zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938465~115938468~119456239~119456247&apve=1&apvf=f&apvc=1&tft=1781274313367&tfd=971",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:13.402Z",
+      "m": "POST",
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885z878814578za20gzb78814578zd78814578&_p=1781274313339&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAAAAGQC&are=1&cid=1138758957.1781274306&ec_mode=a&frm=0&ir=1&pscdl=noapi&rcb=4&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=1&tag_exp=115616985~115938465~115938468~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&tfd=994",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:13.402Z",
+      "m": "POST",
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885z878814578za20gzb78814578zd78814578&_p=1781274313339&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAACAGQC&are=1&cid=1138758957.1781274306&ec_mode=a&frm=0&ir=1&pscdl=noapi&rcb=4&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=2&tag_exp=115616985~115938465~115938468~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&_et=1&tfd=997",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:13.441Z",
+      "status": 200,
+      "url": "https://www.google.com/ccm/collect?rcb=14&frm=0&ae=g&auid=218603287.1781274306&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit&scrsrc=www.googletagmanager.com&rnd=1166798419.1781274313&navt=n&npa=0&ep.ads_data_redaction=0&gtm=45He66a1v78814578za200zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938465~115938468~119456239~119456247&apve=1&apvf=f&apvc=1&tft=1781274313367&tfd=971"
+    },
+    {
+      "t": "2026-06-12T14:25:13.458Z",
+      "m": "POST",
+      "url": "https://www.google.com/rmkt/collect/940863039/?random=1781274313449&cv=11&fst=1781274313449&fmt=8&bg=ffffff&guid=ON&async=1&gtm=45be66a1v9178419319z878814578za20gzb78814578zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616986~115938465~115938468~119456239~119456247&u_w=1440&u_h=900&url=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&rcb=18&frm=0&tiba=Dom%C3%ADnio%20padr%C3%A3o&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=218603287.1781274306&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uamb=0&uam=&uap=Windows&uapv=19.0.0&uaw=0&_tu=CA&ept=68&gcp=5",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:13.458Z",
+      "m": "POST",
+      "url": "https://www.google.com/ccm/collect?rcb=18&frm=0&ae=g&auid=218603287.1781274306&dt=Dom%C3%ADnio%20padr%C3%A3o&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit&scrsrc=www.googletagmanager.com&rnd=1166798419.1781274313&navt=n&npa=0&_tu=CA&gtm=45be66a1v9178419319z878814578za20gzb78814578zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616986~115938465~115938468~119456239~119456247&apve=1&apvf=f&apvc=0&tids=AW-940863039&tid=AW-940863039&tft=1781274313453&tfd=1056",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:13.466Z",
+      "status": 204,
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885z878814578za20gzb78814578zd78814578&_p=1781274313339&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAAAAGQC&are=1&cid=1138758957.1781274306&ec_mode=a&frm=0&ir=1&pscdl=noapi&rcb=4&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=1&tag_exp=115616985~115938465~115938468~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&tfd=994"
+    },
+    {
+      "t": "2026-06-12T14:25:13.466Z",
+      "status": 204,
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885z878814578za20gzb78814578zd78814578&_p=1781274313339&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAACAGQC&are=1&cid=1138758957.1781274306&ec_mode=a&frm=0&ir=1&pscdl=noapi&rcb=4&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=2&tag_exp=115616985~115938465~115938468~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&_et=1&tfd=997"
+    },
+    {
+      "t": "2026-06-12T14:25:13.516Z",
+      "status": 200,
+      "url": "https://www.google.com/ccm/collect?rcb=18&frm=0&ae=g&auid=218603287.1781274306&dt=Dom%C3%ADnio%20padr%C3%A3o&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit&scrsrc=www.googletagmanager.com&rnd=1166798419.1781274313&navt=n&npa=0&_tu=CA&gtm=45be66a1v9178419319z878814578za20gzb78814578zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616986~115938465~115938468~119456239~119456247&apve=1&apvf=f&apvc=0&tids=AW-940863039&tid=AW-940863039&tft=1781274313453&tfd=1056"
+    },
+    {
+      "t": "2026-06-12T14:25:13.526Z",
+      "status": 200,
+      "url": "https://www.google.com/rmkt/collect/940863039/?random=1781274313449&cv=11&fst=1781274313449&fmt=8&bg=ffffff&guid=ON&async=1&gtm=45be66a1v9178419319z878814578za20gzb78814578zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616986~115938465~115938468~119456239~119456247&u_w=1440&u_h=900&url=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&rcb=18&frm=0&tiba=Dom%C3%ADnio%20padr%C3%A3o&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=218603287.1781274306&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uamb=0&uam=&uap=Windows&uapv=19.0.0&uaw=0&_tu=CA&ept=68&gcp=5"
+    },
+    {
+      "t": "2026-06-12T14:25:18.411Z",
+      "m": "POST",
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885za20gzb78814578zd78814578&_p=1781274313339&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EEAAAGQC&ae=a&are=1&cid=1138758957.1781274306&frm=0&ir=1&pscdl=noapi&rcb=4&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=3&tag_exp=115616985~115938465~115938468~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&dt=Dom%C3%ADnio%20padr%C3%A3o&_tu=CA&en=scroll&epn.percent_scrolled=90&_et=11&tfd=6014",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:18.479Z",
+      "status": 204,
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885za20gzb78814578zd78814578&_p=1781274313339&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EEAAAGQC&ae=a&are=1&cid=1138758957.1781274306&frm=0&ir=1&pscdl=noapi&rcb=4&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=3&tag_exp=115616985~115938465~115938468~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&dt=Dom%C3%ADnio%20padr%C3%A3o&_tu=CA&en=scroll&epn.percent_scrolled=90&_et=11&tfd=6014"
+    },
+    {
+      "t": "2026-06-12T14:25:26.628Z",
+      "m": "POST",
+      "url": "/api/v1/o/37061/e/807533/event_content/9295161/save_activity_by_type",
+      "body": "{\"activity_type\":\"lesson\",\"design_editor_config\":{\"layout\":0,\"canva_content\":{\"id\":\"FNBV2cvt60cCUVsRkSFNG\",\"type\":\"VIDEO\",\"duration\":15000,\"name\":\"\",\"frame\":{\"width\":1920,\"height\":1080,\"orientation_format_value\":0,\"has_activities_list\":false,\"show_only_main_activities\":false},\"scenes\":[{\"id\":\"OyTJ5e"
+    },
+    {
+      "t": "2026-06-12T14:25:26.932Z",
+      "status": 200,
+      "url": "/api/v1/o/37061/e/807533/event_content/9295161/save_activity_by_type"
+    },
+    {
+      "t": "2026-06-12T14:25:28.871Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=16473&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3&af=err,spa,xhr,stn,ins&ap=596&be=738&fe=5401&dc=294&perf=%7B%22timing%22:%7B%22of%22:1781274312397,%22n%22:0,%22u%22:746,%22ue%22:746,%22f%22:0,%22dn%22:0,%22dne%22:0,%22c%22:0,%22s%22:0,%22ce%22:0,%22rq%22:1,%22rp%22:739,%22rpe%22:994,%22di%22:1015,%22ds%22:1020,%22de%22:1032,%22dc%22:6133,%22l%22:6135,%22le%22:6139%7D,%22navigation%22:%7B%7D%7D&fp=984&fcp=984",
+      "body": "{\"ja\":{\"webdriverDetected\":true}}"
+    },
+    {
+      "t": "2026-06-12T14:25:29.158Z",
+      "status": 200,
+      "url": "https://bam.nr-data.net/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=16473&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3&af=err,spa,xhr,stn,ins&ap=596&be=738&fe=5401&dc=294&perf=%7B%22timing%22:%7B%22of%22:1781274312397,%22n%22:0,%22u%22:746,%22ue%22:746,%22f%22:0,%22dn%22:0,%22dne%22:0,%22c%22:0,%22s%22:0,%22ce%22:0,%22rq%22:1,%22rp%22:739,%22rpe%22:994,%22di%22:1015,%22ds%22:1020,%22de%22:1032,%22dc%22:6133,%22l%22:6135,%22le%22:6139%7D,%22navigation%22:%7B%7D%7D&fp=984&fcp=984"
+    },
+    {
+      "t": "2026-06-12T14:25:29.159Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=16761&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3",
+      "body": "bel.6;e,'fp,rc,5;5,'pageUrl,'https://novoestudio.stage.twygoead.com/o/37061/studio/activities/9295161/edit;5,'net-etype,'4g;6,'net-dlink,10.;6,'cls,0.27223103084276407;7,'webdriverDetected;e,'fi,6zp,8;5,'type,'pointerdown;5,'eventTarget,'button#tabs-:rt:--tab-1.chakra-tabs__tab.css-fuqmym;5,'loadSta"
+    },
+    {
+      "t": "2026-06-12T14:25:29.160Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/jserrors/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=16762&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3&pve=1",
+      "body": "{\"err\":[{\"params\":{\"stackHash\":94834675,\"exceptionClass\":\"UncaughtError\",\"request_uri\":\"/o/37061/studio/activities/9295161/edit\",\"message\":\"Unhandled Promise Rejection: play() failed because the user didn't interact with the document first. https://goo.gl/xX8pDD\",\"stack_trace\":\"UncaughtError: Unhand"
+    },
+    {
+      "t": "2026-06-12T14:25:29.160Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=16763&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3",
+      "body": "bel.7;1,k,,4qi,,,'initialPageLoad,'https://novoestudio.stage.twygoead.com/o/37061/studio/activities/9295161/edit,,1,,,,gk,!!'f3056cbe-9567-4afc-82be-c3c7a9b39c8e,'1,rc,rc;7,'webdriverDetected;2,1,qz,20,,,'POST,,'www.google.com:443,'/ccm/collect,,,1,'4,!!!;5,'ajaxRequest.id,'40e772c0-8fa2-4db6-a434-7"
+    },
+    {
+      "t": "2026-06-12T14:25:29.161Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=16763&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3",
+      "body": "bel.7;2,1,5r7,43,,,'POST,5o,'a.clarity.ms:443,'/collect,blt,,,'0,!!!;5,'ajaxRequest.id,'be80a19c-42fc-4196-b1a1-71ec2e8fc295;2,1,1ag,6n,,,0,5o,'px.ads.linkedin.com:443,'/wa/,168,,1,3,!!!;5,4,'ee95d01d-4687-4615-94b9-211328a46b24;2,1,352,3j,,,0,5o,1,2,2kmp,,,3,!!!;5,4,'a4713476-1f3b-4db1-9b9d-402665b"
+    },
+    {
+      "t": "2026-06-12T14:25:29.161Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/ins/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=16764&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3",
+      "body": "{\"ins\":[{\"timestamp\":1781274320021,\"pageUrl\":\"https://novoestudio.stage.twygoead.com/o/37061/studio/activities/9295161/edit\",\"currentUrl\":\"https://novoestudio.stage.twygoead.com/o/37061/studio/activities/9295161/edit\",\"eventType\":\"UserAction\",\"action\":\"click\",\"actionCount\":1,\"actionDuration\":0,\"acti"
+    },
+    {
+      "t": "2026-06-12T14:25:29.284Z",
+      "status": 200,
+      "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=16761&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3"
+    },
+    {
+      "t": "2026-06-12T14:25:29.296Z",
+      "status": 200,
+      "url": "https://bam.nr-data.net/jserrors/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=16762&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3&pve=1"
+    },
+    {
+      "t": "2026-06-12T14:25:29.296Z",
+      "status": 200,
+      "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=16763&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3"
+    },
+    {
+      "t": "2026-06-12T14:25:29.297Z",
+      "status": 200,
+      "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=16763&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3"
+    },
+    {
+      "t": "2026-06-12T14:25:29.299Z",
+      "status": 204,
+      "url": "https://bam.nr-data.net/ins/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=16764&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3"
+    },
+    {
+      "t": "2026-06-12T14:25:34.961Z",
+      "m": "POST",
+      "url": "/api/v1/o/37061/e/807533/event_content/9295161/save_activity_by_type",
+      "body": "{\"activity_type\":\"lesson\",\"design_editor_config\":{\"layout\":0,\"canva_content\":{\"id\":\"PFZdgQE4DGU_b1YBqViRz\",\"type\":\"VIDEO\",\"duration\":15000,\"name\":\"\",\"frame\":{\"width\":1920,\"height\":1080,\"orientation_format_value\":0,\"has_activities_list\":false,\"show_only_main_activities\":false},\"scenes\":[{\"id\":\"OyTJ5e"
+    },
+    {
+      "t": "2026-06-12T14:25:35.325Z",
+      "status": 200,
+      "url": "/api/v1/o/37061/e/807533/event_content/9295161/save_activity_by_type"
+    },
+    {
+      "t": "2026-06-12T14:25:36.115Z",
+      "m": "POST",
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885za20gzb78814578zd78814578&_p=1781274313339&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAAAAGQC&are=1&cid=1138758957.1781274306&frm=0&ir=1&pscdl=noapi&rcb=4&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=4&tag_exp=115616985~115938465~115938468~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&dt=Dom%C3%ADnio%20padr%C3%A3o&en=user_engagement&_et=22699&tfd=23713",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:36.116Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=23715&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3",
+      "body": "bel.6;e,'lcp,t4,e;6,'timeToFirstByte,738.8000000000466;6,'resourceLoadDelay,0.;6,'resourceLoadDuration,0.;6,'resourceLoadTime,0.;6,'elementRenderDelay,309.19999999995343;6,'size,9899.;5,'eid,'page-breadcrumb;5,'elTag,'DIV;5,'element,'#page-breadcrumb;5,'pageUrl,'https://novoestudio.stage.twygoead.co"
+    },
+    {
+      "t": "2026-06-12T14:25:36.116Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/jserrors/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=23715&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3",
+      "body": "{\"sm\":[{\"params\":{\"name\":\"Generic/LoaderType/spa/Detected\"},\"stats\":{\"c\":1}},{\"params\":{\"name\":\"Generic/DistMethod/CDN/Detected\"},\"stats\":{\"c\":1}},{\"params\":{\"name\":\"Generic/Runtime/Browser/Detected\"},\"stats\":{\"c\":1}},{\"params\":{\"name\":\"Framework/Jquery/Detected\"},\"stats\":{\"c\":1}},{\"params\":{\"name\":"
+    },
+    {
+      "t": "2026-06-12T14:25:36.116Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/jserrors/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=23715&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3",
+      "body": "{\"xhr\":[{\"params\":{\"method\":\"POST\",\"hostname\":\"bam.nr-data.net\",\"port\":\"443\",\"protocol\":\"https\",\"host\":\"bam.nr-data.net:443\",\"pathname\":\"/events/1/NRJS-9eb7d7839e467b923f5\",\"status\":200},\"metrics\":{\"count\":3,\"txSize\":{\"t\":4043,\"min\":305,\"max\":3169,\"sos\":10459347,\"c\":3},\"rxSize\":{\"t\":72,\"min\":24,\"max"
+    },
+    {
+      "t": "2026-06-12T14:25:36.116Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=23716&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3",
+      "body": "bel.7;2,1,azd,7k,,,'POST,5o,'px.ads.linkedin.com:443,'/wa/,1ag,,1,'0,!!!;5,'ajaxRequest.id,'186d1972-8e4c-4885-acda-68b0961e8717;2,1,-5,7z,,,0,5k,'novoestudio.stage.twygoead.com:443,'/api/v1/o/37061/e/807533/event_content/9295161/save_activity_by_type,xo,13,,3,'13905c5f3a0d7643,'9ab9170081198a198a98"
+    },
+    {
+      "t": "2026-06-12T14:25:36.116Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/ins/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtQQlVQTAhXCDxKREIAWl8fVFwITDkQTUVTDVxvUVJMCE4PF0A%3D&rst=23716&ck=0&s=0&ref=/o/37061/studio/activities/9295161/edit&ptid=a658f2934a7eded3",
+      "body": "{\"ins\":[{\"timestamp\":1781274325169,\"pageUrl\":\"https://novoestudio.stage.twygoead.com/o/37061/studio/activities/9295161/edit\",\"currentUrl\":\"https://novoestudio.stage.twygoead.com/o/37061/studio/activities/9295161/edit\",\"eventType\":\"UserAction\",\"action\":\"scrollend\",\"actionCount\":1,\"actionDuration\":0,\""
+    },
+    {
+      "t": "2026-06-12T14:25:36.120Z",
+      "m": "POST",
+      "url": "https://www.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885za20gzb78814578zd78814578&_p=1781274313339&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAAAAGQC&are=1&cid=1138758957.1781274306&frm=0&ir=1&pscdl=noapi&rcb=4&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=3&_s=4&tag_exp=115616985%7E115938465%7E115938468%7E119456239%7E119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&dt=Dom%C3%ADnio+padr%C3%A3o&en=user_engagement&_et=22699&tfd=23713",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:36.302Z",
+      "m": "POST",
+      "url": "https://www.google.com/ccm/collect?rcb=7&frm=0&ae=g&auid=218603287.1781274306&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&dr=novoestudio.stage.twygoead.com&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit&scrsrc=www.googletagmanager.com&rnd=88755392.1781274336&navt=n&npa=0&ep.ads_data_redaction=0&gtm=45He66a1v78814578za200zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616986~115938465~115938468~119456239~119456247&apve=1&apvf=f&apvc=1&tft=1781274336301&tfd=976",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:36.319Z",
+      "m": "POST",
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885z878814578za20gzb78814578zd78814578&_p=1781274336279&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAAAAGQC&are=1&cid=1138758957.1781274306&ec_mode=a&frm=0&ir=1&pscdl=noapi&rcb=2&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=1&tag_exp=115616985~115938465~115938468~118012009~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&dr=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&tfd=990",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:36.319Z",
+      "m": "POST",
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885z878814578za20gzb78814578zd78814578&_p=1781274336279&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAACAGQC&are=1&cid=1138758957.1781274306&ec_mode=a&frm=0&ir=1&pscdl=noapi&rcb=2&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=2&tag_exp=115616985~115938465~115938468~118012009~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&dr=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&_et=1&tfd=993",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:36.331Z",
+      "m": "POST",
+      "url": "https://www.google.com/rmkt/collect/940863039/?random=1781274336327&cv=11&fst=1781274336327&fmt=8&bg=ffffff&guid=ON&async=1&gtm=45be66a1v9178419319z878814578za20gzb78814578zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938465~115938469~119456239~119456247&u_w=1440&u_h=900&url=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&ref=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&rcb=8&frm=0&tiba=Dom%C3%ADnio%20padr%C3%A3o&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=218603287.1781274306&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uamb=0&uam=&uap=Windows&uapv=19.0.0&uaw=0&_tu=CA&ept=68&gcp=5",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:36.331Z",
+      "m": "POST",
+      "url": "https://www.google.com/ccm/collect?rcb=8&frm=0&ae=g&auid=218603287.1781274306&dt=Dom%C3%ADnio%20padr%C3%A3o&dr=novoestudio.stage.twygoead.com&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit&scrsrc=www.googletagmanager.com&rnd=88755392.1781274336&navt=n&npa=0&_tu=CA&gtm=45be66a1v9178419319z878814578za20gzb78814578zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938465~115938469~119456239~119456247&apve=1&apvf=f&apvc=0&tids=AW-940863039&tid=AW-940863039&tft=1781274336331&tfd=1006",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:36.389Z",
+      "status": 200,
+      "url": "https://www.google.com/ccm/collect?rcb=7&frm=0&ae=g&auid=218603287.1781274306&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&dr=novoestudio.stage.twygoead.com&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit&scrsrc=www.googletagmanager.com&rnd=88755392.1781274336&navt=n&npa=0&ep.ads_data_redaction=0&gtm=45He66a1v78814578za200zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616986~115938465~115938468~119456239~119456247&apve=1&apvf=f&apvc=1&tft=1781274336301&tfd=976"
+    },
+    {
+      "t": "2026-06-12T14:25:36.405Z",
+      "status": 204,
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885z878814578za20gzb78814578zd78814578&_p=1781274336279&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAACAGQC&are=1&cid=1138758957.1781274306&ec_mode=a&frm=0&ir=1&pscdl=noapi&rcb=2&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=2&tag_exp=115616985~115938465~115938468~118012009~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&dr=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&_et=1&tfd=993"
+    },
+    {
+      "t": "2026-06-12T14:25:36.405Z",
+      "status": 204,
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885z878814578za20gzb78814578zd78814578&_p=1781274336279&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAAAAGQC&are=1&cid=1138758957.1781274306&ec_mode=a&frm=0&ir=1&pscdl=noapi&rcb=2&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=1&tag_exp=115616985~115938465~115938468~118012009~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&dr=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&tfd=990"
+    },
+    {
+      "t": "2026-06-12T14:25:36.405Z",
+      "status": 200,
+      "url": "https://www.google.com/ccm/collect?rcb=8&frm=0&ae=g&auid=218603287.1781274306&dt=Dom%C3%ADnio%20padr%C3%A3o&dr=novoestudio.stage.twygoead.com&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit&scrsrc=www.googletagmanager.com&rnd=88755392.1781274336&navt=n&npa=0&_tu=CA&gtm=45be66a1v9178419319z878814578za20gzb78814578zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938465~115938469~119456239~119456247&apve=1&apvf=f&apvc=0&tids=AW-940863039&tid=AW-940863039&tft=1781274336331&tfd=1006"
+    },
+    {
+      "t": "2026-06-12T14:25:36.405Z",
+      "status": 200,
+      "url": "https://www.google.com/rmkt/collect/940863039/?random=1781274336327&cv=11&fst=1781274336327&fmt=8&bg=ffffff&guid=ON&async=1&gtm=45be66a1v9178419319z878814578za20gzb78814578zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938465~115938469~119456239~119456247&u_w=1440&u_h=900&url=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&ref=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&rcb=8&frm=0&tiba=Dom%C3%ADnio%20padr%C3%A3o&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=218603287.1781274306&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uamb=0&uam=&uap=Windows&uapv=19.0.0&uaw=0&_tu=CA&ept=68&gcp=5"
+    },
+    {
+      "t": "2026-06-12T14:25:37.837Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2511&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=36df57f47594b922&af=err,spa,xhr,stn,ins&ap=632&be=777&fe=1061&dc=287&fsh=1&perf=%7B%22timing%22:%7B%22of%22:1781274335325,%22n%22:0,%22u%22:788,%22ue%22:788,%22f%22:0,%22dn%22:0,%22dne%22:0,%22c%22:0,%22s%22:0,%22ce%22:0,%22rq%22:1,%22rp%22:778,%22rpe%22:1031,%22di%22:1040,%22ds%22:1045,%22de%22:1064,%22dc%22:1834,%22l%22:1834,%22le%22:1838%7D,%22navigation%22:%7B%7D%7D&fp=972&fcp=972",
+      "body": "{\"ja\":{\"webdriverDetected\":true}}"
+    },
+    {
+      "t": "2026-06-12T14:25:37.971Z",
+      "status": 200,
+      "url": "https://bam.nr-data.net/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2511&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=36df57f47594b922&af=err,spa,xhr,stn,ins&ap=632&be=777&fe=1061&dc=287&fsh=1&perf=%7B%22timing%22:%7B%22of%22:1781274335325,%22n%22:0,%22u%22:788,%22ue%22:788,%22f%22:0,%22dn%22:0,%22dne%22:0,%22c%22:0,%22s%22:0,%22ce%22:0,%22rq%22:1,%22rp%22:778,%22rpe%22:1031,%22di%22:1040,%22ds%22:1045,%22de%22:1064,%22dc%22:1834,%22l%22:1834,%22le%22:1838%7D,%22navigation%22:%7B%7D%7D&fp=972&fcp=972"
+    },
+    {
+      "t": "2026-06-12T14:25:37.971Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/browser/blobs?browser_monitoring_key=NRJS-9eb7d7839e467b923f5&type=BrowserSessionChunk&app_id=1071860387&protocol_version=0&timestamp=1781274333812&attributes=entityGuid%3DNDc5NzY3OXxCUk9XU0VSfEFQUExJQ0FUSU9OfDExMzQ2OTM4NTA%26harvestId%3D0c7b4cb2af1997c0_36df57f47594b922_1%26trace.firstTimestamp%3D1781274333812%26trace.lastTimestamp%3D1781274335650%26trace.nodes%3D164%26trace.originTimestamp%3D1781274333812%26agentVersion%3D1.316.0%26firstSessionHarvest%3Dtrue%26ptid%3D36df57f47594b922%26session%3D0c7b4cb2af1997c0%26currentUrl%3D/o/37061/contents/807533/edit",
+      "body": "[{\"n\":\"unloadEventStart\",\"s\":788,\"e\":788,\"o\":\"document\",\"t\":\"timing\"},{\"n\":\"unloadEventEnd\",\"s\":788,\"e\":788,\"o\":\"document\",\"t\":\"timing\"},{\"n\":\"domInteractive\",\"s\":1040,\"e\":1040,\"o\":\"document\",\"t\":\"timing\"},{\"n\":\"domContentLoadedEventStart\",\"s\":1045,\"e\":1045,\"o\":\"document\",\"t\":\"timing\"},{\"n\":\"domCont"
+    },
+    {
+      "t": "2026-06-12T14:25:37.971Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/browser/blobs?browser_monitoring_key=NRJS-9eb7d7839e467b923f5&type=BrowserSessionChunk&app_id=1071860387&protocol_version=0&timestamp=1781274334831&attributes=entityGuid%3DNDc5NzY3OXxCUk9XU0VSfEFQUExJQ0FUSU9OfDExMzQ2OTM4NTA%26harvestId%3D0c7b4cb2af1997c0_36df57f47594b922_2%26trace.firstTimestamp%3D1781274334831%26trace.lastTimestamp%3D1781274335626%26trace.nodes%3D130%26trace.originTimestamp%3D1781274333812%26agentVersion%3D1.316.0%26ptid%3D36df57f47594b922%26session%3D0c7b4cb2af1997c0%26currentUrl%3D/o/37061/contents/807533/edit",
+      "body": "[{\"n\":\"script\",\"s\":1072,\"e\":1213,\"o\":\"https://cdn-stage.twygo.com:443/vite/assets/index-CdZVGJef.min.js\",\"t\":\"resource\"},{\"n\":\"script\",\"s\":1072,\"e\":1214,\"o\":\"https://cdn-stage.twygo.com:443/vite/assets/chunk-6QYXN73V-C_lKZ3-O.min.js\",\"t\":\"resource\"},{\"n\":\"script\",\"s\":1072,\"e\":1216,\"o\":\"https://cdn-s"
+    },
+    {
+      "t": "2026-06-12T14:25:37.971Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2646&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=36df57f47594b922&ht=1",
+      "body": "bel.6;e,'fp,r0,5;5,'pageUrl,'https://novoestudio.stage.twygoead.com/o/37061/contents/807533/edit;5,'net-etype,'4g;6,'net-dlink,10.;6,'cls,0.04501693244170096;7,'webdriverDetected;e,'fcp,r0,8;6,'timeToFirstByte,777.8999999999069;6,'firstByteToFCP,194.10000000009313;5,'loadState,'loading;5,1,2;5,3,4;6"
+    },
+    {
+      "t": "2026-06-12T14:25:37.972Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/jserrors/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2646&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=36df57f47594b922&ht=1",
+      "body": "{\"xhr\":[{\"params\":{\"hostname\":\"www.google.com\",\"port\":\"443\",\"protocol\":\"https\",\"host\":\"www.google.com:443\",\"pathname\":\"/ccm/collect\",\"method\":\"POST\",\"status\":0},\"metrics\":{\"count\":2,\"txSize\":{\"t\":0,\"min\":0,\"max\":0,\"sos\":0,\"c\":2},\"rxSize\":{\"c\":2},\"duration\":{\"t\":161,\"min\":73,\"max\":88,\"sos\":13073,\"c\":"
+    },
+    {
+      "t": "2026-06-12T14:25:37.972Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2646&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=36df57f47594b922&ht=1",
+      "body": "bel.7;1,b,,1f1,,,'initialPageLoad,'https://novoestudio.stage.twygoead.com/o/37061/contents/807533/edit,'https://novoestudio.stage.twygoead.com/o/37061/studio/activities/9295161/edit,1,,,,hk,!!'415d50ce-7967-400f-9223-3edc0c22e3e7,'1,r0,r0;7,'isFirstOfSession;7,'webdriverDetected;2,1,r4,2g,,,'POST,,'"
+    },
+    {
+      "t": "2026-06-12T14:25:37.973Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2647&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=36df57f47594b922&ht=1",
+      "body": "bel.7;2,1,1fm,7l,,,'POST,5o,'px.ads.linkedin.com:443,'/wa/,bs,,1,'0,!!!;5,'ajaxRequest.id,'d626981e-69aa-4db3-897a-88f3679d2bd3;2,1,b5,4y,,,0,5o,'a.clarity.ms:443,'/collect,6pyl,,,3,!!!;5,4,'0bf04bc7-4d97-4990-8fca-41dceccbffc8;2,1,ay,8g,,,'GET,5k,'novoestudio.stage.twygoead.com:443,'/api/v1/o/37061"
+    },
+    {
+      "t": "2026-06-12T14:25:37.974Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/browser/blobs?browser_monitoring_key=NRJS-9eb7d7839e467b923f5&type=BrowserSessionChunk&app_id=1071860387&protocol_version=0&timestamp=1781274334784&attributes=entityGuid%3DNDc5NzY3OXxCUk9XU0VSfEFQUExJQ0FUSU9OfDExMzQ2OTM4NTA%26harvestId%3D0c7b4cb2af1997c0_36df57f47594b922_3%26trace.firstTimestamp%3D1781274334784%26trace.lastTimestamp%3D1781274336450%26trace.nodes%3D137%26trace.originTimestamp%3D1781274333812%26agentVersion%3D1.316.0%26ptid%3D36df57f47594b922%26session%3D0c7b4cb2af1997c0%26currentUrl%3D/o/37061/contents/807533/edit",
+      "body": "[{\"n\":\"script\",\"s\":1085,\"e\":1551,\"o\":\"https://cdn-stage.twygo.com:443/vite/assets/style-modal-DtNNeZXS.min.js\",\"t\":\"resource\"},{\"n\":\"script\",\"s\":1085,\"e\":1548,\"o\":\"https://cdn-stage.twygo.com:443/vite/assets/index-BlhPzxEe.min.js\",\"t\":\"resource\"},{\"n\":\"script\",\"s\":1085,\"e\":1549,\"o\":\"https://cdn-stag"
+    },
+    {
+      "t": "2026-06-12T14:25:38.112Z",
+      "status": 200,
+      "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2646&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=36df57f47594b922&ht=1"
+    },
+    {
+      "t": "2026-06-12T14:25:38.112Z",
+      "status": 200,
+      "url": "https://bam.nr-data.net/jserrors/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2646&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=36df57f47594b922&ht=1"
+    },
+    {
+      "t": "2026-06-12T14:25:38.112Z",
+      "status": 200,
+      "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2647&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=36df57f47594b922&ht=1"
+    },
+    {
+      "t": "2026-06-12T14:25:38.112Z",
+      "status": 200,
+      "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2646&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=36df57f47594b922&ht=1"
+    },
+    {
+      "t": "2026-06-12T14:25:38.259Z",
+      "status": 200,
+      "url": "https://bam.nr-data.net/browser/blobs?browser_monitoring_key=NRJS-9eb7d7839e467b923f5&type=BrowserSessionChunk&app_id=1071860387&protocol_version=0&timestamp=1781274333812&attributes=entityGuid%3DNDc5NzY3OXxCUk9XU0VSfEFQUExJQ0FUSU9OfDExMzQ2OTM4NTA%26harvestId%3D0c7b4cb2af1997c0_36df57f47594b922_1%26trace.firstTimestamp%3D1781274333812%26trace.lastTimestamp%3D1781274335650%26trace.nodes%3D164%26trace.originTimestamp%3D1781274333812%26agentVersion%3D1.316.0%26firstSessionHarvest%3Dtrue%26ptid%3D36df57f47594b922%26session%3D0c7b4cb2af1997c0%26currentUrl%3D/o/37061/contents/807533/edit"
+    },
+    {
+      "t": "2026-06-12T14:25:38.263Z",
+      "status": 200,
+      "url": "https://bam.nr-data.net/browser/blobs?browser_monitoring_key=NRJS-9eb7d7839e467b923f5&type=BrowserSessionChunk&app_id=1071860387&protocol_version=0&timestamp=1781274334831&attributes=entityGuid%3DNDc5NzY3OXxCUk9XU0VSfEFQUExJQ0FUSU9OfDExMzQ2OTM4NTA%26harvestId%3D0c7b4cb2af1997c0_36df57f47594b922_2%26trace.firstTimestamp%3D1781274334831%26trace.lastTimestamp%3D1781274335626%26trace.nodes%3D130%26trace.originTimestamp%3D1781274333812%26agentVersion%3D1.316.0%26ptid%3D36df57f47594b922%26session%3D0c7b4cb2af1997c0%26currentUrl%3D/o/37061/contents/807533/edit"
+    },
+    {
+      "t": "2026-06-12T14:25:38.264Z",
+      "status": 200,
+      "url": "https://bam.nr-data.net/browser/blobs?browser_monitoring_key=NRJS-9eb7d7839e467b923f5&type=BrowserSessionChunk&app_id=1071860387&protocol_version=0&timestamp=1781274334784&attributes=entityGuid%3DNDc5NzY3OXxCUk9XU0VSfEFQUExJQ0FUSU9OfDExMzQ2OTM4NTA%26harvestId%3D0c7b4cb2af1997c0_36df57f47594b922_3%26trace.firstTimestamp%3D1781274334784%26trace.lastTimestamp%3D1781274336450%26trace.nodes%3D137%26trace.originTimestamp%3D1781274333812%26agentVersion%3D1.316.0%26ptid%3D36df57f47594b922%26session%3D0c7b4cb2af1997c0%26currentUrl%3D/o/37061/contents/807533/edit"
+    },
+    {
+      "t": "2026-06-12T14:25:41.324Z",
+      "m": "POST",
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885za20gzb78814578zd78814578&_p=1781274336279&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EEAAAGQC&ae=a&are=1&cid=1138758957.1781274306&frm=0&ir=1&pscdl=noapi&rcb=2&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=3&tag_exp=115616985~115938465~115938468~118012009~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&dr=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&dt=Dom%C3%ADnio%20padr%C3%A3o&_tu=CA&en=scroll&epn.percent_scrolled=90&_et=3&tfd=5998",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:41.395Z",
+      "status": 204,
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885za20gzb78814578zd78814578&_p=1781274336279&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EEAAAGQC&ae=a&are=1&cid=1138758957.1781274306&frm=0&ir=1&pscdl=noapi&rcb=2&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=3&tag_exp=115616985~115938465~115938468~118012009~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&dr=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&dt=Dom%C3%ADnio%20padr%C3%A3o&_tu=CA&en=scroll&epn.percent_scrolled=90&_et=3&tfd=5998"
+    },
+    {
+      "t": "2026-06-12T14:25:43.503Z",
+      "m": "POST",
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885za20gzb78814578zd78814578&_p=1781274336279&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAAAAGQC&are=1&cid=1138758957.1781274306&frm=0&ir=1&pscdl=noapi&rcb=2&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=4&tag_exp=115616985~115938465~115938468~118012009~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&dr=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&dt=Dom%C3%ADnio%20padr%C3%A3o&en=user_engagement&_et=7171&tfd=8171",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:43.503Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=8172&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=36df57f47594b922&ht=1",
+      "body": "bel.6;e,'unload,6au,5;5,'pageUrl,'https://novoestudio.stage.twygoead.com/o/37061/contents/807533/edit;5,'net-etype,'4g;6,'net-dlink,10.;6,'cls,0.04501693244170096;7,'webdriverDetected;e,6,19,9;5,'metricId,'v4-1781274337836-4952698805202;5,'largestShiftTarget,'#wrap;6,'largestShiftTime,2426.100000000"
+    },
+    {
+      "t": "2026-06-12T14:25:43.503Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/jserrors/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=8172&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=36df57f47594b922&ht=1",
+      "body": "{\"sm\":[{\"params\":{\"name\":\"Generic/LoaderType/spa/Detected\"},\"stats\":{\"c\":1}},{\"params\":{\"name\":\"Generic/DistMethod/CDN/Detected\"},\"stats\":{\"c\":1}},{\"params\":{\"name\":\"Generic/Runtime/Browser/Detected\"},\"stats\":{\"c\":1}},{\"params\":{\"name\":\"Framework/Jquery/Detected\"},\"stats\":{\"c\":1}},{\"params\":{\"name\":"
+    },
+    {
+      "t": "2026-06-12T14:25:43.503Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/jserrors/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=8172&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=36df57f47594b922&ht=1",
+      "body": "{\"xhr\":[{\"params\":{\"method\":\"GET\",\"hostname\":\"novoestudio.stage.twygoead.com\",\"port\":\"443\",\"protocol\":\"https\",\"host\":\"novoestudio.stage.twygoead.com:443\",\"pathname\":\"/notificate_socket_token\",\"status\":200},\"metrics\":{\"count\":2,\"rxSize\":{\"t\":872,\"min\":436,\"max\":436,\"sos\":380192,\"c\":2},\"duration\":{\"t\""
+    },
+    {
+      "t": "2026-06-12T14:25:43.503Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=8173&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=36df57f47594b922&ht=1",
+      "body": "bel.7;2,1,1i1,kf,,,'GET,5k,'novoestudio.stage.twygoead.com:443,'/notificate_socket_token,,c4,,'0,'e9308cabe95d6569,'e25ed239246a8d662dc5ec70788f721a,mqb0qxvx;5,'ajaxRequest.id,'dcc0c650-5614-4b8f-90cf-7882552ca882;2,1,8j,bx,,,0,5k,1,'/api/v1/o/37061/studio/courses/807533/activities,,aqa,,3,'559be0dd"
+    },
+    {
+      "t": "2026-06-12T14:25:43.503Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/browser/blobs?browser_monitoring_key=NRJS-9eb7d7839e467b923f5&type=BrowserSessionChunk&app_id=1071860387&protocol_version=0&timestamp=1781274333857&attributes=entityGuid%3DNDc5NzY3OXxCUk9XU0VSfEFQUExJQ0FUSU9OfDExMzQ2OTM4NTA%26harvestId%3D0c7b4cb2af1997c0_36df57f47594b922_4%26trace.firstTimestamp%3D1781274333857%26trace.lastTimestamp%3D1781274341983%26trace.nodes%3D61%26trace.originTimestamp%3D1781274333812%26agentVersion%3D1.316.0%26ptid%3D36df57f47594b922%26session%3D0c7b4cb2af1997c0%26currentUrl%3D/o/37061/contents/807533/edit",
+      "body": "[{\"n\":\"load\",\"s\":2680,\"e\":2680,\"o\":\"200 GET: novoestudio.stage.twygoead.com:443/notificate_socket_token\",\"t\":\"event\"},{\"n\":\"Ajax\",\"s\":1945,\"e\":2680,\"o\":\"200 GET: novoestudio.stage.twygoead.com:443/notificate_socket_token\",\"t\":\"ajax\"},{\"n\":\"load\",\"s\":2681,\"e\":2681,\"o\":\"200 GET: novoestudio.stage.twyg"
+    },
+    {
+      "t": "2026-06-12T14:25:43.503Z",
+      "m": "POST",
+      "url": "https://www.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885za20gzb78814578zd78814578&_p=1781274336279&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAAAAGQC&are=1&cid=1138758957.1781274306&frm=0&ir=1&pscdl=noapi&rcb=2&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=3&_s=4&tag_exp=115616985%7E115938465%7E115938468%7E118012009%7E119456239%7E119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&dr=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fstudio%2Factivities%2F9295161%2Fedit%3Ftype%3Dlesson%26eventId%3D807533&dt=Dom%C3%ADnio+padr%C3%A3o&en=user_engagement&_et=7171&tfd=8171",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:43.671Z",
+      "m": "POST",
+      "url": "https://www.google.com/ccm/collect?rcb=10&frm=0&ae=g&auid=218603287.1781274306&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit&scrsrc=www.googletagmanager.com&rnd=1330730415.1781274344&navt=n&npa=0&ep.ads_data_redaction=0&gtm=45He66a1v78814578za200zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938466~115938468~119456239~119456247&apve=1&apvf=f&apvc=1&tft=1781274343670&tfd=835",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:43.687Z",
+      "m": "POST",
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885z878814578za20gzb78814578zd78814578&_p=1781274343653&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAAAAGQC&are=1&cid=1138758957.1781274306&ec_mode=a&frm=0&ir=1&pscdl=noapi&rcb=18&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=1&tag_exp=115938466~115938468~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&tfd=849",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:43.687Z",
+      "m": "POST",
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885z878814578za20gzb78814578zd78814578&_p=1781274343653&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAACAGQC&are=1&cid=1138758957.1781274306&ec_mode=a&frm=0&ir=1&pscdl=noapi&rcb=18&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=2&tag_exp=115938466~115938468~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&tfd=851",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:43.703Z",
+      "m": "POST",
+      "url": "https://www.google.com/rmkt/collect/940863039/?random=1781274343699&cv=11&fst=1781274343699&fmt=8&bg=ffffff&guid=ON&async=1&gtm=45be66a1v9178419319z878814578za20gzb78814578zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616986~115938466~115938468~119456239~119456247&u_w=1440&u_h=900&url=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&rcb=0&frm=0&tiba=Dom%C3%ADnio%20padr%C3%A3o&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=218603287.1781274306&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uamb=0&uam=&uap=Windows&uapv=19.0.0&uaw=0&_tu=CA&ept=68&gcp=5",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:43.703Z",
+      "m": "POST",
+      "url": "https://www.google.com/ccm/collect?rcb=0&frm=0&ae=g&auid=218603287.1781274306&dt=Dom%C3%ADnio%20padr%C3%A3o&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit&scrsrc=www.googletagmanager.com&rnd=1330730415.1781274344&navt=n&npa=0&_tu=CA&gtm=45be66a1v9178419319z878814578za20gzb78814578zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616986~115938466~115938468~119456239~119456247&apve=1&apvf=f&apvc=0&tids=AW-940863039&tid=AW-940863039&tft=1781274343702&tfd=868",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:43.734Z",
+      "status": 200,
+      "url": "https://www.google.com/ccm/collect?rcb=10&frm=0&ae=g&auid=218603287.1781274306&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit&scrsrc=www.googletagmanager.com&rnd=1330730415.1781274344&navt=n&npa=0&ep.ads_data_redaction=0&gtm=45He66a1v78814578za200zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938466~115938468~119456239~119456247&apve=1&apvf=f&apvc=1&tft=1781274343670&tfd=835"
+    },
+    {
+      "t": "2026-06-12T14:25:43.777Z",
+      "status": 204,
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885z878814578za20gzb78814578zd78814578&_p=1781274343653&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAACAGQC&are=1&cid=1138758957.1781274306&ec_mode=a&frm=0&ir=1&pscdl=noapi&rcb=18&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=2&tag_exp=115938466~115938468~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&tfd=851"
+    },
+    {
+      "t": "2026-06-12T14:25:43.777Z",
+      "status": 204,
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885z878814578za20gzb78814578zd78814578&_p=1781274343653&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAAAAGQC&are=1&cid=1138758957.1781274306&ec_mode=a&frm=0&ir=1&pscdl=noapi&rcb=18&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=1&tag_exp=115938466~115938468~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&tfd=849"
+    },
+    {
+      "t": "2026-06-12T14:25:43.786Z",
+      "status": 200,
+      "url": "https://www.google.com/ccm/collect?rcb=0&frm=0&ae=g&auid=218603287.1781274306&dt=Dom%C3%ADnio%20padr%C3%A3o&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit&scrsrc=www.googletagmanager.com&rnd=1330730415.1781274344&navt=n&npa=0&_tu=CA&gtm=45be66a1v9178419319z878814578za20gzb78814578zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616986~115938466~115938468~119456239~119456247&apve=1&apvf=f&apvc=0&tids=AW-940863039&tid=AW-940863039&tft=1781274343702&tfd=868"
+    },
+    {
+      "t": "2026-06-12T14:25:43.787Z",
+      "status": 200,
+      "url": "https://www.google.com/rmkt/collect/940863039/?random=1781274343699&cv=11&fst=1781274343699&fmt=8&bg=ffffff&guid=ON&async=1&gtm=45be66a1v9178419319z878814578za20gzb78814578zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115616986~115938466~115938468~119456239~119456247&u_w=1440&u_h=900&url=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&rcb=0&frm=0&tiba=Dom%C3%ADnio%20padr%C3%A3o&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=218603287.1781274306&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uamb=0&uam=&uap=Windows&uapv=19.0.0&uaw=0&_tu=CA&ept=68&gcp=5"
+    },
+    {
+      "t": "2026-06-12T14:25:45.139Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2303&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=92f1a1e07321264d&ht=1&af=err,spa,xhr,stn,ins&ap=514&be=655&fe=1065&dc=285&fsh=0&perf=%7B%22timing%22:%7B%22of%22:1781274342835,%22n%22:0,%22u%22:664,%22ue%22:664,%22f%22:0,%22dn%22:0,%22dne%22:0,%22c%22:0,%22s%22:0,%22ce%22:0,%22rq%22:1,%22rp%22:656,%22rpe%22:910,%22di%22:917,%22ds%22:922,%22de%22:940,%22dc%22:1716,%22l%22:1716,%22le%22:1720%7D,%22navigation%22:%7B%7D%7D&fp=860&fcp=860&timestamp=1781274343625",
+      "body": "{\"ja\":{\"webdriverDetected\":true}}"
+    },
+    {
+      "t": "2026-06-12T14:25:45.274Z",
+      "status": 200,
+      "url": "https://bam.nr-data.net/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2303&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=92f1a1e07321264d&ht=1&af=err,spa,xhr,stn,ins&ap=514&be=655&fe=1065&dc=285&fsh=0&perf=%7B%22timing%22:%7B%22of%22:1781274342835,%22n%22:0,%22u%22:664,%22ue%22:664,%22f%22:0,%22dn%22:0,%22dne%22:0,%22c%22:0,%22s%22:0,%22ce%22:0,%22rq%22:1,%22rp%22:656,%22rpe%22:910,%22di%22:917,%22ds%22:922,%22de%22:940,%22dc%22:1716,%22l%22:1716,%22le%22:1720%7D,%22navigation%22:%7B%7D%7D&fp=860&fcp=860&timestamp=1781274343625"
+    },
+    {
+      "t": "2026-06-12T14:25:45.274Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/browser/blobs?browser_monitoring_key=NRJS-9eb7d7839e467b923f5&type=BrowserSessionChunk&app_id=1071860387&protocol_version=0&timestamp=1781274341322&attributes=entityGuid%3DNDc5NzY3OXxCUk9XU0VSfEFQUExJQ0FUSU9OfDExMzQ2OTM4NTA%26harvestId%3D0c7b4cb2af1997c0_92f1a1e07321264d_1%26trace.firstTimestamp%3D1781274341322%26trace.lastTimestamp%3D1781274343042%26trace.nodes%3D162%26trace.originTimestamp%3D1781274341322%26agentVersion%3D1.316.0%26ptid%3D92f1a1e07321264d%26session%3D0c7b4cb2af1997c0%26currentUrl%3D/o/37061/contents/807533/edit",
+      "body": "[{\"n\":\"unloadEventStart\",\"s\":664,\"e\":664,\"o\":\"document\",\"t\":\"timing\"},{\"n\":\"unloadEventEnd\",\"s\":664,\"e\":664,\"o\":\"document\",\"t\":\"timing\"},{\"n\":\"domInteractive\",\"s\":917,\"e\":917,\"o\":\"document\",\"t\":\"timing\"},{\"n\":\"domContentLoadedEventStart\",\"s\":922,\"e\":922,\"o\":\"document\",\"t\":\"timing\"},{\"n\":\"domContentL"
+    },
+    {
+      "t": "2026-06-12T14:25:45.274Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/browser/blobs?browser_monitoring_key=NRJS-9eb7d7839e467b923f5&type=BrowserSessionChunk&app_id=1071860387&protocol_version=0&timestamp=1781274342203&attributes=entityGuid%3DNDc5NzY3OXxCUk9XU0VSfEFQUExJQ0FUSU9OfDExMzQ2OTM4NTA%26harvestId%3D0c7b4cb2af1997c0_92f1a1e07321264d_2%26trace.firstTimestamp%3D1781274342203%26trace.lastTimestamp%3D1781274343015%26trace.nodes%3D134%26trace.originTimestamp%3D1781274341322%26agentVersion%3D1.316.0%26ptid%3D92f1a1e07321264d%26session%3D0c7b4cb2af1997c0%26currentUrl%3D/o/37061/contents/807533/edit",
+      "body": "[{\"n\":\"script\",\"s\":946,\"e\":1090,\"o\":\"https://cdn-stage.twygo.com:443/vite/assets/index-CCA4AljD.min.js\",\"t\":\"resource\"},{\"n\":\"script\",\"s\":946,\"e\":1096,\"o\":\"https://cdn-stage.twygo.com:443/vite/assets/chunk-K7XRJ7NL-B0FjN2Iq.min.js\",\"t\":\"resource\"},{\"n\":\"script\",\"s\":946,\"e\":1096,\"o\":\"https://cdn-stag"
+    },
+    {
+      "t": "2026-06-12T14:25:45.276Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2440&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=92f1a1e07321264d&ht=1",
+      "body": "bel.6;e,'fp,nw,5;5,'pageUrl,'https://novoestudio.stage.twygoead.com/o/37061/contents/807533/edit;5,'net-etype,'4g;6,'net-dlink,10.;6,'cls,0.04512195644718793;7,'webdriverDetected;e,'fcp,nw,8;6,'timeToFirstByte,655.5999999998603;6,'firstByteToFCP,204.4000000001397;5,'loadState,'loading;5,1,2;5,3,4;6,"
+    },
+    {
+      "t": "2026-06-12T14:25:45.276Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/jserrors/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2441&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=92f1a1e07321264d&ht=1",
+      "body": "{\"xhr\":[{\"params\":{\"hostname\":\"www.google.com\",\"port\":\"443\",\"protocol\":\"https\",\"host\":\"www.google.com:443\",\"pathname\":\"/ccm/collect\",\"method\":\"POST\",\"status\":0},\"metrics\":{\"count\":2,\"txSize\":{\"t\":0,\"min\":0,\"max\":0,\"sos\":0,\"c\":2},\"rxSize\":{\"c\":2},\"duration\":{\"t\":146,\"min\":64,\"max\":82,\"sos\":10820,\"c\":"
+    },
+    {
+      "t": "2026-06-12T14:25:45.276Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2441&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=92f1a1e07321264d&ht=1",
+      "body": "bel.7;1,9,,1bs,,,'initialPageLoad,'https://novoestudio.stage.twygoead.com/o/37061/contents/807533/edit,,1,,,,ea,!!'8ee1a3b6-e21a-484c-b269-34f1a291ed91,'1,nw,nw;7,'webdriverDetected;2,1,n7,1s,,,'POST,,'www.google.com:443,'/ccm/collect,,,1,'2,!!!;5,'ajaxRequest.id,'8a57780a-8a42-4ba1-bd79-1ae285ff7d9"
+    },
+    {
+      "t": "2026-06-12T14:25:45.277Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2442&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=92f1a1e07321264d&ht=1",
+      "body": "bel.7;2,1,1c4,71,,,'POST,5o,'px.ads.linkedin.com:443,'/wa/,bs,,1,'0,!!!;5,'ajaxRequest.id,'4de49dec-3bd2-4eba-a438-91804c5b25d4;2,1,9q,4g,,,0,5o,'a.clarity.ms:443,'/collect,80a2,,,3,!!!;5,4,'cdd1f4e0-8e77-42cb-a7b5-acd708bcba9c;2,1,8g,5w,,,'GET,5k,'novoestudio.stage.twygoead.com:443,'/api/v1/o/37061"
+    },
+    {
+      "t": "2026-06-12T14:25:45.278Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/browser/blobs?browser_monitoring_key=NRJS-9eb7d7839e467b923f5&type=BrowserSessionChunk&app_id=1071860387&protocol_version=0&timestamp=1781274342157&attributes=entityGuid%3DNDc5NzY3OXxCUk9XU0VSfEFQUExJQ0FUSU9OfDExMzQ2OTM4NTA%26harvestId%3D0c7b4cb2af1997c0_92f1a1e07321264d_3%26trace.firstTimestamp%3D1781274342157%26trace.lastTimestamp%3D1781274343755%26trace.nodes%3D130%26trace.originTimestamp%3D1781274341322%26agentVersion%3D1.316.0%26ptid%3D92f1a1e07321264d%26session%3D0c7b4cb2af1997c0%26currentUrl%3D/o/37061/contents/807533/edit",
+      "body": "[{\"n\":\"script\",\"s\":965,\"e\":1427,\"o\":\"https://cdn-stage.twygo.com:443/vite/assets/get-activity-factory-Bv_tVJvJ.min.js\",\"t\":\"resource\"},{\"n\":\"script\",\"s\":965,\"e\":1427,\"o\":\"https://cdn-stage.twygo.com:443/vite/assets/Timeline-BHqzLZRV.min.js\",\"t\":\"resource\"},{\"n\":\"script\",\"s\":965,\"e\":1428,\"o\":\"https:/"
+    },
+    {
+      "t": "2026-06-12T14:25:45.404Z",
+      "status": 200,
+      "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2441&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=92f1a1e07321264d&ht=1"
+    },
+    {
+      "t": "2026-06-12T14:25:45.404Z",
+      "status": 200,
+      "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2440&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=92f1a1e07321264d&ht=1"
+    },
+    {
+      "t": "2026-06-12T14:25:45.405Z",
+      "status": 200,
+      "url": "https://bam.nr-data.net/jserrors/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2441&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=92f1a1e07321264d&ht=1"
+    },
+    {
+      "t": "2026-06-12T14:25:45.408Z",
+      "status": 200,
+      "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=2442&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=92f1a1e07321264d&ht=1"
+    },
+    {
+      "t": "2026-06-12T14:25:45.408Z",
+      "status": 200,
+      "url": "https://bam.nr-data.net/browser/blobs?browser_monitoring_key=NRJS-9eb7d7839e467b923f5&type=BrowserSessionChunk&app_id=1071860387&protocol_version=0&timestamp=1781274341322&attributes=entityGuid%3DNDc5NzY3OXxCUk9XU0VSfEFQUExJQ0FUSU9OfDExMzQ2OTM4NTA%26harvestId%3D0c7b4cb2af1997c0_92f1a1e07321264d_1%26trace.firstTimestamp%3D1781274341322%26trace.lastTimestamp%3D1781274343042%26trace.nodes%3D162%26trace.originTimestamp%3D1781274341322%26agentVersion%3D1.316.0%26ptid%3D92f1a1e07321264d%26session%3D0c7b4cb2af1997c0%26currentUrl%3D/o/37061/contents/807533/edit"
+    },
+    {
+      "t": "2026-06-12T14:25:45.420Z",
+      "status": 200,
+      "url": "https://bam.nr-data.net/browser/blobs?browser_monitoring_key=NRJS-9eb7d7839e467b923f5&type=BrowserSessionChunk&app_id=1071860387&protocol_version=0&timestamp=1781274342203&attributes=entityGuid%3DNDc5NzY3OXxCUk9XU0VSfEFQUExJQ0FUSU9OfDExMzQ2OTM4NTA%26harvestId%3D0c7b4cb2af1997c0_92f1a1e07321264d_2%26trace.firstTimestamp%3D1781274342203%26trace.lastTimestamp%3D1781274343015%26trace.nodes%3D134%26trace.originTimestamp%3D1781274341322%26agentVersion%3D1.316.0%26ptid%3D92f1a1e07321264d%26session%3D0c7b4cb2af1997c0%26currentUrl%3D/o/37061/contents/807533/edit"
+    },
+    {
+      "t": "2026-06-12T14:25:45.575Z",
+      "status": 200,
+      "url": "https://bam.nr-data.net/browser/blobs?browser_monitoring_key=NRJS-9eb7d7839e467b923f5&type=BrowserSessionChunk&app_id=1071860387&protocol_version=0&timestamp=1781274342157&attributes=entityGuid%3DNDc5NzY3OXxCUk9XU0VSfEFQUExJQ0FUSU9OfDExMzQ2OTM4NTA%26harvestId%3D0c7b4cb2af1997c0_92f1a1e07321264d_3%26trace.firstTimestamp%3D1781274342157%26trace.lastTimestamp%3D1781274343755%26trace.nodes%3D130%26trace.originTimestamp%3D1781274341322%26agentVersion%3D1.316.0%26ptid%3D92f1a1e07321264d%26session%3D0c7b4cb2af1997c0%26currentUrl%3D/o/37061/contents/807533/edit"
+    },
+    {
+      "t": "2026-06-12T14:25:48.699Z",
+      "m": "POST",
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885za20gzb78814578zd78814578&_p=1781274343653&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EEAAAGQC&ae=a&are=1&cid=1138758957.1781274306&frm=0&ir=1&pscdl=noapi&rcb=18&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=3&tag_exp=115938466~115938468~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&dt=Dom%C3%ADnio%20padr%C3%A3o&_tu=CA&en=scroll&epn.percent_scrolled=90&_et=6&tfd=5864",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:25:48.762Z",
+      "status": 204,
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885za20gzb78814578zd78814578&_p=1781274343653&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EEAAAGQC&ae=a&are=1&cid=1138758957.1781274306&frm=0&ir=1&pscdl=noapi&rcb=18&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=3&tag_exp=115938466~115938468~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&dt=Dom%C3%ADnio%20padr%C3%A3o&_tu=CA&en=scroll&epn.percent_scrolled=90&_et=6&tfd=5864"
+    },
+    {
+      "t": "2026-06-12T14:26:03.495Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/browser/blobs?browser_monitoring_key=NRJS-9eb7d7839e467b923f5&type=BrowserSessionChunk&app_id=1071860387&protocol_version=0&timestamp=1781274342316&attributes=entityGuid%3DNDc5NzY3OXxCUk9XU0VSfEFQUExJQ0FUSU9OfDExMzQ2OTM4NTA%26harvestId%3D0c7b4cb2af1997c0_92f1a1e07321264d_4%26trace.firstTimestamp%3D1781274342316%26trace.lastTimestamp%3D1781274361980%26trace.nodes%3D168%26trace.originTimestamp%3D1781274341322%26agentVersion%3D1.316.0%26ptid%3D92f1a1e07321264d%26session%3D0c7b4cb2af1997c0%26currentUrl%3D/o/37061/contents/807533/edit",
+      "body": "[{\"n\":\"load\",\"s\":2449,\"e\":2449,\"o\":\"200 GET: novoestudio.stage.twygoead.com:443/api/v1/o/37061/studio/courses/807533/activities\",\"t\":\"event\"},{\"n\":\"Ajax\",\"s\":2116,\"e\":2449,\"o\":\"200 GET: novoestudio.stage.twygoead.com:443/api/v1/o/37061/studio/courses/807533/activities\",\"t\":\"ajax\"},{\"n\":\"xmlhttpreque"
+    },
+    {
+      "t": "2026-06-12T14:26:03.644Z",
+      "status": 200,
+      "url": "https://bam.nr-data.net/browser/blobs?browser_monitoring_key=NRJS-9eb7d7839e467b923f5&type=BrowserSessionChunk&app_id=1071860387&protocol_version=0&timestamp=1781274342316&attributes=entityGuid%3DNDc5NzY3OXxCUk9XU0VSfEFQUExJQ0FUSU9OfDExMzQ2OTM4NTA%26harvestId%3D0c7b4cb2af1997c0_92f1a1e07321264d_4%26trace.firstTimestamp%3D1781274342316%26trace.lastTimestamp%3D1781274361980%26trace.nodes%3D168%26trace.originTimestamp%3D1781274341322%26agentVersion%3D1.316.0%26ptid%3D92f1a1e07321264d%26session%3D0c7b4cb2af1997c0%26currentUrl%3D/o/37061/contents/807533/edit"
+    },
+    {
+      "t": "2026-06-12T14:26:15.273Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=32436&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=92f1a1e07321264d&ht=1",
+      "body": "bel.6;e,'lcp,1qg,e;6,'timeToFirstByte,655.5999999998603;6,'resourceLoadDelay,0.;6,'resourceLoadDuration,0.;6,'resourceLoadTime,0.;6,'elementRenderDelay,1592.4000000001397;6,'size,10472.;5,'eid;5,'elTag,'P;5,'element,'div.swiper-wrapper>div.swiper-slide.swiper-slide-active>div.css-bne9e5>p.chakra-tex"
+    },
+    {
+      "t": "2026-06-12T14:26:15.274Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/jserrors/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=32437&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=92f1a1e07321264d&ht=1",
+      "body": "{\"xhr\":[{\"params\":{\"method\":\"GET\",\"hostname\":\"novoestudio.stage.twygoead.com\",\"port\":\"443\",\"protocol\":\"https\",\"host\":\"novoestudio.stage.twygoead.com:443\",\"pathname\":\"/api/v1/o/37061/studio/courses/807533/activities\",\"status\":200},\"metrics\":{\"count\":2,\"rxSize\":{\"t\":27811,\"min\":13905,\"max\":13906,\"sos\""
+    },
+    {
+      "t": "2026-06-12T14:26:15.274Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=32437&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=92f1a1e07321264d&ht=1",
+      "body": "bel.7;2,1,1ms,99,,,'GET,5k,'novoestudio.stage.twygoead.com:443,'/api/v1/o/37061/studio/courses/807533/activities,,aqa,,'0,'d4f0df24ff492180,'d87cbce4993aace7db851d856e4d3b82,mqb0r3t9;5,'ajaxRequest.id,'d325c4ec-b17d-4895-89a2-d6f9dee382a6;2,1,ga,4u,,,0,5k,1,'/api/v1/o/37061/copilot/generation_tasks,"
+    },
+    {
+      "t": "2026-06-12T14:26:15.274Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/browser/blobs?browser_monitoring_key=NRJS-9eb7d7839e467b923f5&type=BrowserSessionChunk&app_id=1071860387&protocol_version=0&timestamp=1781274346846&attributes=entityGuid%3DNDc5NzY3OXxCUk9XU0VSfEFQUExJQ0FUSU9OfDExMzQ2OTM4NTA%26harvestId%3D0c7b4cb2af1997c0_92f1a1e07321264d_5%26trace.firstTimestamp%3D1781274346846%26trace.lastTimestamp%3D1781274373641%26trace.nodes%3D63%26trace.originTimestamp%3D1781274341322%26agentVersion%3D1.316.0%26ptid%3D92f1a1e07321264d%26session%3D0c7b4cb2af1997c0%26currentUrl%3D/o/37061/contents/807533/edit",
+      "body": "[{\"n\":\"iframe\",\"s\":20315,\"e\":20658,\"o\":\"https://app.hubspot.com:443/conversations-visitor/44582593/threads/utk/bddc66b00b2c4c8c9e3b787596f3217d\",\"t\":\"resource\"},{\"n\":\"xmlhttprequest\",\"s\":20659,\"e\":20808,\"o\":\"https://bam.nr-data.net:443/browser/blobs\",\"t\":\"resource\"},{\"n\":\"animationiteration\",\"s\":210"
+    },
+    {
+      "t": "2026-06-12T14:26:15.274Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/ins/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=32438&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=92f1a1e07321264d&ht=1",
+      "body": "{\"ins\":[{\"timestamp\":1781274346809,\"pageUrl\":\"https://novoestudio.stage.twygoead.com/o/37061/contents/807533/edit\",\"currentUrl\":\"https://novoestudio.stage.twygoead.com/o/37061/contents/807533/edit\",\"eventType\":\"UserAction\",\"action\":\"scrollend\",\"actionCount\":1,\"actionDuration\":0,\"actionMs\":\"[0]\",\"tar"
+    },
+    {
+      "t": "2026-06-12T14:26:15.398Z",
+      "status": 200,
+      "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=32437&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=92f1a1e07321264d&ht=1"
+    },
+    {
+      "t": "2026-06-12T14:26:15.400Z",
+      "status": 200,
+      "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=32436&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=92f1a1e07321264d&ht=1"
+    },
+    {
+      "t": "2026-06-12T14:26:15.401Z",
+      "status": 204,
+      "url": "https://bam.nr-data.net/ins/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=32438&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=92f1a1e07321264d&ht=1"
+    },
+    {
+      "t": "2026-06-12T14:26:15.404Z",
+      "status": 200,
+      "url": "https://bam.nr-data.net/browser/blobs?browser_monitoring_key=NRJS-9eb7d7839e467b923f5&type=BrowserSessionChunk&app_id=1071860387&protocol_version=0&timestamp=1781274346846&attributes=entityGuid%3DNDc5NzY3OXxCUk9XU0VSfEFQUExJQ0FUSU9OfDExMzQ2OTM4NTA%26harvestId%3D0c7b4cb2af1997c0_92f1a1e07321264d_5%26trace.firstTimestamp%3D1781274346846%26trace.lastTimestamp%3D1781274373641%26trace.nodes%3D63%26trace.originTimestamp%3D1781274341322%26agentVersion%3D1.316.0%26ptid%3D92f1a1e07321264d%26session%3D0c7b4cb2af1997c0%26currentUrl%3D/o/37061/contents/807533/edit"
+    },
+    {
+      "t": "2026-06-12T14:26:15.405Z",
+      "status": 200,
+      "url": "https://bam.nr-data.net/jserrors/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=32437&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=92f1a1e07321264d&ht=1"
+    },
+    {
+      "t": "2026-06-12T14:26:37.853Z",
+      "m": "POST",
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885za20gzb78814578zd78814578&_p=1781274343653&_gaz=1&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAAAAGQC&are=1&cid=1138758957.1781274306&frm=0&ir=1&pscdl=noapi&rcb=18&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=4&tag_exp=115938466~115938468~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&dt=Dom%C3%ADnio%20padr%C3%A3o&en=user_engagement&_et=54146&tfd=55010",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:26:37.853Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=55013&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=92f1a1e07321264d&ht=1",
+      "body": "bel.6;e,'unload,16fx,5;5,'pageUrl,'https://novoestudio.stage.twygoead.com/o/37061/contents/807533/edit;5,'net-etype,'4g;6,'net-dlink,10.;6,'cls,0.04534999517746914;7,'webdriverDetected;e,6,19,9;5,'metricId,'v4-1781274345138-2949711757825;5,'largestShiftTarget,'#wrap;6,'largestShiftTime,21365.;6,'lar"
+    },
+    {
+      "t": "2026-06-12T14:26:37.853Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/jserrors/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=55013&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=92f1a1e07321264d&ht=1",
+      "body": "{\"sm\":[{\"params\":{\"name\":\"Generic/LoaderType/spa/Detected\"},\"stats\":{\"c\":1}},{\"params\":{\"name\":\"Generic/DistMethod/CDN/Detected\"},\"stats\":{\"c\":1}},{\"params\":{\"name\":\"Generic/Runtime/Browser/Detected\"},\"stats\":{\"c\":1}},{\"params\":{\"name\":\"Framework/Jquery/Detected\"},\"stats\":{\"c\":1}},{\"params\":{\"name\":"
+    },
+    {
+      "t": "2026-06-12T14:26:37.853Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/jserrors/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=55013&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=92f1a1e07321264d&ht=1",
+      "body": "{\"xhr\":[{\"params\":{\"method\":\"POST\",\"hostname\":\"bam.nr-data.net\",\"port\":\"443\",\"protocol\":\"https\",\"host\":\"bam.nr-data.net:443\",\"pathname\":\"/events/1/NRJS-9eb7d7839e467b923f5\",\"status\":200},\"metrics\":{\"count\":2,\"txSize\":{\"t\":1402,\"min\":597,\"max\":805,\"sos\":1004434,\"c\":2},\"rxSize\":{\"t\":48,\"min\":24,\"max\":"
+    },
+    {
+      "t": "2026-06-12T14:26:37.853Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/events/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=55014&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=92f1a1e07321264d&ht=1",
+      "body": "bel.7;2,1,4b2,4h,,,'GET,5k,'novoestudio.stage.twygoead.com:443,'/api/v1/o/37061/studio/courses/807533/activities/9295161,,c0,,'0,'7ad924d4050a0562,'403be6e55f45c4e71b5efc2bd77682dc,mqb0r6hj;5,'ajaxRequest.id,'43471ea9-2f1d-4aaf-999f-868d845a9da8;2,1,-1,7c,,,0,5k,1,'/api/v1/e/807533/learn_devise,,f1j"
+    },
+    {
+      "t": "2026-06-12T14:26:37.853Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/browser/blobs?browser_monitoring_key=NRJS-9eb7d7839e467b923f5&type=BrowserSessionChunk&app_id=1071860387&protocol_version=0&timestamp=1781274341367&attributes=entityGuid%3DNDc5NzY3OXxCUk9XU0VSfEFQUExJQ0FUSU9OfDExMzQ2OTM4NTA%26harvestId%3D0c7b4cb2af1997c0_92f1a1e07321264d_6%26trace.firstTimestamp%3D1781274341367%26trace.lastTimestamp%3D1781274396334%26trace.nodes%3D62%26trace.originTimestamp%3D1781274341322%26agentVersion%3D1.316.0%26ptid%3D92f1a1e07321264d%26session%3D0c7b4cb2af1997c0%26currentUrl%3D/o/37061/contents/807533/edit",
+      "body": "[{\"n\":\"load\",\"s\":32563,\"e\":32563,\"o\":\"200 POST: bam.nr-data.net:443/events/1/NRJS-9eb7d7839e467b923f5\",\"t\":\"event\"},{\"n\":\"loadend\",\"s\":32563,\"e\":32563,\"o\":\"200 POST: bam.nr-data.net:443/events/1/NRJS-9eb7d7839e467b923f5\",\"t\":\"event\"},{\"n\":\"xmlhttprequest\",\"s\":32437,\"e\":32562,\"o\":\"https://bam.nr-data"
+    },
+    {
+      "t": "2026-06-12T14:26:37.853Z",
+      "m": "POST",
+      "url": "https://bam.nr-data.net/ins/1/NRJS-9eb7d7839e467b923f5?a=1071860387&v=1.316.0&to=c15WFUoJD1VVRUtWRlVfTBIXAwdQRA%3D%3D&rst=55014&ck=0&s=0c7b4cb2af1997c0&ref=/o/37061/contents/807533/edit&ptid=92f1a1e07321264d&ht=1",
+      "body": "{\"ins\":[{\"timestamp\":1781274346846,\"pageUrl\":\"https://novoestudio.stage.twygoead.com/o/37061/contents/807533/edit\",\"currentUrl\":\"https://novoestudio.stage.twygoead.com/o/37061/contents/807533/edit\",\"eventType\":\"UserAction\",\"action\":\"click\",\"actionCount\":1,\"actionDuration\":0,\"actionMs\":\"[0]\",\"target\""
+    },
+    {
+      "t": "2026-06-12T14:26:37.857Z",
+      "m": "POST",
+      "url": "https://www.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885za20gzb78814578zd78814578&_p=1781274343653&_gaz=1&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAAAAGQC&are=1&cid=1138758957.1781274306&frm=0&ir=1&pscdl=noapi&rcb=18&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=3&_s=4&tag_exp=115938466%7E115938468%7E119456239%7E119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&dt=Dom%C3%ADnio+padr%C3%A3o&en=user_engagement&_et=54146&tfd=55010",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:26:38.059Z",
+      "m": "POST",
+      "url": "https://www.google.com/ccm/collect?rcb=11&frm=0&ae=g&auid=218603287.1781274306&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit&scrsrc=www.googletagmanager.com&rnd=1561665252.1781274398&navt=n&npa=0&ep.ads_data_redaction=0&gtm=45He66a1v78814578za200zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938466~115938468~119456239~119456247&apve=1&apvf=f&apvc=1&tft=1781274398057&tfd=1042",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:26:38.089Z",
+      "m": "POST",
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885z878814578za20gzb78814578zd78814578&_p=1781274398036&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAAAAGQC&are=1&cid=1138758957.1781274306&ec_mode=a&frm=0&ir=1&pscdl=noapi&rcb=11&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=1&tag_exp=115616986~115938466~115938469~117776793~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&tfd=1069",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:26:38.089Z",
+      "m": "POST",
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885z878814578za20gzb78814578zd78814578&_p=1781274398036&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAACAGQC&are=1&cid=1138758957.1781274306&ec_mode=a&frm=0&ir=1&pscdl=noapi&rcb=11&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=2&tag_exp=115616986~115938466~115938469~117776793~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&_et=1&tfd=1073",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:26:38.133Z",
+      "status": 200,
+      "url": "https://www.google.com/ccm/collect?rcb=11&frm=0&ae=g&auid=218603287.1781274306&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit&scrsrc=www.googletagmanager.com&rnd=1561665252.1781274398&navt=n&npa=0&ep.ads_data_redaction=0&gtm=45He66a1v78814578za200zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938466~115938468~119456239~119456247&apve=1&apvf=f&apvc=1&tft=1781274398057&tfd=1042"
+    },
+    {
+      "t": "2026-06-12T14:26:38.166Z",
+      "m": "POST",
+      "url": "https://www.google.com/rmkt/collect/940863039/?random=1781274398162&cv=11&fst=1781274398162&fmt=8&bg=ffffff&guid=ON&async=1&gtm=45be66a1v9178419319z878814578za20gzb78814578zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938466~115938469~119456239~119456247&u_w=1440&u_h=900&url=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&rcb=1&frm=0&tiba=Dom%C3%ADnio%20padr%C3%A3o&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=218603287.1781274306&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uamb=0&uam=&uap=Windows&uapv=19.0.0&uaw=0&_tu=CA&ept=68&gcp=5",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:26:38.166Z",
+      "m": "POST",
+      "url": "https://www.google.com/ccm/collect?rcb=1&frm=0&ae=g&auid=218603287.1781274306&dt=Dom%C3%ADnio%20padr%C3%A3o&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit&scrsrc=www.googletagmanager.com&rnd=1561665252.1781274398&navt=n&npa=0&_tu=CA&gtm=45be66a1v9178419319z878814578za20gzb78814578zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938466~115938469~119456239~119456247&apve=1&apvf=f&apvc=0&tids=AW-940863039&tid=AW-940863039&tft=1781274398165&tfd=1150",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:26:38.166Z",
+      "status": 204,
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885z878814578za20gzb78814578zd78814578&_p=1781274398036&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAAAAGQC&are=1&cid=1138758957.1781274306&ec_mode=a&frm=0&ir=1&pscdl=noapi&rcb=11&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=1&tag_exp=115616986~115938466~115938469~117776793~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&tfd=1069"
+    },
+    {
+      "t": "2026-06-12T14:26:38.167Z",
+      "status": 204,
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885z878814578za20gzb78814578zd78814578&_p=1781274398036&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EAACAGQC&are=1&cid=1138758957.1781274306&ec_mode=a&frm=0&ir=1&pscdl=noapi&rcb=11&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=2&tag_exp=115616986~115938466~115938469~117776793~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&dt=Dom%C3%ADnio%20padr%C3%A3o&en=page_view&_et=1&tfd=1073"
+    },
+    {
+      "t": "2026-06-12T14:26:38.238Z",
+      "status": 200,
+      "url": "https://www.google.com/ccm/collect?rcb=1&frm=0&ae=g&auid=218603287.1781274306&dt=Dom%C3%ADnio%20padr%C3%A3o&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit&scrsrc=www.googletagmanager.com&rnd=1561665252.1781274398&navt=n&npa=0&_tu=CA&gtm=45be66a1v9178419319z878814578za20gzb78814578zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938466~115938469~119456239~119456247&apve=1&apvf=f&apvc=0&tids=AW-940863039&tid=AW-940863039&tft=1781274398165&tfd=1150"
+    },
+    {
+      "t": "2026-06-12T14:26:38.238Z",
+      "status": 200,
+      "url": "https://www.google.com/rmkt/collect/940863039/?random=1781274398162&cv=11&fst=1781274398162&fmt=8&bg=ffffff&guid=ON&async=1&gtm=45be66a1v9178419319z878814578za20gzb78814578zd78814578xea&gcd=13l3l3l3l1l1&dma=0&tag_exp=115938466~115938469~119456239~119456247&u_w=1440&u_h=900&url=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&rcb=1&frm=0&tiba=Dom%C3%ADnio%20padr%C3%A3o&hn=www.googleadservices.com&npa=0&pscdl=noapi&auid=218603287.1781274306&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uamb=0&uam=&uap=Windows&uapv=19.0.0&uaw=0&_tu=CA&ept=68&gcp=5"
+    },
+    {
+      "t": "2026-06-12T14:26:43.094Z",
+      "m": "POST",
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885za20gzb78814578zd78814578&_p=1781274398036&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EEAAAGQC&ae=a&are=1&cid=1138758957.1781274306&frm=0&ir=1&pscdl=noapi&rcb=11&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=3&tag_exp=115616986~115938466~115938469~117776793~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&dt=Dom%C3%ADnio%20padr%C3%A3o&_tu=CA&en=scroll&epn.percent_scrolled=90&_et=2&tfd=6078",
+      "body": null
+    },
+    {
+      "t": "2026-06-12T14:26:43.160Z",
+      "status": 204,
+      "url": "https://analytics.google.com/g/collect?v=2&tid=G-RD7B5K6ZK4&gtm=45je66a1v884816885za20gzb78814578zd78814578&_p=1781274398036&gcd=13l3l3l3l1l1&npa=0&dma=0&ecid=84656696&_eu=EEAAAGQC&ae=a&are=1&cid=1138758957.1781274306&frm=0&ir=1&pscdl=noapi&rcb=11&sr=1440x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B147.0.7727.15%7CNot.A%252FBrand%3B8.0.0.0%7CChromium%3B147.0.7727.15&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=pt-br&gaf=2&_s=3&tag_exp=115616986~115938466~115938469~117776793~119456239~119456247&sid=1781274306&sct=1&seg=1&dl=https%3A%2F%2Fnovoestudio.stage.twygoead.com%2Fo%2F37061%2Fcontents%2F807533%2Fedit%3Ftab%3Dstudio&dt=Dom%C3%ADnio%20padr%C3%A3o&_tu=CA&en=scroll&epn.percent_scrolled=90&_et=2&tfd=6078"
+    }
+  ]
+}

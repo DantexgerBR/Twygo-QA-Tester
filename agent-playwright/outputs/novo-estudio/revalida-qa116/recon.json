@@ -1,0 +1,257 @@
+{
+  "topoEstudio": {
+    "matches": [],
+    "topoBotoes": [
+      {
+        "txt": "leaderboard\n\n\n\nDashboard",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "school\n\n\n\n\nAprendizagem",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "format_list_bulleted_add\n\n\nConteúdos",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "send\n\n\nCompartilhamentos",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "description\n\n\nRegistros\n\nBETA",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "workspace_premium\n\n\nCertificados",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "browse\n\n\nModelos de conteúdo",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "folder_open\n\n\nBase de conhecimento",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "group\n\n\n\nUsuários",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "work\n\n\n\nEmpresas",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "live_help\n\n\n\nQuestionários",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "groups\n\n\n\nComunidades",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "psychology\n\n\n\n\nSkills\n\nBETA",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "lan\n\n\nOrganograma",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "badge\n\n\nFunções de negócio",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "award_star\n\n\nCompetências",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "monitoring\n\n\n\n\nPlanos e Metas\n\nBETA",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "track_changes\n\n\nPDI",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "Configurações",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "Organização",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "Navegação",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "electrical_services\n\n\nIntegrações",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "flash_auto\n\n\nPiloto automático",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "Regras do Jogo",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "Comunicação",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "sell\n\n\nCobrança de inscrição",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "credit_card\n\n\nPlano e assinatura",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "Segurança\n\nNOVO",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "smart_toy\n\n\n\nControle de IA\n\nBETA",
+        "aria": null,
+        "tid": null
+      },
+      {
+        "txt": "palette\n\n\nAparência",
+        "aria": null,
+        "tid": null
+      }
+    ]
+  },
+  "menusHeader": [
+    {
+      "txt": "Adicionar",
+      "aria": null,
+      "tid": "creation-studio-activity-add-button"
+    },
+    {
+      "txt": "",
+      "aria": "Recolher lista de atividades",
+      "tid": "creation-studio-activities-list-collapse"
+    },
+    {
+      "txt": "Concluir geração com IA",
+      "aria": null,
+      "tid": "creation-studio-preview-complete-with-ai"
+    },
+    {
+      "txt": "",
+      "aria": "Liberar atividade",
+      "tid": "creation-studio-preview-toggle-status"
+    },
+    {
+      "txt": "",
+      "aria": "Excluir",
+      "tid": "creation-studio-preview-delete"
+    },
+    {
+      "txt": "",
+      "aria": "Abrir copiloto",
+      "tid": "copilot-drawer-toggle"
+    }
+  ],
+  "lesson_9289484": {
+    "renderHits": [],
+    "botoesVisiveis": [
+      "school",
+      "Administrador",
+      "Voltar",
+      "Dados",
+      "Conteúdo",
+      "Parágrafo",
+      "more_horiz",
+      "Parágrafo",
+      "Parágrafo",
+      "Título 1",
+      "Título 2",
+      "Título 3",
+      "Tabela",
+      "Código",
+      "Citação",
+      "Divisor",
+      "Lista com marcadores",
+      "Lista numerada",
+      "Lista de tarefas",
+      "Lista de alternantes",
+      "Imagem",
+      "Vídeo",
+      "Áudio",
+      "Índice",
+      "Colunas"
+    ],
+    "url": "/o/37061/studio/activities/9289484/edit?type=lesson&eventId=807533"
+  },
+  "lesson_9295166": {
+    "renderHits": [],
+    "botoesVisiveis": [
+      "school",
+      "Administrador",
+      "Voltar",
+      "Dados",
+      "Conteúdo",
+      "Parágrafo",
+      "more_horiz",
+      "Parágrafo",
+      "Parágrafo",
+      "Título 1",
+      "Título 2",
+      "Título 3",
+      "Tabela",
+      "Código",
+      "Citação",
+      "Divisor",
+      "Lista com marcadores",
+      "Lista numerada",
+      "Lista de tarefas",
+      "Lista de alternantes",
+      "Imagem",
+      "Vídeo",
+      "Áudio",
+      "Índice",
+      "Colunas"
+    ],
+    "url": "/o/37061/studio/activities/9295166/edit?type=lesson&eventId=807533"
+  },
+  "flipper_novo_estudio_criacao": {
+    "corpo": "STAGE\n1.4.2 available!\nFeatures\nSettings\nDocs • Version: 1.3.0\nnovo_estudio_criacao\n Conditionally enabled\nEnabled for 8 actors\nAdd an actor\nOrganization;36952\nRemove\nOrganization;37063\nRemove\nOrganization;36602\nRemove\nOrganization;37061\nRemove\nOrganization;36675\nRemove\nOrganization;36863\nRemove\nOrganization;37062\nRemove\nOrganization;37068\nRemove\nNo groups enabled\nAdd a group\nEnabled for 0% of actors\nEdit\nEnabled for 0% of time\nEdit\nFully Enable\nDisable\nDanger Zone\n\nDeleting a feature removes it from the list of features and disables it for everyone.\n\nDelete"
+  },
+  "flipper_creation_studio": {
+    "corpo": "STAGE\n1.4.2 available!\nFeatures\nSettings\nDocs • Version: 1.3.0\ncreation_studio\n Disabled\nNo actors enabled\nAdd an actor\nNo groups enabled\nAdd a group\nEnabled for 0% of actors\nEdit\nEnabled for 0% of time\nEdit\nFully Enable\nDanger Zone\n\nDeleting a feature removes it from the list of features and disables it for everyone.\n\nDelete"
+  }
+}

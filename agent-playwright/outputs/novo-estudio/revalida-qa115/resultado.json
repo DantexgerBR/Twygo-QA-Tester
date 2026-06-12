@@ -1,0 +1,55 @@
+{
+  "flagOn": {
+    "org": "37063",
+    "criacao": {
+      "url": "/o/37063/contents/new?kind=course",
+      "tabs": [
+        "tab-identification",
+        "tab-modelo",
+        "tab-access",
+        "tab-banner",
+        "tab-approval",
+        "tab-charge",
+        "tab-location",
+        "tab-dashboard",
+        "tab-share",
+        "tab-studio"
+      ],
+      "formCarregou": true
+    },
+    "cursoId": null,
+    "edicao": null
+  },
+  "flagOff": {
+    "org": "36912",
+    "criacao": {
+      "url": "/o/36912/contents/new?kind=course",
+      "tabs": [
+        "tab-identification",
+        "tab-access",
+        "tab-banner",
+        "tab-approval",
+        "tab-charge",
+        "tab-location",
+        "tab-dashboard",
+        "tab-share"
+      ],
+      "formCarregou": true
+    },
+    "cursoId": "798475",
+    "edicao": {
+      "url": "/o/36912/contents/798475/edit",
+      "tabs": [
+        "tab-identification",
+        "tab-access",
+        "tab-banner",
+        "tab-approval",
+        "tab-charge",
+        "tab-location",
+        "tab-dashboard",
+        "tab-share"
+      ]
+    }
+  },
+  "passou": true
+}

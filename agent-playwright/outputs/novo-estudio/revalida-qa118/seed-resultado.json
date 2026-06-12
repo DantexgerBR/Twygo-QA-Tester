@@ -1,0 +1,19 @@
+{
+  "ck": "ok",
+  "cursoId": "807988",
+  "pageActivityId": "9296214",
+  "geracaoDisparada": true,
+  "geracaoCompletou": true,
+  "rede": [
+    ">> POST https://jnn-pa.googleapis.com/$rpc/google.internal.waa.v1.Waa/GenerateIT",
+    ">> POST https://jnn-pa.googleapis.com/$rpc/google.internal.waa.v1.Waa/GenerateIT",
+    ">> POST https://jnn-pa.googleapis.com/$rpc/google.internal.waa.v1.Waa/GenerateIT",
+    "<< 200 https://jnn-pa.googleapis.com/$rpc/google.internal.waa.v1.Waa/GenerateIT",
+    "<< 200 https://jnn-pa.googleapis.com/$rpc/google.internal.waa.v1.Waa/GenerateIT",
+    "<< 200 https://jnn-pa.googleapis.com/$rpc/google.internal.waa.v1.Waa/GenerateIT",
+    ">> POST /api/v1/o/37062/copilot/conversations",
+    "<< 201 /api/v1/o/37062/copilot/conversations",
+    ">> POST /api/v1/o/37062/copilot/conversations/f6479bc6-669c-429a-9d71-b976720eee6c/messages",
+    "<< 200 /api/v1/o/37062/copilot/conversations/f6479bc6-669c-429a-9d71-b976720eee6c/messages"
+  ]
+}
