@@ -1,0 +1,44 @@
+{
+  "card": 19814,
+  "alvo": "painel da lista de atividades do Estúdio (correção do Dante)",
+  "env": "https://novoestudio.stage.twygoead.com",
+  "org": "37061",
+  "content": "807533",
+  "expandido": {
+    "listaVisivel": true,
+    "larguraLista": 359,
+    "botaoRecolherVisivel": true,
+    "botaoRecolherAria": "Recolher lista de atividades",
+    "botaoExpandirVisivel": false,
+    "botaoExpandirAria": null,
+    "elementosClicaveisColunaEsq": 28
+  },
+  "recolhido": {
+    "listaVisivel": false,
+    "larguraLista": null,
+    "botaoRecolherVisivel": false,
+    "botaoRecolherAria": null,
+    "botaoExpandirVisivel": true,
+    "botaoExpandirAria": "Expandir lista de atividades",
+    "elementosClicaveisColunaEsq": 2
+  },
+  "railRecolhido": [
+    {
+      "aria": "Expandir lista de atividades",
+      "tid": "creation-studio-activities-list-expand",
+      "txt": ""
+    }
+  ],
+  "controlesOcultar": [],
+  "temBotaoExpandir": true,
+  "reexpandido": {
+    "listaVisivel": true,
+    "larguraLista": 359,
+    "botaoRecolherVisivel": true,
+    "botaoRecolherAria": "Recolher lista de atividades",
+    "botaoExpandirVisivel": false,
+    "botaoExpandirAria": null,
+    "elementosClicaveisColunaEsq": 28
+  },
+  "colapsoFunciona": true
+}
