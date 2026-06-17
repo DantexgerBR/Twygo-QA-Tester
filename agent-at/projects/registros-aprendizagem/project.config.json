@@ -1,0 +1,30 @@
+{
+  "name": "Registros de Aprendizagem",
+  "slug": "registros-aprendizagem",
+  "description": "Análise de Teste do projeto 'Registros de Aprendizagem' (LMS) da Twygo — listagens por perfil, KPI cards, CRUD de registros, avaliação, evidências, histórico, filtros, ações em massa, extração, provedores, IA e regras transversais.",
+  "environment": "staging-registros-aprendizagem",
+  "envSecondary": null,
+  "prototypeUrl": "http://localhost:5173/",
+  "prototypeScreens": [
+    "Meu histórico (Aluno) - listagem + KPI clicável",
+    "Aprendizagem > Registros (Admin/Líder) - listagem + KPI estático",
+    "Aprendizagem > Provedores - listagem CRUD",
+    "Form Adicionar registro (aluno e admin)",
+    "Form Avaliar registro + modal de recusa",
+    "Drawer Lista de filtros + Filtro rápido",
+    "Drawer Ações em massa",
+    "Drawer Configurações da extração",
+    "Drawer Evidências",
+    "Drawer Histórico"
+  ],
+  "sourceDocs": [
+    "docs/Documentação completa - Registros de Aprendizagem.md",
+    "docs/[Discovery] Registros de Aprendizagem - v02 25.05.2026.md",
+    "docs/[Spike] Registros de Aprendizagem.md",
+    "docs/Registros de Aprendizagem.xlsx",
+    "docs/extract.md",
+    "docs/spike-mass-download-certificates.md"
+  ],
+  "contractVersion": "1.1",
+  "atVersion": 1
+}
