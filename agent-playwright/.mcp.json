@@ -7,7 +7,7 @@
         "run-test-mcp-server"
       ],
       "env": {
-        "PROJECT": "modelos"
+        "PROJECT": "registros-externos"
       }
     },
     "chrome-devtools": {

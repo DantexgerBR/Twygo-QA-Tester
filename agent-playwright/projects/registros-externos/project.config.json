@@ -1,0 +1,46 @@
+{
+  "projectName": "Registros de Aprendizagem",
+  "testAnalysisFile": "inputs/test-analysis.md",
+  "environment": "staging-registros-externos",
+  "browsers": ["chromium"],
+  "headless": true,
+  "reporting": {
+    "format": "html",
+    "outputDir": "outputs",
+    "screenshotsOnFailure": true
+  },
+  "performance": {
+    "enableTracing": true,
+    "enableVideo": true
+  },
+  "codeGeneration": {
+    "pagesDir": "pages",
+    "featuresDir": "tests/features",
+    "overwriteExistingPages": false,
+    "overwriteExistingTests": true
+  },
+  "exploratory": {
+    "enabled": true,
+    "strict": false,
+    "probes": {
+      "consoleErrors": true,
+      "httpErrors": true,
+      "brokenImages": true,
+      "untestedInteractive": true,
+      "a11y": true
+    },
+    "a11yTags": ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "best-practice"],
+    "ignoredHttpStatuses": [],
+    "ignoredHostnames": [],
+    "scopedRoutes": [],
+    "scopedKeywords": [],
+    "activeProbes": {
+      "hoverTooltips": true,
+      "keyboardNav": false,
+      "formEdge": true,
+      "clickabilitySweep": false,
+      "a11yDeep": false,
+      "visualStability": true
+    }
+  }
+}
