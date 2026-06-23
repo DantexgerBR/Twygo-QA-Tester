@@ -1,8 +1,8 @@
 {
   "name": "Registros de Aprendizagem",
-  "slug": "registros-aprendizagem",
+  "slug": "registros-externos",
   "description": "Análise de Teste do projeto 'Registros de Aprendizagem' (LMS) da Twygo — listagens por perfil, KPI cards, CRUD de registros, avaliação, evidências, histórico, filtros, ações em massa, extração, provedores, IA e regras transversais.",
-  "environment": "staging-registros-aprendizagem",
+  "environment": "staging-registros-externos",
   "envSecondary": null,
   "prototypeUrl": "http://localhost:5173/",
   "prototypeScreens": [

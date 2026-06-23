@@ -1,0 +1,11 @@
+{
+  "runId": "atualizacao-de-kpis-em-tempo-real-acoes-expiracao-e-batch_20260622-172949",
+  "mode": "per-suite",
+  "suiteFilter": "Atualização de KPIs em tempo real (ações, expiração e batch)",
+  "projectName": "Registros de Aprendizagem",
+  "environment": "staging-registros-externos",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-06-22T20:29:49.296Z"
+}

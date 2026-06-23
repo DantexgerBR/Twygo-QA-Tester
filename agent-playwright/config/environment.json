@@ -167,6 +167,20 @@
       "editContractPath": "/admin/edit_sys_subscription_settings/37079"
     }
   },
+  "staging-registros-externos-s2": {
+    "baseUrl": "https://registrosf2.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_STAGING_REGISTROS_EXTERNOS_S2_EMAIL}",
+      "password": "${TWYGO_STAGING_REGISTROS_EXTERNOS_S2_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "37079",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/37079"
+    }
+  },
   "staging-registros-externos-aditional": {
     "baseUrl": "https://registrosf2adicional.stage.twygoead.com/",
     "credentials": {

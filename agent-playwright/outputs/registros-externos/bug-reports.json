@@ -1,0 +1,690 @@
+{
+  "generatedAt": "2026-06-22T20:23:42.894Z",
+  "project": "registros-externos",
+  "totalRed": 7,
+  "reports": [
+    {
+      "id": "editar-registro-de-aprendizagem-matriz-perfil-origem-status-e-banners__validar-disponibilidade-do-editar-para-o-aluno-matriz-origem-status",
+      "title": "Validar disponibilidade do \"Editar\" para o Aluno (matriz origem × status) — Error: menu observado: [Editar, Excluir, Visualizar, Evidências, Histórico]",
+      "testsuite": "Editar registro de aprendizagem (matriz perfil × origem × status e banners)",
+      "testcase": "Validar disponibilidade do \"Editar\" para o Aluno (matriz origem × status)",
+      "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc1-disponibilidade-editar-aluno.spec.ts",
+      "status": "failed",
+      "durationMs": 27024,
+      "categoriaSugerida": "inconclusivo",
+      "categoriaConfianca": "baixa",
+      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
+      "severity": "media",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-registros-externos",
+        "baseUrl": "https://registrosf2.stage.twygoead.com/",
+        "orgId": "37079",
+        "browser": "chromium",
+        "user": "richard.sebold@twygo.com"
+      },
+      "buildCommit": "1d6a322",
+      "generatedAt": "2026-06-22T20:23:42.894Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "Entrar como Colaborador e abrir \"Meu histórico\"",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "Menu 3-pontos de um registro Externo Emitido",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: menu observado: [Editar, Excluir, Visualizar, Evidências, Histórico]\n\nexpect(received).not.toContain(expected) // indexOf\n\nExpected value: not \"Editar\"\nReceived array:     [\"Editar\", \"Excluir\", \"Visualizar\", \"Evidências\", \"Histórico\"]",
+      "errorLocation": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc1-disponibilidade-editar-aluno.spec.ts:38:66",
+      "network": [
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=estudio_de_criacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=agente_suporte_ia&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        }
+      ],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-registros-externo-ae6ca-uno-matriz-origem-×-status--chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-ae6ca-uno-matriz-origem-×-status--chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-ae6ca-uno-matriz-origem-×-status--chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-registros-externo-ae6ca-uno-matriz-origem-×-status--chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-registros-externo-ae6ca-uno-matriz-origem-×-status--chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37079",
+        "userId": null
+      }
+    },
+    {
+      "id": "editar-registro-de-aprendizagem-matriz-perfil-origem-status-e-banners__validar-banner-verde-de-registro-emitido",
+      "title": "Validar banner verde de registro Emitido — Error: expect(locator).toBeVisible() failed",
+      "testsuite": "Editar registro de aprendizagem (matriz perfil × origem × status e banners)",
+      "testcase": "Validar banner verde de registro Emitido",
+      "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc10-banner-verde-emitido.spec.ts",
+      "status": "failed",
+      "durationMs": 39367,
+      "categoriaSugerida": "inconclusivo",
+      "categoriaConfianca": "baixa",
+      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
+      "severity": "media",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-registros-externos",
+        "baseUrl": "https://registrosf2.stage.twygoead.com/",
+        "orgId": "37079",
+        "browser": "chromium",
+        "user": "richard.sebold@twygo.com"
+      },
+      "buildCommit": "1d6a322",
+      "generatedAt": "2026-06-22T20:23:42.894Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "Admin: abrir \"Editar\" de um Externo Emitido",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "Banner verde \"Certificado aprovado\" + botão \"Histórico\" (RN46)",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: expect(locator).toBeVisible() failed\n\nLocator: getByText('Certificado aprovado').first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 10000ms\n  - waiting for getByText('Certificado aprovado').first()\n",
+      "errorLocation": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc10-banner-verde-emitido.spec.ts:28:48",
+      "network": [
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        }
+      ],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-registros-externo-176cf-r-verde-de-registro-Emitido-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-176cf-r-verde-de-registro-Emitido-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-176cf-r-verde-de-registro-Emitido-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-registros-externo-176cf-r-verde-de-registro-Emitido-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-registros-externo-176cf-r-verde-de-registro-Emitido-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37079",
+        "userId": null
+      }
+    },
+    {
+      "id": "editar-registro-de-aprendizagem-matriz-perfil-origem-status-e-banners__validar-disponibilidade-do-editar-para-o-admin-matriz-origem-status",
+      "title": "Validar disponibilidade do \"Editar\" para o Admin (matriz origem × status) — Error: Pendente: [Avaliar, Editar, Excluir, Visualizar, Evidências, Histórico]",
+      "testsuite": "Editar registro de aprendizagem (matriz perfil × origem × status e banners)",
+      "testcase": "Validar disponibilidade do \"Editar\" para o Admin (matriz origem × status)",
+      "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc2-disponibilidade-editar-admin.spec.ts",
+      "status": "failed",
+      "durationMs": 26441,
+      "categoriaSugerida": "inconclusivo",
+      "categoriaConfianca": "baixa",
+      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
+      "severity": "media",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-registros-externos",
+        "baseUrl": "https://registrosf2.stage.twygoead.com/",
+        "orgId": "37079",
+        "browser": "chromium",
+        "user": "richard.sebold@twygo.com"
+      },
+      "buildCommit": "1d6a322",
+      "generatedAt": "2026-06-22T20:23:42.894Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "Abrir \"Aprendizagem > Registros\" (Admin)",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "Externo Emitido → \"Editar\" presente, sem \"Avaliar\" (AT TC2.1)",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 3,
+          "action": "Externo Pendente → \"Avaliar\" primário, sem \"Editar\" (AT TC2.4)",
+          "status": "failed",
+          "errorAtStep": true
+        },
+        {
+          "n": 4,
+          "action": "Interno → \"Editar\" NÃO exibido (AT TC2.6)",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: Pendente: [Avaliar, Editar, Excluir, Visualizar, Evidências, Histórico]\n\nexpect(received).not.toContain(expected) // indexOf\n\nExpected value: not \"Editar\"\nReceived array:     [\"Avaliar\", \"Editar\", \"Excluir\", \"Visualizar\", \"Evidências\", \"Histórico\"]",
+      "errorLocation": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc2-disponibilidade-editar-admin.spec.ts:38:65",
+      "network": [
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        }
+      ],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-registros-externo-913c9-min-matriz-origem-×-status--chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-913c9-min-matriz-origem-×-status--chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-913c9-min-matriz-origem-×-status--chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-registros-externo-913c9-min-matriz-origem-×-status--chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-registros-externo-913c9-min-matriz-origem-×-status--chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37079",
+        "userId": null
+      }
+    },
+    {
+      "id": "editar-registro-de-aprendizagem-matriz-perfil-origem-status-e-banners__validar-cabecalhos-do-form-de-edicao-por-perfil",
+      "title": "Validar cabeçalhos do form de edição por perfil — Error: expect(locator).toBeVisible() failed",
+      "testsuite": "Editar registro de aprendizagem (matriz perfil × origem × status e banners)",
+      "testcase": "Validar cabeçalhos do form de edição por perfil",
+      "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc3-cabecalhos-form-por-perfil.spec.ts",
+      "status": "failed",
+      "durationMs": 39437,
+      "categoriaSugerida": "inconclusivo",
+      "categoriaConfianca": "baixa",
+      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
+      "severity": "media",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-registros-externos",
+        "baseUrl": "https://registrosf2.stage.twygoead.com/",
+        "orgId": "37079",
+        "browser": "chromium",
+        "user": "richard.sebold@twygo.com"
+      },
+      "buildCommit": "1d6a322",
+      "generatedAt": "2026-06-22T20:23:42.894Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "Admin: abrir \"Editar\" de um Externo Emitido",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: expect(locator).toBeVisible() failed\n\nLocator: getByText('Editar registro', { exact: true }).first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 10000ms\n  - waiting for getByText('Editar registro', { exact: true }).first()\n",
+      "errorLocation": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc3-cabecalhos-form-por-perfil.spec.ts:27:81",
+      "network": [
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        }
+      ],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-registros-externo-a1028-o-form-de-edição-por-perfil-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-a1028-o-form-de-edição-por-perfil-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-a1028-o-form-de-edição-por-perfil-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-registros-externo-a1028-o-form-de-edição-por-perfil-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-registros-externo-a1028-o-form-de-edição-por-perfil-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37079",
+        "userId": null
+      }
+    },
+    {
+      "id": "editar-registro-de-aprendizagem-matriz-perfil-origem-status-e-banners__validar-pre-populacao-dos-campos-na-edicao",
+      "title": "Validar pré-população dos campos na edição — Error: expect(locator).toHaveValue(expected) failed",
+      "testsuite": "Editar registro de aprendizagem (matriz perfil × origem × status e banners)",
+      "testcase": "Validar pré-população dos campos na edição",
+      "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc4-pre-populacao-campos.spec.ts",
+      "status": "failed",
+      "durationMs": 41162,
+      "categoriaSugerida": "inconclusivo",
+      "categoriaConfianca": "baixa",
+      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
+      "severity": "media",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-registros-externos",
+        "baseUrl": "https://registrosf2.stage.twygoead.com/",
+        "orgId": "37079",
+        "browser": "chromium",
+        "user": "richard.sebold@twygo.com"
+      },
+      "buildCommit": "1d6a322",
+      "generatedAt": "2026-06-22T20:23:42.894Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "Abrir \"Editar\" de um Externo Emitido",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "Datas e carga horária pré-populadas (RN43)",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: expect(locator).toHaveValue(expected) failed\n\nLocator: locator('input[name=\"startDate\"]')\nExpected pattern: /\\d{4}-\\d{2}-\\d{2}/\nReceived string:  \"\"\nTimeout: 10000ms\n\nCall log:\n  - Expect \"toHaveValue\" with timeout 10000ms\n  - waiting for locator('input[name=\"startDate\"]')\n    14 × locator resolved to <input value=\"\" type=\"date\" placeholder=\"\" id=\"startDate\" name=\"startDate\" inputmode=\"text\" autocomplete=\"on\" class=\"chakra-input css-1k4krg8\"/>\n       - unexpected value \"\"\n",
+      "errorLocation": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc4-pre-populacao-campos.spec.ts:30:49",
+      "network": [
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        }
+      ],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-registros-externo-92130-ulação-dos-campos-na-edição-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-92130-ulação-dos-campos-na-edição-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-92130-ulação-dos-campos-na-edição-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-registros-externo-92130-ulação-dos-campos-na-edição-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-registros-externo-92130-ulação-dos-campos-na-edição-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37079",
+        "userId": null
+      }
+    },
+    {
+      "id": "editar-registro-de-aprendizagem-matriz-perfil-origem-status-e-banners__validar-campo-pessoa-desabilitado-na-edicao-do-admin",
+      "title": "Validar campo Pessoa desabilitado na edição do Admin — Error: expect(locator).toBeDisabled() failed",
+      "testsuite": "Editar registro de aprendizagem (matriz perfil × origem × status e banners)",
+      "testcase": "Validar campo Pessoa desabilitado na edição do Admin",
+      "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc5-campo-pessoa-desabilitado-admin.spec.ts",
+      "status": "failed",
+      "durationMs": 29506,
+      "categoriaSugerida": "inconclusivo",
+      "categoriaConfianca": "baixa",
+      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
+      "severity": "media",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-registros-externos",
+        "baseUrl": "https://registrosf2.stage.twygoead.com/",
+        "orgId": "37079",
+        "browser": "chromium",
+        "user": "richard.sebold@twygo.com"
+      },
+      "buildCommit": "1d6a322",
+      "generatedAt": "2026-06-22T20:23:42.894Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "Admin: abrir \"Editar\" de um Externo Emitido",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "Campo Pessoa desabilitado (RN43)",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: expect(locator).toBeDisabled() failed\n\nLocator:  getByTestId('people-selector-input')\nExpected: disabled\nReceived: enabled\nTimeout:  10000ms\n\nCall log:\n  - Expect \"toBeDisabled\" with timeout 10000ms\n  - waiting for getByTestId('people-selector-input')\n    14 × locator resolved to <div id=\"people\" class=\"css-179lbir\" data-test-id=\"people-selector-input\">…</div>\n       - unexpected value \"enabled\"\n",
+      "errorLocation": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc5-campo-pessoa-desabilitado-admin.spec.ts:28:40",
+      "network": [
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        }
+      ],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-registros-externo-9b47d-bilitado-na-edição-do-Admin-chromium/test-failed-1.png"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-registros-externo-9b47d-bilitado-na-edição-do-Admin-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-registros-externo-9b47d-bilitado-na-edição-do-Admin-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37079",
+        "userId": null
+      }
+    },
+    {
+      "id": "editar-registro-de-aprendizagem-matriz-perfil-origem-status-e-banners__validar-presenca-condicional-do-botao-excluir-no-rodape",
+      "title": "Validar presença condicional do botão \"Excluir\" no rodapé — Error: expect(locator).toBeVisible() failed",
+      "testsuite": "Editar registro de aprendizagem (matriz perfil × origem × status e banners)",
+      "testcase": "Validar presença condicional do botão \"Excluir\" no rodapé",
+      "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc8-botao-excluir-condicional.spec.ts",
+      "status": "failed",
+      "durationMs": 29883,
+      "categoriaSugerida": "inconclusivo",
+      "categoriaConfianca": "baixa",
+      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
+      "severity": "media",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-registros-externos",
+        "baseUrl": "https://registrosf2.stage.twygoead.com/",
+        "orgId": "37079",
+        "browser": "chromium",
+        "user": "richard.sebold@twygo.com"
+      },
+      "buildCommit": "1d6a322",
+      "generatedAt": "2026-06-22T20:23:42.894Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "Admin: abrir \"Editar\" de um Externo Emitido",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "Rodapé exibe botão \"Excluir\" (AT TC8.3 / RN45)",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: expect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: 'Excluir', exact: true })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 10000ms\n  - waiting for getByRole('button', { name: 'Excluir', exact: true })\n",
+      "errorLocation": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc8-botao-excluir-condicional.spec.ts:28:41",
+      "network": [
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        }
+      ],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-registros-externo-e9769--do-botão-Excluir-no-rodapé-chromium/test-failed-1.png"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-registros-externo-e9769--do-botão-Excluir-no-rodapé-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-registros-externo-e9769--do-botão-Excluir-no-rodapé-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37079",
+        "userId": null
+      }
+    }
+  ]
+}

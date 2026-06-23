@@ -1,0 +1,11 @@
+{
+  "runId": "kpi-cards-como-filtro-de-status-aluno_20260622-161640",
+  "mode": "per-suite",
+  "suiteFilter": "KPI cards como filtro de status (Aluno)",
+  "projectName": "Registros de Aprendizagem",
+  "environment": "staging-registros-externos",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-06-22T19:16:40.413Z"
+}

@@ -1,0 +1,72 @@
+# [inconclusivo] Validar pré-população dos campos na edição
+
+> _Categoria confiança: **baixa** — Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace_
+> _Gerado em 2026-06-22T20:23:42.894Z · commit 1d6a322_
+
+## Identificação
+- **Suite**: Editar registro de aprendizagem (matriz perfil × origem × status e banners)
+- **TC**: Validar pré-população dos campos na edição
+- **Spec**: `projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc4-pre-populacao-campos.spec.ts`
+- **Erro em**: `D:\novo-estudio-twygo\twygo-agents-qa\agent-playwright\projects\registros-externos\tests\features\editar-registro-matriz-perfil-origem-status-banners\tc4-pre-populacao-campos.spec.ts:30:49`
+- **Status**: failed (41162ms)
+
+## Ambiente
+- **Env**: staging-registros-externos (`https://registrosf2.stage.twygoead.com/`)
+- **OrgId**: 37079
+- **Usuário**: richard.sebold@twygo.com
+- **Browser**: chromium
+- **Build/commit**: 1d6a322
+
+## Reprodução
+- **Pré-condições**: storageState pré-logado em `outputs/.auth/storage.json`, perfil Administrador.
+- **Passo-a-passo**:
+  1. Abrir "Editar" de um Externo Emitido — ✅
+  2. Datas e carga horária pré-populadas (RN43) — ❌ **falhou aqui**
+- **Taxa**: 1/1 nesta execução `[REVISAR taxa real — rodar 3+ vezes]`
+
+## Comportamento
+- **Esperado**: [REVISAR — preencher com expectedresults do XML do step que falhou]
+- **Observado**:
+  ```
+  Error: expect(locator).toHaveValue(expected) failed
+  
+  Locator: locator('input[name="startDate"]')
+  Expected pattern: /\d{4}-\d{2}-\d{2}/
+  Received string:  ""
+  Timeout: 10000ms
+  
+  Call log:
+  ```
+
+## Evidência técnica
+
+### Network
+| Método | URL | Status | In-scope | Body |
+|---|---|---|---|---|
+| GET | `https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true` | **400** | não | — |
+| GET | `https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true` | **400** | não | — |
+| GET | `https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true` | **400** | não | — |
+
+### Attachments
+- ![screenshot](../test-artifacts/projects-registros-externo-92130-ulação-dos-campos-na-edição-chromium/test-failed-1.png)
+- [video](../test-artifacts/projects-registros-externo-92130-ulação-dos-campos-na-edição-chromium/video-1.webm)
+- [video](../test-artifacts/projects-registros-externo-92130-ulação-dos-campos-na-edição-chromium/video.webm)
+- [error-context](../test-artifacts/projects-registros-externo-92130-ulação-dos-campos-na-edição-chromium/error-context.md)
+- [trace](../test-artifacts/projects-registros-externo-92130-ulação-dos-campos-na-edição-chromium/trace.zip)
+
+### IDs envolvidos
+- orgId: 37079
+
+## Escopo
+- **Reproduz em outro usuário?** `[REVISAR isolamento]`
+- **Reproduz em outro env?** `[REVISAR isolamento]`
+- **Regressão?** desconhecida `[REVISAR regressão]`
+- **Workaround**: nenhum identificado `[REVISAR workaround]`
+
+## Impacto
+- **Severity sugerida**: **media** `[REVISAR severity]`
+- **Impacto qualitativo**: desconhecido `[REVISAR impacto]`
+
+---
+
+> _Gerado por `gerar-bug-report-de-tc-red` v1.0.0. Campos `[REVISAR]` exigem validação humana antes de abrir task._

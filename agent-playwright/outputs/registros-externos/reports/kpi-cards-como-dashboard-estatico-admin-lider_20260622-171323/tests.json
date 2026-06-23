@@ -1,0 +1,994 @@
+{
+  "config": {
+    "configFile": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "D:/novo-estudio-twygo/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/richa/.claude/jobs/b80b2ee8/tmp/final-art",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "D:/novo-estudio-twygo/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "tests/auth/**/*.spec.ts",
+          "projects/registros-externos/tests/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\registros-externos\\tests\\features\\kpi-cards-dashboard-estatico-admin-lider\\validar-contagem-nao-reage-a-filtros-do-drawer.spec.ts",
+      "file": "projects/registros-externos/tests/features/kpi-cards-dashboard-estatico-admin-lider/validar-contagem-nao-reage-a-filtros-do-drawer.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "KPI cards como dashboard estático (Admin/Líder)",
+          "file": "projects/registros-externos/tests/features/kpi-cards-dashboard-estatico-admin-lider/validar-contagem-nao-reage-a-filtros-do-drawer.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar que a contagem não reage a filtros do drawer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 14067,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar como Admin e anotar as contagens dos 4 cards",
+                          "duration": 6957
+                        },
+                        {
+                          "title": "2-3. Aplicar filtro padrão \"Pendentes\" no drawer → contagens inalteradas (RN 31)",
+                          "duration": 1212
+                        },
+                        {
+                          "title": "4. Buscar por uma pessoa → lista filtra, contagens dos KPIs inalteradas (RN 31)",
+                          "duration": 999
+                        }
+                      ],
+                      "startTime": "2026-06-22T19:49:08.468Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IktQSSBjYXJkcyBjb21vIGRhc2hib2FyZCBlc3TDoXRpY28gKEFkbWluL0zDrWRlcikifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIHF1ZSBhIGNvbnRhZ2VtIG7Do28gcmVhZ2UgYSBmaWx0cm9zIGRvIGRyYXdlciJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-daa5a-o-reage-a-filtros-do-drawer-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-daa5a-o-reage-a-filtros-do-drawer-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-daa5a-o-reage-a-filtros-do-drawer-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-daa5a-o-reage-a-filtros-do-drawer-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "abc623cd0e4723519e4e-e1dc3b73709db6e42a09",
+              "file": "projects/registros-externos/tests/features/kpi-cards-dashboard-estatico-admin-lider/validar-contagem-nao-reage-a-filtros-do-drawer.spec.ts",
+              "line": 9,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\kpi-cards-dashboard-estatico-admin-lider\\validar-escopo-da-contagem-do-lider.spec.ts",
+      "file": "projects/registros-externos/tests/features/kpi-cards-dashboard-estatico-admin-lider/validar-escopo-da-contagem-do-lider.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "KPI cards como dashboard estático (Admin/Líder)",
+          "file": "projects/registros-externos/tests/features/kpi-cards-dashboard-estatico-admin-lider/validar-escopo-da-contagem-do-lider.spec.ts",
+          "line": 13,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar escopo da contagem do Líder (liderados diretos)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed/credencial ausente: usuário Líder com liderados de distribuição conhecida (RN 22). Destinatário: QA Lead.",
+                      "location": {
+                        "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\kpi-cards-dashboard-estatico-admin-lider\\validar-escopo-da-contagem-do-lider.spec.ts",
+                        "line": 15,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 835,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-22T19:49:23.491Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed/credencial ausente: usuário Líder com liderados de distribuição conhecida (RN 22). Destinatário: QA Lead.",
+                          "location": {
+                            "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\kpi-cards-dashboard-estatico-admin-lider\\validar-escopo-da-contagem-do-lider.spec.ts",
+                            "line": 15,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-2623d-do-Líder-liderados-diretos--chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-2623d-do-Líder-liderados-diretos--chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-2623d-do-Líder-liderados-diretos--chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-2623d-do-Líder-liderados-diretos--chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "90af975ba76ac9318afd-8b4fc47dbfd2db515ae4",
+              "file": "projects/registros-externos/tests/features/kpi-cards-dashboard-estatico-admin-lider/validar-escopo-da-contagem-do-lider.spec.ts",
+              "line": 14,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\kpi-cards-dashboard-estatico-admin-lider\\validar-estado-tudo-zero-no-admin-de-org-nova.spec.ts",
+      "file": "projects/registros-externos/tests/features/kpi-cards-dashboard-estatico-admin-lider/validar-estado-tudo-zero-no-admin-de-org-nova.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "KPI cards como dashboard estático (Admin/Líder)",
+          "file": "projects/registros-externos/tests/features/kpi-cards-dashboard-estatico-admin-lider/validar-estado-tudo-zero-no-admin-de-org-nova.spec.ts",
+          "line": 12,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar estado \"tudo zero\" no Admin de organização nova",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed/ambiente ausente: org Admin sem nenhum registro (RN 36). Destinatário: QA Lead.",
+                      "location": {
+                        "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\kpi-cards-dashboard-estatico-admin-lider\\validar-estado-tudo-zero-no-admin-de-org-nova.spec.ts",
+                        "line": 14,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 876,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-22T19:49:24.493Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed/ambiente ausente: org Admin sem nenhum registro (RN 36). Destinatário: QA Lead.",
+                          "location": {
+                            "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\kpi-cards-dashboard-estatico-admin-lider\\validar-estado-tudo-zero-no-admin-de-org-nova.spec.ts",
+                            "line": 14,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-3b432-o-Admin-de-organização-nova-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-3b432-o-Admin-de-organização-nova-chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-3b432-o-Admin-de-organização-nova-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-3b432-o-Admin-de-organização-nova-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "5ead485ff15537bdef04-93eeabf20860fab03262",
+              "file": "projects/registros-externos/tests/features/kpi-cards-dashboard-estatico-admin-lider/validar-estado-tudo-zero-no-admin-de-org-nova.spec.ts",
+              "line": 13,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\kpi-cards-dashboard-estatico-admin-lider\\validar-estrutura-cores-e-carga-horaria-no-admin.spec.ts",
+      "file": "projects/registros-externos/tests/features/kpi-cards-dashboard-estatico-admin-lider/validar-estrutura-cores-e-carga-horaria-no-admin.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "KPI cards como dashboard estático (Admin/Líder)",
+          "file": "projects/registros-externos/tests/features/kpi-cards-dashboard-estatico-admin-lider/validar-estrutura-cores-e-carga-horaria-no-admin.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar estrutura, cores e label de carga horária no Admin",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 12757,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar \"Aprendizagem > Registros\" como Admin",
+                          "duration": 7879
+                        },
+                        {
+                          "title": "2. Contagens refletem registros da organização (invariante vs records/stats)",
+                          "duration": 265
+                        },
+                        {
+                          "title": "3. Label \"Carga horária total: {X} horas\"",
+                          "duration": 228
+                        }
+                      ],
+                      "startTime": "2026-06-22T19:49:25.546Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IktQSSBjYXJkcyBjb21vIGRhc2hib2FyZCBlc3TDoXRpY28gKEFkbWluL0zDrWRlcikifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGVzdHJ1dHVyYSwgY29yZXMgZSBsYWJlbCBkZSBjYXJnYSBob3LDoXJpYSBubyBBZG1pbiJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-7ca9b-l-de-carga-horária-no-Admin-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-7ca9b-l-de-carga-horária-no-Admin-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-7ca9b-l-de-carga-horária-no-Admin-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-7ca9b-l-de-carga-horária-no-Admin-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d6a7bfff62a570087755-170987d71d2d0a3e4e9b",
+              "file": "projects/registros-externos/tests/features/kpi-cards-dashboard-estatico-admin-lider/validar-estrutura-cores-e-carga-horaria-no-admin.spec.ts",
+              "line": 9,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\kpi-cards-dashboard-estatico-admin-lider\\validar-exclusao-de-pessoas-inativadas-da-contagem.spec.ts",
+      "file": "projects/registros-externos/tests/features/kpi-cards-dashboard-estatico-admin-lider/validar-exclusao-de-pessoas-inativadas-da-contagem.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "KPI cards como dashboard estático (Admin/Líder)",
+          "file": "projects/registros-externos/tests/features/kpi-cards-dashboard-estatico-admin-lider/validar-exclusao-de-pessoas-inativadas-da-contagem.spec.ts",
+          "line": 12,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar exclusão de pessoas inativadas da contagem",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed ausente: pessoa inativada com registros + nome conhecido (RN 24). Destinatário: QA Lead.",
+                      "location": {
+                        "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\kpi-cards-dashboard-estatico-admin-lider\\validar-exclusao-de-pessoas-inativadas-da-contagem.spec.ts",
+                        "line": 14,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 874,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-22T19:49:38.957Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed ausente: pessoa inativada com registros + nome conhecido (RN 24). Destinatário: QA Lead.",
+                          "location": {
+                            "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\kpi-cards-dashboard-estatico-admin-lider\\validar-exclusao-de-pessoas-inativadas-da-contagem.spec.ts",
+                            "line": 14,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-2752b-soas-inativadas-da-contagem-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-2752b-soas-inativadas-da-contagem-chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-2752b-soas-inativadas-da-contagem-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-2752b-soas-inativadas-da-contagem-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "047daa061b40383921f9-38cf9fc8da9a5f09b7d1",
+              "file": "projects/registros-externos/tests/features/kpi-cards-dashboard-estatico-admin-lider/validar-exclusao-de-pessoas-inativadas-da-contagem.spec.ts",
+              "line": 13,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\kpi-cards-dashboard-estatico-admin-lider\\validar-lider-com-0-liderados.spec.ts",
+      "file": "projects/registros-externos/tests/features/kpi-cards-dashboard-estatico-admin-lider/validar-lider-com-0-liderados.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "KPI cards como dashboard estático (Admin/Líder)",
+          "file": "projects/registros-externos/tests/features/kpi-cards-dashboard-estatico-admin-lider/validar-lider-com-0-liderados.spec.ts",
+          "line": 11,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar Líder com 0 liderados (todos os cards zerados)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed/credencial ausente: usuário Líder sem liderados diretos (RN 22, RN 36). Destinatário: QA Lead.",
+                      "location": {
+                        "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\kpi-cards-dashboard-estatico-admin-lider\\validar-lider-com-0-liderados.spec.ts",
+                        "line": 13,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 888,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-22T19:49:40.101Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed/credencial ausente: usuário Líder sem liderados diretos (RN 22, RN 36). Destinatário: QA Lead.",
+                          "location": {
+                            "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\kpi-cards-dashboard-estatico-admin-lider\\validar-lider-com-0-liderados.spec.ts",
+                            "line": 13,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-61901-dos-todos-os-cards-zerados--chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-61901-dos-todos-os-cards-zerados--chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-61901-dos-todos-os-cards-zerados--chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-61901-dos-todos-os-cards-zerados--chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "68aea918481c86b16c7e-2f728c8eb01d368a58bd",
+              "file": "projects/registros-externos/tests/features/kpi-cards-dashboard-estatico-admin-lider/validar-lider-com-0-liderados.spec.ts",
+              "line": 12,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\kpi-cards-dashboard-estatico-admin-lider\\validar-nao-clicabilidade-dos-cards-no-admin.spec.ts",
+      "file": "projects/registros-externos/tests/features/kpi-cards-dashboard-estatico-admin-lider/validar-nao-clicabilidade-dos-cards-no-admin.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "KPI cards como dashboard estático (Admin/Líder)",
+          "file": "projects/registros-externos/tests/features/kpi-cards-dashboard-estatico-admin-lider/validar-nao-clicabilidade-dos-cards-no-admin.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar não-clicabilidade dos cards no Admin",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 14295,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar \"Aprendizagem > Registros\" como Admin",
+                          "duration": 7540
+                        },
+                        {
+                          "title": "2. Hover no card \"Pendentes\" não eleva nem seleciona",
+                          "duration": 266
+                        },
+                        {
+                          "title": "3. Clicar no card \"Pendentes\" não filtra nem seleciona",
+                          "duration": 522
+                        }
+                      ],
+                      "startTime": "2026-06-22T19:49:41.179Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IktQSSBjYXJkcyBjb21vIGRhc2hib2FyZCBlc3TDoXRpY28gKEFkbWluL0zDrWRlcikifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIG7Do28tY2xpY2FiaWxpZGFkZSBkb3MgY2FyZHMgbm8gQWRtaW4ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-6aefd-bilidade-dos-cards-no-Admin-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-6aefd-bilidade-dos-cards-no-Admin-chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-6aefd-bilidade-dos-cards-no-Admin-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-6aefd-bilidade-dos-cards-no-Admin-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "23cf93f50c0cc13ff2ec-64cc2eb13399306d9475",
+              "file": "projects/registros-externos/tests/features/kpi-cards-dashboard-estatico-admin-lider/validar-nao-clicabilidade-dos-cards-no-admin.spec.ts",
+              "line": 8,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\kpi-cards-dashboard-estatico-admin-lider\\validar-tooltips-no-tom-institucional-do-admin.spec.ts",
+      "file": "projects/registros-externos/tests/features/kpi-cards-dashboard-estatico-admin-lider/validar-tooltips-no-tom-institucional-do-admin.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "KPI cards como dashboard estático (Admin/Líder)",
+          "file": "projects/registros-externos/tests/features/kpi-cards-dashboard-estatico-admin-lider/validar-tooltips-no-tom-institucional-do-admin.spec.ts",
+          "line": 12,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar tooltips no tom institucional do Admin",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 12672,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"Registros \u001b[7maprov\u001b[27mado\u001b[7ms\u001b[27m e\u001b[7m dentro do praz\u001b[27mo \u001b[7md\u001b[27me v\u001b[7ma\u001b[27mlid\u001b[7made na organizaçã\u001b[27mo.\"\u001b[39m\nReceived: \u001b[31m\"Registros \u001b[7mcom certific\u001b[27mado e\u001b[7mmitid\u001b[27mo e v\u001b[7má\u001b[27mlido.\"\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"Registros \u001b[7maprov\u001b[27mado\u001b[7ms\u001b[27m e\u001b[7m dentro do praz\u001b[27mo \u001b[7md\u001b[27me v\u001b[7ma\u001b[27mlid\u001b[7made na organizaçã\u001b[27mo.\"\u001b[39m\nReceived: \u001b[31m\"Registros \u001b[7mcom certific\u001b[27mado e\u001b[7mmitid\u001b[27mo e v\u001b[7má\u001b[27mlido.\"\u001b[39m\n    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\kpi-cards-dashboard-estatico-admin-lider\\validar-tooltips-no-tom-institucional-do-admin.spec.ts:27:54",
+                        "location": {
+                          "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\kpi-cards-dashboard-estatico-admin-lider\\validar-tooltips-no-tom-institucional-do-admin.spec.ts",
+                          "column": 54,
+                          "line": 27
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 25 |\u001b[39m\n \u001b[90m 26 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'2. Tooltip do card \"Emitidos\"'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 27 |\u001b[39m       expect(\u001b[36mawait\u001b[39m registros\u001b[33m.\u001b[39mreadTooltip(\u001b[32m'emitted'\u001b[39m))\u001b[33m.\u001b[39mtoBe(data\u001b[33m.\u001b[39mtooltipsAdminEsperado\u001b[33m.\u001b[39memitted)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 28 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 29 |\u001b[39m\n \u001b[90m 30 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'3. Tooltip do card \"Expirados\"'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\kpi-cards-dashboard-estatico-admin-lider\\validar-tooltips-no-tom-institucional-do-admin.spec.ts",
+                            "column": 54,
+                            "line": 27
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"Registros \u001b[7maprov\u001b[27mado\u001b[7ms\u001b[27m e\u001b[7m dentro do praz\u001b[27mo \u001b[7md\u001b[27me v\u001b[7ma\u001b[27mlid\u001b[7made na organizaçã\u001b[27mo.\"\u001b[39m\nReceived: \u001b[31m\"Registros \u001b[7mcom certific\u001b[27mado e\u001b[7mmitid\u001b[27mo e v\u001b[7má\u001b[27mlido.\"\u001b[39m\n\n\u001b[0m \u001b[90m 25 |\u001b[39m\n \u001b[90m 26 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'2. Tooltip do card \"Emitidos\"'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 27 |\u001b[39m       expect(\u001b[36mawait\u001b[39m registros\u001b[33m.\u001b[39mreadTooltip(\u001b[32m'emitted'\u001b[39m))\u001b[33m.\u001b[39mtoBe(data\u001b[33m.\u001b[39mtooltipsAdminEsperado\u001b[33m.\u001b[39memitted)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 28 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 29 |\u001b[39m\n \u001b[90m 30 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'3. Tooltip do card \"Expirados\"'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[2m    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\kpi-cards-dashboard-estatico-admin-lider\\validar-tooltips-no-tom-institucional-do-admin.spec.ts:27:54\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar \"Aprendizagem > Registros\" como Admin",
+                          "duration": 7431
+                        },
+                        {
+                          "title": "2. Tooltip do card \"Emitidos\"",
+                          "duration": 219,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"Registros \u001b[7maprov\u001b[27mado\u001b[7ms\u001b[27m e\u001b[7m dentro do praz\u001b[27mo \u001b[7md\u001b[27me v\u001b[7ma\u001b[27mlid\u001b[7made na organizaçã\u001b[27mo.\"\u001b[39m\nReceived: \u001b[31m\"Registros \u001b[7mcom certific\u001b[27mado e\u001b[7mmitid\u001b[27mo e v\u001b[7má\u001b[27mlido.\"\u001b[39m",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"Registros \u001b[7maprov\u001b[27mado\u001b[7ms\u001b[27m e\u001b[7m dentro do praz\u001b[27mo \u001b[7md\u001b[27me v\u001b[7ma\u001b[27mlid\u001b[7made na organizaçã\u001b[27mo.\"\u001b[39m\nReceived: \u001b[31m\"Registros \u001b[7mcom certific\u001b[27mado e\u001b[7mmitid\u001b[27mo e v\u001b[7má\u001b[27mlido.\"\u001b[39m\n    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\kpi-cards-dashboard-estatico-admin-lider\\validar-tooltips-no-tom-institucional-do-admin.spec.ts:27:54",
+                            "location": {
+                              "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\kpi-cards-dashboard-estatico-admin-lider\\validar-tooltips-no-tom-institucional-do-admin.spec.ts",
+                              "column": 54,
+                              "line": 27
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 25 |\u001b[39m\n \u001b[90m 26 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'2. Tooltip do card \"Emitidos\"'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 27 |\u001b[39m       expect(\u001b[36mawait\u001b[39m registros\u001b[33m.\u001b[39mreadTooltip(\u001b[32m'emitted'\u001b[39m))\u001b[33m.\u001b[39mtoBe(data\u001b[33m.\u001b[39mtooltipsAdminEsperado\u001b[33m.\u001b[39memitted)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 28 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 29 |\u001b[39m\n \u001b[90m 30 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'3. Tooltip do card \"Expirados\"'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-06-22T19:49:56.438Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IktQSSBjYXJkcyBjb21vIGRhc2hib2FyZCBlc3TDoXRpY28gKEFkbWluL0zDrWRlcikifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIHRvb2x0aXBzIG5vIHRvbSBpbnN0aXR1Y2lvbmFsIGRvIEFkbWluIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJub3JtYWwifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InRhZyIsInZhbHVlIjoiUkVWSUVXX05FRURFRCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-b015c--tom-institucional-do-Admin-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-b015c--tom-institucional-do-Admin-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-b015c--tom-institucional-do-Admin-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-b015c--tom-institucional-do-Admin-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-b015c--tom-institucional-do-Admin-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\kpi-cards-dashboard-estatico-admin-lider\\validar-tooltips-no-tom-institucional-do-admin.spec.ts",
+                        "column": 54,
+                        "line": 27
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "c1ba9f35e590e63140e0-d9411b6c854252651c98",
+              "file": "projects/registros-externos/tests/features/kpi-cards-dashboard-estatico-admin-lider/validar-tooltips-no-tom-institucional-do-admin.spec.ts",
+              "line": 13,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\kpi-cards-dashboard-estatico-admin-lider\\validar-transicao-emitido-expirado-ao-cruzar-validade.spec.ts",
+      "file": "projects/registros-externos/tests/features/kpi-cards-dashboard-estatico-admin-lider/validar-transicao-emitido-expirado-ao-cruzar-validade.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "KPI cards como dashboard estático (Admin/Líder)",
+          "file": "projects/registros-externos/tests/features/kpi-cards-dashboard-estatico-admin-lider/validar-transicao-emitido-expirado-ao-cruzar-validade.spec.ts",
+          "line": 14,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar transição Emitido → Expirado ao cruzar a data de validade",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "dependência externa/Spike S1: massa com validade no instante do teste + refresh async não definido (RN 25). Destinatário: QA Lead + dev.",
+                      "location": {
+                        "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\kpi-cards-dashboard-estatico-admin-lider\\validar-transicao-emitido-expirado-ao-cruzar-validade.spec.ts",
+                        "line": 16,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 1016,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-22T19:50:10.817Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "dependência externa/Spike S1: massa com validade no instante do teste + refresh async não definido (RN 25). Destinatário: QA Lead + dev.",
+                          "location": {
+                            "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\kpi-cards-dashboard-estatico-admin-lider\\validar-transicao-emitido-expirado-ao-cruzar-validade.spec.ts",
+                            "line": 16,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-fbc41-o-cruzar-a-data-de-validade-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-fbc41-o-cruzar-a-data-de-validade-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-fbc41-o-cruzar-a-data-de-validade-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\richa\\.claude\\jobs\\b80b2ee8\\tmp\\final-art\\projects-registros-externo-fbc41-o-cruzar-a-data-de-validade-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "b2d304613f070720b899-b627b500db24d596da1b",
+              "file": "projects/registros-externos/tests/features/kpi-cards-dashboard-estatico-admin-lider/validar-transicao-emitido-expirado-ao-cruzar-validade.spec.ts",
+              "line": 15,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-06-22T19:48:35.267Z",
+    "duration": 96943.96100000001,
+    "expected": 3,
+    "skipped": 5,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

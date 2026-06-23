@@ -1,7 +1,7 @@
 ---
 contract_version: 1.1
 at_version: 1
-project: registros-aprendizagem
+project: registros-externos
 project_name: "Registros de Aprendizagem"
 generated_at: 2026-06-03T20:00:00Z
 generated_by: agent-at@manual
@@ -12,7 +12,7 @@ source_docs:
   - "docs/Registros de Aprendizagem.xlsx"
   - "docs/extract.md"
   - "docs/spike-mass-download-certificates.md"
-env: staging-registros-aprendizagem
+env: staging-registros-externos
 prototypeUrl: http://localhost:5173/
 totals:
   suites: 21
