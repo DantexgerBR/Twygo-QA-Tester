@@ -1,0 +1,11 @@
+{
+  "runId": "filtros-via-drawer-e-personalizacao-de-colunas-dnd_20260624-101412",
+  "mode": "per-suite",
+  "suiteFilter": "Filtros via drawer e personalização de colunas (DnD)",
+  "projectName": "Registros de Aprendizagem",
+  "environment": "staging-registros-externos",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-06-24T13:14:13.141Z"
+}

@@ -13,6 +13,14 @@ const STORAGE_PATH = resolve(process.cwd(), 'outputs/.auth/storage.json');
 const STORAGE_TTL_MS = 30 * 60 * 1000; // 30 min — re-login se mais antigo
 
 /**
+ * Storage do ambiente PRINCIPAL (mesmo consumido por `use.storageState` em
+ * `playwright.config.ts`). Exportado para specs que precisam abrir um contexto
+ * fresco autenticado em `afterAll`/`afterEach` (ex.: restaurar preferência de
+ * UI persistida — personalização de colunas — após o teste).
+ */
+export const PRIMARY_STORAGE_PATH = STORAGE_PATH;
+
+/**
  * Storage secundário para o ambiente "sem saldo de créditos" — usado por
  * testes de bloqueio de funcionalidades (RN: organização sem créditos
  * disponíveis). O storage é criado quando `staging-without-credits` (ou
