@@ -1,0 +1,1197 @@
+{
+  "config": {
+    "configFile": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "D:/Estudo/Programação/cursor/twygo-work/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/Estudo/Programação/cursor/twygo-work/twygo-agents-qa/agent-playwright/outputs/registros-externos/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "D:/Estudo/Programação/cursor/twygo-work/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "tests/auth/**/*.spec.ts",
+          "projects/registros-externos/tests/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/registros-externos/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc1-disponibilidade-avaliar-no-menu.spec.ts",
+      "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc1-disponibilidade-avaliar-no-menu.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Avaliar registro externo pendente (Aprovar/Recusar com justificativa)",
+          "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc1-disponibilidade-avaliar-no-menu.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar disponibilidade do \"Avaliar\" como item primário do menu",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 13540,
+                      "error": {
+                        "message": "Error: RN50: Externo Pendente não deve ter Editar/Excluir (achou: edit\nEditar, delete\nExcluir)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 6\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"edit\u001b[39m\n\u001b[31m+ Editar\",\u001b[39m\n\u001b[31m+   \"delete\u001b[39m\n\u001b[31m+ Excluir\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                        "stack": "Error: RN50: Externo Pendente não deve ter Editar/Excluir (achou: edit\nEditar, delete\nExcluir)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 6\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"edit\u001b[39m\n\u001b[31m+ Editar\",\u001b[39m\n\u001b[31m+   \"delete\u001b[39m\n\u001b[31m+ Excluir\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc1-disponibilidade-avaliar-no-menu.spec.ts:42:112",
+                        "location": {
+                          "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc1-disponibilidade-avaliar-no-menu.spec.ts",
+                          "column": 112,
+                          "line": 42
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 40 |\u001b[39m       \u001b[90m// BUG (laudo qa19): \"Editar\"/\"Excluir\" aparecem indevidamente → vermelho.\u001b[39m\n \u001b[90m 41 |\u001b[39m       \u001b[36mconst\u001b[39m proibidos \u001b[33m=\u001b[39m items\u001b[33m.\u001b[39mfilter((t) \u001b[33m=>\u001b[39m \u001b[35m/\\bEditar\\b|\\bExcluir\\b/i\u001b[39m\u001b[33m.\u001b[39mtest(t))\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 42 |\u001b[39m       expect(proibidos\u001b[33m,\u001b[39m \u001b[32m`RN50: Externo Pendente não deve ter Editar/Excluir (achou: ${proibidos.join(', ')})`\u001b[39m)\u001b[33m.\u001b[39mtoEqual([])\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                                                                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 43 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 44 |\u001b[39m\n \u001b[90m 45 |\u001b[39m     \u001b[90m// Sub-checks dependentes de seed inexistente neste env (Externo Emitido tem\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc1-disponibilidade-avaliar-no-menu.spec.ts",
+                            "column": 112,
+                            "line": 42
+                          },
+                          "message": "Error: RN50: Externo Pendente não deve ter Editar/Excluir (achou: edit\nEditar, delete\nExcluir)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 6\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"edit\u001b[39m\n\u001b[31m+ Editar\",\u001b[39m\n\u001b[31m+   \"delete\u001b[39m\n\u001b[31m+ Excluir\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  40 |       // BUG (laudo qa19): \"Editar\"/\"Excluir\" aparecem indevidamente → vermelho.\n  41 |       const proibidos = items.filter((t) => /\\bEditar\\b|\\bExcluir\\b/i.test(t));\n> 42 |       expect(proibidos, `RN50: Externo Pendente não deve ter Editar/Excluir (achou: ${proibidos.join(', ')})`).toEqual([]);\n     |                                                                                                                ^\n  43 |     });\n  44 |\n  45 |     // Sub-checks dependentes de seed inexistente neste env (Externo Emitido tem\n    at D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc1-disponibilidade-avaliar-no-menu.spec.ts:42:112"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Pré: criar registro Externo Pendente",
+                          "duration": 10035
+                        },
+                        {
+                          "title": "1. Menu do Externo Pendente: \"Avaliar\" primário, sem Editar/Excluir (RN50)",
+                          "duration": 290,
+                          "error": {
+                            "message": "Error: RN50: Externo Pendente não deve ter Editar/Excluir (achou: edit\nEditar, delete\nExcluir)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 6\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"edit\u001b[39m\n\u001b[31m+ Editar\",\u001b[39m\n\u001b[31m+   \"delete\u001b[39m\n\u001b[31m+ Excluir\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                            "stack": "Error: RN50: Externo Pendente não deve ter Editar/Excluir (achou: edit\nEditar, delete\nExcluir)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 6\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"edit\u001b[39m\n\u001b[31m+ Editar\",\u001b[39m\n\u001b[31m+   \"delete\u001b[39m\n\u001b[31m+ Excluir\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc1-disponibilidade-avaliar-no-menu.spec.ts:42:112",
+                            "location": {
+                              "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc1-disponibilidade-avaliar-no-menu.spec.ts",
+                              "column": 112,
+                              "line": 42
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 40 |\u001b[39m       \u001b[90m// BUG (laudo qa19): \"Editar\"/\"Excluir\" aparecem indevidamente → vermelho.\u001b[39m\n \u001b[90m 41 |\u001b[39m       \u001b[36mconst\u001b[39m proibidos \u001b[33m=\u001b[39m items\u001b[33m.\u001b[39mfilter((t) \u001b[33m=>\u001b[39m \u001b[35m/\\bEditar\\b|\\bExcluir\\b/i\u001b[39m\u001b[33m.\u001b[39mtest(t))\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 42 |\u001b[39m       expect(proibidos\u001b[33m,\u001b[39m \u001b[32m`RN50: Externo Pendente não deve ter Editar/Excluir (achou: ${proibidos.join(', ')})`\u001b[39m)\u001b[33m.\u001b[39mtoEqual([])\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                                                                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 43 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 44 |\u001b[39m\n \u001b[90m 45 |\u001b[39m     \u001b[90m// Sub-checks dependentes de seed inexistente neste env (Externo Emitido tem\u001b[39m\u001b[0m"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-06-25T20:10:23.916Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkF2YWxpYXIgcmVnaXN0cm8gZXh0ZXJubyBwZW5kZW50ZSAoQXByb3Zhci9SZWN1c2FyIGNvbSBqdXN0aWZpY2F0aXZhKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGRpc3BvbmliaWxpZGFkZSBkbyBcIkF2YWxpYXJcIiBjb21vIGl0ZW0gcHJpbcOhcmlvIGRvIG1lbnUifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-804be--como-item-primário-do-menu-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-804be--como-item-primário-do-menu-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-804be--como-item-primário-do-menu-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-804be--como-item-primário-do-menu-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-804be--como-item-primário-do-menu-chromium\\test-failed-2.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-804be--como-item-primário-do-menu-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-804be--como-item-primário-do-menu-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc1-disponibilidade-avaliar-no-menu.spec.ts",
+                        "column": 112,
+                        "line": 42
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "8c3a65cc7750d065cbc4-e40dbbc4b157a9fdc0c4",
+              "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc1-disponibilidade-avaliar-no-menu.spec.ts",
+              "line": 21,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc2-form-modo-avaliacao.spec.ts",
+      "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc2-form-modo-avaliacao.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Avaliar registro externo pendente (Aprovar/Recusar com justificativa)",
+          "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc2-form-modo-avaliacao.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar form em modo avaliação (banner, campos e rodapé)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 26766,
+                      "error": {
+                        "message": "Error: RN51: banner \"Avaliação pendente\" ausente\n\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/Avaliação pendente/i).first()\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - RN51: banner \"Avaliação pendente\" ausente with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/Avaliação pendente/i).first()\u001b[22m\n",
+                        "stack": "Error: RN51: banner \"Avaliação pendente\" ausente\n\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/Avaliação pendente/i).first()\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - RN51: banner \"Avaliação pendente\" ausente with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/Avaliação pendente/i).first()\u001b[22m\n\n    at D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc2-form-modo-avaliacao.spec.ts:41:91\n    at body (D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-js-commons\\dist\\esm\\facade.js:105:48)\n    at call (D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:13:56)\n    at Generator._invoke (D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at Generator.next (D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at asyncGeneratorStep (D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at _next (D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1\n    at D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1",
+                        "location": {
+                          "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc2-form-modo-avaliacao.spec.ts",
+                          "column": 91,
+                          "line": 41
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 39 |\u001b[39m     \u001b[90m// e SEM o banner \"Avaliação pendente\". soft-asserts documentam cada ponto.\u001b[39m\n \u001b[90m 40 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'2. Banner amarelo \"Avaliação pendente\"'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 41 |\u001b[39m       \u001b[36mawait\u001b[39m expect\u001b[33m.\u001b[39msoft(av\u001b[33m.\u001b[39mbannerPendente()\u001b[33m,\u001b[39m \u001b[32m'RN51: banner \"Avaliação pendente\" ausente'\u001b[39m)\u001b[33m.\u001b[39mtoBeVisible({ timeout\u001b[33m:\u001b[39m \u001b[35m8\u001b[39m_000 })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                                           \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 42 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 43 |\u001b[39m\n \u001b[90m 44 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'3. Demais campos desabilitados (ex.: Carga horária)'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc2-form-modo-avaliacao.spec.ts",
+                            "column": 91,
+                            "line": 41
+                          },
+                          "message": "Error: RN51: banner \"Avaliação pendente\" ausente\n\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/Avaliação pendente/i).first()\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - RN51: banner \"Avaliação pendente\" ausente with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/Avaliação pendente/i).first()\u001b[22m\n\n\n  39 |     // e SEM o banner \"Avaliação pendente\". soft-asserts documentam cada ponto.\n  40 |     await allure.step('2. Banner amarelo \"Avaliação pendente\"', async () => {\n> 41 |       await expect.soft(av.bannerPendente(), 'RN51: banner \"Avaliação pendente\" ausente').toBeVisible({ timeout: 8_000 });\n     |                                                                                           ^\n  42 |     });\n  43 |\n  44 |     await allure.step('3. Demais campos desabilitados (ex.: Carga horária)', async () => {\n    at D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc2-form-modo-avaliacao.spec.ts:41:91\n    at body (D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-js-commons\\dist\\esm\\facade.js:105:48)\n    at call (D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:13:56)\n    at Generator._invoke (D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at Generator.next (D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at asyncGeneratorStep (D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at _next (D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1\n    at D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Pré: criar Externo Pendente e abrir \"Avaliar\"",
+                          "duration": 15112
+                        },
+                        {
+                          "title": "2. Banner amarelo \"Avaliação pendente\"",
+                          "duration": 8044,
+                          "error": {
+                            "message": "Error: RN51: banner \"Avaliação pendente\" ausente\n\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/Avaliação pendente/i).first()\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - RN51: banner \"Avaliação pendente\" ausente with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/Avaliação pendente/i).first()\u001b[22m\n",
+                            "stack": "Error: RN51: banner \"Avaliação pendente\" ausente\n\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText(/Avaliação pendente/i).first()\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - RN51: banner \"Avaliação pendente\" ausente with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/Avaliação pendente/i).first()\u001b[22m\n\n    at D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc2-form-modo-avaliacao.spec.ts:41:91\n    at body (D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-js-commons\\dist\\esm\\facade.js:105:48)\n    at call (D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:13:56)\n    at Generator._invoke (D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at Generator.next (D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at asyncGeneratorStep (D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at _next (D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1\n    at D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1",
+                            "location": {
+                              "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc2-form-modo-avaliacao.spec.ts",
+                              "column": 91,
+                              "line": 41
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 39 |\u001b[39m     \u001b[90m// e SEM o banner \"Avaliação pendente\". soft-asserts documentam cada ponto.\u001b[39m\n \u001b[90m 40 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'2. Banner amarelo \"Avaliação pendente\"'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 41 |\u001b[39m       \u001b[36mawait\u001b[39m expect\u001b[33m.\u001b[39msoft(av\u001b[33m.\u001b[39mbannerPendente()\u001b[33m,\u001b[39m \u001b[32m'RN51: banner \"Avaliação pendente\" ausente'\u001b[39m)\u001b[33m.\u001b[39mtoBeVisible({ timeout\u001b[33m:\u001b[39m \u001b[35m8\u001b[39m_000 })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                                           \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 42 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 43 |\u001b[39m\n \u001b[90m 44 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'3. Demais campos desabilitados (ex.: Carga horária)'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m"
+                          }
+                        },
+                        {
+                          "title": "3. Demais campos desabilitados (ex.: Carga horária)",
+                          "duration": 60
+                        },
+                        {
+                          "title": "5. Rodapé com Aprovar, Recusar e Cancelar",
+                          "duration": 80
+                        }
+                      ],
+                      "startTime": "2026-06-25T20:10:40.974Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkF2YWxpYXIgcmVnaXN0cm8gZXh0ZXJubyBwZW5kZW50ZSAoQXByb3Zhci9SZWN1c2FyIGNvbSBqdXN0aWZpY2F0aXZhKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGZvcm0gZW0gbW9kbyBhdmFsaWHDp8OjbyAoYmFubmVyLCBjYW1wb3MgZSByb2RhcMOpKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-945ec-ção-banner-campos-e-rodapé--chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-945ec-ção-banner-campos-e-rodapé--chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-945ec-ção-banner-campos-e-rodapé--chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-945ec-ção-banner-campos-e-rodapé--chromium\\error-context.md"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-945ec-ção-banner-campos-e-rodapé--chromium\\test-failed-2.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-945ec-ção-banner-campos-e-rodapé--chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-945ec-ção-banner-campos-e-rodapé--chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc2-form-modo-avaliacao.spec.ts",
+                        "column": 91,
+                        "line": 41
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b588b79557fd7988cd46-5f697407dd80ddfb3b33",
+              "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc2-form-modo-avaliacao.spec.ts",
+              "line": 21,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc3-obrigatoriedade-tipo-ao-aprovar.spec.ts",
+      "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc3-obrigatoriedade-tipo-ao-aprovar.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Avaliar registro externo pendente (Aprovar/Recusar com justificativa)",
+          "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc3-obrigatoriedade-tipo-ao-aprovar.spec.ts",
+          "line": 11,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar obrigatoriedade do Tipo de experiência ao Aprovar",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 28918,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.chakra-form-control').filter({ has: locator('label').filter({ hasText: /^Tipo de experiência/ }) }).first().getByText(/Campo obrigatório/i).first()\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('.chakra-form-control').filter({ has: locator('label').filter({ hasText: /^Tipo de experiência/ }) }).first().getByText(/Campo obrigatório/i).first()\u001b[22m\n\u001b[2m    - waiting for\" https://registrosf2.stage.twygoead.com/o/37079/records\" navigation to finish...\u001b[22m\n\u001b[2m    - navigated to \"https://registrosf2.stage.twygoead.com/o/37079/records\"\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.chakra-form-control').filter({ has: locator('label').filter({ hasText: /^Tipo de experiência/ }) }).first().getByText(/Campo obrigatório/i).first()\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('.chakra-form-control').filter({ has: locator('label').filter({ hasText: /^Tipo de experiência/ }) }).first().getByText(/Campo obrigatório/i).first()\u001b[22m\n\u001b[2m    - waiting for\" https://registrosf2.stage.twygoead.com/o/37079/records\" navigation to finish...\u001b[22m\n\u001b[2m    - navigated to \"https://registrosf2.stage.twygoead.com/o/37079/records\"\u001b[22m\n\n    at D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc3-obrigatoriedade-tipo-ao-aprovar.spec.ts:42:36",
+                        "location": {
+                          "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc3-obrigatoriedade-tipo-ao-aprovar.spec.ts",
+                          "column": 36,
+                          "line": 42
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 40 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'2. Aprovar com Tipo vazio → \"Campo obrigatório\", não aprova'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m 41 |\u001b[39m       \u001b[36mawait\u001b[39m av\u001b[33m.\u001b[39mclickAprovar()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 42 |\u001b[39m       \u001b[36mawait\u001b[39m expect(av\u001b[33m.\u001b[39mtipoError())\u001b[33m.\u001b[39mtoBeVisible({ timeout\u001b[33m:\u001b[39m \u001b[35m8\u001b[39m_000 })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 43 |\u001b[39m       expect(page\u001b[33m.\u001b[39murl()\u001b[33m,\u001b[39m \u001b[32m'não deve sair do form de avaliação'\u001b[39m)\u001b[33m.\u001b[39mtoMatch(\u001b[35m/admin-avaliar/\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 44 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 45 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc3-obrigatoriedade-tipo-ao-aprovar.spec.ts",
+                            "column": 36,
+                            "line": 42
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.chakra-form-control').filter({ has: locator('label').filter({ hasText: /^Tipo de experiência/ }) }).first().getByText(/Campo obrigatório/i).first()\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('.chakra-form-control').filter({ has: locator('label').filter({ hasText: /^Tipo de experiência/ }) }).first().getByText(/Campo obrigatório/i).first()\u001b[22m\n\u001b[2m    - waiting for\" https://registrosf2.stage.twygoead.com/o/37079/records\" navigation to finish...\u001b[22m\n\u001b[2m    - navigated to \"https://registrosf2.stage.twygoead.com/o/37079/records\"\u001b[22m\n\n\n  40 |     await allure.step('2. Aprovar com Tipo vazio → \"Campo obrigatório\", não aprova', async () => {\n  41 |       await av.clickAprovar();\n> 42 |       await expect(av.tipoError()).toBeVisible({ timeout: 8_000 });\n     |                                    ^\n  43 |       expect(page.url(), 'não deve sair do form de avaliação').toMatch(/admin-avaliar/);\n  44 |     });\n  45 |\n    at D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc3-obrigatoriedade-tipo-ao-aprovar.spec.ts:42:36"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Pré: criar Externo Pendente e abrir \"Avaliar\"",
+                          "duration": 15053
+                        },
+                        {
+                          "title": "2. Aprovar com Tipo vazio → \"Campo obrigatório\", não aprova",
+                          "duration": 8253,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.chakra-form-control').filter({ has: locator('label').filter({ hasText: /^Tipo de experiência/ }) }).first().getByText(/Campo obrigatório/i).first()\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('.chakra-form-control').filter({ has: locator('label').filter({ hasText: /^Tipo de experiência/ }) }).first().getByText(/Campo obrigatório/i).first()\u001b[22m\n\u001b[2m    - waiting for\" https://registrosf2.stage.twygoead.com/o/37079/records\" navigation to finish...\u001b[22m\n\u001b[2m    - navigated to \"https://registrosf2.stage.twygoead.com/o/37079/records\"\u001b[22m\n",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.chakra-form-control').filter({ has: locator('label').filter({ hasText: /^Tipo de experiência/ }) }).first().getByText(/Campo obrigatório/i).first()\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('.chakra-form-control').filter({ has: locator('label').filter({ hasText: /^Tipo de experiência/ }) }).first().getByText(/Campo obrigatório/i).first()\u001b[22m\n\u001b[2m    - waiting for\" https://registrosf2.stage.twygoead.com/o/37079/records\" navigation to finish...\u001b[22m\n\u001b[2m    - navigated to \"https://registrosf2.stage.twygoead.com/o/37079/records\"\u001b[22m\n\n    at D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc3-obrigatoriedade-tipo-ao-aprovar.spec.ts:42:36",
+                            "location": {
+                              "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc3-obrigatoriedade-tipo-ao-aprovar.spec.ts",
+                              "column": 36,
+                              "line": 42
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 40 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'2. Aprovar com Tipo vazio → \"Campo obrigatório\", não aprova'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m 41 |\u001b[39m       \u001b[36mawait\u001b[39m av\u001b[33m.\u001b[39mclickAprovar()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 42 |\u001b[39m       \u001b[36mawait\u001b[39m expect(av\u001b[33m.\u001b[39mtipoError())\u001b[33m.\u001b[39mtoBeVisible({ timeout\u001b[33m:\u001b[39m \u001b[35m8\u001b[39m_000 })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 43 |\u001b[39m       expect(page\u001b[33m.\u001b[39murl()\u001b[33m,\u001b[39m \u001b[32m'não deve sair do form de avaliação'\u001b[39m)\u001b[33m.\u001b[39mtoMatch(\u001b[35m/admin-avaliar/\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 44 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 45 |\u001b[39m\u001b[0m"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-06-25T20:11:11.260Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkF2YWxpYXIgcmVnaXN0cm8gZXh0ZXJubyBwZW5kZW50ZSAoQXByb3Zhci9SZWN1c2FyIGNvbSBqdXN0aWZpY2F0aXZhKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIG9icmlnYXRvcmllZGFkZSBkbyBUaXBvIGRlIGV4cGVyacOqbmNpYSBhbyBBcHJvdmFyIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-1601e-o-de-experiência-ao-Aprovar-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-1601e-o-de-experiência-ao-Aprovar-chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-1601e-o-de-experiência-ao-Aprovar-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-1601e-o-de-experiência-ao-Aprovar-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-1601e-o-de-experiência-ao-Aprovar-chromium\\test-failed-2.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-1601e-o-de-experiência-ao-Aprovar-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-1601e-o-de-experiência-ao-Aprovar-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc3-obrigatoriedade-tipo-ao-aprovar.spec.ts",
+                        "column": 36,
+                        "line": 42
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "9890b1c20ce36754478f-55c123dd684fe2fa3a95",
+              "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc3-obrigatoriedade-tipo-ao-aprovar.spec.ts",
+              "line": 24,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc4-fluxo-completo-aprovacao.spec.ts",
+      "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc4-fluxo-completo-aprovacao.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Avaliar registro externo pendente (Aprovar/Recusar com justificativa)",
+          "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc4-fluxo-completo-aprovacao.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar fluxo completo de aprovação",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 38840,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Pré: criar Externo Pendente e abrir \"Avaliar\"",
+                          "duration": 15026
+                        },
+                        {
+                          "title": "2-4. Tipo \"Curso\" + Categoria \"Tecnologia\" + Aprovar",
+                          "duration": 12885
+                        },
+                        {
+                          "title": "5. Linha exibe situação Aprovado / certificado Emitido",
+                          "duration": 7186
+                        }
+                      ],
+                      "startTime": "2026-06-25T20:11:44.203Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkF2YWxpYXIgcmVnaXN0cm8gZXh0ZXJubyBwZW5kZW50ZSAoQXByb3Zhci9SZWN1c2FyIGNvbSBqdXN0aWZpY2F0aXZhKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGZsdXhvIGNvbXBsZXRvIGRlIGFwcm92YcOnw6NvIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-9fef9-fluxo-completo-de-aprovação-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-9fef9-fluxo-completo-de-aprovação-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-9fef9-fluxo-completo-de-aprovação-chromium\\video.webm"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-9fef9-fluxo-completo-de-aprovação-chromium\\test-finished-2.png"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-9fef9-fluxo-completo-de-aprovação-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "98cf47153dc09a35004f-8849163d9bb478c92541",
+              "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc4-fluxo-completo-aprovacao.spec.ts",
+              "line": 21,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc5-modal-recusa-validacao.spec.ts",
+      "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc5-modal-recusa-validacao.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Avaliar registro externo pendente (Aprovar/Recusar com justificativa)",
+          "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc5-modal-recusa-validacao.spec.ts",
+          "line": 9,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar estrutura e bloqueio do modal de Recusa",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 19090,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Pré: criar Externo Pendente e abrir \"Avaliar\"",
+                          "duration": 14944
+                        },
+                        {
+                          "title": "1-2. Abrir modal de recusa → botão desabilitado com justificativa vazia",
+                          "duration": 229
+                        },
+                        {
+                          "title": "3-4. Preencher justificativa habilita; Cancelar fecha sem recusar",
+                          "duration": 368
+                        }
+                      ],
+                      "startTime": "2026-06-25T20:12:26.519Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkF2YWxpYXIgcmVnaXN0cm8gZXh0ZXJubyBwZW5kZW50ZSAoQXByb3Zhci9SZWN1c2FyIGNvbSBqdXN0aWZpY2F0aXZhKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGVzdHJ1dHVyYSBlIGJsb3F1ZWlvIGRvIG1vZGFsIGRlIFJlY3VzYSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-48d8d-bloqueio-do-modal-de-Recusa-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-48d8d-bloqueio-do-modal-de-Recusa-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-48d8d-bloqueio-do-modal-de-Recusa-chromium\\video.webm"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-48d8d-bloqueio-do-modal-de-Recusa-chromium\\test-finished-2.png"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-48d8d-bloqueio-do-modal-de-Recusa-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "889ea34134f7c6b877a0-7a9d260df6b6c96cb936",
+              "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc5-modal-recusa-validacao.spec.ts",
+              "line": 22,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc6-fluxo-completo-recusa-e-historico.spec.ts",
+      "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc6-fluxo-completo-recusa-e-historico.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Avaliar registro externo pendente (Aprovar/Recusar com justificativa)",
+          "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc6-fluxo-completo-recusa-e-historico.spec.ts",
+          "line": 10,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar fluxo completo de recusa e visibilidade da justificativa",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 43779,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.chakra-modal__content, [role=\"dialog\"]').filter({ hasText: /Histórico/i }).first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.chakra-modal__content, [role=\"dialog\"]').filter({ hasText: /Histórico/i }).first()\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.chakra-modal__content, [role=\"dialog\"]').filter({ hasText: /Histórico/i }).first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.chakra-modal__content, [role=\"dialog\"]').filter({ hasText: /Histórico/i }).first()\u001b[22m\n\n    at AvaliarRegistroPage.openHistorico (D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\pages\\AvaliarRegistroPage.ts:186:26)\n    at D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc6-fluxo-completo-recusa-e-historico.spec.ts:48:22",
+                        "location": {
+                          "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\pages\\AvaliarRegistroPage.ts",
+                          "column": 26,
+                          "line": 186
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39mprojects\\registros-externos\\pages\\AvaliarRegistroPage.ts:186\n\n\u001b[0m \u001b[90m 184 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mbase\u001b[33m.\u001b[39mclickRowMenuItem(\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mrowByContent(marker)\u001b[33m,\u001b[39m \u001b[35m/Histórico/i\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 185 |\u001b[39m     \u001b[36mconst\u001b[39m drawer \u001b[33m=\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mlocator(\u001b[32m'.chakra-modal__content, [role=\"dialog\"]'\u001b[39m)\u001b[33m.\u001b[39mfilter({ hasText\u001b[33m:\u001b[39m \u001b[35m/Histórico/i\u001b[39m })\u001b[33m.\u001b[39mfirst()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 186 |\u001b[39m     \u001b[36mawait\u001b[39m expect(drawer)\u001b[33m.\u001b[39mtoBeVisible({ timeout\u001b[33m:\u001b[39m \u001b[35m10\u001b[39m_000 })\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 187 |\u001b[39m     \u001b[36mreturn\u001b[39m drawer\u001b[33m;\u001b[39m\n \u001b[90m 188 |\u001b[39m   }\n \u001b[90m 189 |\u001b[39m }\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\pages\\AvaliarRegistroPage.ts",
+                            "column": 26,
+                            "line": 186
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.chakra-modal__content, [role=\"dialog\"]').filter({ hasText: /Histórico/i }).first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.chakra-modal__content, [role=\"dialog\"]').filter({ hasText: /Histórico/i }).first()\u001b[22m\n\n\n   at projects\\registros-externos\\pages\\AvaliarRegistroPage.ts:186\n\n  184 |     await this.base.clickRowMenuItem(this.rowByContent(marker), /Histórico/i);\n  185 |     const drawer = this.page.locator('.chakra-modal__content, [role=\"dialog\"]').filter({ hasText: /Histórico/i }).first();\n> 186 |     await expect(drawer).toBeVisible({ timeout: 10_000 });\n      |                          ^\n  187 |     return drawer;\n  188 |   }\n  189 | }\n    at AvaliarRegistroPage.openHistorico (D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\pages\\AvaliarRegistroPage.ts:186:26)\n    at D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc6-fluxo-completo-recusa-e-historico.spec.ts:48:22"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Pré: criar Externo Pendente e abrir \"Avaliar\"",
+                          "duration": 15103
+                        },
+                        {
+                          "title": "1-3. Recusar com justificativa → registro fica Recusado",
+                          "duration": 13982
+                        },
+                        {
+                          "title": "4. Histórico do registro recusado exibe a justificativa",
+                          "duration": 10604,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.chakra-modal__content, [role=\"dialog\"]').filter({ hasText: /Histórico/i }).first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.chakra-modal__content, [role=\"dialog\"]').filter({ hasText: /Histórico/i }).first()\u001b[22m\n",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.chakra-modal__content, [role=\"dialog\"]').filter({ hasText: /Histórico/i }).first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.chakra-modal__content, [role=\"dialog\"]').filter({ hasText: /Histórico/i }).first()\u001b[22m\n\n    at AvaliarRegistroPage.openHistorico (D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\pages\\AvaliarRegistroPage.ts:186:26)\n    at D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc6-fluxo-completo-recusa-e-historico.spec.ts:48:22",
+                            "location": {
+                              "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\pages\\AvaliarRegistroPage.ts",
+                              "column": 26,
+                              "line": 186
+                            },
+                            "snippet": "\u001b[90m   at \u001b[39mprojects\\registros-externos\\pages\\AvaliarRegistroPage.ts:186\n\n\u001b[0m \u001b[90m 184 |\u001b[39m     \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mbase\u001b[33m.\u001b[39mclickRowMenuItem(\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mrowByContent(marker)\u001b[33m,\u001b[39m \u001b[35m/Histórico/i\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 185 |\u001b[39m     \u001b[36mconst\u001b[39m drawer \u001b[33m=\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mlocator(\u001b[32m'.chakra-modal__content, [role=\"dialog\"]'\u001b[39m)\u001b[33m.\u001b[39mfilter({ hasText\u001b[33m:\u001b[39m \u001b[35m/Histórico/i\u001b[39m })\u001b[33m.\u001b[39mfirst()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 186 |\u001b[39m     \u001b[36mawait\u001b[39m expect(drawer)\u001b[33m.\u001b[39mtoBeVisible({ timeout\u001b[33m:\u001b[39m \u001b[35m10\u001b[39m_000 })\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 187 |\u001b[39m     \u001b[36mreturn\u001b[39m drawer\u001b[33m;\u001b[39m\n \u001b[90m 188 |\u001b[39m   }\n \u001b[90m 189 |\u001b[39m }\u001b[0m"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-06-25T20:12:48.002Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkF2YWxpYXIgcmVnaXN0cm8gZXh0ZXJubyBwZW5kZW50ZSAoQXByb3Zhci9SZWN1c2FyIGNvbSBqdXN0aWZpY2F0aXZhKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGZsdXhvIGNvbXBsZXRvIGRlIHJlY3VzYSBlIHZpc2liaWxpZGFkZSBkYSBqdXN0aWZpY2F0aXZhIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-791e8-sibilidade-da-justificativa-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-791e8-sibilidade-da-justificativa-chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-791e8-sibilidade-da-justificativa-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-791e8-sibilidade-da-justificativa-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-791e8-sibilidade-da-justificativa-chromium\\test-failed-2.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-791e8-sibilidade-da-justificativa-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-791e8-sibilidade-da-justificativa-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\pages\\AvaliarRegistroPage.ts",
+                        "column": 26,
+                        "line": 186
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ad488784e95988155c8e-ed8c2de2e8418a939ffc",
+              "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc6-fluxo-completo-recusa-e-historico.spec.ts",
+              "line": 24,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc7-cancelar-avaliacao.spec.ts",
+      "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc7-cancelar-avaliacao.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Avaliar registro externo pendente (Aprovar/Recusar com justificativa)",
+          "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc7-cancelar-avaliacao.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar botão Cancelar do form de avaliação",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 32028,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Pré: criar Externo Pendente e abrir \"Avaliar\"",
+                          "duration": 15409
+                        },
+                        {
+                          "title": "2-3. Selecionar Tipo (form sujo) e Cancelar → registro permanece Pendente",
+                          "duration": 12489
+                        }
+                      ],
+                      "startTime": "2026-06-25T20:13:35.895Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkF2YWxpYXIgcmVnaXN0cm8gZXh0ZXJubyBwZW5kZW50ZSAoQXByb3Zhci9SZWN1c2FyIGNvbSBqdXN0aWZpY2F0aXZhKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGJvdMOjbyBDYW5jZWxhciBkbyBmb3JtIGRlIGF2YWxpYcOnw6NvIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJoaWdoIn1dfX0="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-e26da-ncelar-do-form-de-avaliação-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-e26da-ncelar-do-form-de-avaliação-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-e26da-ncelar-do-form-de-avaliação-chromium\\video.webm"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-e26da-ncelar-do-form-de-avaliação-chromium\\test-finished-2.png"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-e26da-ncelar-do-form-de-avaliação-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dbe27080a2460c1de382-b37b9910b27e3008df53",
+              "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc7-cancelar-avaliacao.spec.ts",
+              "line": 21,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc8-escopo-do-lider.spec.ts",
+      "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc8-escopo-do-lider.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Avaliar registro externo pendente (Aprovar/Recusar com justificativa)",
+          "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc8-escopo-do-lider.spec.ts",
+          "line": 11,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar escopo do Líder na avaliação",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc8-escopo-do-lider.spec.ts",
+                        "line": 12,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-25T20:14:11.483Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "location": {
+                            "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc8-escopo-do-lider.spec.ts",
+                            "line": 12,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d535834bf2ce5b793b21-b0381c4d0e62947d84bc",
+              "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc8-escopo-do-lider.spec.ts",
+              "line": 12,
+              "column": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc9-erro-aprovar-registro-excluido.spec.ts",
+      "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc9-erro-aprovar-registro-excluido.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Avaliar registro externo pendente (Aprovar/Recusar com justificativa)",
+          "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc9-erro-aprovar-registro-excluido.spec.ts",
+          "line": 9,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar erro ao aprovar registro excluído por outro admin",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 31488,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Abrir \"Avaliar\" de um Externo Pendente (sessão A)",
+                          "duration": 14726
+                        },
+                        {
+                          "title": "2. Excluir o registro por fora (sessão B via API)",
+                          "duration": 694
+                        },
+                        {
+                          "title": "3. Aprovar na sessão A → erro; registro não é aprovado (já não existe)",
+                          "duration": 7797
+                        }
+                      ],
+                      "startTime": "2026-06-25T20:14:11.513Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkF2YWxpYXIgcmVnaXN0cm8gZXh0ZXJubyBwZW5kZW50ZSAoQXByb3Zhci9SZWN1c2FyIGNvbSBqdXN0aWZpY2F0aXZhKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGVycm8gYW8gYXByb3ZhciByZWdpc3RybyBleGNsdcOtZG8gcG9yIG91dHJvIGFkbWluIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJub3JtYWwifV19fQ=="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-3ead0-ro-excluído-por-outro-admin-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-3ead0-ro-excluído-por-outro-admin-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-3ead0-ro-excluído-por-outro-admin-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-3ead0-ro-excluído-por-outro-admin-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6b1595230a92c9dec231-1a5ab3a15e7b7b685b7e",
+              "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc9-erro-aprovar-registro-excluido.spec.ts",
+              "line": 10,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-06-25T20:09:49.806Z",
+    "duration": 295065.856,
+    "expected": 4,
+    "skipped": 1,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}
