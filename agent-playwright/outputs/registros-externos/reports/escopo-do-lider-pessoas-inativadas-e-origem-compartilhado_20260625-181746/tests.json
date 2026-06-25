@@ -1,0 +1,715 @@
+{
+  "config": {
+    "configFile": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "D:/Estudo/Programação/cursor/twygo-work/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/Estudo/Programação/cursor/twygo-work/twygo-agents-qa/agent-playwright/outputs/registros-externos/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "D:/Estudo/Programação/cursor/twygo-work/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "tests/auth/**/*.spec.ts",
+          "projects/registros-externos/tests/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/registros-externos/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\registros-externos\\tests\\features\\escopo-lider-inativadas-compartilhado\\tc1-2-3-escopo-lider.spec.ts",
+      "file": "projects/registros-externos/tests/features/escopo-lider-inativadas-compartilhado/tc1-2-3-escopo-lider.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Escopo do Líder, pessoas inativadas e origem Compartilhado",
+          "file": "projects/registros-externos/tests/features/escopo-lider-inativadas-compartilhado/tc1-2-3-escopo-lider.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar matriz de escopo Líder vs Admin",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider-inativadas-compartilhado\\tc1-2-3-escopo-lider.spec.ts",
+                        "line": 9,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-25T21:16:40.410Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "location": {
+                            "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider-inativadas-compartilhado\\tc1-2-3-escopo-lider.spec.ts",
+                            "line": 9,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e67d53d3e043378cf792-38360b44466685482e03",
+              "file": "projects/registros-externos/tests/features/escopo-lider-inativadas-compartilhado/tc1-2-3-escopo-lider.spec.ts",
+              "line": 9,
+              "column": 8
+            },
+            {
+              "title": "Validar 403 e toast ao atuar fora do escopo do Líder",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider-inativadas-compartilhado\\tc1-2-3-escopo-lider.spec.ts",
+                        "line": 10,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-25T21:16:40.411Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "location": {
+                            "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider-inativadas-compartilhado\\tc1-2-3-escopo-lider.spec.ts",
+                            "line": 10,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e67d53d3e043378cf792-71fc89735ff3b1d43b68",
+              "file": "projects/registros-externos/tests/features/escopo-lider-inativadas-compartilhado/tc1-2-3-escopo-lider.spec.ts",
+              "line": 10,
+              "column": 8
+            },
+            {
+              "title": "Validar preservação de ações antigas após mudança de hierarquia",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider-inativadas-compartilhado\\tc1-2-3-escopo-lider.spec.ts",
+                        "line": 11,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-25T21:16:40.411Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "location": {
+                            "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider-inativadas-compartilhado\\tc1-2-3-escopo-lider.spec.ts",
+                            "line": 11,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e67d53d3e043378cf792-b34ed6fe6a0f2087aa53",
+              "file": "projects/registros-externos/tests/features/escopo-lider-inativadas-compartilhado/tc1-2-3-escopo-lider.spec.ts",
+              "line": 11,
+              "column": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\escopo-lider-inativadas-compartilhado\\tc4-inativar-pessoa.spec.ts",
+      "file": "projects/registros-externos/tests/features/escopo-lider-inativadas-compartilhado/tc4-inativar-pessoa.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Escopo do Líder, pessoas inativadas e origem Compartilhado",
+          "file": "projects/registros-externos/tests/features/escopo-lider-inativadas-compartilhado/tc4-inativar-pessoa.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar sumiço completo de pessoas inativadas",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider-inativadas-compartilhado\\tc4-inativar-pessoa.spec.ts",
+                        "line": 9,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-25T21:16:40.411Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "location": {
+                            "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider-inativadas-compartilhado\\tc4-inativar-pessoa.spec.ts",
+                            "line": 9,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "22d286ca87ec4e5ab02c-b43f31258d5697f4c05f",
+              "file": "projects/registros-externos/tests/features/escopo-lider-inativadas-compartilhado/tc4-inativar-pessoa.spec.ts",
+              "line": 9,
+              "column": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\escopo-lider-inativadas-compartilhado\\tc5-coerencia-kpi-lista.spec.ts",
+      "file": "projects/registros-externos/tests/features/escopo-lider-inativadas-compartilhado/tc5-coerencia-kpi-lista.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Escopo do Líder, pessoas inativadas e origem Compartilhado",
+          "file": "projects/registros-externos/tests/features/escopo-lider-inativadas-compartilhado/tc5-coerencia-kpi-lista.spec.ts",
+          "line": 10,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar coerência permanente entre KPI e lista",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1468,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1-2. total da lista (paginação) == total_general dos KPIs",
+                          "duration": 212
+                        },
+                        {
+                          "title": "Soma dos status dos cards == total_general (sem divergência)",
+                          "duration": 0
+                        }
+                      ],
+                      "startTime": "2026-06-25T21:16:41.150Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkVzY29wbyBkbyBMw61kZXIsIHBlc3NvYXMgaW5hdGl2YWRhcyBlIG9yaWdlbSBDb21wYXJ0aWxoYWRvIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGNvZXLDqm5jaWEgcGVybWFuZW50ZSBlbnRyZSBLUEkgZSBsaXN0YSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-38c78-ermanente-entre-KPI-e-lista-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-38c78-ermanente-entre-KPI-e-lista-chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-38c78-ermanente-entre-KPI-e-lista-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-38c78-ermanente-entre-KPI-e-lista-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fc80463240412ac383fe-c61915acb31c08883db6",
+              "file": "projects/registros-externos/tests/features/escopo-lider-inativadas-compartilhado/tc5-coerencia-kpi-lista.spec.ts",
+              "line": 11,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\escopo-lider-inativadas-compartilhado\\tc6-7-10-compartilhado.spec.ts",
+      "file": "projects/registros-externos/tests/features/escopo-lider-inativadas-compartilhado/tc6-7-10-compartilhado.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Escopo do Líder, pessoas inativadas e origem Compartilhado",
+          "file": "projects/registros-externos/tests/features/escopo-lider-inativadas-compartilhado/tc6-7-10-compartilhado.spec.ts",
+          "line": 9,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar apresentação e menu restrito de registros Compartilhados",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider-inativadas-compartilhado\\tc6-7-10-compartilhado.spec.ts",
+                        "line": 10,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-25T21:16:43.180Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "location": {
+                            "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider-inativadas-compartilhado\\tc6-7-10-compartilhado.spec.ts",
+                            "line": 10,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "5da8c7bec2492935a5c3-4cf7878a70b8817e5592",
+              "file": "projects/registros-externos/tests/features/escopo-lider-inativadas-compartilhado/tc6-7-10-compartilhado.spec.ts",
+              "line": 10,
+              "column": 8
+            },
+            {
+              "title": "Validar bloqueio de modificação de Compartilhado via API (403)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider-inativadas-compartilhado\\tc6-7-10-compartilhado.spec.ts",
+                        "line": 11,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-25T21:16:43.180Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "location": {
+                            "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider-inativadas-compartilhado\\tc6-7-10-compartilhado.spec.ts",
+                            "line": 11,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "5da8c7bec2492935a5c3-7ccc3841e8e8dedf1418",
+              "file": "projects/registros-externos/tests/features/escopo-lider-inativadas-compartilhado/tc6-7-10-compartilhado.spec.ts",
+              "line": 11,
+              "column": 8
+            },
+            {
+              "title": "Validar permanência de Compartilhados após inativação da org parceira",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider-inativadas-compartilhado\\tc6-7-10-compartilhado.spec.ts",
+                        "line": 12,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-25T21:16:43.180Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "location": {
+                            "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider-inativadas-compartilhado\\tc6-7-10-compartilhado.spec.ts",
+                            "line": 12,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "5da8c7bec2492935a5c3-31f88cf9928a273203d9",
+              "file": "projects/registros-externos/tests/features/escopo-lider-inativadas-compartilhado/tc6-7-10-compartilhado.spec.ts",
+              "line": 12,
+              "column": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\escopo-lider-inativadas-compartilhado\\tc8-9-multi-org.spec.ts",
+      "file": "projects/registros-externos/tests/features/escopo-lider-inativadas-compartilhado/tc8-9-multi-org.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Escopo do Líder, pessoas inativadas e origem Compartilhado",
+          "file": "projects/registros-externos/tests/features/escopo-lider-inativadas-compartilhado/tc8-9-multi-org.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar isolamento multi-organização do Aluno",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider-inativadas-compartilhado\\tc8-9-multi-org.spec.ts",
+                        "line": 9,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-25T21:16:43.180Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "location": {
+                            "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider-inativadas-compartilhado\\tc8-9-multi-org.spec.ts",
+                            "line": 9,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "b3ca1f353add6827d566-244df9912f01b364fbc3",
+              "file": "projects/registros-externos/tests/features/escopo-lider-inativadas-compartilhado/tc8-9-multi-org.spec.ts",
+              "line": 9,
+              "column": 8
+            },
+            {
+              "title": "Validar isolamento entre organizações no perfil Admin",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider-inativadas-compartilhado\\tc8-9-multi-org.spec.ts",
+                        "line": 10,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-25T21:16:43.180Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "location": {
+                            "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider-inativadas-compartilhado\\tc8-9-multi-org.spec.ts",
+                            "line": 10,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "b3ca1f353add6827d566-dccf5ded8fc3d27c5ec1",
+              "file": "projects/registros-externos/tests/features/escopo-lider-inativadas-compartilhado/tc8-9-multi-org.spec.ts",
+              "line": 10,
+              "column": 8
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-06-25T21:15:36.724Z",
+    "duration": 66513.139,
+    "expected": 1,
+    "skipped": 9,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
