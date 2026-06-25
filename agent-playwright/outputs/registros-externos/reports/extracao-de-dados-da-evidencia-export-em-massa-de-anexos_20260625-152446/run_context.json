@@ -1,5 +1,5 @@
 {
-  "runId": "extracao-de-dados-da-evidencia-export-em-massa-de-anexos_20260624-115212",
+  "runId": "extracao-de-dados-da-evidencia-export-em-massa-de-anexos_20260625-152446",
   "mode": "per-suite",
   "suiteFilter": "Extração de dados da Evidência (export em massa de anexos)",
   "projectName": "Registros de Aprendizagem",
@@ -7,5 +7,5 @@
   "browsers": [
     "chromium"
   ],
-  "generatedAt": "2026-06-24T14:52:12.598Z"
+  "generatedAt": "2026-06-25T18:24:46.744Z"
 }

@@ -1,6 +1,6 @@
 # Relatório de Execução — Twygo QA
 
-**Projeto:** Registros de Aprendizagem · **Ambiente:** `staging-registros-externos` · **Browsers:** chromium · **Gerado em:** 24/06/2026, 11:52:12
+**Projeto:** Registros de Aprendizagem · **Ambiente:** `staging-registros-externos` · **Browsers:** chromium · **Gerado em:** 25/06/2026, 15:24:46
 
 > **Escopo:** Apenas testsuite contendo "Extração de dados da Evidência (export em massa de anexos)"
 

@@ -1,0 +1,29 @@
+{
+  "runId": "trial-provisionamento-e-exclusao-de-dados_20260625-152703",
+  "scope": "Apenas testsuite contendo \"Trial (provisionamento e exclusão de dados)\"",
+  "tests": {
+    "total": 4,
+    "passed": 1,
+    "failed": 1,
+    "skipped": 2,
+    "durationMs": 57645
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 0,
+    "tests": 151,
+    "outOfScope": {
+      "errors": 1435,
+      "warnings": 850,
+      "info": 82
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

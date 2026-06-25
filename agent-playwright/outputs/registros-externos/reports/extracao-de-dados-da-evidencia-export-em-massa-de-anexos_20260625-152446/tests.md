@@ -36,25 +36,7 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 
 **Evidências:**
 
-📁 _Pasta:_ [`artifacts/projects-registros-externo-961a2-do-pacote-ZIP-de-evidências-chromium/`](artifacts/projects-registros-externo-961a2-do-pacote-ZIP-de-evidências-chromium/)
-
-- 📸 **Screenshot (screenshot)** — [`test-finished-1.png`](artifacts/projects-registros-externo-961a2-do-pacote-ZIP-de-evidências-chromium/test-finished-1.png)
-
-  ![](artifacts/projects-registros-externo-961a2-do-pacote-ZIP-de-evidências-chromium/test-finished-1.png)
-
-- 🎬 [Vídeo da execução (video.webm)](artifacts/projects-registros-externo-961a2-do-pacote-ZIP-de-evidências-chromium/video.webm)
-
-- 🎬 [Vídeo da execução (video-1.webm)](artifacts/projects-registros-externo-961a2-do-pacote-ZIP-de-evidências-chromium/video-1.webm)
-
-- 📦 **Trace** — [`trace.zip`](artifacts/projects-registros-externo-961a2-do-pacote-ZIP-de-evidências-chromium/trace.zip)
-
-  ```bash
-  npx playwright show-trace outputs/registros-externos/reports/extracao-de-dados-da-evidencia-export-em-massa-de-anexos_20260624-115212/artifacts/projects-registros-externo-961a2-do-pacote-ZIP-de-evidências-chromium/trace.zip
-  ```
-
-- 🎥 **Vídeo** — [`video.webm`](artifacts/projects-registros-externo-961a2-do-pacote-ZIP-de-evidências-chromium/video.webm)
-
-- 🎥 **Vídeo** — [`video-1.webm`](artifacts/projects-registros-externo-961a2-do-pacote-ZIP-de-evidências-chromium/video-1.webm)
+_Sem evidências anexadas._
 
 
 ---
