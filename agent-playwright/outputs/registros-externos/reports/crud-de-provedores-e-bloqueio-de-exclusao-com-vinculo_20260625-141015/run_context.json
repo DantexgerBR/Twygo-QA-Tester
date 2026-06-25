@@ -1,0 +1,11 @@
+{
+  "runId": "crud-de-provedores-e-bloqueio-de-exclusao-com-vinculo_20260625-141015",
+  "mode": "per-suite",
+  "suiteFilter": "CRUD de Provedores e bloqueio de exclusão com vínculo",
+  "projectName": "Registros de Aprendizagem",
+  "environment": "staging-registros-externos",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-06-25T17:10:15.416Z"
+}

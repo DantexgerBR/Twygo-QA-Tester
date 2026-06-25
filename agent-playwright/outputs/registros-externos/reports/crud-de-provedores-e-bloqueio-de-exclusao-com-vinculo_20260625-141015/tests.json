@@ -1,0 +1,1248 @@
+{
+  "config": {
+    "configFile": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "D:/Estudo/Programação/cursor/twygo-work/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/Estudo/Programação/cursor/twygo-work/twygo-agents-qa/agent-playwright/outputs/registros-externos/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "D:/Estudo/Programação/cursor/twygo-work/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "tests/auth/**/*.spec.ts",
+          "projects/registros-externos/tests/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/registros-externos/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\registros-externos\\tests\\features\\crud-de-provedores-bloqueio-exclusao-vinculo\\tc1-acesso-tab-e-estrutura-listagem.spec.ts",
+      "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc1-acesso-tab-e-estrutura-listagem.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "CRUD de Provedores e bloqueio de exclusão com vínculo",
+          "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc1-acesso-tab-e-estrutura-listagem.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar acesso à tab Provedores e estrutura da listagem",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9087,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar Registros e abrir a tab \"Provedores\"",
+                          "duration": 5264
+                        },
+                        {
+                          "title": "2. Verificar as colunas da tabela",
+                          "duration": 14
+                        },
+                        {
+                          "title": "3. Toolbar: Adicionar + busca + Filtro; SEM toggle tabela/grid",
+                          "duration": 65
+                        },
+                        {
+                          "title": "4. Coluna Website exibe host limpo (sem https://www.)",
+                          "duration": 12
+                        },
+                        {
+                          "title": "5. Ordenar pela coluna \"Nome\" (asc → inverte)",
+                          "duration": 1243
+                        }
+                      ],
+                      "startTime": "2026-06-25T17:04:17.426Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNSVUQgZGUgUHJvdmVkb3JlcyBlIGJsb3F1ZWlvIGRlIGV4Y2x1c8OjbyBjb20gdsOtbmN1bG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGFjZXNzbyDDoCB0YWIgUHJvdmVkb3JlcyBlIGVzdHJ1dHVyYSBkYSBsaXN0YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-dd18e-res-e-estrutura-da-listagem-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-dd18e-res-e-estrutura-da-listagem-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-dd18e-res-e-estrutura-da-listagem-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-dd18e-res-e-estrutura-da-listagem-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c1a333c8a8387547a16b-f4b873e1af8bae13cf59",
+              "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc1-acesso-tab-e-estrutura-listagem.spec.ts",
+              "line": 8,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\crud-de-provedores-bloqueio-exclusao-vinculo\\tc10-visualizacao-mobile.spec.ts",
+      "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc10-visualizacao-mobile.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "CRUD de Provedores e bloqueio de exclusão com vínculo",
+          "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc10-visualizacao-mobile.spec.ts",
+          "line": 9,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar visualização mobile da tab Provedores",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6934,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar a tab Provedores em viewport mobile → cards",
+                          "duration": 4961
+                        }
+                      ],
+                      "startTime": "2026-06-25T17:04:27.563Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNSVUQgZGUgUHJvdmVkb3JlcyBlIGJsb3F1ZWlvIGRlIGV4Y2x1c8OjbyBjb20gdsOtbmN1bG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIHZpc3VhbGl6YcOnw6NvIG1vYmlsZSBkYSB0YWIgUHJvdmVkb3JlcyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJub3JtYWwifV19fQ=="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-69130-ão-mobile-da-tab-Provedores-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-69130-ão-mobile-da-tab-Provedores-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-69130-ão-mobile-da-tab-Provedores-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-69130-ão-mobile-da-tab-Provedores-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ceabe230808d89a9d6c9-5cad4cc9c3da78ffa1d4",
+              "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc10-visualizacao-mobile.spec.ts",
+              "line": 10,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\crud-de-provedores-bloqueio-exclusao-vinculo\\tc2-criacao-de-provedor.spec.ts",
+      "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc2-criacao-de-provedor.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "CRUD de Provedores e bloqueio de exclusão com vínculo",
+          "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc2-criacao-de-provedor.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar criação de provedor",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 27705,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Abrir a tela \"Adicionar provedor\"",
+                          "duration": 9185
+                        },
+                        {
+                          "title": "2-4. Preencher Nome, Website e Descrição",
+                          "duration": 91
+                        },
+                        {
+                          "title": "5. Salvar → volta à listagem com o provedor criado",
+                          "duration": 8569
+                        }
+                      ],
+                      "startTime": "2026-06-25T17:04:34.940Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNSVUQgZGUgUHJvdmVkb3JlcyBlIGJsb3F1ZWlvIGRlIGV4Y2x1c8OjbyBjb20gdsOtbmN1bG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGNyaWHDp8OjbyBkZSBwcm92ZWRvciJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-540dd-Validar-criação-de-provedor-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-540dd-Validar-criação-de-provedor-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-540dd-Validar-criação-de-provedor-chromium\\video.webm"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-540dd-Validar-criação-de-provedor-chromium\\test-finished-2.png"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-540dd-Validar-criação-de-provedor-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0a31963986225f269ffc-bc515118602bb785cffd",
+              "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc2-criacao-de-provedor.spec.ts",
+              "line": 21,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\crud-de-provedores-bloqueio-exclusao-vinculo\\tc3-validacoes-campo-nome.spec.ts",
+      "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc3-validacoes-campo-nome.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "CRUD de Provedores e bloqueio de exclusão com vínculo",
+          "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc3-validacoes-campo-nome.spec.ts",
+          "line": 15,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validações do campo \"Nome\" do provedor",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 88488,
+                      "error": {
+                        "message": "Error: \"Emoji\" deveria ser aceito\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected pattern: \u001b[32m/tab=event-sources-tab/\u001b[39m\nReceived string:  \u001b[31m\"https://registrosf2.stage.twygoead.com/o/37079/event_sources/new\"\u001b[39m",
+                        "stack": "Error: \"Emoji\" deveria ser aceito\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected pattern: \u001b[32m/tab=event-sources-tab/\u001b[39m\nReceived string:  \u001b[31m\"https://registrosf2.stage.twygoead.com/o/37079/event_sources/new\"\u001b[39m\n    at D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\crud-de-provedores-bloqueio-exclusao-vinculo\\tc3-validacoes-campo-nome.spec.ts:56:74",
+                        "location": {
+                          "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\crud-de-provedores-bloqueio-exclusao-vinculo\\tc3-validacoes-campo-nome.spec.ts",
+                          "column": 74,
+                          "line": 56
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 54 |\u001b[39m           \u001b[90m// criam). O \"salvo escapado\" é coberto pelo check de alertFired no fim.\u001b[39m\n \u001b[90m 55 |\u001b[39m           \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[35m/tab=event-sources-tab/\u001b[39m\u001b[33m,\u001b[39m { timeout\u001b[33m:\u001b[39m \u001b[35m15\u001b[39m_000 })\u001b[33m.\u001b[39m\u001b[36mcatch\u001b[39m(() \u001b[33m=>\u001b[39m undefined)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 56 |\u001b[39m           expect\u001b[33m.\u001b[39msoft(page\u001b[33m.\u001b[39murl()\u001b[33m,\u001b[39m \u001b[32m`\"${row.cenario}\" deveria ser aceito`\u001b[39m)\u001b[33m.\u001b[39mtoMatch(\u001b[35m/tab=event-sources-tab/\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 57 |\u001b[39m         } \u001b[36melse\u001b[39m {\n \u001b[90m 58 |\u001b[39m           \u001b[90m// ESPERADO bloquear (RN84). BUG: o produto cria provedor de nome vazio\u001b[39m\n \u001b[90m 59 |\u001b[39m           \u001b[90m// e navega de volta → este soft-expect fica vermelho documentando o bug.\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\crud-de-provedores-bloqueio-exclusao-vinculo\\tc3-validacoes-campo-nome.spec.ts",
+                            "column": 74,
+                            "line": 56
+                          },
+                          "message": "Error: \"Emoji\" deveria ser aceito\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected pattern: \u001b[32m/tab=event-sources-tab/\u001b[39m\nReceived string:  \u001b[31m\"https://registrosf2.stage.twygoead.com/o/37079/event_sources/new\"\u001b[39m\n\n  54 |           // criam). O \"salvo escapado\" é coberto pelo check de alertFired no fim.\n  55 |           await page.waitForURL(/tab=event-sources-tab/, { timeout: 15_000 }).catch(() => undefined);\n> 56 |           expect.soft(page.url(), `\"${row.cenario}\" deveria ser aceito`).toMatch(/tab=event-sources-tab/);\n     |                                                                          ^\n  57 |         } else {\n  58 |           // ESPERADO bloquear (RN84). BUG: o produto cria provedor de nome vazio\n  59 |           // e navega de volta → este soft-expect fica vermelho documentando o bug.\n    at D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\crud-de-provedores-bloqueio-exclusao-vinculo\\tc3-validacoes-campo-nome.spec.ts:56:74"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Cenário \"Vazio\" → bloqueado",
+                          "duration": 7981
+                        },
+                        {
+                          "title": "Cenário \"Só espaços\" → bloqueado",
+                          "duration": 8086
+                        },
+                        {
+                          "title": "Cenário \"1 caractere\" → aceito",
+                          "duration": 10273
+                        },
+                        {
+                          "title": "Cenário \"Acentos\" → aceito",
+                          "duration": 10616
+                        },
+                        {
+                          "title": "Cenário \"Emoji\" → aceito",
+                          "duration": 22144,
+                          "error": {
+                            "message": "Error: \"Emoji\" deveria ser aceito\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected pattern: \u001b[32m/tab=event-sources-tab/\u001b[39m\nReceived string:  \u001b[31m\"https://registrosf2.stage.twygoead.com/o/37079/event_sources/new\"\u001b[39m",
+                            "stack": "Error: \"Emoji\" deveria ser aceito\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected pattern: \u001b[32m/tab=event-sources-tab/\u001b[39m\nReceived string:  \u001b[31m\"https://registrosf2.stage.twygoead.com/o/37079/event_sources/new\"\u001b[39m\n    at D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\crud-de-provedores-bloqueio-exclusao-vinculo\\tc3-validacoes-campo-nome.spec.ts:56:74",
+                            "location": {
+                              "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\crud-de-provedores-bloqueio-exclusao-vinculo\\tc3-validacoes-campo-nome.spec.ts",
+                              "column": 74,
+                              "line": 56
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 54 |\u001b[39m           \u001b[90m// criam). O \"salvo escapado\" é coberto pelo check de alertFired no fim.\u001b[39m\n \u001b[90m 55 |\u001b[39m           \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForURL(\u001b[35m/tab=event-sources-tab/\u001b[39m\u001b[33m,\u001b[39m { timeout\u001b[33m:\u001b[39m \u001b[35m15\u001b[39m_000 })\u001b[33m.\u001b[39m\u001b[36mcatch\u001b[39m(() \u001b[33m=>\u001b[39m undefined)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 56 |\u001b[39m           expect\u001b[33m.\u001b[39msoft(page\u001b[33m.\u001b[39murl()\u001b[33m,\u001b[39m \u001b[32m`\"${row.cenario}\" deveria ser aceito`\u001b[39m)\u001b[33m.\u001b[39mtoMatch(\u001b[35m/tab=event-sources-tab/\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                          \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 57 |\u001b[39m         } \u001b[36melse\u001b[39m {\n \u001b[90m 58 |\u001b[39m           \u001b[90m// ESPERADO bloquear (RN84). BUG: o produto cria provedor de nome vazio\u001b[39m\n \u001b[90m 59 |\u001b[39m           \u001b[90m// e navega de volta → este soft-expect fica vermelho documentando o bug.\u001b[39m\u001b[0m"
+                          }
+                        },
+                        {
+                          "title": "Cenário \"Script tag\" → aceito",
+                          "duration": 10905
+                        },
+                        {
+                          "title": "Cenário \"SQL injection\" → aceito",
+                          "duration": 10369
+                        }
+                      ],
+                      "startTime": "2026-06-25T17:05:04.238Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNSVUQgZGUgUHJvdmVkb3JlcyBlIGJsb3F1ZWlvIGRlIGV4Y2x1c8OjbyBjb20gdsOtbmN1bG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGHDp8O1ZXMgZG8gY2FtcG8gXCJOb21lXCIgZG8gcHJvdmVkb3IifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-16a9d-s-do-campo-Nome-do-provedor-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-16a9d-s-do-campo-Nome-do-provedor-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-16a9d-s-do-campo-Nome-do-provedor-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-16a9d-s-do-campo-Nome-do-provedor-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-16a9d-s-do-campo-Nome-do-provedor-chromium\\test-failed-2.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-16a9d-s-do-campo-Nome-do-provedor-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-16a9d-s-do-campo-Nome-do-provedor-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\crud-de-provedores-bloqueio-exclusao-vinculo\\tc3-validacoes-campo-nome.spec.ts",
+                        "column": 74,
+                        "line": 56
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "52780708e1a8a7343ecb-9065245c68a5c3985d25",
+              "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc3-validacoes-campo-nome.spec.ts",
+              "line": 27,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\crud-de-provedores-bloqueio-exclusao-vinculo\\tc4-validacoes-campo-website.spec.ts",
+      "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc4-validacoes-campo-website.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "CRUD de Provedores e bloqueio de exclusão com vínculo",
+          "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc4-validacoes-campo-website.spec.ts",
+          "line": 12,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validações do campo \"Website\" do provedor",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 41704,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Website \"Vazio\"",
+                          "duration": 8761
+                        },
+                        {
+                          "title": "Website \"URL válida\"",
+                          "duration": 8326
+                        },
+                        {
+                          "title": "Website \"Sem protocolo\"",
+                          "duration": 8764
+                        },
+                        {
+                          "title": "Website \"Texto inválido\"",
+                          "duration": 8063
+                        }
+                      ],
+                      "startTime": "2026-06-25T17:06:36.501Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNSVUQgZGUgUHJvdmVkb3JlcyBlIGJsb3F1ZWlvIGRlIGV4Y2x1c8OjbyBjb20gdsOtbmN1bG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGHDp8O1ZXMgZG8gY2FtcG8gXCJXZWJzaXRlXCIgZG8gcHJvdmVkb3IifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJub3JtYWwifV19fQ=="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-eea9d-o-campo-Website-do-provedor-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-eea9d-o-campo-Website-do-provedor-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-eea9d-o-campo-Website-do-provedor-chromium\\video.webm"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-eea9d-o-campo-Website-do-provedor-chromium\\test-finished-2.png"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-eea9d-o-campo-Website-do-provedor-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "25f6774eead29268a64d-b3467fcf283407cc85cd",
+              "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc4-validacoes-campo-website.spec.ts",
+              "line": 23,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\crud-de-provedores-bloqueio-exclusao-vinculo\\tc5-edicao-de-provedor.spec.ts",
+      "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc5-edicao-de-provedor.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "CRUD de Provedores e bloqueio de exclusão com vínculo",
+          "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc5-edicao-de-provedor.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar edição de provedor",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 31707,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Pré: criar um provedor para editar",
+                          "duration": 17583
+                        },
+                        {
+                          "title": "1. Abrir a tela \"Editar provedor\" pré-populada",
+                          "duration": 3576
+                        },
+                        {
+                          "title": "2. Alterar a Descrição",
+                          "duration": 24
+                        },
+                        {
+                          "title": "3. Salvar → listagem reflete a descrição atualizada",
+                          "duration": 8411
+                        }
+                      ],
+                      "startTime": "2026-06-25T17:07:20.676Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNSVUQgZGUgUHJvdmVkb3JlcyBlIGJsb3F1ZWlvIGRlIGV4Y2x1c8OjbyBjb20gdsOtbmN1bG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGVkacOnw6NvIGRlIHByb3ZlZG9yIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJoaWdoIn1dfX0="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-4a190--Validar-edição-de-provedor-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-4a190--Validar-edição-de-provedor-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-4a190--Validar-edição-de-provedor-chromium\\video.webm"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-4a190--Validar-edição-de-provedor-chromium\\test-finished-2.png"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-4a190--Validar-edição-de-provedor-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f7ba2334ce6f83647a8f-f24570ad5f22bd0f4d47",
+              "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc5-edicao-de-provedor.spec.ts",
+              "line": 21,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\crud-de-provedores-bloqueio-exclusao-vinculo\\tc6-toggle-ativo-na-linha.spec.ts",
+      "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc6-toggle-ativo-na-linha.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "CRUD de Provedores e bloqueio de exclusão com vínculo",
+          "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc6-toggle-ativo-na-linha.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar toggle Ativo na linha com toasts",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 31500,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Pré: criar provedor (Ativo por default)",
+                          "duration": 17406
+                        },
+                        {
+                          "title": "1. Switch começa ligado",
+                          "duration": 20
+                        },
+                        {
+                          "title": "2. Desativar → switch desligado (+ toast)",
+                          "duration": 6196
+                        },
+                        {
+                          "title": "3. Ativar → switch ligado (+ toast)",
+                          "duration": 5948
+                        }
+                      ],
+                      "startTime": "2026-06-25T17:07:54.066Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNSVUQgZGUgUHJvdmVkb3JlcyBlIGJsb3F1ZWlvIGRlIGV4Y2x1c8OjbyBjb20gdsOtbmN1bG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIHRvZ2dsZSBBdGl2byBuYSBsaW5oYSBjb20gdG9hc3RzIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-bd38d-e-Ativo-na-linha-com-toasts-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-bd38d-e-Ativo-na-linha-com-toasts-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-bd38d-e-Ativo-na-linha-com-toasts-chromium\\video.webm"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-bd38d-e-Ativo-na-linha-com-toasts-chromium\\test-finished-2.png"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-bd38d-e-Ativo-na-linha-com-toasts-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "539fb169c66535a462cd-a14b3595ee7a48c7cbf6",
+              "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc6-toggle-ativo-na-linha.spec.ts",
+              "line": 21,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\crud-de-provedores-bloqueio-exclusao-vinculo\\tc7-provedor-inativo-dropdown-e-registros.spec.ts",
+      "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc7-provedor-inativo-dropdown-e-registros.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "CRUD de Provedores e bloqueio de exclusão com vínculo",
+          "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc7-provedor-inativo-dropdown-e-registros.spec.ts",
+          "line": 9,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar efeito do provedor inativo nos dropdowns e registros existentes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 34864,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Desativar o provedor vinculado \"Alura\"",
+                          "duration": 12707
+                        },
+                        {
+                          "title": "2. Dropdown \"Provedor\" do novo registro NÃO lista o desativado",
+                          "duration": 5788
+                        },
+                        {
+                          "title": "3. Registros existentes continuam exibindo o provedor",
+                          "duration": 5785
+                        },
+                        {
+                          "title": "4. Reativar o provedor (restauração)",
+                          "duration": 6773
+                        }
+                      ],
+                      "startTime": "2026-06-25T17:08:26.902Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNSVUQgZGUgUHJvdmVkb3JlcyBlIGJsb3F1ZWlvIGRlIGV4Y2x1c8OjbyBjb20gdsOtbmN1bG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGVmZWl0byBkbyBwcm92ZWRvciBpbmF0aXZvIG5vcyBkcm9wZG93bnMgZSByZWdpc3Ryb3MgZXhpc3RlbnRlcyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-d25f8-owns-e-registros-existentes-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-d25f8-owns-e-registros-existentes-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-d25f8-owns-e-registros-existentes-chromium\\video.webm"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-d25f8-owns-e-registros-existentes-chromium\\test-finished-2.png"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-d25f8-owns-e-registros-existentes-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1a967c2333da78b0d6e6-7ce945876beeff55061f",
+              "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc7-provedor-inativo-dropdown-e-registros.spec.ts",
+              "line": 24,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\crud-de-provedores-bloqueio-exclusao-vinculo\\tc8-exclusao-provedor-sem-vinculo.spec.ts",
+      "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc8-exclusao-provedor-sem-vinculo.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "CRUD de Provedores e bloqueio de exclusão com vínculo",
+          "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc8-exclusao-provedor-sem-vinculo.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar exclusão de provedor sem vínculo",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 27138,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Pré: criar provedor sem vínculo",
+                          "duration": 22349
+                        },
+                        {
+                          "title": "1-2. Excluir → modal destrutivo → Cancelar mantém na lista",
+                          "duration": 563
+                        },
+                        {
+                          "title": "3. Excluir e confirmar → toast \"Provedor excluído\", some da lista",
+                          "duration": 931
+                        }
+                      ],
+                      "startTime": "2026-06-25T17:09:14.017Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNSVUQgZGUgUHJvdmVkb3JlcyBlIGJsb3F1ZWlvIGRlIGV4Y2x1c8OjbyBjb20gdsOtbmN1bG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGV4Y2x1c8OjbyBkZSBwcm92ZWRvciBzZW0gdsOtbmN1bG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-7449a-são-de-provedor-sem-vínculo-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-7449a-são-de-provedor-sem-vínculo-chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-7449a-são-de-provedor-sem-vínculo-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-7449a-são-de-provedor-sem-vínculo-chromium\\test-finished-2.png"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-7449a-são-de-provedor-sem-vínculo-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "aa0582c1302a7e23d3a5-626033195f9fa5090ced",
+              "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc8-exclusao-provedor-sem-vinculo.spec.ts",
+              "line": 22,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\crud-de-provedores-bloqueio-exclusao-vinculo\\tc9-bloqueio-exclusao-com-vinculo.spec.ts",
+      "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc9-bloqueio-exclusao-com-vinculo.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "CRUD de Provedores e bloqueio de exclusão com vínculo",
+          "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc9-bloqueio-exclusao-com-vinculo.spec.ts",
+          "line": 10,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar bloqueio de exclusão de provedor com vínculo",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 19015,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Excluir provedor COM vínculo → confirmar Excluir",
+                          "duration": 532
+                        },
+                        {
+                          "title": "2. UI exibe bloqueio \"não pode ser excluído / registros vinculados\"",
+                          "duration": 399
+                        },
+                        {
+                          "title": "3. Provedor permanece na listagem (não foi excluído)",
+                          "duration": 6836
+                        }
+                      ],
+                      "startTime": "2026-06-25T17:09:43.365Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNSVUQgZGUgUHJvdmVkb3JlcyBlIGJsb3F1ZWlvIGRlIGV4Y2x1c8OjbyBjb20gdsOtbmN1bG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGJsb3F1ZWlvIGRlIGV4Y2x1c8OjbyBkZSBwcm92ZWRvciBjb20gdsOtbmN1bG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-1ed87-são-de-provedor-com-vínculo-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-1ed87-são-de-provedor-com-vínculo-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-1ed87-são-de-provedor-com-vínculo-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-1ed87-são-de-provedor-com-vínculo-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "45a744aaf9f4c9a09be7-043d6c1e87685646940e",
+              "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc9-bloqueio-exclusao-com-vinculo.spec.ts",
+              "line": 11,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-06-25T17:03:29.618Z",
+    "duration": 394742.864,
+    "expected": 9,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}
