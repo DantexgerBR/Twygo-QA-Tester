@@ -5,6 +5,7 @@ import { getOrgId } from '../../../src/utils/environment.js';
 import {
   type KpiStatus,
   KPI_LABEL,
+  KPI_PRODUCT_KEY,
   EMPTY_ROW_TEXT,
 } from './MeuHistoricoPage.js';
 
@@ -87,11 +88,11 @@ export class RegistrosAdminPage {
   // ---- KPI cards ----
 
   card(status: KpiStatus): Locator {
-    return this.page.getByTestId(`records-kpi-card-${status}`);
+    return this.page.getByTestId(`records-kpi-card-${KPI_PRODUCT_KEY[status]}`);
   }
 
   countNode(status: KpiStatus): Locator {
-    return this.page.getByTestId(`records-kpi-count-${status}`);
+    return this.page.getByTestId(`records-kpi-count-${KPI_PRODUCT_KEY[status]}`);
   }
 
   async getCount(status: KpiStatus): Promise<number> {
@@ -262,8 +263,13 @@ export class RegistrosAdminPage {
       data?: { by_status?: Record<string, number>; total_general?: number; workload_total_seconds?: number };
     };
     const d = json.data ?? {};
+    // Produto chaveia by_status por chave de produto (pending→awaiting_confirmation).
+    // Reindexa para o vocabulário interno (KpiStatus) que o resto do POM usa.
+    const bs = d.by_status ?? {};
+    const byStatus: Record<string, number> = {};
+    for (const s of ORDER) byStatus[s] = bs[KPI_PRODUCT_KEY[s]] ?? 0;
     return {
-      byStatus: d.by_status ?? {},
+      byStatus,
       totalGeneral: d.total_general ?? 0,
       workloadSeconds: d.workload_total_seconds ?? 0,
     };

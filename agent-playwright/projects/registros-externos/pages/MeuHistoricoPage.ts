@@ -36,6 +36,21 @@ export const KPI_COLOR: Record<KpiStatus, string> = {
 
 const ORDER: KpiStatus[] = ['emitted', 'expired', 'pending', 'rejected'];
 
+/**
+ * Sufixo de status usado pelo PRODUTO nos testids `records-kpi-{card,count}-*`
+ * e na chave `by_status` de `/records/stats`. O backend renomeou o status
+ * "Pendentes" de `pending` → `awaiting_confirmation` (confirmado na revalidação
+ * 2026-06-30; antes a faixa de KPIs nem hidratava → `expectLoaded` travava).
+ * O vocabulário interno do POM segue `pending`; traduzir só no boundary evita
+ * rename em cascata pelas suítes 1.1/1.3/1.4/1.5 que consomem `KpiStatus`.
+ */
+export const KPI_PRODUCT_KEY: Record<KpiStatus, string> = {
+  emitted: 'emitted',
+  expired: 'expired',
+  pending: 'awaiting_confirmation',
+  rejected: 'rejected',
+};
+
 /** Texto exibido na linha placeholder da tabela quando não há dados. */
 export const EMPTY_ROW_TEXT = 'Não há dados para exibir';
 
@@ -85,11 +100,11 @@ export class MeuHistoricoPage {
   // ---- KPI cards ----
 
   card(status: KpiStatus): Locator {
-    return this.page.getByTestId(`records-kpi-card-${status}`);
+    return this.page.getByTestId(`records-kpi-card-${KPI_PRODUCT_KEY[status]}`);
   }
 
   countNode(status: KpiStatus): Locator {
-    return this.page.getByTestId(`records-kpi-count-${status}`);
+    return this.page.getByTestId(`records-kpi-count-${KPI_PRODUCT_KEY[status]}`);
   }
 
   /** Número exibido no card (contagem do status para o aluno). */

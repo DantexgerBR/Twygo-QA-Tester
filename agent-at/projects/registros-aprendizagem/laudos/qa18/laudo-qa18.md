@@ -1,5 +1,15 @@
 # Laudo QA 1.8 — Visualizar registro (standalone vs form viewing, "Em andamento")
 
+> **REVALIDAÇÃO 2026-06-30** — BUG P1 **AINDA PRESENTE** (não corrigido).
+> Reproduzido via Playwright headed (org 37079, Admin). Item "Visualizar"
+> (`data-test-id="records-list-view-action"`, inner id
+> `records-44306168-custom-element-1-button-1` — sufixo `custom-element`)
+> está habilitado (`aria-disabled=null`) mas o click não produz ação:
+> URL inalterada, nenhuma nova aba, nenhum form "Visualizar registro".
+> Controle: "Editar" no mesmo kebab navega para `/records/44306176/edit`
+> normalmente — confirma que o bug é específico do handler do Visualizar,
+> não artefato de automação. Veredito da execução de 2026-06-23 mantido.
+
 **Card Artia**: 19895  
 **Data de execução**: 2026-06-23  
 **Ambiente**: Stage — https://registrosf2.stage.twygoead.com/ (Org 37079)  

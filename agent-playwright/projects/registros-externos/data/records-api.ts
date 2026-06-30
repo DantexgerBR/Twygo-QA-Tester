@@ -107,9 +107,45 @@ export interface RecordStats {
   workload_total_seconds: number;
 }
 
+/**
+ * Acha o `content` (usado como termo de busca na UI) do 1º registro existente que
+ * casa com origin/situation. Read-only — para inspecionar menu/modal sem mutar.
+ */
+export async function findRecordContentByStatus(
+  page: Page,
+  filter: { origin?: string; situation?: string },
+): Promise<string | undefined> {
+  const all = await listRecords(page);
+  const match = (all as Array<ApiRecord & { origin?: string; situation?: string }>).find(
+    (r) =>
+      (filter.origin ? r.origin === filter.origin : true) &&
+      (filter.situation ? r.situation === filter.situation : true) &&
+      typeof r.content === 'string' &&
+      r.content.length > 0,
+  );
+  return match?.content;
+}
+
 /** Lê o endpoint de contagens (fonte de verdade do KPI — ver skill testar-kpi-cards-twygo). */
 export async function getStats(page: Page): Promise<RecordStats> {
   const res = await page.request.get(`${recordsBase()}/stats`, { headers: { Accept: 'application/json' } });
   const j = await res.json();
-  return (j?.data ?? j) as RecordStats;
+  const raw = (j?.data ?? j) as {
+    by_status?: Record<string, number>;
+    total_general?: number;
+    workload_total_seconds?: number;
+  };
+  const bs = raw.by_status ?? {};
+  // Produto renomeou o status "Pendentes" de `pending` → `awaiting_confirmation`
+  // (revalidação 2026-06-30). Normaliza p/ `pending` que o RecordStats expõe.
+  return {
+    by_status: {
+      emitted: bs.emitted ?? 0,
+      expired: bs.expired ?? 0,
+      pending: bs.awaiting_confirmation ?? bs.pending ?? 0,
+      rejected: bs.rejected ?? 0,
+    },
+    total_general: raw.total_general ?? 0,
+    workload_total_seconds: raw.workload_total_seconds ?? 0,
+  };
 }
