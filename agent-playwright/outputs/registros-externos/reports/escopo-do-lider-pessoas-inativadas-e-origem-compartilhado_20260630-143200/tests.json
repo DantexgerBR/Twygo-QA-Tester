@@ -1,0 +1,1193 @@
+{
+  "config": {
+    "configFile": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "C:/Claude/registros/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Claude/registros/twygo-agents-qa/agent-playwright/outputs/registros-externos/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Claude/registros/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "tests/auth/**/*.spec.ts",
+          "projects/registros-externos/tests/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/registros-externos/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 2,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\registros-externos\\tests\\features\\escopo-lider\\tc1-matriz-escopo-lider-vs-admin.spec.ts",
+      "file": "projects/registros-externos/tests/features/escopo-lider/tc1-matriz-escopo-lider-vs-admin.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Escopo do Líder, pessoas inativadas e origem Compartilhado",
+          "file": "projects/registros-externos/tests/features/escopo-lider/tc1-matriz-escopo-lider-vs-admin.spec.ts",
+          "line": 15,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar matriz de escopo Líder vs Admin (lado Admin)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 26423,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Admin acessa Registros → lista exibe registros de toda a org",
+                          "duration": 12022
+                        },
+                        {
+                          "title": "4. Admin clica na tab \"Provedores\" → listagem completa (não filtra por liderado)",
+                          "duration": 8113
+                        }
+                      ],
+                      "startTime": "2026-06-30T17:28:53.081Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkVzY29wbyBkbyBMw61kZXIsIHBlc3NvYXMgaW5hdGl2YWRhcyBlIG9yaWdlbSBDb21wYXJ0aWxoYWRvIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIG1hdHJpeiBkZSBlc2NvcG8gTMOtZGVyIHZzIEFkbWluIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-3e97f--Líder-vs-Admin-lado-Admin--chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-3e97f--Líder-vs-Admin-lado-Admin--chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-3e97f--Líder-vs-Admin-lado-Admin--chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-3e97f--Líder-vs-Admin-lado-Admin--chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "4428852551b097ac00af-0646fa19c4b3d17ab4e1",
+              "file": "projects/registros-externos/tests/features/escopo-lider/tc1-matriz-escopo-lider-vs-admin.spec.ts",
+              "line": 16,
+              "column": 3
+            },
+            {
+              "title": "Validar escopo restrito do Líder (lista e dropdown Pessoa)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed-ausente: ≥2 liderados diretos COM registros sob o líder (team_leader 4301564). Rota /o/{org}/team/records + endpoint /records/stats?in_use_mode_layout=true&team_scope=true confirmados no recon modo-de-uso (corrige recon §9). Destinatário: QA Lead (seed de liderados).",
+                      "location": {
+                        "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider\\tc1-matriz-escopo-lider-vs-admin.spec.ts",
+                        "line": 57,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "skipped",
+                      "duration": 1569,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-30T17:28:53.081Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed-ausente: ≥2 liderados diretos COM registros sob o líder (team_leader 4301564). Rota /o/{org}/team/records + endpoint /records/stats?in_use_mode_layout=true&team_scope=true confirmados no recon modo-de-uso (corrige recon §9). Destinatário: QA Lead (seed de liderados).",
+                          "location": {
+                            "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider\\tc1-matriz-escopo-lider-vs-admin.spec.ts",
+                            "line": 57,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-d43e7-er-lista-e-dropdown-Pessoa--chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-d43e7-er-lista-e-dropdown-Pessoa--chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-d43e7-er-lista-e-dropdown-Pessoa--chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-d43e7-er-lista-e-dropdown-Pessoa--chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "4428852551b097ac00af-9fa57ceedaffe0b29d85",
+              "file": "projects/registros-externos/tests/features/escopo-lider/tc1-matriz-escopo-lider-vs-admin.spec.ts",
+              "line": 56,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\escopo-lider\\tc10-permanencia-compartilhados-apos-inativacao-org.spec.ts",
+      "file": "projects/registros-externos/tests/features/escopo-lider/tc10-permanencia-compartilhados-apos-inativacao-org.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Escopo do Líder, pessoas inativadas e origem Compartilhado",
+          "file": "projects/registros-externos/tests/features/escopo-lider/tc10-permanencia-compartilhados-apos-inativacao-org.spec.ts",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar permanência de Compartilhados após inativação da org parceira",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed-ausente: origem \"Compartilhado\" / org parceira inexistente (recon: shared_events = 0); além disso o passo 2 inativa uma ORG inteira (destrutivo, difícil reverter). Destinatário: QA Lead/infra (seed) + produto (confirmar política de preservação, Spike S11).",
+                      "location": {
+                        "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider\\tc10-permanencia-compartilhados-apos-inativacao-org.spec.ts",
+                        "line": 23,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "skipped",
+                      "duration": 1490,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-30T17:28:55.304Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed-ausente: origem \"Compartilhado\" / org parceira inexistente (recon: shared_events = 0); além disso o passo 2 inativa uma ORG inteira (destrutivo, difícil reverter). Destinatário: QA Lead/infra (seed) + produto (confirmar política de preservação, Spike S11).",
+                          "location": {
+                            "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider\\tc10-permanencia-compartilhados-apos-inativacao-org.spec.ts",
+                            "line": 23,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-71fff--inativação-da-org-parceira-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-71fff--inativação-da-org-parceira-chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-71fff--inativação-da-org-parceira-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-71fff--inativação-da-org-parceira-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ccf5990bb5883f650e00-e5e0056bf670de1c26e2",
+              "file": "projects/registros-externos/tests/features/escopo-lider/tc10-permanencia-compartilhados-apos-inativacao-org.spec.ts",
+              "line": 22,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\escopo-lider\\tc2-403-toast-fora-do-escopo-lider.spec.ts",
+      "file": "projects/registros-externos/tests/features/escopo-lider/tc2-403-toast-fora-do-escopo-lider.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Escopo do Líder, pessoas inativadas e origem Compartilhado",
+          "file": "projects/registros-externos/tests/features/escopo-lider/tc2-403-toast-fora-do-escopo-lider.spec.ts",
+          "line": 19,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar 403 e toast ao atuar fora do escopo do Líder",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed-ausente: liderado + pessoa fora da equipe (cada um com registro) e rota de aprovação a confirmar via recon de API. Escopo de Líder confirmado existente (corrige recon §9). Destinatário: QA Lead (seed) + recon de API de ação.",
+                      "location": {
+                        "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider\\tc2-403-toast-fora-do-escopo-lider.spec.ts",
+                        "line": 21,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "skipped",
+                      "duration": 1435,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-30T17:28:57.192Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed-ausente: liderado + pessoa fora da equipe (cada um com registro) e rota de aprovação a confirmar via recon de API. Escopo de Líder confirmado existente (corrige recon §9). Destinatário: QA Lead (seed) + recon de API de ação.",
+                          "location": {
+                            "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider\\tc2-403-toast-fora-do-escopo-lider.spec.ts",
+                            "line": 21,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-9107f-uar-fora-do-escopo-do-Líder-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-9107f-uar-fora-do-escopo-do-Líder-chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-9107f-uar-fora-do-escopo-do-Líder-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-9107f-uar-fora-do-escopo-do-Líder-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "dfe2ea3e8e794729500f-af82f3642c0ac691dcb2",
+              "file": "projects/registros-externos/tests/features/escopo-lider/tc2-403-toast-fora-do-escopo-lider.spec.ts",
+              "line": 20,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\escopo-lider\\tc3-preservacao-acoes-apos-mudanca-hierarquia.spec.ts",
+      "file": "projects/registros-externos/tests/features/escopo-lider/tc3-preservacao-acoes-apos-mudanca-hierarquia.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Escopo do Líder, pessoas inativadas e origem Compartilhado",
+          "file": "projects/registros-externos/tests/features/escopo-lider/tc3-preservacao-acoes-apos-mudanca-hierarquia.spec.ts",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar preservação de ações antigas após mudança de hierarquia",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed-ausente: liderado com registro aprovável + ação de remover liderado da equipe (/team_leaders/4301564/users) a validar/reverter. Visão de time confirmada existente (corrige recon §9). Destinatário: QA Lead (seed + reversibilidade).",
+                      "location": {
+                        "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider\\tc3-preservacao-acoes-apos-mudanca-hierarquia.spec.ts",
+                        "line": 23,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "skipped",
+                      "duration": 1293,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-30T17:28:59.001Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed-ausente: liderado com registro aprovável + ação de remover liderado da equipe (/team_leaders/4301564/users) a validar/reverter. Visão de time confirmada existente (corrige recon §9). Destinatário: QA Lead (seed + reversibilidade).",
+                          "location": {
+                            "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider\\tc3-preservacao-acoes-apos-mudanca-hierarquia.spec.ts",
+                            "line": 23,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-73957--após-mudança-de-hierarquia-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-73957--após-mudança-de-hierarquia-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-73957--após-mudança-de-hierarquia-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-73957--após-mudança-de-hierarquia-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "b8084e6c3a169bdef01b-f7a87ca3121817254f82",
+              "file": "projects/registros-externos/tests/features/escopo-lider/tc3-preservacao-acoes-apos-mudanca-hierarquia.spec.ts",
+              "line": 22,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\escopo-lider\\tc4-sumico-pessoas-inativadas.spec.ts",
+      "file": "projects/registros-externos/tests/features/escopo-lider/tc4-sumico-pessoas-inativadas.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Escopo do Líder, pessoas inativadas e origem Compartilhado",
+          "file": "projects/registros-externos/tests/features/escopo-lider/tc4-sumico-pessoas-inativadas.spec.ts",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar sumiço completo de pessoas inativadas",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed-ausente: pessoa inativável com distribuição conhecida (ex. 3 Emitidos + 1 Pendente) e rota da admin de usuários a confirmar (/professionals veio vazio). Destinatário: QA Lead (seed).",
+                      "location": {
+                        "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider\\tc4-sumico-pessoas-inativadas.spec.ts",
+                        "line": 23,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "skipped",
+                      "duration": 1509,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-30T17:29:00.673Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed-ausente: pessoa inativável com distribuição conhecida (ex. 3 Emitidos + 1 Pendente) e rota da admin de usuários a confirmar (/professionals veio vazio). Destinatário: QA Lead (seed).",
+                          "location": {
+                            "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider\\tc4-sumico-pessoas-inativadas.spec.ts",
+                            "line": 23,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-06add-pleto-de-pessoas-inativadas-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-06add-pleto-de-pessoas-inativadas-chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-06add-pleto-de-pessoas-inativadas-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-06add-pleto-de-pessoas-inativadas-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9282b30e8ad60a6a5395-bc9cf6d253be4d4f2304",
+              "file": "projects/registros-externos/tests/features/escopo-lider/tc4-sumico-pessoas-inativadas.spec.ts",
+              "line": 22,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\escopo-lider\\tc5-coerencia-kpi-x-lista.spec.ts",
+      "file": "projects/registros-externos/tests/features/escopo-lider/tc5-coerencia-kpi-x-lista.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Escopo do Líder, pessoas inativadas e origem Compartilhado",
+          "file": "projects/registros-externos/tests/features/escopo-lider/tc5-coerencia-kpi-x-lista.spec.ts",
+          "line": 22,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar coerência permanente entre KPI e lista",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 21676,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar Registros como Admin e ler o total geral dos KPIs (via /stats)",
+                          "duration": 10895
+                        },
+                        {
+                          "title": "2a. total_general de /records/stats é a fonte de verdade do KPI",
+                          "duration": 556
+                        },
+                        {
+                          "title": "2b. Total da listagem (API, todas as páginas) == total_general (invariante KPI×lista, RN 96.5)",
+                          "duration": 564
+                        },
+                        {
+                          "title": "2c. Cross-check de UI (best-effort): 1ª página renderiza linhas coerentes",
+                          "duration": 71
+                        }
+                      ],
+                      "startTime": "2026-06-30T17:29:02.633Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkVzY29wbyBkbyBMw61kZXIsIHBlc3NvYXMgaW5hdGl2YWRhcyBlIG9yaWdlbSBDb21wYXJ0aWxoYWRvIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGNvZXLDqm5jaWEgcGVybWFuZW50ZSBlbnRyZSBLUEkgZSBsaXN0YSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-591a3-ermanente-entre-KPI-e-lista-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-591a3-ermanente-entre-KPI-e-lista-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-591a3-ermanente-entre-KPI-e-lista-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-591a3-ermanente-entre-KPI-e-lista-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0f566d105567f5d08727-493f42ecd0d2b7be2164",
+              "file": "projects/registros-externos/tests/features/escopo-lider/tc5-coerencia-kpi-x-lista.spec.ts",
+              "line": 23,
+              "column": 3
+            },
+            {
+              "title": "Validar coerência KPI × lista no escopo do Líder",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 37096,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Ler o total geral do Admin (org inteira) como referência de escopo",
+                          "duration": 12709
+                        },
+                        {
+                          "title": "2. Abrir \"Gestão de Time > Registros\" e ler o /stats escopado ao time",
+                          "duration": 16831
+                        },
+                        {
+                          "title": "3a. O escopo do Líder é um SUBCONJUNTO da org (prova de escopo, RN 93)",
+                          "duration": 4
+                        },
+                        {
+                          "title": "3b. Coerência KPI × lista dentro do escopo do Líder (RN 96.5)",
+                          "duration": 65
+                        }
+                      ],
+                      "startTime": "2026-06-30T17:29:21.503Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkVzY29wbyBkbyBMw61kZXIsIHBlc3NvYXMgaW5hdGl2YWRhcyBlIG9yaWdlbSBDb21wYXJ0aWxoYWRvIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGNvZXLDqm5jaWEgS1BJIMOXIGxpc3RhIG5vIGVzY29wbyBkbyBMw61kZXIifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-a81f1--×-lista-no-escopo-do-Líder-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-a81f1--×-lista-no-escopo-do-Líder-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-a81f1--×-lista-no-escopo-do-Líder-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-a81f1--×-lista-no-escopo-do-Líder-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0f566d105567f5d08727-f09077746d1323aff69e",
+              "file": "projects/registros-externos/tests/features/escopo-lider/tc5-coerencia-kpi-x-lista.spec.ts",
+              "line": 73,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\escopo-lider\\tc6-apresentacao-menu-restrito-compartilhado.spec.ts",
+      "file": "projects/registros-externos/tests/features/escopo-lider/tc6-apresentacao-menu-restrito-compartilhado.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Escopo do Líder, pessoas inativadas e origem Compartilhado",
+          "file": "projects/registros-externos/tests/features/escopo-lider/tc6-apresentacao-menu-restrito-compartilhado.spec.ts",
+          "line": 20,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar apresentação e menu restrito de registros Compartilhados",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed-ausente: origem \"Compartilhado\" inexistente — recon modo-de-uso confirmou granted/received_shared_events = 0 e badges só external/internal. Exige org parceira + compartilhamento de registro replicado. Destinatário: QA Lead/infra (seed de compartilhamento).",
+                      "location": {
+                        "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider\\tc6-apresentacao-menu-restrito-compartilhado.spec.ts",
+                        "line": 22,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "skipped",
+                      "duration": 1763,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-30T17:29:26.259Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed-ausente: origem \"Compartilhado\" inexistente — recon modo-de-uso confirmou granted/received_shared_events = 0 e badges só external/internal. Exige org parceira + compartilhamento de registro replicado. Destinatário: QA Lead/infra (seed de compartilhamento).",
+                          "location": {
+                            "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider\\tc6-apresentacao-menu-restrito-compartilhado.spec.ts",
+                            "line": 22,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-164e5-de-registros-Compartilhados-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-164e5-de-registros-Compartilhados-chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-164e5-de-registros-Compartilhados-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-164e5-de-registros-Compartilhados-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fdb4a7d2c12573c6e55b-b121dc44c3557608e55a",
+              "file": "projects/registros-externos/tests/features/escopo-lider/tc6-apresentacao-menu-restrito-compartilhado.spec.ts",
+              "line": 21,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\escopo-lider\\tc7-bloqueio-modificacao-compartilhado-api.spec.ts",
+      "file": "projects/registros-externos/tests/features/escopo-lider/tc7-bloqueio-modificacao-compartilhado-api.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Escopo do Líder, pessoas inativadas e origem Compartilhado",
+          "file": "projects/registros-externos/tests/features/escopo-lider/tc7-bloqueio-modificacao-compartilhado-api.spec.ts",
+          "line": 15,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar bloqueio de modificação de Compartilhado via API (403)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed-ausente: nenhum registro origem \"Compartilhado\" na org (recon modo-de-uso: shared_events = 0) → sem id para exercer PATCH/DELETE. Destinatário: QA Lead/infra (seed de compartilhamento).",
+                      "location": {
+                        "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider\\tc7-bloqueio-modificacao-compartilhado-api.spec.ts",
+                        "line": 17,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "skipped",
+                      "duration": 1811,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-30T17:29:28.523Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed-ausente: nenhum registro origem \"Compartilhado\" na org (recon modo-de-uso: shared_events = 0) → sem id para exercer PATCH/DELETE. Destinatário: QA Lead/infra (seed de compartilhamento).",
+                          "location": {
+                            "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider\\tc7-bloqueio-modificacao-compartilhado-api.spec.ts",
+                            "line": 17,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-6ada3--Compartilhado-via-API-403--chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-6ada3--Compartilhado-via-API-403--chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-6ada3--Compartilhado-via-API-403--chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-6ada3--Compartilhado-via-API-403--chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "dc6045b61ff5760415b4-26245701bede220e891b",
+              "file": "projects/registros-externos/tests/features/escopo-lider/tc7-bloqueio-modificacao-compartilhado-api.spec.ts",
+              "line": 16,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\escopo-lider\\tc8-isolamento-multiorg-aluno.spec.ts",
+      "file": "projects/registros-externos/tests/features/escopo-lider/tc8-isolamento-multiorg-aluno.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Escopo do Líder, pessoas inativadas e origem Compartilhado",
+          "file": "projects/registros-externos/tests/features/escopo-lider/tc8-isolamento-multiorg-aluno.spec.ts",
+          "line": 16,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar isolamento multi-organização do Aluno",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed-ausente: 2ª organização (org Y) com o MESMO aluno vinculado (10 registros na X, 4 na Y). Não há seletor multi-org na sessão atual nem env de org Y. Destinatário: QA Lead/infra (provisionar org Y + vincular usuário + entrada em environment.json).",
+                      "location": {
+                        "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider\\tc8-isolamento-multiorg-aluno.spec.ts",
+                        "line": 18,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "skipped",
+                      "duration": 1556,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-30T17:29:30.770Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed-ausente: 2ª organização (org Y) com o MESMO aluno vinculado (10 registros na X, 4 na Y). Não há seletor multi-org na sessão atual nem env de org Y. Destinatário: QA Lead/infra (provisionar org Y + vincular usuário + entrada em environment.json).",
+                          "location": {
+                            "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider\\tc8-isolamento-multiorg-aluno.spec.ts",
+                            "line": 18,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-4d511--multi-organização-do-Aluno-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-4d511--multi-organização-do-Aluno-chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-4d511--multi-organização-do-Aluno-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-4d511--multi-organização-do-Aluno-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "b71d6182ab310c807d30-d8c97576feb5b1bc4925",
+              "file": "projects/registros-externos/tests/features/escopo-lider/tc8-isolamento-multiorg-aluno.spec.ts",
+              "line": 17,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\escopo-lider\\tc9-isolamento-orgs-perfil-admin.spec.ts",
+      "file": "projects/registros-externos/tests/features/escopo-lider/tc9-isolamento-orgs-perfil-admin.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Escopo do Líder, pessoas inativadas e origem Compartilhado",
+          "file": "projects/registros-externos/tests/features/escopo-lider/tc9-isolamento-orgs-perfil-admin.spec.ts",
+          "line": 14,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar isolamento entre organizações no perfil Admin",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed-ausente: 2ª organização (org Y) com o MESMO usuário Admin vinculado e registros em ambas. Mesma dependência do TC8. Destinatário: QA Lead/infra (provisionar org Y + vincular usuário).",
+                      "location": {
+                        "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider\\tc9-isolamento-orgs-perfil-admin.spec.ts",
+                        "line": 16,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "skipped",
+                      "duration": 1495,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-30T17:29:32.814Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed-ausente: 2ª organização (org Y) com o MESMO usuário Admin vinculado e registros em ambas. Mesma dependência do TC8. Destinatário: QA Lead/infra (provisionar org Y + vincular usuário).",
+                          "location": {
+                            "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\escopo-lider\\tc9-isolamento-orgs-perfil-admin.spec.ts",
+                            "line": 16,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-8a05f-rganizações-no-perfil-Admin-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-8a05f-rganizações-no-perfil-Admin-chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-8a05f-rganizações-no-perfil-Admin-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-8a05f-rganizações-no-perfil-Admin-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "527b7467dff5136e1bdd-3af4521708c6b27add98",
+              "file": "projects/registros-externos/tests/features/escopo-lider/tc9-isolamento-orgs-perfil-admin.spec.ts",
+              "line": 15,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-06-30T17:28:49.607Z",
+    "duration": 71531.555,
+    "expected": 3,
+    "skipped": 9,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -76,6 +76,22 @@ interface ApiRecord {
   id: number;
   content?: string;
   situation?: string;
+  origin?: string;
+}
+
+/**
+ * Acha o id do 1º registro cuja `origin` contém `originSubstr` (case-insensitive,
+ * ex.: 'extern'). Devolve null se nenhum. Usado para localizar um registro real
+ * existente (sem criar seed) — ex.: abrir o /edit de um Externo no TC1 da 1.15.
+ */
+export async function findRecordIdByOrigin(page: Page, originSubstr: string): Promise<number | null> {
+  const res = await page.request.get(`${recordsBase()}?per_page=200`, { headers: { Accept: 'application/json' } });
+  const j = await res.json().catch(() => null);
+  const arr = Array.isArray(j?.data) ? j.data : j?.data?.records ?? j?.records ?? [];
+  const hit = (Array.isArray(arr) ? arr : []).find(
+    (r: ApiRecord) => typeof r.origin === 'string' && r.origin.toLowerCase().includes(originSubstr.toLowerCase()),
+  );
+  return (hit?.id as number | undefined) ?? null;
 }
 
 /** Lista até 200 registros da org (tolerante a variações de shape). */
@@ -87,6 +103,28 @@ export async function listRecords(page: Page): Promise<ApiRecord[]> {
   if (!j) return [];
   const arr = Array.isArray(j.data) ? j.data : j.data?.records ?? j.records ?? [];
   return Array.isArray(arr) ? arr : [];
+}
+
+/**
+ * Conta TODOS os registros da org somando a paginação do endpoint `/records`.
+ * Itera páginas com `per_page` largo até a página vir vazia (ou repetir). É a
+ * contraparte server-side do total de linhas que a UI renderiza — usado no
+ * invariante KPI×lista do TC5 (1.16). Não depende de número fixo de seed.
+ */
+export async function countAllRecords(page: Page, perPage = 200): Promise<number> {
+  let total = 0;
+  for (let pageNum = 1; pageNum <= 50; pageNum++) {
+    const res = await page.request.get(`${recordsBase()}?per_page=${perPage}&page=${pageNum}`, {
+      headers: { Accept: 'application/json' },
+    });
+    const j = await res.json().catch(() => null);
+    if (!j) break;
+    const arr = Array.isArray(j.data) ? j.data : j.data?.records ?? j.records ?? [];
+    const chunk = Array.isArray(arr) ? arr.length : 0;
+    total += chunk;
+    if (chunk < perPage) break; // última página
+  }
+  return total;
 }
 
 /** Exclui (por id da listagem) todos os registros cujo conteúdo contém o marker. */

@@ -1,7 +1,7 @@
 ---
 name: debugar-filename-too-long-windows
-description: Em Windows com `MAX_PATH=260` (default), operações git (`pull`, `stash`, `checkout`, `clone`, `reset`) falham com `fatal: Unable to process path ... Filename too long` quando o repo tem paths em `outputs/widgets/reports/<run-id>/artifacts/<test-folder>/step-NN-<descrição-longa>-<sha>.png` ou similares. Use quando uma operação git abortar com `Filename too long` no working tree (não no protocolo SSH/HTTP — esse é outro erro).
-version: 1.0.0
+description: Em Windows com `MAX_PATH=260` (default), operações git (`pull`, `stash`, `checkout`, `clone`, `reset`) falham com `fatal: Unable to process path ... Filename too long` quando o repo tem paths em `outputs/widgets/reports/<run-id>/artifacts/<test-folder>/step-NN-<descrição-longa>-<sha>.png` ou similares. Use quando uma operação git abortar com `Filename too long` no working tree (não no protocolo SSH/HTTP — esse é outro erro). COBRE TAMBÉM a variante silenciosa — clone/checkout que aborta no meio e deixa o working tree parcial (`git status` cheio de `D`, runtime/projeto inteiro ausente do disco), facilmente confundida com "branch quebrada no remoto".
+version: 1.1.0
 ---
 
 # debugar-filename-too-long-windows
@@ -30,6 +30,57 @@ O path culpado é tipicamente em `outputs/widgets/reports/` ou similar — combi
 - hash SHA truncado (`9ea0df1d8005e280917ca79c524b083983591d20.png`)
 
 Esses 4 fatores somam frequentemente >260 chars.
+
+## Variante silenciosa: clone/checkout parcial (a mais traiçoeira)
+
+Nem sempre o erro aparece na sua cara. Quando o `git clone` (ou um `checkout`
+de branch) bate no primeiro path longo demais, ele **aborta o checkout no meio**
+— o `.git` é populado por completo (todos os commits estão lá), mas o working
+tree fica **parcial**: tudo que vinha na ordem de escrita ANTES do path culpado
+foi gravado, tudo DEPOIS não. O erro "Filename too long" rola durante o clone e
+some do scroll; o que sobra é um working tree mutilado sem mensagem óbvia.
+
+**Sintoma enganoso** — parece "branch quebrada no remoto" ou "clone corrompido":
+
+- `git status` mostra **centenas/milhares de arquivos como `D`** (staged
+  deletion), porque o index tem entradas que o disco não tem.
+- Pastas/arquivos inteiros **faltam do disco** (ex.: `package.json`, `src/`,
+  `tests/`, `projects/<slug>/` sumiram), embora estejam no commit.
+- O corte é **cirúrgico e ordenado**: subpastas alfabeticamente anteriores
+  (ex.: `agent-at/`, `agent-db/`) vêm 100% completas; a pasta onde o path
+  longo vive (ex.: `agent-playwright/`, por causa de `outputs/.../reports/`)
+  vem cortada no meio.
+
+**Diagnóstico em 3 comandos** (confirma que é isto e NÃO problema de remoto):
+
+```bash
+# 1. O remoto está íntegro? HEAD local == upstream → conteúdo do commit OK
+git rev-parse HEAD; git rev-parse @{u}        # iguais = branch remota não tem culpa
+
+# 2. Quantos arquivos do commit faltam no disco?
+git ls-tree -r HEAD --name-only | while read -r p; do [ -e "$p" ] || echo "$p"; done | wc -l
+
+# 3. Existe path > 260 chars no commit? (a causa)
+git ls-tree -r HEAD --name-only | awk '{ if (length($0) > 259) print length($0), $0 }' | sort -rn | head
+```
+
+Se (1) bate, (2) é alto e (3) lista paths longos → é clone parcial por
+`longpaths`, não branch quebrada.
+
+**Fix** (liga longpaths e re-materializa o que faltou — seguro, nada a perder
+porque o disco não tem modificações, só falta arquivo):
+
+```bash
+git config --global core.longpaths true
+git reset --hard HEAD      # ou: git checkout HEAD -- .
+```
+
+Depois confira que o working tree ficou limpo (`git status` sem `D`).
+
+> **Por que confundir com "branch quebrada" é o risco real**: o instinto é
+> culpar o remoto ou refazer o clone numa branch diferente. Antes disso, rode
+> o comando (1) — se HEAD == upstream, o remoto está perfeito e o problema é
+> 100% local de checkout no Windows.
 
 ## Por que acontece
 
@@ -114,6 +165,18 @@ Para o monorepo `twygo-agents-qa`, vale adicionar nota em `.claude/SETUP.md` (in
 Em 2026-05-12, em sessão de `git pull origin chore/agentes-qa-overhaul` na branch `project/paineis-dos-usuarios-widgets`, o `git stash push -u -- outputs/` falhou com `Filename too long` num path de 270+ chars em `outputs/widgets/reports/adicionar-editar-aba_20260511-165802/artifacts/projects-widgets-tests-fea-1e9eb-xistente-via-ícone-de-lápis-chromium/step-01-Pr--condi-o-criar-painel-e-abrir-aba-Layouts-9ea0df1d8005e280917ca79c524b083983591d20.png`.
 
 Fix foi `git config core.longpaths true` no repo local — 1 comando, problema desaparece. Sem essa skill, a próxima sessão Windows perde 15-30min entendendo o erro, tentando renomear/deletar arquivos, ou abandonando o stash.
+
+Em 2026-06-25, na branch `project/registros-externos`, a **variante silenciosa**
+apareceu: o clone tinha abortado no meio (sem `core.longpaths`), deixando
+`git status` com 2057 arquivos `D` e o working tree sem o runtime inteiro do
+`agent-playwright` (`package.json`, `src/`, `tests/`, `projects/registros-externos/`
+— 1431 de 2057 arquivos faltando). `agent-at/` e `agent-db/` vieram completos
+(paths curtos, vêm antes na ordem); `agent-playwright/` cortou exatamente em
+`outputs/registros-externos/reports/.../artifacts/...` (primeiro path > 260).
+A confusão inicial foi achar que a branch remota estava quebrada — `git rev-parse
+HEAD == @{u}` provou que o commit estava íntegro e o problema era só o checkout
+local. Fix: `core.longpaths true` + `git reset --hard HEAD` re-materializou os
+1431 arquivos. Esse caso motivou a seção "Variante silenciosa" acima.
 
 ## Notas
 

@@ -60,6 +60,30 @@ export class RegistrosAdminPage {
     await this.expectLoaded();
   }
 
+  /**
+   * Navegação "leve": espera só a tab + a lista (linhas OU empty state), SEM o
+   * gate de hidratação dos 4 KPI cards. Usar quando o teste depende de
+   * `/stats` + contagem de linhas, não dos cards. Imune à divergência de testid
+   * dos cards (o produto renomeou `pending` → `awaiting_confirmation` no Admin —
+   * ver nota na suíte escopo-lider). NÃO substitui `goto()` para suites que
+   * validam os cards (1.3/1.4).
+   */
+  async gotoLight(): Promise<void> {
+    const maxAttempts = 3;
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      await safeGoto(this.page, this.url());
+      if (await this.tabRecords().isVisible({ timeout: 12_000 }).catch(() => false)) {
+        await Promise.race([
+          this.dataRows().first().waitFor({ state: 'visible', timeout: 30_000 }).catch(() => {}),
+          this.emptyIndicator().first().waitFor({ state: 'visible', timeout: 30_000 }).catch(() => {}),
+        ]);
+        return;
+      }
+      if (attempt < maxAttempts) await new Promise((r) => setTimeout(r, 3_000));
+    }
+    await expect(this.tabRecords()).toBeVisible({ timeout: 20_000 });
+  }
+
   /** Espera a faixa de 4 KPIs renderizar (cards hidratam tarde — timeout largo). */
   async expectLoaded(): Promise<void> {
     await expect(this.tabRecords()).toBeVisible({ timeout: 20_000 });
@@ -182,6 +206,62 @@ export class RegistrosAdminPage {
 
   emptyIndicator(): Locator {
     return this.page.getByText(EMPTY_ROW_TEXT, { exact: false });
+  }
+
+  /**
+   * Botão "próxima página" da paginação da listagem. Twygo usa um controle de
+   * paginação com botão de avançar; quando está na última página ele fica
+   * `disabled`. Localizado por papel + accessible name tolerante (PT-BR/aria),
+   * com fallback para o ícone de chevron `navigate_next` — o testId exato não
+   * foi capturado no recon (a org 37093 tem só 1 página de registros), então o
+   * seletor é defensivo e o consumidor (TC5) trata ausência como "página única".
+   */
+  private nextPageButton(): Locator {
+    return this.page
+      .getByRole('button', { name: /pr[oó]xim|next|avan[çc]ar/i })
+      .or(this.page.locator('button:has(span:text-is("navigate_next"))'))
+      .first();
+  }
+
+  /**
+   * Conta TODAS as linhas de dados somando a paginação da UI (RN 96.5 / TC5).
+   * Invariante, não count de seed fixo: itera enquanto houver "próxima página"
+   * habilitada, somando as linhas visíveis de cada página. Se não houver
+   * controle de paginação (lista cabe em 1 página), devolve a contagem única.
+   * Robusto a strict-mode: o botão é resolvido com `.first()`.
+   */
+  async countAllRowsAcrossPages(maxPages = 50): Promise<number> {
+    let total = 0;
+    for (let pageNum = 1; pageNum <= maxPages; pageNum++) {
+      if (await this.isEmptyState().catch(() => false)) break;
+      total += await this.getVisibleRecordCount();
+
+      const next = this.nextPageButton();
+      const present = await next.isVisible({ timeout: 1_000 }).catch(() => false);
+      if (!present) break;
+      const disabled = await next.isDisabled().catch(() => true);
+      if (disabled) break;
+
+      const firstRowBefore = await this.dataRows()
+        .first()
+        .innerText()
+        .catch(() => '');
+      await next.click();
+      // Espera a tabela trocar de página: 1ª linha muda OU vira empty state.
+      await expect
+        .poll(
+          async () => {
+            if (await this.isEmptyState().catch(() => false)) return '__empty__';
+            return this.dataRows()
+              .first()
+              .innerText()
+              .catch(() => firstRowBefore);
+          },
+          { timeout: 15_000 },
+        )
+        .not.toBe(firstRowBefore);
+    }
+    return total;
   }
 
   async isEmptyState(): Promise<boolean> {

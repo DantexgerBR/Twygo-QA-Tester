@@ -1,7 +1,7 @@
 ---
 name: testar-kpi-cards-twygo
 description: Padrão canônico de teste dos KPI cards de Registros de Aprendizagem (Twygo) — faixa de 4 cards (Emitidos/Expirados/Pendentes/Recusados) com donut em <canvas>, que funcionam como filtro de status clicável (visão Aluno) ou dashboard estático (visão Admin/Líder). Cobre seletores estáveis, a técnica de validar cor do donut (canvas, não introspectável) via border do card ativo, asserção por invariante contra /records/stats, faixa permanente, poll de transição Chakra e as divergências produto×AT já mapeadas. Use ao gerar/healear specs de QUALQUER suíte de KPI cards de Registros (Aluno, Admin/Líder, tempo real).
-version: 1.0.0
+version: 1.1.0
 ---
 
 # testar-kpi-cards-twygo
@@ -51,6 +51,41 @@ status (inclui Substituído e "Em andamento", que não têm card).
 
 POM de referência: `projects/registros-externos/pages/MeuHistoricoPage.ts`.
 Specs de referência: `projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/`.
+
+## ⚠️ REGRESSÃO 2026-06-29 — produto renomeou status `pending` → `awaiting_confirmation`
+
+Recon ao vivo (org 37093, Aluno E Admin) confirmou que o produto **trocou o
+testid e os labels** dos cards. O POM/skill antigo usa `pending` e os labels
+curtos — **está desatualizado e quebra o carregamento** (`expectLoaded` espera
+`records-kpi-card-pending`, que não existe mais → 60s timeout).
+
+| Antes (POM atual) | Agora (produto, 2026-06-29) |
+|---|---|
+| testid `records-kpi-card-pending` / `records-kpi-count-pending` | `...-awaiting_confirmation` |
+| `/stats` `by_status.pending` | `by_status.awaiting_confirmation` |
+| label "Emitidos" | "Certificados emitidos" |
+| label "Expirados" | "Certificados expirados" |
+| label "Pendentes" | "Registros aguardando confirmação" |
+| label "Recusados" | "Registros recusados" |
+
+**Impacto**: quebra TODA suíte que depende do gate de cards via
+`RegistrosAdminPage.goto()`/`MeuHistoricoPage.goto()` →
+`expectLoaded`/`waitForCountsHydrated`: KPI Aluno (1.3), KPI Admin/Líder (1.4),
+tempo real (1.5), ações em massa (1.12, via `getCount('pending')`). Todas
+provavelmente VERMELHAS hoje por isto, sem ninguém ter mexido nelas.
+
+**Correção pendente (refactor dedicado, NÃO feito ainda)**: renomear a chave
+`KpiStatus` `pending` → `awaiting_confirmation` em `MeuHistoricoPage.ts`
+(+ `KPI_LABEL`, `KPI_COLOR`, `ORDER`), atualizar os labels (toContainText e o
+regex `getCardLabelsInOrder`), o tipo `by_status` em `records-api.ts`, e TODAS
+as referências literais `'pending'` (~15, em 1.4/1.5/1.12). Depois re-rodar
+essas suítes. É um refactor cross-suite — abrir como tarefa própria.
+
+**Contorno aditivo já aplicado (suíte 1.16)**: `RegistrosAdminPage.gotoLight()`
+— navega esperando só a tab + a lista (linhas OU empty state), **sem** o gate
+dos 4 cards. Use em TCs que precisam só de `/stats` + contagem de linhas
+(ex.: invariante KPI×lista), não da anatomia dos cards. Não substitui `goto()`
+em suítes que validam os cards.
 
 ## Cores canônicas (RN 18) e o truque do donut em canvas
 

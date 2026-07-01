@@ -1,7 +1,7 @@
 ---
 name: trocar-perfil-twygo
-description: Como alternar entre perfis Twygo (Administrador / Aluno / Colaborador / Instrutor / Gestor) em specs Playwright. O switch é uma navegação client-side via popover de perfil no canto superior direito — não exige credencial nova nem storageState secundário. Use sempre que um TC exigir validar visão Aluno (dashboard de aluno, widgets, listagem de cursos visíveis ao aluno) ou outra persona, e nunca marque `test.fixme` por "falta credencial do perfil X" sem antes verificar o switch UI.
-version: 1.0.0
+description: Como alternar entre perfis Twygo (Administrador / Aluno / Colaborador / Instrutor / Gestor) em specs Playwright. O switch é uma navegação client-side via popover de perfil no canto superior direito — não exige credencial nova nem storageState secundário. Use sempre que um TC exigir validar visão Aluno (dashboard de aluno, widgets, listagem de cursos visíveis ao aluno) ou outra persona, e nunca marque `test.fixme` por "falta credencial do perfil X" sem antes verificar o switch UI. ATENÇÃO: persona NÃO é só o popover — a visão escopada de uma feature pode ser um MODELO DE PÁGINA do modo de uso, alcançado por item de menu (ver seção "Persona × modelo de página").
+version: 2.0.0
 ---
 
 # trocar-perfil-twygo
@@ -11,6 +11,54 @@ version: 1.0.0
 Sempre que o TC exigir interagir com o app numa persona ≠ Administrador (Aluno, Colaborador, Instrutor, Gestor). Twygo **não** usa credenciais separadas por persona — o mesmo usuário admin acessa todos os perfis via popover. Generator/healer que marcam `test.fixme(true, 'seed ausente: requer credencial Aluno')` estão errados: o caminho UI existe.
 
 Caso real (2026-05-14): suite "Dashboard - Visão do aluno" (8 TCs) toda marcada fixme por "credencial aluno faltando". Investigação live revelou que o user padrão `claude@teste.com` no `staging-widgets` já chega logado em `/dashboard_students` com os widgets visíveis — switch via popover é o único passo necessário.
+
+## Persona × modelo de página (modo de uso) — leia ANTES de marcar fixme de escopo
+
+⚠️ **Trocar de perfil no popover ≠ acessar a visão escopada de uma feature.** O
+popover muda o "papel" (e o landing), mas a visão escopada de uma tela
+(ex.: registros de aprendizagem do **time/liderados** vs do **próprio
+colaborador** vs da **org inteira**) é controlada pelo **modelo de página do
+modo de uso** — um item de **menu**, configurado em `/o/{org}/use_modes`
+(API `/api/v1/o/{org}/use_modes`).
+
+A MESMA tela pode ter N modelos de página, cada um com sua rota e seu endpoint
+escopado. Exemplo real **Registros de Aprendizagem** (org 37093, recon
+2026-06-30 — ver `projects/registros-externos/inputs/recon-escopo-lider-modo-uso.md`):
+
+| Escopo | Rota | Endpoint de stats |
+|---|---|---|
+| Admin (org inteira) | `/o/{org}/records` | `/records/stats` |
+| Colaborador (Meu histórico) | `/o/{org}/my-history` (ou `/records?in_use_mode_layout=true`) | `/records/stats?in_use_mode_layout=true` |
+| **Líder / Time** | `/o/{org}/team/records?menu_id=registros-externos` | `/records/stats?in_use_mode_layout=true&team_scope=true` |
+
+**Caso real de erro (não repetir)**: um recon trocou para o perfil "Lider de
+equipe" pelo popover, caiu em `/dashboard_students`, viu que `/records/stats`
+(cru) era idêntico ao Admin e concluiu **"escopo de Líder não existe neste
+BETA"**. **Errado** — nunca navegou a `/o/{org}/team/records` nem chamou o
+`/records/stats` com `team_scope=true`. O escopo existia o tempo todo. Custo:
+4 TCs marcados como bloqueio de produto quando o bloqueio real era só seed.
+
+**Ritual obrigatório antes de marcar `fixme("escopo X não aplicado")`:**
+
+1. Abrir `/o/{org}/use_modes` (ou a API) e listar os `use_mode` + seus
+   `use_mode_itens`. Procurar o item de menu da feature na persona-alvo.
+2. Navegar à **rota do item de menu** (não só trocar de perfil) e capturar via
+   Network o endpoint **escopado** (procurar params como `team_scope`,
+   `in_use_mode_layout`, `scope`, `menu_id`).
+3. Comparar os `total_general`/contagens entre escopos. **Se diferem, o escopo
+   está aplicado** — qualquer fixme é por SEED (faltam dados naquele escopo),
+   não por feature ausente.
+4. Só então, se a rota/endpoint não existir mesmo, marcar fixme de feature.
+
+### Gotcha: rótulo do perfil ≠ classe do link
+
+O admin pode **renomear** os perfis. Na org 37093 o perfil rotulado **"Lider de
+equipe"** usa a classe de link **`new-item-aluno`** (é o perfil aluno renomeado)
+e o trigger exibe "Lider de equipe", não "Aluno". Logo
+`ProfileSwitcher.switchTo('Aluno')` **falha no assert** `toContainText('Aluno')`.
+Quando o rótulo divergir da classe, faça o switch sem assertir o rótulo:
+`button.menu-target` → clicar `a.new-item-aluno` → `dismissCommonModals` (ver
+`pages/TeamRecordsPage.goto()` em registros-externos como referência).
 
 ## Mecânica do switch
 

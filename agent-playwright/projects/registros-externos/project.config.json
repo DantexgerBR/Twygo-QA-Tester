@@ -1,7 +1,7 @@
 {
   "projectName": "Registros de Aprendizagem",
   "testAnalysisFile": "inputs/test-analysis.md",
-  "environment": "staging-registros-externos",
+  "environment": "staging-registros-edu",
   "browsers": ["chromium"],
   "headless": true,
   "reporting": {

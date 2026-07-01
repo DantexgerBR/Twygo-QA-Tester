@@ -4,7 +4,7 @@ import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'no
 import { dirname, resolve } from 'node:path';
 import { createLogger } from '../../src/utils/logger.js';
 import { LoginPage } from '../../src/pages/LoginPage.js';
-import { loadEnvironmentConfig, loadProjectConfig } from '../../src/utils/environment.js';
+import { getEnvByName, loadEnvironmentConfig, loadProjectConfig } from '../../src/utils/environment.js';
 import { FILES } from '../../src/utils/constants.js';
 
 const log = createLogger('global-setup');
@@ -112,13 +112,20 @@ async function globalSetup(_config: FullConfig): Promise<void> {
   }
 
   const projectConfig = loadProjectConfig();
-  // Carrega config com placeholders `${VAR}` já resolvidos via process.env.
+  // Override runtime opcional: TWYGO_ENV sobrepõe o env do project.config.json
+  // sem editar esse arquivo versionado. Mesma resolução de
+  // src/utils/environment.ts#getCurrentEnv e playwright.config.ts — login e
+  // navegação precisam apontar para o MESMO env, senão o storageState fica
+  // inválido (cookies de uma org, requests para outra).
+  const activeEnvName = process.env.TWYGO_ENV?.trim() || projectConfig.environment;
+  // Mapa CRU só para enumerar nomes/checar existência (secundário/adicional).
+  // As entradas que realmente logamos vêm de getEnvByName(), que expande os
+  // `${VAR}` apenas daquela org — não exige credenciais das demais.
   const envConfig: EnvConfig = loadEnvironmentConfig() as EnvConfig;
-  const env = envConfig[projectConfig.environment];
-  if (!env) throw new Error(`Environment "${projectConfig.environment}" ausente em ${FILES.environment}`);
+  if (!(activeEnvName in envConfig)) throw new Error(`Environment "${activeEnvName}" ausente em ${FILES.environment}`);
 
   // Login no ambiente principal (storage padrão consumido por playwright.config.ts/use.storageState)
-  await loginAndPersist(projectConfig.environment, env, STORAGE_PATH);
+  await loginAndPersist(activeEnvName, getEnvByName(activeEnvName), STORAGE_PATH);
 
   // Login secundário: detecta um env "negado" para specs de bloqueio.
   // Convenções aceitas (sufixos): `-without-credits` (créditos de IA) e
@@ -135,7 +142,7 @@ async function globalSetup(_config: FullConfig): Promise<void> {
   // `staging-without-credits` (que tem widgets ativos!), e specs de
   // "feature-flag-desabilitada" logavam no env errado.
   const SECONDARY_SUFFIXES = ['-without-credits', '-disabled', '-widgets-disabled'];
-  const principal = projectConfig.environment;
+  const principal = activeEnvName;
   const directMatch = SECONDARY_SUFFIXES
     .map((s) => `${principal}${s}`)
     .find((candidate) => candidate in envConfig);
@@ -145,7 +152,7 @@ async function globalSetup(_config: FullConfig): Promise<void> {
     );
   if (secondaryEnvName) {
     try {
-      await loginAndPersist(secondaryEnvName, envConfig[secondaryEnvName]!, SECONDARY_STORAGE_PATH);
+      await loginAndPersist(secondaryEnvName, getEnvByName(secondaryEnvName), SECONDARY_STORAGE_PATH);
     } catch (e) {
       log.warn(`Falha ao preparar storage secundário "${secondaryEnvName}": ${(e as Error).message}. Specs que dependem dele serão pulados.`);
     }
@@ -158,7 +165,7 @@ async function globalSetup(_config: FullConfig): Promise<void> {
   const aditionalEnvName = `${principal}-aditional`;
   if (aditionalEnvName in envConfig) {
     try {
-      await loginAndPersist(aditionalEnvName, envConfig[aditionalEnvName]!, ADITIONAL_STORAGE_PATH);
+      await loginAndPersist(aditionalEnvName, getEnvByName(aditionalEnvName), ADITIONAL_STORAGE_PATH);
     } catch (e) {
       log.warn(`Falha ao preparar storage adicional "${aditionalEnvName}": ${(e as Error).message}. Specs que dependem dele serão pulados.`);
     }
