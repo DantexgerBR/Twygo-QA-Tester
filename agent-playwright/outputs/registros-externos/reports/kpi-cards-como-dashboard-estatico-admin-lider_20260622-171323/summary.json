@@ -1,0 +1,29 @@
+{
+  "runId": "kpi-cards-como-dashboard-estatico-admin-lider_20260622-171323",
+  "scope": "Apenas testsuite contendo \"KPI cards como dashboard estático (Admin/Líder)\"",
+  "tests": {
+    "total": 9,
+    "passed": 3,
+    "failed": 1,
+    "skipped": 5,
+    "durationMs": 58280
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 1,
+    "tests": 98,
+    "outOfScope": {
+      "errors": 1049,
+      "warnings": 604,
+      "info": 59
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

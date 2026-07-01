@@ -1,0 +1,1463 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: projects\registros-externos\tests\features\editar-registro-matriz-perfil-origem-status-banners\tc1-disponibilidade-editar-aluno.spec.ts >> Editar registro de aprendizagem (matriz perfil × origem × status e banners) >> Validar disponibilidade do "Editar" para o Aluno (matriz origem × status)
+- Location: projects\registros-externos\tests\features\editar-registro-matriz-perfil-origem-status-banners\tc1-disponibilidade-editar-aluno.spec.ts:15:3
+
+# Error details
+
+```
+Error: menu observado: [Editar, Excluir, Visualizar, Evidências, Histórico]
+
+expect(received).not.toContain(expected) // indexOf
+
+Expected value: not "Editar"
+Received array:     ["Editar", "Excluir", "Visualizar", "Evidências", "Histórico"]
+```
+
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - generic "Logo - Registros F2" [ref=e4]:
+        - img "Logo - Registros F2" [ref=e5]
+      - img [ref=e7]
+    - generic [ref=e9]:
+      - list [ref=e10]:
+        - list [ref=e11]:
+          - listitem [ref=e12]:
+            - link "leaderboard Dashboard" [ref=e13] [cursor=pointer]:
+              - /url: /o/37079/dashboard
+              - generic [ref=e14]:
+                - generic [ref=e16]: leaderboard
+                - generic [ref=e17]: Dashboard
+          - listitem [ref=e18]:
+            - generic [ref=e20]:
+              - generic [ref=e23]: school
+              - generic [ref=e24]: Aprendizagem
+            - list [ref=e25]:
+              - listitem [ref=e26]:
+                - link "format_list_bulleted_add Conteúdos" [ref=e27] [cursor=pointer]:
+                  - /url: /o/37079/events?tab=events
+                  - generic [ref=e28]:
+                    - generic [ref=e30]: format_list_bulleted_add
+                    - generic [ref=e31]: Conteúdos
+              - listitem [ref=e32]:
+                - link "send Compartilhamentos" [ref=e33] [cursor=pointer]:
+                  - /url: /o/37079/shared_events
+                  - generic [ref=e34]:
+                    - generic [ref=e36]: send
+                    - generic [ref=e37]: Compartilhamentos
+              - listitem [ref=e38]:
+                - link "description Registros BETA" [ref=e39] [cursor=pointer]:
+                  - /url: /o/37079/records
+                  - generic [ref=e40]:
+                    - generic [ref=e42]: description
+                    - generic [ref=e43]: Registros
+                    - generic [ref=e44]: BETA
+              - listitem [ref=e45]:
+                - link "workspace_premium Certificados" [ref=e46] [cursor=pointer]:
+                  - /url: /o/37079/certificate_models
+                  - generic [ref=e47]:
+                    - generic [ref=e49]: workspace_premium
+                    - generic [ref=e50]: Certificados
+              - listitem [ref=e51]:
+                - link "folder_open Base de conhecimento" [ref=e52] [cursor=pointer]:
+                  - /url: /o/37079/knowledge_repositories
+                  - generic [ref=e53]:
+                    - generic [ref=e55]: folder_open
+                    - generic [ref=e56]: Base de conhecimento
+          - listitem [ref=e57]:
+            - link "group Usuários" [ref=e58] [cursor=pointer]:
+              - /url: /o/37079/users
+              - generic [ref=e59]:
+                - generic [ref=e61]: group
+                - generic [ref=e62]: Usuários
+          - listitem [ref=e63]:
+            - link "work Empresas" [ref=e64] [cursor=pointer]:
+              - /url: /o/37079/companies
+              - generic [ref=e65]:
+                - generic [ref=e67]: work
+                - generic [ref=e68]: Empresas
+          - listitem [ref=e69]:
+            - link "live_help Questionários" [ref=e70] [cursor=pointer]:
+              - /url: /o/37079/question_lists
+              - generic [ref=e71]:
+                - generic [ref=e73]: live_help
+                - generic [ref=e74]: Questionários
+          - listitem [ref=e75]:
+            - link "groups Comunidades" [ref=e76] [cursor=pointer]:
+              - /url: /o/37079/feed
+              - generic [ref=e77]:
+                - generic [ref=e79]: groups
+                - generic [ref=e80]: Comunidades
+          - listitem [ref=e81]:
+            - generic [ref=e83]:
+              - generic [ref=e86]: psychology
+              - generic [ref=e87]:
+                - text: Skills
+                - generic [ref=e88]: BETA
+            - list [ref=e89]:
+              - listitem [ref=e90]:
+                - link "lan Organograma" [ref=e91] [cursor=pointer]:
+                  - /url: /o/37079/organization_chart
+                  - generic [ref=e92]:
+                    - generic [ref=e94]: lan
+                    - generic [ref=e95]: Organograma
+              - listitem [ref=e96]:
+                - link "badge Funções de negócio" [ref=e97] [cursor=pointer]:
+                  - /url: /o/37079/roles
+                  - generic [ref=e98]:
+                    - generic [ref=e100]: badge
+                    - generic [ref=e101]: Funções de negócio
+              - listitem [ref=e102]:
+                - link "award_star Competências" [ref=e103] [cursor=pointer]:
+                  - /url: /o/37079/organization_chart_competencies
+                  - generic [ref=e104]:
+                    - generic [ref=e106]: award_star
+                    - generic [ref=e107]: Competências
+          - listitem [ref=e108]:
+            - generic [ref=e110]:
+              - generic [ref=e113]: monitoring
+              - generic [ref=e114]:
+                - text: Planos e Metas
+                - generic [ref=e115]: BETA
+            - list [ref=e116]:
+              - listitem [ref=e117]:
+                - link "track_changes PDI" [ref=e118] [cursor=pointer]:
+                  - /url: /o/37079/admin/pdis
+                  - generic [ref=e119]:
+                    - generic [ref=e121]: track_changes
+                    - generic [ref=e122]: PDI
+      - generic [ref=e123]: Registros F2
+      - list [ref=e124]:
+        - listitem [ref=e125]:
+          - generic [ref=e127]:
+            - generic [ref=e129]: f
+            - generic [ref=e130]: Configurações
+          - list [ref=e131]:
+            - listitem [ref=e132]:
+              - link "e Organização" [ref=e133] [cursor=pointer]:
+                - /url: /o/37079/edit
+                - generic [ref=e134]:
+                  - generic [ref=e136]: e
+                  - generic [ref=e137]: Organização
+            - listitem [ref=e138]:
+              - link " Navegação" [ref=e139] [cursor=pointer]:
+                - /url: /o/37079/use_modes
+                - generic [ref=e140]:
+                  - generic [ref=e142]: 
+                  - generic [ref=e143]: Navegação
+            - listitem [ref=e144]:
+              - link "electrical_services Integrações" [ref=e145] [cursor=pointer]:
+                - /url: /o/37079/integrations
+                - generic [ref=e146]:
+                  - generic [ref=e148]: electrical_services
+                  - generic [ref=e149]: Integrações
+            - listitem [ref=e150]:
+              - link "flash_auto Piloto automático" [ref=e151] [cursor=pointer]:
+                - /url: /o/37079/autopilots
+                - generic [ref=e152]:
+                  - generic [ref=e154]: flash_auto
+                  - generic [ref=e155]: Piloto automático
+            - listitem [ref=e156]:
+              - link " Regras do Jogo" [ref=e157] [cursor=pointer]:
+                - /url: /o/37079/game_rules
+                - generic [ref=e158]:
+                  - generic [ref=e160]: 
+                  - generic [ref=e161]: Regras do Jogo
+            - listitem [ref=e162]:
+              - link " Comunicação" [ref=e163] [cursor=pointer]:
+                - /url: /o/37079/communication
+                - generic [ref=e164]:
+                  - generic [ref=e166]: 
+                  - generic [ref=e167]: Comunicação
+            - listitem [ref=e168]:
+              - link "sell Cobrança de inscrição" [ref=e169] [cursor=pointer]:
+                - /url: /o/37079/payments
+                - generic [ref=e170]:
+                  - generic [ref=e172]: sell
+                  - generic [ref=e173]: Cobrança de inscrição
+            - listitem [ref=e174]:
+              - link "credit_card Plano e assinatura" [ref=e175] [cursor=pointer]:
+                - /url: /o/37079/subscription_plans
+                - generic [ref=e176]:
+                  - generic [ref=e178]: credit_card
+                  - generic [ref=e179]: Plano e assinatura
+            - text: s
+            - listitem [ref=e180]:
+              - link " Segurança NOVO" [ref=e181] [cursor=pointer]:
+                - /url: /o/37079/security
+                - generic [ref=e182]:
+                  - generic [ref=e184]: 
+                  - generic [ref=e185]: Segurança NOVO
+            - listitem [ref=e186]:
+              - link "smart_toy Controle de IA BETA" [ref=e187] [cursor=pointer]:
+                - /url: /o/37079/ai_consumption_analysis
+                - generic [ref=e188]:
+                  - generic [ref=e190]: smart_toy
+                  - generic [ref=e191]: Controle de IA BETA
+            - listitem [ref=e192]:
+              - link "palette Aparência" [ref=e193] [cursor=pointer]:
+                - /url: /o/37079/appearance
+                - generic [ref=e194]:
+                  - generic [ref=e196]: palette
+                  - generic [ref=e197]: Aparência
+    - generic [ref=e200]:
+      - generic [ref=e201]:
+        - img [ref=e202]
+        - text: Richard Sebold
+      - img [ref=e204]
+  - text: "0"
+  - generic [ref=e207]:
+    - generic "Logo - Registros F2" [ref=e209]:
+      - link "Registros F2" [ref=e211] [cursor=pointer]:
+        - /url: /o/37079/dashboard
+    - generic [ref=e215]:
+      - button "Twygo Academy" [ref=e219] [cursor=pointer]:
+        - generic [ref=e220]: school
+      - link "Open chat" [ref=e224] [cursor=pointer]:
+        - /url: /o/37079/chats
+        - button "Open chat" [ref=e225]:
+          - img [ref=e226]
+      - button "Users" [ref=e233] [cursor=pointer]:
+        - img [ref=e234]
+      - generic [ref=e237]:
+        - link "7094579 - Richard Sebold" [ref=e238] [cursor=pointer]:
+          - /url: javascript:void(0);
+        - generic [ref=e239]: Richard Sebold
+      - button "Administrador G" [ref=e240] [cursor=pointer]:
+        - text: Administrador
+        - generic [ref=e241]: G
+    - text: M * * M * *
+  - generic [ref=e244]:
+    - generic [ref=e246]:
+      - list [ref=e247]:
+        - list [ref=e248]:
+          - listitem [ref=e249] [cursor=pointer]:
+            - link "leaderboard Dashboard" [ref=e250]:
+              - /url: /o/37079/dashboard
+              - generic [ref=e251]:
+                - generic [ref=e253]: leaderboard
+                - generic [ref=e254]: Dashboard
+          - listitem [ref=e255] [cursor=pointer]:
+            - generic [ref=e257]:
+              - generic [ref=e260]: school
+              - generic [ref=e261]: Aprendizagem
+              - generic [ref=e263]: G
+            - list [ref=e264]:
+              - listitem [ref=e265]:
+                - link "format_list_bulleted_add Conteúdos" [ref=e266]:
+                  - /url: /o/37079/events?tab=events
+                  - generic [ref=e267]:
+                    - generic [ref=e269]: format_list_bulleted_add
+                    - generic [ref=e270]: Conteúdos
+              - listitem [ref=e271]:
+                - link "send Compartilhamentos" [ref=e272]:
+                  - /url: /o/37079/shared_events
+                  - generic [ref=e273]:
+                    - generic [ref=e275]: send
+                    - generic [ref=e276]: Compartilhamentos
+              - listitem [ref=e277]:
+                - link "description Registros BETA" [ref=e278]:
+                  - /url: /o/37079/records
+                  - generic [ref=e279]:
+                    - generic [ref=e281]: description
+                    - generic [ref=e282]: Registros
+                    - generic [ref=e283]: BETA
+              - listitem [ref=e284]:
+                - link "workspace_premium Certificados" [ref=e285]:
+                  - /url: /o/37079/certificate_models
+                  - generic [ref=e286]:
+                    - generic [ref=e288]: workspace_premium
+                    - generic [ref=e289]: Certificados
+              - listitem [ref=e290]:
+                - link "folder_open Base de conhecimento" [ref=e291]:
+                  - /url: /o/37079/knowledge_repositories
+                  - generic [ref=e292]:
+                    - generic [ref=e294]: folder_open
+                    - generic [ref=e295]: Base de conhecimento
+          - listitem [ref=e296] [cursor=pointer]:
+            - link "group Usuários" [ref=e297]:
+              - /url: /o/37079/users
+              - generic [ref=e298]:
+                - generic [ref=e300]: group
+                - generic [ref=e301]: Usuários
+          - listitem [ref=e302] [cursor=pointer]:
+            - link "work Empresas" [ref=e303]:
+              - /url: /o/37079/companies
+              - generic [ref=e304]:
+                - generic [ref=e306]: work
+                - generic [ref=e307]: Empresas
+          - listitem [ref=e308] [cursor=pointer]:
+            - link "live_help Questionários" [ref=e309]:
+              - /url: /o/37079/question_lists
+              - generic [ref=e310]:
+                - generic [ref=e312]: live_help
+                - generic [ref=e313]: Questionários
+          - listitem [ref=e314] [cursor=pointer]:
+            - link "groups Comunidades" [ref=e315]:
+              - /url: /o/37079/feed
+              - generic [ref=e316]:
+                - generic [ref=e318]: groups
+                - generic [ref=e319]: Comunidades
+          - listitem [ref=e320] [cursor=pointer]:
+            - generic [ref=e322]:
+              - generic [ref=e325]: psychology
+              - generic [ref=e326]:
+                - text: Skills
+                - generic [ref=e327]: BETA
+              - generic [ref=e329]: G
+          - listitem [ref=e330] [cursor=pointer]:
+            - generic [ref=e332]:
+              - generic [ref=e335]: monitoring
+              - generic [ref=e336]:
+                - text: Planos e Metas
+                - generic [ref=e337]: BETA
+              - generic [ref=e339]: G
+      - generic [ref=e341]: Registros F2
+      - list [ref=e342]:
+        - listitem [ref=e343] [cursor=pointer]:
+          - generic [ref=e345]:
+            - generic [ref=e347]: f
+            - generic [ref=e348]: Configurações
+            - generic [ref=e350]: G
+          - text: e    s 
+    - generic [ref=e352]:
+      - generic [ref=e355]: Lista de conteúdos
+      - generic [ref=e360]:
+        - generic [ref=e362]:
+          - generic [ref=e366]:
+            - generic [ref=e367]:
+              - generic [ref=e369]:
+                - button "+ Adicionar" [ref=e370] [cursor=pointer]:
+                  - generic:
+                    - button "+ Adicionar":
+                      - generic: + Adicionar
+                - generic [ref=e371]:
+                  - button "Criar curso com IA" [ref=e372] [cursor=pointer]:
+                    - img [ref=e374]
+                    - text: Criar curso com IA
+                  - img [ref=e378]
+              - button "ios_share Extrair dados" [ref=e380] [cursor=pointer]:
+                - generic [ref=e381]: ios_share
+                - text: Extrair dados
+              - generic [ref=e382]:
+                - generic [ref=e383]:
+                  - img [ref=e385]
+                  - textbox "Pesquise aqui" [ref=e387]
+                - generic [ref=e388]:
+                  - generic [ref=e389] [cursor=pointer]: grid_view
+                  - generic [ref=e390] [cursor=pointer]: reorder
+                - button "Filtro" [ref=e391] [cursor=pointer]:
+                  - generic [ref=e393]: filter_alt
+                  - paragraph [ref=e395]: Filtro
+            - table [ref=e397]:
+              - rowgroup [ref=e398]:
+                - row "Tipo Conteúdo Equipe Publicado em Inscrições Situação Tipo de experiência" [ref=e399]:
+                  - columnheader "Tipo" [ref=e400] [cursor=pointer]:
+                    - generic [ref=e403]:
+                      - text: Tipo
+                      - img [ref=e404]
+                  - columnheader "Conteúdo" [ref=e406] [cursor=pointer]:
+                    - generic [ref=e409]:
+                      - text: Conteúdo
+                      - img [ref=e410]
+                  - columnheader "Equipe" [ref=e412]:
+                    - generic [ref=e413]:
+                      - text: Equipe
+                      - img [ref=e415]
+                  - columnheader "Publicado em" [ref=e417] [cursor=pointer]:
+                    - generic [ref=e420]:
+                      - text: Publicado em
+                      - img [ref=e421]
+                  - columnheader "Inscrições" [ref=e423] [cursor=pointer]:
+                    - generic [ref=e426]:
+                      - text: Inscrições
+                      - img [ref=e427]
+                  - columnheader "Situação" [ref=e429] [cursor=pointer]:
+                    - generic [ref=e432]:
+                      - text: Situação
+                      - img [ref=e433]
+                  - columnheader "Tipo de experiência" [ref=e435] [cursor=pointer]:
+                    - generic [ref=e438]:
+                      - text: Tipo de experiência
+                      - img [ref=e439]
+                  - columnheader [ref=e441]
+              - rowgroup [ref=e442]:
+                - row "menu_book Curso Construindo times de alta performance 6 check 6 schedule 0 L Curso more_vert" [ref=e443]:
+                  - cell "menu_book Curso" [ref=e444] [cursor=pointer]:
+                    - generic [ref=e446]:
+                      - generic [ref=e447]: menu_book
+                      - paragraph [ref=e448]: Curso
+                  - cell "Construindo times de alta performance" [ref=e449] [cursor=pointer]:
+                    - paragraph [ref=e451]: Construindo times de alta performance
+                  - cell [ref=e452]
+                  - cell [ref=e453] [cursor=pointer]
+                  - cell "6 check 6 schedule 0" [ref=e454] [cursor=pointer]:
+                    - generic [ref=e455]:
+                      - paragraph [ref=e457]: "6"
+                      - generic [ref=e461]:
+                        - generic [ref=e462]:
+                          - generic [ref=e463]: check
+                          - paragraph [ref=e464]: "6"
+                        - generic [ref=e465]:
+                          - generic [ref=e466]: schedule
+                          - paragraph [ref=e467]: "0"
+                  - cell "L" [ref=e468] [cursor=pointer]:
+                    - paragraph [ref=e470]: L
+                  - cell "Curso" [ref=e471] [cursor=pointer]:
+                    - generic "Curso" [ref=e473]:
+                      - paragraph [ref=e474]: Curso
+                  - cell "more_vert" [ref=e475]:
+                    - button "more_vert" [ref=e479] [cursor=pointer]:
+                      - generic:
+                        - generic: more_vert
+                - row "menu_book Curso Gestão para resultados 6 check 6 schedule 0 L Curso more_vert" [ref=e480]:
+                  - cell "menu_book Curso" [ref=e481] [cursor=pointer]:
+                    - generic [ref=e483]:
+                      - generic [ref=e484]: menu_book
+                      - paragraph [ref=e485]: Curso
+                  - cell "Gestão para resultados" [ref=e486] [cursor=pointer]:
+                    - paragraph [ref=e488]: Gestão para resultados
+                  - cell [ref=e489]
+                  - cell [ref=e490] [cursor=pointer]
+                  - cell "6 check 6 schedule 0" [ref=e491] [cursor=pointer]:
+                    - generic [ref=e492]:
+                      - paragraph [ref=e494]: "6"
+                      - generic [ref=e498]:
+                        - generic [ref=e499]:
+                          - generic [ref=e500]: check
+                          - paragraph [ref=e501]: "6"
+                        - generic [ref=e502]:
+                          - generic [ref=e503]: schedule
+                          - paragraph [ref=e504]: "0"
+                  - cell "L" [ref=e505] [cursor=pointer]:
+                    - paragraph [ref=e507]: L
+                  - cell "Curso" [ref=e508] [cursor=pointer]:
+                    - generic "Curso" [ref=e510]:
+                      - paragraph [ref=e511]: Curso
+                  - cell "more_vert" [ref=e512]:
+                    - button "more_vert" [ref=e516] [cursor=pointer]:
+                      - generic:
+                        - generic: more_vert
+                - row "menu_book Curso Cultura de feedback 6 check 6 schedule 0 L Curso more_vert" [ref=e517]:
+                  - cell "menu_book Curso" [ref=e518] [cursor=pointer]:
+                    - generic [ref=e520]:
+                      - generic [ref=e521]: menu_book
+                      - paragraph [ref=e522]: Curso
+                  - cell "Cultura de feedback" [ref=e523] [cursor=pointer]:
+                    - paragraph [ref=e525]: Cultura de feedback
+                  - cell [ref=e526]
+                  - cell [ref=e527] [cursor=pointer]
+                  - cell "6 check 6 schedule 0" [ref=e528] [cursor=pointer]:
+                    - generic [ref=e529]:
+                      - paragraph [ref=e531]: "6"
+                      - generic [ref=e535]:
+                        - generic [ref=e536]:
+                          - generic [ref=e537]: check
+                          - paragraph [ref=e538]: "6"
+                        - generic [ref=e539]:
+                          - generic [ref=e540]: schedule
+                          - paragraph [ref=e541]: "0"
+                  - cell "L" [ref=e542] [cursor=pointer]:
+                    - paragraph [ref=e544]: L
+                  - cell "Curso" [ref=e545] [cursor=pointer]:
+                    - generic "Curso" [ref=e547]:
+                      - paragraph [ref=e548]: Curso
+                  - cell "more_vert" [ref=e549]:
+                    - button "more_vert" [ref=e553] [cursor=pointer]:
+                      - generic:
+                        - generic: more_vert
+                - row "menu_book Curso Conflitos e negociação 6 check 6 schedule 0 L Curso more_vert" [ref=e554]:
+                  - cell "menu_book Curso" [ref=e555] [cursor=pointer]:
+                    - generic [ref=e557]:
+                      - generic [ref=e558]: menu_book
+                      - paragraph [ref=e559]: Curso
+                  - cell "Conflitos e negociação" [ref=e560] [cursor=pointer]:
+                    - paragraph [ref=e562]: Conflitos e negociação
+                  - cell [ref=e563]
+                  - cell [ref=e564] [cursor=pointer]
+                  - cell "6 check 6 schedule 0" [ref=e565] [cursor=pointer]:
+                    - generic [ref=e566]:
+                      - paragraph [ref=e568]: "6"
+                      - generic [ref=e572]:
+                        - generic [ref=e573]:
+                          - generic [ref=e574]: check
+                          - paragraph [ref=e575]: "6"
+                        - generic [ref=e576]:
+                          - generic [ref=e577]: schedule
+                          - paragraph [ref=e578]: "0"
+                  - cell "L" [ref=e579] [cursor=pointer]:
+                    - paragraph [ref=e581]: L
+                  - cell "Curso" [ref=e582] [cursor=pointer]:
+                    - generic "Curso" [ref=e584]:
+                      - paragraph [ref=e585]: Curso
+                  - cell "more_vert" [ref=e586]:
+                    - button "more_vert" [ref=e590] [cursor=pointer]:
+                      - generic:
+                        - generic: more_vert
+                - row "menu_book Curso Comunicação e oratória 6 check 6 schedule 0 L Curso more_vert" [ref=e591]:
+                  - cell "menu_book Curso" [ref=e592] [cursor=pointer]:
+                    - generic [ref=e594]:
+                      - generic [ref=e595]: menu_book
+                      - paragraph [ref=e596]: Curso
+                  - cell "Comunicação e oratória" [ref=e597] [cursor=pointer]:
+                    - paragraph [ref=e599]: Comunicação e oratória
+                  - cell [ref=e600]
+                  - cell [ref=e601] [cursor=pointer]
+                  - cell "6 check 6 schedule 0" [ref=e602] [cursor=pointer]:
+                    - generic [ref=e603]:
+                      - paragraph [ref=e605]: "6"
+                      - generic [ref=e609]:
+                        - generic [ref=e610]:
+                          - generic [ref=e611]: check
+                          - paragraph [ref=e612]: "6"
+                        - generic [ref=e613]:
+                          - generic [ref=e614]: schedule
+                          - paragraph [ref=e615]: "0"
+                  - cell "L" [ref=e616] [cursor=pointer]:
+                    - paragraph [ref=e618]: L
+                  - cell "Curso" [ref=e619] [cursor=pointer]:
+                    - generic "Curso" [ref=e621]:
+                      - paragraph [ref=e622]: Curso
+                  - cell "more_vert" [ref=e623]:
+                    - button "more_vert" [ref=e627] [cursor=pointer]:
+                      - generic:
+                        - generic: more_vert
+                - row "menu_book Curso Storytelling 0 check 0 schedule 0 L Curso more_vert" [ref=e628]:
+                  - cell "menu_book Curso" [ref=e629] [cursor=pointer]:
+                    - generic [ref=e631]:
+                      - generic [ref=e632]: menu_book
+                      - paragraph [ref=e633]: Curso
+                  - cell "Storytelling" [ref=e634] [cursor=pointer]:
+                    - paragraph [ref=e636]: Storytelling
+                  - cell [ref=e637]
+                  - cell [ref=e638] [cursor=pointer]
+                  - cell "0 check 0 schedule 0" [ref=e639] [cursor=pointer]:
+                    - generic [ref=e640]:
+                      - paragraph [ref=e642]: "0"
+                      - generic [ref=e646]:
+                        - generic [ref=e647]:
+                          - generic [ref=e648]: check
+                          - paragraph [ref=e649]: "0"
+                        - generic [ref=e650]:
+                          - generic [ref=e651]: schedule
+                          - paragraph [ref=e652]: "0"
+                  - cell "L" [ref=e653] [cursor=pointer]:
+                    - paragraph [ref=e655]: L
+                  - cell "Curso" [ref=e656] [cursor=pointer]:
+                    - generic "Curso" [ref=e658]:
+                      - paragraph [ref=e659]: Curso
+                  - cell "more_vert" [ref=e660]:
+                    - button "more_vert" [ref=e664] [cursor=pointer]:
+                      - generic:
+                        - generic: more_vert
+                - row "menu_book Curso Programação neurolinguística (PNL) 6 check 6 schedule 0 L Curso more_vert" [ref=e665]:
+                  - cell "menu_book Curso" [ref=e666] [cursor=pointer]:
+                    - generic [ref=e668]:
+                      - generic [ref=e669]: menu_book
+                      - paragraph [ref=e670]: Curso
+                  - cell "Programação neurolinguística (PNL)" [ref=e671] [cursor=pointer]:
+                    - paragraph [ref=e673]: Programação neurolinguística (PNL)
+                  - cell [ref=e674]
+                  - cell [ref=e675] [cursor=pointer]
+                  - cell "6 check 6 schedule 0" [ref=e676] [cursor=pointer]:
+                    - generic [ref=e677]:
+                      - paragraph [ref=e679]: "6"
+                      - generic [ref=e683]:
+                        - generic [ref=e684]:
+                          - generic [ref=e685]: check
+                          - paragraph [ref=e686]: "6"
+                        - generic [ref=e687]:
+                          - generic [ref=e688]: schedule
+                          - paragraph [ref=e689]: "0"
+                  - cell "L" [ref=e690] [cursor=pointer]:
+                    - paragraph [ref=e692]: L
+                  - cell "Curso" [ref=e693] [cursor=pointer]:
+                    - generic "Curso" [ref=e695]:
+                      - paragraph [ref=e696]: Curso
+                  - cell "more_vert" [ref=e697]:
+                    - button "more_vert" [ref=e701] [cursor=pointer]:
+                      - generic:
+                        - generic: more_vert
+                - row "menu_book Curso Conhecendo a SophiaTech 6 check 6 schedule 0 L Curso more_vert" [ref=e702]:
+                  - cell "menu_book Curso" [ref=e703] [cursor=pointer]:
+                    - generic [ref=e705]:
+                      - generic [ref=e706]: menu_book
+                      - paragraph [ref=e707]: Curso
+                  - cell "Conhecendo a SophiaTech" [ref=e708] [cursor=pointer]:
+                    - paragraph [ref=e710]: Conhecendo a SophiaTech
+                  - cell [ref=e711]
+                  - cell [ref=e712] [cursor=pointer]
+                  - cell "6 check 6 schedule 0" [ref=e713] [cursor=pointer]:
+                    - generic [ref=e714]:
+                      - paragraph [ref=e716]: "6"
+                      - generic [ref=e720]:
+                        - generic [ref=e721]:
+                          - generic [ref=e722]: check
+                          - paragraph [ref=e723]: "6"
+                        - generic [ref=e724]:
+                          - generic [ref=e725]: schedule
+                          - paragraph [ref=e726]: "0"
+                  - cell "L" [ref=e727] [cursor=pointer]:
+                    - paragraph [ref=e729]: L
+                  - cell "Curso" [ref=e730] [cursor=pointer]:
+                    - generic "Curso" [ref=e732]:
+                      - paragraph [ref=e733]: Curso
+                  - cell "more_vert" [ref=e734]:
+                    - button "more_vert" [ref=e738] [cursor=pointer]:
+                      - generic:
+                        - generic: more_vert
+                - row "menu_book Curso Áreas funcionais 6 check 6 schedule 0 L Curso more_vert" [ref=e739]:
+                  - cell "menu_book Curso" [ref=e740] [cursor=pointer]:
+                    - generic [ref=e742]:
+                      - generic [ref=e743]: menu_book
+                      - paragraph [ref=e744]: Curso
+                  - cell "Áreas funcionais" [ref=e745] [cursor=pointer]:
+                    - paragraph [ref=e747]: Áreas funcionais
+                  - cell [ref=e748]
+                  - cell [ref=e749] [cursor=pointer]
+                  - cell "6 check 6 schedule 0" [ref=e750] [cursor=pointer]:
+                    - generic [ref=e751]:
+                      - paragraph [ref=e753]: "6"
+                      - generic [ref=e757]:
+                        - generic [ref=e758]:
+                          - generic [ref=e759]: check
+                          - paragraph [ref=e760]: "6"
+                        - generic [ref=e761]:
+                          - generic [ref=e762]: schedule
+                          - paragraph [ref=e763]: "0"
+                  - cell "L" [ref=e764] [cursor=pointer]:
+                    - paragraph [ref=e766]: L
+                  - cell "Curso" [ref=e767] [cursor=pointer]:
+                    - generic "Curso" [ref=e769]:
+                      - paragraph [ref=e770]: Curso
+                  - cell "more_vert" [ref=e771]:
+                    - button "more_vert" [ref=e775] [cursor=pointer]:
+                      - generic:
+                        - generic: more_vert
+                - row "menu_book Curso Culture code 6 check 6 schedule 0 L Curso more_vert" [ref=e776]:
+                  - cell "menu_book Curso" [ref=e777] [cursor=pointer]:
+                    - generic [ref=e779]:
+                      - generic [ref=e780]: menu_book
+                      - paragraph [ref=e781]: Curso
+                  - cell "Culture code" [ref=e782] [cursor=pointer]:
+                    - paragraph [ref=e784]: Culture code
+                  - cell [ref=e785]
+                  - cell [ref=e786] [cursor=pointer]
+                  - cell "6 check 6 schedule 0" [ref=e787] [cursor=pointer]:
+                    - generic [ref=e788]:
+                      - paragraph [ref=e790]: "6"
+                      - generic [ref=e794]:
+                        - generic [ref=e795]:
+                          - generic [ref=e796]: check
+                          - paragraph [ref=e797]: "6"
+                        - generic [ref=e798]:
+                          - generic [ref=e799]: schedule
+                          - paragraph [ref=e800]: "0"
+                  - cell "L" [ref=e801] [cursor=pointer]:
+                    - paragraph [ref=e803]: L
+                  - cell "Curso" [ref=e804] [cursor=pointer]:
+                    - generic "Curso" [ref=e806]:
+                      - paragraph [ref=e807]: Curso
+                  - cell "more_vert" [ref=e808]:
+                    - button "more_vert" [ref=e812] [cursor=pointer]:
+                      - generic:
+                        - generic: more_vert
+                - row "menu_book Curso Planejamento estratégico 6 check 6 schedule 0 L Curso more_vert" [ref=e813]:
+                  - cell "menu_book Curso" [ref=e814] [cursor=pointer]:
+                    - generic [ref=e816]:
+                      - generic [ref=e817]: menu_book
+                      - paragraph [ref=e818]: Curso
+                  - cell "Planejamento estratégico" [ref=e819] [cursor=pointer]:
+                    - paragraph [ref=e821]: Planejamento estratégico
+                  - cell [ref=e822]
+                  - cell [ref=e823] [cursor=pointer]
+                  - cell "6 check 6 schedule 0" [ref=e824] [cursor=pointer]:
+                    - generic [ref=e825]:
+                      - paragraph [ref=e827]: "6"
+                      - generic [ref=e831]:
+                        - generic [ref=e832]:
+                          - generic [ref=e833]: check
+                          - paragraph [ref=e834]: "6"
+                        - generic [ref=e835]:
+                          - generic [ref=e836]: schedule
+                          - paragraph [ref=e837]: "0"
+                  - cell "L" [ref=e838] [cursor=pointer]:
+                    - paragraph [ref=e840]: L
+                  - cell "Curso" [ref=e841] [cursor=pointer]:
+                    - generic "Curso" [ref=e843]:
+                      - paragraph [ref=e844]: Curso
+                  - cell "more_vert" [ref=e845]:
+                    - button "more_vert" [ref=e849] [cursor=pointer]:
+                      - generic:
+                        - generic: more_vert
+                - row "menu_book Curso Produtividade e gestão do tempo 6 check 6 schedule 0 L Curso more_vert" [ref=e850]:
+                  - cell "menu_book Curso" [ref=e851] [cursor=pointer]:
+                    - generic [ref=e853]:
+                      - generic [ref=e854]: menu_book
+                      - paragraph [ref=e855]: Curso
+                  - cell "Produtividade e gestão do tempo" [ref=e856] [cursor=pointer]:
+                    - paragraph [ref=e858]: Produtividade e gestão do tempo
+                  - cell [ref=e859]
+                  - cell [ref=e860] [cursor=pointer]
+                  - cell "6 check 6 schedule 0" [ref=e861] [cursor=pointer]:
+                    - generic [ref=e862]:
+                      - paragraph [ref=e864]: "6"
+                      - generic [ref=e868]:
+                        - generic [ref=e869]:
+                          - generic [ref=e870]: check
+                          - paragraph [ref=e871]: "6"
+                        - generic [ref=e872]:
+                          - generic [ref=e873]: schedule
+                          - paragraph [ref=e874]: "0"
+                  - cell "L" [ref=e875] [cursor=pointer]:
+                    - paragraph [ref=e877]: L
+                  - cell "Curso" [ref=e878] [cursor=pointer]:
+                    - generic "Curso" [ref=e880]:
+                      - paragraph [ref=e881]: Curso
+                  - cell "more_vert" [ref=e882]:
+                    - button "more_vert" [ref=e886] [cursor=pointer]:
+                      - generic:
+                        - generic: more_vert
+                - 'row "menu_book Curso Webinar: Inteligência emocional 0 check 0 schedule 0 L Curso more_vert" [ref=e887]':
+                  - cell "menu_book Curso" [ref=e888] [cursor=pointer]:
+                    - generic [ref=e890]:
+                      - generic [ref=e891]: menu_book
+                      - paragraph [ref=e892]: Curso
+                  - 'cell "Webinar: Inteligência emocional" [ref=e893] [cursor=pointer]':
+                    - paragraph [ref=e895]: "Webinar: Inteligência emocional"
+                  - cell [ref=e896]
+                  - cell [ref=e897] [cursor=pointer]
+                  - cell "0 check 0 schedule 0" [ref=e898] [cursor=pointer]:
+                    - generic [ref=e899]:
+                      - paragraph [ref=e901]: "0"
+                      - generic [ref=e905]:
+                        - generic [ref=e906]:
+                          - generic [ref=e907]: check
+                          - paragraph [ref=e908]: "0"
+                        - generic [ref=e909]:
+                          - generic [ref=e910]: schedule
+                          - paragraph [ref=e911]: "0"
+                  - cell "L" [ref=e912] [cursor=pointer]:
+                    - paragraph [ref=e914]: L
+                  - cell "Curso" [ref=e915] [cursor=pointer]:
+                    - generic "Curso" [ref=e917]:
+                      - paragraph [ref=e918]: Curso
+                  - cell "more_vert" [ref=e919]:
+                    - button "more_vert" [ref=e923] [cursor=pointer]:
+                      - generic:
+                        - generic: more_vert
+                - row "menu_book Curso Criatividade e inovação 6 check 6 schedule 0 L Curso more_vert" [ref=e924]:
+                  - cell "menu_book Curso" [ref=e925] [cursor=pointer]:
+                    - generic [ref=e927]:
+                      - generic [ref=e928]: menu_book
+                      - paragraph [ref=e929]: Curso
+                  - cell "Criatividade e inovação" [ref=e930] [cursor=pointer]:
+                    - paragraph [ref=e932]: Criatividade e inovação
+                  - cell [ref=e933]
+                  - cell [ref=e934] [cursor=pointer]
+                  - cell "6 check 6 schedule 0" [ref=e935] [cursor=pointer]:
+                    - generic [ref=e936]:
+                      - paragraph [ref=e938]: "6"
+                      - generic [ref=e942]:
+                        - generic [ref=e943]:
+                          - generic [ref=e944]: check
+                          - paragraph [ref=e945]: "6"
+                        - generic [ref=e946]:
+                          - generic [ref=e947]: schedule
+                          - paragraph [ref=e948]: "0"
+                  - cell "L" [ref=e949] [cursor=pointer]:
+                    - paragraph [ref=e951]: L
+                  - cell "Curso" [ref=e952] [cursor=pointer]:
+                    - generic "Curso" [ref=e954]:
+                      - paragraph [ref=e955]: Curso
+                  - cell "more_vert" [ref=e956]:
+                    - button "more_vert" [ref=e960] [cursor=pointer]:
+                      - generic:
+                        - generic: more_vert
+                - row "menu_book Curso Gestão Ágil (Agile) 6 check 6 schedule 0 L Curso more_vert" [ref=e961]:
+                  - cell "menu_book Curso" [ref=e962] [cursor=pointer]:
+                    - generic [ref=e964]:
+                      - generic [ref=e965]: menu_book
+                      - paragraph [ref=e966]: Curso
+                  - cell "Gestão Ágil (Agile)" [ref=e967] [cursor=pointer]:
+                    - paragraph [ref=e969]: Gestão Ágil (Agile)
+                  - cell [ref=e970]
+                  - cell [ref=e971] [cursor=pointer]
+                  - cell "6 check 6 schedule 0" [ref=e972] [cursor=pointer]:
+                    - generic [ref=e973]:
+                      - paragraph [ref=e975]: "6"
+                      - generic [ref=e979]:
+                        - generic [ref=e980]:
+                          - generic [ref=e981]: check
+                          - paragraph [ref=e982]: "6"
+                        - generic [ref=e983]:
+                          - generic [ref=e984]: schedule
+                          - paragraph [ref=e985]: "0"
+                  - cell "L" [ref=e986] [cursor=pointer]:
+                    - paragraph [ref=e988]: L
+                  - cell "Curso" [ref=e989] [cursor=pointer]:
+                    - generic "Curso" [ref=e991]:
+                      - paragraph [ref=e992]: Curso
+                  - cell "more_vert" [ref=e993]:
+                    - button "more_vert" [ref=e997] [cursor=pointer]:
+                      - generic:
+                        - generic: more_vert
+                - row "menu_book Curso Programa de melhoria contínua 6 check 6 schedule 0 L Curso more_vert" [ref=e998]:
+                  - cell "menu_book Curso" [ref=e999] [cursor=pointer]:
+                    - generic [ref=e1001]:
+                      - generic [ref=e1002]: menu_book
+                      - paragraph [ref=e1003]: Curso
+                  - cell "Programa de melhoria contínua" [ref=e1004] [cursor=pointer]:
+                    - paragraph [ref=e1006]: Programa de melhoria contínua
+                  - cell [ref=e1007]
+                  - cell [ref=e1008] [cursor=pointer]
+                  - cell "6 check 6 schedule 0" [ref=e1009] [cursor=pointer]:
+                    - generic [ref=e1010]:
+                      - paragraph [ref=e1012]: "6"
+                      - generic [ref=e1016]:
+                        - generic [ref=e1017]:
+                          - generic [ref=e1018]: check
+                          - paragraph [ref=e1019]: "6"
+                        - generic [ref=e1020]:
+                          - generic [ref=e1021]: schedule
+                          - paragraph [ref=e1022]: "0"
+                  - cell "L" [ref=e1023] [cursor=pointer]:
+                    - paragraph [ref=e1025]: L
+                  - cell "Curso" [ref=e1026] [cursor=pointer]:
+                    - generic "Curso" [ref=e1028]:
+                      - paragraph [ref=e1029]: Curso
+                  - cell "more_vert" [ref=e1030]:
+                    - button "more_vert" [ref=e1034] [cursor=pointer]:
+                      - generic:
+                        - generic: more_vert
+                - row "menu_book Curso Processo de monitoramento de desvio padrão 6 check 6 schedule 0 L Curso more_vert" [ref=e1035]:
+                  - cell "menu_book Curso" [ref=e1036] [cursor=pointer]:
+                    - generic [ref=e1038]:
+                      - generic [ref=e1039]: menu_book
+                      - paragraph [ref=e1040]: Curso
+                  - cell "Processo de monitoramento de desvio padrão" [ref=e1041] [cursor=pointer]:
+                    - paragraph [ref=e1043]: Processo de monitoramento de desvio padrão
+                  - cell [ref=e1044]
+                  - cell [ref=e1045] [cursor=pointer]
+                  - cell "6 check 6 schedule 0" [ref=e1046] [cursor=pointer]:
+                    - generic [ref=e1047]:
+                      - paragraph [ref=e1049]: "6"
+                      - generic [ref=e1053]:
+                        - generic [ref=e1054]:
+                          - generic [ref=e1055]: check
+                          - paragraph [ref=e1056]: "6"
+                        - generic [ref=e1057]:
+                          - generic [ref=e1058]: schedule
+                          - paragraph [ref=e1059]: "0"
+                  - cell "L" [ref=e1060] [cursor=pointer]:
+                    - paragraph [ref=e1062]: L
+                  - cell "Curso" [ref=e1063] [cursor=pointer]:
+                    - generic "Curso" [ref=e1065]:
+                      - paragraph [ref=e1066]: Curso
+                  - cell "more_vert" [ref=e1067]:
+                    - button "more_vert" [ref=e1071] [cursor=pointer]:
+                      - generic:
+                        - generic: more_vert
+                - row "menu_book Curso Modelo de diagnóstico e solução de problemas e desperdícios 6 check 6 schedule 0 L Curso more_vert" [ref=e1072]:
+                  - cell "menu_book Curso" [ref=e1073] [cursor=pointer]:
+                    - generic [ref=e1075]:
+                      - generic [ref=e1076]: menu_book
+                      - paragraph [ref=e1077]: Curso
+                  - cell "Modelo de diagnóstico e solução de problemas e desperdícios" [ref=e1078] [cursor=pointer]:
+                    - paragraph [ref=e1080]: Modelo de diagnóstico e solução de problemas e desperdícios
+                  - cell [ref=e1081]
+                  - cell [ref=e1082] [cursor=pointer]
+                  - cell "6 check 6 schedule 0" [ref=e1083] [cursor=pointer]:
+                    - generic [ref=e1084]:
+                      - paragraph [ref=e1086]: "6"
+                      - generic [ref=e1090]:
+                        - generic [ref=e1091]:
+                          - generic [ref=e1092]: check
+                          - paragraph [ref=e1093]: "6"
+                        - generic [ref=e1094]:
+                          - generic [ref=e1095]: schedule
+                          - paragraph [ref=e1096]: "0"
+                  - cell "L" [ref=e1097] [cursor=pointer]:
+                    - paragraph [ref=e1099]: L
+                  - cell "Curso" [ref=e1100] [cursor=pointer]:
+                    - generic "Curso" [ref=e1102]:
+                      - paragraph [ref=e1103]: Curso
+                  - cell "more_vert" [ref=e1104]:
+                    - button "more_vert" [ref=e1108] [cursor=pointer]:
+                      - generic:
+                        - generic: more_vert
+                - row "menu_book Curso Certificações 6 check 6 schedule 0 L Curso more_vert" [ref=e1109]:
+                  - cell "menu_book Curso" [ref=e1110] [cursor=pointer]:
+                    - generic [ref=e1112]:
+                      - generic [ref=e1113]: menu_book
+                      - paragraph [ref=e1114]: Curso
+                  - cell "Certificações" [ref=e1115] [cursor=pointer]:
+                    - paragraph [ref=e1117]: Certificações
+                  - cell [ref=e1118]
+                  - cell [ref=e1119] [cursor=pointer]
+                  - cell "6 check 6 schedule 0" [ref=e1120] [cursor=pointer]:
+                    - generic [ref=e1121]:
+                      - paragraph [ref=e1123]: "6"
+                      - generic [ref=e1127]:
+                        - generic [ref=e1128]:
+                          - generic [ref=e1129]: check
+                          - paragraph [ref=e1130]: "6"
+                        - generic [ref=e1131]:
+                          - generic [ref=e1132]: schedule
+                          - paragraph [ref=e1133]: "0"
+                  - cell "L" [ref=e1134] [cursor=pointer]:
+                    - paragraph [ref=e1136]: L
+                  - cell "Curso" [ref=e1137] [cursor=pointer]:
+                    - generic "Curso" [ref=e1139]:
+                      - paragraph [ref=e1140]: Curso
+                  - cell "more_vert" [ref=e1141]:
+                    - button "more_vert" [ref=e1145] [cursor=pointer]:
+                      - generic:
+                        - generic: more_vert
+                - row "menu_book Curso Normativas para equipamentos de proteção individual (EPI) 6 check 6 schedule 0 L Curso more_vert" [ref=e1146]:
+                  - cell "menu_book Curso" [ref=e1147] [cursor=pointer]:
+                    - generic [ref=e1149]:
+                      - generic [ref=e1150]: menu_book
+                      - paragraph [ref=e1151]: Curso
+                  - cell "Normativas para equipamentos de proteção individual (EPI)" [ref=e1152] [cursor=pointer]:
+                    - paragraph [ref=e1154]: Normativas para equipamentos de proteção individual (EPI)
+                  - cell [ref=e1155]
+                  - cell [ref=e1156] [cursor=pointer]
+                  - cell "6 check 6 schedule 0" [ref=e1157] [cursor=pointer]:
+                    - generic [ref=e1158]:
+                      - paragraph [ref=e1160]: "6"
+                      - generic [ref=e1164]:
+                        - generic [ref=e1165]:
+                          - generic [ref=e1166]: check
+                          - paragraph [ref=e1167]: "6"
+                        - generic [ref=e1168]:
+                          - generic [ref=e1169]: schedule
+                          - paragraph [ref=e1170]: "0"
+                  - cell "L" [ref=e1171] [cursor=pointer]:
+                    - paragraph [ref=e1173]: L
+                  - cell "Curso" [ref=e1174] [cursor=pointer]:
+                    - generic "Curso" [ref=e1176]:
+                      - paragraph [ref=e1177]: Curso
+                  - cell "more_vert" [ref=e1178]:
+                    - button "more_vert" [ref=e1182] [cursor=pointer]:
+                      - generic:
+                        - generic: more_vert
+                - row "menu_book Curso Programa de riscos ambientais 6 check 6 schedule 0 L Curso more_vert" [ref=e1183]:
+                  - cell "menu_book Curso" [ref=e1184] [cursor=pointer]:
+                    - generic [ref=e1186]:
+                      - generic [ref=e1187]: menu_book
+                      - paragraph [ref=e1188]: Curso
+                  - cell "Programa de riscos ambientais" [ref=e1189] [cursor=pointer]:
+                    - paragraph [ref=e1191]: Programa de riscos ambientais
+                  - cell [ref=e1192]
+                  - cell [ref=e1193] [cursor=pointer]
+                  - cell "6 check 6 schedule 0" [ref=e1194] [cursor=pointer]:
+                    - generic [ref=e1195]:
+                      - paragraph [ref=e1197]: "6"
+                      - generic [ref=e1201]:
+                        - generic [ref=e1202]:
+                          - generic [ref=e1203]: check
+                          - paragraph [ref=e1204]: "6"
+                        - generic [ref=e1205]:
+                          - generic [ref=e1206]: schedule
+                          - paragraph [ref=e1207]: "0"
+                  - cell "L" [ref=e1208] [cursor=pointer]:
+                    - paragraph [ref=e1210]: L
+                  - cell "Curso" [ref=e1211] [cursor=pointer]:
+                    - generic "Curso" [ref=e1213]:
+                      - paragraph [ref=e1214]: Curso
+                  - cell "more_vert" [ref=e1215]:
+                    - button "more_vert" [ref=e1219] [cursor=pointer]:
+                      - generic:
+                        - generic: more_vert
+                - row "menu_book Curso Processo de abertura de CAT (Comunicação de acidente de trabalho) 6 check 6 schedule 0 L Curso more_vert" [ref=e1220]:
+                  - cell "menu_book Curso" [ref=e1221] [cursor=pointer]:
+                    - generic [ref=e1223]:
+                      - generic [ref=e1224]: menu_book
+                      - paragraph [ref=e1225]: Curso
+                  - cell "Processo de abertura de CAT (Comunicação de acidente de trabalho)" [ref=e1226] [cursor=pointer]:
+                    - paragraph [ref=e1228]: Processo de abertura de CAT (Comunicação de acidente de trabalho)
+                  - cell [ref=e1229]
+                  - cell [ref=e1230] [cursor=pointer]
+                  - cell "6 check 6 schedule 0" [ref=e1231] [cursor=pointer]:
+                    - generic [ref=e1232]:
+                      - paragraph [ref=e1234]: "6"
+                      - generic [ref=e1238]:
+                        - generic [ref=e1239]:
+                          - generic [ref=e1240]: check
+                          - paragraph [ref=e1241]: "6"
+                        - generic [ref=e1242]:
+                          - generic [ref=e1243]: schedule
+                          - paragraph [ref=e1244]: "0"
+                  - cell "L" [ref=e1245] [cursor=pointer]:
+                    - paragraph [ref=e1247]: L
+                  - cell "Curso" [ref=e1248] [cursor=pointer]:
+                    - generic "Curso" [ref=e1250]:
+                      - paragraph [ref=e1251]: Curso
+                  - cell "more_vert" [ref=e1252]:
+                    - button "more_vert" [ref=e1256] [cursor=pointer]:
+                      - generic:
+                        - generic: more_vert
+                - row "menu_book Curso Manual de uso do CRM 6 check 6 schedule 0 L Curso more_vert" [ref=e1257]:
+                  - cell "menu_book Curso" [ref=e1258] [cursor=pointer]:
+                    - generic [ref=e1260]:
+                      - generic [ref=e1261]: menu_book
+                      - paragraph [ref=e1262]: Curso
+                  - cell "Manual de uso do CRM" [ref=e1263] [cursor=pointer]:
+                    - paragraph [ref=e1265]: Manual de uso do CRM
+                  - cell [ref=e1266]
+                  - cell [ref=e1267] [cursor=pointer]
+                  - cell "6 check 6 schedule 0" [ref=e1268] [cursor=pointer]:
+                    - generic [ref=e1269]:
+                      - paragraph [ref=e1271]: "6"
+                      - generic [ref=e1275]:
+                        - generic [ref=e1276]:
+                          - generic [ref=e1277]: check
+                          - paragraph [ref=e1278]: "6"
+                        - generic [ref=e1279]:
+                          - generic [ref=e1280]: schedule
+                          - paragraph [ref=e1281]: "0"
+                  - cell "L" [ref=e1282] [cursor=pointer]:
+                    - paragraph [ref=e1284]: L
+                  - cell "Curso" [ref=e1285] [cursor=pointer]:
+                    - generic "Curso" [ref=e1287]:
+                      - paragraph [ref=e1288]: Curso
+                  - cell "more_vert" [ref=e1289]:
+                    - button "more_vert" [ref=e1293] [cursor=pointer]:
+                      - generic:
+                        - generic: more_vert
+                - row "menu_book Curso Gestão de carteira de leads 6 check 6 schedule 0 L Curso more_vert" [ref=e1294]:
+                  - cell "menu_book Curso" [ref=e1295] [cursor=pointer]:
+                    - generic [ref=e1297]:
+                      - generic [ref=e1298]: menu_book
+                      - paragraph [ref=e1299]: Curso
+                  - cell "Gestão de carteira de leads" [ref=e1300] [cursor=pointer]:
+                    - paragraph [ref=e1302]: Gestão de carteira de leads
+                  - cell [ref=e1303]
+                  - cell [ref=e1304] [cursor=pointer]
+                  - cell "6 check 6 schedule 0" [ref=e1305] [cursor=pointer]:
+                    - generic [ref=e1306]:
+                      - paragraph [ref=e1308]: "6"
+                      - generic [ref=e1312]:
+                        - generic [ref=e1313]:
+                          - generic [ref=e1314]: check
+                          - paragraph [ref=e1315]: "6"
+                        - generic [ref=e1316]:
+                          - generic [ref=e1317]: schedule
+                          - paragraph [ref=e1318]: "0"
+                  - cell "L" [ref=e1319] [cursor=pointer]:
+                    - paragraph [ref=e1321]: L
+                  - cell "Curso" [ref=e1322] [cursor=pointer]:
+                    - generic "Curso" [ref=e1324]:
+                      - paragraph [ref=e1325]: Curso
+                  - cell "more_vert" [ref=e1326]:
+                    - button "more_vert" [ref=e1330] [cursor=pointer]:
+                      - generic:
+                        - generic: more_vert
+                - row "menu_book Curso SalesKit (material do vendedor) 6 check 6 schedule 0 L Curso more_vert" [ref=e1331]:
+                  - cell "menu_book Curso" [ref=e1332] [cursor=pointer]:
+                    - generic [ref=e1334]:
+                      - generic [ref=e1335]: menu_book
+                      - paragraph [ref=e1336]: Curso
+                  - cell "SalesKit (material do vendedor)" [ref=e1337] [cursor=pointer]:
+                    - paragraph [ref=e1339]: SalesKit (material do vendedor)
+                  - cell [ref=e1340]
+                  - cell [ref=e1341] [cursor=pointer]
+                  - cell "6 check 6 schedule 0" [ref=e1342] [cursor=pointer]:
+                    - generic [ref=e1343]:
+                      - paragraph [ref=e1345]: "6"
+                      - generic [ref=e1349]:
+                        - generic [ref=e1350]:
+                          - generic [ref=e1351]: check
+                          - paragraph [ref=e1352]: "6"
+                        - generic [ref=e1353]:
+                          - generic [ref=e1354]: schedule
+                          - paragraph [ref=e1355]: "0"
+                  - cell "L" [ref=e1356] [cursor=pointer]:
+                    - paragraph [ref=e1358]: L
+                  - cell "Curso" [ref=e1359] [cursor=pointer]:
+                    - generic "Curso" [ref=e1361]:
+                      - paragraph [ref=e1362]: Curso
+                  - cell "more_vert" [ref=e1363]:
+                    - button "more_vert" [ref=e1367] [cursor=pointer]:
+                      - generic:
+                        - generic: more_vert
+            - generic [ref=e1369]:
+              - generic [ref=e1370]:
+                - button "keyboard_double_arrow_left" [disabled] [ref=e1371]:
+                  - generic [ref=e1372]: keyboard_double_arrow_left
+                - button "chevron_left" [disabled] [ref=e1373]:
+                  - generic [ref=e1374]: chevron_left
+                - button "1" [ref=e1375] [cursor=pointer]
+                - button "2" [ref=e1376] [cursor=pointer]
+                - button "chevron_right" [ref=e1377] [cursor=pointer]:
+                  - generic [ref=e1378]: chevron_right
+              - generic [ref=e1379]:
+                - combobox [ref=e1380]:
+                  - option "25 por página" [selected]
+                  - option "50 por página"
+                  - option "100 por página"
+                - generic:
+                  - img
+          - generic: E E E
+          - text: "0"
+        - text: "0"
+  - generic:
+    - region "Notifications-top"
+    - region "Notifications-top-left"
+    - region "Notifications-top-right"
+    - region "Notifications-bottom-left"
+    - region "Notifications-bottom"
+    - region "Notifications-bottom-right"
+  - generic:
+    - region "Notifications-top"
+    - region "Notifications-top-left"
+    - region "Notifications-top-right"
+    - region "Notifications-bottom-left"
+    - region "Notifications-bottom"
+    - region "Notifications-bottom-right"
+  - generic:
+    - region "Notifications-top"
+    - region "Notifications-top-left"
+    - region "Notifications-top-right"
+    - region "Notifications-bottom-left"
+    - region "Notifications-bottom"
+    - region "Notifications-bottom-right"
+  - generic:
+    - generic [ref=e1381] [cursor=pointer]: edit
+    - generic [ref=e1382] [cursor=pointer]: content_copy
+    - generic [ref=e1383] [cursor=pointer]: contact_page
+    - generic [ref=e1384] [cursor=pointer]: sort
+    - generic [ref=e1385] [cursor=pointer]: how_to_reg
+    - generic [ref=e1386] [cursor=pointer]: supervisor_account
+    - generic [ref=e1387] [cursor=pointer]: for_you
+    - generic [ref=e1388] [cursor=pointer]: share
+    - generic [ref=e1389] [cursor=pointer]: open_in_new
+    - generic [ref=e1390] [cursor=pointer]: delete
+  - generic:
+    - generic [ref=e1391] [cursor=pointer]: edit
+    - generic [ref=e1392] [cursor=pointer]: content_copy
+    - generic [ref=e1393] [cursor=pointer]: contact_page
+    - generic [ref=e1394] [cursor=pointer]: sort
+    - generic [ref=e1395] [cursor=pointer]: how_to_reg
+    - generic [ref=e1396] [cursor=pointer]: supervisor_account
+    - generic [ref=e1397] [cursor=pointer]: for_you
+    - generic [ref=e1398] [cursor=pointer]: share
+    - generic [ref=e1399] [cursor=pointer]: open_in_new
+    - generic [ref=e1400] [cursor=pointer]: delete
+  - generic:
+    - generic [ref=e1401] [cursor=pointer]: edit
+    - generic [ref=e1402] [cursor=pointer]: content_copy
+    - generic [ref=e1403] [cursor=pointer]: contact_page
+    - generic [ref=e1404] [cursor=pointer]: sort
+    - generic [ref=e1405] [cursor=pointer]: how_to_reg
+    - generic [ref=e1406] [cursor=pointer]: supervisor_account
+    - generic [ref=e1407] [cursor=pointer]: for_you
+    - generic [ref=e1408] [cursor=pointer]: share
+    - generic [ref=e1409] [cursor=pointer]: open_in_new
+    - generic [ref=e1410] [cursor=pointer]: delete
+  - generic:
+    - generic [ref=e1411] [cursor=pointer]: edit
+    - generic [ref=e1412] [cursor=pointer]: content_copy
+    - generic [ref=e1413] [cursor=pointer]: contact_page
+    - generic [ref=e1414] [cursor=pointer]: sort
+    - generic [ref=e1415] [cursor=pointer]: how_to_reg
+    - generic [ref=e1416] [cursor=pointer]: supervisor_account
+    - generic [ref=e1417] [cursor=pointer]: for_you
+    - generic [ref=e1418] [cursor=pointer]: share
+    - generic [ref=e1419] [cursor=pointer]: open_in_new
+    - generic [ref=e1420] [cursor=pointer]: delete
+  - generic:
+    - generic [ref=e1421] [cursor=pointer]: edit
+    - generic [ref=e1422] [cursor=pointer]: content_copy
+    - generic [ref=e1423] [cursor=pointer]: contact_page
+    - generic [ref=e1424] [cursor=pointer]: sort
+    - generic [ref=e1425] [cursor=pointer]: how_to_reg
+    - generic [ref=e1426] [cursor=pointer]: supervisor_account
+    - generic [ref=e1427] [cursor=pointer]: for_you
+    - generic [ref=e1428] [cursor=pointer]: share
+    - generic [ref=e1429] [cursor=pointer]: open_in_new
+    - generic [ref=e1430] [cursor=pointer]: delete
+  - generic:
+    - generic [ref=e1431] [cursor=pointer]: edit
+    - generic [ref=e1432] [cursor=pointer]: content_copy
+    - generic [ref=e1433] [cursor=pointer]: contact_page
+    - generic [ref=e1434] [cursor=pointer]: sort
+    - generic [ref=e1435] [cursor=pointer]: how_to_reg
+    - generic [ref=e1436] [cursor=pointer]: supervisor_account
+    - generic [ref=e1437] [cursor=pointer]: for_you
+    - generic [ref=e1438] [cursor=pointer]: share
+    - generic [ref=e1439] [cursor=pointer]: open_in_new
+    - generic [ref=e1440] [cursor=pointer]: delete
+  - generic:
+    - generic [ref=e1441] [cursor=pointer]: edit
+    - generic [ref=e1442] [cursor=pointer]: content_copy
+    - generic [ref=e1443] [cursor=pointer]: contact_page
+    - generic [ref=e1444] [cursor=pointer]: sort
+    - generic [ref=e1445] [cursor=pointer]: how_to_reg
+    - generic [ref=e1446] [cursor=pointer]: supervisor_account
+    - generic [ref=e1447] [cursor=pointer]: for_you
+    - generic [ref=e1448] [cursor=pointer]: share
+    - generic [ref=e1449] [cursor=pointer]: open_in_new
+    - generic [ref=e1450] [cursor=pointer]: delete
+  - generic:
+    - generic [ref=e1451] [cursor=pointer]: edit
+    - generic [ref=e1452] [cursor=pointer]: content_copy
+    - generic [ref=e1453] [cursor=pointer]: contact_page
+    - generic [ref=e1454] [cursor=pointer]: sort
+    - generic [ref=e1455] [cursor=pointer]: how_to_reg
+    - generic [ref=e1456] [cursor=pointer]: supervisor_account
+    - generic [ref=e1457] [cursor=pointer]: for_you
+    - generic [ref=e1458] [cursor=pointer]: share
+    - generic [ref=e1459] [cursor=pointer]: open_in_new
+    - generic [ref=e1460] [cursor=pointer]: delete
+  - generic:
+    - generic [ref=e1461] [cursor=pointer]: edit
+    - generic [ref=e1462] [cursor=pointer]: content_copy
+    - generic [ref=e1463] [cursor=pointer]: contact_page
+    - generic [ref=e1464] [cursor=pointer]: sort
+    - generic [ref=e1465] [cursor=pointer]: how_to_reg
+    - generic [ref=e1466] [cursor=pointer]: supervisor_account
+    - generic [ref=e1467] [cursor=pointer]: for_you
+    - generic [ref=e1468] [cursor=pointer]: share
+    - generic [ref=e1469] [cursor=pointer]: open_in_new
+    - generic [ref=e1470] [cursor=pointer]: delete
+  - generic:
+    - generic [ref=e1471] [cursor=pointer]: edit
+    - generic [ref=e1472] [cursor=pointer]: content_copy
+    - generic [ref=e1473] [cursor=pointer]: contact_page
+    - generic [ref=e1474] [cursor=pointer]: sort
+    - generic [ref=e1475] [cursor=pointer]: how_to_reg
+    - generic [ref=e1476] [cursor=pointer]: supervisor_account
+    - generic [ref=e1477] [cursor=pointer]: for_you
+    - generic [ref=e1478] [cursor=pointer]: share
+    - generic [ref=e1479] [cursor=pointer]: open_in_new
+    - generic [ref=e1480] [cursor=pointer]: delete
+  - generic:
+    - generic [ref=e1481] [cursor=pointer]: edit
+    - generic [ref=e1482] [cursor=pointer]: content_copy
+    - generic [ref=e1483] [cursor=pointer]: contact_page
+    - generic [ref=e1484] [cursor=pointer]: sort
+    - generic [ref=e1485] [cursor=pointer]: how_to_reg
+    - generic [ref=e1486] [cursor=pointer]: supervisor_account
+    - generic [ref=e1487] [cursor=pointer]: for_you
+    - generic [ref=e1488] [cursor=pointer]: share
+    - generic [ref=e1489] [cursor=pointer]: open_in_new
+    - generic [ref=e1490] [cursor=pointer]: delete
+  - generic:
+    - generic [ref=e1491] [cursor=pointer]: edit
+    - generic [ref=e1492] [cursor=pointer]: content_copy
+    - generic [ref=e1493] [cursor=pointer]: contact_page
+    - generic [ref=e1494] [cursor=pointer]: sort
+    - generic [ref=e1495] [cursor=pointer]: how_to_reg
+    - generic [ref=e1496] [cursor=pointer]: supervisor_account
+    - generic [ref=e1497] [cursor=pointer]: for_you
+    - generic [ref=e1498] [cursor=pointer]: share
+    - generic [ref=e1499] [cursor=pointer]: open_in_new
+    - generic [ref=e1500] [cursor=pointer]: delete
+  - generic:
+    - generic [ref=e1501] [cursor=pointer]: edit
+    - generic [ref=e1502] [cursor=pointer]: content_copy
+    - generic [ref=e1503] [cursor=pointer]: contact_page
+    - generic [ref=e1504] [cursor=pointer]: sort
+    - generic [ref=e1505] [cursor=pointer]: how_to_reg
+    - generic [ref=e1506] [cursor=pointer]: supervisor_account
+    - generic [ref=e1507] [cursor=pointer]: for_you
+    - generic [ref=e1508] [cursor=pointer]: share
+    - generic [ref=e1509] [cursor=pointer]: open_in_new
+    - generic [ref=e1510] [cursor=pointer]: delete
+  - generic:
+    - generic [ref=e1511] [cursor=pointer]: edit
+    - generic [ref=e1512] [cursor=pointer]: content_copy
+    - generic [ref=e1513] [cursor=pointer]: contact_page
+    - generic [ref=e1514] [cursor=pointer]: sort
+    - generic [ref=e1515] [cursor=pointer]: how_to_reg
+    - generic [ref=e1516] [cursor=pointer]: supervisor_account
+    - generic [ref=e1517] [cursor=pointer]: for_you
+    - generic [ref=e1518] [cursor=pointer]: share
+    - generic [ref=e1519] [cursor=pointer]: open_in_new
+    - generic [ref=e1520] [cursor=pointer]: delete
+  - generic:
+    - generic [ref=e1521] [cursor=pointer]: edit
+    - generic [ref=e1522] [cursor=pointer]: content_copy
+    - generic [ref=e1523] [cursor=pointer]: contact_page
+    - generic [ref=e1524] [cursor=pointer]: sort
+    - generic [ref=e1525] [cursor=pointer]: how_to_reg
+    - generic [ref=e1526] [cursor=pointer]: supervisor_account
+    - generic [ref=e1527] [cursor=pointer]: for_you
+    - generic [ref=e1528] [cursor=pointer]: share
+    - generic [ref=e1529] [cursor=pointer]: open_in_new
+    - generic [ref=e1530] [cursor=pointer]: delete
+  - generic:
+    - generic [ref=e1531] [cursor=pointer]: edit
+    - generic [ref=e1532] [cursor=pointer]: content_copy
+    - generic [ref=e1533] [cursor=pointer]: contact_page
+    - generic [ref=e1534] [cursor=pointer]: sort
+    - generic [ref=e1535] [cursor=pointer]: how_to_reg
+    - generic [ref=e1536] [cursor=pointer]: supervisor_account
+    - generic [ref=e1537] [cursor=pointer]: for_you
+    - generic [ref=e1538] [cursor=pointer]: share
+    - generic [ref=e1539] [cursor=pointer]: open_in_new
+    - generic [ref=e1540] [cursor=pointer]: delete
+  - generic:
+    - generic [ref=e1541] [cursor=pointer]: edit
+    - generic [ref=e1542] [cursor=pointer]: content_copy
+    - generic [ref=e1543] [cursor=pointer]: contact_page
+    - generic [ref=e1544] [cursor=pointer]: sort
+    - generic [ref=e1545] [cursor=pointer]: how_to_reg
+    - generic [ref=e1546] [cursor=pointer]: supervisor_account
+    - generic [ref=e1547] [cursor=pointer]: for_you
+    - generic [ref=e1548] [cursor=pointer]: share
+    - generic [ref=e1549] [cursor=pointer]: open_in_new
+    - generic [ref=e1550] [cursor=pointer]: delete
+  - generic:
+    - generic [ref=e1551] [cursor=pointer]: edit
+    - generic [ref=e1552] [cursor=pointer]: content_copy
+    - generic [ref=e1553] [cursor=pointer]: contact_page
+    - generic [ref=e1554] [cursor=pointer]: sort
+    - generic [ref=e1555] [cursor=pointer]: how_to_reg
+    - generic [ref=e1556] [cursor=pointer]: supervisor_account
+    - generic [ref=e1557] [cursor=pointer]: for_you
+    - generic [ref=e1558] [cursor=pointer]: share
+    - generic [ref=e1559] [cursor=pointer]: open_in_new
+    - generic [ref=e1560] [cursor=pointer]: delete
+  - generic:
+    - generic [ref=e1561] [cursor=pointer]: edit
+    - generic [ref=e1562] [cursor=pointer]: content_copy
+    - generic [ref=e1563] [cursor=pointer]: contact_page
+    - generic [ref=e1564] [cursor=pointer]: sort
+    - generic [ref=e1565] [cursor=pointer]: how_to_reg
+    - generic [ref=e1566] [cursor=pointer]: supervisor_account
+    - generic [ref=e1567] [cursor=pointer]: for_you
+    - generic [ref=e1568] [cursor=pointer]: share
+    - generic [ref=e1569] [cursor=pointer]: open_in_new
+    - generic [ref=e1570] [cursor=pointer]: delete
+  - generic:
+    - generic [ref=e1571] [cursor=pointer]: edit
+    - generic [ref=e1572] [cursor=pointer]: content_copy
+    - generic [ref=e1573] [cursor=pointer]: contact_page
+    - generic [ref=e1574] [cursor=pointer]: sort
+    - generic [ref=e1575] [cursor=pointer]: how_to_reg
+    - generic [ref=e1576] [cursor=pointer]: supervisor_account
+    - generic [ref=e1577] [cursor=pointer]: for_you
+    - generic [ref=e1578] [cursor=pointer]: share
+    - generic [ref=e1579] [cursor=pointer]: open_in_new
+    - generic [ref=e1580] [cursor=pointer]: delete
+  - generic:
+    - generic [ref=e1581] [cursor=pointer]: edit
+    - generic [ref=e1582] [cursor=pointer]: content_copy
+    - generic [ref=e1583] [cursor=pointer]: contact_page
+    - generic [ref=e1584] [cursor=pointer]: sort
+    - generic [ref=e1585] [cursor=pointer]: how_to_reg
+    - generic [ref=e1586] [cursor=pointer]: supervisor_account
+    - generic [ref=e1587] [cursor=pointer]: for_you
+    - generic [ref=e1588] [cursor=pointer]: share
+    - generic [ref=e1589] [cursor=pointer]: open_in_new
+    - generic [ref=e1590] [cursor=pointer]: delete
+  - generic:
+    - generic [ref=e1591] [cursor=pointer]: edit
+    - generic [ref=e1592] [cursor=pointer]: content_copy
+    - generic [ref=e1593] [cursor=pointer]: contact_page
+    - generic [ref=e1594] [cursor=pointer]: sort
+    - generic [ref=e1595] [cursor=pointer]: how_to_reg
+    - generic [ref=e1596] [cursor=pointer]: supervisor_account
+    - generic [ref=e1597] [cursor=pointer]: for_you
+    - generic [ref=e1598] [cursor=pointer]: share
+    - generic [ref=e1599] [cursor=pointer]: open_in_new
+    - generic [ref=e1600] [cursor=pointer]: delete
+  - generic:
+    - generic [ref=e1601] [cursor=pointer]: edit
+    - generic [ref=e1602] [cursor=pointer]: content_copy
+    - generic [ref=e1603] [cursor=pointer]: contact_page
+    - generic [ref=e1604] [cursor=pointer]: sort
+    - generic [ref=e1605] [cursor=pointer]: how_to_reg
+    - generic [ref=e1606] [cursor=pointer]: supervisor_account
+    - generic [ref=e1607] [cursor=pointer]: for_you
+    - generic [ref=e1608] [cursor=pointer]: share
+    - generic [ref=e1609] [cursor=pointer]: open_in_new
+    - generic [ref=e1610] [cursor=pointer]: delete
+  - generic:
+    - generic [ref=e1611] [cursor=pointer]: edit
+    - generic [ref=e1612] [cursor=pointer]: content_copy
+    - generic [ref=e1613] [cursor=pointer]: contact_page
+    - generic [ref=e1614] [cursor=pointer]: sort
+    - generic [ref=e1615] [cursor=pointer]: how_to_reg
+    - generic [ref=e1616] [cursor=pointer]: supervisor_account
+    - generic [ref=e1617] [cursor=pointer]: for_you
+    - generic [ref=e1618] [cursor=pointer]: share
+    - generic [ref=e1619] [cursor=pointer]: open_in_new
+    - generic [ref=e1620] [cursor=pointer]: delete
+  - generic:
+    - generic [ref=e1621] [cursor=pointer]: edit
+    - generic [ref=e1622] [cursor=pointer]: content_copy
+    - generic [ref=e1623] [cursor=pointer]: contact_page
+    - generic [ref=e1624] [cursor=pointer]: sort
+    - generic [ref=e1625] [cursor=pointer]: how_to_reg
+    - generic [ref=e1626] [cursor=pointer]: supervisor_account
+    - generic [ref=e1627] [cursor=pointer]: for_you
+    - generic [ref=e1628] [cursor=pointer]: share
+    - generic [ref=e1629] [cursor=pointer]: open_in_new
+    - generic [ref=e1630] [cursor=pointer]: delete
+```
+
+# Test source
+
+```ts
+  1  | import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js';
+  2  | import * as allure from 'allure-js-commons';
+  3  | import { RegistrosListPage } from '../../../pages/EditarRegistroPage.js';
+  4  | import { ProfileSwitcher } from '../../../../../src/pages/ProfileSwitcher.js';
+  5  | import { editarRegistroData as data } from './editar-registro.shared.data.js';
+  6  | 
+  7  | const SUITE = 'Editar registro de aprendizagem (matriz perfil × origem × status e banners)';
+  8  | 
+  9  | // DIVERGÊNCIA PRODUTO×AT (recon 2026-06-22): no build BETA o item "Editar" do menu
+  10 | // 3-pontos aparece para QUALQUER registro, independente de origem/status/perfil — a
+  11 | // RN42 (gating do "Editar") não está implementada. Este spec assere a expectativa da
+  12 | // AT (Externo Emitido NÃO deve ter "Editar" para o Aluno) e falha vermelho de propósito,
+  13 | // sinalizando a lacuna. Quando a RN42 for implementada, passa sem mudar o spec.
+  14 | test.describe(SUITE, () => {
+  15 |   test('Validar disponibilidade do "Editar" para o Aluno (matriz origem × status)', async ({ page }) => {
+  16 |     await allure.epic('Twygo - Registros de Aprendizagem');
+  17 |     await allure.feature(SUITE);
+  18 |     await allure.story('TC1 — disponibilidade do "Editar" para o Aluno');
+  19 |     await allure.severity('critical');
+  20 | 
+  21 |     const lista = new RegistrosListPage(page);
+  22 |     const profile = new ProfileSwitcher(page);
+  23 | 
+  24 |     await allure.step('Entrar como Colaborador e abrir "Meu histórico"', async () => {
+  25 |       await lista.gotoAluno();
+  26 |       await profile.switchTo('Colaborador');
+  27 |       await lista.gotoAluno();
+  28 |     });
+  29 | 
+  30 |     // seed ausente: o Aluno logado só possui 1 registro (Externo Emitido). Externo
+  31 |     // Pendente/Recusado/Expirado próprios + Interno + Compartilhado não existem no env,
+  32 |     // então os passos 1-3, 5 e 6 da AT (que exigem esses registros) não são cobríveis.
+  33 |     await allure.step('Menu 3-pontos de um registro Externo Emitido', async () => {
+  34 |       const id = await lista.findRecordId('external', 'Emitido');
+  35 |       expect(id, 'seed esperado: ao menos 1 Externo Emitido visível ao aluno logado').not.toBeNull();
+  36 |       const items = await lista.menuItems(id!);
+  37 |       // AT TC1.4: para Externo Emitido o item "Editar" NÃO deve ser exibido ao Aluno.
+> 38 |       expect(items, `menu observado: [${items.join(', ')}]`).not.toContain(data.menuItems.editar);
+     |                                                                  ^ Error: menu observado: [Editar, Excluir, Visualizar, Evidências, Histórico]
+  39 |     });
+  40 |   });
+  41 | 
+  42 |   test.afterEach(async ({ page }) => {
+  43 |     await new ProfileSwitcher(page).revertToAdminSafe();
+  44 |   });
+  45 | });
+  46 | 
+```

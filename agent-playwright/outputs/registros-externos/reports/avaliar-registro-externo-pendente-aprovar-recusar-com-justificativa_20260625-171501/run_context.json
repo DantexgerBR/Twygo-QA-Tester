@@ -1,0 +1,11 @@
+{
+  "runId": "avaliar-registro-externo-pendente-aprovar-recusar-com-justificativa_20260625-171501",
+  "mode": "per-suite",
+  "suiteFilter": "Avaliar registro externo pendente (Aprovar/Recusar com justificativa)",
+  "projectName": "Registros de Aprendizagem",
+  "environment": "staging-registros-externos",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-06-25T20:15:01.100Z"
+}

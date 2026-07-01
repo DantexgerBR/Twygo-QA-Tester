@@ -1,0 +1,1253 @@
+{
+  "config": {
+    "configFile": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "D:/novo-estudio-twygo/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/novo-estudio-twygo/twygo-agents-qa/agent-playwright/outputs/registros-externos/test-artifacts",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "D:/novo-estudio-twygo/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "tests/auth/**/*.spec.ts",
+          "projects/registros-externos/tests/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/registros-externos/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\registros-externos\\tests\\features\\filtros-drawer-personalizacao-colunas-dnd\\tc1-abertura-drawer-e-estado-ativo-botao-filtro.spec.ts",
+      "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc1-abertura-drawer-e-estado-ativo-botao-filtro.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Filtros via drawer e personalização de colunas (DnD)",
+          "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc1-abertura-drawer-e-estado-ativo-botao-filtro.spec.ts",
+          "line": 14,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar abertura do drawer e estado ativo do botão Filtro",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "divergência",
+                      "description": "Filtros padrão ausentes no build (RN 63 passo 3 não exercível como descrito). Estado ativo validado via customização de coluna. Sufixo \"(N)\" não observado."
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 16444,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar Registros — botão \"Filtro\" sem filtro aplicado",
+                          "duration": 6841
+                        },
+                        {
+                          "title": "2. Clicar em \"Filtro\" abre o drawer \"Lista de filtros\"",
+                          "duration": 654
+                        },
+                        {
+                          "title": "3. Aplicar customização → botão sólido + \"Limpar filtro\" aparece",
+                          "duration": 2853
+                        },
+                        {
+                          "title": "4. Clicar em \"Limpar filtro\" volta o botão à variante outline",
+                          "duration": 358
+                        }
+                      ],
+                      "startTime": "2026-06-24T13:10:19.378Z",
+                      "annotations": [
+                        {
+                          "type": "divergência",
+                          "description": "Filtros padrão ausentes no build (RN 63 passo 3 não exercível como descrito). Estado ativo validado via customização de coluna. Sufixo \"(N)\" não observado."
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkZpbHRyb3MgdmlhIGRyYXdlciBlIHBlcnNvbmFsaXphw6fDo28gZGUgY29sdW5hcyAoRG5EKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGFiZXJ0dXJhIGRvIGRyYXdlciBlIGVzdGFkbyBhdGl2byBkbyBib3TDo28gRmlsdHJvIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-98407-stado-ativo-do-botão-Filtro-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-98407-stado-ativo-do-botão-Filtro-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-98407-stado-ativo-do-botão-Filtro-chromium\\video.webm"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-98407-stado-ativo-do-botão-Filtro-chromium\\test-finished-2.png"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-98407-stado-ativo-do-botão-Filtro-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b5fde74616521e58d553-aa6383a7244207ecbf0f",
+              "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc1-abertura-drawer-e-estado-ativo-botao-filtro.spec.ts",
+              "line": 15,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\filtros-drawer-personalizacao-colunas-dnd\\tc10-combinacao-2-filtros-mais-busca-textual.spec.ts",
+      "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc10-combinacao-2-filtros-mais-busca-textual.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Filtros via drawer e personalização de colunas (DnD)",
+          "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc10-combinacao-2-filtros-mais-busca-textual.spec.ts",
+          "line": 13,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar combinação de 2 filtros + busca textual (combinatória mínima)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "AT desatualizada / feature não entregue no BETA: o grupo \"Filtros padrão\" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe \"Não há filtros nessa seção.\"; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2).",
+                      "location": {
+                        "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\filtros-drawer-personalizacao-colunas-dnd\\tc10-combinacao-2-filtros-mais-busca-textual.spec.ts",
+                        "line": 19,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 1000,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-24T13:10:50.015Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "AT desatualizada / feature não entregue no BETA: o grupo \"Filtros padrão\" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe \"Não há filtros nessa seção.\"; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2).",
+                          "location": {
+                            "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\filtros-drawer-personalizacao-colunas-dnd\\tc10-combinacao-2-filtros-mais-busca-textual.spec.ts",
+                            "line": 19,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkZpbHRyb3MgdmlhIGRyYXdlciBlIHBlcnNvbmFsaXphw6fDo28gZGUgY29sdW5hcyAoRG5EKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGNvbWJpbmHDp8OjbyBkZSAyIGZpbHRyb3MgKyBidXNjYSB0ZXh0dWFsIChjb21iaW5hdMOzcmlhIG3DrW5pbWEpIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJoaWdoIn1dfX0="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-d9722-extual-combinatória-mínima--chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-d9722-extual-combinatória-mínima--chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-d9722-extual-combinatória-mínima--chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-d9722-extual-combinatória-mínima--chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "c3f7597d987d0dbbad22-906163503dca4b94bf2e",
+              "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc10-combinacao-2-filtros-mais-busca-textual.spec.ts",
+              "line": 14,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\filtros-drawer-personalizacao-colunas-dnd\\tc2-estrutura-drawer-lista-de-filtros.spec.ts",
+      "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc2-estrutura-drawer-lista-de-filtros.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Filtros via drawer e personalização de colunas (DnD)",
+          "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc2-estrutura-drawer-lista-de-filtros.spec.ts",
+          "line": 14,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar estrutura do drawer \"Lista de filtros\"",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "divergência",
+                      "description": "AT esperava 4 filtros padrão (radio) + ícone info + duplicar + toast \"Em breve\" e copy \"Em breve — ...\" nos grupos. Build exibe \"Não há filtros nessa seção.\" nos 3 grupos e não tem radios/duplicar. Destinatário: AT / QA Lead."
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 11496,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Abrir drawer — header, busca e botão \"Novo\"",
+                          "duration": 8019
+                        },
+                        {
+                          "title": "2. Grupo \"Filtros padrão\" — divergência: vazio neste build",
+                          "duration": 119
+                        },
+                        {
+                          "title": "3. Grupo \"Filtros compartilhados\" expande com empty state",
+                          "duration": 179
+                        },
+                        {
+                          "title": "4. Grupo \"Meus filtros\" expande com empty state",
+                          "duration": 162
+                        },
+                        {
+                          "title": "5. Footer com \"Cancelar\" e \"Aplicar\"",
+                          "duration": 54
+                        }
+                      ],
+                      "startTime": "2026-06-24T13:10:51.203Z",
+                      "annotations": [
+                        {
+                          "type": "divergência",
+                          "description": "AT esperava 4 filtros padrão (radio) + ícone info + duplicar + toast \"Em breve\" e copy \"Em breve — ...\" nos grupos. Build exibe \"Não há filtros nessa seção.\" nos 3 grupos e não tem radios/duplicar. Destinatário: AT / QA Lead."
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkZpbHRyb3MgdmlhIGRyYXdlciBlIHBlcnNvbmFsaXphw6fDo28gZGUgY29sdW5hcyAoRG5EKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGVzdHJ1dHVyYSBkbyBkcmF3ZXIgXCJMaXN0YSBkZSBmaWx0cm9zXCIifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-50618-do-drawer-Lista-de-filtros--chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-50618-do-drawer-Lista-de-filtros--chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-50618-do-drawer-Lista-de-filtros--chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-50618-do-drawer-Lista-de-filtros--chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8c30cba8b217c302046e-0e8be85f43033df1cd85",
+              "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc2-estrutura-drawer-lista-de-filtros.spec.ts",
+              "line": 15,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\filtros-drawer-personalizacao-colunas-dnd\\tc3-busca-interna-da-lista-de-filtros.spec.ts",
+      "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc3-busca-interna-da-lista-de-filtros.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Filtros via drawer e personalização de colunas (DnD)",
+          "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc3-busca-interna-da-lista-de-filtros.spec.ts",
+          "line": 12,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar busca interna da lista de filtros",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "AT desatualizada / feature não entregue no BETA: o grupo \"Filtros padrão\" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe \"Não há filtros nessa seção.\"; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2).",
+                      "location": {
+                        "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\filtros-drawer-personalizacao-colunas-dnd\\tc3-busca-interna-da-lista-de-filtros.spec.ts",
+                        "line": 18,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 845,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-24T13:11:03.390Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "AT desatualizada / feature não entregue no BETA: o grupo \"Filtros padrão\" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe \"Não há filtros nessa seção.\"; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2).",
+                          "location": {
+                            "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\filtros-drawer-personalizacao-colunas-dnd\\tc3-busca-interna-da-lista-de-filtros.spec.ts",
+                            "line": 18,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkZpbHRyb3MgdmlhIGRyYXdlciBlIHBlcnNvbmFsaXphw6fDo28gZGUgY29sdW5hcyAoRG5EKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGJ1c2NhIGludGVybmEgZGEgbGlzdGEgZGUgZmlsdHJvcyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJub3JtYWwifV19fQ=="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-7f178-interna-da-lista-de-filtros-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-7f178-interna-da-lista-de-filtros-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-7f178-interna-da-lista-de-filtros-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-7f178-interna-da-lista-de-filtros-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "49090edda491eb731a00-1ce31d5973ae5095cb9e",
+              "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc3-busca-interna-da-lista-de-filtros.spec.ts",
+              "line": 13,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\filtros-drawer-personalizacao-colunas-dnd\\tc4-pending-aplicar-cancelar-ressincronizar.spec.ts",
+      "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc4-pending-aplicar-cancelar-ressincronizar.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Filtros via drawer e personalização de colunas (DnD)",
+          "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc4-pending-aplicar-cancelar-ressincronizar.spec.ts",
+          "line": 11,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar comportamento de pending (aplicar, cancelar, ressincronizar)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "AT desatualizada / feature não entregue no BETA: o grupo \"Filtros padrão\" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe \"Não há filtros nessa seção.\"; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2).",
+                      "location": {
+                        "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\filtros-drawer-personalizacao-colunas-dnd\\tc4-pending-aplicar-cancelar-ressincronizar.spec.ts",
+                        "line": 17,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 839,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-24T13:11:04.415Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "AT desatualizada / feature não entregue no BETA: o grupo \"Filtros padrão\" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe \"Não há filtros nessa seção.\"; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2).",
+                          "location": {
+                            "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\filtros-drawer-personalizacao-colunas-dnd\\tc4-pending-aplicar-cancelar-ressincronizar.spec.ts",
+                            "line": 17,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkZpbHRyb3MgdmlhIGRyYXdlciBlIHBlcnNvbmFsaXphw6fDo28gZGUgY29sdW5hcyAoRG5EKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGNvbXBvcnRhbWVudG8gZGUgcGVuZGluZyAoYXBsaWNhciwgY2FuY2VsYXIsIHJlc3NpbmNyb25pemFyKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-aa05f-ar-cancelar-ressincronizar--chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-aa05f-ar-cancelar-ressincronizar--chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-aa05f-ar-cancelar-ressincronizar--chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-aa05f-ar-cancelar-ressincronizar--chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "c3ab122ac9782e3d340f-22ec42a13df19dd0227d",
+              "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc4-pending-aplicar-cancelar-ressincronizar.spec.ts",
+              "line": 12,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\filtros-drawer-personalizacao-colunas-dnd\\tc5-sincronizacao-kpi-cards-drawer-aluno.spec.ts",
+      "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc5-sincronizacao-kpi-cards-drawer-aluno.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Filtros via drawer e personalização de colunas (DnD)",
+          "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc5-sincronizacao-kpi-cards-drawer-aluno.spec.ts",
+          "line": 12,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar sincronização KPI cards ↔ drawer (Aluno)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "AT desatualizada / feature não entregue no BETA: o grupo \"Filtros padrão\" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe \"Não há filtros nessa seção.\"; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2).",
+                      "location": {
+                        "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\filtros-drawer-personalizacao-colunas-dnd\\tc5-sincronizacao-kpi-cards-drawer-aluno.spec.ts",
+                        "line": 18,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 841,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-24T13:11:05.434Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "AT desatualizada / feature não entregue no BETA: o grupo \"Filtros padrão\" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe \"Não há filtros nessa seção.\"; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2).",
+                          "location": {
+                            "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\filtros-drawer-personalizacao-colunas-dnd\\tc5-sincronizacao-kpi-cards-drawer-aluno.spec.ts",
+                            "line": 18,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkZpbHRyb3MgdmlhIGRyYXdlciBlIHBlcnNvbmFsaXphw6fDo28gZGUgY29sdW5hcyAoRG5EKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIHNpbmNyb25pemHDp8OjbyBLUEkgY2FyZHMg4oaUIGRyYXdlciAoQWx1bm8pIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJoaWdoIn1dfX0="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-a0928-o-KPI-cards-↔-drawer-Aluno--chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-a0928-o-KPI-cards-↔-drawer-Aluno--chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-a0928-o-KPI-cards-↔-drawer-Aluno--chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-a0928-o-KPI-cards-↔-drawer-Aluno--chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a9c8ebd941b93dbf336b-4f70b1184220c3c9a900",
+              "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc5-sincronizacao-kpi-cards-drawer-aluno.spec.ts",
+              "line": 13,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\filtros-drawer-personalizacao-colunas-dnd\\tc6-navegacao-para-view-filtro-rapido.spec.ts",
+      "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc6-navegacao-para-view-filtro-rapido.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Filtros via drawer e personalização de colunas (DnD)",
+          "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc6-navegacao-para-view-filtro-rapido.spec.ts",
+          "line": 10,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar navegação para a view \"Filtro rápido\"",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "divergência",
+                      "description": "\"+ Opções de filtro\" abre menu funcional de colunas (18 itens), não o toast \"Em breve\" que a AT esperava. Filtro avançado por coluna está implementado."
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 13063,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Abrir drawer e clicar \"Novo\" → view \"Filtro rápido\"",
+                          "duration": 8549
+                        },
+                        {
+                          "title": "2. Grupo \"Colunas para filtrar\" + botão \"+ Opções de filtro\"",
+                          "duration": 80
+                        },
+                        {
+                          "title": "3. \"+ Opções de filtro\" abre menu de colunas (divergência: não é toast)",
+                          "duration": 250
+                        },
+                        {
+                          "title": "4. Grupo \"Colunas para exibir\" lista colunas com checkbox",
+                          "duration": 318
+                        },
+                        {
+                          "title": "5. Link \"Lista de filtros\" volta para a view de lista",
+                          "duration": 561
+                        }
+                      ],
+                      "startTime": "2026-06-24T13:11:06.479Z",
+                      "annotations": [
+                        {
+                          "type": "divergência",
+                          "description": "\"+ Opções de filtro\" abre menu funcional de colunas (18 itens), não o toast \"Em breve\" que a AT esperava. Filtro avançado por coluna está implementado."
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkZpbHRyb3MgdmlhIGRyYXdlciBlIHBlcnNvbmFsaXphw6fDo28gZGUgY29sdW5hcyAoRG5EKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIG5hdmVnYcOnw6NvIHBhcmEgYSB2aWV3IFwiRmlsdHJvIHLDoXBpZG9cIiJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJoaWdoIn1dfX0="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-70e8e--para-a-view-Filtro-rápido--chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-70e8e--para-a-view-Filtro-rápido--chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-70e8e--para-a-view-Filtro-rápido--chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-70e8e--para-a-view-Filtro-rápido--chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "16b2aa5b16092eea05aa-1cefeea68b35f86b6f10",
+              "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc6-navegacao-para-view-filtro-rapido.spec.ts",
+              "line": 11,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\filtros-drawer-personalizacao-colunas-dnd\\tc7-ligar-desligar-colunas-reflete-na-tabela.spec.ts",
+      "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc7-ligar-desligar-colunas-reflete-na-tabela.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Filtros via drawer e personalização de colunas (DnD)",
+          "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc7-ligar-desligar-colunas-reflete-na-tabela.spec.ts",
+          "line": 14,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar ligar/desligar colunas e refletir na tabela",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 15380,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Abrir a view \"Filtro rápido\"",
+                          "duration": 8289
+                        },
+                        {
+                          "title": "2. Desmarcar a coluna \"Provedor\"",
+                          "duration": 355
+                        },
+                        {
+                          "title": "3. Marcar a coluna \"Progresso\"",
+                          "duration": 306
+                        },
+                        {
+                          "title": "4. Aplicar → tabela reflete as mudanças; seleção/ações fixas nas pontas",
+                          "duration": 1651
+                        }
+                      ],
+                      "startTime": "2026-06-24T13:11:20.265Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkZpbHRyb3MgdmlhIGRyYXdlciBlIHBlcnNvbmFsaXphw6fDo28gZGUgY29sdW5hcyAoRG5EKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGxpZ2FyL2Rlc2xpZ2FyIGNvbHVuYXMgZSByZWZsZXRpciBuYSB0YWJlbGEifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-9a84f-olunas-e-refletir-na-tabela-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-9a84f-olunas-e-refletir-na-tabela-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-9a84f-olunas-e-refletir-na-tabela-chromium\\video.webm"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-9a84f-olunas-e-refletir-na-tabela-chromium\\test-finished-2.png"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-9a84f-olunas-e-refletir-na-tabela-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a7d0ec56ac60da5f398f-f69f41639f56d16c8f64",
+              "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc7-ligar-desligar-colunas-reflete-na-tabela.spec.ts",
+              "line": 20,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\filtros-drawer-personalizacao-colunas-dnd\\tc8-reordenacao-colunas-drag-and-drop.spec.ts",
+      "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc8-reordenacao-colunas-drag-and-drop.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Filtros via drawer e personalização de colunas (DnD)",
+          "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc8-reordenacao-colunas-drag-and-drop.spec.ts",
+          "line": 11,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar reordenação de colunas via drag and drop",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 15612,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Abrir a view \"Filtro rápido\" com a lista de colunas",
+                          "duration": 8026
+                        },
+                        {
+                          "title": "2. Drag handle de \"Carga horária\" é arrastável",
+                          "duration": 33
+                        },
+                        {
+                          "title": "3. Arrastar \"Carga horária\" para antes de \"Origem\"",
+                          "duration": 2219
+                        },
+                        {
+                          "title": "4. Aplicar → tabela mostra \"Carga horária\" antes de \"Origem\"",
+                          "duration": 1229
+                        }
+                      ],
+                      "startTime": "2026-06-24T13:11:54.703Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkZpbHRyb3MgdmlhIGRyYXdlciBlIHBlcnNvbmFsaXphw6fDo28gZGUgY29sdW5hcyAoRG5EKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIHJlb3JkZW5hw6fDo28gZGUgY29sdW5hcyB2aWEgZHJhZyBhbmQgZHJvcCJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJoaWdoIn1dfX0="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-fb45c-e-colunas-via-drag-and-drop-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-fb45c-e-colunas-via-drag-and-drop-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-fb45c-e-colunas-via-drag-and-drop-chromium\\video.webm"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-fb45c-e-colunas-via-drag-and-drop-chromium\\test-finished-2.png"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-fb45c-e-colunas-via-drag-and-drop-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0e560e1985e4a924e203-361ef77fd86391ad7415",
+              "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc8-reordenacao-colunas-drag-and-drop.spec.ts",
+              "line": 17,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\filtros-drawer-personalizacao-colunas-dnd\\tc9-reset-suave-e-persistencia-da-customizacao.spec.ts",
+      "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc9-reset-suave-e-persistencia-da-customizacao.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Filtros via drawer e personalização de colunas (DnD)",
+          "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc9-reset-suave-e-persistencia-da-customizacao.spec.ts",
+          "line": 14,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar reset suave do drawer e não persistência da customização",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "divergência",
+                      "description": "AT esperava que a customização de colunas NÃO persistisse após reload; o build PERSISTE (localStorage por usuário). Destinatário: AT / QA Lead (confirmar comportamento desejado)."
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 21506,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Customizar (desmarcar \"Provedor\") e aplicar",
+                          "duration": 10601
+                        },
+                        {
+                          "title": "2. Reabrir o drawer (com customização aplicada) abre na view \"Filtro rápido\"",
+                          "duration": 291
+                        },
+                        {
+                          "title": "3. \"Novo\" exibe a lista de colunas (estado da customização aplicada)",
+                          "duration": 546
+                        },
+                        {
+                          "title": "4. Recarregar a página — customização PERSISTE (divergência vs AT)",
+                          "duration": 5755
+                        }
+                      ],
+                      "startTime": "2026-06-24T13:12:30.412Z",
+                      "annotations": [
+                        {
+                          "type": "divergência",
+                          "description": "AT esperava que a customização de colunas NÃO persistisse após reload; o build PERSISTE (localStorage por usuário). Destinatário: AT / QA Lead (confirmar comportamento desejado)."
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkZpbHRyb3MgdmlhIGRyYXdlciBlIHBlcnNvbmFsaXphw6fDo28gZGUgY29sdW5hcyAoRG5EKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIHJlc2V0IHN1YXZlIGRvIGRyYXdlciBlIG7Do28gcGVyc2lzdMOqbmNpYSBkYSBjdXN0b21pemHDp8OjbyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJoaWdoIn1dfX0="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-59a7a-ersistência-da-customização-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-59a7a-ersistência-da-customização-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-59a7a-ersistência-da-customização-chromium\\video.webm"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-59a7a-ersistência-da-customização-chromium\\test-finished-2.png"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-59a7a-ersistência-da-customização-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "da7180302077d9956a29-2d7bdfa59d37a4216230",
+              "file": "projects/registros-externos/tests/features/filtros-drawer-personalizacao-colunas-dnd/tc9-reset-suave-e-persistencia-da-customizacao.spec.ts",
+              "line": 18,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-06-24T13:09:23.963Z",
+    "duration": 282025.113,
+    "expected": 6,
+    "skipped": 4,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

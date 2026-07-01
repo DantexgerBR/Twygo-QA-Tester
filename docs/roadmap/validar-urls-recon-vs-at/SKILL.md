@@ -104,8 +104,7 @@ Skill criada pra que **próximo projeto não pague o mesmo custo**.
 ## Relacionado
 
 - [[twygo-recon]] — skill principal; receberia a validação
-- [[navegar-admin-dashboard-twygo]] — descoberta de URLs via sidebar admin
-- [[escopar-sidebar-menu-twygo]] — sidebar tem duplicidade
+- [[navegar-sidebar-admin-twygo]] — descoberta de URLs via sidebar admin; sidebar tem duplicidade (skill consolidada, ex-`navegar-admin-dashboard-twygo`/`escopar-sidebar-menu-twygo`)
 - CONTRACT.md — MD canônico é fonte de verdade; XMind/XML são derivados regeneráveis
 
 ## Implementação — quem pega

@@ -1,0 +1,12 @@
+{
+  "slug": "registros-externos",
+  "envName": "trial-registros-externos",
+  "orgId": 37094,
+  "url": "https://twygo1782412880.stage.twygoead.com/",
+  "email": "richardsebold21@gmail.com",
+  "emailEnvVar": "TWYGO_TRIAL_REGISTROS_EXTERNOS_EMAIL",
+  "passwordEnvVar": "TWYGO_TRIAL_REGISTROS_EXTERNOS_PASSWORD",
+  "icp": "icp5",
+  "provisionedAt": "2026-06-25",
+  "note": "Trial re-provisionada (org 37094, host twygo1782412880) após a anterior (37078) ser consumida pela suíte de exclusão. Seed completo da SophiaTech presente (recon 2026-06-25: emitidos=13). Email logado diretamente no campo `email` (richardsebold21@gmail.com); senha via TWYGO_TRIAL_REGISTROS_EXTERNOS_PASSWORD (ver .env, gitignored). A suíte de exclusão (TC3/TC4) ZERA este env."
+}

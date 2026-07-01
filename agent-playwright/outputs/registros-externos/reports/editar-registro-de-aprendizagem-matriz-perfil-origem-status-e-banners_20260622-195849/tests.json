@@ -1,0 +1,1413 @@
+{
+  "config": {
+    "configFile": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "D:/novo-estudio-twygo/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/novo-estudio-twygo/twygo-agents-qa/agent-playwright/outputs/registros-externos/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "D:/novo-estudio-twygo/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "tests/auth/**/*.spec.ts",
+          "projects/registros-externos/tests/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/registros-externos/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc1-disponibilidade-editar-aluno.spec.ts",
+      "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc1-disponibilidade-editar-aluno.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Editar registro de aprendizagem (matriz perfil × origem × status e banners)",
+          "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc1-disponibilidade-editar-aluno.spec.ts",
+          "line": 14,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar disponibilidade do \"Editar\" para o Aluno (matriz origem × status)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 31064,
+                      "error": {
+                        "message": "Error: menu observado: [Editar, Excluir, Visualizar, Evidências, Histórico]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: not \u001b[32m\"Editar\"\u001b[39m\nReceived array:     \u001b[31m[\u001b[7m\"Editar\"\u001b[27m, \"Excluir\", \"Visualizar\", \"Evidências\", \"Histórico\"]\u001b[39m",
+                        "stack": "Error: menu observado: [Editar, Excluir, Visualizar, Evidências, Histórico]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: not \u001b[32m\"Editar\"\u001b[39m\nReceived array:     \u001b[31m[\u001b[7m\"Editar\"\u001b[27m, \"Excluir\", \"Visualizar\", \"Evidências\", \"Histórico\"]\u001b[39m\n    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc1-disponibilidade-editar-aluno.spec.ts:38:66",
+                        "location": {
+                          "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc1-disponibilidade-editar-aluno.spec.ts",
+                          "column": 66,
+                          "line": 38
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 36 |\u001b[39m       \u001b[36mconst\u001b[39m items \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m lista\u001b[33m.\u001b[39mmenuItems(id\u001b[33m!\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 37 |\u001b[39m       \u001b[90m// AT TC1.4: para Externo Emitido o item \"Editar\" NÃO deve ser exibido ao Aluno.\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 38 |\u001b[39m       expect(items\u001b[33m,\u001b[39m \u001b[32m`menu observado: [${items.join(', ')}]`\u001b[39m)\u001b[33m.\u001b[39mnot\u001b[33m.\u001b[39mtoContain(data\u001b[33m.\u001b[39mmenuItems\u001b[33m.\u001b[39meditar)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 39 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 40 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 41 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc1-disponibilidade-editar-aluno.spec.ts",
+                            "column": 66,
+                            "line": 38
+                          },
+                          "message": "Error: menu observado: [Editar, Excluir, Visualizar, Evidências, Histórico]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: not \u001b[32m\"Editar\"\u001b[39m\nReceived array:     \u001b[31m[\u001b[7m\"Editar\"\u001b[27m, \"Excluir\", \"Visualizar\", \"Evidências\", \"Histórico\"]\u001b[39m\n\n\u001b[0m \u001b[90m 36 |\u001b[39m       \u001b[36mconst\u001b[39m items \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m lista\u001b[33m.\u001b[39mmenuItems(id\u001b[33m!\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 37 |\u001b[39m       \u001b[90m// AT TC1.4: para Externo Emitido o item \"Editar\" NÃO deve ser exibido ao Aluno.\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 38 |\u001b[39m       expect(items\u001b[33m,\u001b[39m \u001b[32m`menu observado: [${items.join(', ')}]`\u001b[39m)\u001b[33m.\u001b[39mnot\u001b[33m.\u001b[39mtoContain(data\u001b[33m.\u001b[39mmenuItems\u001b[33m.\u001b[39meditar)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 39 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 40 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 41 |\u001b[39m\u001b[0m\n\u001b[2m    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc1-disponibilidade-editar-aluno.spec.ts:38:66\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Entrar como Colaborador e abrir \"Meu histórico\"",
+                          "duration": 21135
+                        },
+                        {
+                          "title": "Menu 3-pontos de um registro Externo Emitido",
+                          "duration": 625,
+                          "error": {
+                            "message": "Error: menu observado: [Editar, Excluir, Visualizar, Evidências, Histórico]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: not \u001b[32m\"Editar\"\u001b[39m\nReceived array:     \u001b[31m[\u001b[7m\"Editar\"\u001b[27m, \"Excluir\", \"Visualizar\", \"Evidências\", \"Histórico\"]\u001b[39m",
+                            "stack": "Error: menu observado: [Editar, Excluir, Visualizar, Evidências, Histórico]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: not \u001b[32m\"Editar\"\u001b[39m\nReceived array:     \u001b[31m[\u001b[7m\"Editar\"\u001b[27m, \"Excluir\", \"Visualizar\", \"Evidências\", \"Histórico\"]\u001b[39m\n    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc1-disponibilidade-editar-aluno.spec.ts:38:66",
+                            "location": {
+                              "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc1-disponibilidade-editar-aluno.spec.ts",
+                              "column": 66,
+                              "line": 38
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 36 |\u001b[39m       \u001b[36mconst\u001b[39m items \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m lista\u001b[33m.\u001b[39mmenuItems(id\u001b[33m!\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 37 |\u001b[39m       \u001b[90m// AT TC1.4: para Externo Emitido o item \"Editar\" NÃO deve ser exibido ao Aluno.\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 38 |\u001b[39m       expect(items\u001b[33m,\u001b[39m \u001b[32m`menu observado: [${items.join(', ')}]`\u001b[39m)\u001b[33m.\u001b[39mnot\u001b[33m.\u001b[39mtoContain(data\u001b[33m.\u001b[39mmenuItems\u001b[33m.\u001b[39meditar)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 39 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 40 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 41 |\u001b[39m\u001b[0m"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-06-22T22:52:13.138Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkVkaXRhciByZWdpc3RybyBkZSBhcHJlbmRpemFnZW0gKG1hdHJpeiBwZXJmaWwgw5cgb3JpZ2VtIMOXIHN0YXR1cyBlIGJhbm5lcnMpIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJUQzEg4oCUIGRpc3BvbmliaWxpZGFkZSBkbyBcIkVkaXRhclwiIHBhcmEgbyBBbHVubyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-ae6ca-uno-matriz-origem-×-status--chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-ae6ca-uno-matriz-origem-×-status--chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-ae6ca-uno-matriz-origem-×-status--chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-ae6ca-uno-matriz-origem-×-status--chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-ae6ca-uno-matriz-origem-×-status--chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc1-disponibilidade-editar-aluno.spec.ts",
+                        "column": 66,
+                        "line": 38
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "6f7ff6c9341b2c32fe64-f0ad4f7ab301fcf74f75",
+              "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc1-disponibilidade-editar-aluno.spec.ts",
+              "line": 15,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc10-banner-verde-emitido.spec.ts",
+      "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc10-banner-verde-emitido.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Editar registro de aprendizagem (matriz perfil × origem × status e banners)",
+          "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc10-banner-verde-emitido.spec.ts",
+          "line": 10,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar banner verde de registro Emitido",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 31798,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Certificado aprovado').first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Certificado aprovado').first()\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Certificado aprovado').first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Certificado aprovado').first()\u001b[22m\n\n    at body (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc10-banner-verde-emitido.spec.ts:28:48)\n    at body (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-js-commons\\src\\facade.ts:135:48)\n    at call (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:13:56)\n    at Generator._invoke (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at Generator.next (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at asyncGeneratorStep (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at _next (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1\n    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1",
+                        "location": {
+                          "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc10-banner-verde-emitido.spec.ts",
+                          "column": 48,
+                          "line": 28
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 26 |\u001b[39m\n \u001b[90m 27 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'Banner verde \"Certificado aprovado\" + botão \"Histórico\" (RN46)'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 28 |\u001b[39m       \u001b[36mawait\u001b[39m expect(form\u001b[33m.\u001b[39mgreenBanner()\u001b[33m.\u001b[39mfirst())\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 29 |\u001b[39m       \u001b[36mawait\u001b[39m expect(form\u001b[33m.\u001b[39mhistoricoButton()\u001b[33m.\u001b[39mfirst())\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m 30 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 31 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc10-banner-verde-emitido.spec.ts",
+                            "column": 48,
+                            "line": 28
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Certificado aprovado').first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Certificado aprovado').first()\u001b[22m\n\n\n\u001b[0m \u001b[90m 26 |\u001b[39m\n \u001b[90m 27 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'Banner verde \"Certificado aprovado\" + botão \"Histórico\" (RN46)'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 28 |\u001b[39m       \u001b[36mawait\u001b[39m expect(form\u001b[33m.\u001b[39mgreenBanner()\u001b[33m.\u001b[39mfirst())\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 29 |\u001b[39m       \u001b[36mawait\u001b[39m expect(form\u001b[33m.\u001b[39mhistoricoButton()\u001b[33m.\u001b[39mfirst())\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m 30 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 31 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at body (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc10-banner-verde-emitido.spec.ts:28:48)\u001b[22m\n\u001b[2m    at body (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-js-commons\\src\\facade.ts:135:48)\u001b[22m\n\u001b[2m    at call (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:13:56)\u001b[22m\n\u001b[2m    at Generator._invoke (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\u001b[22m\n\u001b[2m    at Generator.next (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\u001b[22m\n\u001b[2m    at asyncGeneratorStep (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\u001b[22m\n\u001b[2m    at _next (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\u001b[22m\n\u001b[2m    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1\u001b[22m\n\u001b[2m    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Admin: abrir \"Editar\" de um Externo Emitido",
+                          "duration": 18480
+                        },
+                        {
+                          "title": "Banner verde \"Certificado aprovado\" + botão \"Histórico\" (RN46)",
+                          "duration": 10018,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Certificado aprovado').first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Certificado aprovado').first()\u001b[22m\n",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Certificado aprovado').first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Certificado aprovado').first()\u001b[22m\n\n    at body (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc10-banner-verde-emitido.spec.ts:28:48)\n    at body (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-js-commons\\src\\facade.ts:135:48)\n    at call (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:13:56)\n    at Generator._invoke (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at Generator.next (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at asyncGeneratorStep (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at _next (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1\n    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1",
+                            "location": {
+                              "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc10-banner-verde-emitido.spec.ts",
+                              "column": 48,
+                              "line": 28
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 26 |\u001b[39m\n \u001b[90m 27 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'Banner verde \"Certificado aprovado\" + botão \"Histórico\" (RN46)'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 28 |\u001b[39m       \u001b[36mawait\u001b[39m expect(form\u001b[33m.\u001b[39mgreenBanner()\u001b[33m.\u001b[39mfirst())\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 29 |\u001b[39m       \u001b[36mawait\u001b[39m expect(form\u001b[33m.\u001b[39mhistoricoButton()\u001b[33m.\u001b[39mfirst())\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m 30 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 31 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-06-22T22:52:45.923Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkVkaXRhciByZWdpc3RybyBkZSBhcHJlbmRpemFnZW0gKG1hdHJpeiBwZXJmaWwgw5cgb3JpZ2VtIMOXIHN0YXR1cyBlIGJhbm5lcnMpIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJUQzEwIOKAlCBiYW5uZXIgdmVyZGUgZGUgcmVnaXN0cm8gRW1pdGlkbyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJub3JtYWwifV19fQ=="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-176cf-r-verde-de-registro-Emitido-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-176cf-r-verde-de-registro-Emitido-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-176cf-r-verde-de-registro-Emitido-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-176cf-r-verde-de-registro-Emitido-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-176cf-r-verde-de-registro-Emitido-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc10-banner-verde-emitido.spec.ts",
+                        "column": 48,
+                        "line": 28
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "252bdd687e9b6573c96d-e485a32bcb953ca48082",
+              "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc10-banner-verde-emitido.spec.ts",
+              "line": 11,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc2-disponibilidade-editar-admin.spec.ts",
+      "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc2-disponibilidade-editar-admin.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Editar registro de aprendizagem (matriz perfil × origem × status e banners)",
+          "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc2-disponibilidade-editar-admin.spec.ts",
+          "line": 13,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar disponibilidade do \"Editar\" para o Admin (matriz origem × status)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 26232,
+                      "error": {
+                        "message": "Error: seed: Externo Pendente\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m",
+                        "stack": "Error: seed: Externo Pendente\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc2-disponibilidade-editar-admin.spec.ts:35:48",
+                        "location": {
+                          "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc2-disponibilidade-editar-admin.spec.ts",
+                          "column": 48,
+                          "line": 35
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 33 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'Externo Pendente → \"Avaliar\" primário, sem \"Editar\" (AT TC2.4)'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m 34 |\u001b[39m       \u001b[36mconst\u001b[39m id \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m lista\u001b[33m.\u001b[39mfindRecordId(\u001b[32m'external'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'Pendente'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 35 |\u001b[39m       expect(id\u001b[33m,\u001b[39m \u001b[32m'seed: Externo Pendente'\u001b[39m)\u001b[33m.\u001b[39mnot\u001b[33m.\u001b[39mtoBeNull()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 36 |\u001b[39m       \u001b[36mconst\u001b[39m items \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m lista\u001b[33m.\u001b[39mmenuItems(id\u001b[33m!\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 37 |\u001b[39m       expect\u001b[33m.\u001b[39msoft(items\u001b[33m,\u001b[39m \u001b[32m`Pendente: [${items.join(', ')}]`\u001b[39m)\u001b[33m.\u001b[39mtoContain(data\u001b[33m.\u001b[39mmenuItems\u001b[33m.\u001b[39mavaliar)\u001b[33m;\u001b[39m\n \u001b[90m 38 |\u001b[39m       expect\u001b[33m.\u001b[39msoft(items\u001b[33m,\u001b[39m \u001b[32m`Pendente: [${items.join(', ')}]`\u001b[39m)\u001b[33m.\u001b[39mnot\u001b[33m.\u001b[39mtoContain(data\u001b[33m.\u001b[39mmenuItems\u001b[33m.\u001b[39meditar)\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc2-disponibilidade-editar-admin.spec.ts",
+                            "column": 48,
+                            "line": 35
+                          },
+                          "message": "Error: seed: Externo Pendente\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\n\u001b[0m \u001b[90m 33 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'Externo Pendente → \"Avaliar\" primário, sem \"Editar\" (AT TC2.4)'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m 34 |\u001b[39m       \u001b[36mconst\u001b[39m id \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m lista\u001b[33m.\u001b[39mfindRecordId(\u001b[32m'external'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'Pendente'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 35 |\u001b[39m       expect(id\u001b[33m,\u001b[39m \u001b[32m'seed: Externo Pendente'\u001b[39m)\u001b[33m.\u001b[39mnot\u001b[33m.\u001b[39mtoBeNull()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 36 |\u001b[39m       \u001b[36mconst\u001b[39m items \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m lista\u001b[33m.\u001b[39mmenuItems(id\u001b[33m!\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 37 |\u001b[39m       expect\u001b[33m.\u001b[39msoft(items\u001b[33m,\u001b[39m \u001b[32m`Pendente: [${items.join(', ')}]`\u001b[39m)\u001b[33m.\u001b[39mtoContain(data\u001b[33m.\u001b[39mmenuItems\u001b[33m.\u001b[39mavaliar)\u001b[33m;\u001b[39m\n \u001b[90m 38 |\u001b[39m       expect\u001b[33m.\u001b[39msoft(items\u001b[33m,\u001b[39m \u001b[32m`Pendente: [${items.join(', ')}]`\u001b[39m)\u001b[33m.\u001b[39mnot\u001b[33m.\u001b[39mtoContain(data\u001b[33m.\u001b[39mmenuItems\u001b[33m.\u001b[39meditar)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc2-disponibilidade-editar-admin.spec.ts:35:48\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Abrir \"Aprendizagem > Registros\" (Admin)",
+                          "duration": 20763
+                        },
+                        {
+                          "title": "Externo Emitido → \"Editar\" presente, sem \"Avaliar\" (AT TC2.1)",
+                          "duration": 793
+                        },
+                        {
+                          "title": "Externo Pendente → \"Avaliar\" primário, sem \"Editar\" (AT TC2.4)",
+                          "duration": 46,
+                          "error": {
+                            "message": "Error: seed: Externo Pendente\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m",
+                            "stack": "Error: seed: Externo Pendente\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc2-disponibilidade-editar-admin.spec.ts:35:48",
+                            "location": {
+                              "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc2-disponibilidade-editar-admin.spec.ts",
+                              "column": 48,
+                              "line": 35
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 33 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'Externo Pendente → \"Avaliar\" primário, sem \"Editar\" (AT TC2.4)'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m 34 |\u001b[39m       \u001b[36mconst\u001b[39m id \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m lista\u001b[33m.\u001b[39mfindRecordId(\u001b[32m'external'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'Pendente'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 35 |\u001b[39m       expect(id\u001b[33m,\u001b[39m \u001b[32m'seed: Externo Pendente'\u001b[39m)\u001b[33m.\u001b[39mnot\u001b[33m.\u001b[39mtoBeNull()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 36 |\u001b[39m       \u001b[36mconst\u001b[39m items \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m lista\u001b[33m.\u001b[39mmenuItems(id\u001b[33m!\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 37 |\u001b[39m       expect\u001b[33m.\u001b[39msoft(items\u001b[33m,\u001b[39m \u001b[32m`Pendente: [${items.join(', ')}]`\u001b[39m)\u001b[33m.\u001b[39mtoContain(data\u001b[33m.\u001b[39mmenuItems\u001b[33m.\u001b[39mavaliar)\u001b[33m;\u001b[39m\n \u001b[90m 38 |\u001b[39m       expect\u001b[33m.\u001b[39msoft(items\u001b[33m,\u001b[39m \u001b[32m`Pendente: [${items.join(', ')}]`\u001b[39m)\u001b[33m.\u001b[39mnot\u001b[33m.\u001b[39mtoContain(data\u001b[33m.\u001b[39mmenuItems\u001b[33m.\u001b[39meditar)\u001b[33m;\u001b[39m\u001b[0m"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-06-22T22:53:19.337Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkVkaXRhciByZWdpc3RybyBkZSBhcHJlbmRpemFnZW0gKG1hdHJpeiBwZXJmaWwgw5cgb3JpZ2VtIMOXIHN0YXR1cyBlIGJhbm5lcnMpIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJUQzIg4oCUIGRpc3BvbmliaWxpZGFkZSBkbyBcIkVkaXRhclwiIHBhcmEgbyBBZG1pbiJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-913c9-min-matriz-origem-×-status--chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-913c9-min-matriz-origem-×-status--chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-913c9-min-matriz-origem-×-status--chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-913c9-min-matriz-origem-×-status--chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-913c9-min-matriz-origem-×-status--chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc2-disponibilidade-editar-admin.spec.ts",
+                        "column": 48,
+                        "line": 35
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "c9426766fe3662b2908a-c9892fdce16d960f9049",
+              "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc2-disponibilidade-editar-admin.spec.ts",
+              "line": 14,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc3-cabecalhos-form-por-perfil.spec.ts",
+      "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc3-cabecalhos-form-por-perfil.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Editar registro de aprendizagem (matriz perfil × origem × status e banners)",
+          "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc3-cabecalhos-form-por-perfil.spec.ts",
+          "line": 12,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar cabeçalhos do form de edição por perfil",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 42436,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Editar registro', { exact: true }).first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Editar registro', { exact: true }).first()\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Editar registro', { exact: true }).first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Editar registro', { exact: true }).first()\u001b[22m\n\n    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc3-cabecalhos-form-por-perfil.spec.ts:27:81",
+                        "location": {
+                          "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc3-cabecalhos-form-por-perfil.spec.ts",
+                          "column": 81,
+                          "line": 27
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 25 |\u001b[39m       \u001b[36mawait\u001b[39m lista\u001b[33m.\u001b[39mopenEdit(id\u001b[33m!\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 26 |\u001b[39m       \u001b[90m// AT TC3.2: cabeçalho \"Editar registro\".\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 27 |\u001b[39m       \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(data\u001b[33m.\u001b[39mheaders\u001b[33m.\u001b[39madmin\u001b[33m,\u001b[39m { exact\u001b[33m:\u001b[39m \u001b[36mtrue\u001b[39m })\u001b[33m.\u001b[39mfirst())\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 28 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 29 |\u001b[39m\n \u001b[90m 30 |\u001b[39m     \u001b[90m// seed ausente: passo 1 (Aluno) exige um Externo Pendente próprio do aluno; o aluno\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc3-cabecalhos-form-por-perfil.spec.ts",
+                            "column": 81,
+                            "line": 27
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Editar registro', { exact: true }).first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Editar registro', { exact: true }).first()\u001b[22m\n\n\n\u001b[0m \u001b[90m 25 |\u001b[39m       \u001b[36mawait\u001b[39m lista\u001b[33m.\u001b[39mopenEdit(id\u001b[33m!\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 26 |\u001b[39m       \u001b[90m// AT TC3.2: cabeçalho \"Editar registro\".\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 27 |\u001b[39m       \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(data\u001b[33m.\u001b[39mheaders\u001b[33m.\u001b[39madmin\u001b[33m,\u001b[39m { exact\u001b[33m:\u001b[39m \u001b[36mtrue\u001b[39m })\u001b[33m.\u001b[39mfirst())\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 28 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 29 |\u001b[39m\n \u001b[90m 30 |\u001b[39m     \u001b[90m// seed ausente: passo 1 (Aluno) exige um Externo Pendente próprio do aluno; o aluno\u001b[39m\u001b[0m\n\u001b[2m    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc3-cabecalhos-form-por-perfil.spec.ts:27:81\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Admin: abrir \"Editar\" de um Externo Emitido",
+                          "duration": 36206,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Editar registro', { exact: true }).first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Editar registro', { exact: true }).first()\u001b[22m\n",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByText('Editar registro', { exact: true }).first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByText('Editar registro', { exact: true }).first()\u001b[22m\n\n    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc3-cabecalhos-form-por-perfil.spec.ts:27:81",
+                            "location": {
+                              "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc3-cabecalhos-form-por-perfil.spec.ts",
+                              "column": 81,
+                              "line": 27
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 25 |\u001b[39m       \u001b[36mawait\u001b[39m lista\u001b[33m.\u001b[39mopenEdit(id\u001b[33m!\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 26 |\u001b[39m       \u001b[90m// AT TC3.2: cabeçalho \"Editar registro\".\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 27 |\u001b[39m       \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(data\u001b[33m.\u001b[39mheaders\u001b[33m.\u001b[39madmin\u001b[33m,\u001b[39m { exact\u001b[33m:\u001b[39m \u001b[36mtrue\u001b[39m })\u001b[33m.\u001b[39mfirst())\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 28 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 29 |\u001b[39m\n \u001b[90m 30 |\u001b[39m     \u001b[90m// seed ausente: passo 1 (Aluno) exige um Externo Pendente próprio do aluno; o aluno\u001b[39m\u001b[0m"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-06-22T22:53:48.140Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkVkaXRhciByZWdpc3RybyBkZSBhcHJlbmRpemFnZW0gKG1hdHJpeiBwZXJmaWwgw5cgb3JpZ2VtIMOXIHN0YXR1cyBlIGJhbm5lcnMpIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJUQzMg4oCUIGNhYmXDp2FsaG9zIGRvIGZvcm0gcG9yIHBlcmZpbCJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJub3JtYWwifV19fQ=="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-a1028-o-form-de-edição-por-perfil-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-a1028-o-form-de-edição-por-perfil-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-a1028-o-form-de-edição-por-perfil-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-a1028-o-form-de-edição-por-perfil-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-a1028-o-form-de-edição-por-perfil-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc3-cabecalhos-form-por-perfil.spec.ts",
+                        "column": 81,
+                        "line": 27
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "3a052dae7bfec9235996-07fd432938829b643af0",
+              "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc3-cabecalhos-form-por-perfil.spec.ts",
+              "line": 13,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc4-pre-populacao-campos.spec.ts",
+      "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc4-pre-populacao-campos.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Editar registro de aprendizagem (matriz perfil × origem × status e banners)",
+          "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc4-pre-populacao-campos.spec.ts",
+          "line": 11,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar pré-população dos campos na edição",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 39731,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveValue\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('input[name=\"startDate\"]')\nExpected pattern: \u001b[32m/\\d{4}-\\d{2}-\\d{2}/\u001b[39m\nReceived string:  \u001b[31m\"\"\u001b[39m\nTimeout: 10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveValue\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('input[name=\"startDate\"]')\u001b[22m\n\u001b[2m    14 × locator resolved to <input value=\"\" type=\"date\" placeholder=\"\" id=\"startDate\" name=\"startDate\" inputmode=\"text\" autocomplete=\"on\" class=\"chakra-input css-1k4krg8\"/>\u001b[22m\n\u001b[2m       - unexpected value \"\"\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveValue\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('input[name=\"startDate\"]')\nExpected pattern: \u001b[32m/\\d{4}-\\d{2}-\\d{2}/\u001b[39m\nReceived string:  \u001b[31m\"\"\u001b[39m\nTimeout: 10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveValue\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('input[name=\"startDate\"]')\u001b[22m\n\u001b[2m    14 × locator resolved to <input value=\"\" type=\"date\" placeholder=\"\" id=\"startDate\" name=\"startDate\" inputmode=\"text\" autocomplete=\"on\" class=\"chakra-input css-1k4krg8\"/>\u001b[22m\n\u001b[2m       - unexpected value \"\"\u001b[22m\n\n    at body (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc4-pre-populacao-campos.spec.ts:30:49)\n    at body (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-js-commons\\src\\facade.ts:135:48)\n    at call (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:13:56)\n    at Generator._invoke (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at Generator.next (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at asyncGeneratorStep (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at _next (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1\n    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1",
+                        "location": {
+                          "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc4-pre-populacao-campos.spec.ts",
+                          "column": 49,
+                          "line": 30
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 28 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'Datas e carga horária pré-populadas (RN43)'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m 29 |\u001b[39m       \u001b[90m// AT TC4.3: datas exibem os valores do registro no formato do input date (yyyy-mm-dd).\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 30 |\u001b[39m       \u001b[36mawait\u001b[39m expect(form\u001b[33m.\u001b[39mdateInput(\u001b[32m'startDate'\u001b[39m))\u001b[33m.\u001b[39mtoHaveValue(\u001b[35m/\\d{4}-\\d{2}-\\d{2}/\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 31 |\u001b[39m       \u001b[36mawait\u001b[39m expect(form\u001b[33m.\u001b[39mdateInput(\u001b[32m'endDate'\u001b[39m))\u001b[33m.\u001b[39mtoHaveValue(\u001b[35m/\\d{4}-\\d{2}-\\d{2}/\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 32 |\u001b[39m       \u001b[36mawait\u001b[39m expect(form\u001b[33m.\u001b[39mcargaHorariaInput())\u001b[33m.\u001b[39mnot\u001b[33m.\u001b[39mtoHaveValue(\u001b[32m''\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 33 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc4-pre-populacao-campos.spec.ts",
+                            "column": 49,
+                            "line": 30
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveValue\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('input[name=\"startDate\"]')\nExpected pattern: \u001b[32m/\\d{4}-\\d{2}-\\d{2}/\u001b[39m\nReceived string:  \u001b[31m\"\"\u001b[39m\nTimeout: 10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveValue\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('input[name=\"startDate\"]')\u001b[22m\n\u001b[2m    14 × locator resolved to <input value=\"\" type=\"date\" placeholder=\"\" id=\"startDate\" name=\"startDate\" inputmode=\"text\" autocomplete=\"on\" class=\"chakra-input css-1k4krg8\"/>\u001b[22m\n\u001b[2m       - unexpected value \"\"\u001b[22m\n\n\n\u001b[0m \u001b[90m 28 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'Datas e carga horária pré-populadas (RN43)'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m 29 |\u001b[39m       \u001b[90m// AT TC4.3: datas exibem os valores do registro no formato do input date (yyyy-mm-dd).\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 30 |\u001b[39m       \u001b[36mawait\u001b[39m expect(form\u001b[33m.\u001b[39mdateInput(\u001b[32m'startDate'\u001b[39m))\u001b[33m.\u001b[39mtoHaveValue(\u001b[35m/\\d{4}-\\d{2}-\\d{2}/\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 31 |\u001b[39m       \u001b[36mawait\u001b[39m expect(form\u001b[33m.\u001b[39mdateInput(\u001b[32m'endDate'\u001b[39m))\u001b[33m.\u001b[39mtoHaveValue(\u001b[35m/\\d{4}-\\d{2}-\\d{2}/\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 32 |\u001b[39m       \u001b[36mawait\u001b[39m expect(form\u001b[33m.\u001b[39mcargaHorariaInput())\u001b[33m.\u001b[39mnot\u001b[33m.\u001b[39mtoHaveValue(\u001b[32m''\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 33 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at body (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc4-pre-populacao-campos.spec.ts:30:49)\u001b[22m\n\u001b[2m    at body (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-js-commons\\src\\facade.ts:135:48)\u001b[22m\n\u001b[2m    at call (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:13:56)\u001b[22m\n\u001b[2m    at Generator._invoke (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\u001b[22m\n\u001b[2m    at Generator.next (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\u001b[22m\n\u001b[2m    at asyncGeneratorStep (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\u001b[22m\n\u001b[2m    at _next (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\u001b[22m\n\u001b[2m    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1\u001b[22m\n\u001b[2m    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Abrir \"Editar\" de um Externo Emitido",
+                          "duration": 26330
+                        },
+                        {
+                          "title": "Datas e carga horária pré-populadas (RN43)",
+                          "duration": 10032,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveValue\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('input[name=\"startDate\"]')\nExpected pattern: \u001b[32m/\\d{4}-\\d{2}-\\d{2}/\u001b[39m\nReceived string:  \u001b[31m\"\"\u001b[39m\nTimeout: 10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveValue\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('input[name=\"startDate\"]')\u001b[22m\n\u001b[2m    14 × locator resolved to <input value=\"\" type=\"date\" placeholder=\"\" id=\"startDate\" name=\"startDate\" inputmode=\"text\" autocomplete=\"on\" class=\"chakra-input css-1k4krg8\"/>\u001b[22m\n\u001b[2m       - unexpected value \"\"\u001b[22m\n",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveValue\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('input[name=\"startDate\"]')\nExpected pattern: \u001b[32m/\\d{4}-\\d{2}-\\d{2}/\u001b[39m\nReceived string:  \u001b[31m\"\"\u001b[39m\nTimeout: 10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveValue\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('input[name=\"startDate\"]')\u001b[22m\n\u001b[2m    14 × locator resolved to <input value=\"\" type=\"date\" placeholder=\"\" id=\"startDate\" name=\"startDate\" inputmode=\"text\" autocomplete=\"on\" class=\"chakra-input css-1k4krg8\"/>\u001b[22m\n\u001b[2m       - unexpected value \"\"\u001b[22m\n\n    at body (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc4-pre-populacao-campos.spec.ts:30:49)\n    at body (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-js-commons\\src\\facade.ts:135:48)\n    at call (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:13:56)\n    at Generator._invoke (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at Generator.next (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at asyncGeneratorStep (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at _next (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1\n    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1",
+                            "location": {
+                              "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc4-pre-populacao-campos.spec.ts",
+                              "column": 49,
+                              "line": 30
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 28 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'Datas e carga horária pré-populadas (RN43)'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m 29 |\u001b[39m       \u001b[90m// AT TC4.3: datas exibem os valores do registro no formato do input date (yyyy-mm-dd).\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 30 |\u001b[39m       \u001b[36mawait\u001b[39m expect(form\u001b[33m.\u001b[39mdateInput(\u001b[32m'startDate'\u001b[39m))\u001b[33m.\u001b[39mtoHaveValue(\u001b[35m/\\d{4}-\\d{2}-\\d{2}/\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                 \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 31 |\u001b[39m       \u001b[36mawait\u001b[39m expect(form\u001b[33m.\u001b[39mdateInput(\u001b[32m'endDate'\u001b[39m))\u001b[33m.\u001b[39mtoHaveValue(\u001b[35m/\\d{4}-\\d{2}-\\d{2}/\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 32 |\u001b[39m       \u001b[36mawait\u001b[39m expect(form\u001b[33m.\u001b[39mcargaHorariaInput())\u001b[33m.\u001b[39mnot\u001b[33m.\u001b[39mtoHaveValue(\u001b[32m''\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 33 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-06-22T22:54:32.924Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkVkaXRhciByZWdpc3RybyBkZSBhcHJlbmRpemFnZW0gKG1hdHJpeiBwZXJmaWwgw5cgb3JpZ2VtIMOXIHN0YXR1cyBlIGJhbm5lcnMpIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJUQzQg4oCUIHByw6ktcG9wdWxhw6fDo28gZG9zIGNhbXBvcyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-92130-ulação-dos-campos-na-edição-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-92130-ulação-dos-campos-na-edição-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-92130-ulação-dos-campos-na-edição-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-92130-ulação-dos-campos-na-edição-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-92130-ulação-dos-campos-na-edição-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc4-pre-populacao-campos.spec.ts",
+                        "column": 49,
+                        "line": 30
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "6c2861e5ea25dc569a1b-f609847c515f90e8513a",
+              "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc4-pre-populacao-campos.spec.ts",
+              "line": 12,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc5-campo-pessoa-desabilitado-admin.spec.ts",
+      "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc5-campo-pessoa-desabilitado-admin.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Editar registro de aprendizagem (matriz perfil × origem × status e banners)",
+          "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc5-campo-pessoa-desabilitado-admin.spec.ts",
+          "line": 10,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar campo Pessoa desabilitado na edição do Admin",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 40868,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeDisabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('people-selector-input')\nExpected: disabled\nReceived: enabled\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeDisabled\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('people-selector-input')\u001b[22m\n\u001b[2m    14 × locator resolved to <div id=\"people\" class=\"css-179lbir\" data-test-id=\"people-selector-input\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"enabled\"\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeDisabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('people-selector-input')\nExpected: disabled\nReceived: enabled\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeDisabled\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('people-selector-input')\u001b[22m\n\u001b[2m    14 × locator resolved to <div id=\"people\" class=\"css-179lbir\" data-test-id=\"people-selector-input\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"enabled\"\u001b[22m\n\n    at body (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc5-campo-pessoa-desabilitado-admin.spec.ts:28:40)\n    at body (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-js-commons\\src\\facade.ts:135:48)\n    at call (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:13:56)\n    at Generator._invoke (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at Generator.next (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at asyncGeneratorStep (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at _next (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1\n    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1",
+                        "location": {
+                          "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc5-campo-pessoa-desabilitado-admin.spec.ts",
+                          "column": 40,
+                          "line": 28
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 26 |\u001b[39m\n \u001b[90m 27 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'Campo Pessoa desabilitado (RN43)'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 28 |\u001b[39m       \u001b[36mawait\u001b[39m expect(form\u001b[33m.\u001b[39mpeopleInput())\u001b[33m.\u001b[39mtoBeDisabled()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 29 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 30 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 31 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc5-campo-pessoa-desabilitado-admin.spec.ts",
+                            "column": 40,
+                            "line": 28
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeDisabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('people-selector-input')\nExpected: disabled\nReceived: enabled\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeDisabled\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('people-selector-input')\u001b[22m\n\u001b[2m    14 × locator resolved to <div id=\"people\" class=\"css-179lbir\" data-test-id=\"people-selector-input\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"enabled\"\u001b[22m\n\n\n\u001b[0m \u001b[90m 26 |\u001b[39m\n \u001b[90m 27 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'Campo Pessoa desabilitado (RN43)'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 28 |\u001b[39m       \u001b[36mawait\u001b[39m expect(form\u001b[33m.\u001b[39mpeopleInput())\u001b[33m.\u001b[39mtoBeDisabled()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 29 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 30 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 31 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at body (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc5-campo-pessoa-desabilitado-admin.spec.ts:28:40)\u001b[22m\n\u001b[2m    at body (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-js-commons\\src\\facade.ts:135:48)\u001b[22m\n\u001b[2m    at call (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:13:56)\u001b[22m\n\u001b[2m    at Generator._invoke (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\u001b[22m\n\u001b[2m    at Generator.next (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\u001b[22m\n\u001b[2m    at asyncGeneratorStep (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\u001b[22m\n\u001b[2m    at _next (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\u001b[22m\n\u001b[2m    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1\u001b[22m\n\u001b[2m    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Admin: abrir \"Editar\" de um Externo Emitido",
+                          "duration": 27565
+                        },
+                        {
+                          "title": "Campo Pessoa desabilitado (RN43)",
+                          "duration": 10026,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeDisabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('people-selector-input')\nExpected: disabled\nReceived: enabled\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeDisabled\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('people-selector-input')\u001b[22m\n\u001b[2m    14 × locator resolved to <div id=\"people\" class=\"css-179lbir\" data-test-id=\"people-selector-input\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"enabled\"\u001b[22m\n",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeDisabled\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('people-selector-input')\nExpected: disabled\nReceived: enabled\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeDisabled\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('people-selector-input')\u001b[22m\n\u001b[2m    14 × locator resolved to <div id=\"people\" class=\"css-179lbir\" data-test-id=\"people-selector-input\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"enabled\"\u001b[22m\n\n    at body (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc5-campo-pessoa-desabilitado-admin.spec.ts:28:40)\n    at body (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-js-commons\\src\\facade.ts:135:48)\n    at call (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:13:56)\n    at Generator._invoke (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at Generator.next (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at asyncGeneratorStep (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at _next (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1\n    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1",
+                            "location": {
+                              "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc5-campo-pessoa-desabilitado-admin.spec.ts",
+                              "column": 40,
+                              "line": 28
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 26 |\u001b[39m\n \u001b[90m 27 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'Campo Pessoa desabilitado (RN43)'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 28 |\u001b[39m       \u001b[36mawait\u001b[39m expect(form\u001b[33m.\u001b[39mpeopleInput())\u001b[33m.\u001b[39mtoBeDisabled()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 29 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 30 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 31 |\u001b[39m })\u001b[33m;\u001b[39m\u001b[0m"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-06-22T22:55:14.570Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkVkaXRhciByZWdpc3RybyBkZSBhcHJlbmRpemFnZW0gKG1hdHJpeiBwZXJmaWwgw5cgb3JpZ2VtIMOXIHN0YXR1cyBlIGJhbm5lcnMpIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJUQzUg4oCUIGNhbXBvIFBlc3NvYSBkZXNhYmlsaXRhZG8gKEFkbWluKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJub3JtYWwifV19fQ=="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-9b47d-bilitado-na-edição-do-Admin-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-9b47d-bilitado-na-edição-do-Admin-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-9b47d-bilitado-na-edição-do-Admin-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-9b47d-bilitado-na-edição-do-Admin-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-9b47d-bilitado-na-edição-do-Admin-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc5-campo-pessoa-desabilitado-admin.spec.ts",
+                        "column": 40,
+                        "line": 28
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0ebff14245a93453c62d-452a196d468116e2c89d",
+              "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc5-campo-pessoa-desabilitado-admin.spec.ts",
+              "line": 11,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc6-validacao-obrigatorios-edicao.spec.ts",
+      "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc6-validacao-obrigatorios-edicao.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Editar registro de aprendizagem (matriz perfil × origem × status e banners)",
+          "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc6-validacao-obrigatorios-edicao.spec.ts",
+          "line": 11,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar validação de obrigatórios na edição",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 35239,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Abrir \"Editar\" de um Externo Emitido",
+                          "duration": 30360
+                        },
+                        {
+                          "title": "Limpar \"Data de término *\" e tentar salvar",
+                          "duration": 1049
+                        }
+                      ],
+                      "startTime": "2026-06-22T22:55:57.228Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkVkaXRhciByZWdpc3RybyBkZSBhcHJlbmRpemFnZW0gKG1hdHJpeiBwZXJmaWwgw5cgb3JpZ2VtIMOXIHN0YXR1cyBlIGJhbm5lcnMpIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJUQzYg4oCUIHZhbGlkYcOnw6NvIGRlIG9icmlnYXTDs3Jpb3MgbmEgZWRpw6fDo28ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJub3JtYWwifV19fQ=="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-f0fb0-o-de-obrigatórios-na-edição-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-f0fb0-o-de-obrigatórios-na-edição-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-f0fb0-o-de-obrigatórios-na-edição-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-f0fb0-o-de-obrigatórios-na-edição-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "41048376768b942874d6-23e2f6b064f67a1d812d",
+              "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc6-validacao-obrigatorios-edicao.spec.ts",
+              "line": 12,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc7-labels-toasts-salvamento.spec.ts",
+      "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc7-labels-toasts-salvamento.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Editar registro de aprendizagem (matriz perfil × origem × status e banners)",
+          "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc7-labels-toasts-salvamento.spec.ts",
+          "line": 13,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar labels dinâmicos e toasts de salvamento por perfil",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 34999,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Admin: abrir \"Editar\" de um Externo Emitido",
+                          "duration": 26436
+                        },
+                        {
+                          "title": "Rodapé exibe botão \"Salvar\"",
+                          "duration": 23
+                        },
+                        {
+                          "title": "Salvar persiste a edição e retorna à lista",
+                          "duration": 1301
+                        }
+                      ],
+                      "startTime": "2026-06-22T22:56:33.570Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkVkaXRhciByZWdpc3RybyBkZSBhcHJlbmRpemFnZW0gKG1hdHJpeiBwZXJmaWwgw5cgb3JpZ2VtIMOXIHN0YXR1cyBlIGJhbm5lcnMpIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJUQzcg4oCUIGxhYmVscyBlIHRvYXN0cyBkZSBzYWx2YW1lbnRvIChBZG1pbikifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-d6ff6-ts-de-salvamento-por-perfil-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-d6ff6-ts-de-salvamento-por-perfil-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-d6ff6-ts-de-salvamento-por-perfil-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-d6ff6-ts-de-salvamento-por-perfil-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a8babfae9a8368a80d19-26798becd567e53a1c0f",
+              "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc7-labels-toasts-salvamento.spec.ts",
+              "line": 14,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc8-botao-excluir-condicional.spec.ts",
+      "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc8-botao-excluir-condicional.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Editar registro de aprendizagem (matriz perfil × origem × status e banners)",
+          "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc8-botao-excluir-condicional.spec.ts",
+          "line": 10,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar presença condicional do botão \"Excluir\" no rodapé",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 37796,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: 'Excluir', exact: true })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: 'Excluir', exact: true })\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: 'Excluir', exact: true })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: 'Excluir', exact: true })\u001b[22m\n\n    at body (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc8-botao-excluir-condicional.spec.ts:28:41)\n    at body (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-js-commons\\src\\facade.ts:135:48)\n    at call (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:13:56)\n    at Generator._invoke (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at Generator.next (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at asyncGeneratorStep (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at _next (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1\n    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1",
+                        "location": {
+                          "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc8-botao-excluir-condicional.spec.ts",
+                          "column": 41,
+                          "line": 28
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 26 |\u001b[39m\n \u001b[90m 27 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'Rodapé exibe botão \"Excluir\" (AT TC8.3 / RN45)'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 28 |\u001b[39m       \u001b[36mawait\u001b[39m expect(form\u001b[33m.\u001b[39mdeleteButton())\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 29 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 30 |\u001b[39m\n \u001b[90m 31 |\u001b[39m     \u001b[90m// seed ausente: passos 1-2 (Aluno · Externo Pendente e Recusado próprios) não cobríveis.\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc8-botao-excluir-condicional.spec.ts",
+                            "column": 41,
+                            "line": 28
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: 'Excluir', exact: true })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: 'Excluir', exact: true })\u001b[22m\n\n\n\u001b[0m \u001b[90m 26 |\u001b[39m\n \u001b[90m 27 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'Rodapé exibe botão \"Excluir\" (AT TC8.3 / RN45)'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 28 |\u001b[39m       \u001b[36mawait\u001b[39m expect(form\u001b[33m.\u001b[39mdeleteButton())\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 29 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 30 |\u001b[39m\n \u001b[90m 31 |\u001b[39m     \u001b[90m// seed ausente: passos 1-2 (Aluno · Externo Pendente e Recusado próprios) não cobríveis.\u001b[39m\u001b[0m\n\u001b[2m    at body (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc8-botao-excluir-condicional.spec.ts:28:41)\u001b[22m\n\u001b[2m    at body (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-js-commons\\src\\facade.ts:135:48)\u001b[22m\n\u001b[2m    at call (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:13:56)\u001b[22m\n\u001b[2m    at Generator._invoke (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\u001b[22m\n\u001b[2m    at Generator.next (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\u001b[22m\n\u001b[2m    at asyncGeneratorStep (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\u001b[22m\n\u001b[2m    at _next (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\u001b[22m\n\u001b[2m    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1\u001b[22m\n\u001b[2m    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Admin: abrir \"Editar\" de um Externo Emitido",
+                          "duration": 24824
+                        },
+                        {
+                          "title": "Rodapé exibe botão \"Excluir\" (AT TC8.3 / RN45)",
+                          "duration": 10029,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: 'Excluir', exact: true })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: 'Excluir', exact: true })\u001b[22m\n",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: 'Excluir', exact: true })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: 'Excluir', exact: true })\u001b[22m\n\n    at body (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc8-botao-excluir-condicional.spec.ts:28:41)\n    at body (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-js-commons\\src\\facade.ts:135:48)\n    at call (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:13:56)\n    at Generator._invoke (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at Generator.next (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at asyncGeneratorStep (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at _next (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1)\n    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1\n    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\node_modules\\allure-playwright\\src\\runtime.ts:2:1",
+                            "location": {
+                              "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc8-botao-excluir-condicional.spec.ts",
+                              "column": 41,
+                              "line": 28
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 26 |\u001b[39m\n \u001b[90m 27 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'Rodapé exibe botão \"Excluir\" (AT TC8.3 / RN45)'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 28 |\u001b[39m       \u001b[36mawait\u001b[39m expect(form\u001b[33m.\u001b[39mdeleteButton())\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 29 |\u001b[39m     })\u001b[33m;\u001b[39m\n \u001b[90m 30 |\u001b[39m\n \u001b[90m 31 |\u001b[39m     \u001b[90m// seed ausente: passos 1-2 (Aluno · Externo Pendente e Recusado próprios) não cobríveis.\u001b[39m\u001b[0m"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-06-22T22:57:09.615Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkVkaXRhciByZWdpc3RybyBkZSBhcHJlbmRpemFnZW0gKG1hdHJpeiBwZXJmaWwgw5cgb3JpZ2VtIMOXIHN0YXR1cyBlIGJhbm5lcnMpIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJUQzgg4oCUIGJvdMOjbyBcIkV4Y2x1aXJcIiBjb25kaWNpb25hbCBubyByb2RhcMOpIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJub3JtYWwifV19fQ=="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-e9769--do-botão-Excluir-no-rodapé-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-e9769--do-botão-Excluir-no-rodapé-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-e9769--do-botão-Excluir-no-rodapé-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-e9769--do-botão-Excluir-no-rodapé-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-e9769--do-botão-Excluir-no-rodapé-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc8-botao-excluir-condicional.spec.ts",
+                        "column": 41,
+                        "line": 28
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "baefa590940426072d16-31760ea566948981d0ca",
+              "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc8-botao-excluir-condicional.spec.ts",
+              "line": 11,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc9-banner-vermelho-recusado.spec.ts",
+      "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc9-banner-vermelho-recusado.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Editar registro de aprendizagem (matriz perfil × origem × status e banners)",
+          "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc9-banner-vermelho-recusado.spec.ts",
+          "line": 11,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar banner vermelho de registro Recusado com justificativa",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 43888,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: /Histórico/i }).first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /Histórico/i }).first()\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: /Histórico/i }).first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /Histórico/i }).first()\u001b[22m\n\n    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc9-banner-vermelho-recusado.spec.ts:30:52",
+                        "location": {
+                          "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc9-banner-vermelho-recusado.spec.ts",
+                          "column": 52,
+                          "line": 30
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 28 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'Banner vermelho + botão \"Histórico\" (RN46)'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m 29 |\u001b[39m       \u001b[36mawait\u001b[39m expect(form\u001b[33m.\u001b[39mredBanner()\u001b[33m.\u001b[39mfirst())\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 30 |\u001b[39m       \u001b[36mawait\u001b[39m expect(form\u001b[33m.\u001b[39mhistoricoButton()\u001b[33m.\u001b[39mfirst())\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 31 |\u001b[39m       \u001b[36mawait\u001b[39m form\u001b[33m.\u001b[39mhistoricoButton()\u001b[33m.\u001b[39mfirst()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 32 |\u001b[39m       \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[35m/Histórico -/\u001b[39m)\u001b[33m.\u001b[39mfirst())\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m 33 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc9-banner-vermelho-recusado.spec.ts",
+                            "column": 52,
+                            "line": 30
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: /Histórico/i }).first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /Histórico/i }).first()\u001b[22m\n\n\n\u001b[0m \u001b[90m 28 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'Banner vermelho + botão \"Histórico\" (RN46)'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m 29 |\u001b[39m       \u001b[36mawait\u001b[39m expect(form\u001b[33m.\u001b[39mredBanner()\u001b[33m.\u001b[39mfirst())\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 30 |\u001b[39m       \u001b[36mawait\u001b[39m expect(form\u001b[33m.\u001b[39mhistoricoButton()\u001b[33m.\u001b[39mfirst())\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 31 |\u001b[39m       \u001b[36mawait\u001b[39m form\u001b[33m.\u001b[39mhistoricoButton()\u001b[33m.\u001b[39mfirst()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 32 |\u001b[39m       \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[35m/Histórico -/\u001b[39m)\u001b[33m.\u001b[39mfirst())\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m 33 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc9-banner-vermelho-recusado.spec.ts:30:52\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Abrir \"Editar\" de um Externo Recusado",
+                          "duration": 30142
+                        },
+                        {
+                          "title": "Banner vermelho + botão \"Histórico\" (RN46)",
+                          "duration": 10053,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: /Histórico/i }).first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /Histórico/i }).first()\u001b[22m\n",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: /Histórico/i }).first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: /Histórico/i }).first()\u001b[22m\n\n    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc9-banner-vermelho-recusado.spec.ts:30:52",
+                            "location": {
+                              "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc9-banner-vermelho-recusado.spec.ts",
+                              "column": 52,
+                              "line": 30
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 28 |\u001b[39m     \u001b[36mawait\u001b[39m allure\u001b[33m.\u001b[39mstep(\u001b[32m'Banner vermelho + botão \"Histórico\" (RN46)'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m 29 |\u001b[39m       \u001b[36mawait\u001b[39m expect(form\u001b[33m.\u001b[39mredBanner()\u001b[33m.\u001b[39mfirst())\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 30 |\u001b[39m       \u001b[36mawait\u001b[39m expect(form\u001b[33m.\u001b[39mhistoricoButton()\u001b[33m.\u001b[39mfirst())\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 31 |\u001b[39m       \u001b[36mawait\u001b[39m form\u001b[33m.\u001b[39mhistoricoButton()\u001b[33m.\u001b[39mfirst()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 32 |\u001b[39m       \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[35m/Histórico -/\u001b[39m)\u001b[33m.\u001b[39mfirst())\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m 33 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-06-22T22:57:49.142Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkVkaXRhciByZWdpc3RybyBkZSBhcHJlbmRpemFnZW0gKG1hdHJpeiBwZXJmaWwgw5cgb3JpZ2VtIMOXIHN0YXR1cyBlIGJhbm5lcnMpIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJUQzkg4oCUIGJhbm5lciB2ZXJtZWxobyBkZSByZWdpc3RybyBSZWN1c2FkbyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-81da6--Recusado-com-justificativa-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-81da6--Recusado-com-justificativa-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-81da6--Recusado-com-justificativa-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-81da6--Recusado-com-justificativa-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-81da6--Recusado-com-justificativa-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\editar-registro-matriz-perfil-origem-status-banners\\tc9-banner-vermelho-recusado.spec.ts",
+                        "column": 52,
+                        "line": 30
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "f188a52743c99cc1e0bf-006473134a24a25b303f",
+              "file": "projects/registros-externos/tests/features/editar-registro-matriz-perfil-origem-status-banners/tc9-banner-vermelho-recusado.spec.ts",
+              "line": 12,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-06-22T22:51:11.628Z",
+    "duration": 442700.233,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 8,
+    "flaky": 0
+  }
+}

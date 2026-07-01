@@ -1,0 +1,1142 @@
+{
+  "config": {
+    "configFile": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "C:/Claude/registros/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Claude/registros/twygo-agents-qa/agent-playwright/outputs/registros-externos/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Claude/registros/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "tests/auth/**/*.spec.ts",
+          "projects/registros-externos/tests/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/registros-externos/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\registros-externos\\tests\\features\\preenchimento-ia-credito\\tc1-card-promocional-de-ia-nos-modos-editaveis.spec.ts",
+      "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc1-card-promocional-de-ia-nos-modos-editaveis.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Preenchimento com IA e crédito de IA (3 estados e modais por perfil)",
+          "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc1-card-promocional-de-ia-nos-modos-editaveis.spec.ts",
+          "line": 10,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar presença do card promocional de IA nos modos editáveis (Admin: adicionar e editar)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 30977,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Form \"Adicionar registro\" como Admin → card de IA com título, botão e disclaimer",
+                          "duration": 15350
+                        },
+                        {
+                          "title": "3. Form de EDIÇÃO de um registro Externo (Admin) → card de IA exibido",
+                          "duration": 9237
+                        }
+                      ],
+                      "startTime": "2026-06-29T20:06:20.482Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IlByZWVuY2hpbWVudG8gY29tIElBIGUgY3LDqWRpdG8gZGUgSUEgKDMgZXN0YWRvcyBlIG1vZGFpcyBwb3IgcGVyZmlsKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIHByZXNlbsOnYSBkbyBjYXJkIHByb21vY2lvbmFsIGRlIElBIG5vcyBtb2RvcyBlZGl0w6F2ZWlzIChBZG1pbjogYWRpY2lvbmFyIGUgZWRpdGFyKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-44451-s-Admin-adicionar-e-editar--chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-44451-s-Admin-adicionar-e-editar--chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-44451-s-Admin-adicionar-e-editar--chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-44451-s-Admin-adicionar-e-editar--chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e0797b4bd63858fa2d99-bb8e2e62c158acfe1fcc",
+              "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc1-card-promocional-de-ia-nos-modos-editaveis.spec.ts",
+              "line": 11,
+              "column": 3
+            },
+            {
+              "title": "Validar card de IA no form de adição como Aluno (perfil Aluno ausente)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\preenchimento-ia-credito\\tc1-card-promocional-de-ia-nos-modos-editaveis.spec.ts",
+                        "line": 41,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-29T20:06:52.888Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "location": {
+                            "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\preenchimento-ia-credito\\tc1-card-promocional-de-ia-nos-modos-editaveis.spec.ts",
+                            "line": 41,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e0797b4bd63858fa2d99-87f2f886f74ab2f5dbab",
+              "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc1-card-promocional-de-ia-nos-modos-editaveis.spec.ts",
+              "line": 41,
+              "column": 8
+            },
+            {
+              "title": "Validar ausência do card de IA em Visualizar e Avaliar (passos 4-5)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\preenchimento-ia-credito\\tc1-card-promocional-de-ia-nos-modos-editaveis.spec.ts",
+                        "line": 50,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-29T20:06:52.888Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "location": {
+                            "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\preenchimento-ia-credito\\tc1-card-promocional-de-ia-nos-modos-editaveis.spec.ts",
+                            "line": 50,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e0797b4bd63858fa2d99-b8877b75760b5f1299c2",
+              "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc1-card-promocional-de-ia-nos-modos-editaveis.spec.ts",
+              "line": 50,
+              "column": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\preenchimento-ia-credito\\tc2-habilitada-com-credito-fluxo-de-sucesso.spec.ts",
+      "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc2-habilitada-com-credito-fluxo-de-sucesso.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Preenchimento com IA e crédito de IA (3 estados e modais por perfil)",
+          "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc2-habilitada-com-credito-fluxo-de-sucesso.spec.ts",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar estado habilitada + com crédito (form aceita o preenchimento por IA)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 18336,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar form \"Adicionar registro\" como Admin → botão exibido desabilitado",
+                          "duration": 10767
+                        },
+                        {
+                          "title": "2. Upload de \"certificado_ia.pdf\" → botão \"Preencher com IA\" habilita",
+                          "duration": 595
+                        },
+                        {
+                          "title": "3. Clicar \"Preencher com IA\" → back aceita o request (POST ai_fill 2xx)",
+                          "duration": 1750
+                        }
+                      ],
+                      "startTime": "2026-06-29T20:06:52.934Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IlByZWVuY2hpbWVudG8gY29tIElBIGUgY3LDqWRpdG8gZGUgSUEgKDMgZXN0YWRvcyBlIG1vZGFpcyBwb3IgcGVyZmlsKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGVzdGFkbyBoYWJpbGl0YWRhICsgY29tIGNyw6lkaXRvIChmb3JtIGFjZWl0YSBvIHByZWVuY2hpbWVudG8gcG9yIElBKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-47c9e-ita-o-preenchimento-por-IA--chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-47c9e-ita-o-preenchimento-por-IA--chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-47c9e-ita-o-preenchimento-por-IA--chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-47c9e-ita-o-preenchimento-por-IA--chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "124a758161683d0d106d-dd54b245e4ace3d573f5",
+              "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc2-habilitada-com-credito-fluxo-de-sucesso.spec.ts",
+              "line": 24,
+              "column": 3
+            },
+            {
+              "title": "Validar preenchimento visual de Tipo/Categorias + toast verde (IA stage lenta)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\preenchimento-ia-credito\\tc2-habilitada-com-credito-fluxo-de-sucesso.spec.ts",
+                        "line": 59,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-29T20:07:12.654Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "location": {
+                            "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\preenchimento-ia-credito\\tc2-habilitada-com-credito-fluxo-de-sucesso.spec.ts",
+                            "line": 59,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "124a758161683d0d106d-a9ccd713bbde534ae009",
+              "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc2-habilitada-com-credito-fluxo-de-sucesso.spec.ts",
+              "line": 59,
+              "column": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\preenchimento-ia-credito\\tc3-sem-credito-admin-modal-contato.spec.ts",
+      "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc3-sem-credito-admin-modal-contato.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Preenchimento com IA e crédito de IA (3 estados e modais por perfil)",
+          "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc3-sem-credito-admin-modal-contato.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar estado habilitada + sem crédito no Admin (modal com Contato)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\preenchimento-ia-credito\\tc3-sem-credito-admin-modal-contato.spec.ts",
+                        "line": 13,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-29T20:07:12.654Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "location": {
+                            "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\preenchimento-ia-credito\\tc3-sem-credito-admin-modal-contato.spec.ts",
+                            "line": 13,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "21aa4e8a302692360970-63329e62b6311e93b8ea",
+              "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc3-sem-credito-admin-modal-contato.spec.ts",
+              "line": 13,
+              "column": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\preenchimento-ia-credito\\tc4-sem-credito-aluno-modal-fechar.spec.ts",
+      "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc4-sem-credito-aluno-modal-fechar.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Preenchimento com IA e crédito de IA (3 estados e modais por perfil)",
+          "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc4-sem-credito-aluno-modal-fechar.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar estado habilitada + sem crédito no Aluno (modal com Fechar)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\preenchimento-ia-credito\\tc4-sem-credito-aluno-modal-fechar.spec.ts",
+                        "line": 13,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-29T20:07:12.654Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "location": {
+                            "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\preenchimento-ia-credito\\tc4-sem-credito-aluno-modal-fechar.spec.ts",
+                            "line": 13,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "a8f798f8801f1edbf77f-00424718f287c97469c0",
+              "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc4-sem-credito-aluno-modal-fechar.spec.ts",
+              "line": 13,
+              "column": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\preenchimento-ia-credito\\tc5-funcionalidade-desabilitada-toast-vermelho.spec.ts",
+      "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc5-funcionalidade-desabilitada-toast-vermelho.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Preenchimento com IA e crédito de IA (3 estados e modais por perfil)",
+          "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc5-funcionalidade-desabilitada-toast-vermelho.spec.ts",
+          "line": 16,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar estado funcionalidade desabilitada (card de IA não é renderizado)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 24849,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Pré: desligar \"Acesso de IA\" da organização",
+                          "duration": 10731
+                        },
+                        {
+                          "title": "1. Form \"Adicionar registro\" como Admin com IA OFF → card de IA AUSENTE",
+                          "duration": 8201
+                        }
+                      ],
+                      "startTime": "2026-06-29T20:07:12.719Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IlByZWVuY2hpbWVudG8gY29tIElBIGUgY3LDqWRpdG8gZGUgSUEgKDMgZXN0YWRvcyBlIG1vZGFpcyBwb3IgcGVyZmlsKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGVzdGFkbyBmdW5jaW9uYWxpZGFkZSBkZXNhYmlsaXRhZGEgKGNhcmQgZGUgSUEgbsOjbyDDqSByZW5kZXJpemFkbykifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-c68f4-rd-de-IA-não-é-renderizado--chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-c68f4-rd-de-IA-não-é-renderizado--chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-c68f4-rd-de-IA-não-é-renderizado--chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-c68f4-rd-de-IA-não-é-renderizado--chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c1876ccb49f85f1b0a48-69213dac34eb0ae8018e",
+              "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc5-funcionalidade-desabilitada-toast-vermelho.spec.ts",
+              "line": 29,
+              "column": 3
+            },
+            {
+              "title": "Validar toast vermelho / 403 de funcionalidade desabilitada (modelo não exposto)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\preenchimento-ia-credito\\tc5-funcionalidade-desabilitada-toast-vermelho.spec.ts",
+                        "line": 61,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-29T20:07:38.862Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "location": {
+                            "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\preenchimento-ia-credito\\tc5-funcionalidade-desabilitada-toast-vermelho.spec.ts",
+                            "line": 61,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-585a8-ilitada-modelo-não-exposto--chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-585a8-ilitada-modelo-não-exposto--chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "c1876ccb49f85f1b0a48-328bd97967ca54f92138",
+              "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc5-funcionalidade-desabilitada-toast-vermelho.spec.ts",
+              "line": 61,
+              "column": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\preenchimento-ia-credito\\tc6-toggle-de-credito-de-ia-na-topbar.spec.ts",
+      "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc6-toggle-de-credito-de-ia-na-topbar.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Preenchimento com IA e crédito de IA (3 estados e modais por perfil)",
+          "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc6-toggle-de-credito-de-ia-na-topbar.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar toggle de crédito de IA na TopBar",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\preenchimento-ia-credito\\tc6-toggle-de-credito-de-ia-na-topbar.spec.ts",
+                        "line": 13,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-29T20:07:51.710Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "location": {
+                            "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\preenchimento-ia-credito\\tc6-toggle-de-credito-de-ia-na-topbar.spec.ts",
+                            "line": 13,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "da2c33f9b001bb87e24d-fa83eecc06dbf8f4d69a",
+              "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc6-toggle-de-credito-de-ia-na-topbar.spec.ts",
+              "line": 13,
+              "column": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\preenchimento-ia-credito\\tc7-uso-manual-nao-consome-credito.spec.ts",
+      "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc7-uso-manual-nao-consome-credito.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Preenchimento com IA e crédito de IA (3 estados e modais por perfil)",
+          "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc7-uso-manual-nao-consome-credito.spec.ts",
+          "line": 26,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar que uso manual não consome crédito de IA",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 22506,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar form \"Adicionar registro\" → card de IA visível",
+                          "duration": 10794
+                        },
+                        {
+                          "title": "2. Preencher manualmente e acionar \"Salvar\" → nenhuma chamada de IA é disparada",
+                          "duration": 5245
+                        }
+                      ],
+                      "startTime": "2026-06-29T20:07:51.757Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IlByZWVuY2hpbWVudG8gY29tIElBIGUgY3LDqWRpdG8gZGUgSUEgKDMgZXN0YWRvcyBlIG1vZGFpcyBwb3IgcGVyZmlsKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIHF1ZSB1c28gbWFudWFsIG7Do28gY29uc29tZSBjcsOpZGl0byBkZSBJQSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJub3JtYWwifV19fQ=="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-ed328-l-não-consome-crédito-de-IA-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-ed328-l-não-consome-crédito-de-IA-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-ed328-l-não-consome-crédito-de-IA-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-ed328-l-não-consome-crédito-de-IA-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "32876e3cbef771951640-ac3738675c490169d7dc",
+              "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc7-uso-manual-nao-consome-credito.spec.ts",
+              "line": 27,
+              "column": 3
+            },
+            {
+              "title": "Validar persistência do registro manual + toast de sucesso (bug: registro indeletável)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\preenchimento-ia-credito\\tc7-uso-manual-nao-consome-credito.spec.ts",
+                        "line": 72,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-29T20:08:16.061Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "location": {
+                            "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\preenchimento-ia-credito\\tc7-uso-manual-nao-consome-credito.spec.ts",
+                            "line": 72,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "32876e3cbef771951640-153cf25b59f742b692f9",
+              "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc7-uso-manual-nao-consome-credito.spec.ts",
+              "line": 72,
+              "column": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\preenchimento-ia-credito\\tc8-timeout-erro-da-ia.spec.ts",
+      "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc8-timeout-erro-da-ia.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Preenchimento com IA e crédito de IA (3 estados e modais por perfil)",
+          "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc8-timeout-erro-da-ia.spec.ts",
+          "line": 14,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar tratamento de timeout/erro da IA",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 20543,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Pré: mockar /records/ai_fill com 500",
+                          "duration": 4
+                        },
+                        {
+                          "title": "1. Acessar form \"Adicionar registro\" como Admin → card visível",
+                          "duration": 11050
+                        },
+                        {
+                          "title": "2. Upload + acionar \"Preencher com IA\" → toast de erro, campos inalterados",
+                          "duration": 3125
+                        }
+                      ],
+                      "startTime": "2026-06-29T20:08:16.108Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IlByZWVuY2hpbWVudG8gY29tIElBIGUgY3LDqWRpdG8gZGUgSUEgKDMgZXN0YWRvcyBlIG1vZGFpcyBwb3IgcGVyZmlsKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIHRyYXRhbWVudG8gZGUgdGltZW91dC9lcnJvIGRhIElBIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-98d7d-mento-de-timeout-erro-da-IA-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-98d7d-mento-de-timeout-erro-da-IA-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-98d7d-mento-de-timeout-erro-da-IA-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-98d7d-mento-de-timeout-erro-da-IA-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "646cb02203192686e171-10ef3a5f84296eb852b3",
+              "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc8-timeout-erro-da-ia.spec.ts",
+              "line": 15,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\preenchimento-ia-credito\\tc9-bloqueio-no-back-403.spec.ts",
+      "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc9-bloqueio-no-back-403.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Preenchimento com IA e crédito de IA (3 estados e modais por perfil)",
+          "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc9-bloqueio-no-back-403.spec.ts",
+          "line": 22,
+          "column": 15,
+          "specs": [
+            {
+              "title": "Validar bloqueio no back para request sem requisitos (403) — AT modela 403 síncrono; produto responde 204 assíncrono",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\preenchimento-ia-credito\\tc9-bloqueio-no-back-403.spec.ts",
+                        "line": 22,
+                        "column": 15
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-29T20:08:38.056Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "location": {
+                            "file": "C:\\Claude\\registros\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\preenchimento-ia-credito\\tc9-bloqueio-no-back-403.spec.ts",
+                            "line": 22,
+                            "column": 15
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "69790b863e9301ab6862-a3c1a3f866b4f7f7b7af",
+              "file": "projects/registros-externos/tests/features/preenchimento-ia-credito/tc9-bloqueio-no-back-403.spec.ts",
+              "line": 23,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-06-29T20:06:15.411Z",
+    "duration": 145049.61299999998,
+    "expected": 5,
+    "skipped": 9,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

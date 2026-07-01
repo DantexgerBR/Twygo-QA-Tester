@@ -1,0 +1,424 @@
+{
+  "generatedAt": "2026-06-23T19:40:47.864Z",
+  "project": "registros-externos",
+  "totalRed": 5,
+  "reports": [
+    {
+      "id": "extracao-de-dados-e-evidencias-assincrona-com-modal-de-atencao__validar-extracao-de-dados-csv-com-toast-de-variacao",
+      "title": "Validar extração de dados CSV com toast de variação — Error: expect(locator).toBeHidden() failed",
+      "testsuite": "Extração de dados e evidências (assíncrona com modal de atenção)",
+      "testcase": "Validar extração de dados CSV com toast de variação",
+      "file": "projects/registros-externos/tests/features/extracao-dados-evidencias-assincrona-modal-atencao/tc4-extracao-dados-csv-toast.spec.ts",
+      "status": "failed",
+      "durationMs": 21287,
+      "categoriaSugerida": "inconclusivo",
+      "categoriaConfianca": "baixa",
+      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
+      "severity": "media",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-registros-externos",
+        "baseUrl": "https://registrosf2.stage.twygoead.com/",
+        "orgId": "37079",
+        "browser": "chromium",
+        "user": "richard.sebold@twygo.com"
+      },
+      "buildCommit": "9da2a1c",
+      "generatedAt": "2026-06-23T19:40:47.864Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1-2. Abrir o drawer na tela Admin Registros",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "3. Manter Dados+CSV+Filtro atual e clicar \"Extrair\" → drawer fecha + toast",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: expect(locator).toBeHidden() failed\n\nLocator:  locator('.chakra-modal__content.chakra-slide')\nExpected: hidden\nReceived: visible\nTimeout:  10000ms\n\nCall log:\n  - Expect \"toBeHidden\" with timeout 10000ms\n  - waiting for locator('.chakra-modal__content.chakra-slide')\n    14 × locator resolved to <div role=\"dialog\" tabindex=\"-1\" aria-modal=\"true\" id=\"chakra-modal-:r23:\" data-test-id=\"records-extraction-drawer\" aria-describedby=\"chakra-modal--body-:r23:\" aria-labelledby=\"chakra-modal--header-:r23:\" class=\"chakra-slide chakra-modal__content css-26fghr\">…</div>\n       - unexpected value \"visible\"\n",
+      "errorLocation": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\extracao-dados-evidencias-assincrona-modal-atencao\\tc4-extracao-dados-csv-toast.spec.ts:32:39",
+      "network": [
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        }
+      ],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-registros-externo-a294b-s-CSV-com-toast-de-variação-chromium-retry2/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-a294b-s-CSV-com-toast-de-variação-chromium-retry2/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-a294b-s-CSV-com-toast-de-variação-chromium-retry2/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-registros-externo-a294b-s-CSV-com-toast-de-variação-chromium-retry2/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-registros-externo-a294b-s-CSV-com-toast-de-variação-chromium-retry2/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37079",
+        "userId": null
+      }
+    },
+    {
+      "id": "extracao-de-dados-e-evidencias-assincrona-com-modal-de-atencao__validar-modal-de-atencao-para-evidencias-faltantes",
+      "title": "Validar modal de Atenção para evidências faltantes — Error: expect(locator).toBeVisible() failed",
+      "testsuite": "Extração de dados e evidências (assíncrona com modal de atenção)",
+      "testcase": "Validar modal de Atenção para evidências faltantes",
+      "file": "projects/registros-externos/tests/features/extracao-dados-evidencias-assincrona-modal-atencao/tc5-modal-atencao-evidencias-faltantes.spec.ts",
+      "status": "failed",
+      "durationMs": 23684,
+      "categoriaSugerida": "inconclusivo",
+      "categoriaConfianca": "baixa",
+      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
+      "severity": "media",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-registros-externos",
+        "baseUrl": "https://registrosf2.stage.twygoead.com/",
+        "orgId": "37079",
+        "browser": "chromium",
+        "user": "richard.sebold@twygo.com"
+      },
+      "buildCommit": "9da2a1c",
+      "generatedAt": "2026-06-23T19:40:47.864Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1-2. Disparar extração de Evidências (Filtro atual) → modal \"Atenção\"",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: expect(locator).toBeVisible() failed\n\nLocator: locator('[role=\"alertdialog\"], [role=\"dialog\"]').filter({ hasText: /n[ãa]o t[êe]m evid[êe]ncia anexada|ser[ãa]o ignorados na extra/i })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 10000ms\n  - waiting for locator('[role=\"alertdialog\"], [role=\"dialog\"]').filter({ hasText: /n[ãa]o t[êe]m evid[êe]ncia anexada|ser[ãa]o ignorados na extra/i })\n",
+      "errorLocation": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\extracao-dados-evidencias-assincrona-modal-atencao\\tc5-modal-atencao-evidencias-faltantes.spec.ts:28:45",
+      "network": [
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        }
+      ],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-registros-externo-c4811-o-para-evidências-faltantes-chromium-retry2/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-c4811-o-para-evidências-faltantes-chromium-retry2/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-c4811-o-para-evidências-faltantes-chromium-retry2/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-registros-externo-c4811-o-para-evidências-faltantes-chromium-retry2/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-registros-externo-c4811-o-para-evidências-faltantes-chromium-retry2/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37079",
+        "userId": null
+      }
+    },
+    {
+      "id": "extracao-de-dados-e-evidencias-assincrona-com-modal-de-atencao__validar-extracao-de-evidencias-sem-faltantes-modal-nao-aparece",
+      "title": "Validar extração de evidências sem faltantes (modal não aparece) — Error: expect(locator).toBeVisible() failed",
+      "testsuite": "Extração de dados e evidências (assíncrona com modal de atenção)",
+      "testcase": "Validar extração de evidências sem faltantes (modal não aparece)",
+      "file": "projects/registros-externos/tests/features/extracao-dados-evidencias-assincrona-modal-atencao/tc6-extracao-evidencias-sem-faltantes.spec.ts",
+      "status": "failed",
+      "durationMs": 27026,
+      "categoriaSugerida": "inconclusivo",
+      "categoriaConfianca": "baixa",
+      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
+      "severity": "media",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-registros-externos",
+        "baseUrl": "https://registrosf2.stage.twygoead.com/",
+        "orgId": "37079",
+        "browser": "chromium",
+        "user": "richard.sebold@twygo.com"
+      },
+      "buildCommit": "9da2a1c",
+      "generatedAt": "2026-06-23T19:40:47.864Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1-2. Disparar Evidências (Filtro atual) → sem modal + toast direto",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: expect(locator).toBeVisible() failed\n\nLocator: locator('.chakra-toast').filter({ hasText: /Extra[çc][ãa]o iniciada/i }).first()\nExpected: visible\nTimeout: 15000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 15000ms\n  - waiting for locator('.chakra-toast').filter({ hasText: /Extra[çc][ãa]o iniciada/i }).first()\n",
+      "errorLocation": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\extracao-dados-evidencias-assincrona-modal-atencao\\tc6-extracao-evidencias-sem-faltantes.spec.ts:31:67",
+      "network": [
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        }
+      ],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-registros-externo-84e09-altantes-modal-não-aparece--chromium-retry2/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-84e09-altantes-modal-não-aparece--chromium-retry2/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-84e09-altantes-modal-não-aparece--chromium-retry2/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-registros-externo-84e09-altantes-modal-não-aparece--chromium-retry2/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-registros-externo-84e09-altantes-modal-não-aparece--chromium-retry2/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37079",
+        "userId": null
+      }
+    },
+    {
+      "id": "extracao-de-dados-e-evidencias-assincrona-com-modal-de-atencao__validar-entrega-assincrona-e-mail-e-notificacao-no-sino",
+      "title": "Validar entrega assíncrona: e-mail e notificação no sino — Error: expect(locator).toBeVisible() failed",
+      "testsuite": "Extração de dados e evidências (assíncrona com modal de atenção)",
+      "testcase": "Validar entrega assíncrona: e-mail e notificação no sino",
+      "file": "projects/registros-externos/tests/features/extracao-dados-evidencias-assincrona-modal-atencao/tc7-entrega-assincrona-email-e-sino.spec.ts",
+      "status": "failed",
+      "durationMs": 25652,
+      "categoriaSugerida": "inconclusivo",
+      "categoriaConfianca": "baixa",
+      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
+      "severity": "media",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-registros-externos",
+        "baseUrl": "https://registrosf2.stage.twygoead.com/",
+        "orgId": "37079",
+        "browser": "chromium",
+        "user": "richard.sebold@twygo.com"
+      },
+      "buildCommit": "9da2a1c",
+      "generatedAt": "2026-06-23T19:40:47.864Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Disparar uma extração de Dados CSV → toast \"Extração iniciada\"",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: expect(locator).toBeVisible() failed\n\nLocator: locator('.chakra-toast').filter({ hasText: /Extra[çc][ãa]o iniciada: CSV com \\d+ registros \\(filtro atual · colunas do filtro\\)\\./i }).first()\nExpected: visible\nTimeout: 15000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 15000ms\n  - waiting for locator('.chakra-toast').filter({ hasText: /Extra[çc][ãa]o iniciada: CSV com \\d+ registros \\(filtro atual · colunas do filtro\\)\\./i }).first()\n",
+      "errorLocation": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\extracao-dados-evidencias-assincrona-modal-atencao\\tc7-entrega-assincrona-email-e-sino.spec.ts:28:57",
+      "network": [
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        }
+      ],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-registros-externo-c83e5--mail-e-notificação-no-sino-chromium-retry2/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-c83e5--mail-e-notificação-no-sino-chromium-retry2/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-c83e5--mail-e-notificação-no-sino-chromium-retry2/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-registros-externo-c83e5--mail-e-notificação-no-sino-chromium-retry2/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-registros-externo-c83e5--mail-e-notificação-no-sino-chromium-retry2/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37079",
+        "userId": null
+      }
+    },
+    {
+      "id": "extracao-de-dados-e-evidencias-assincrona-com-modal-de-atencao__validar-reset-do-drawer-ao-reabrir",
+      "title": "Validar reset do drawer ao reabrir — Error: expect(received).toBe(expected) // Object.is equality",
+      "testsuite": "Extração de dados e evidências (assíncrona com modal de atenção)",
+      "testcase": "Validar reset do drawer ao reabrir",
+      "file": "projects/registros-externos/tests/features/extracao-dados-evidencias-assincrona-modal-atencao/tc9-reset-do-drawer-ao-reabrir.spec.ts",
+      "status": "failed",
+      "durationMs": 12496,
+      "categoriaSugerida": "inconclusivo",
+      "categoriaConfianca": "baixa",
+      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
+      "severity": "media",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-registros-externos",
+        "baseUrl": "https://registrosf2.stage.twygoead.com/",
+        "orgId": "37079",
+        "browser": "chromium",
+        "user": "richard.sebold@twygo.com"
+      },
+      "buildCommit": "9da2a1c",
+      "generatedAt": "2026-06-23T19:40:47.864Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Abrir, selecionar \"Evidências\" e fechar pelo X",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "2. Reabrir → \"Tipo\" volta a \"Dados\" e radios nos defaults",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"Dados\"\nReceived: \"Evidências\"",
+      "errorLocation": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\extracao-dados-evidencias-assincrona-modal-atencao\\tc9-reset-do-drawer-ao-reabrir.spec.ts:25:48",
+      "network": [
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        }
+      ],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-registros-externo-a9099--reset-do-drawer-ao-reabrir-chromium-retry2/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-a9099--reset-do-drawer-ao-reabrir-chromium-retry2/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-a9099--reset-do-drawer-ao-reabrir-chromium-retry2/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-registros-externo-a9099--reset-do-drawer-ao-reabrir-chromium-retry2/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-registros-externo-a9099--reset-do-drawer-ao-reabrir-chromium-retry2/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37079",
+        "userId": null
+      }
+    }
+  ]
+}

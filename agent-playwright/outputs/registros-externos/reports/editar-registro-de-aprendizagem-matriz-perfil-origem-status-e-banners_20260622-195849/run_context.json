@@ -1,0 +1,11 @@
+{
+  "runId": "editar-registro-de-aprendizagem-matriz-perfil-origem-status-e-banners_20260622-195849",
+  "mode": "per-suite",
+  "suiteFilter": "Editar registro de aprendizagem (matriz perfil × origem × status e banners)",
+  "projectName": "Registros de Aprendizagem",
+  "environment": "staging-registros-externos",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-06-22T22:58:49.649Z"
+}

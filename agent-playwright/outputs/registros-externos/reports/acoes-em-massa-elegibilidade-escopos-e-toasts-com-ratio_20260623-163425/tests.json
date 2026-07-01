@@ -1,0 +1,1303 @@
+{
+  "config": {
+    "configFile": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "D:/novo-estudio-twygo/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/novo-estudio-twygo/twygo-agents-qa/agent-playwright/outputs/registros-externos/test-artifacts",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "D:/novo-estudio-twygo/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "tests/auth/**/*.spec.ts",
+          "projects/registros-externos/tests/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/registros-externos/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\registros-externos\\tests\\features\\acoes-em-massa-elegibilidade-escopos-toasts\\tc1-disponibilidade-botao-e-abertura-sem-selecao.spec.ts",
+      "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc1-disponibilidade-botao-e-abertura-sem-selecao.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Ações em massa (elegibilidade, escopos e toasts com ratio)",
+          "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc1-disponibilidade-botao-e-abertura-sem-selecao.spec.ts",
+          "line": 9,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar disponibilidade do botão e abertura sem seleção",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 15961,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Layout do Aluno NÃO exibe \"Ações em massa\"",
+                          "duration": 6122
+                        },
+                        {
+                          "title": "2. Admin exibe \"Ações em massa\" habilitado sem seleção",
+                          "duration": 6390
+                        },
+                        {
+                          "title": "3. Clicar abre o drawer \"Ações em massa\"",
+                          "duration": 353
+                        }
+                      ],
+                      "startTime": "2026-06-23T19:29:41.580Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkHDp8O1ZXMgZW0gbWFzc2EgKGVsZWdpYmlsaWRhZGUsIGVzY29wb3MgZSB0b2FzdHMgY29tIHJhdGlvKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGRpc3BvbmliaWxpZGFkZSBkbyBib3TDo28gZSBhYmVydHVyYSBzZW0gc2VsZcOnw6NvIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-aba64-otão-e-abertura-sem-seleção-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-aba64-otão-e-abertura-sem-seleção-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-aba64-otão-e-abertura-sem-seleção-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-aba64-otão-e-abertura-sem-seleção-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "00238d0fb6780968168a-0cf94388c14fd392f7c0",
+              "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc1-disponibilidade-botao-e-abertura-sem-selecao.spec.ts",
+              "line": 10,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\acoes-em-massa-elegibilidade-escopos-toasts\\tc10-escopo-vazio-com-aviso-de-orientacao.spec.ts",
+      "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc10-escopo-vazio-com-aviso-de-orientacao.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Ações em massa (elegibilidade, escopos e toasts com ratio)",
+          "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc10-escopo-vazio-com-aviso-de-orientacao.spec.ts",
+          "line": 10,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar escopo vazio com aviso de orientação",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 14196,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Aplicar busca que retorna 0 registros",
+                          "duration": 8133
+                        },
+                        {
+                          "title": "2. Tentar aplicar uma ação no escopo total vazio: nenhum processamento",
+                          "duration": 3487
+                        }
+                      ],
+                      "startTime": "2026-06-23T19:29:58.451Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkHDp8O1ZXMgZW0gbWFzc2EgKGVsZWdpYmlsaWRhZGUsIGVzY29wb3MgZSB0b2FzdHMgY29tIHJhdGlvKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGVzY29wbyB2YXppbyBjb20gYXZpc28gZGUgb3JpZW50YcOnw6NvIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJtZWRpdW0ifV19fQ=="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-c9610-zio-com-aviso-de-orientação-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-c9610-zio-com-aviso-de-orientação-chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-c9610-zio-com-aviso-de-orientação-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-c9610-zio-com-aviso-de-orientação-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b616fe6075b4696ca5a1-419a4e7222fc2729311c",
+              "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc10-escopo-vazio-com-aviso-de-orientacao.spec.ts",
+              "line": 11,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\acoes-em-massa-elegibilidade-escopos-toasts\\tc2-estrutura-do-drawer-e-defaults-de-escopo.spec.ts",
+      "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc2-estrutura-do-drawer-e-defaults-de-escopo.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Ações em massa (elegibilidade, escopos e toasts com ratio)",
+          "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc2-estrutura-do-drawer-e-defaults-de-escopo.spec.ts",
+          "line": 9,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar estrutura do drawer e defaults de escopo",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 13124,
+                      "error": {
+                        "message": "Error: apiRequestContext._wrapApiCall: ENOENT: no such file or directory, open 'D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\.playwright-artifacts-0\\traces\\5c84dc4462a422d7ee36-96b9e2212f5029e66893-recording2.trace'",
+                        "stack": "Error: apiRequestContext._wrapApiCall: ENOENT: no such file or directory, open 'D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\.playwright-artifacts-0\\traces\\5c84dc4462a422d7ee36-96b9e2212f5029e66893-recording2.trace'"
+                      },
+                      "errors": [
+                        {
+                          "message": "Error: apiRequestContext._wrapApiCall: ENOENT: no such file or directory, open 'D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\.playwright-artifacts-0\\traces\\5c84dc4462a422d7ee36-96b9e2212f5029e66893-recording2.trace'"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Drawer com select \"Ação\" e grupo de escopo",
+                          "duration": 8730
+                        },
+                        {
+                          "title": "2. Com 0 marcados: \"Selecionados\" é o default e está habilitado",
+                          "duration": 68
+                        },
+                        {
+                          "title": "3. Marcar 3 linhas e reabrir: \"Selecionados\" habilitado e default",
+                          "duration": 2192
+                        },
+                        {
+                          "title": "4. Footer com \"Cancelar\" e \"Executar\"",
+                          "duration": 68
+                        }
+                      ],
+                      "startTime": "2026-06-23T19:30:13.459Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkHDp8O1ZXMgZW0gbWFzc2EgKGVsZWdpYmlsaWRhZGUsIGVzY29wb3MgZSB0b2FzdHMgY29tIHJhdGlvKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGVzdHJ1dHVyYSBkbyBkcmF3ZXIgZSBkZWZhdWx0cyBkZSBlc2NvcG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-1537d-drawer-e-defaults-de-escopo-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-1537d-drawer-e-defaults-de-escopo-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-1537d-drawer-e-defaults-de-escopo-chromium\\trace.zip"
+                        }
+                      ]
+                    },
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 12940,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 1,
+                      "steps": [
+                        {
+                          "title": "1. Drawer com select \"Ação\" e grupo de escopo",
+                          "duration": 8053
+                        },
+                        {
+                          "title": "2. Com 0 marcados: \"Selecionados\" é o default e está habilitado",
+                          "duration": 63
+                        },
+                        {
+                          "title": "3. Marcar 3 linhas e reabrir: \"Selecionados\" habilitado e default",
+                          "duration": 1774
+                        },
+                        {
+                          "title": "4. Footer com \"Cancelar\" e \"Executar\"",
+                          "duration": 64
+                        }
+                      ],
+                      "startTime": "2026-06-23T19:30:27.639Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkHDp8O1ZXMgZW0gbWFzc2EgKGVsZWdpYmlsaWRhZGUsIGVzY29wb3MgZSB0b2FzdHMgY29tIHJhdGlvKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGVzdHJ1dHVyYSBkbyBkcmF3ZXIgZSBkZWZhdWx0cyBkZSBlc2NvcG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-1537d-drawer-e-defaults-de-escopo-chromium-retry1\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-1537d-drawer-e-defaults-de-escopo-chromium-retry1\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-1537d-drawer-e-defaults-de-escopo-chromium-retry1\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-1537d-drawer-e-defaults-de-escopo-chromium-retry1\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "flaky"
+                }
+              ],
+              "id": "5c84dc4462a422d7ee36-96b9e2212f5029e66893",
+              "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc2-estrutura-do-drawer-e-defaults-de-escopo.spec.ts",
+              "line": 10,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\acoes-em-massa-elegibilidade-escopos-toasts\\tc3-aprovacao-em-massa-com-toast-de-sucesso.spec.ts",
+      "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc3-aprovacao-em-massa-com-toast-de-sucesso.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Ações em massa (elegibilidade, escopos e toasts com ratio)",
+          "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc3-aprovacao-em-massa-com-toast-de-sucesso.spec.ts",
+          "line": 10,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar aprovação em massa de selecionados com toast de sucesso",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 25321,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Pré: criar 5 registros Externos Pendentes via API",
+                          "duration": 1258
+                        },
+                        {
+                          "title": "1. Acessar Registros e marcar os 5 Pendentes",
+                          "duration": 9716
+                        },
+                        {
+                          "title": "2-3. Abrir drawer → Aprovar registros → Executar → Confirmar",
+                          "duration": 2559
+                        },
+                        {
+                          "title": "4. Lista reflete os 5 agora Aprovados (Pendentes -5, Emitidos +5)",
+                          "duration": 6339
+                        }
+                      ],
+                      "startTime": "2026-06-23T19:30:41.475Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkHDp8O1ZXMgZW0gbWFzc2EgKGVsZWdpYmlsaWRhZGUsIGVzY29wb3MgZSB0b2FzdHMgY29tIHJhdGlvKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGFwcm92YcOnw6NvIGVtIG1hc3NhIGRlIHNlbGVjaW9uYWRvcyBjb20gdG9hc3QgZGUgc3VjZXNzbyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-9384d-onados-com-toast-de-sucesso-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-9384d-onados-com-toast-de-sucesso-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-9384d-onados-com-toast-de-sucesso-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-9384d-onados-com-toast-de-sucesso-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ce155e66966defd6317e-a89c67fb3686de17fa96",
+              "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc3-aprovacao-em-massa-com-toast-de-sucesso.spec.ts",
+              "line": 11,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\acoes-em-massa-elegibilidade-escopos-toasts\\tc4-toast-com-ratio-quando-ha-inelegiveis.spec.ts",
+      "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc4-toast-com-ratio-quando-ha-inelegiveis.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Ações em massa (elegibilidade, escopos e toasts com ratio)",
+          "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc4-toast-com-ratio-quando-ha-inelegiveis.spec.ts",
+          "line": 12,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar toast com ratio quando há inelegíveis no escopo",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 24075,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Pré: criar 4 registros Externos Pendentes via API",
+                          "duration": 1011
+                        },
+                        {
+                          "title": "1. Marcar 4 Pendentes + 3 Emitidos (7 linhas)",
+                          "duration": 10426
+                        },
+                        {
+                          "title": "2-3. Aprovar registros → Executar → modal de elegibilidade → Confirmar",
+                          "duration": 1202
+                        },
+                        {
+                          "title": "4. Apenas os 4 Pendentes mudam (Pendentes -4, Emitidos +4)",
+                          "duration": 6560
+                        }
+                      ],
+                      "startTime": "2026-06-23T19:31:07.974Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkHDp8O1ZXMgZW0gbWFzc2EgKGVsZWdpYmlsaWRhZGUsIGVzY29wb3MgZSB0b2FzdHMgY29tIHJhdGlvKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIHRvYXN0IGNvbSByYXRpbyBxdWFuZG8gaMOhIGluZWxlZ8OtdmVpcyBubyBlc2NvcG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-2e8d4-do-há-inelegíveis-no-escopo-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-2e8d4-do-há-inelegíveis-no-escopo-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-2e8d4-do-há-inelegíveis-no-escopo-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-2e8d4-do-há-inelegíveis-no-escopo-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "da050833267da6250b57-34c0164aa728159e30d8",
+              "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc4-toast-com-ratio-quando-ha-inelegiveis.spec.ts",
+              "line": 13,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\acoes-em-massa-elegibilidade-escopos-toasts\\tc5-recusa-em-massa-com-justificativa-unica.spec.ts",
+      "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc5-recusa-em-massa-com-justificativa-unica.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Ações em massa (elegibilidade, escopos e toasts com ratio)",
+          "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc5-recusa-em-massa-com-justificativa-unica.spec.ts",
+          "line": 10,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar recusa em massa com modal de justificativa única",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 24827,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Pré: criar 3 registros Externos Pendentes via API",
+                          "duration": 728
+                        },
+                        {
+                          "title": "1. Marcar os 3 Pendentes e abrir o drawer com \"Recusar registros\"",
+                          "duration": 10123
+                        },
+                        {
+                          "title": "2-3. Justificativa obrigatória (inline) habilita a execução",
+                          "duration": 121
+                        },
+                        {
+                          "title": "4. Executar → Confirmar → 3 registros recusados",
+                          "duration": 8228
+                        }
+                      ],
+                      "startTime": "2026-06-23T19:31:33.109Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkHDp8O1ZXMgZW0gbWFzc2EgKGVsZWdpYmlsaWRhZGUsIGVzY29wb3MgZSB0b2FzdHMgY29tIHJhdGlvKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIHJlY3VzYSBlbSBtYXNzYSBjb20gbW9kYWwgZGUganVzdGlmaWNhdGl2YSDDum5pY2EifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-05c72-odal-de-justificativa-única-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-05c72-odal-de-justificativa-única-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-05c72-odal-de-justificativa-única-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-05c72-odal-de-justificativa-única-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c3f6eb0acc16df3b9913-7a16db64c9e379740379",
+              "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc5-recusa-em-massa-com-justificativa-unica.spec.ts",
+              "line": 11,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\acoes-em-massa-elegibilidade-escopos-toasts\\tc6-exclusao-em-massa-com-alertdialog-de-contagem.spec.ts",
+      "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc6-exclusao-em-massa-com-alertdialog-de-contagem.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Ações em massa (elegibilidade, escopos e toasts com ratio)",
+          "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc6-exclusao-em-massa-com-alertdialog-de-contagem.spec.ts",
+          "line": 13,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar exclusão em massa com AlertDialog de contagem",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 34032,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Pré: criar 3 Pendentes e aprová-los (ficam Emitidos, elegíveis a exclusão)",
+                          "duration": 19217
+                        },
+                        {
+                          "title": "1. Marcar os 3 registros Externos (Emitidos)",
+                          "duration": 1405
+                        },
+                        {
+                          "title": "2. Excluir registros → modal de confirmação com a contagem",
+                          "duration": 1112
+                        },
+                        {
+                          "title": "3. Confirmar → 3 linhas somem da lista",
+                          "duration": 6554
+                        }
+                      ],
+                      "startTime": "2026-06-23T19:31:59.045Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkHDp8O1ZXMgZW0gbWFzc2EgKGVsZWdpYmlsaWRhZGUsIGVzY29wb3MgZSB0b2FzdHMgY29tIHJhdGlvKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGV4Y2x1c8OjbyBlbSBtYXNzYSBjb20gQWxlcnREaWFsb2cgZGUgY29udGFnZW0ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-c78e6-com-AlertDialog-de-contagem-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-c78e6-com-AlertDialog-de-contagem-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-c78e6-com-AlertDialog-de-contagem-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-c78e6-com-AlertDialog-de-contagem-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fa2a9898b0c48219da71-ac091cbe0b7286f38f1d",
+              "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc6-exclusao-em-massa-com-alertdialog-de-contagem.spec.ts",
+              "line": 14,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\acoes-em-massa-elegibilidade-escopos-toasts\\tc7-banner-amarelo-de-escopo-sem-elegiveis.spec.ts",
+      "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc7-banner-amarelo-de-escopo-sem-elegiveis.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Ações em massa (elegibilidade, escopos e toasts com ratio)",
+          "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc7-banner-amarelo-de-escopo-sem-elegiveis.spec.ts",
+          "line": 9,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar banner amarelo de escopo sem elegíveis",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 14763,
+                      "error": {
+                        "message": "Error: apiRequestContext._wrapApiCall: ENOENT: no such file or directory, open 'D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\.playwright-artifacts-1\\traces\\399b86b09c9a57149a4a-49aada56200257d948f0-recording5.network'",
+                        "stack": "Error: apiRequestContext._wrapApiCall: ENOENT: no such file or directory, open 'D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\.playwright-artifacts-1\\traces\\399b86b09c9a57149a4a-49aada56200257d948f0-recording5.network'"
+                      },
+                      "errors": [
+                        {
+                          "message": "Error: apiRequestContext._wrapApiCall: ENOENT: no such file or directory, open 'D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\.playwright-artifacts-1\\traces\\399b86b09c9a57149a4a-49aada56200257d948f0-recording5.network'"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Marcar 3 registros Emitidos (nenhum Pendente)",
+                          "duration": 9058
+                        },
+                        {
+                          "title": "2. Aprovar registros: o BETA NÃO exibe banner amarelo",
+                          "duration": 637
+                        },
+                        {
+                          "title": "3. Trocar para \"Excluir registros\": segue sem banner (Emitidos são elegíveis)",
+                          "duration": 102
+                        }
+                      ],
+                      "startTime": "2026-06-23T19:32:34.711Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkHDp8O1ZXMgZW0gbWFzc2EgKGVsZWdpYmlsaWRhZGUsIGVzY29wb3MgZSB0b2FzdHMgY29tIHJhdGlvKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGJhbm5lciBhbWFyZWxvIGRlIGVzY29wbyBzZW0gZWxlZ8OtdmVpcyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJoaWdoIn1dfX0="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-b6bc3-elo-de-escopo-sem-elegíveis-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-b6bc3-elo-de-escopo-sem-elegíveis-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-b6bc3-elo-de-escopo-sem-elegíveis-chromium\\trace.zip"
+                        }
+                      ]
+                    },
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 15161,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 1,
+                      "steps": [
+                        {
+                          "title": "1. Marcar 3 registros Emitidos (nenhum Pendente)",
+                          "duration": 10719
+                        },
+                        {
+                          "title": "2. Aprovar registros: o BETA NÃO exibe banner amarelo",
+                          "duration": 716
+                        },
+                        {
+                          "title": "3. Trocar para \"Excluir registros\": segue sem banner (Emitidos são elegíveis)",
+                          "duration": 95
+                        }
+                      ],
+                      "startTime": "2026-06-23T19:32:50.641Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkHDp8O1ZXMgZW0gbWFzc2EgKGVsZWdpYmlsaWRhZGUsIGVzY29wb3MgZSB0b2FzdHMgY29tIHJhdGlvKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGJhbm5lciBhbWFyZWxvIGRlIGVzY29wbyBzZW0gZWxlZ8OtdmVpcyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJoaWdoIn1dfX0="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-b6bc3-elo-de-escopo-sem-elegíveis-chromium-retry1\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-b6bc3-elo-de-escopo-sem-elegíveis-chromium-retry1\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-b6bc3-elo-de-escopo-sem-elegíveis-chromium-retry1\\video-1.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-b6bc3-elo-de-escopo-sem-elegíveis-chromium-retry1\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "flaky"
+                }
+              ],
+              "id": "399b86b09c9a57149a4a-49aada56200257d948f0",
+              "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc7-banner-amarelo-de-escopo-sem-elegiveis.spec.ts",
+              "line": 10,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\acoes-em-massa-elegibilidade-escopos-toasts\\tc8-pos-aplicacao-limpeza-selecao-e-refresh-kpi.spec.ts",
+      "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc8-pos-aplicacao-limpeza-selecao-e-refresh-kpi.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Ações em massa (elegibilidade, escopos e toasts com ratio)",
+          "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc8-pos-aplicacao-limpeza-selecao-e-refresh-kpi.spec.ts",
+          "line": 10,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar pós-aplicação: limpeza da seleção e refresh único do KPI",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 25412,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Pré: criar 4 registros Externos Pendentes via API",
+                          "duration": 965
+                        },
+                        {
+                          "title": "1. Anotar KPIs e marcar 4 Pendentes (header em tri-state)",
+                          "duration": 10781
+                        },
+                        {
+                          "title": "2. Executar \"Aprovar registros\" em massa",
+                          "duration": 1768
+                        },
+                        {
+                          "title": "3-4. Após o refresh único: seleção limpa + KPIs -/+N",
+                          "duration": 7016
+                        }
+                      ],
+                      "startTime": "2026-06-23T19:33:06.737Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkHDp8O1ZXMgZW0gbWFzc2EgKGVsZWdpYmlsaWRhZGUsIGVzY29wb3MgZSB0b2FzdHMgY29tIHJhdGlvKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIHDDs3MtYXBsaWNhw6fDo286IGxpbXBlemEgZGEgc2VsZcOnw6NvIGUgcmVmcmVzaCDDum5pY28gZG8gS1BJIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJoaWdoIn1dfX0="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-00e5e-eção-e-refresh-único-do-KPI-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-00e5e-eção-e-refresh-único-do-KPI-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-00e5e-eção-e-refresh-único-do-KPI-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-00e5e-eção-e-refresh-único-do-KPI-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "498ccf1ed5063a86a58b-867351706309df589f0a",
+              "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc8-pos-aplicacao-limpeza-selecao-e-refresh-kpi.spec.ts",
+              "line": 11,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\acoes-em-massa-elegibilidade-escopos-toasts\\tc9-fechamento-do-drawer-preservando-selecao.spec.ts",
+      "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc9-fechamento-do-drawer-preservando-selecao.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Ações em massa (elegibilidade, escopos e toasts com ratio)",
+          "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc9-fechamento-do-drawer-preservando-selecao.spec.ts",
+          "line": 9,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar fechamento do drawer preservando a seleção",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 16561,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Marcar 4 linhas",
+                          "duration": 9378
+                        },
+                        {
+                          "title": "2-3. Abrir o drawer e fechar pelo X",
+                          "duration": 1041
+                        },
+                        {
+                          "title": "As 4 linhas permanecem selecionadas",
+                          "duration": 778
+                        }
+                      ],
+                      "startTime": "2026-06-23T19:33:33.213Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkHDp8O1ZXMgZW0gbWFzc2EgKGVsZWdpYmlsaWRhZGUsIGVzY29wb3MgZSB0b2FzdHMgY29tIHJhdGlvKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGZlY2hhbWVudG8gZG8gZHJhd2VyIHByZXNlcnZhbmRvIGEgc2VsZcOnw6NvIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJtZWRpdW0ifV19fQ=="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-6c5d2-rawer-preservando-a-seleção-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-6c5d2-rawer-preservando-a-seleção-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-6c5d2-rawer-preservando-a-seleção-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-6c5d2-rawer-preservando-a-seleção-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ca10e171f4230ccdfc65-e008a235848f2c97f6c3",
+              "file": "projects/registros-externos/tests/features/acoes-em-massa-elegibilidade-escopos-toasts/tc9-fechamento-do-drawer-preservando-selecao.spec.ts",
+              "line": 10,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-06-23T19:28:58.964Z",
+    "duration": 291927.6,
+    "expected": 8,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 2
+  }
+}

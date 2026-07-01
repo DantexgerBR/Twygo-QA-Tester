@@ -324,6 +324,57 @@ um modal/section grande, conte mentalmente quantos elementos podem
 matchar. ≥2 → quebrar em locator mais específico ou criar helper de
 sub-bloco no Page Object.
 
+## Princípio 7 — Estado visual pós-click em componente Chakra tem transição; pollar, nunca ler imediato
+
+Componentes Chakra (cards, tabs, switches, accordions) animam o estado
+visual via **CSS transition** ao mudar de estado. `border-color`,
+`box-shadow`, `opacity`, classes hasheadas — tudo isso leva alguns ms pra
+assentar depois do click. Se você lê o estado **imediatamente** após o
+`click()` (ou após um poll que só espera o INÍCIO da mudança), pega o valor
+**no meio da transição** — uma cor/opacidade intermediária que não bate com
+o valor final.
+
+Caso real (suite "KPI cards filtro de status (Aluno)", registros-externos,
+2026-06-22): o card ativo adota a cor canônica do status no `border`
+(emitted = `rgb(56, 161, 105)`). Dois falsos-vermelhos auto-introduzidos:
+
+1. **Cor lida no meio da transição**: clicar o card e ler `borderColor`
+   logo em seguida retornava `rgb(106, 182, 145)` (verde claro
+   intermediário) em vez do `rgb(56, 161, 105)` final.
+2. **Desativação não assentada**: ao clicar o card B, o card A perde o
+   estado ativo — mas a transição do `box-shadow` de A sumindo ainda não
+   terminou quando `isActive(A)` era lido → `true` quando já deveria ser
+   `false`.
+
+❌ **Ruim** (lê o estado imediatamente):
+
+```ts
+await card.click();
+expect(await getBorderColor('emitted')).toBe('rgb(56, 161, 105)');   // pega transição
+expect(await isActive('pending')).toBe(false);                       // desativação não assentou
+```
+
+✅ **Bom** (`expect.poll` deixa a transição assentar):
+
+```ts
+await card.click();
+await expect.poll(async () => getBorderColor('emitted'), { timeout: 5_000 })
+  .toBe('rgb(56, 161, 105)');
+await expect.poll(async () => isActive('pending'), { timeout: 5_000 })
+  .toBe(false);
+```
+
+**Regra**: toda asserção sobre **propriedade computada de estilo** ou
+**estado derivado de classe** que muda em resposta a uma interação Chakra
+vai via `expect.poll(...)`, nunca `expect(await leitura())`. Vale pra cor,
+sombra, opacidade, `aria-*` que anima, contagem de classe. Leitura direta
+só é segura pra texto/atributo que muda de forma síncrona (sem transition).
+
+> Cuidado com poll "preguiçoso": um poll que espera só `boxShadow != none`
+> confirma que a ativação **começou**, não que **terminou** — e diz nada
+> sobre a desativação do card anterior. Pollar o valor FINAL exato (a cor
+> canônica, o `false` da desativação), não um proxy de "mudou".
+
 ## Tabela "Sintoma → Causa → Fix"
 
 | Sintoma | Causa | Fix |
@@ -336,6 +387,7 @@ sub-bloco no Page Object.
 | `getByTestId('X').getByPlaceholder('Y')` → `element(s) not found` | testId está no próprio `<input>` (void element, 0 descendants) | Uso direto: `getByTestId('X')` (Princípio 6) |
 | `modal.getByRole('combobox')` → strict mode `resolved to 3 elements` | Modal tem react-select inputs + HTML `<select>` (todos role combobox) | `modal.locator('select')` ou helper específico (Princípio 6 sub-padrão) |
 | `modal.getByText('Aba X')` → strict mode `resolved to 2 elements` | Mesmo texto em label do dropdown + preview | Helper de sub-bloco no Page Object pra escopar (Princípio 6 sub-padrão) |
+| Cor/sombra/estado lido pós-click bate "quase" (cor clara, ativo errado) | Transição CSS Chakra ainda não assentou na leitura | `expect.poll(...)` até o valor FINAL (Princípio 7) |
 
 ## Anti-patterns que generator NÃO deve emitir
 
@@ -352,6 +404,8 @@ sub-bloco no Page Object.
   com testId é `<input>` / `<button>` / `<select>` (void/leaf elements)
 - ❌ `modal.getByRole('combobox')` / `modal.getByText('X')` sem garantir
   que matcha 1 elemento único (verificar via DOM live antes de gerar)
+- ❌ `expect(await getBorderColor()/isActive())` logo após click em
+  componente Chakra com transição — usar `expect.poll` (Princípio 7)
 
 ## Checklist pré-merge de spec novo
 
@@ -375,6 +429,9 @@ for "sim", aplique o fix correspondente:
 7. **Existe `modal.getByRole('combobox')` ou `modal.getByText('X')`
    em escopo amplo?** → verificar via DOM live quantos elementos
    matcham; se ≥2, criar helper de sub-bloco no Page Object.
+8. **Existe `expect(await leitura())` de cor/sombra/opacidade/estado-ativo
+   logo após um click em componente Chakra?** → trocar por
+   `expect.poll(...)` até o valor final (Princípio 7).
 
 ## Quando NÃO usar
 

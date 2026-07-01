@@ -1,0 +1,11 @@
+{
+  "runId": "acoes-em-massa-elegibilidade-escopos-e-toasts-com-ratio_20260623-163425",
+  "mode": "per-suite",
+  "suiteFilter": "Ações em massa (elegibilidade, escopos e toasts com ratio)",
+  "projectName": "Registros de Aprendizagem",
+  "environment": "staging-registros-externos",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-06-23T19:34:25.855Z"
+}

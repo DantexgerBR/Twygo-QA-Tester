@@ -1,0 +1,465 @@
+{
+  "config": {
+    "configFile": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "D:/novo-estudio-twygo/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/novo-estudio-twygo/twygo-agents-qa/agent-playwright/outputs/registros-externos/test-artifacts",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "D:/novo-estudio-twygo/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "tests/auth/**/*.spec.ts",
+          "projects/registros-externos/tests/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/registros-externos/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\registros-externos\\tests\\features\\extracao-evidencias-export-massa-anexos\\tc1-estrutura-zip-pasta-por-pessoa.spec.ts",
+      "file": "projects/registros-externos/tests/features/extracao-evidencias-export-massa-anexos/tc1-estrutura-zip-pasta-por-pessoa.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Extração de dados da Evidência (export em massa de anexos)",
+          "file": "projects/registros-externos/tests/features/extracao-evidencias-export-massa-anexos/tc1-estrutura-zip-pasta-por-pessoa.spec.ts",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar estrutura interna do pacote ZIP de evidências",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "manual",
+                      "description": "Baixar o ZIP (sino/e-mail) e confirmar estrutura de pasta por pessoa com os anexos dentro."
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 16178,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Disparar extração de Evidências sobre escopo de várias pessoas → job criado (201)",
+                          "duration": 10400
+                        },
+                        {
+                          "title": "2. [MANUAL] Baixar o ZIP via notificação do sino e verificar pasta por pessoa",
+                          "duration": 0
+                        }
+                      ],
+                      "startTime": "2026-06-24T14:51:22.677Z",
+                      "annotations": [
+                        {
+                          "type": "manual",
+                          "description": "Baixar o ZIP (sino/e-mail) e confirmar estrutura de pasta por pessoa com os anexos dentro."
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkV4dHJhw6fDo28gZGUgZGFkb3MgZGEgRXZpZMOqbmNpYSAoZXhwb3J0IGVtIG1hc3NhIGRlIGFuZXhvcykifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGVzdHJ1dHVyYSBpbnRlcm5hIGRvIHBhY290ZSBaSVAgZGUgZXZpZMOqbmNpYXMifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-961a2-do-pacote-ZIP-de-evidências-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-961a2-do-pacote-ZIP-de-evidências-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-961a2-do-pacote-ZIP-de-evidências-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-961a2-do-pacote-ZIP-de-evidências-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "74e1c6152b1ad6a93a3f-2a748edb10eb15379c24",
+              "file": "projects/registros-externos/tests/features/extracao-evidencias-export-massa-anexos/tc1-estrutura-zip-pasta-por-pessoa.spec.ts",
+              "line": 22,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\extracao-evidencias-export-massa-anexos\\tc2-log-falhas-parciais.spec.ts",
+      "file": "projects/registros-externos/tests/features/extracao-evidencias-export-massa-anexos/tc2-log-falhas-parciais.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Extração de dados da Evidência (export em massa de anexos)",
+          "file": "projects/registros-externos/tests/features/extracao-evidencias-export-massa-anexos/tc2-log-falhas-parciais.spec.ts",
+          "line": 12,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar registro de falhas parciais no export",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\extracao-evidencias-export-massa-anexos\\tc2-log-falhas-parciais.spec.ts",
+                        "line": 13,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-24T14:51:21.929Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "location": {
+                            "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\extracao-evidencias-export-massa-anexos\\tc2-log-falhas-parciais.spec.ts",
+                            "line": 13,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "7d947f3a8c3e10058a76-38285673dd15a6de405f",
+              "file": "projects/registros-externos/tests/features/extracao-evidencias-export-massa-anexos/tc2-log-falhas-parciais.spec.ts",
+              "line": 13,
+              "column": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\extracao-evidencias-export-massa-anexos\\tc3-split-export-grande-notificacao-unica.spec.ts",
+      "file": "projects/registros-externos/tests/features/extracao-evidencias-export-massa-anexos/tc3-split-export-grande-notificacao-unica.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Extração de dados da Evidência (export em massa de anexos)",
+          "file": "projects/registros-externos/tests/features/extracao-evidencias-export-massa-anexos/tc3-split-export-grande-notificacao-unica.spec.ts",
+          "line": 12,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar split de export grande em múltiplos pacotes com notificação única",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\extracao-evidencias-export-massa-anexos\\tc3-split-export-grande-notificacao-unica.spec.ts",
+                        "line": 13,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-24T14:51:21.929Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "location": {
+                            "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\extracao-evidencias-export-massa-anexos\\tc3-split-export-grande-notificacao-unica.spec.ts",
+                            "line": 13,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "066cb492e619bd85f0df-0b0f6b68dc6f67bd38a4",
+              "file": "projects/registros-externos/tests/features/extracao-evidencias-export-massa-anexos/tc3-split-export-grande-notificacao-unica.spec.ts",
+              "line": 13,
+              "column": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\extracao-evidencias-export-massa-anexos\\tc4-expiracao-link-ttl.spec.ts",
+      "file": "projects/registros-externos/tests/features/extracao-evidencias-export-massa-anexos/tc4-expiracao-link-ttl.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Extração de dados da Evidência (export em massa de anexos)",
+          "file": "projects/registros-externos/tests/features/extracao-evidencias-export-massa-anexos/tc4-expiracao-link-ttl.spec.ts",
+          "line": 11,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar expiração do link de download (TTL)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\extracao-evidencias-export-massa-anexos\\tc4-expiracao-link-ttl.spec.ts",
+                        "line": 12,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-24T14:51:21.929Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "location": {
+                            "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\extracao-evidencias-export-massa-anexos\\tc4-expiracao-link-ttl.spec.ts",
+                            "line": 12,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "33c89c6eb337bee6dd5d-441e692b09561d276327",
+              "file": "projects/registros-externos/tests/features/extracao-evidencias-export-massa-anexos/tc4-expiracao-link-ttl.spec.ts",
+              "line": 12,
+              "column": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\extracao-evidencias-export-massa-anexos\\tc5-inclusao-mirrors.spec.ts",
+      "file": "projects/registros-externos/tests/features/extracao-evidencias-export-massa-anexos/tc5-inclusao-mirrors.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Extração de dados da Evidência (export em massa de anexos)",
+          "file": "projects/registros-externos/tests/features/extracao-evidencias-export-massa-anexos/tc5-inclusao-mirrors.spec.ts",
+          "line": 12,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar inclusão de participantes de conteúdos compartilhados (mirror)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\extracao-evidencias-export-massa-anexos\\tc5-inclusao-mirrors.spec.ts",
+                        "line": 13,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-24T14:51:21.930Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "location": {
+                            "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\extracao-evidencias-export-massa-anexos\\tc5-inclusao-mirrors.spec.ts",
+                            "line": 13,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "bf16990faaa27bf20c96-4a4eb4912b01d7114922",
+              "file": "projects/registros-externos/tests/features/extracao-evidencias-export-massa-anexos/tc5-inclusao-mirrors.spec.ts",
+              "line": 13,
+              "column": 8
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-06-24T14:50:25.637Z",
+    "duration": 75432.205,
+    "expected": 1,
+    "skipped": 4,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
