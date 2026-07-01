@@ -153,6 +153,62 @@
       "editContractPath": "/admin/edit_sys_subscription_settings/37007"
     }
   },
+  "staging-registros-externos": {
+    "baseUrl": "https://registrosf2.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_STAGING_REGISTROS_EXTERNOS_EMAIL}",
+      "password": "${TWYGO_STAGING_REGISTROS_EXTERNOS_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "37079",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/37079"
+    }
+  },
+  "staging-registros-edu": {
+    "baseUrl": "https://registrosexternos.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_STAGING_REGISTROS_EDU_EMAIL}",
+      "password": "${TWYGO_STAGING_REGISTROS_EDU_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "37093",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/37093"
+    }
+  },
+  "staging-registros-externos-aditional": {
+    "baseUrl": "https://registrosf2adicional.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_STAGING_REGISTROS_EXTERNOS_ADITIONAL_EMAIL}",
+      "password": "${TWYGO_STAGING_REGISTROS_EXTERNOS_ADITIONAL_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "37080",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/37079"
+    }
+  },
+  "trial-registros-externos": {
+    "baseUrl": "https://registrostrial.stage.twygoead.com/",
+    "credentials": {
+      "email": "${TWYGO_TRIAL_REGISTROS_EXTERNOS_EMAIL}",
+      "password": "${TWYGO_TRIAL_REGISTROS_EXTERNOS_PASSWORD}"
+    },
+    "timeout": 30000,
+    "orgId": "37078",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/37078"
+    }
+  },
   "staging-recertificacao": {
     "baseUrl": "https://recertificacao-testeqa.stage.twygoead.com/",
     "credentials": {

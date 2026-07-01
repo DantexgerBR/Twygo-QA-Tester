@@ -1,0 +1,1103 @@
+{
+  "config": {
+    "configFile": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "D:/novo-estudio-twygo/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/novo-estudio-twygo/twygo-agents-qa/agent-playwright/outputs/registros-externos/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "D:/novo-estudio-twygo/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "tests/auth/**/*.spec.ts",
+          "projects/registros-externos/tests/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\registros-externos\\tests\\features\\atualizacao-kpis-tempo-real\\tc1-incremento-kpi-apos-adicionar.spec.ts",
+      "file": "projects/registros-externos/tests/features/atualizacao-kpis-tempo-real/tc1-incremento-kpi-apos-adicionar.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Atualização de KPIs em tempo real (ações, expiração e batch)",
+          "file": "projects/registros-externos/tests/features/atualizacao-kpis-tempo-real/tc1-incremento-kpi-apos-adicionar.spec.ts",
+          "line": 17,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar incremento imediato do KPI após Adicionar",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 22979,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar Registros e anotar o número do card \"Pendentes\"",
+                          "duration": 6516
+                        },
+                        {
+                          "title": "2-6. Abrir \"Adicionar\" e preencher o registro externo",
+                          "duration": 7419
+                        },
+                        {
+                          "title": "7. Salvar/enviar o registro → volta para a lista",
+                          "duration": 4942
+                        },
+                        {
+                          "title": "8. Verificar o card \"Pendentes\" incrementou em 1 sem reload",
+                          "duration": 19
+                        }
+                      ],
+                      "startTime": "2026-06-22T20:25:31.009Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkF0dWFsaXphw6fDo28gZGUgS1BJcyBlbSB0ZW1wbyByZWFsIChhw6fDtWVzLCBleHBpcmHDp8OjbyBlIGJhdGNoKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGluY3JlbWVudG8gaW1lZGlhdG8gZG8gS1BJIGFww7NzIEFkaWNpb25hciAoQWx1bm8pIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-ba4dc-diato-do-KPI-após-Adicionar-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-ba4dc-diato-do-KPI-após-Adicionar-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-ba4dc-diato-do-KPI-após-Adicionar-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-ba4dc-diato-do-KPI-após-Adicionar-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2fda31f1cdd1838c9fd7-73462cd05760e40eb73c",
+              "file": "projects/registros-externos/tests/features/atualizacao-kpis-tempo-real/tc1-incremento-kpi-apos-adicionar.spec.ts",
+              "line": 20,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\atualizacao-kpis-tempo-real\\tc2-transicao-kpi-apos-aprovar.spec.ts",
+      "file": "projects/registros-externos/tests/features/atualizacao-kpis-tempo-real/tc2-transicao-kpi-apos-aprovar.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Atualização de KPIs em tempo real (ações, expiração e batch)",
+          "file": "projects/registros-externos/tests/features/atualizacao-kpis-tempo-real/tc2-transicao-kpi-apos-aprovar.spec.ts",
+          "line": 10,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar transição de KPI após Aprovar (-1 Pendentes, +1 Emitidos)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 20122,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Pré: criar 1 registro Externo Pendente via API",
+                          "duration": 263
+                        },
+                        {
+                          "title": "1. Acessar Registros e anotar \"Pendentes\" e \"Emitidos\"",
+                          "duration": 5724
+                        },
+                        {
+                          "title": "2-5. Abrir \"Avaliar\" do registro Pendente e clicar \"Aprovar\"",
+                          "duration": 10437
+                        },
+                        {
+                          "title": "6. \"Pendentes\" -1 e \"Emitidos\" +1 sem reload",
+                          "duration": 40
+                        }
+                      ],
+                      "startTime": "2026-06-22T20:25:54.930Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkF0dWFsaXphw6fDo28gZGUgS1BJcyBlbSB0ZW1wbyByZWFsIChhw6fDtWVzLCBleHBpcmHDp8OjbyBlIGJhdGNoKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIHRyYW5zacOnw6NvIGRlIEtQSSBhcMOzcyBBcHJvdmFyICgtMSBQZW5kZW50ZXMsICsxIEVtaXRpZG9zKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-a6e44-ar--1-Pendentes-1-Emitidos--chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-a6e44-ar--1-Pendentes-1-Emitidos--chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-a6e44-ar--1-Pendentes-1-Emitidos--chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-a6e44-ar--1-Pendentes-1-Emitidos--chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7c03ed4c6626fb7fd902-38b11f31cce3358d5894",
+              "file": "projects/registros-externos/tests/features/atualizacao-kpis-tempo-real/tc2-transicao-kpi-apos-aprovar.spec.ts",
+              "line": 13,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\atualizacao-kpis-tempo-real\\tc3-transicao-kpi-apos-recusar.spec.ts",
+      "file": "projects/registros-externos/tests/features/atualizacao-kpis-tempo-real/tc3-transicao-kpi-apos-recusar.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Atualização de KPIs em tempo real (ações, expiração e batch)",
+          "file": "projects/registros-externos/tests/features/atualizacao-kpis-tempo-real/tc3-transicao-kpi-apos-recusar.spec.ts",
+          "line": 10,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar transição de KPI após Recusar (-1 Pendentes, +1 Recusados)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 20349,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Pré: criar 1 registro Externo Pendente via API",
+                          "duration": 227
+                        },
+                        {
+                          "title": "1. Acessar Registros e anotar \"Pendentes\" e \"Recusados\"",
+                          "duration": 6416
+                        },
+                        {
+                          "title": "2-6. Avaliar → Recusar com justificativa",
+                          "duration": 9982
+                        },
+                        {
+                          "title": "7. \"Pendentes\" -1 e \"Recusados\" +1 sem reload",
+                          "duration": 46
+                        }
+                      ],
+                      "startTime": "2026-06-22T20:26:15.775Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkF0dWFsaXphw6fDo28gZGUgS1BJcyBlbSB0ZW1wbyByZWFsIChhw6fDtWVzLCBleHBpcmHDp8OjbyBlIGJhdGNoKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIHRyYW5zacOnw6NvIGRlIEtQSSBhcMOzcyBSZWN1c2FyICgtMSBQZW5kZW50ZXMsICsxIFJlY3VzYWRvcykifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-76bea-r--1-Pendentes-1-Recusados--chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-76bea-r--1-Pendentes-1-Recusados--chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-76bea-r--1-Pendentes-1-Recusados--chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-76bea-r--1-Pendentes-1-Recusados--chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "98ca14c01ff45ffeb6a9-f05e5ac7cfb341fc5e06",
+              "file": "projects/registros-externos/tests/features/atualizacao-kpis-tempo-real/tc3-transicao-kpi-apos-recusar.spec.ts",
+              "line": 13,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\atualizacao-kpis-tempo-real\\tc4-decremento-kpi-apos-excluir.spec.ts",
+      "file": "projects/registros-externos/tests/features/atualizacao-kpis-tempo-real/tc4-decremento-kpi-apos-excluir.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Atualização de KPIs em tempo real (ações, expiração e batch)",
+          "file": "projects/registros-externos/tests/features/atualizacao-kpis-tempo-real/tc4-decremento-kpi-apos-excluir.spec.ts",
+          "line": 16,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar decremento do KPI após Excluir",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 30536,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[role=\"alertdialog\"], [role=\"dialog\"], .chakra-modal__content').filter({ hasText: /Excluir registro|desfeita|Tem certeza|Confirmação/i }).first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[role=\"alertdialog\"], [role=\"dialog\"], .chakra-modal__content').filter({ hasText: /Excluir registro|desfeita|Tem certeza|Confirmação/i }).first()\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[role=\"alertdialog\"], [role=\"dialog\"], .chakra-modal__content').filter({ hasText: /Excluir registro|desfeita|Tem certeza|Confirmação/i }).first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[role=\"alertdialog\"], [role=\"dialog\"], .chakra-modal__content').filter({ hasText: /Excluir registro|desfeita|Tem certeza|Confirmação/i }).first()\u001b[22m\n\n    at AdminRegistrosPage.deleteRow (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\pages\\AdminRegistrosPage.ts:181:25)\n    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\atualizacao-kpis-tempo-real\\tc4-decremento-kpi-apos-excluir.spec.ts:45:7",
+                        "location": {
+                          "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\pages\\AdminRegistrosPage.ts",
+                          "column": 25,
+                          "line": 181
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39mprojects\\registros-externos\\pages\\AdminRegistrosPage.ts:181\n\n\u001b[0m \u001b[90m 179 |\u001b[39m       \u001b[33m.\u001b[39mfilter({ hasText\u001b[33m:\u001b[39m \u001b[35m/Excluir registro|desfeita|Tem certeza|Confirmação/i\u001b[39m })\n \u001b[90m 180 |\u001b[39m       \u001b[33m.\u001b[39mfirst()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 181 |\u001b[39m     \u001b[36mawait\u001b[39m expect(modal)\u001b[33m.\u001b[39mtoBeVisible({ timeout\u001b[33m:\u001b[39m \u001b[35m10\u001b[39m_000 })\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 182 |\u001b[39m     \u001b[36mawait\u001b[39m modal\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/^Excluir$|Confirmar/i\u001b[39m })\u001b[33m.\u001b[39mfirst()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 183 |\u001b[39m     \u001b[36mawait\u001b[39m expect(modal)\u001b[33m.\u001b[39mtoBeHidden({ timeout\u001b[33m:\u001b[39m \u001b[35m10\u001b[39m_000 })\u001b[33m;\u001b[39m\n \u001b[90m 184 |\u001b[39m   }\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\pages\\AdminRegistrosPage.ts",
+                            "column": 25,
+                            "line": 181
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[role=\"alertdialog\"], [role=\"dialog\"], .chakra-modal__content').filter({ hasText: /Excluir registro|desfeita|Tem certeza|Confirmação/i }).first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[role=\"alertdialog\"], [role=\"dialog\"], .chakra-modal__content').filter({ hasText: /Excluir registro|desfeita|Tem certeza|Confirmação/i }).first()\u001b[22m\n\n\n\u001b[90m   at \u001b[39mprojects\\registros-externos\\pages\\AdminRegistrosPage.ts:181\n\n\u001b[0m \u001b[90m 179 |\u001b[39m       \u001b[33m.\u001b[39mfilter({ hasText\u001b[33m:\u001b[39m \u001b[35m/Excluir registro|desfeita|Tem certeza|Confirmação/i\u001b[39m })\n \u001b[90m 180 |\u001b[39m       \u001b[33m.\u001b[39mfirst()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 181 |\u001b[39m     \u001b[36mawait\u001b[39m expect(modal)\u001b[33m.\u001b[39mtoBeVisible({ timeout\u001b[33m:\u001b[39m \u001b[35m10\u001b[39m_000 })\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 182 |\u001b[39m     \u001b[36mawait\u001b[39m modal\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/^Excluir$|Confirmar/i\u001b[39m })\u001b[33m.\u001b[39mfirst()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 183 |\u001b[39m     \u001b[36mawait\u001b[39m expect(modal)\u001b[33m.\u001b[39mtoBeHidden({ timeout\u001b[33m:\u001b[39m \u001b[35m10\u001b[39m_000 })\u001b[33m;\u001b[39m\n \u001b[90m 184 |\u001b[39m   }\u001b[0m\n\u001b[2m    at AdminRegistrosPage.deleteRow (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\pages\\AdminRegistrosPage.ts:181:25)\u001b[22m\n\u001b[2m    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\atualizacao-kpis-tempo-real\\tc4-decremento-kpi-apos-excluir.spec.ts:45:7\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Pré: criar Pendente e aprovar (→ Emitido, elegível a exclusão)",
+                          "duration": 15936
+                        },
+                        {
+                          "title": "1. Anotar o card \"Emitidos\"",
+                          "duration": 37
+                        },
+                        {
+                          "title": "2-4. Menu 3 pontos → Excluir → confirmar no modal",
+                          "duration": 10565,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[role=\"alertdialog\"], [role=\"dialog\"], .chakra-modal__content').filter({ hasText: /Excluir registro|desfeita|Tem certeza|Confirmação/i }).first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[role=\"alertdialog\"], [role=\"dialog\"], .chakra-modal__content').filter({ hasText: /Excluir registro|desfeita|Tem certeza|Confirmação/i }).first()\u001b[22m\n",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[role=\"alertdialog\"], [role=\"dialog\"], .chakra-modal__content').filter({ hasText: /Excluir registro|desfeita|Tem certeza|Confirmação/i }).first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('[role=\"alertdialog\"], [role=\"dialog\"], .chakra-modal__content').filter({ hasText: /Excluir registro|desfeita|Tem certeza|Confirmação/i }).first()\u001b[22m\n\n    at AdminRegistrosPage.deleteRow (D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\pages\\AdminRegistrosPage.ts:181:25)\n    at D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\atualizacao-kpis-tempo-real\\tc4-decremento-kpi-apos-excluir.spec.ts:45:7",
+                            "location": {
+                              "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\pages\\AdminRegistrosPage.ts",
+                              "column": 25,
+                              "line": 181
+                            },
+                            "snippet": "\u001b[90m   at \u001b[39mprojects\\registros-externos\\pages\\AdminRegistrosPage.ts:181\n\n\u001b[0m \u001b[90m 179 |\u001b[39m       \u001b[33m.\u001b[39mfilter({ hasText\u001b[33m:\u001b[39m \u001b[35m/Excluir registro|desfeita|Tem certeza|Confirmação/i\u001b[39m })\n \u001b[90m 180 |\u001b[39m       \u001b[33m.\u001b[39mfirst()\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 181 |\u001b[39m     \u001b[36mawait\u001b[39m expect(modal)\u001b[33m.\u001b[39mtoBeVisible({ timeout\u001b[33m:\u001b[39m \u001b[35m10\u001b[39m_000 })\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 182 |\u001b[39m     \u001b[36mawait\u001b[39m modal\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m { name\u001b[33m:\u001b[39m \u001b[35m/^Excluir$|Confirmar/i\u001b[39m })\u001b[33m.\u001b[39mfirst()\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 183 |\u001b[39m     \u001b[36mawait\u001b[39m expect(modal)\u001b[33m.\u001b[39mtoBeHidden({ timeout\u001b[33m:\u001b[39m \u001b[35m10\u001b[39m_000 })\u001b[33m;\u001b[39m\n \u001b[90m 184 |\u001b[39m   }\u001b[0m"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-06-22T20:26:36.907Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkF0dWFsaXphw6fDo28gZGUgS1BJcyBlbSB0ZW1wbyByZWFsIChhw6fDtWVzLCBleHBpcmHDp8OjbyBlIGJhdGNoKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGRlY3JlbWVudG8gZG8gS1BJIGFww7NzIEV4Y2x1aXIifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-edf6b-remento-do-KPI-após-Excluir-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-edf6b-remento-do-KPI-após-Excluir-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-edf6b-remento-do-KPI-após-Excluir-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-edf6b-remento-do-KPI-após-Excluir-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-edf6b-remento-do-KPI-após-Excluir-chromium\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\pages\\AdminRegistrosPage.ts",
+                        "column": 25,
+                        "line": 181
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "f0e1dfc170a4935b2583-98ff08f97d7104242a82",
+              "file": "projects/registros-externos/tests/features/atualizacao-kpis-tempo-real/tc4-decremento-kpi-apos-excluir.spec.ts",
+              "line": 19,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\atualizacao-kpis-tempo-real\\tc5-kpi-apos-editar-com-mudanca-status.spec.ts",
+      "file": "projects/registros-externos/tests/features/atualizacao-kpis-tempo-real/tc5-kpi-apos-editar-com-mudanca-status.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Atualização de KPIs em tempo real (ações, expiração e batch)",
+          "file": "projects/registros-externos/tests/features/atualizacao-kpis-tempo-real/tc5-kpi-apos-editar-com-mudanca-status.spec.ts",
+          "line": 17,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar atualização do KPI após Editar com mudança de status",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 30460,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Pré: criar Pendente e aprovar (→ Emitido) via UI",
+                          "duration": 16636
+                        },
+                        {
+                          "title": "1. Anotar \"Emitidos\" e \"Expirados\"",
+                          "duration": 37
+                        },
+                        {
+                          "title": "2-4. Editar o registro Emitido com Data de validade passada e Salvar",
+                          "duration": 9425
+                        },
+                        {
+                          "title": "5. \"Emitidos\" -1 e \"Expirados\" +1 conforme a transição efetiva",
+                          "duration": 43
+                        }
+                      ],
+                      "startTime": "2026-06-22T20:27:09.153Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkF0dWFsaXphw6fDo28gZGUgS1BJcyBlbSB0ZW1wbyByZWFsIChhw6fDtWVzLCBleHBpcmHDp8OjbyBlIGJhdGNoKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGF0dWFsaXphw6fDo28gZG8gS1BJIGFww7NzIEVkaXRhciBjb20gbXVkYW7Dp2EgZGUgc3RhdHVzIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJub3JtYWwifV19fQ=="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-dbd96-ditar-com-mudança-de-status-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-dbd96-ditar-com-mudança-de-status-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-dbd96-ditar-com-mudança-de-status-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-dbd96-ditar-com-mudança-de-status-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "798ef7021bde643fd481-f19654b6d6c3b5cfdf04",
+              "file": "projects/registros-externos/tests/features/atualizacao-kpis-tempo-real/tc5-kpi-apos-editar-com-mudanca-status.spec.ts",
+              "line": 20,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\atualizacao-kpis-tempo-real\\tc6-refresh-unico-apos-acoes-em-massa.spec.ts",
+      "file": "projects/registros-externos/tests/features/atualizacao-kpis-tempo-real/tc6-refresh-unico-apos-acoes-em-massa.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Atualização de KPIs em tempo real (ações, expiração e batch)",
+          "file": "projects/registros-externos/tests/features/atualizacao-kpis-tempo-real/tc6-refresh-unico-apos-acoes-em-massa.spec.ts",
+          "line": 10,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar refresh único do KPI após ações em massa",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 20402,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Pré: criar 5 registros Externos Pendentes via API",
+                          "duration": 1186
+                        },
+                        {
+                          "title": "1. Acessar Registros e anotar \"Pendentes\" e \"Emitidos\"",
+                          "duration": 6442
+                        },
+                        {
+                          "title": "2. Marcar o checkbox dos 5 registros Pendentes",
+                          "duration": 1864
+                        },
+                        {
+                          "title": "3-4. Abrir \"Ações em massa\" → Aprovar registros → Executar",
+                          "duration": 1614
+                        },
+                        {
+                          "title": "5. \"Pendentes\" -N e \"Emitidos\" +N numa única atualização",
+                          "duration": 5233
+                        }
+                      ],
+                      "startTime": "2026-06-22T20:27:41.460Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkF0dWFsaXphw6fDo28gZGUgS1BJcyBlbSB0ZW1wbyByZWFsIChhw6fDtWVzLCBleHBpcmHDp8OjbyBlIGJhdGNoKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIHJlZnJlc2ggw7puaWNvIGRvIEtQSSBhcMOzcyBhw6fDtWVzIGVtIG1hc3NhIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-d6ac5--do-KPI-após-ações-em-massa-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-d6ac5--do-KPI-após-ações-em-massa-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-d6ac5--do-KPI-após-ações-em-massa-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-d6ac5--do-KPI-após-ações-em-massa-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba8e872ce7fb918fa673-ef3965e1f380b8804247",
+              "file": "projects/registros-externos/tests/features/atualizacao-kpis-tempo-real/tc6-refresh-unico-apos-acoes-em-massa.spec.ts",
+              "line": 13,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\atualizacao-kpis-tempo-real\\tc7-kpi-batch-parcial.spec.ts",
+      "file": "projects/registros-externos/tests/features/atualizacao-kpis-tempo-real/tc7-kpi-batch-parcial.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Atualização de KPIs em tempo real (ações, expiração e batch)",
+          "file": "projects/registros-externos/tests/features/atualizacao-kpis-tempo-real/tc7-kpi-batch-parcial.spec.ts",
+          "line": 14,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar KPI refletindo apenas o processado em batch parcial",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 49009,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Pré: criar 7 registros Pendentes e aprovar 3 (→ Emitidos inelegíveis)",
+                          "duration": 35879
+                        },
+                        {
+                          "title": "1. Anotar \"Pendentes\"/\"Emitidos\" e marcar os 7 (4 Pendentes + 3 Emitidos)",
+                          "duration": 2399
+                        },
+                        {
+                          "title": "2-3. Ações em massa → Aprovar registros → Executar",
+                          "duration": 1756
+                        },
+                        {
+                          "title": "4. \"Pendentes\" -4 e \"Emitidos\" +4 (os 3 ignorados não geram delta)",
+                          "duration": 4481
+                        }
+                      ],
+                      "startTime": "2026-06-22T20:28:02.718Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkF0dWFsaXphw6fDo28gZGUgS1BJcyBlbSB0ZW1wbyByZWFsIChhw6fDtWVzLCBleHBpcmHDp8OjbyBlIGJhdGNoKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIEtQSSByZWZsZXRpbmRvIGFwZW5hcyBvIHByb2Nlc3NhZG8gZW0gYmF0Y2ggcGFyY2lhbCJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJub3JtYWwifV19fQ=="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-dc770-processado-em-batch-parcial-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-dc770-processado-em-batch-parcial-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-dc770-processado-em-batch-parcial-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-dc770-processado-em-batch-parcial-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ed4487e51f6976e3e3e6-d82da6bc3dda3d933492",
+              "file": "projects/registros-externos/tests/features/atualizacao-kpis-tempo-real/tc7-kpi-batch-parcial.spec.ts",
+              "line": 17,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\atualizacao-kpis-tempo-real\\tc8-transicao-automatica-emitido-expirado.spec.ts",
+      "file": "projects/registros-externos/tests/features/atualizacao-kpis-tempo-real/tc8-transicao-automatica-emitido-expirado.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Atualização de KPIs em tempo real (ações, expiração e batch)",
+          "file": "projects/registros-externos/tests/features/atualizacao-kpis-tempo-real/tc8-transicao-automatica-emitido-expirado.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar transição automática Emitido → Expirado com tela aberta",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "seed/massa ausente: requer registro com validade cruzando durante a sessão + ciclo de refresh do produto (RN 33, Spike S1)",
+                      "location": {
+                        "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\atualizacao-kpis-tempo-real\\tc8-transicao-automatica-emitido-expirado.spec.ts",
+                        "line": 20,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 771,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-22T20:28:53.219Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "seed/massa ausente: requer registro com validade cruzando durante a sessão + ciclo de refresh do produto (RN 33, Spike S1)",
+                          "location": {
+                            "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\atualizacao-kpis-tempo-real\\tc8-transicao-automatica-emitido-expirado.spec.ts",
+                            "line": 20,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkF0dWFsaXphw6fDo28gZGUgS1BJcyBlbSB0ZW1wbyByZWFsIChhw6fDtWVzLCBleHBpcmHDp8OjbyBlIGJhdGNoKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIHRyYW5zacOnw6NvIGF1dG9tw6F0aWNhIEVtaXRpZG8g4oaSIEV4cGlyYWRvIGNvbSB0ZWxhIGFiZXJ0YSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJub3JtYWwifV19fQ=="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-0f35c--→-Expirado-com-tela-aberta-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-0f35c--→-Expirado-com-tela-aberta-chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-0f35c--→-Expirado-com-tela-aberta-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-0f35c--→-Expirado-com-tela-aberta-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fb2a1574726bc5c28b0d-ed47c1aab226335cc013",
+              "file": "projects/registros-externos/tests/features/atualizacao-kpis-tempo-real/tc8-transicao-automatica-emitido-expirado.spec.ts",
+              "line": 8,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\atualizacao-kpis-tempo-real\\tc9-refresh-kpi-lider-apos-hierarquia.spec.ts",
+      "file": "projects/registros-externos/tests/features/atualizacao-kpis-tempo-real/tc9-refresh-kpi-lider-apos-hierarquia.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Atualização de KPIs em tempo real (ações, expiração e batch)",
+          "file": "projects/registros-externos/tests/features/atualizacao-kpis-tempo-real/tc9-refresh-kpi-lider-apos-hierarquia.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar refresh do KPI do Líder após mudança de hierarquia",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "dependência externa: persona Líder + liderados + remoção via estrutura organizacional (RN 34, Spike S4)",
+                      "location": {
+                        "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\atualizacao-kpis-tempo-real\\tc9-refresh-kpi-lider-apos-hierarquia.spec.ts",
+                        "line": 20,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 747,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-22T20:28:54.144Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "dependência externa: persona Líder + liderados + remoção via estrutura organizacional (RN 34, Spike S4)",
+                          "location": {
+                            "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\atualizacao-kpis-tempo-real\\tc9-refresh-kpi-lider-apos-hierarquia.spec.ts",
+                            "line": 20,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkF0dWFsaXphw6fDo28gZGUgS1BJcyBlbSB0ZW1wbyByZWFsIChhw6fDtWVzLCBleHBpcmHDp8OjbyBlIGJhdGNoKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIHJlZnJlc2ggZG8gS1BJIGRvIEzDrWRlciBhcMOzcyBtdWRhbsOnYSBkZSBoaWVyYXJxdWlhIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJtaW5vciJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-6594c--após-mudança-de-hierarquia-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-6594c--após-mudança-de-hierarquia-chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-6594c--após-mudança-de-hierarquia-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-6594c--após-mudança-de-hierarquia-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3ad026fb119408af2d37-8bd037b609ecd8c739b7",
+              "file": "projects/registros-externos/tests/features/atualizacao-kpis-tempo-real/tc9-refresh-kpi-lider-apos-hierarquia.spec.ts",
+              "line": 8,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-06-22T20:24:57.848Z",
+    "duration": 237375.968,
+    "expected": 6,
+    "skipped": 2,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

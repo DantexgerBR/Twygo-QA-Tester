@@ -1,0 +1,29 @@
+{
+  "runId": "escopo-do-lider-pessoas-inativadas-e-origem-compartilhado_20260625-181746",
+  "scope": "Apenas testsuite contendo \"Escopo do Líder, pessoas inativadas e origem Compartilhado\"",
+  "tests": {
+    "total": 10,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 9,
+    "durationMs": 1468
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 1,
+    "tests": 48,
+    "outOfScope": {
+      "errors": 902,
+      "warnings": 481,
+      "info": 27
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

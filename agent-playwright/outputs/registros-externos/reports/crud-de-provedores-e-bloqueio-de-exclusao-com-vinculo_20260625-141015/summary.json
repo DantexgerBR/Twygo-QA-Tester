@@ -1,0 +1,29 @@
+{
+  "runId": "crud-de-provedores-e-bloqueio-de-exclusao-com-vinculo_20260625-141015",
+  "scope": "Apenas testsuite contendo \"CRUD de Provedores e bloqueio de exclusão com vínculo\"",
+  "tests": {
+    "total": 10,
+    "passed": 9,
+    "failed": 1,
+    "skipped": 0,
+    "durationMs": 318142
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 1,
+    "tests": 34,
+    "outOfScope": {
+      "errors": 747,
+      "warnings": 391,
+      "info": 19
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

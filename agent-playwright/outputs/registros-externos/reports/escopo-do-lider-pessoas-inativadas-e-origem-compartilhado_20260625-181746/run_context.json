@@ -1,0 +1,11 @@
+{
+  "runId": "escopo-do-lider-pessoas-inativadas-e-origem-compartilhado_20260625-181746",
+  "mode": "per-suite",
+  "suiteFilter": "Escopo do Líder, pessoas inativadas e origem Compartilhado",
+  "projectName": "Registros de Aprendizagem",
+  "environment": "staging-registros-externos",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-06-25T21:17:46.683Z"
+}

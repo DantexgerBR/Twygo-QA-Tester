@@ -1,0 +1,94 @@
+{
+  "generatedAt": "2026-06-22T20:13:22.740Z",
+  "project": "registros-externos",
+  "totalRed": 1,
+  "reports": [
+    {
+      "id": "kpi-cards-como-dashboard-estatico-admin-lider__validar-tooltips-no-tom-institucional-do-admin",
+      "title": "Validar tooltips no tom institucional do Admin — Error: expect(received).toBe(expected) // Object.is equality",
+      "testsuite": "KPI cards como dashboard estático (Admin/Líder)",
+      "testcase": "Validar tooltips no tom institucional do Admin",
+      "file": "projects/registros-externos/tests/features/kpi-cards-dashboard-estatico-admin-lider/validar-tooltips-no-tom-institucional-do-admin.spec.ts",
+      "status": "failed",
+      "durationMs": 12672,
+      "categoriaSugerida": "inconclusivo",
+      "categoriaConfianca": "baixa",
+      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
+      "severity": "media",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-registros-externos",
+        "baseUrl": "https://registrosf2.stage.twygoead.com/",
+        "orgId": "37079",
+        "browser": "chromium",
+        "user": "richard.sebold@twygo.com"
+      },
+      "buildCommit": "1d6a322",
+      "generatedAt": "2026-06-22T20:13:22.740Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Acessar \"Aprendizagem > Registros\" como Admin",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "2. Tooltip do card \"Emitidos\"",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"Registros aprovados e dentro do prazo de validade na organização.\"\nReceived: \"Registros com certificado emitido e válido.\"",
+      "errorLocation": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\kpi-cards-dashboard-estatico-admin-lider\\validar-tooltips-no-tom-institucional-do-admin.spec.ts:27:54",
+      "network": [
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        }
+      ],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "C:/Users/richa/.claude/jobs/b80b2ee8/tmp/final-art/projects-registros-externo-b015c--tom-institucional-do-Admin-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "C:/Users/richa/.claude/jobs/b80b2ee8/tmp/final-art/projects-registros-externo-b015c--tom-institucional-do-Admin-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "C:/Users/richa/.claude/jobs/b80b2ee8/tmp/final-art/projects-registros-externo-b015c--tom-institucional-do-Admin-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "C:/Users/richa/.claude/jobs/b80b2ee8/tmp/final-art/projects-registros-externo-b015c--tom-institucional-do-Admin-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "C:/Users/richa/.claude/jobs/b80b2ee8/tmp/final-art/projects-registros-externo-b015c--tom-institucional-do-Admin-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37079",
+        "userId": null
+      }
+    }
+  ]
+}

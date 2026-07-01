@@ -1,0 +1,29 @@
+{
+  "runId": "avaliar-registro-externo-pendente-aprovar-recusar-com-justificativa_20260625-171501",
+  "scope": "Apenas testsuite contendo \"Avaliar registro externo pendente (Aprovar/Recusar com justificativa)\"",
+  "tests": {
+    "total": 9,
+    "passed": 4,
+    "failed": 4,
+    "skipped": 1,
+    "durationMs": 234449
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 1,
+    "tests": 47,
+    "outOfScope": {
+      "errors": 900,
+      "warnings": 479,
+      "info": 27
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

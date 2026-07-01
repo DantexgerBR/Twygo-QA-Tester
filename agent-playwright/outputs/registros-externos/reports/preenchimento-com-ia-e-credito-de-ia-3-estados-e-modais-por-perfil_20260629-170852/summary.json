@@ -1,0 +1,29 @@
+{
+  "runId": "preenchimento-com-ia-e-credito-de-ia-3-estados-e-modais-por-perfil_20260629-170852",
+  "scope": "Apenas testsuite contendo \"Preenchimento com IA e crédito de IA (3 estados e modais por perfil)\"",
+  "tests": {
+    "total": 14,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 9,
+    "durationMs": 117211
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 1,
+    "tests": 62,
+    "outOfScope": {
+      "errors": 589,
+      "warnings": 367,
+      "info": 31
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

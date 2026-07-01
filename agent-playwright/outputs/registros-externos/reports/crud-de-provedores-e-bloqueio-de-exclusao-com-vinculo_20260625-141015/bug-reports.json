@@ -1,0 +1,204 @@
+{
+  "generatedAt": "2026-06-25T17:10:14.365Z",
+  "project": "registros-externos",
+  "totalRed": 1,
+  "reports": [
+    {
+      "id": "crud-de-provedores-e-bloqueio-de-exclusao-com-vinculo__validacoes-do-campo-nome-do-provedor",
+      "title": "Validações do campo \"Nome\" do provedor — Error: \"Emoji\" deveria ser aceito",
+      "testsuite": "CRUD de Provedores e bloqueio de exclusão com vínculo",
+      "testcase": "Validações do campo \"Nome\" do provedor",
+      "file": "projects/registros-externos/tests/features/crud-de-provedores-bloqueio-exclusao-vinculo/tc3-validacoes-campo-nome.spec.ts",
+      "status": "failed",
+      "durationMs": 88488,
+      "categoriaSugerida": "inconclusivo",
+      "categoriaConfianca": "baixa",
+      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
+      "severity": "media",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-registros-externos",
+        "baseUrl": "https://registrosf2.stage.twygoead.com/",
+        "orgId": "37079",
+        "browser": "chromium",
+        "user": "dante.tavares@twygo.com"
+      },
+      "buildCommit": "003cf2c",
+      "generatedAt": "2026-06-25T17:10:14.365Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "Cenário \"Vazio\" → bloqueado",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "Cenário \"Só espaços\" → bloqueado",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 3,
+          "action": "Cenário \"1 caractere\" → aceito",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 4,
+          "action": "Cenário \"Acentos\" → aceito",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 5,
+          "action": "Cenário \"Emoji\" → aceito",
+          "status": "failed",
+          "errorAtStep": true
+        },
+        {
+          "n": 6,
+          "action": "Cenário \"Script tag\" → aceito",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 7,
+          "action": "Cenário \"SQL injection\" → aceito",
+          "status": "passed",
+          "errorAtStep": false
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: \"Emoji\" deveria ser aceito\n\nexpect(received).toMatch(expected)\n\nExpected pattern: /tab=event-sources-tab/\nReceived string:  \"https://registrosf2.stage.twygoead.com/o/37079/event_sources/new\"",
+      "errorLocation": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\crud-de-provedores-bloqueio-exclusao-vinculo\\tc3-validacoes-campo-nome.spec.ts:56:74",
+      "network": [
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "POST",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/event_sources",
+          "status": 500,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        }
+      ],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-registros-externo-16a9d-s-do-campo-Nome-do-provedor-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-16a9d-s-do-campo-Nome-do-provedor-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-16a9d-s-do-campo-Nome-do-provedor-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-registros-externo-16a9d-s-do-campo-Nome-do-provedor-chromium/error-context.md"
+        },
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-registros-externo-16a9d-s-do-campo-Nome-do-provedor-chromium/test-failed-2.png"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-registros-externo-16a9d-s-do-campo-Nome-do-provedor-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-registros-externo-16a9d-s-do-campo-Nome-do-provedor-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37079",
+        "userId": null
+      }
+    }
+  ]
+}

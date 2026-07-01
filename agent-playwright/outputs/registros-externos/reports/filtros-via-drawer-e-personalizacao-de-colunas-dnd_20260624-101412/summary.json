@@ -1,0 +1,29 @@
+{
+  "runId": "filtros-via-drawer-e-personalizacao-de-colunas-dnd_20260624-101412",
+  "scope": "Apenas testsuite contendo \"Filtros via drawer e personalização de colunas (DnD)\"",
+  "tests": {
+    "total": 10,
+    "passed": 6,
+    "failed": 0,
+    "skipped": 4,
+    "durationMs": 97026
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 1,
+    "tests": 151,
+    "outOfScope": {
+      "errors": 1435,
+      "warnings": 850,
+      "info": 82
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

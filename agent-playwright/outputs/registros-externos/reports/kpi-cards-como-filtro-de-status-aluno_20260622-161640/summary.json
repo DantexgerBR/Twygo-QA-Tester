@@ -1,0 +1,29 @@
+{
+  "runId": "kpi-cards-como-filtro-de-status-aluno_20260622-161640",
+  "scope": "Apenas testsuite contendo \"KPI cards como filtro de status (Aluno)\"",
+  "tests": {
+    "total": 10,
+    "passed": 9,
+    "failed": 0,
+    "skipped": 1,
+    "durationMs": 82751
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 1,
+    "tests": 86,
+    "outOfScope": {
+      "errors": 897,
+      "warnings": 533,
+      "info": 51
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

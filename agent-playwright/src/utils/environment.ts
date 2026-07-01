@@ -84,20 +84,35 @@ function expandEnvRefs<T>(value: T, ctx = 'environment.json'): T {
   return value;
 }
 
+/**
+ * Carrega o `environment.json` CRU (placeholders `${VAR}` NÃO expandidos),
+ * cacheado. Expansão acontece por-entrada (ver `expandEntry`) só quando uma
+ * entrada é efetivamente selecionada — assim quem roda só 1 projeto não precisa
+ * preencher credenciais das orgs que não usa.
+ */
 function loadAll(): EnvFile {
   if (cachedAll) return cachedAll;
-  const raw = JSON.parse(
+  cachedAll = JSON.parse(
     readFileSync(resolve(process.cwd(), FILES.environment), 'utf-8'),
   ) as EnvFile;
-  cachedAll = expandEnvRefs(raw, FILES.environment);
   return cachedAll;
 }
 
 /**
- * Carrega `config/environment.json` com placeholders `${VAR}` já expandidos
- * via `process.env`. Use este helper em vez de `JSON.parse(readFileSync(...))`
- * direto — caso contrário credenciais vazam como `${TWYGO_STAGING_PASSWORD}`
- * literal nos requests.
+ * Expande os `${VAR}` de UMA entrada. Lança apenas pelas vars referenciadas
+ * naquela entrada — não pelas das demais orgs no arquivo.
+ */
+function expandEntry(name: string, entry: EnvEntry): EnvEntry {
+  return expandEnvRefs(entry, `${FILES.environment} (env "${name}")`);
+}
+
+/**
+ * Carrega `config/environment.json` CRU (com placeholders `${VAR}` literais).
+ * Use APENAS para enumerar nomes de env ou checar existência (`Object.keys`,
+ * `name in config`). Para obter `baseUrl`/credenciais já resolvidos, use
+ * `getEnvByName()` ou `getCurrentEnv()` — eles expandem só a entrada pedida.
+ * NÃO leia `.credentials`/`.baseUrl` do retorno desta função direto, senão
+ * pega `${TWYGO_...}` literal.
  */
 export function loadEnvironmentConfig(): EnvFile {
   return loadAll();
@@ -231,19 +246,18 @@ export function resolveProjectPath(relativePath: string, slug?: string): string 
  * hardcodar. Substitui literais como `https://stage10.stage.twygoead.com`
  * ou `36602` espalhados em testes — quebra ao trocar de ambiente.
  *
+ * Override em runtime: `TWYGO_ENV=<nome>` sobrepõe o env do project.config.json
+ * sem editar esse arquivo (que é versionado/compartilhado). Útil para rodar
+ * contra uma org isolada/pessoal (ex.: `TWYGO_ENV=staging-registros-edu`) sem
+ * redirecionar a branch inteira. Se não definido, usa `project.config.json`.
+ *
  * Veja CLAUDE.md §7.6 (anti-pattern B).
  */
 export function getCurrentEnv(): { name: string; entry: EnvEntry } {
   if (cachedCurrent) return cachedCurrent;
   const proj = loadProjectConfig();
-  const all = loadAll();
-  const entry = all[proj.environment];
-  if (!entry) {
-    throw new Error(
-      `Environment "${proj.environment}" não encontrado em ${FILES.environment}`,
-    );
-  }
-  cachedCurrent = { name: proj.environment, entry };
+  const envName = process.env.TWYGO_ENV?.trim() || proj.environment;
+  cachedCurrent = { name: envName, entry: getEnvByName(envName) };
   return cachedCurrent;
 }
 
@@ -252,7 +266,7 @@ export function getEnvByName(name: string): EnvEntry {
   if (!entry) {
     throw new Error(`Environment "${name}" não encontrado em ${FILES.environment}`);
   }
-  return entry;
+  return expandEntry(name, entry);
 }
 
 export function getBaseUrl(): string {

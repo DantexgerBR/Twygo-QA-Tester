@@ -1,0 +1,423 @@
+{
+  "generatedAt": "2026-06-25T20:15:00.266Z",
+  "project": "registros-externos",
+  "totalRed": 4,
+  "reports": [
+    {
+      "id": "avaliar-registro-externo-pendente-aprovar-recusar-com-justificativa__validar-disponibilidade-do-avaliar-como-item-primario-do-menu",
+      "title": "Validar disponibilidade do \"Avaliar\" como item primário do menu — Error: RN50: Externo Pendente não deve ter Editar/Excluir (achou: edit",
+      "testsuite": "Avaliar registro externo pendente (Aprovar/Recusar com justificativa)",
+      "testcase": "Validar disponibilidade do \"Avaliar\" como item primário do menu",
+      "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc1-disponibilidade-avaliar-no-menu.spec.ts",
+      "status": "failed",
+      "durationMs": 13540,
+      "categoriaSugerida": "inconclusivo",
+      "categoriaConfianca": "baixa",
+      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
+      "severity": "media",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-registros-externos",
+        "baseUrl": "https://registrosf2.stage.twygoead.com/",
+        "orgId": "37079",
+        "browser": "chromium",
+        "user": "dante.tavares@twygo.com"
+      },
+      "buildCommit": "e6637f3",
+      "generatedAt": "2026-06-25T20:15:00.266Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "Pré: criar registro Externo Pendente",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "1. Menu do Externo Pendente: \"Avaliar\" primário, sem Editar/Excluir (RN50)",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: RN50: Externo Pendente não deve ter Editar/Excluir (achou: edit\nEditar, delete\nExcluir)\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 6\n\n- Array []\n+ Array [\n+   \"edit\n+ Editar\",\n+   \"delete\n+ Excluir\",\n+ ]",
+      "errorLocation": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc1-disponibilidade-avaliar-no-menu.spec.ts:42:112",
+      "network": [
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        }
+      ],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-registros-externo-804be--como-item-primário-do-menu-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-804be--como-item-primário-do-menu-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-804be--como-item-primário-do-menu-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-registros-externo-804be--como-item-primário-do-menu-chromium/error-context.md"
+        },
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-registros-externo-804be--como-item-primário-do-menu-chromium/test-failed-2.png"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-registros-externo-804be--como-item-primário-do-menu-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-registros-externo-804be--como-item-primário-do-menu-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37079",
+        "userId": null
+      }
+    },
+    {
+      "id": "avaliar-registro-externo-pendente-aprovar-recusar-com-justificativa__validar-form-em-modo-avaliacao-banner-campos-e-rodape",
+      "title": "Validar form em modo avaliação (banner, campos e rodapé) — Error: RN51: banner \"Avaliação pendente\" ausente",
+      "testsuite": "Avaliar registro externo pendente (Aprovar/Recusar com justificativa)",
+      "testcase": "Validar form em modo avaliação (banner, campos e rodapé)",
+      "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc2-form-modo-avaliacao.spec.ts",
+      "status": "failed",
+      "durationMs": 26766,
+      "categoriaSugerida": "inconclusivo",
+      "categoriaConfianca": "baixa",
+      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
+      "severity": "media",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-registros-externos",
+        "baseUrl": "https://registrosf2.stage.twygoead.com/",
+        "orgId": "37079",
+        "browser": "chromium",
+        "user": "dante.tavares@twygo.com"
+      },
+      "buildCommit": "e6637f3",
+      "generatedAt": "2026-06-25T20:15:00.266Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "Pré: criar Externo Pendente e abrir \"Avaliar\"",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "2. Banner amarelo \"Avaliação pendente\"",
+          "status": "failed",
+          "errorAtStep": true
+        },
+        {
+          "n": 3,
+          "action": "3. Demais campos desabilitados (ex.: Carga horária)",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 4,
+          "action": "5. Rodapé com Aprovar, Recusar e Cancelar",
+          "status": "passed",
+          "errorAtStep": false
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: RN51: banner \"Avaliação pendente\" ausente\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByText(/Avaliação pendente/i).first()\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n  - RN51: banner \"Avaliação pendente\" ausente with timeout 8000ms\n  - waiting for getByText(/Avaliação pendente/i).first()\n",
+      "errorLocation": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc2-form-modo-avaliacao.spec.ts:41:91",
+      "network": [
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        }
+      ],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-registros-externo-945ec-ção-banner-campos-e-rodapé--chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-945ec-ção-banner-campos-e-rodapé--chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-945ec-ção-banner-campos-e-rodapé--chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-registros-externo-945ec-ção-banner-campos-e-rodapé--chromium/error-context.md"
+        },
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-registros-externo-945ec-ção-banner-campos-e-rodapé--chromium/test-failed-2.png"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-registros-externo-945ec-ção-banner-campos-e-rodapé--chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-registros-externo-945ec-ção-banner-campos-e-rodapé--chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37079",
+        "userId": null
+      }
+    },
+    {
+      "id": "avaliar-registro-externo-pendente-aprovar-recusar-com-justificativa__validar-obrigatoriedade-do-tipo-de-experiencia-ao-aprovar",
+      "title": "Validar obrigatoriedade do Tipo de experiência ao Aprovar — Error: expect(locator).toBeVisible() failed",
+      "testsuite": "Avaliar registro externo pendente (Aprovar/Recusar com justificativa)",
+      "testcase": "Validar obrigatoriedade do Tipo de experiência ao Aprovar",
+      "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc3-obrigatoriedade-tipo-ao-aprovar.spec.ts",
+      "status": "failed",
+      "durationMs": 28918,
+      "categoriaSugerida": "inconclusivo",
+      "categoriaConfianca": "baixa",
+      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
+      "severity": "media",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-registros-externos",
+        "baseUrl": "https://registrosf2.stage.twygoead.com/",
+        "orgId": "37079",
+        "browser": "chromium",
+        "user": "dante.tavares@twygo.com"
+      },
+      "buildCommit": "e6637f3",
+      "generatedAt": "2026-06-25T20:15:00.266Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "Pré: criar Externo Pendente e abrir \"Avaliar\"",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "2. Aprovar com Tipo vazio → \"Campo obrigatório\", não aprova",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: expect(locator).toBeVisible() failed\n\nLocator: locator('.chakra-form-control').filter({ has: locator('label').filter({ hasText: /^Tipo de experiência/ }) }).first().getByText(/Campo obrigatório/i).first()\nExpected: visible\nTimeout: 8000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 8000ms\n  - waiting for locator('.chakra-form-control').filter({ has: locator('label').filter({ hasText: /^Tipo de experiência/ }) }).first().getByText(/Campo obrigatório/i).first()\n    - waiting for\" https://registrosf2.stage.twygoead.com/o/37079/records\" navigation to finish...\n    - navigated to \"https://registrosf2.stage.twygoead.com/o/37079/records\"\n",
+      "errorLocation": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\avaliar-registro-externo-pendente\\tc3-obrigatoriedade-tipo-ao-aprovar.spec.ts:42:36",
+      "network": [
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        }
+      ],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-registros-externo-1601e-o-de-experiência-ao-Aprovar-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-1601e-o-de-experiência-ao-Aprovar-chromium/video.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-1601e-o-de-experiência-ao-Aprovar-chromium/video-1.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-registros-externo-1601e-o-de-experiência-ao-Aprovar-chromium/error-context.md"
+        },
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-registros-externo-1601e-o-de-experiência-ao-Aprovar-chromium/test-failed-2.png"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-registros-externo-1601e-o-de-experiência-ao-Aprovar-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-registros-externo-1601e-o-de-experiência-ao-Aprovar-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37079",
+        "userId": null
+      }
+    },
+    {
+      "id": "avaliar-registro-externo-pendente-aprovar-recusar-com-justificativa__validar-fluxo-completo-de-recusa-e-visibilidade-da-justificativa",
+      "title": "Validar fluxo completo de recusa e visibilidade da justificativa — Error: expect(locator).toBeVisible() failed",
+      "testsuite": "Avaliar registro externo pendente (Aprovar/Recusar com justificativa)",
+      "testcase": "Validar fluxo completo de recusa e visibilidade da justificativa",
+      "file": "projects/registros-externos/tests/features/avaliar-registro-externo-pendente/tc6-fluxo-completo-recusa-e-historico.spec.ts",
+      "status": "failed",
+      "durationMs": 43779,
+      "categoriaSugerida": "inconclusivo",
+      "categoriaConfianca": "baixa",
+      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
+      "severity": "media",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-registros-externos",
+        "baseUrl": "https://registrosf2.stage.twygoead.com/",
+        "orgId": "37079",
+        "browser": "chromium",
+        "user": "dante.tavares@twygo.com"
+      },
+      "buildCommit": "e6637f3",
+      "generatedAt": "2026-06-25T20:15:00.266Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "Pré: criar Externo Pendente e abrir \"Avaliar\"",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "1-3. Recusar com justificativa → registro fica Recusado",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 3,
+          "action": "4. Histórico do registro recusado exibe a justificativa",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: expect(locator).toBeVisible() failed\n\nLocator: locator('.chakra-modal__content, [role=\"dialog\"]').filter({ hasText: /Histórico/i }).first()\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 10000ms\n  - waiting for locator('.chakra-modal__content, [role=\"dialog\"]').filter({ hasText: /Histórico/i }).first()\n",
+      "errorLocation": "D:\\Estudo\\Programação\\cursor\\twygo-work\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\pages\\AvaliarRegistroPage.ts:186:26",
+      "network": [
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        },
+        {
+          "method": "GET",
+          "url": "https://registrosf2.stage.twygoead.com/api/v1/o/37079/beta_test/get_active_beta_test_notification?feature_name=registros_avaliacao&with_notification_history=true",
+          "status": 400,
+          "inScope": false
+        }
+      ],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-registros-externo-791e8-sibilidade-da-justificativa-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-791e8-sibilidade-da-justificativa-chromium/video.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-registros-externo-791e8-sibilidade-da-justificativa-chromium/video-1.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-registros-externo-791e8-sibilidade-da-justificativa-chromium/error-context.md"
+        },
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-registros-externo-791e8-sibilidade-da-justificativa-chromium/test-failed-2.png"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-registros-externo-791e8-sibilidade-da-justificativa-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-registros-externo-791e8-sibilidade-da-justificativa-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37079",
+        "userId": null
+      }
+    }
+  ]
+}

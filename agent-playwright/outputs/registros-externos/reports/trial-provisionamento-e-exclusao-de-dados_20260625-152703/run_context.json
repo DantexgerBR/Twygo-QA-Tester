@@ -1,0 +1,11 @@
+{
+  "runId": "trial-provisionamento-e-exclusao-de-dados_20260625-152703",
+  "mode": "per-suite",
+  "suiteFilter": "Trial (provisionamento e exclusão de dados)",
+  "projectName": "Registros de Aprendizagem",
+  "environment": "staging-registros-externos",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-06-25T18:27:03.427Z"
+}

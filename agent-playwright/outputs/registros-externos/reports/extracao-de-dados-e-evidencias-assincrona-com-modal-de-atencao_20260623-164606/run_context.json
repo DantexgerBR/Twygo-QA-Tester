@@ -1,0 +1,11 @@
+{
+  "runId": "extracao-de-dados-e-evidencias-assincrona-com-modal-de-atencao_20260623-164606",
+  "mode": "per-suite",
+  "suiteFilter": "Extração de dados e evidências (assíncrona com modal de atenção)",
+  "projectName": "Registros de Aprendizagem",
+  "environment": "staging-registros-externos",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-06-23T19:46:06.337Z"
+}

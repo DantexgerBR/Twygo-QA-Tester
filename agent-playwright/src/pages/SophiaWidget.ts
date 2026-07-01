@@ -72,6 +72,19 @@ export class SophiaWidget {
       .filter({ hasText: 'Escolha quais informações você deseja excluir' });
   }
 
+  /** Container do modal "Excluir informações" — independe do estado interno
+   * (form de seleção OU progresso de uma exclusão em andamento). */
+  getDeleteModalContainer(): Locator {
+    return this.page.locator('.chakra-modal__content').filter({ hasText: 'Excluir informações' });
+  }
+
+  /** Texto de progresso exibido quando JÁ existe uma exclusão em andamento
+   * (job async de uma exclusão anterior). Ex.: "Estou trabalhando nisso, já
+   * exclui 65% dos dados.". */
+  getDeletionInProgress(): Locator {
+    return this.getDeleteModalContainer().getByText(/Estou trabalhando nisso|já exclu/i);
+  }
+
   /**
    * Row da opção (`<div.css-uqr5jf>`) que contém o checkbox + o span de texto.
    * Localiza pelo span exato e sobe pro pai.
@@ -128,6 +141,20 @@ export class SophiaWidget {
     });
     await this.getPopoverHeader().waitFor({ state: 'visible' });
     await this.getDeleteInfoOption().click();
+    await this.getDeleteModalContainer().waitFor({ state: 'visible' });
+
+    // Se uma exclusão anterior ainda está rodando (job async), o modal mostra
+    // o progresso ("já exclui X%") em vez do form de seleção. Esperar concluir
+    // e reabrir o form. Descoberto live 2026-06-25: TC3 (SophiaTech) e TC4
+    // (total) rodando em sequência colidiam — a exclusão do TC3 seguia async
+    // ao abrir o modal do TC4. Ver skill testar-exclusao-dados-trial-twygo.
+    if ((await this.getDeletionInProgress().count()) > 0) {
+      await this.getDeletionInProgress().waitFor({ state: 'hidden', timeout: 300_000 });
+      if ((await this.getDeleteModal().count()) === 0) {
+        await this.getDeleteInfoOption().click();
+      }
+    }
+
     await this.getDeleteModal().waitFor({ state: 'visible' });
   }
 

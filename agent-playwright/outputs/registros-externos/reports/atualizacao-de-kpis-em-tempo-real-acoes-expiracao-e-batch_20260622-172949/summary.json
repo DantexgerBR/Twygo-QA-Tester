@@ -1,0 +1,29 @@
+{
+  "runId": "atualizacao-de-kpis-em-tempo-real-acoes-expiracao-e-batch_20260622-172949",
+  "scope": "Apenas testsuite contendo \"Atualização de KPIs em tempo real (ações, expiração e batch)\"",
+  "tests": {
+    "total": 9,
+    "passed": 6,
+    "failed": 1,
+    "skipped": 2,
+    "durationMs": 195375
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 1,
+    "tests": 98,
+    "outOfScope": {
+      "errors": 1041,
+      "warnings": 600,
+      "info": 59
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

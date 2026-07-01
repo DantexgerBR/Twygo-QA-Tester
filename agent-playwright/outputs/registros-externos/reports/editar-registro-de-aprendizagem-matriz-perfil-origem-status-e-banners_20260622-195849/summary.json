@@ -1,0 +1,29 @@
+{
+  "runId": "editar-registro-de-aprendizagem-matriz-perfil-origem-status-e-banners_20260622-195849",
+  "scope": "Apenas testsuite contendo \"Editar registro de aprendizagem (matriz perfil × origem × status e banners)\"",
+  "tests": {
+    "total": 10,
+    "passed": 2,
+    "failed": 8,
+    "skipped": 0,
+    "durationMs": 364051
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 1,
+    "tests": 98,
+    "outOfScope": {
+      "errors": 1041,
+      "warnings": 600,
+      "info": 59
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

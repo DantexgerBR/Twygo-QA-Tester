@@ -1,0 +1,11 @@
+{
+  "runId": "kpi-cards-como-dashboard-estatico-admin-lider_20260622-171323",
+  "mode": "per-suite",
+  "suiteFilter": "KPI cards como dashboard estático (Admin/Líder)",
+  "projectName": "Registros de Aprendizagem",
+  "environment": "staging-registros-externos",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-06-22T20:13:23.758Z"
+}

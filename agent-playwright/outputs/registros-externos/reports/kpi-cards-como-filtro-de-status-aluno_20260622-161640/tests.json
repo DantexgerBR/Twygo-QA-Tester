@@ -1,0 +1,1150 @@
+{
+  "config": {
+    "configFile": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "D:/novo-estudio-twygo/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/novo-estudio-twygo/twygo-agents-qa/agent-playwright/outputs/registros-externos/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "D:/novo-estudio-twygo/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "tests/auth/**/*.spec.ts",
+          "projects/registros-externos/tests/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/registros-externos/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\registros-externos\\tests\\features\\kpi-cards-filtro-status-aluno\\validar-card-com-contagem-zero-clicavel-levando-ao-empty-state.spec.ts",
+      "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-card-com-contagem-zero-clicavel-levando-ao-empty-state.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "KPI cards como filtro de status (Aluno)",
+          "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-card-com-contagem-zero-clicavel-levando-ao-empty-state.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar card com contagem 0 clicável levando ao empty state",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9664,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Card com 0 exibe \"0\" bold e anel cinza, idêntico aos demais",
+                          "duration": 6065
+                        },
+                        {
+                          "title": "2. Clicar no card 0 — ganha ativo e lista mostra empty state",
+                          "duration": 439
+                        },
+                        {
+                          "title": "3. Clicar novamente — filtro desativa e lista volta",
+                          "duration": 568
+                        }
+                      ],
+                      "startTime": "2026-06-22T19:01:32.545Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IktQSSBjYXJkcyBjb21vIGZpbHRybyBkZSBzdGF0dXMgKEFsdW5vKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGNhcmQgY29tIGNvbnRhZ2VtIDAgY2xpY8OhdmVsIGxldmFuZG8gYW8gZW1wdHkgc3RhdGUifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InRhZyIsInZhbHVlIjoiUkVWSUVXX05FRURFRCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-4e0cf-ável-levando-ao-empty-state-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-4e0cf-ável-levando-ao-empty-state-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-4e0cf-ável-levando-ao-empty-state-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-4e0cf-ável-levando-ao-empty-state-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d51a148f49107363c606-49c208a52f8b6ce65904",
+              "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-card-com-contagem-zero-clicavel-levando-ao-empty-state.spec.ts",
+              "line": 9,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\kpi-cards-filtro-status-aluno\\validar-clique-no-card-aplicando-filtro-de-status.spec.ts",
+      "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-clique-no-card-aplicando-filtro-de-status.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "KPI cards como filtro de status (Aluno)",
+          "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-clique-no-card-aplicando-filtro-de-status.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar clique no card aplicando filtro de status",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9065,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar \"Meu histórico\" — nenhum card ativo",
+                          "duration": 5724
+                        },
+                        {
+                          "title": "2. Clicar no card \"Pendentes\" — lista filtra por Pendente",
+                          "duration": 325
+                        },
+                        {
+                          "title": "3. Clicar no card \"Emitidos\" — só um card ativo por vez",
+                          "duration": 340
+                        }
+                      ],
+                      "startTime": "2026-06-22T19:01:43.022Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IktQSSBjYXJkcyBjb21vIGZpbHRybyBkZSBzdGF0dXMgKEFsdW5vKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGNsaXF1ZSBubyBjYXJkIGFwbGljYW5kbyBmaWx0cm8gZGUgc3RhdHVzIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-6f4a1--aplicando-filtro-de-status-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-6f4a1--aplicando-filtro-de-status-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-6f4a1--aplicando-filtro-de-status-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-6f4a1--aplicando-filtro-de-status-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0f5d0c89069098589ecc-e056782aad618fd03725",
+              "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-clique-no-card-aplicando-filtro-de-status.spec.ts",
+              "line": 8,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\kpi-cards-filtro-status-aluno\\validar-denominador-do-donut-somando-os-6-status.spec.ts",
+      "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-denominador-do-donut-somando-os-6-status.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "KPI cards como filtro de status (Aluno)",
+          "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-denominador-do-donut-somando-os-6-status.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar denominador do donut somando os 6 status",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9346,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Proporção do donut usa a soma dos 6 status como total",
+                          "duration": 6309
+                        },
+                        {
+                          "title": "2. Soma dos 4 cards <= total_general (diferença = Substituído + Em andamento)",
+                          "duration": 51
+                        }
+                      ],
+                      "startTime": "2026-06-22T19:01:52.711Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IktQSSBjYXJkcyBjb21vIGZpbHRybyBkZSBzdGF0dXMgKEFsdW5vKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGRlbm9taW5hZG9yIGRvIGRvbnV0IHNvbWFuZG8gb3MgNiBzdGF0dXMifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InRhZyIsInZhbHVlIjoiUkVWSUVXX05FRURFRCJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7InBhcmFtZXRlcnMiOlt7Im5hbWUiOiJzb21hXzRfY2FyZHMiLCJ2YWx1ZSI6IjMifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7InBhcmFtZXRlcnMiOlt7Im5hbWUiOiJ0b3RhbF9nZW5lcmFsIiwidmFsdWUiOiIzIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7InBhcmFtZXRlcnMiOlt7Im5hbWUiOiJkaWZmX3N0YXR1c19zZW1fY2FyZCIsInZhbHVlIjoiMCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-e62a5-o-donut-somando-os-6-status-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-e62a5-o-donut-somando-os-6-status-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-e62a5-o-donut-somando-os-6-status-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-e62a5-o-donut-somando-os-6-status-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0d750db31da900a73a3f-e8aa3236e568900acd3f",
+              "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-denominador-do-donut-somando-os-6-status.spec.ts",
+              "line": 9,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\kpi-cards-filtro-status-aluno\\validar-escopo-da-contagem-e-carga-horaria-do-aluno.spec.ts",
+      "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-escopo-da-contagem-e-carga-horaria-do-aluno.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "KPI cards como filtro de status (Aluno)",
+          "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-escopo-da-contagem-e-carga-horaria-do-aluno.spec.ts",
+          "line": 13,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar escopo da contagem e label de carga horária do Aluno",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8832,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Contagem dos cards == stats escopado ao aluno",
+                          "duration": 6362
+                        },
+                        {
+                          "title": "2. Label \"Carga horária total: {X} horas\" deriva da carga do aluno",
+                          "duration": 14
+                        }
+                      ],
+                      "startTime": "2026-06-22T19:02:02.672Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IktQSSBjYXJkcyBjb21vIGZpbHRybyBkZSBzdGF0dXMgKEFsdW5vKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGVzY29wbyBkYSBjb250YWdlbSBlIGxhYmVsIGRlIGNhcmdhIGhvcsOhcmlhIGRvIEFsdW5vIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7InBhcmFtZXRlcnMiOlt7Im5hbWUiOiJvcmdJZCIsInZhbHVlIjoiMzcwNzkifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7InBhcmFtZXRlcnMiOlt7Im5hbWUiOiJieV9zdGF0dXMiLCJ2YWx1ZSI6IntcImVtaXR0ZWRcIjozLFwiZXhwaXJlZFwiOjAsXCJwZW5kaW5nXCI6MCxcInJlamVjdGVkXCI6MH0ifV19fQ=="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-ba898-l-de-carga-horária-do-Aluno-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-ba898-l-de-carga-horária-do-Aluno-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-ba898-l-de-carga-horária-do-Aluno-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-ba898-l-de-carga-horária-do-Aluno-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1138c5c5bbafec17e574-99a158a4d3ed6616c680",
+              "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-escopo-da-contagem-e-carga-horaria-do-aluno.spec.ts",
+              "line": 14,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\kpi-cards-filtro-status-aluno\\validar-estado-tudo-zero-para-aluno-novo.spec.ts",
+      "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-estado-tudo-zero-para-aluno-novo.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "KPI cards como filtro de status (Aluno)",
+          "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-estado-tudo-zero-para-aluno-novo.spec.ts",
+          "line": 15,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar estado \"tudo zero\" para aluno novo",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8382,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Faixa de KPIs aparece com os 4 cards (donut + número)",
+                          "duration": 5887
+                        },
+                        {
+                          "title": "2. Faixa de cards é renderizada (não substituída por mensagem)",
+                          "duration": 103
+                        }
+                      ],
+                      "startTime": "2026-06-22T19:02:12.065Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IktQSSBjYXJkcyBjb21vIGZpbHRybyBkZSBzdGF0dXMgKEFsdW5vKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGVzdGFkbyBcInR1ZG8gemVyb1wiIHBhcmEgYWx1bm8gbm92byJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJub3JtYWwifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InRhZyIsInZhbHVlIjoiUkVWSUVXX05FRURFRCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-4af83-o-tudo-zero-para-aluno-novo-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-4af83-o-tudo-zero-para-aluno-novo-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-4af83-o-tudo-zero-para-aluno-novo-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-4af83-o-tudo-zero-para-aluno-novo-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "08555808d65ec5a15579-b04b3ca95507526320ef",
+              "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-estado-tudo-zero-para-aluno-novo.spec.ts",
+              "line": 16,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\kpi-cards-filtro-status-aluno\\validar-estados-visuais-ativo-dimmed-e-hover-de-preview.spec.ts",
+      "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-estados-visuais-ativo-dimmed-e-hover-de-preview.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "KPI cards como filtro de status (Aluno)",
+          "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-estados-visuais-ativo-dimmed-e-hover-de-preview.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar estados visuais: ativo, dimmed e hover de preview",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8711,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar \"Meu histórico\" — todos com peso visual normal",
+                          "duration": 5867
+                        },
+                        {
+                          "title": "2. Clicar \"Pendentes\" — ativo ganha borda na cor + elevação",
+                          "duration": 558
+                        },
+                        {
+                          "title": "3. Hover no card \"Emitidos\" (dimmed) — restaura visual temporário",
+                          "duration": 108
+                        },
+                        {
+                          "title": "4. Retirar o mouse — card volta ao dimmed",
+                          "duration": 67
+                        }
+                      ],
+                      "startTime": "2026-06-22T19:02:21.039Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IktQSSBjYXJkcyBjb21vIGZpbHRybyBkZSBzdGF0dXMgKEFsdW5vKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGVzdGFkb3MgdmlzdWFpczogYXRpdm8sIGRpbW1lZCBlIGhvdmVyIGRlIHByZXZpZXcifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InRhZyIsInZhbHVlIjoiUkVWSUVXX05FRURFRCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-88fbf-o-dimmed-e-hover-de-preview-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-88fbf-o-dimmed-e-hover-de-preview-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-88fbf-o-dimmed-e-hover-de-preview-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-88fbf-o-dimmed-e-hover-de-preview-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3329b6e5924d42b5897a-53cca11592a696764cc1",
+              "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-estados-visuais-ativo-dimmed-e-hover-de-preview.spec.ts",
+              "line": 8,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\kpi-cards-filtro-status-aluno\\validar-estrutura-e-cores-dos-4-kpi-cards.spec.ts",
+      "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-estrutura-e-cores-dos-4-kpi-cards.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "KPI cards como filtro de status (Aluno)",
+          "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-estrutura-e-cores-dos-4-kpi-cards.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar estrutura e cores dos 4 KPI cards",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9662,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar a tela \"Meu histórico\"",
+                          "duration": 5802
+                        },
+                        {
+                          "title": "2. Verificar os elementos do card \"Emitidos\"",
+                          "duration": 60
+                        },
+                        {
+                          "title": "3. Verificar a cor do donut de cada card",
+                          "duration": 1682
+                        }
+                      ],
+                      "startTime": "2026-06-22T19:02:30.337Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IktQSSBjYXJkcyBjb21vIGZpbHRybyBkZSBzdGF0dXMgKEFsdW5vKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIGVzdHJ1dHVyYSBlIGNvcmVzIGRvcyA0IEtQSSBjYXJkcyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-90c29-ura-e-cores-dos-4-KPI-cards-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-90c29-ura-e-cores-dos-4-KPI-cards-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-90c29-ura-e-cores-dos-4-KPI-cards-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-90c29-ura-e-cores-dos-4-KPI-cards-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e59bb0300de08a7662e2-39335555f837cd78d600",
+              "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-estrutura-e-cores-dos-4-kpi-cards.spec.ts",
+              "line": 9,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\kpi-cards-filtro-status-aluno\\validar-independencia-da-contagem-do-drawer-de-filtros.spec.ts",
+      "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-independencia-da-contagem-do-drawer-de-filtros.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "KPI cards como filtro de status (Aluno)",
+          "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-independencia-da-contagem-do-drawer-de-filtros.spec.ts",
+          "line": 37,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar independência da contagem em relação ao drawer de filtros",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "location": {
+                        "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\kpi-cards-filtro-status-aluno\\validar-independencia-da-contagem-do-drawer-de-filtros.spec.ts",
+                        "line": 38,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-06-22T19:02:40.625Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "location": {
+                            "file": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\projects\\registros-externos\\tests\\features\\kpi-cards-filtro-status-aluno\\validar-independencia-da-contagem-do-drawer-de-filtros.spec.ts",
+                            "line": 38,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "b00d72069e0ecc4a2e1d-be9a420b06ab27ef7dfd",
+              "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-independencia-da-contagem-do-drawer-de-filtros.spec.ts",
+              "line": 38,
+              "column": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\kpi-cards-filtro-status-aluno\\validar-toggle-de-desselecao-do-card-ativo.spec.ts",
+      "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-toggle-de-desselecao-do-card-ativo.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "KPI cards como filtro de status (Aluno)",
+          "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-toggle-de-desselecao-do-card-ativo.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar toggle de desseleção do card ativo",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9244,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar \"Meu histórico\" — sem filtro ativo",
+                          "duration": 5931
+                        },
+                        {
+                          "title": "2. Clicar no card \"Pendentes\" — fica ativo",
+                          "duration": 196
+                        },
+                        {
+                          "title": "3. Clicar novamente no card \"Pendentes\" — filtro removido",
+                          "duration": 861
+                        }
+                      ],
+                      "startTime": "2026-06-22T19:02:40.635Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IktQSSBjYXJkcyBjb21vIGZpbHRybyBkZSBzdGF0dXMgKEFsdW5vKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIHRvZ2dsZSBkZSBkZXNzZWxlw6fDo28gZG8gY2FyZCBhdGl2byJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-b79d2-de-desseleção-do-card-ativo-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-b79d2-de-desseleção-do-card-ativo-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-b79d2-de-desseleção-do-card-ativo-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-b79d2-de-desseleção-do-card-ativo-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c12b653563c8b967e14d-4ab33822472540eab729",
+              "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-toggle-de-desselecao-do-card-ativo.spec.ts",
+              "line": 8,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\registros-externos\\tests\\features\\kpi-cards-filtro-status-aluno\\validar-tooltips-dos-cards-no-tom-do-aluno.spec.ts",
+      "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-tooltips-dos-cards-no-tom-do-aluno.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "KPI cards como filtro de status (Aluno)",
+          "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-tooltips-dos-cards-no-tom-do-aluno.spec.ts",
+          "line": 14,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Validar tooltips dos cards no tom do Aluno",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9845,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Acessar a tela \"Meu histórico\"",
+                          "duration": 5884
+                        },
+                        {
+                          "title": "2. Tooltip do card \"Emitidos\"",
+                          "duration": 303
+                        },
+                        {
+                          "title": "3. Tooltip do card \"Expirados\"",
+                          "duration": 465
+                        },
+                        {
+                          "title": "4. Tooltip do card \"Pendentes\"",
+                          "duration": 433
+                        },
+                        {
+                          "title": "5. Tooltip do card \"Recusados\"",
+                          "duration": 401
+                        }
+                      ],
+                      "startTime": "2026-06-22T19:02:50.478Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVnaXN0cm9zIGRlIEFwcmVuZGl6YWdlbSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IktQSSBjYXJkcyBjb21vIGZpbHRybyBkZSBzdGF0dXMgKEFsdW5vKSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJWYWxpZGFyIHRvb2x0aXBzIGRvcyBjYXJkcyBubyB0b20gZG8gQWx1bm8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7InBhcmFtZXRlcnMiOlt7Im5hbWUiOiJvYnNfQVQiLCJ2YWx1ZSI6InRlc3QtYW5hbHlzaXMubWQgUk4gMTguMy4xIGRlc2F0dWFsaXphZGEg4oCUIGFsaW5oYXIgw6AgY8OzcGlhIHJlYWwifV19fQ=="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-b1a1d-s-dos-cards-no-tom-do-Aluno-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-b1a1d-s-dos-cards-no-tom-do-Aluno-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-b1a1d-s-dos-cards-no-tom-do-Aluno-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\novo-estudio-twygo\\twygo-agents-qa\\agent-playwright\\outputs\\registros-externos\\test-artifacts\\projects-registros-externo-b1a1d-s-dos-cards-no-tom-do-Aluno-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "48b750efdd51cbbc632f-01d04967032a62941d3e",
+              "file": "projects/registros-externos/tests/features/kpi-cards-filtro-status-aluno/validar-tooltips-dos-cards-no-tom-do-aluno.spec.ts",
+              "line": 15,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-06-22T19:00:55.477Z",
+    "duration": 125724.728,
+    "expected": 9,
+    "skipped": 1,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

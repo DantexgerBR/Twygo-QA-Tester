@@ -5,7 +5,7 @@
 > sempre que adicionar/refatorar skill, garantir `triggers:` curtos e
 > description ≤ 200 chars (vide [[evitar-reinventar-resolvidos-twygo]]).
 
-**Total**: 47 skills ativas + 3 design docs em `docs/roadmap/` (excluídos
+**Total**: 51 skills ativas + 3 design docs em `docs/roadmap/` (excluídos
 do namespace ativo).
 
 ---
@@ -53,6 +53,9 @@ do namespace ativo).
 |---|---|
 | [navegar-sidebar-admin-twygo](navegar-sidebar-admin-twygo/SKILL.md) | Sidebar admin: `#menu` ancestor, `dispatchEvent` em parent expanders, `/o/{orgId}/dashboard` vs `/play` |
 | [interagir-switch-chakra-twygo](interagir-switch-chakra-twygo/SKILL.md) | Switch Chakra: `setSwitch` padrão, `force:true`, `data-checked` em vez de `toBeChecked` |
+| [atuar-kebab-menuitem-twygo](atuar-kebab-menuitem-twygo/SKILL.md) | Itens de menu kebab (3 pontos) perto da borda: `dispatchEvent('click')` contorna actionability — evita falso-negativo em revalidação de bug |
+| [testar-kpi-cards-twygo](testar-kpi-cards-twygo/SKILL.md) | KPI cards de Registros (Emitidos/Expirados/Pendentes/Recusados): donut em `<canvas>`, filtro clicável (Aluno) vs dashboard estático (Admin/Líder), invariante vs `/records/stats` |
+| [testar-preenchimento-ia-twygo](testar-preenchimento-ia-twygo/SKILL.md) | Card "Preencher com IA": gated por flag, dropzone upload, `/records/ai_fill` assíncrono (204 — não 403), capturar contrato sem gastar crédito |
 | [testar-toast-chakra-twygo](testar-toast-chakra-twygo/SKILL.md) | Toasts Chakra acumulam — `getToast().first()` + `waitForToastsToClear` |
 | [testar-filtro-drawer-twygo](testar-filtro-drawer-twygo/SKILL.md) | Drawer Chakra slide-in (Lista + Edição) + filtros por coluna + `#clear-filter` |
 | [testar-plate-editor-twygo](testar-plate-editor-twygo/SKILL.md) | Rich-text Plate.js (kit de marca, IA, color picker) |
@@ -78,6 +81,7 @@ do namespace ativo).
 | [debugar-generator-travado](debugar-generator-travado/SKILL.md) | Subagent `playwright-test-generator` travado silenciosamente |
 | [debugar-chat-widget-hubspot](debugar-chat-widget-hubspot/SKILL.md) | Chat widget HubSpot interceptando clicks |
 | [debugar-filename-too-long-windows](debugar-filename-too-long-windows/SKILL.md) | `git add` falha com "Filename too long" no Windows |
+| [debugar-mcp-config-cache](debugar-mcp-config-cache/SKILL.md) | MCP playwright-test cacheia config no boot — `setup_page` erra igual antes/depois de corrigir `project.config`/`.env` |
 
 ---
 

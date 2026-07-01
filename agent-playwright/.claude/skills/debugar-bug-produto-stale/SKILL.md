@@ -44,6 +44,25 @@ Caso real Twygo widgets, 2026-05-11 → 2026-05-13:
 5. **Atualize o comentário** do spec: nova data de validação, novo veredito (corrigido + nova causa, se houver). Se a nova causa é spec, conserte o spec. Se é outro bug, abra outro ticket.
 6. **Não use `test.describe.fixme`** pra "esconder" enquanto investiga — comentário no topo + spec red é o ciclo que documenta o problema (Anti-pattern F do CLAUDE.md).
 
+### ⚠️ Sintoma "clicar no X não faz nada" — confirme ATUAÇÃO antes de cravar
+
+Quando o bug é de UI do tipo **"clicar no item/botão não dispara ação"**
+(kebab, dropdown, menu Chakra, item perto da borda da viewport), **NÃO**
+conclua "sem ação" só porque URL/estado não mudou: o `.click()` do Playwright
+pode ter **falhado em atuar** o elemento (hit-test perto da borda → o menu fica
+aberto, só aparece tooltip), gerando **falso-negativo**.
+
+Antes de cravar bug de produto:
+1. O menu/popover **fechou** após o clique? Se não, o clique não atuou.
+2. Não use "o item do topo passou" como prova — a posição na viewport muda o resultado.
+3. Atue via `dispatchEvent('click')` e só então compare — ver [[atuar-kebab-menuitem-twygo]].
+4. Cruze com **clique humano real** (QA) — clique humano atua onde o `.click()` falha.
+
+**Caso real (2026-06-30)**: P1 do card 19895 (1.8 "Visualizar") foi reportado
+como "ainda presente" 2× por automação — mas era artefato: o `.click()` não
+atuava o menuitem na borda; via `dispatchEvent` a ação disparava. O QA testou
+manual e funcionava. Veredito real: **corrigido**. Quase virou ticket falso.
+
 ## Próximos passos
 
 Se o diagnóstico revelar um padrão (ex.: spec ficou red por modal não previsto), considere:

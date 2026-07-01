@@ -3,9 +3,9 @@ import { readFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
+  getEnvByName,
   getProjectSlug,
   listAvailableProjects,
-  loadEnvironmentConfig,
 } from './src/utils/environment.js';
 
 // __dirname não existe em ES modules; reconstruímos a partir de import.meta.url
@@ -27,12 +27,6 @@ type ProjectConfig = {
   };
 };
 
-type EnvironmentConfig = Record<string, {
-  baseUrl: string;
-  credentials: { email: string; password: string };
-  timeout: number;
-}>;
-
 // Resolve qual projeto está ativo nesta execução. Em modo "PROJECT_ALL=true"
 // (regressivo cumulativo), não há projeto ativo único — usamos o primeiro
 // disponível só para herdar `environment` e `headless`/`browsers`/etc.
@@ -48,16 +42,13 @@ const projectConfig: ProjectConfig = JSON.parse(
     'utf-8',
   ),
 );
-// Resolve `${VAR}` placeholders via process.env (carregado de .env).
-// Ver agent-playwright/.env.example.
-const environmentConfig: EnvironmentConfig = loadEnvironmentConfig();
-
-const env = environmentConfig[projectConfig.environment];
-if (!env) {
-  throw new Error(
-    `Environment "${projectConfig.environment}" not found in config/environment.json`,
-  );
-}
+// Override runtime opcional: TWYGO_ENV sobrepõe o env do project.config.json
+// sem editar esse arquivo versionado (ver src/utils/environment.ts#getCurrentEnv
+// e tests/setup/global-setup.ts). Mantém login + baseURL no mesmo env.
+// getEnvByName expande os `${VAR}` SÓ desta entrada (carregados de .env), então
+// não exige credenciais das outras orgs no arquivo. Lança se o env não existir.
+const activeEnvName = process.env.TWYGO_ENV?.trim() || projectConfig.environment;
+const env = getEnvByName(activeEnvName);
 
 // Padrões de testMatch — UI fica em tests/features/, API em tests/api/
 // (CONTRACT.md §16, regra dura #14 do agent-playwright/CLAUDE.md).

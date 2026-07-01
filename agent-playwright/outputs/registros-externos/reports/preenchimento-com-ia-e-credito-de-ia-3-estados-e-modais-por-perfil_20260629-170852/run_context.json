@@ -1,0 +1,11 @@
+{
+  "runId": "preenchimento-com-ia-e-credito-de-ia-3-estados-e-modais-por-perfil_20260629-170852",
+  "mode": "per-suite",
+  "suiteFilter": "Preenchimento com IA e crédito de IA (3 estados e modais por perfil)",
+  "projectName": "Registros de Aprendizagem",
+  "environment": "staging-registros-edu",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-06-29T20:08:52.333Z"
+}

@@ -1,0 +1,29 @@
+{
+  "runId": "extracao-de-dados-da-evidencia-export-em-massa-de-anexos_20260625-152446",
+  "scope": "Apenas testsuite contendo \"Extração de dados da Evidência (export em massa de anexos)\"",
+  "tests": {
+    "total": 5,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 4,
+    "durationMs": 16178
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 0,
+    "tests": 151,
+    "outOfScope": {
+      "errors": 1435,
+      "warnings": 850,
+      "info": 82
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}
