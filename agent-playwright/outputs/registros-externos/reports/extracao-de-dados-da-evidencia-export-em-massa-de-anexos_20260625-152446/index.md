@@ -4,13 +4,15 @@
 
 > **Escopo:** Apenas testsuite contendo "Extração de dados da Evidência (export em massa de anexos)"
 
-> ✅ **Nenhuma falha registrada** — todos os 5 caso(s) executado(s) foram aprovados.
+> ✅ **Nenhuma falha registrada** — 4 de 5 caso(s) aprovados (1 automatizado + 3 por validação manual em 25/06/2026); 1 permanece ignorado (TC2, verificação manual pendente).
 
 ## Casos de teste (XML)
 
 | Total | ✅ Aprovados | ❌ Falhas | ⊘ Ignorados | Duração |
 |---:|---:|---:|---:|---:|
-| 5 | 1 | 0 | 4 | 16.2s |
+| 5 | 4 | 0 | 1 | 16.2s |
+
+> _4 aprovados = TC1 (automatizado) + TC3/TC4/TC5 (validação manual). Os specs de TC3/TC4/TC5 seguem `test.fixme` no código (verificação não-automatizável por Playwright UI); a aprovação foi registrada manualmente neste relatório._
 
 ## Validação Exploratória
 
@@ -22,7 +24,7 @@
 
 | Testsuite | Total | Distribuição (✅/❌/⊘) | %Pass | ❌ | ⊘ | Findings | Tempo |
 |---|---:|---|---:|---:|---:|---|---:|
-| **Extração de dados da Evidência (export em massa de anexos)** | 5 | `[████⊘⊘⊘⊘⊘⊘⊘⊘⊘⊘⊘⊘⊘⊘⊘⊘]` 1/0/4 | 20% | 0 | 4 | — | 16.2s |
+| **Extração de dados da Evidência (export em massa de anexos)** | 5 | `[████████████████⊘⊘⊘⊘]` 4/0/1 | 80% | 0 | 1 | — | 16.2s |
 
 ## Onde ir agora
 

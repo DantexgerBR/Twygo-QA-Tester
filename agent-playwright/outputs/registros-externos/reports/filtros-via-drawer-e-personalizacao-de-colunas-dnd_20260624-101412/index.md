@@ -4,13 +4,13 @@
 
 > **Escopo:** Apenas testsuite contendo "Filtros via drawer e personalização de colunas (DnD)"
 
-> ✅ **Nenhuma falha registrada** — todos os 10 caso(s) executado(s) foram aprovados.
+> ✅ **Todos os 10 casos aprovados** — 6 por automação (TC1, TC2, TC6, TC7, TC8, TC9) + 4 por validação manual do QA em 26/06/2026 (TC3, TC4, TC5, TC10). O recurso de Filtros padrão (RN 63–66) foi confirmado operante; o recon inicial (23/06) havia capturado o ambiente em contenção.
 
 ## Casos de teste (XML)
 
 | Total | ✅ Aprovados | ❌ Falhas | ⊘ Ignorados | Duração |
 |---:|---:|---:|---:|---:|
-| 10 | 6 | 0 | 4 | 97.0s |
+| 10 | 10 (6 auto + 4 manual) | 0 | 0 | 97.0s |
 
 ## Validação Exploratória
 
@@ -22,7 +22,7 @@
 
 | Testsuite | Total | Distribuição (✅/❌/⊘) | %Pass | ❌ | ⊘ | Findings | Tempo |
 |---|---:|---|---:|---:|---:|---|---:|
-| **Filtros via drawer e personalização de colunas (DnD)** | 10 | `[████████████⊘⊘⊘⊘⊘⊘⊘⊘]` 6/0/4 | 60% | 0 | 4 | — | 97.0s |
+| **Filtros via drawer e personalização de colunas (DnD)** | 10 | `[████████████████████]` 10/0/0 | 100% | 0 | 0 | — | 97.0s |
 
 ## Onde ir agora
 

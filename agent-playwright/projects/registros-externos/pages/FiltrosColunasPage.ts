@@ -152,9 +152,25 @@ export class FiltrosColunasPage {
     return this.page.locator('#expand-my-filters');
   }
 
-  /** Quantos radios de filtro padrão existem (0 no build atual — feature ausente). */
+  /** Quantos radios de filtro padrão existem no grupo "Filtros padrão". */
   async defaultFilterRadioCount(): Promise<number> {
     return this.page.locator('[role="radiogroup"] [role="radio"], [role="radiogroup"] input[type="radio"]').count();
+  }
+
+  /** Radio de um filtro padrão pelo rótulo (Válidos/Expirados/Pendentes/Recusados). */
+  defaultFilterRadio(name: 'Válidos' | 'Expirados' | 'Pendentes' | 'Recusados'): Locator {
+    return this.drawer().locator('[role="radiogroup"]').getByText(name, { exact: true });
+  }
+
+  /** Seleciona um filtro padrão pelo rótulo (na view "Lista de filtros"). */
+  async selectDefaultFilter(name: 'Válidos' | 'Expirados' | 'Pendentes' | 'Recusados'): Promise<void> {
+    await this.defaultFilterRadio(name).click();
+  }
+
+  /** Seleciona o filtro padrão e aplica pela "Lista de filtros". */
+  async applyDefaultFilter(name: 'Válidos' | 'Expirados' | 'Pendentes' | 'Recusados'): Promise<void> {
+    await this.selectDefaultFilter(name);
+    await this.applyLista();
   }
 
   /** innerText do item do accordion (header + corpo) para checar empty state. */

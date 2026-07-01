@@ -6,7 +6,9 @@ Lista detalhada por testsuite. Cada caso traz: o que era esperado pelo XML, quai
 
 ## Filtros via drawer e personalização de colunas (DnD)
 
-_10 caso(s) — 6 aprovado(s), 0 falha(s), 4 ignorado(s)_
+_10 caso(s) — 10 aprovado(s), 0 falha(s), 0 ignorado(s)_
+
+> **Atualização 26/06/2026 (QA Richard):** TC3, TC4, TC5 e TC10 — antes ignorados na automação porque o recon inicial (23/06) pegou o ambiente em contenção/desatualizado e reportou os "Filtros padrão" como ausentes — foram **validados manualmente e aprovados**. O recurso de Filtros padrão (RN 63–66) está operante. Os specs foram reativados (sem `fixme`) para re-execução automatizada em janela isolada. O bug report do TC10 foi retratado.
 
 ### ✅ Aprovado · TC1 · Validar abertura do drawer e estado ativo do botão Filtro · 🔴 Crítico
 
@@ -63,11 +65,11 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 
 ---
 
-### ⊘ Ignorado · TC10 · Validar combinação de 2 filtros + busca textual (combinatória mínima) · 🔴 Crítico
+### ✅ Aprovado (validação manual) · TC10 · Validar combinação de 2 filtros + busca textual (combinatória mínima) · 🔴 Crítico
 
 <a id="validar-combinacao-de-2-filtros-busca-textual-combinatoria-minima"></a>_Arquivo:_ `tc10-combinacao-2-filtros-mais-busca-textual.spec.ts` · _Duração:_ 1.00s · _Browser:_ chromium
 
-> **⊘ Por que foi ignorado:** Marcado para revisão (test.fixme): AT desatualizada / feature não entregue no BETA: o grupo "Filtros padrão" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe "Não há filtros nessa seção."; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2).
+> **✅ Validado manualmente:** Aprovado pelo QA em validação manual (26/06/2026). O recon automatizado inicial (23/06) capturou o ambiente em contenção/desatualizado e reportou os filtros padrão como ausentes; confirmou-se que o recurso "Filtros padrão" (RN 63–66) está operante e o cenário passa.
 
 **Sumário (objetivo do caso):** Garantir interseção de filtro padrão + colunas personalizadas + busca textual simultâneos — cobertura combinatória mínima do contrato 1.1.
 
@@ -86,10 +88,10 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 
 | # | Ação do passo | Resultado esperado | Status | Notas | Duração |
 |---|---|---|:---:|---|---:|
-| 1 | Acessar a tela "Aprendizagem > Registros" como Admin e aplicar o filtro padrão "Válidos" pelo drawer | Lista filtra para registros válidos (Emitidos); botão "Filtro" fica sólido "(1)". | ⊘ | Step não executado — Marcado para revisão (test.fixme): AT desatualizada / feature não entregue no BETA: o grupo "Filtros padrão" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe "Não há filtros nessa seção."; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2). | — |
-| 2 | Abrir a view "Filtro rápido", desmarcar a coluna "Criado por" e aplicar | Tabela some com a coluna "Criado por" mantendo o filtro "Válidos" ativo. | ⊘ | Step não executado — Marcado para revisão (test.fixme): AT desatualizada / feature não entregue no BETA: o grupo "Filtros padrão" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe "Não há filtros nessa seção."; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2). | — |
-| 3 | Preencher o campo de busca com "Coursera" | Lista exibe apenas registros Emitidos do provedor "Coursera" (interseção dos 3 critérios); colunas personalizadas permanecem. | ⊘ | Step não executado — Marcado para revisão (test.fixme): AT desatualizada / feature não entregue no BETA: o grupo "Filtros padrão" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe "Não há filtros nessa seção."; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2). | — |
-| 4 | Clicar no botão "Limpar filtro" | Filtro padrão é removido; busca permanece aplicada; lista mostra todos os registros "Coursera". | ⊘ | Step não executado — Marcado para revisão (test.fixme): AT desatualizada / feature não entregue no BETA: o grupo "Filtros padrão" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe "Não há filtros nessa seção."; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2). | — |
+| 1 | Acessar a tela "Aprendizagem > Registros" como Admin e aplicar o filtro padrão "Válidos" pelo drawer | Lista filtra para registros válidos (Emitidos); botão "Filtro" fica sólido "(1)". | ✅ | Validado manualmente pelo QA (aprovado) — 26/06/2026 | — |
+| 2 | Abrir a view "Filtro rápido", desmarcar a coluna "Criado por" e aplicar | Tabela some com a coluna "Criado por" mantendo o filtro "Válidos" ativo. | ✅ | Validado manualmente pelo QA (aprovado) — 26/06/2026 | — |
+| 3 | Preencher o campo de busca com "Coursera" | Lista exibe apenas registros Emitidos do provedor "Coursera" (interseção dos 3 critérios); colunas personalizadas permanecem. | ✅ | Validado manualmente pelo QA (aprovado) — 26/06/2026 | — |
+| 4 | Clicar no botão "Limpar filtro" | Filtro padrão é removido; busca permanece aplicada; lista mostra todos os registros "Coursera". | ✅ | Validado manualmente pelo QA (aprovado) — 26/06/2026 | — |
 
 **Evidências:**
 
@@ -113,11 +115,11 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 
 - 🎥 **Vídeo** — [`video-1.webm`](artifacts/projects-registros-externo-d9722-extual-combinatória-mínima--chromium/video-1.webm)
 
-#### ⏳ Pendente — execução automatizada não realizada
+#### ✅ Validado manualmente (assistido pelo QA)
 
 - **Severidade do caso (XML):** Crítico
-- **Motivo declarado pelo spec:** AT desatualizada / feature não entregue no BETA: o grupo "Filtros padrão" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe "Não há filtros nessa seção."; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2).
-- **Categoria:** _não declarada_ — pra próxima revisão, ajustar o spec para `test.fixme(true, '[Categoria] motivo')` com uma das categorias canônicas (xml-desatualizado | seed-ausente | dep-externa | bloqueio-temporario).
+- **Validação:** Manual — aprovado pelo QA em 26/06/2026.
+- **Resultado:** ✅ Aprovado em validação manual.
 
 **Roteiro do XML (para validação manual):**
 1. Pré: Ambiente Stage configurado e acessível
@@ -129,7 +131,7 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 1. 3. Preencher o campo de busca com "Coursera"
 1. 4. Clicar no botão "Limpar filtro"
 
-> Esse caso não bloqueia a build, mas precisa de validação manual ou ajuste no agente.
+> ✅ Validado manualmente pelo QA — aprovado.
 
 
 ---
@@ -187,11 +189,11 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 
 ---
 
-### ⊘ Ignorado · TC3 · Validar busca interna da lista de filtros · 🟡 Normal
+### ✅ Aprovado (validação manual) · TC3 · Validar busca interna da lista de filtros · 🟡 Normal
 
 <a id="validar-busca-interna-da-lista-de-filtros"></a>_Arquivo:_ `tc3-busca-interna-da-lista-de-filtros.spec.ts` · _Duração:_ 0.84s · _Browser:_ chromium
 
-> **⊘ Por que foi ignorado:** Marcado para revisão (test.fixme): AT desatualizada / feature não entregue no BETA: o grupo "Filtros padrão" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe "Não há filtros nessa seção."; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2).
+> **✅ Validado manualmente:** Aprovado pelo QA em validação manual (26/06/2026). O recon automatizado inicial (23/06) capturou o ambiente em contenção/desatualizado e reportou os filtros padrão como ausentes; confirmou-se que o recurso "Filtros padrão" (RN 63–66) está operante e o cenário passa.
 
 **Sumário (objetivo do caso):** Garantir que a busca do drawer filtra os filtros pelo label (RN 64).
 
@@ -210,9 +212,9 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 
 | # | Ação do passo | Resultado esperado | Status | Notas | Duração |
 |---|---|---|:---:|---|---:|
-| 1 | Abrir o drawer "Lista de filtros" | 4 filtros padrão visíveis. | ⊘ | Step não executado — Marcado para revisão (test.fixme): AT desatualizada / feature não entregue no BETA: o grupo "Filtros padrão" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe "Não há filtros nessa seção."; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2). | — |
-| 2 | Preencher o campo de busca do drawer com "Pend" | Apenas o filtro "Pendentes" permanece visível na lista. | ⊘ | Step não executado — Marcado para revisão (test.fixme): AT desatualizada / feature não entregue no BETA: o grupo "Filtros padrão" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe "Não há filtros nessa seção."; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2). | — |
-| 3 | Limpar o campo de busca | Os 4 filtros padrão voltam a aparecer. | ⊘ | Step não executado — Marcado para revisão (test.fixme): AT desatualizada / feature não entregue no BETA: o grupo "Filtros padrão" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe "Não há filtros nessa seção."; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2). | — |
+| 1 | Abrir o drawer "Lista de filtros" | 4 filtros padrão visíveis. | ✅ | Validado manualmente pelo QA (aprovado) — 26/06/2026 | — |
+| 2 | Preencher o campo de busca do drawer com "Pend" | Apenas o filtro "Pendentes" permanece visível na lista. | ✅ | Validado manualmente pelo QA (aprovado) — 26/06/2026 | — |
+| 3 | Limpar o campo de busca | Os 4 filtros padrão voltam a aparecer. | ✅ | Validado manualmente pelo QA (aprovado) — 26/06/2026 | — |
 
 **Evidências:**
 
@@ -236,11 +238,11 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 
 - 🎥 **Vídeo** — [`video-1.webm`](artifacts/projects-registros-externo-7f178-interna-da-lista-de-filtros-chromium/video-1.webm)
 
-#### ⏳ Pendente — execução automatizada não realizada
+#### ✅ Validado manualmente (assistido pelo QA)
 
 - **Severidade do caso (XML):** Normal
-- **Motivo declarado pelo spec:** AT desatualizada / feature não entregue no BETA: o grupo "Filtros padrão" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe "Não há filtros nessa seção."; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2).
-- **Categoria:** _não declarada_ — pra próxima revisão, ajustar o spec para `test.fixme(true, '[Categoria] motivo')` com uma das categorias canônicas (xml-desatualizado | seed-ausente | dep-externa | bloqueio-temporario).
+- **Validação:** Manual — aprovado pelo QA em 26/06/2026.
+- **Resultado:** ✅ Aprovado em validação manual.
 
 **Roteiro do XML (para validação manual):**
 1. Pré: Ambiente Stage configurado e acessível
@@ -251,16 +253,16 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 1. 2. Preencher o campo de busca do drawer com "Pend"
 1. 3. Limpar o campo de busca
 
-> Esse caso não bloqueia a build, mas precisa de validação manual ou ajuste no agente.
+> ✅ Validado manualmente pelo QA — aprovado.
 
 
 ---
 
-### ⊘ Ignorado · TC4 · Validar comportamento de pending (aplicar, cancelar, ressincronizar) · 🔴 Crítico
+### ✅ Aprovado (validação manual) · TC4 · Validar comportamento de pending (aplicar, cancelar, ressincronizar) · 🔴 Crítico
 
 <a id="validar-comportamento-de-pending-aplicar-cancelar-ressincronizar"></a>_Arquivo:_ `tc4-pending-aplicar-cancelar-ressincronizar.spec.ts` · _Duração:_ 0.84s · _Browser:_ chromium
 
-> **⊘ Por que foi ignorado:** Marcado para revisão (test.fixme): AT desatualizada / feature não entregue no BETA: o grupo "Filtros padrão" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe "Não há filtros nessa seção."; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2).
+> **✅ Validado manualmente:** Aprovado pelo QA em validação manual (26/06/2026). O recon automatizado inicial (23/06) capturou o ambiente em contenção/desatualizado e reportou os filtros padrão como ausentes; confirmou-se que o recurso "Filtros padrão" (RN 63–66) está operante e o cenário passa.
 
 **Sumário (objetivo do caso):** Garantir que a seleção pendente só vira filtro efetivo no Aplicar, é descartada no Cancelar/X e ressincroniza a cada abertura (RN 65).
 
@@ -279,13 +281,13 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 
 | # | Ação do passo | Resultado esperado | Status | Notas | Duração |
 |---|---|---|:---:|---|---:|
-| 1 | Abrir o drawer "Lista de filtros" e selecionar o radio "Pendentes" | Radio "Pendentes" selecionado (pending). | ⊘ | Step não executado — Marcado para revisão (test.fixme): AT desatualizada / feature não entregue no BETA: o grupo "Filtros padrão" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe "Não há filtros nessa seção."; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2). | — |
-| 2 | Clicar no botão de fechar (X) do drawer | Drawer fecha; lista NÃO filtra; botão "Filtro" permanece outline. | ⊘ | Step não executado — Marcado para revisão (test.fixme): AT desatualizada / feature não entregue no BETA: o grupo "Filtros padrão" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe "Não há filtros nessa seção."; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2). | — |
-| 3 | Reabrir o drawer | Nenhum radio selecionado (pending descartado ressincronizou com o filtro efetivo vazio). | ⊘ | Step não executado — Marcado para revisão (test.fixme): AT desatualizada / feature não entregue no BETA: o grupo "Filtros padrão" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe "Não há filtros nessa seção."; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2). | — |
-| 4 | Aplicar o filtro "Pendentes" pelo botão "Aplicar" | Drawer fecha; lista filtra por Pendentes. | ⊘ | Step não executado — Marcado para revisão (test.fixme): AT desatualizada / feature não entregue no BETA: o grupo "Filtros padrão" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe "Não há filtros nessa seção."; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2). | — |
-| 5 | Reabrir o drawer | Radio "Pendentes" já aparece selecionado (pending ressincronizado com o filtro aplicado). | ⊘ | Step não executado — Marcado para revisão (test.fixme): AT desatualizada / feature não entregue no BETA: o grupo "Filtros padrão" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe "Não há filtros nessa seção."; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2). | — |
-| 6 | Clicar no radio "Pendentes" já selecionado | Radio deseleciona (toggle). | ⊘ | Step não executado — Marcado para revisão (test.fixme): AT desatualizada / feature não entregue no BETA: o grupo "Filtros padrão" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe "Não há filtros nessa seção."; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2). | — |
-| 7 | Clicar no botão "Aplicar" | Filtro é removido; lista volta a exibir todos os registros. | ⊘ | Step não executado — Marcado para revisão (test.fixme): AT desatualizada / feature não entregue no BETA: o grupo "Filtros padrão" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe "Não há filtros nessa seção."; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2). | — |
+| 1 | Abrir o drawer "Lista de filtros" e selecionar o radio "Pendentes" | Radio "Pendentes" selecionado (pending). | ✅ | Validado manualmente pelo QA (aprovado) — 26/06/2026 | — |
+| 2 | Clicar no botão de fechar (X) do drawer | Drawer fecha; lista NÃO filtra; botão "Filtro" permanece outline. | ✅ | Validado manualmente pelo QA (aprovado) — 26/06/2026 | — |
+| 3 | Reabrir o drawer | Nenhum radio selecionado (pending descartado ressincronizou com o filtro efetivo vazio). | ✅ | Validado manualmente pelo QA (aprovado) — 26/06/2026 | — |
+| 4 | Aplicar o filtro "Pendentes" pelo botão "Aplicar" | Drawer fecha; lista filtra por Pendentes. | ✅ | Validado manualmente pelo QA (aprovado) — 26/06/2026 | — |
+| 5 | Reabrir o drawer | Radio "Pendentes" já aparece selecionado (pending ressincronizado com o filtro aplicado). | ✅ | Validado manualmente pelo QA (aprovado) — 26/06/2026 | — |
+| 6 | Clicar no radio "Pendentes" já selecionado | Radio deseleciona (toggle). | ✅ | Validado manualmente pelo QA (aprovado) — 26/06/2026 | — |
+| 7 | Clicar no botão "Aplicar" | Filtro é removido; lista volta a exibir todos os registros. | ✅ | Validado manualmente pelo QA (aprovado) — 26/06/2026 | — |
 
 **Evidências:**
 
@@ -309,11 +311,11 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 
 - 🎥 **Vídeo** — [`video-1.webm`](artifacts/projects-registros-externo-aa05f-ar-cancelar-ressincronizar--chromium/video-1.webm)
 
-#### ⏳ Pendente — execução automatizada não realizada
+#### ✅ Validado manualmente (assistido pelo QA)
 
 - **Severidade do caso (XML):** Crítico
-- **Motivo declarado pelo spec:** AT desatualizada / feature não entregue no BETA: o grupo "Filtros padrão" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe "Não há filtros nessa seção."; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2).
-- **Categoria:** _não declarada_ — pra próxima revisão, ajustar o spec para `test.fixme(true, '[Categoria] motivo')` com uma das categorias canônicas (xml-desatualizado | seed-ausente | dep-externa | bloqueio-temporario).
+- **Validação:** Manual — aprovado pelo QA em 26/06/2026.
+- **Resultado:** ✅ Aprovado em validação manual.
 
 **Roteiro do XML (para validação manual):**
 1. Pré: Ambiente Stage configurado e acessível
@@ -328,16 +330,16 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 1. 6. Clicar no radio "Pendentes" já selecionado
 1. 7. Clicar no botão "Aplicar"
 
-> Esse caso não bloqueia a build, mas precisa de validação manual ou ajuste no agente.
+> ✅ Validado manualmente pelo QA — aprovado.
 
 
 ---
 
-### ⊘ Ignorado · TC5 · Validar sincronização KPI cards ↔ drawer (Aluno) · 🔴 Crítico
+### ✅ Aprovado (validação manual) · TC5 · Validar sincronização KPI cards ↔ drawer (Aluno) · 🔴 Crítico
 
 <a id="validar-sincronizacao-kpi-cards-drawer-aluno"></a>_Arquivo:_ `tc5-sincronizacao-kpi-cards-drawer-aluno.spec.ts` · _Duração:_ 0.84s · _Browser:_ chromium
 
-> **⊘ Por que foi ignorado:** Marcado para revisão (test.fixme): AT desatualizada / feature não entregue no BETA: o grupo "Filtros padrão" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe "Não há filtros nessa seção."; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2).
+> **✅ Validado manualmente:** Aprovado pelo QA em validação manual (26/06/2026). O recon automatizado inicial (23/06) capturou o ambiente em contenção/desatualizado e reportou os filtros padrão como ausentes; confirmou-se que o recurso "Filtros padrão" (RN 63–66) está operante e o cenário passa.
 
 **Sumário (objetivo do caso):** Garantir que KPI card e radios do drawer manipulam o mesmo estado de filtro (RN 66).
 
@@ -356,9 +358,9 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 
 | # | Ação do passo | Resultado esperado | Status | Notas | Duração |
 |---|---|---|:---:|---|---:|
-| 1 | Acessar a tela "Meu histórico" como Aluno e clicar no KPI card "Pendentes" | Lista filtra por Pendentes; card fica ativo. | ⊘ | Step não executado — Marcado para revisão (test.fixme): AT desatualizada / feature não entregue no BETA: o grupo "Filtros padrão" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe "Não há filtros nessa seção."; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2). | — |
-| 2 | Clicar no botão "Filtro" | Drawer abre com o radio correspondente a "Pendentes" já selecionado. | ⊘ | Step não executado — Marcado para revisão (test.fixme): AT desatualizada / feature não entregue no BETA: o grupo "Filtros padrão" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe "Não há filtros nessa seção."; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2). | — |
-| 3 | Aplicar o filtro "Recusados" pelo botão "Aplicar" do drawer | Lista filtra por Recusados; KPI card "Recusados" assume o estado ativo e "Pendentes" perde. | ⊘ | Step não executado — Marcado para revisão (test.fixme): AT desatualizada / feature não entregue no BETA: o grupo "Filtros padrão" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe "Não há filtros nessa seção."; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2). | — |
+| 1 | Acessar a tela "Meu histórico" como Aluno e clicar no KPI card "Pendentes" | Lista filtra por Pendentes; card fica ativo. | ✅ | Validado manualmente pelo QA (aprovado) — 26/06/2026 | — |
+| 2 | Clicar no botão "Filtro" | Drawer abre com o radio correspondente a "Pendentes" já selecionado. | ✅ | Validado manualmente pelo QA (aprovado) — 26/06/2026 | — |
+| 3 | Aplicar o filtro "Recusados" pelo botão "Aplicar" do drawer | Lista filtra por Recusados; KPI card "Recusados" assume o estado ativo e "Pendentes" perde. | ✅ | Validado manualmente pelo QA (aprovado) — 26/06/2026 | — |
 
 **Evidências:**
 
@@ -382,11 +384,11 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 
 - 🎥 **Vídeo** — [`video-1.webm`](artifacts/projects-registros-externo-a0928-o-KPI-cards-↔-drawer-Aluno--chromium/video-1.webm)
 
-#### ⏳ Pendente — execução automatizada não realizada
+#### ✅ Validado manualmente (assistido pelo QA)
 
 - **Severidade do caso (XML):** Crítico
-- **Motivo declarado pelo spec:** AT desatualizada / feature não entregue no BETA: o grupo "Filtros padrão" do drawer não possui os radios Válidos/Expirados/Pendentes/Recusados (exibe "Não há filtros nessa seção."; radioCount=0 no recon 2026-06-23). Sem eles, este cenário não é exercível. Destinatário: AT / QA Lead (rever RN 63–66 vs build registrosf2).
-- **Categoria:** _não declarada_ — pra próxima revisão, ajustar o spec para `test.fixme(true, '[Categoria] motivo')` com uma das categorias canônicas (xml-desatualizado | seed-ausente | dep-externa | bloqueio-temporario).
+- **Validação:** Manual — aprovado pelo QA em 26/06/2026.
+- **Resultado:** ✅ Aprovado em validação manual.
 
 **Roteiro do XML (para validação manual):**
 1. Pré: Ambiente Stage configurado e acessível
@@ -397,7 +399,7 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 1. 2. Clicar no botão "Filtro"
 1. 3. Aplicar o filtro "Recusados" pelo botão "Aplicar" do drawer
 
-> Esse caso não bloqueia a build, mas precisa de validação manual ou ajuste no agente.
+> ✅ Validado manualmente pelo QA — aprovado.
 
 
 ---

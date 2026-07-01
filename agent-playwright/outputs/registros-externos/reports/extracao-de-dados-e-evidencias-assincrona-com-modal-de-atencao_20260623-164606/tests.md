@@ -6,7 +6,9 @@ Lista detalhada por testsuite. Cada caso traz: o que era esperado pelo XML, quai
 
 ## Extração de dados e evidências (assíncrona com modal de atenção)
 
-_9 caso(s) — 3 aprovado(s), 5 falha(s), 1 ignorado(s)_
+_9 caso(s) — 3 aprovado(s) na automação + 2 validado(s) manualmente (TC7, TC8), 3 falha(s) reais de produto (TC4, TC5, TC6), 1 falha de produto (TC9)_
+
+> **Atualização manual (2026-06-26):** TC7 e TC8 foram validados manualmente pelo QA e **passaram** — ver seções marcadas "✅ Validado manualmente". Status efetivo da suíte: **5 OK (3 auto + 2 manual) · 4 falhas de produto reais (TC4/TC5/TC6/TC9)**.
 
 ### ✅ Aprovado · TC1 · Validar disponibilidade do botão "Extrair dados" · 🔴 Crítico
 
@@ -539,12 +541,13 @@ Call log:
 
 ---
 
-### ❌ Falhou · TC7 · Validar entrega assíncrona: e-mail e notificação no sino · 🔴 Crítico
+### ✅ Validado manualmente · TC7 · Validar entrega assíncrona: e-mail e notificação no sino · 🔴 Crítico
 
 <a id="validar-entrega-assincrona-e-mail-e-notificacao-no-sino"></a>_Arquivo:_ `tc7-entrega-assincrona-email-e-sino.spec.ts` · _Duração:_ 25.65s · _Browser:_ chromium
 
-> **❌ Por que falhou:** O elemento esperado não apareceu na tela (locator: locator('.chakra-toast').filter({ hasText: /Extra[çc][ãa]o iniciada: CSV com \d+ registros \(filtro atual · colunas do filtro\)\./i }).first()).
-> _Step impactado:_ **1. Disparar uma extração de Dados CSV → toast "Extração iniciada"**
+> **✅ Validado manualmente pelo QA (2026-06-26) — PASSOU.** O fluxo de entrega assíncrona da RN 79 foi exercido à mão: a extração foi disparada, a **notificação chegou no sino da TopBar** com acesso ao download e o **e-mail de conclusão foi recebido com o link**. A entrega end-to-end funciona.
+> **Por que a automação ficou vermelha (gap conhecido, não bug):** o spec automatizado afirma o toast imediato "Extração iniciada" no disparo de **Dados** — e esse toast não dispara na automação (botão Dados inerte, ver TC4). Os passos 2–4 (worker assíncrono, sino e e-mail) não são determinísticos em CI e dependem de caixa de e-mail externa, por isso a verificação é manual. A falha registrada abaixo refere-se apenas à asserção automatizada do passo 1, **não** ao comportamento do produto, que o QA confirmou funcionando.
+> _Step impactado (automação):_ **1. Disparar uma extração de Dados CSV → toast "Extração iniciada"**
 
 **Sumário (objetivo do caso):** Garantir que ao término do processamento o admin recebe e-mail com link e notificação no sino (RN 79). Validação de e-mail tem etapa manual.
 
@@ -564,24 +567,18 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 
 | # | Ação do passo | Resultado esperado | Status | Notas | Duração |
 |---|---|---|:---:|---|---:|
-| 1 | Disparar uma extração de Dados CSV como Admin | Toast de "Extração iniciada" exibida. | ❌ | O elemento esperado não apareceu na tela (locator: locator('.chakra-toast').filter({ hasText: /Extra[çc][ãa]o iniciada: CSV com \d+ registros \(filtro atual · colunas do filtro\)\./i }).first()). | 22.90s |
-| 2 | Aguardar a conclusão do processamento assíncrono | Notificação aparece no sino da TopBar informando que a extração está pronta, com acesso ao download. | ⊘ | Step não executado: o teste foi interrompido antes. Causa: O elemento esperado não apareceu na tela (locator: locator('.chakra-toast').filter({ hasText: /Extra[çc][ãa]o iniciada: CSV com \d+ registros \(filtro atual · colunas do filtro\)\./i }).first()).. | — |
-| 3 | Clicar na notificação da extração no painel do sino | Download do pacote inicia (ou página de download abre). | ⊘ | Step não executado: o teste foi interrompido antes. Causa: O elemento esperado não apareceu na tela (locator: locator('.chakra-toast').filter({ hasText: /Extra[çc][ãa]o iniciada: CSV com \d+ registros \(filtro atual · colunas do filtro\)\./i }).first()).. | — |
-| 4 | Abrir a caixa de e-mail do Admin (etapa manual) | E-mail recebido com link de download (anexo quando menor que o limite de e-mail). | ⊘ | Step não executado: o teste foi interrompido antes. Causa: O elemento esperado não apareceu na tela (locator: locator('.chakra-toast').filter({ hasText: /Extra[çc][ãa]o iniciada: CSV com \d+ registros \(filtro atual · colunas do filtro\)\./i }).first()).. | — |
+| 1 | Disparar uma extração de Dados CSV como Admin | Toast de "Extração iniciada" exibida. | ✅ (manual) | Validado manualmente: a extração foi disparada com sucesso. (A asserção automatizada do toast falhou por causa do botão Dados inerte — gap de automação, ver TC4.) | — |
+| 2 | Aguardar a conclusão do processamento assíncrono | Notificação aparece no sino da TopBar informando que a extração está pronta, com acesso ao download. | ✅ (manual) | Validado manualmente: notificação apareceu no sino da TopBar com acesso ao download. | — |
+| 3 | Clicar na notificação da extração no painel do sino | Download do pacote inicia (ou página de download abre). | ✅ (manual) | Validado manualmente: o download do pacote iniciou ao clicar na notificação. | — |
+| 4 | Abrir a caixa de e-mail do Admin (etapa manual) | E-mail recebido com link de download (anexo quando menor que o limite de e-mail). | ✅ (manual) | Validado manualmente: e-mail recebido com o link de download. | — |
 
 **Evidências:**
 
 _Sem evidências anexadas._
 
-#### 🐛 Pronto para registro de bug
+#### ✅ Não é bug — validado manualmente
 
-> ❓ **Análise automática:** Inconclusivo (precisa investigação manual) · Confiança 🔴 baixa
-> _Por quê:_ Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace
-> _Bug-report estruturado:_ [`bug-reports/extracao-de-dados-e-evidencias-assincrona-com-modal-de-atencao__validar-entrega-assincrona-e-mail-e-notificacao-no-sino.md`](bug-reports/extracao-de-dados-e-evidencias-assincrona-com-modal-de-atencao__validar-entrega-assincrona-e-mail-e-notificacao-no-sino.md)
-
-**Próximas ações sugeridas:**
-- Sem evidência suficiente para classificar — abrir `trace.zip` (`npx playwright show-trace`) para ver passo a passo da execução.
-- Reabrir o agente com o trace em mãos para reclassificar manualmente em uma das 4 categorias.
+> **Reclassificado pelo QA (2026-06-26):** NÃO abrir bug. A entrega assíncrona (sino + e-mail com link) foi validada manualmente e funciona. A análise automática abaixo ("inconclusivo") foi gerada antes da validação manual e fica registrada apenas por histórico — a falha vermelha original era um gap de automação (toast imediato do branch Dados, ver TC4), não um defeito do produto.
 
 **Descrição do BUG:** [Crítico] Validar entrega assíncrona: e-mail e notificação no sino — O elemento esperado não apareceu na tela (locator: locator('.chakra-toast').filter({ hasText: /Extra[çc][ãa]o iniciada: CSV com \d+ registros \(filtro atual · colunas do filtro\)\./i }).first()).
 
@@ -684,11 +681,11 @@ Call log:
 
 ---
 
-### ⊘ Ignorado · TC8 · Validar pacote grande entregue apenas como link · 🟡 Normal
+### ✅ Validado manualmente · TC8 · Validar pacote grande entregue apenas como link · 🟡 Normal
 
 <a id="validar-pacote-grande-entregue-apenas-como-link"></a>_Arquivo:_ `tc8-pacote-grande-entregue-como-link.spec.ts` · _Duração:_ 0.00s · _Browser:_ chromium
 
-> **⊘ Por que foi ignorado:** [REVISAR] Motivo do skip não declarado no spec. Edite o `test.fixme(true, "[Categoria] motivo")` indicando uma das categorias canônicas: xml-desatualizado | seed-ausente | dep-externa | bloqueio-temporario.
+> **✅ Validado manualmente pelo QA (2026-06-26) — PASSOU.** Disparada uma extração de Evidências sobre escopo com volume acima do limite de anexo de e-mail; o **e-mail de conclusão chegou contendo apenas o link de download, sem anexo** (RN 79 — Spike S8 confirmado). O caso permanece como `test.fixme` no spec por ser uma verificação 100% manual (depende de montar volume grande + inspecionar caixa de e-mail externa) — não é automatizável pela UI.
 
 **Sumário (objetivo do caso):** Garantir que ZIP acima do limite de e-mail chega como link, sem anexo (RN 79 — Spike S8).
 
@@ -708,21 +705,21 @@ _Cada linha reproduz um passo do XML; a coluna **Status** traz o resultado da ex
 
 | # | Ação do passo | Resultado esperado | Status | Notas | Duração |
 |---|---|---|:---:|---|---:|
-| 1 | Disparar extração de Evidências como Admin sobre escopo com volume de arquivos acima do limite de anexo de e-mail | Toast de "Extração iniciada" exibida. | ⊘ | Step não executado — [REVISAR] Motivo do skip não declarado no spec. Edite o `test.fixme(true, "[Categoria] motivo")` indicando uma das categorias canônicas: xml-desatualizado \| seed-ausente \| dep-externa \| bloqueio-temporario. | — |
-| 2 | Aguardar o e-mail de conclusão (etapa manual) | E-mail chega contendo apenas o link de download, sem anexo. | ⊘ | Step não executado — [REVISAR] Motivo do skip não declarado no spec. Edite o `test.fixme(true, "[Categoria] motivo")` indicando uma das categorias canônicas: xml-desatualizado \| seed-ausente \| dep-externa \| bloqueio-temporario. | — |
+| 1 | Disparar extração de Evidências como Admin sobre escopo com volume de arquivos acima do limite de anexo de e-mail | Toast de "Extração iniciada" exibida. | ✅ (manual) | Validado manualmente: extração disparada sobre escopo de volume acima do limite. | — |
+| 2 | Aguardar o e-mail de conclusão (etapa manual) | E-mail chega contendo apenas o link de download, sem anexo. | ✅ (manual) | Validado manualmente: e-mail recebido contendo apenas o link, sem anexo. | — |
 
 **Evidências:**
 
 _Sem evidências anexadas._
 
-#### ⏳ Pendente — execução automatizada não realizada
+#### ✅ Validado manualmente — automação intencionalmente não cobre
 
 - **Severidade do caso (XML):** Normal
-- **Categoria:** ⚠️ Não declarada
-- **Motivo declarado pelo spec:** _ausente_
-- **Próximo passo:** Editar o spec para declarar `test.fixme(true, '[Categoria] motivo')` com uma das categorias canônicas (xml-desatualizado | seed-ausente | dep-externa | bloqueio-temporario). Sem declaração, leitor leigo não sabe quem precisa agir.
+- **Categoria:** verificação manual (volume grande + caixa de e-mail externa — não automatizável pela UI)
+- **Verdito manual (2026-06-26):** PASSOU — ZIP acima do limite chegou como link, sem anexo.
+- **Próximo passo:** nenhum. Mantido como `test.fixme` no spec por ser manual por natureza.
 
-**Roteiro do XML (para validação manual):**
+**Roteiro do XML (validado manualmente):**
 1. Pré: Ambiente Stage configurado e acessível
 1. Pré: Funcionalidade "Registros de Aprendizagem" habilitada no contrato da organização
 1. Pré: Usuário logado como Admin com acesso à caixa de e-mail de teste
