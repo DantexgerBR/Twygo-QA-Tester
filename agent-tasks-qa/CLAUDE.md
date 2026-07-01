@@ -14,8 +14,11 @@ agent-tasks-qa/
 ├── README.md                  # quickstart e visão geral
 ├── requirements.txt           # dependências Python (openpyxl, python-docx, docx2txt)
 │
-├── docs/                      # entrada — Discovery/Spike (.docx) + Quebra de atividades (.xlsx)
-├── output/                    # saída — planilhas .xlsx geradas
+├── projects/                  # 1 subpasta por projeto Twygo — padrão alinhado ao monorepo
+│   └── <slug>/                # ex.: desempenho-feedback
+│       ├── README.md          # onboarding do projeto
+│       ├── docs/              # ← INPUTS: Discovery/Spike (.docx) + Quebra de atividades (.xlsx)
+│       └── output/            # ← SAÍDA: planilhas .xlsx geradas (gitignored)
 │
 └── .claude/
     └── skills/
@@ -38,10 +41,28 @@ agent-tasks-qa/
             └── SKILL.md
 ```
 
+> **Estrutura por projeto (alinhamento monorepo)**: cada projeto vive em
+> `projects/<slug>/{docs,output}/` — simétrico a `agent-at/projects/<slug>/`
+> e `agent-playwright/projects/<slug>/`. A infra do agente (`.claude/`,
+> `requirements.txt`) fica na raiz e é compartilhada.
+>
+> **Como o agente descobre o projeto ativo** (mesma convenção dos demais agentes):
+> 1. Flag `--project <slug>` ao invocar a skill
+> 2. Variável de ambiente `PROJECT=<slug>`
+> 3. Auto-detect: se há exatamente 1 projeto em `projects/`, usa ele
+> 4. Erro explícito: lista projetos disponíveis e pede a flag
+>
+> **Legado**: os diretórios planos `docs/` e `output/` na raiz são mantidos
+> por compatibilidade (modo legado — a skill `break-qa-tasks` cai nele com
+> alerta se não houver `projects/`). Projetos novos usam `projects/<slug>/`.
+> As skills (`read-inputs`, `break-qa-tasks`, `generate-qa-sheet`) já
+> resolvem `--project`/`PROJECT`/auto-detect e leem de
+> `projects/<slug>/docs/` (escrevem em `projects/<slug>/output/`).
+
 ## Regras Gerais
 
-1. **`docs/`** contém TODOS os arquivos de entrada. Ler todos ao iniciar um novo projeto.
-2. **`output/`** recebe as planilhas geradas. Limpar arquivos anteriores antes de gerar novos.
+1. **`projects/<slug>/docs/`** contém TODOS os arquivos de entrada do projeto. Ler todos ao iniciar.
+2. **`projects/<slug>/output/`** recebe as planilhas geradas. Limpar arquivos anteriores antes de gerar novos.
 3. As estimativas refletem o esforço de **escrita e manutenção de testes automatizados com Playwright**, considerando a estrutura e padrões já existentes em [`agent-playwright/`](../agent-playwright/).
 4. **NUNCA** incluir atividade de "Buffer de retrabalho" nas planilhas de QA — não é mais usada.
 5. **NUNCA** inventar RNs que não existem na documentação — se a doc não tem RNs numeradas, inferir e **alertar o usuário** para validação.
@@ -52,7 +73,7 @@ agent-tasks-qa/
 
 Ao receber um novo projeto, invocar a skill `/break-qa-tasks` que orquestra todo o processo:
 
-1. **Verificação do ambiente** — confere `docs/` e `output/`.
+1. **Verificação do ambiente** — confere `projects/<slug>/docs/` e `projects/<slug>/output/`.
 2. **Leitura dos inputs** (`/read-inputs`) — lê Discovery/Spike (.docx) e planilha Dev (.xlsx), extrai RNs, atividades de Dev, metadados (account_id, folder_id, nome do projeto) e estrutura de blocos.
 3. **Estruturação das atividades de QA** — aplica regras de agrupamento/desmembramento, nomenclatura `QA [Bloco].[Num] - [Funcionalidade]` e geração de descrições no template padrão.
 4. **Estimativa de esforço** — leitura prévia da estrutura de `agent-playwright/` para calibrar estimativas; aplica tabela base ajustando para reutilização de código existente.
@@ -197,4 +218,4 @@ Os textos padrão das descrições fixas estão na skill `twygo-tasks-convention
 4. **Nunca incluir "Buffer de retrabalho"** — descontinuado.
 5. **Sempre alertar** sobre casos especiais (RNs ausentes, account_id ausente, transversais sem bloco).
 6. **Sempre apresentar resumo** em tabela Markdown ao final.
-7. **Nunca commitar `output/`** — gerado pelo agente, fica gitignored.
+7. **Nunca commitar `output/`** (`projects/<slug>/output/` ou o legado `output/` raiz) — gerado pelo agente, fica gitignored.

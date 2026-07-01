@@ -1,6 +1,6 @@
 ---
 name: generate-qa-sheet
-description: Gera os dois arquivos .xlsx finais de quebra de atividades — Planilha Completa (Dev + QA) e Planilha QA-Only — na pasta output/, usando a lista de atividades produzida pela skill /break-qa-tasks. Aplica colunas obrigatórias, atividades finais fixas e descrições padrão.
+description: Gera os dois arquivos .xlsx finais de quebra de atividades — Planilha Completa (Dev + QA) e Planilha QA-Only — em projects/<slug>/output/, usando a lista de atividades produzida pela skill /break-qa-tasks. Aplica colunas obrigatórias, atividades finais fixas e descrições padrão.
 disable-model-invocation: true
 allowed-tools: Read Write Bash
 ---
@@ -9,10 +9,14 @@ allowed-tools: Read Write Bash
 
 ## Objetivo
 
-Gerar dois arquivos `.xlsx` em `output/`:
+Gerar dois arquivos `.xlsx` em `projects/<slug>/output/`:
 
 1. **`QA_Atividades_<NomeProjeto>_Complementada.xlsx`** — Dev + QA (planilha completa para o gestor de projetos).
 2. **`QA_Only_<NomeProjeto>.xlsx`** — apenas QA (para revisões focadas).
+
+> O diretório de saída é informado pela `/break-qa-tasks` via
+> `--output-dir projects/<slug>/output`. O default `output/` do script é
+> apenas fallback do modo legado.
 
 ## Como Funciona
 

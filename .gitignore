@@ -41,9 +41,17 @@ agent-playwright/outputs/**/*.zip
 
 # ===== Outputs gerados pelo agente Tasks-QA =====
 # Planilhas .xlsx geradas por execução — não commitar
+# Cobre tanto layout legado (output/ na raiz) quanto novo (projects/<slug>/output/)
 agent-tasks-qa/output/*.xlsx
 agent-tasks-qa/output/*.md
 !agent-tasks-qa/output/.gitkeep
+agent-tasks-qa/projects/*/output/*.xlsx
+agent-tasks-qa/projects/*/output/*.md
+!agent-tasks-qa/projects/*/output/.gitkeep
+
+# Excel lock files (criados enquanto a planilha está aberta no Excel)
+~$*.xlsx
+~$*.xls
 
 # ===== Env / segredos =====
 .env

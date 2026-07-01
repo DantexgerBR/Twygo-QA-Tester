@@ -1,0 +1,23 @@
+{
+  "name": "Desempenho e Feedback",
+  "slug": "desempenho-feedback",
+  "description": "Análise de Teste do projeto 'Desempenho e Feedback' da Twygo.",
+  "environment": "staging-desempenho",
+  "envSecondary": "staging-desempenho-aditional",
+  "figmaPrototype": null,
+  "sourceDocs": [
+    "docs/prd-desempenho.md",
+    "docs/prd-admin-desenvolvimento.md",
+    "docs/prd-admin-feedbacks-anotacoes.md",
+    "docs/prd-admin-usuarios-dho.md",
+    "docs/prd-lider-desenvolvimento.md",
+    "docs/prd-lider-feedbacks-anotacoes.md",
+    "docs/prd-aluno-avaliacoes.md",
+    "docs/prd-aluno-feedbacks-recebidos.md",
+    "docs/status-x-acoes.md",
+    "docs/README.md",
+    "docs/QA_Only_Desempenho_e_Feedback.xlsx"
+  ],
+  "contractVersion": "1.1",
+  "atVersion": 1
+}

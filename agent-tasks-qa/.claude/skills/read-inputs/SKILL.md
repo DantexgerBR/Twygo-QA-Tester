@@ -1,6 +1,6 @@
 ---
 name: read-inputs
-description: Lê e interpreta os documentos da pasta docs/ (Discovery/Spike .docx + planilha de Dev .xlsx), extraindo Regras de Negócio numeradas, atividades de Desenvolvimento, estrutura de blocos do projeto e metadados (account_id, folder_id, nome do projeto). Identifica também atividades transversais (Banco Histórico, Logs, Trial, Feature flag).
+description: Lê e interpreta os documentos de projects/<slug>/docs/ (Discovery/Spike .docx + planilha de Dev .xlsx), extraindo Regras de Negócio numeradas, atividades de Desenvolvimento, estrutura de blocos do projeto e metadados (account_id, folder_id, nome do projeto). Identifica também atividades transversais (Banco Histórico, Logs, Trial, Feature flag).
 allowed-tools: Read Write Bash Glob Grep
 ---
 
@@ -8,7 +8,7 @@ allowed-tools: Read Write Bash Glob Grep
 
 ## Objetivo
 
-Ler TODOS os arquivos da pasta `docs/` e extrair:
+Ler TODOS os arquivos da pasta `projects/<slug>/docs/` e extrair:
 
 1. **Regras de Negócio (RNs)** do `.docx` — ID + texto
 2. **Atividades de Dev** do `.xlsx` (aba `dev-qa`) — tipo, título, descrição, esforço, bloco
@@ -16,7 +16,7 @@ Ler TODOS os arquivos da pasta `docs/` e extrair:
 4. **Metadados do produto** da aba `produto` da planilha — `account_id`, `folder_id`, nome do projeto
 5. **Atividades transversais** sem bloco explícito (Banco Histórico, Logs, Trial, Feature flag, Ambientes adicionais)
 
-Consolidar tudo em memória (ou opcionalmente em `output/inputs_extraidos.md` se útil para debug).
+Consolidar tudo em memória (ou opcionalmente em `projects/<slug>/output/inputs_extraidos.md` se útil para debug).
 
 ## Tipos de Arquivo Suportados
 

@@ -35,8 +35,8 @@
 - ✅ Aba `produto` da planilha contém `account_id` e `folder_id` válidos.
 
 **Arquivos gerados:**
-- `output/QA_Atividades_Base_de_Conhecimento_IA_Fase_01_Complementada.xlsx`
-- `output/QA_Only_Base_de_Conhecimento_IA_Fase_01.xlsx`
+- `projects/base-de-conhecimento/output/QA_Atividades_Base_de_Conhecimento_IA_Fase_01_Complementada.xlsx`
+- `projects/base-de-conhecimento/output/QA_Only_Base_de_Conhecimento_IA_Fase_01.xlsx`
 
 ---
 

@@ -250,5 +250,47 @@
       "subscriptionPlansPath": "/admin/subscription_plans",
       "editContractPath": "/admin/edit_sys_subscription_settings/37051"
     }
+  },
+  "staging-desempenho": {
+    "baseUrl": "",
+    "credentials": {
+      "email": "",
+      "password": ""
+    },
+    "timeout": 30000,
+    "orgId": "",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/"
+    }
+  },
+  "staging-desempenho-aditional": {
+    "baseUrl": "",
+    "credentials": {
+      "email": "",
+      "password": ""
+    },
+    "timeout": 30000,
+    "orgId": "",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/"
+    }
+  },
+  "staging-desempenho-trial": {
+    "baseUrl": "",
+    "credentials": {
+      "email": "",
+      "password": ""
+    },
+    "timeout": 30000,
+    "orgId": "",
+    "superAdmin": {
+      "path": "/admin",
+      "subscriptionPlansPath": "/admin/subscription_plans",
+      "editContractPath": "/admin/edit_sys_subscription_settings/"
+    }
   }
 }
