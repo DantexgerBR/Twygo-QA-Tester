@@ -1,6 +1,18 @@
 ---
 name: testar-toast-chakra-twygo
 description: Toasts Chakra (`.chakra-toast`) acumulam no toast-manager quando ações sucessivas disparam vários — assert `expect(toast).toBeVisible()` filtrado só por texto viola strict-mode com `resolved to N elements`. Documenta o padrão canônico `getToast()` com `.first()` + helper `waitForToastsToClear()` para sincronizar antes de interagir com elementos sob o toast manager (Salvar Layout etc). Use ao gerar specs Twygo que validam toast de sucesso/erro após save em form, ou que clicam botões próximos ao canto `bottom-right`/`top-right` da tela.
+when_to_use: |
+  - Spec valida toast de sucesso/erro após save em form
+  - Spec clica em botões próximos a `bottom-right`/`top-right` da tela
+  - Strict-mode violation em `.chakra-toast` ("resolved to N elements")
+triggers:
+  - "chakra-toast"
+  - "toast-manager"
+  - "getToast"
+  - "waitForToastsToClear"
+  - "resolved to N elements"
+  - "toast intercepts"
+  - "Salvar Layout"
 version: 1.0.0
 ---
 
@@ -134,3 +146,11 @@ interceptou click em "Salvar Layout".
 Fix: `.first()` no `getToast` + `waitForToastsToClear` + `force:true` no save
 crítico. 6/6 passes após. O padrão se repete em qualquer save de form Twygo —
 documentar evita o re-debug de 15min no próximo spec.
+
+## Quando NÃO usar
+
+- Spec valida modal Chakra (`role="dialog"`), não toast — modal não acumula no toast-manager; locator e timing são diferentes.
+- Erro é `beforeunload` dialog nativo do browser (não Chakra) — use [[testar-beforeunload-dialog-twygo]] com `page.on('dialog', ...)`.
+- Mensagem que você quer validar é alert inline no form (`role="alert"` dentro do form, não floating) — locator é `getByRole('alert')` dentro do form, não `.chakra-toast`.
+- Spec só verifica que NÃO apareceu toast de erro — usar `.not.toBeVisible()` direto no locator; padrão idempotente do `getToast` não se aplica.
+- Você está validando que UMA notificação específica apareceu N vezes (bulk action) — use `toHaveCount(N)` em vez de `.first()`, ver seção "Quando o padrão NÃO basta".

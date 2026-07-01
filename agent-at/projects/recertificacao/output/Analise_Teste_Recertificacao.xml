@@ -1,0 +1,1754 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="">  <testsuite name="Configuração de Conteúdo (Switch &#34;Habilitar reinscrição&#34;)">    <testcase name="Switch &#34;Habilitar reinscrição&#34; aparece com flag ON na edição de curso">
+      <summary>Validar que o switch &#34;Habilitar reinscrição&#34; é exibido na tela de edição do curso quando a feature flag `:recertificacao` está habilitada para a organização (RN 1, 1.1, 1.2, 2).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA na organização do teste
+Usuário logado como Admin
+Pelo menos 1 curso pré-existente (para validar default `has_recertification = false`)
+Pelo menos 1 trilha pré-existente (para validar paridade do switch)</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a URL &#34;/o/{orgId}/dashboard&#34;</actions>
+          <expectedresults>Dashboard padrão é exibido contendo o menu lateral.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Navegar até a listagem de cursos da organização</actions>
+          <expectedresults>Listagem de cursos é exibida com pelo menos 1 curso pré-existente.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Clicar em &#34;Editar&#34; no menu de ações do curso</actions>
+          <expectedresults>Página de edição do curso é exibida na rota &#34;/e/:id/edit&#34; (HAML) ou &#34;/contents/:id/edit&#34; (React facelift).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Localizar a seção &#34;Detalhes&#34; ou seção principal do formulário</actions>
+          <expectedresults>Switch &#34;Habilitar reinscrição&#34; está visível no formulário.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>5</step_number>
+          <actions>Posicionar o cursor sobre o ícone de ajuda do switch &#34;Habilitar reinscrição&#34;</actions>
+          <expectedresults>Tooltip de ajuda é exibido com o texto da chave I18n &#34;activerecord.attributes.event.has_recertification_tooltip&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Switch &#34;Habilitar reinscrição&#34; NÃO aparece com flag OFF (regressão)">
+      <summary>Validar comportamento regressivo: com a feature flag desativada, o switch &#34;Habilitar reinscrição&#34; não é exibido na edição do conteúdo (RN 1 — kill switch global).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA na organização do teste
+Usuário logado como Admin
+Pelo menos 1 curso pré-existente (para validar default `has_recertification = false`)
+Pelo menos 1 trilha pré-existente (para validar paridade do switch)</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Desativar a feature flag `:recertificacao` para a organização via Flipper Admin</actions>
+          <expectedresults>Feature flag fica desativada na organização atual.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Acessar a tela de edição de um curso existente em &#34;/e/{eventId}/edit&#34;</actions>
+          <expectedresults>Página de edição do curso é exibida normalmente.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Inspecionar o formulário em busca do label &#34;Habilitar reinscrição&#34;</actions>
+          <expectedresults>Label &#34;Habilitar reinscrição&#34; NÃO está presente em nenhum lugar do formulário.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Salvar o curso sem alterações</actions>
+          <expectedresults>Curso é salvo com sucesso e atributo `events.has_recertification` permanece `false` (default).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Ativar e salvar o switch persiste `has_recertification = true`">
+      <summary>Validar persistência: ao ativar o switch e salvar, o atributo `events.has_recertification` é atualizado para `true` no backend (RN 2, 2.1).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA na organização do teste
+Usuário logado como Admin
+Pelo menos 1 curso pré-existente (para validar default `has_recertification = false`)
+Pelo menos 1 trilha pré-existente (para validar paridade do switch)</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a edição de um curso com `has_recertification = false`</actions>
+          <expectedresults>Página de edição é exibida e switch &#34;Habilitar reinscrição&#34; está visível e desligado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no switch &#34;Habilitar reinscrição&#34;</actions>
+          <expectedresults>Switch transita para o estado ligado (ON).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Clicar no botão &#34;Salvar&#34;</actions>
+          <expectedresults>Toast de sucesso é exibido (REVISAR-FIGMA: texto exato do toast).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Recarregar a página de edição do mesmo curso</actions>
+          <expectedresults>Switch &#34;Habilitar reinscrição&#34; continua no estado ligado, refletindo o valor persistido `has_recertification = true`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Desativar o switch em curso com participants reinscritos é permitido sem aviso">
+      <summary>Validar que desativar o switch num curso que já possui participants reinscritos é permitido sem qualquer modal/aviso de bloqueio, preservando o histórico (RN 2.3).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA na organização do teste
+Usuário logado como Admin
+Pelo menos 1 curso pré-existente (para validar default `has_recertification = false`)
+Pelo menos 1 trilha pré-existente (para validar paridade do switch)</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Pré-condição: curso &#34;Curso com Reinscritos w{workerIndex}&#34; com `has_recertification = true` e ao menos 1 participant com `recertification_number &gt; 0`.</actions>
+          <expectedresults>Curso e participants pré-existem no env.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Acessar a edição deste curso em &#34;/e/{eventId}/edit&#34;</actions>
+          <expectedresults>Página de edição é exibida com switch ligado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Clicar no switch &#34;Habilitar reinscrição&#34; para desligá-lo</actions>
+          <expectedresults>Switch transita para o estado desligado. Nenhum modal de confirmação ou aviso é exibido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Clicar em &#34;Salvar&#34;</actions>
+          <expectedresults>Curso é salvo. `events.has_recertification` passa para `false`. Participants existentes mantêm seu `recertification_number &gt; 0` no banco (histórico preservado).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Paridade do switch entre formulário HAML e formulário React (facelift)">
+      <summary>Validar que o switch tem comportamento equivalente nas duas telas (`_form_details.haml` e `event-form.tsx`), gravando na mesma coluna (RN 2.1).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA na organização do teste
+Usuário logado como Admin
+Pelo menos 1 curso pré-existente (para validar default `has_recertification = false`)
+Pelo menos 1 trilha pré-existente (para validar paridade do switch)</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Editar um curso na tela HAML em &#34;/e/{eventId}/edit&#34;, ativar o switch e salvar</actions>
+          <expectedresults>Switch ativado, salvo com sucesso, `has_recertification = true` persiste.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Acessar o MESMO curso pela tela React em &#34;/contents/{eventId}/edit&#34;</actions>
+          <expectedresults>Tela facelift carrega com switch &#34;Habilitar reinscrição&#34; no estado ligado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Desativar o switch na tela React e salvar</actions>
+          <expectedresults>Switch desativado, salvo com sucesso.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Recarregar a edição na tela HAML</actions>
+          <expectedresults>Switch aparece desligado, confirmando que ambas escrevem em `events.has_recertification`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Reinscrição Individual pelo Admin">    <testcase name="Botão &#34;Reinscrever&#34; visível e habilitado apenas para aluno elegível">
+      <summary>Validar visibilidade e habilitação do botão &#34;Reinscrever&#34; no menu de ação da linha do aluno, conforme regras de elegibilidade (RN 4, 4.1, 6).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA na organização
+Curso com `has_recertification = true`
+Usuário logado como Admin
+{&#39;Pelo menos 3 alunos cadastrados no curso em cenários distintos&#39;: &#39;(a) elegível por `progress_score = 100` (b) elegível por certificado expirado (`expires_at &lt; hoje`) (c) inelegível (em andamento, `progress_score &lt; 100`, sem aprovação, sem certificado expirado)&#39;}</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a lista de aprendizagem do curso em &#34;/learning_students?event_id={eventId}&#34;</actions>
+          <expectedresults>Lista de alunos é exibida com pelo menos os 3 alunos pré-condicionados.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Abrir o menu de ações da linha do aluno &#34;(a) elegível por progresso 100%&#34;</actions>
+          <expectedresults>Menu de ações é exibido contendo o item &#34;Reinscrever&#34; habilitado (sem tooltip de bloqueio).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Clicar fora para fechar o menu e abrir o menu da linha do aluno &#34;(b) elegível por certificado expirado&#34;</actions>
+          <expectedresults>Menu exibe o item &#34;Reinscrever&#34; habilitado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Abrir o menu da linha do aluno &#34;(c) inelegível em andamento&#34;</actions>
+          <expectedresults>Item &#34;Reinscrever&#34; é exibido mas DESABILITADO; ao posicionar o cursor sobre o item, tooltip explicativo de inelegibilidade é exibido (REVISAR-FIGMA: confirmar texto).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Botão &#34;Reinscrever&#34; visível apenas na linha do participant com maior `recertification_number`">
+      <summary>Validar que para um aluno com múltiplas inscrições históricas, o botão &#34;Reinscrever&#34; aparece APENAS na linha do participant com maior `recertification_number` (RN 4).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA na organização
+Curso com `has_recertification = true`
+Usuário logado como Admin
+{&#39;Pelo menos 3 alunos cadastrados no curso em cenários distintos&#39;: &#39;(a) elegível por `progress_score = 100` (b) elegível por certificado expirado (`expires_at &lt; hoje`) (c) inelegível (em andamento, `progress_score &lt; 100`, sem aprovação, sem certificado expirado)&#39;}</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Pré-condição: aluno &#34;Aluno Multi-Reinscrição w{workerIndex}&#34; com 2 participants no curso: `recertification_number = 0` e `recertification_number = 1`.</actions>
+          <expectedresults>Backend tem ambos os registros.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Acessar a lista de aprendizagem do curso em &#34;/learning_students?event_id={eventId}&#34;</actions>
+          <expectedresults>Listagem padrão exibe apenas a inscrição com maior `recertification_number` (campo `is_latest_recertification = 1`).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Aplicar filtro para exibir histórico completo (REVISAR-FIGMA: confirmar como exibir histórico)</actions>
+          <expectedresults>Ambas as inscrições do aluno são exibidas.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Abrir o menu de ações da linha com `recertification_number = 0`</actions>
+          <expectedresults>Item &#34;Reinscrever&#34; NÃO está presente no menu (apenas demais ações como &#34;Ver detalhes&#34;).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>5</step_number>
+          <actions>Abrir o menu de ações da linha com `recertification_number = 1`</actions>
+          <expectedresults>Item &#34;Reinscrever&#34; está presente no menu, habilitado (assumindo aluno elegível).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Reinscrever aluno individualmente cria novo participant zerado">
+      <summary>Validar criação de novo `EventParticipant` com campos zerados após reinscrição individual (RN 5, 7).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA na organização
+Curso com `has_recertification = true`
+Usuário logado como Admin
+{&#39;Pelo menos 3 alunos cadastrados no curso em cenários distintos&#39;: &#39;(a) elegível por `progress_score = 100` (b) elegível por certificado expirado (`expires_at &lt; hoje`) (c) inelegível (em andamento, `progress_score &lt; 100`, sem aprovação, sem certificado expirado)&#39;}</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a lista de aprendizagem do curso em &#34;/learning_students?event_id={eventId}&#34;</actions>
+          <expectedresults>Lista exibe aluno &#34;(a) elegível&#34; com `recertification_number = N`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no item &#34;Reinscrever&#34; no menu da linha</actions>
+          <expectedresults>Modal de confirmação &#34;Confirmar reinscrição&#34; é exibido (REVISAR-FIGMA: header e body exatos).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Clicar em &#34;Confirmar&#34;</actions>
+          <expectedresults>Modal fecha, toast de sucesso é exibido (REVISAR-FIGMA: texto exato); tabela faz refetch automático.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Localizar a linha do aluno na listagem</actions>
+          <expectedresults>Aluno aparece com `recertification_number = N+1`, `progress_score = 0`, badge de status &#34;Pendente&#34; (REVISAR-FIGMA: texto exato), sem nota e sem certificado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Botão &#34;Reinscrever&#34; fica visível mas DESABILITADO quando `event.has_recertification = false`">
+      <summary>Validar que em conteúdo com `has_recertification = false`, o botão &#34;Reinscrever&#34; aparece visível mas desabilitado com tooltip explicativo (RN 4.2).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA na organização
+Curso com `has_recertification = true`
+Usuário logado como Admin
+{&#39;Pelo menos 3 alunos cadastrados no curso em cenários distintos&#39;: &#39;(a) elegível por `progress_score = 100` (b) elegível por certificado expirado (`expires_at &lt; hoje`) (c) inelegível (em andamento, `progress_score &lt; 100`, sem aprovação, sem certificado expirado)&#39;}</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Pré-condição: curso &#34;Curso sem Reinscrição w{workerIndex}&#34; com `has_recertification = false` e ao menos 1 aluno elegível por progresso 100%.</actions>
+          <expectedresults>Curso e aluno pré-existem no env.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Acessar a lista de aprendizagem deste curso em &#34;/learning_students?event_id={eventId}&#34;</actions>
+          <expectedresults>Lista exibe o aluno elegível.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Abrir o menu de ações da linha do aluno</actions>
+          <expectedresults>Item &#34;Reinscrever&#34; é exibido mas DESABILITADO.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Posicionar o cursor sobre o item &#34;Reinscrever&#34;</actions>
+          <expectedresults>Tooltip &#34;conteúdo não permite reinscrição&#34; é exibido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Reinscrição com flag OFF retorna HTTP 422 `feature_disabled`">
+      <summary>Validar comportamento defensivo do backend: mesmo se a ação chegar ao controller com a flag desativada (cenário de exploit / tela em cache), o endpoint retorna HTTP 422 estruturado (RN 1, RN 10).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA na organização
+Curso com `has_recertification = true`
+Usuário logado como Admin
+{&#39;Pelo menos 3 alunos cadastrados no curso em cenários distintos&#39;: &#39;(a) elegível por `progress_score = 100` (b) elegível por certificado expirado (`expires_at &lt; hoje`) (c) inelegível (em andamento, `progress_score &lt; 100`, sem aprovação, sem certificado expirado)&#39;}</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Desativar a feature flag `:recertificacao` para a organização via Flipper Admin</actions>
+          <expectedresults>Flag fica desativada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Disparar via API um `POST /api/v1/contents/{eventId}/event_participants` com body `{ user_id: {alunoId}, recertification: true }`</actions>
+          <expectedresults>Response retorna status HTTP 422.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Inspecionar o corpo da resposta</actions>
+          <expectedresults>Body contém chave de erro `reenroll_participant.errors.feature_disabled` (chave I18n).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Consultar a tabela &#34;event_participants&#34; via Rails console com &#34;EventParticipant.where(user_id: X, event_id: Y).count&#34;</actions>
+          <expectedresults>Contagem retorna o valor anterior — nenhum novo `EventParticipant` foi criado para o par `(user_id, event_id)`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Após reinscrição, e-mail diferenciado é disparado (validação cross-suite)">
+      <summary>Validar que ao concluir reinscrição individual, o `RecertificationMailer#student_email` é disparado com template `reenrollment_mail` (RN 7, 24.1). Validação detalhada em suíte 10.</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA na organização
+Curso com `has_recertification = true`
+Usuário logado como Admin
+{&#39;Pelo menos 3 alunos cadastrados no curso em cenários distintos&#39;: &#39;(a) elegível por `progress_score = 100` (b) elegível por certificado expirado (`expires_at &lt; hoje`) (c) inelegível (em andamento, `progress_score &lt; 100`, sem aprovação, sem certificado expirado)&#39;}</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a lista de aprendizagem com a inbox de teste aberta em paralelo (REVISAR-FIGMA: tooling de inbox em staging)</actions>
+          <expectedresults>Lista de aprendizagem é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Reinscrever um aluno elegível pelo fluxo do TC3</actions>
+          <expectedresults>Toast de sucesso é exibido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Aguardar até 30 segundos pelo e-mail na inbox do aluno</actions>
+          <expectedresults>E-mail é recebido na caixa de entrada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Inspecionar o assunto e o corpo do e-mail</actions>
+          <expectedresults>Assunto corresponde à chave I18n `recertification_mailer.reenrollment.subject`; corpo corresponde ao template `reenrollment_mail` (não ao `recertification_mail` legado).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Reinscrição em Massa pelo Admin">    <testcase name="Ação &#34;Reinscrição em massa&#34; aparece no drawer quando todas as condições atendidas">
+      <summary>Validar visibilidade condicional da ação &#34;Reinscrição em massa&#34; no drawer de ações em massa: flag ON, `has_recertification = true` e tipo do evento ≠ pacote (RN 8).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Curso com `has_recertification = true`
+Pelo menos 5 alunos elegíveis selecionáveis na lista de aprendizagem
+Sidekiq operacional (worker `MassReenrollParticipantsWorker`)</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a lista de aprendizagem do curso em &#34;/learning_students?event_id={eventId}&#34;</actions>
+          <expectedresults>Lista de alunos é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Selecionar 3 alunos clicando nos checkboxes correspondentes</actions>
+          <expectedresults>Drawer de ações em massa é exibido na lateral com a contagem &#34;3 selecionados&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Inspecionar as opções do drawer</actions>
+          <expectedresults>Opção &#34;Reinscrição em massa&#34; está visível e habilitada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Ação &#34;Reinscrição em massa&#34; NÃO aparece em evento do tipo pacote">
+      <summary>Validar regra de visibilidade: ação não aparece se o evento for do tipo pacote (`ContentKind.package`), mesmo com flag e gate ON (RN 8).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Curso com `has_recertification = true`
+Pelo menos 5 alunos elegíveis selecionáveis na lista de aprendizagem
+Sidekiq operacional (worker `MassReenrollParticipantsWorker`)</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Pré-condição: pacote &#34;Pacote Recertificação w{workerIndex}&#34; com `has_recertification = true` e ao menos 3 alunos</actions>
+          <expectedresults>Pacote pré-existe no env.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Acessar a lista de aprendizagem do pacote em &#34;/learning_students?event_id={packageId}&#34;</actions>
+          <expectedresults>Lista de alunos do pacote é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Selecionar 3 alunos</actions>
+          <expectedresults>Drawer de ações em massa é exibido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Inspecionar as opções do drawer</actions>
+          <expectedresults>Opção &#34;Reinscrição em massa&#34; NÃO está presente.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Disparar reinscrição em massa enfileira worker e processa todos os alunos elegíveis">
+      <summary>Validar que ao confirmar reinscrição em massa, o worker `MassReenrollParticipantsWorker` é enfileirado e processa todos os alunos selecionados criando participants reinscritos (RN 9).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Curso com `has_recertification = true`
+Pelo menos 5 alunos elegíveis selecionáveis na lista de aprendizagem
+Sidekiq operacional (worker `MassReenrollParticipantsWorker`)</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a lista de aprendizagem do curso em &#34;/learning_students?event_id={eventId}&#34;</actions>
+          <expectedresults>Lista de alunos é exibida com pelo menos 5 alunos elegíveis.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Selecionar 5 alunos elegíveis nos checkboxes</actions>
+          <expectedresults>Drawer exibe contagem &#34;5 selecionados&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Clicar em &#34;Reinscrição em massa&#34; no drawer</actions>
+          <expectedresults>Modal de confirmação é exibido (REVISAR-FIGMA: texto exato do modal).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Clicar em &#34;Confirmar&#34;</actions>
+          <expectedresults>Modal fecha, toast &#34;Reinscrição em massa iniciada&#34; é exibido (REVISAR-FIGMA texto exato).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>5</step_number>
+          <actions>Aguardar até 60 segundos e recarregar a lista</actions>
+          <expectedresults>Os 5 alunos aparecem com `recertification_number = N+1`, `progress_score = 0`, status &#34;Pendente&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Worker é idempotente: alunos já reinscritos na mesma janela são pulados">
+      <summary>Validar idempotência: re-disparar reinscrição em massa para alunos já reinscritos no mesmo curso não cria participants duplicados nem retorna erro (RN 9.1).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Curso com `has_recertification = true`
+Pelo menos 5 alunos elegíveis selecionáveis na lista de aprendizagem
+Sidekiq operacional (worker `MassReenrollParticipantsWorker`)</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Executar o fluxo do TC3 reinscrevendo 5 alunos (estado: todos com `recertification_number = N+1`)</actions>
+          <expectedresults>5 participants reinscritos criados.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Selecionar os mesmos 5 alunos novamente na listagem</actions>
+          <expectedresults>Drawer exibe &#34;5 selecionados&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Clicar em &#34;Reinscrição em massa&#34; e confirmar</actions>
+          <expectedresults>Toast de sucesso/processamento é exibido sem erro visível.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Aguardar até 60 segundos e recarregar a lista</actions>
+          <expectedresults>Cada um dos 5 alunos continua com `recertification_number = N+1` (nenhum incremento adicional). Worker pulou silenciosamente.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Erro em aluno individual não interrompe o lote">
+      <summary>Validar que erro de processamento em 1 aluno (ex: aluno desativado entre seleção e processamento) não impede a criação dos demais participants do mesmo lote (RN 9.2).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Curso com `has_recertification = true`
+Pelo menos 5 alunos elegíveis selecionáveis na lista de aprendizagem
+Sidekiq operacional (worker `MassReenrollParticipantsWorker`)</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Pré-condição: 4 alunos elegíveis + 1 aluno marcado como `deleted_at` recente.</actions>
+          <expectedresults>5 alunos selecionáveis aparecem na lista.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Selecionar os 5 alunos e disparar reinscrição em massa pelo fluxo do TC3</actions>
+          <expectedresults>Toast de processamento é exibido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Aguardar até 60 segundos e recarregar a lista</actions>
+          <expectedresults>4 alunos aparecem com `recertification_number = N+1`. O aluno deletado não aparece na listagem padrão e seu erro foi reportado ao Datadog/NewRelic (verificar fora do teste).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Disparo de reinscrição em massa com flag OFF retorna HTTP 422 `feature_disabled`">
+      <summary>Validar bloqueio defensivo do controller `Api::V1::LearningStudentsController#action_mass` quando flag OFF (RN 10).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Curso com `has_recertification = true`
+Pelo menos 5 alunos elegíveis selecionáveis na lista de aprendizagem
+Sidekiq operacional (worker `MassReenrollParticipantsWorker`)</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Desativar a feature flag `:recertificacao` para a organização</actions>
+          <expectedresults>Flag fica desativada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Disparar via API um `POST /api/v1/learning_students/action_mass` com `action_type=mass_reenroll_participants` e array de `participant_ids`</actions>
+          <expectedresults>Response retorna status HTTP 422.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Inspecionar o corpo da resposta</actions>
+          <expectedresults>Body contém chave de erro `reenroll_participant.errors.feature_disabled`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Consultar a tabela &#34;event_participants&#34; via Rails console com &#34;EventParticipant.where(id: participant_ids).count&#34;</actions>
+          <expectedresults>Contagem permanece a anterior — nenhum novo participant foi criado para os IDs enviados.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Reinscrição via Importação CSV">    <testcase name="Coluna &#34;Reinscrever&#34; aparece no template CSV com flag ON">
+      <summary>Validar que o template CSV baixado pelo admin contém a coluna &#34;Reinscrever&#34; quando a flag `:recertificacao` está ativa na organização (RN 11).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Curso com `has_recertification = true`
+Usuário logado como Admin
+Pelo menos 3 alunos elegíveis pré-cadastrados (para reinscrição via CSV)</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a página de importação de participantes em &#34;/o/{orgId}/events/{eventId}/import_participants&#34; (REVISAR-FIGMA: confirmar URL)</actions>
+          <expectedresults>Página de importação é exibida com link &#34;Baixar template CSV&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar em &#34;Baixar template CSV&#34;</actions>
+          <expectedresults>Download do arquivo template.csv inicia.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Abrir o arquivo template.csv baixado</actions>
+          <expectedresults>Header da planilha contém a coluna &#34;Reinscrever&#34; (entre as colunas existentes).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Coluna &#34;Reinscrever&#34; NÃO aparece no template CSV com flag OFF (regressão)">
+      <summary>Validar comportamento regressivo: com flag OFF, template CSV não contém a coluna nova (RN 11).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Curso com `has_recertification = true`
+Usuário logado como Admin
+Pelo menos 3 alunos elegíveis pré-cadastrados (para reinscrição via CSV)</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Desativar a feature flag `:recertificacao` para a organização</actions>
+          <expectedresults>Flag fica desativada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Acessar a página de importação e baixar o template CSV</actions>
+          <expectedresults>Download conclui.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Abrir o arquivo template.csv</actions>
+          <expectedresults>Header NÃO contém a coluna &#34;Reinscrever&#34;. Todas as demais colunas (Nome, Email, CPF, etc.) presentes.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Upload de CSV com `Reinscrever=SIM` para usuário existente cria participant reinscrito">
+      <summary>Validar fluxo principal: linha com `Reinscrever=SIM` para usuário já cadastrado e elegível cria novo participant com `recertification_number` incrementado, bypassando o erro `:in_use` (RN 12, 13).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Curso com `has_recertification = true`
+Usuário logado como Admin
+Pelo menos 3 alunos elegíveis pré-cadastrados (para reinscrição via CSV)</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Preparar arquivo &#34;participants-reenroll.csv&#34; com 1 linha contendo o email do &#34;Aluno Elegível w{workerIndex}&#34; e `Reinscrever=SIM`</actions>
+          <expectedresults>Arquivo CSV criado no disco do executor.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Acessar a página de importação de participantes em &#34;/o/{orgId}/events/{eventId}/import_participants&#34;</actions>
+          <expectedresults>Página exibida com upload de arquivo.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Fazer upload do arquivo &#34;participants-reenroll.csv&#34;</actions>
+          <expectedresults>Upload é aceito. Toast &#34;Importação iniciada&#34; é exibido (REVISAR-FIGMA texto exato).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Aguardar até 30 segundos pelo processamento do worker `CsvImportEventParticipantWorker`</actions>
+          <expectedresults>Worker conclui.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>5</step_number>
+          <actions>Acessar a lista de aprendizagem do curso</actions>
+          <expectedresults>&#34;Aluno Elegível w{workerIndex}&#34; aparece com `recertification_number = N+1`, `progress_score = 0`, status &#34;Pendente&#34;. Aluno também recebe e-mail de reinscrição.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Valores de `Reinscrever` aceitos (case-insensitive: SIM/sim/true/1)">
+      <summary>Validar matriz de valores aceitos na coluna &#34;Reinscrever&#34; — todos resultam em reinscrição (RN 11.1).
+
+**Validation matrix**:
+| Cenário | Categoria | Input | Esperado |
+|---|---|---|---|
+| Valor &#34;SIM&#34; maiúsculo | aceito | &#34;SIM&#34; | Reinscrição criada |
+| Valor &#34;sim&#34; minúsculo | aceito | &#34;sim&#34; | Reinscrição criada |
+| Valor &#34;true&#34; | aceito | &#34;true&#34; | Reinscrição criada |
+| Valor &#34;1&#34; | aceito | &#34;1&#34; | Reinscrição criada |
+| Valor &#34;NÃO&#34; | ignorado | &#34;NÃO&#34; | Fluxo normal sem reinscrição |
+| Valor vazio | ignorado | &#34;&#34; | Fluxo normal sem reinscrição |
+| Valor inválido | ignorado | &#34;talvez&#34; | Fluxo normal sem reinscrição |</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Curso com `has_recertification = true`
+Usuário logado como Admin
+Pelo menos 3 alunos elegíveis pré-cadastrados (para reinscrição via CSV)</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Preparar arquivo CSV contendo 7 linhas com os 7 valores da matriz acima para 7 alunos distintos</actions>
+          <expectedresults>Arquivo CSV criado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Fazer upload pela página de importação</actions>
+          <expectedresults>Worker processa.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Aguardar processamento e abrir lista de aprendizagem</actions>
+          <expectedresults>4 alunos (SIM/sim/true/1) aparecem com `recertification_number &gt; 0`. Os 3 alunos com valor &#34;NÃO&#34;, vazio ou inválido NÃO aparecem como reinscritos (fluxo normal de inscrição).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Linha com `Reinscrever=SIM` em conteúdo com `has_recertification=false` registra erro estruturado">
+      <summary>Validar erro por linha quando o conteúdo de destino não permite reinscrição (RN 12).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Curso com `has_recertification = true`
+Usuário logado como Admin
+Pelo menos 3 alunos elegíveis pré-cadastrados (para reinscrição via CSV)</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Pré-condição: curso &#34;Curso sem Reinscrição w{workerIndex}&#34; com `has_recertification = false`.</actions>
+          <expectedresults>Curso pré-existe.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Preparar CSV com 1 linha contendo email de aluno existente, curso destino &#34;Curso sem Reinscrição&#34; e `Reinscrever=SIM`</actions>
+          <expectedresults>Arquivo CSV criado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Fazer upload na página de importação</actions>
+          <expectedresults>Upload aceito; worker processa.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Aguardar processamento e acessar a tela de &#34;Resultado da importação&#34; (REVISAR-FIGMA: URL exata)</actions>
+          <expectedresults>Linha aparece como erro com mensagem da chave `reenroll_participant.errors.recertification_disabled_for_event`. Nenhum participant criado para esta linha.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Linha com `Reinscrever=SIM` para usuário INEXISTENTE cai no fluxo normal de criação (sem reinscrição)">
+      <summary>Validar que reinscrição via CSV requer usuário pré-existente. Linha com `Reinscrever=SIM` para email novo cria participant com `recertification_number = 0` (fluxo legado) (RN 12).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Curso com `has_recertification = true`
+Usuário logado como Admin
+Pelo menos 3 alunos elegíveis pré-cadastrados (para reinscrição via CSV)</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Preparar CSV com 1 linha contendo email &#34;novo-aluno-w{workerIndex}-{ts}@example.com&#34; e `Reinscrever=SIM`</actions>
+          <expectedresults>CSV criado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Fazer upload do CSV</actions>
+          <expectedresults>Upload aceito; worker processa.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Aguardar e verificar a lista de aprendizagem em &#34;/learning_students?event_id={eventId}&#34;</actions>
+          <expectedresults>Novo usuário foi criado. Aparece no curso com `recertification_number = 0` (não como reinscrição — fluxo de criação original).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Inspecionar a caixa de entrada &#34;inbox&#34; do novo aluno em busca do e-mail &#34;Bem-vindo ao curso&#34;</actions>
+          <expectedresults>E-mail recebido é o de inscrição original (assunto da chave &#34;events.welcome_subject&#34;, NÃO o template `reenrollment_mail`).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Pós-importação, e-mails são enviados APENAS para participants com `recertification_number &gt; 0` criados nesta execução">
+      <summary>Validar escopo do disparo de e-mails: apenas os recém-criados como reinscritos recebem o e-mail diferenciado (RN 13).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Curso com `has_recertification = true`
+Usuário logado como Admin
+Pelo menos 3 alunos elegíveis pré-cadastrados (para reinscrição via CSV)</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Preparar CSV com 3 linhas: linha A (`Reinscrever=SIM` user existente — cria reinscrito), linha B (`Reinscrever=NÃO` user existente — não cria nada porque já está inscrito), linha C (`Reinscrever=SIM` user novo — cria com `recertification_number = 0`)</actions>
+          <expectedresults>CSV criado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Fazer upload e aguardar processamento</actions>
+          <expectedresults>Worker processa as 3 linhas.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Inspecionar inboxes dos 3 alunos</actions>
+          <expectedresults>Apenas o aluno A recebe e-mail com assunto `recertification_mailer.reenrollment.subject` (template `reenrollment_mail`). Alunos B e C não recebem este e-mail diferenciado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Reinscrição via API V2">    <testcase name="POST /api/v2/users/mass com `recertification=true` cria participants reinscritos">
+      <summary>Validar fluxo principal da API V2: payload com `recertification: true` por participant cria participants reinscritos com `recertification_number` incrementado (RN 14).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA na organização
+Curso &#34;Curso API V2 Reinscrição w{workerIndex}&#34; com `has_recertification = true`
+Curso &#34;Curso API V2 SEM Reinscrição w{workerIndex}&#34; com `has_recertification = false`
+Pelo menos 2 alunos pré-cadastrados e elegíveis
+{&#39;Token de acesso à API V2 disponível (REVISAR&#39;: &#39;como obter token em staging)&#39;}</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Preparar payload JSON `{&#34;participants&#34;: [{&#34;email&#34;:&#34;aluno1@example.com&#34;, &#34;event_id&#34;: &lt;id_com_recertification&gt;, &#34;recertification&#34;: true}]}`</actions>
+          <expectedresults>Payload pronto.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Disparar `POST /api/v2/users/mass` com o payload, autenticado com token de admin</actions>
+          <expectedresults>Response retorna HTTP 200 ou 207 (multi-status).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Inspecionar o corpo da resposta</actions>
+          <expectedresults>Item correspondente ao aluno aparece com status de sucesso, sem erro.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Acessar a lista de aprendizagem do curso em &#34;/learning_students?event_id={eventId}&#34;</actions>
+          <expectedresults>&#34;aluno1@example.com&#34; aparece com `recertification_number = N+1`, `progress_score = 0`, status &#34;Pendente&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Item com `recertification=true` em curso com `has_recertification=false` retorna erro por item (HTTP 207)">
+      <summary>Validar resposta multi-status: payload misto com itens válidos e itens inválidos retorna sucessos e erros por item (RN 14.1).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA na organização
+Curso &#34;Curso API V2 Reinscrição w{workerIndex}&#34; com `has_recertification = true`
+Curso &#34;Curso API V2 SEM Reinscrição w{workerIndex}&#34; com `has_recertification = false`
+Pelo menos 2 alunos pré-cadastrados e elegíveis
+{&#39;Token de acesso à API V2 disponível (REVISAR&#39;: &#39;como obter token em staging)&#39;}</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Preparar payload JSON com 2 items: item A: `{&#34;email&#34;:&#34;aluno_valido@example.com&#34;, &#34;event_id&#34;: &lt;id_com_recertification&gt;, &#34;recertification&#34;: true}` item B: `{&#34;email&#34;:&#34;aluno_invalido@example.com&#34;, &#34;event_id&#34;: &lt;id_SEM_recertification&gt;, &#34;recertification&#34;: true}`</actions>
+          <expectedresults>Payload pronto.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Disparar `POST /api/v2/users/mass` autenticado</actions>
+          <expectedresults>Response retorna HTTP 207 (multi-status).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Inspecionar o corpo da resposta</actions>
+          <expectedresults>Array de resultados: item A com sucesso e participant criado; item B com erro estruturado contendo chave I18n `reenroll_participant.errors.recertification_disabled_for_event`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Payload sem `recertification` segue fluxo legado (regressão)">
+      <summary>Validar compatibilidade retroativa: payloads de integrações antigas (sem chave `recertification`) seguem o fluxo de inscrição original (RN 14).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA na organização
+Curso &#34;Curso API V2 Reinscrição w{workerIndex}&#34; com `has_recertification = true`
+Curso &#34;Curso API V2 SEM Reinscrição w{workerIndex}&#34; com `has_recertification = false`
+Pelo menos 2 alunos pré-cadastrados e elegíveis
+{&#39;Token de acesso à API V2 disponível (REVISAR&#39;: &#39;como obter token em staging)&#39;}</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Preparar payload JSON antigo `{&#34;participants&#34;: [{&#34;email&#34;:&#34;aluno_legado@example.com&#34;, &#34;event_id&#34;: &lt;id_com_recertification&gt;}]}` (sem `recertification`)</actions>
+          <expectedresults>Payload pronto.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Disparar `POST /api/v2/users/mass` autenticado</actions>
+          <expectedresults>Response retorna HTTP 200 com sucesso.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Acessar a lista de aprendizagem</actions>
+          <expectedresults>&#34;aluno_legado@example.com&#34; aparece com `recertification_number = 0` (fluxo de inscrição original — sem reinscrição).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Com flag OFF, parâmetro `recertification` é ignorado silenciosamente">
+      <summary>Validar compatibilidade: com flag OFF na org, payload com `recertification: true` é processado como inscrição normal sem retornar erro (RN 14.2).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA na organização
+Curso &#34;Curso API V2 Reinscrição w{workerIndex}&#34; com `has_recertification = true`
+Curso &#34;Curso API V2 SEM Reinscrição w{workerIndex}&#34; com `has_recertification = false`
+Pelo menos 2 alunos pré-cadastrados e elegíveis
+{&#39;Token de acesso à API V2 disponível (REVISAR&#39;: &#39;como obter token em staging)&#39;}</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Desativar a feature flag `:recertificacao` para a organização</actions>
+          <expectedresults>Flag fica OFF.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Disparar `POST /api/v2/users/mass` com payload contendo `recertification: true` por item</actions>
+          <expectedresults>Response retorna HTTP 200 com sucesso. Sem erro relacionado a feature flag.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Acessar a lista de aprendizagem</actions>
+          <expectedresults>Aluno aparece com `recertification_number = 0` (parâmetro foi ignorado).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Reinscrição pelo Aluno (Play e Link Público)">    <testcase name="Botão &#34;Reinscreva-se&#34; aparece no banner do Play para aluno elegível">
+      <summary>Validar exibição do botão &#34;Reinscreva-se&#34; no banner do Play, abaixo do botão original, para aluno elegível com flag e gate ON (RN 16, 16.1).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Curso com `has_recertification = true`
+Aluno &#34;Aluno Play Reinscrição w{workerIndex}&#34; cadastrado e elegível (progresso 100% ou expirado)
+Aluno &#34;Aluno Play Inelegível w{workerIndex}&#34; cadastrado mas em andamento
+Pacote com link público gerado em &#34;/play/.../course_registrations&#34;</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Login com o aluno &#34;Aluno Play Reinscrição w{workerIndex}&#34;</actions>
+          <expectedresults>Aluno autenticado e redirecionado ao Play.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Acessar a página do curso elegível no Play em &#34;/play/event/{eventId}&#34;</actions>
+          <expectedresults>Página do curso é exibida; banner principal contém o botão original (acesso/inscrição).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Inspecionar o banner do Play</actions>
+          <expectedresults>Banner exibe DOIS botões empilhados: botão original em cima + botão &#34;Reinscreva-se&#34; abaixo.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Botão &#34;Reinscreva-se&#34; NÃO aparece para aluno inelegível (sem disabled visível)">
+      <summary>Validar que aluno inelegível NÃO vê o botão (não é exibido como disabled — simplesmente sumido) (RN 16.2).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Curso com `has_recertification = true`
+Aluno &#34;Aluno Play Reinscrição w{workerIndex}&#34; cadastrado e elegível (progresso 100% ou expirado)
+Aluno &#34;Aluno Play Inelegível w{workerIndex}&#34; cadastrado mas em andamento
+Pacote com link público gerado em &#34;/play/.../course_registrations&#34;</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Login com o aluno &#34;Aluno Play Inelegível w{workerIndex}&#34;</actions>
+          <expectedresults>Aluno autenticado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Acessar a página do curso no Play em &#34;/play/event/{eventId}&#34;</actions>
+          <expectedresults>Página do curso é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Inspecionar o banner do Play</actions>
+          <expectedresults>Apenas o botão original (acesso/inscrição) é exibido. Botão &#34;Reinscreva-se&#34; NÃO está presente nem como disabled.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Click em &#34;Reinscreva-se&#34; dispara subscribe com `recertification=true` e cria novo participant">
+      <summary>Validar fluxo de auto-reinscrição: click no botão dispara `POST /api/v1/play/.../subscribe` com `recertification=true` e o backend cria novo participant (RN 17).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Curso com `has_recertification = true`
+Aluno &#34;Aluno Play Reinscrição w{workerIndex}&#34; cadastrado e elegível (progresso 100% ou expirado)
+Aluno &#34;Aluno Play Inelegível w{workerIndex}&#34; cadastrado mas em andamento
+Pacote com link público gerado em &#34;/play/.../course_registrations&#34;</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Login com &#34;Aluno Play Reinscrição w{workerIndex}&#34; e acessar a página do curso</actions>
+          <expectedresults>Botão &#34;Reinscreva-se&#34; está visível.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;Reinscreva-se&#34;</actions>
+          <expectedresults>Request `POST /api/v1/play/.../subscribe` é enviada com body contendo `recertification: true`. Response retorna HTTP 201 com o objeto `participant` criado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Aguardar refresh do contexto `PlaySubscriptionContext`</actions>
+          <expectedresults>Banner do Play é atualizado refletindo o novo participant (`recertification_number = N+1`, `progress_score = 0`).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Em sessão separada como admin, acessar a lista de aprendizagem do curso em &#34;/learning_students?event_id={eventId}&#34;</actions>
+          <expectedresults>Novo participant aparece para o aluno com `recertification_number = N+1`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Flag OFF na org: banner do Play NÃO exibe &#34;Reinscreva-se&#34;">
+      <summary>Validar que sem a flag, mesmo aluno elegível não vê o botão (RN 16.2 — comportamento regressivo).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Curso com `has_recertification = true`
+Aluno &#34;Aluno Play Reinscrição w{workerIndex}&#34; cadastrado e elegível (progresso 100% ou expirado)
+Aluno &#34;Aluno Play Inelegível w{workerIndex}&#34; cadastrado mas em andamento
+Pacote com link público gerado em &#34;/play/.../course_registrations&#34;</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Desativar a feature flag `:recertificacao` para a organização</actions>
+          <expectedresults>Flag OFF.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Login com &#34;Aluno Play Reinscrição w{workerIndex}&#34; e acessar a página do curso</actions>
+          <expectedresults>Página do curso é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Inspecionar o banner</actions>
+          <expectedresults>Apenas o botão original é exibido. Botão &#34;Reinscreva-se&#34; NÃO aparece.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="POST em link público com `?recertification=true` para aluno elegível cria participant">
+      <summary>Validar fluxo de link público de pacote: POST com `recertification=true` valida elegibilidade e cria participant se elegível (RN 15).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Curso com `has_recertification = true`
+Aluno &#34;Aluno Play Reinscrição w{workerIndex}&#34; cadastrado e elegível (progresso 100% ou expirado)
+Aluno &#34;Aluno Play Inelegível w{workerIndex}&#34; cadastrado mas em andamento
+Pacote com link público gerado em &#34;/play/.../course_registrations&#34;</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Preparar URL do pacote público com query `?recertification=true`</actions>
+          <expectedresults>URL pronta: `/play/{packageSlug}/course_registrations?recertification=true`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Disparar `POST` na URL acima com payload do aluno elegível (email, nome, cpf)</actions>
+          <expectedresults>Response retorna HTTP 201 com o participant criado contendo `recertification_number = N+1`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Acessar a lista de aprendizagem como admin</actions>
+          <expectedresults>Aluno aparece reinscrito no curso correspondente ao pacote.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="POST em link público com `recertification=true` para aluno inelegível retorna erro sem criar participant">
+      <summary>Validar resposta de erro para aluno inelegível via link público (RN 15).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Curso com `has_recertification = true`
+Aluno &#34;Aluno Play Reinscrição w{workerIndex}&#34; cadastrado e elegível (progresso 100% ou expirado)
+Aluno &#34;Aluno Play Inelegível w{workerIndex}&#34; cadastrado mas em andamento
+Pacote com link público gerado em &#34;/play/.../course_registrations&#34;</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Preparar payload de aluno inelegível (em andamento, sem expiração) no POST com `?recertification=true`</actions>
+          <expectedresults>Payload pronto.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Disparar `POST /play/{packageSlug}/course_registrations?recertification=true`</actions>
+          <expectedresults>Response retorna HTTP 422 com mensagem de erro do `CheckReenrollmentEligibilityUseCase`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Consultar a tabela &#34;event_participants&#34; via Rails console com &#34;EventParticipant.where(user_id: X, event_id: Y).count&#34;</actions>
+          <expectedresults>Contagem permanece a anterior — nenhum novo participant criado para o par `(user_id, event_id)`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="POST em link público com flag OFF retorna HTTP 404 com payload vazio">
+      <summary>Validar resposta defensiva 404 para link público quando flag desativada (RN 15).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Curso com `has_recertification = true`
+Aluno &#34;Aluno Play Reinscrição w{workerIndex}&#34; cadastrado e elegível (progresso 100% ou expirado)
+Aluno &#34;Aluno Play Inelegível w{workerIndex}&#34; cadastrado mas em andamento
+Pacote com link público gerado em &#34;/play/.../course_registrations&#34;</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Desativar a feature flag `:recertificacao` para a organização do pacote</actions>
+          <expectedresults>Flag OFF.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Disparar `POST /play/{packageSlug}/course_registrations?recertification=true` com payload válido</actions>
+          <expectedresults>Response retorna HTTP 404 Not Found com body vazio (`{}`).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Consultar a tabela &#34;event_participants&#34; via Rails console com &#34;EventParticipant.where(user_id: X, event_id: Y).count&#34;</actions>
+          <expectedresults>Contagem permanece a anterior — nenhum participant criado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Cascade de Reinscrição em Trilhas">    <testcase name="Reinscrever trilha individualmente cria participants nos cursos filhos com `recertification_number` correto por curso">
+      <summary>Validar cascade de reinscrição: ao reinscrever aluno numa trilha, cada curso filho recebe novo participant com `recertification_number` calculado por par `(user_id, course_id)` (RN 18, 18.1).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Trilha &#34;Trilha Reinscrição w{workerIndex}&#34; com `has_recertification = true` e 3 cursos filhos vinculados
+Pelo menos 2 alunos elegíveis na trilha
+Sidekiq operacional (worker `AddParticipantToLearningPath`)</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a lista de aprendizagem da trilha em &#34;/learning_students?event_id={trilhaId}&#34;</actions>
+          <expectedresults>Lista de alunos da trilha é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar em &#34;Reinscrever&#34; na linha do aluno elegível e confirmar</actions>
+          <expectedresults>Modal fecha, toast de sucesso, novo participant da trilha criado com `recertification_number = N_trilha + 1`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Aguardar até 60 segundos pelo processamento do worker `AddParticipantToLearningPath`</actions>
+          <expectedresults>Worker processa.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Acessar a lista de aprendizagem de cada curso filho da trilha em &#34;/learning_students?event_id={cursoFilhoId}&#34;</actions>
+          <expectedresults>Aluno aparece em cada um dos 3 cursos filhos com `recertification_number = N_curso_filho + 1` (incremento INDEPENDENTE por curso, não pelo número da trilha).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Filtro &#34;já inscrito&#34; é bypassado em fluxos de reinscrição (cria segunda/N-ésima inscrição)">
+      <summary>Validar que cascade não bloqueia o aluno mesmo que ele já tenha participant em algum curso filho (RN 18.2).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Trilha &#34;Trilha Reinscrição w{workerIndex}&#34; com `has_recertification = true` e 3 cursos filhos vinculados
+Pelo menos 2 alunos elegíveis na trilha
+Sidekiq operacional (worker `AddParticipantToLearningPath`)</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Pré-condição: aluno com participant ativo em 2 dos 3 cursos filhos da trilha, e sem participant no 3º.</actions>
+          <expectedresults>Estado preparado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Reinscrever o aluno na trilha pelo fluxo do TC1</actions>
+          <expectedresults>Worker processa.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Acessar a lista de aprendizagem de cada um dos 3 cursos filhos em &#34;/learning_students?event_id={cursoFilhoId}&#34;</actions>
+          <expectedresults>Aluno aparece nos 3 cursos com `recertification_number &gt; 0` (mesmo nos 2 onde já estava inscrito antes — filtro `event_and_user_id_subscribed` bypassado).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Cascade NÃO acontece em inscrição original (sem `recertification`) — regressão crítica">
+      <summary>Validar comportamento regressivo: worker `AddParticipantToLearningPath` chamado sem 3º argumento (`recertification = false`) NÃO dispara cascade de reinscrição — segue fluxo `associate_courses_for_initial_enrollment` antigo (RN 19).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Trilha &#34;Trilha Reinscrição w{workerIndex}&#34; com `has_recertification = true` e 3 cursos filhos vinculados
+Pelo menos 2 alunos elegíveis na trilha
+Sidekiq operacional (worker `AddParticipantToLearningPath`)</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Disparar inscrição original (sem reinscrição) de aluno novo na trilha via API ou UI</actions>
+          <expectedresults>Aluno é inscrito na trilha com `recertification_number = 0`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar processamento do worker</actions>
+          <expectedresults>Worker processa.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Acessar a lista de aprendizagem de cada curso filho em &#34;/learning_students?event_id={cursoFilhoId}&#34;</actions>
+          <expectedresults>Aluno aparece em cada curso filho com `recertification_number = 0` (fluxo original — sem incremento).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Cascade síncrona inline no fluxo CSV">
+      <summary>Validar que para importação CSV em trilha, o cascade para cursos filhos é executado SÍNCRONO inline dentro do worker do CSV (RN 18 — `LearningPathActionMassService#create_course_participants`).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Trilha &#34;Trilha Reinscrição w{workerIndex}&#34; com `has_recertification = true` e 3 cursos filhos vinculados
+Pelo menos 2 alunos elegíveis na trilha
+Sidekiq operacional (worker `AddParticipantToLearningPath`)</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Preparar CSV com 1 linha contendo email de aluno existente, trilha destino e `Reinscrever=SIM`</actions>
+          <expectedresults>CSV criado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Fazer upload do CSV pela tela de importação da trilha</actions>
+          <expectedresults>Worker `CsvImportEventParticipantWorker` processa.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Inspecionar listagem dos 3 cursos filhos IMEDIATAMENTE após o worker concluir</actions>
+          <expectedresults>Aluno aparece nos 3 cursos filhos com `recertification_number &gt; 0` (cascade já completou — síncrono inline, sem job adicional).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Ciclo de Vida do Certificado Substituído">    <testcase name="Após emitir novo certificado, anteriores são marcados em lote como REPLACED">
+      <summary>Validar `CertificateGenerationService#replace_previous_certificates_bulk`: ao emitir certificado VALID para participant reinscrito (`recertification_number &gt; 0`), todos os certificados VALID anteriores do mesmo par `(user_id, event_id)` viram REPLACED em uma única query `update_all` (RN 20, 21).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Curso &#34;Curso Certificado Reinscrição w{workerIndex}&#34; com `has_recertification = true`
+Aluno com `recertification_number = 0` aprovado e certificado emitido (`CERTIFICATE_VALID = 2`)
+Cron `ExpiresCertificates` configurado para staging</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Pré-condição: aluno aprovado com `recertification_number = 0` e certificado `VALID` emitido.</actions>
+          <expectedresults>Estado validado no banco: 1 row em `certificates` com `situation = 2 (VALID)`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Reinscrever o aluno individualmente pelo fluxo da suíte 2 TC3</actions>
+          <expectedresults>Novo participant criado com `recertification_number = 1`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Simular conclusão do conteúdo pelo novo participant: `progress_score = 100`</actions>
+          <expectedresults>Certificado novo é emitido (queue de geração de certificados).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Aguardar até 60 segundos e consultar tabela `certificates` para o par `(user_id, event_id)`</actions>
+          <expectedresults>2 rows: certificado anterior com `situation = 4 (REPLACED)` e certificado novo com `situation = 2 (VALID)`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Worker `ExpiresCertificates` expira VALID e propaga para REPLACED do mesmo par">
+      <summary>Validar `ExpiresCertificates#expire_replaced_certificates`: ao expirar certificado VALID, todos os REPLACED do mesmo par são marcados como EXPIRED em conjunto (RN 22, 22.1).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Curso &#34;Curso Certificado Reinscrição w{workerIndex}&#34; com `has_recertification = true`
+Aluno com `recertification_number = 0` aprovado e certificado emitido (`CERTIFICATE_VALID = 2`)
+Cron `ExpiresCertificates` configurado para staging</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Pré-condição: aluno com 2 certificados — 1 REPLACED (do participant `recertification_number = 0`) e 1 VALID (do participant `recertification_number = 1`) com `expires_at = hoje`.</actions>
+          <expectedresults>Estado preparado no banco.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Disparar manualmente o cron `ExpiresCertificates.new.perform`</actions>
+          <expectedresults>Worker processa.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Consultar a tabela `certificates` para o par `(user_id, event_id)`</actions>
+          <expectedresults>Ambos os certificados estão com `situation = 1 (EXPIRED)`: o que era VALID e o que era REPLACED.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Constante `CERTIFICATE_REPLACED = 4` espelhada em `EventParticipant::REPLACED`">
+      <summary>Validar mapeamento da constante em código Rails e na chave I18n usada pelo filtro avançado (RN 20, 20.1).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Curso &#34;Curso Certificado Reinscrição w{workerIndex}&#34; com `has_recertification = true`
+Aluno com `recertification_number = 0` aprovado e certificado emitido (`CERTIFICATE_VALID = 2`)
+Cron `ExpiresCertificates` configurado para staging</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Via Rails console em staging, executar `Certificate::CERTIFICATE_REPLACED`</actions>
+          <expectedresults>Retorna o valor inteiro `4`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Executar `EventParticipant::REPLACED`</actions>
+          <expectedresults>Retorna o mesmo valor inteiro `4`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Executar `EventParticipant::CERTIFICATE_STATUS_DESCRIPTIONS`</actions>
+          <expectedresults>Hash contém a chave `&#39;replaced&#39; =&gt; 4`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Certificados emitidos no fluxo legado (sem reinscrição) permanecem VALID indefinidamente">
+      <summary>Validar comportamento regressivo: aluno com `recertification_number = 0` que concluiu o curso e recebeu VALID NÃO tem o certificado marcado como REPLACED sem reinscrição (RN 20, 21).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Curso &#34;Curso Certificado Reinscrição w{workerIndex}&#34; com `has_recertification = true`
+Aluno com `recertification_number = 0` aprovado e certificado emitido (`CERTIFICATE_VALID = 2`)
+Cron `ExpiresCertificates` configurado para staging</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Pré-condição: aluno com `recertification_number = 0` aprovado e VALID emitido.</actions>
+          <expectedresults>Estado preparado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Esperar 1 hora (ou re-rodar cron de geração de certificados) sem disparar reinscrição.</actions>
+          <expectedresults>Cron de geração processa outros casos.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Consultar tabela `certificates`</actions>
+          <expectedresults>Certificado do aluno continua com `situation = 2 (VALID)`. Não foi marcado como REPLACED.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Filtro Avançado Status Substituído">    <testcase name="Opção &#34;Substituído&#34; aparece no filtro avançado de Status do certificado com flag ON">
+      <summary>Validar visibilidade condicional: opção &#34;Substituído&#34; no filtro avançado de Status do certificado aparece apenas com flag ativa (RN 23).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Pelo menos 1 aluno com certificado VALID, 1 com REPLACED, 1 com EXPIRED, 1 com PENDING
+Lista de aprendizagem com filtro avançado disponível em &#34;/learning_students&#34;</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a lista de aprendizagem em &#34;/learning_students&#34;</actions>
+          <expectedresults>Lista é exibida com colunas Nome, Status do certificado, etc.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no ícone de filtro da coluna &#34;Status do certificado&#34;</actions>
+          <expectedresults>Drawer de filtro avançado é exibido com lista de opções.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Inspecionar as opções do filtro</actions>
+          <expectedresults>Lista contém: Emitido, Pendente, Expirado, Aguardando assinatura, **Substituído**.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Filtrar por &#34;Substituído&#34; exibe apenas alunos com `certificate_status = 4`">
+      <summary>Validar query do filtro: ao selecionar &#34;Substituído&#34;, listagem mostra apenas participants com `certificate_status = 4` (REPLACED) (RN 23.1).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Pelo menos 1 aluno com certificado VALID, 1 com REPLACED, 1 com EXPIRED, 1 com PENDING
+Lista de aprendizagem com filtro avançado disponível em &#34;/learning_students&#34;</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a lista de aprendizagem em &#34;/learning_students&#34;</actions>
+          <expectedresults>Lista exibe todos os alunos.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Abrir o filtro avançado de &#34;Status do certificado&#34;, marcar APENAS a opção &#34;Substituído&#34; e aplicar</actions>
+          <expectedresults>Drawer fecha, listagem refilra.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Inspecionar as linhas listadas</actions>
+          <expectedresults>Apenas alunos com `certificate_status = 4` aparecem. Demais (VALID, EXPIRED, PENDING) ficam ocultos.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Badge &#34;Substituído&#34; é exibido na coluna de Status para participants com `certificate_status = 4`">
+      <summary>Validar componente `certificate-student-badge.tsx`: badge &#34;Substituído&#34; renderizado para participants com status REPLACED (RN 23.2).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Pelo menos 1 aluno com certificado VALID, 1 com REPLACED, 1 com EXPIRED, 1 com PENDING
+Lista de aprendizagem com filtro avançado disponível em &#34;/learning_students&#34;</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a lista de aprendizagem sem filtros aplicados</actions>
+          <expectedresults>Lista é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Localizar a linha de um aluno com certificado REPLACED (`certificate_status = 4`)</actions>
+          <expectedresults>Coluna &#34;Status do certificado&#34; exibe badge com label &#34;Substituído&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Posicionar o cursor sobre o badge</actions>
+          <expectedresults>Tooltip explicativo é exibido (REVISAR-FIGMA: confirmar tooltip).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Opção &#34;Substituído&#34; NÃO aparece no filtro com flag OFF (regressão)">
+      <summary>Validar regressão: com flag OFF, opção &#34;Substituído&#34; não aparece no filtro (RN 23).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Pelo menos 1 aluno com certificado VALID, 1 com REPLACED, 1 com EXPIRED, 1 com PENDING
+Lista de aprendizagem com filtro avançado disponível em &#34;/learning_students&#34;</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Desativar a feature flag `:recertificacao`</actions>
+          <expectedresults>Flag OFF.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Acessar a lista de aprendizagem e abrir o filtro avançado de Status do certificado</actions>
+          <expectedresults>Drawer de filtro é exibido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Inspecionar as opções</actions>
+          <expectedresults>Lista contém apenas: Emitido, Pendente, Expirado, Aguardando assinatura. Opção &#34;Substituído&#34; NÃO está presente.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="E-mail Diferenciado de Reinscrição">    <testcase name="Criação de participant com `recertification_number &gt; 0` dispara `RecertificationMailer#student_email`">
+      <summary>Validar disparo do mailer com template `reenrollment_mail` para participants com `recertification_number &gt; 0` (RN 24, 24.1).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Mailer ativo em staging (inbox de teste acessível)
+Curso com `has_recertification = true`
+Aluno cadastrado com e-mail real testável</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Reinscrever um aluno individualmente pelo fluxo da suíte 2 TC3</actions>
+          <expectedresults>Toast de sucesso é exibido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar até 30 segundos pelo e-mail</actions>
+          <expectedresults>E-mail chega na inbox do aluno.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Inspecionar o assunto do e-mail</actions>
+          <expectedresults>Assunto corresponde à chave I18n `recertification_mailer.reenrollment.subject` (texto traduzido conforme locale do aluno).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Inspecionar o corpo do e-mail</actions>
+          <expectedresults>Corpo é renderizado a partir do template `reenrollment_mail` (NÃO `recertification_mail` legado).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Participant com `recertification_number = 0` em fluxo de aviso de expiração usa template legado">
+      <summary>Validar que mailer mantém compatibilidade com fluxo legado de aviso de expiração próxima (RN 24, 24.2).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Mailer ativo em staging (inbox de teste acessível)
+Curso com `has_recertification = true`
+Aluno cadastrado com e-mail real testável</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Pré-condição: aluno com `recertification_number = 0` e certificado VALID com `expires_at = hoje + 7 dias` (próximo do vencimento).</actions>
+          <expectedresults>Estado preparado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Disparar manualmente o cron de aviso de expiração que chama `RecertificationMailer#student_email`</actions>
+          <expectedresults>Worker processa.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Inspecionar inbox do aluno</actions>
+          <expectedresults>E-mail recebido com assunto da chave `recertification_mailer.expiration_reminder.subject` e corpo do template legado `recertification_mail`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="E-mail respeita bloqueio de `organization.mailer_block?`">
+      <summary>Validar que mailer não envia e-mail quando organização tem `mailer_block? = true` (RN 25).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Mailer ativo em staging (inbox de teste acessível)
+Curso com `has_recertification = true`
+Aluno cadastrado com e-mail real testável</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Pré-condição: organização com `mailer_block = true` (REVISAR: como definir em staging).</actions>
+          <expectedresults>Estado preparado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Reinscrever um aluno individualmente pelo fluxo da suíte 2 TC3</actions>
+          <expectedresults>Toast de sucesso é exibido (criação ocorre normalmente).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Aguardar 60 segundos pelo e-mail</actions>
+          <expectedresults>Nenhum e-mail é recebido na inbox do aluno.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Inspecionar os logs do mailer no Sidekiq UI em &#34;/sidekiq&#34; filtrando por &#34;RecertificationMailer&#34;</actions>
+          <expectedresults>Job aparece como completed sem envio efetivo — registro com tag &#34;skipped: mailer_block?&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="E-mail respeita locale do aluno (pt-BR/en/es)">
+      <summary>Validar internacionalização do mailer: assunto e corpo no locale configurado para o aluno (RN 24.1).
+
+**Validation matrix**:
+| Cenário | Categoria | Input | Esperado |
+|---|---|---|---|
+| Locale pt-BR | aceito | locale=&#34;pt-BR&#34; | Assunto e corpo em português brasileiro |
+| Locale en | aceito | locale=&#34;en&#34; | Assunto e corpo em inglês |
+| Locale es | aceito | locale=&#34;es&#34; | Assunto e corpo em espanhol |
+| Locale fr (não suportado) | fallback | locale=&#34;fr&#34; | Fallback para &#34;en&#34; |</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Mailer ativo em staging (inbox de teste acessível)
+Curso com `has_recertification = true`
+Aluno cadastrado com e-mail real testável</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Configurar locale do aluno para &#34;pt-BR&#34; (perfil do usuário)</actions>
+          <expectedresults>Estado preparado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Reinscrever o aluno e aguardar e-mail</actions>
+          <expectedresults>E-mail recebido com texto em português brasileiro.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Repetir para &#34;en&#34; e &#34;es&#34; usando alunos com locales correspondentes</actions>
+          <expectedresults>E-mail recebido nos idiomas respectivos.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Configurar locale &#34;fr&#34; (não oficialmente suportado) e reinscrever</actions>
+          <expectedresults>E-mail recebido em inglês (fallback `en` do Rails).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Isolamento de Progresso, Score e Attendance por Inscrição">    <testcase name="Aluno reinscrito tem progress/score/attendance zerados na nova inscrição">
+      <summary>Validar que `event_content_users` criados após reinscrição são vinculados ao novo `event_participant_id` e ficam isolados do histórico (RN 27, 28).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Curso &#34;Curso Isolamento w{workerIndex}&#34; com `has_recertification = true`
+Aluno aprovado com `recertification_number = 0`, `progress_score = 100`, certificado VALID
+Banco com índice `unique_participant(user_id, event_id, partner_rel, recertification_number)` aplicado</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Reinscrever o aluno aprovado pelo fluxo da suíte 2 TC3</actions>
+          <expectedresults>Novo participant criado com `recertification_number = 1`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Login com o aluno e acessar a página do curso no Play</actions>
+          <expectedresults>Banner do curso exibe progresso `0%` (NÃO 100% do anterior). Status &#34;Pendente&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Avançar uma aula até `progress_score = 25` no novo participant</actions>
+          <expectedresults>Progresso atualiza para 25% na UI do Play.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Acessar como admin a lista de aprendizagem</actions>
+          <expectedresults>Listagem padrão exibe apenas o participant atual com `progress_score = 25`. Histórico (recertification_number = 0, progress_score = 100) preservado em banco mas oculto do listing default (`is_latest_recertification = 1` filtra).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Aluno NÃO reinscrito (`recertification_number = 0`) mantém progresso histórico após deploy">
+      <summary>Validar regressão crítica: alunos antigos com `event_content_users.event_participant_id IS NULL` continuam contando para o participant com `recertification_number = 0` (RN 27.1, 28).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Curso &#34;Curso Isolamento w{workerIndex}&#34; com `has_recertification = true`
+Aluno aprovado com `recertification_number = 0`, `progress_score = 100`, certificado VALID
+Banco com índice `unique_participant(user_id, event_id, partner_rel, recertification_number)` aplicado</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Pré-condição: aluno pré-deploy com `recertification_number = 0`, `progress_score = 100`, e registros em `event_content_users` com `event_participant_id IS NULL`.</actions>
+          <expectedresults>Estado preparado em staging.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Login com este aluno e acessar a página do curso no Play</actions>
+          <expectedresults>Banner exibe progresso `100%` (mantido do histórico).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Acessar como admin a lista de aprendizagem</actions>
+          <expectedresults>Aluno aparece com `progress_score = 100`, certificado VALID — exatamente como antes do deploy.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Índice único `unique_participant` rejeita duplicata `(user_id, event_id, partner_rel, recertification_number)`">
+      <summary>Validar nova unicidade composta: tentativa de inserir 2 participants idênticos (mesmo user, event, partner_rel e recertification_number) falha com violação (RN 29).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Curso &#34;Curso Isolamento w{workerIndex}&#34; com `has_recertification = true`
+Aluno aprovado com `recertification_number = 0`, `progress_score = 100`, certificado VALID
+Banco com índice `unique_participant(user_id, event_id, partner_rel, recertification_number)` aplicado</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Pré-condição: 1 participant existente com `recertification_number = 1` para par `(user_id, event_id)`.</actions>
+          <expectedresults>Estado preparado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Via Rails console em staging, tentar `EventParticipant.create!(user_id: X, event_id: Y, partner_rel: P, recertification_number: 1, ...)`</actions>
+          <expectedresults>Execução lança `ActiveRecord::RecordNotUnique` ou validação Rails de uniqueness.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Consultar a tabela &#34;event_participants&#34; via Rails console com &#34;EventParticipant.where(user_id: X, event_id: Y, partner_rel: P, recertification_number: 1).count&#34;</actions>
+          <expectedresults>Contagem retorna `1` — apenas 1 row para o par `(user_id, event_id, partner_rel, recertification_number = 1)`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Validações Rails de email/cpf escopam por `[:event_id, :recertification_number]`">
+      <summary>Validar que validators de uniqueness de email/cpf no modelo `EventParticipant` aceitam o mesmo email/cpf em diferentes valores de `recertification_number` (RN 29.1).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Curso &#34;Curso Isolamento w{workerIndex}&#34; com `has_recertification = true`
+Aluno aprovado com `recertification_number = 0`, `progress_score = 100`, certificado VALID
+Banco com índice `unique_participant(user_id, event_id, partner_rel, recertification_number)` aplicado</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Via Rails console, criar participant com email &#34;teste@example.com&#34; e `recertification_number = 0` no curso X.</actions>
+          <expectedresults>Participant criado com sucesso.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Criar segundo participant com mesmo email e `recertification_number = 1` no MESMO curso.</actions>
+          <expectedresults>Participant criado com sucesso (validação aceita porque scope inclui `recertification_number`).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Tentar criar terceiro participant com mesmo email e `recertification_number = 1` no mesmo curso (duplicata exata).</actions>
+          <expectedresults>Falha com validação de uniqueness.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Comportamento da Feature Flag :recertificacao">    <testcase name="Habilitar flag exibe switch &#34;Habilitar reinscrição&#34; em conteúdos">
+      <summary>Validar gating UI: habilitar a flag para a organização exibe o switch &#34;Habilitar reinscrição&#34; nas telas de edição de conteúdo (RN 1, 1.1).</summary>
+      <preconditions>Acesso à página de Flipper Admin &#34;/admin/manage/features/recertificacao&#34;
+Curso com `has_recertification = true` (estado preparado quando flag estava ON)
+Usuário Admin com permissão para gerenciar features</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar Flipper Admin em &#34;/admin/manage/features/recertificacao&#34;</actions>
+          <expectedresults>Página da feature `recertificacao` é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Adicionar a organização atual ao actor da flag via &#34;Add&#34; → tipo &#34;Organization&#34; → &#34;Organization;{orgId}&#34;</actions>
+          <expectedresults>Actor &#34;Organization;{orgId}&#34; aparece na lista de actors com flag ON.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Acessar a edição de um curso em &#34;/e/{eventId}/edit&#34; (em nova aba ou janela limpa)</actions>
+          <expectedresults>Switch &#34;Habilitar reinscrição&#34; está visível no formulário (validado em detalhe na suíte 1).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Desabilitar flag oculta switch e desativa fluxos (cenário de rollback)">
+      <summary>Validar gating UI e funcional: remover a organização do actor da flag deve esconder o switch, esconder ações de reinscrição na lista de aprendizagem, esconder filtro &#34;Substituído&#34;, e fazer backends rejeitarem reinscrição via API (RN 1, 10).</summary>
+      <preconditions>Acesso à página de Flipper Admin &#34;/admin/manage/features/recertificacao&#34;
+Curso com `has_recertification = true` (estado preparado quando flag estava ON)
+Usuário Admin com permissão para gerenciar features</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Pré-condição: organização com flag ON, curso com `has_recertification = true` e ao menos 1 aluno reinscrito (`recertification_number &gt; 0`).</actions>
+          <expectedresults>Estado preparado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Acessar Flipper Admin e remover a organização do actor da flag (Remove actor &#34;Organization;{orgId}&#34;)</actions>
+          <expectedresults>Actor removido da lista.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Acessar a edição do mesmo curso em &#34;/e/{eventId}/edit&#34;</actions>
+          <expectedresults>Switch &#34;Habilitar reinscrição&#34; NÃO está visível no formulário.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Acessar a lista de aprendizagem em &#34;/learning_students?event_id={eventId}&#34;</actions>
+          <expectedresults>Lista é exibida mas SEM os elementos de reinscrição: filtro &#34;Substituído&#34; some, item &#34;Reinscrever&#34; some do menu, ação &#34;Reinscrição em massa&#34; some do drawer.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>5</step_number>
+          <actions>Disparar `POST /api/v1/contents/{eventId}/event_participants` com `recertification: true` autenticado</actions>
+          <expectedresults>Response retorna HTTP 422 com `reenroll_participant.errors.feature_disabled`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Re-habilitar flag restaura todos os fluxos (sem perda de dados)">
+      <summary>Validar idempotência de toggle: re-habilitar a flag restaura os fluxos UI e backend, com participants reinscritos pré-existentes intactos.</summary>
+      <preconditions>Acesso à página de Flipper Admin &#34;/admin/manage/features/recertificacao&#34;
+Curso com `has_recertification = true` (estado preparado quando flag estava ON)
+Usuário Admin com permissão para gerenciar features</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Pré-condição: organização com flag OFF após o TC2, mantendo 1 participant com `recertification_number &gt; 0` no banco.</actions>
+          <expectedresults>Estado preparado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Acessar Flipper Admin e adicionar a organização novamente como actor da flag</actions>
+          <expectedresults>Actor &#34;Organization;{orgId}&#34; volta a aparecer com ON.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Acessar a lista de aprendizagem</actions>
+          <expectedresults>Filtro &#34;Substituído&#34;, item &#34;Reinscrever&#34; e ação &#34;Reinscrição em massa&#34; voltam a aparecer.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Inspecionar o participant reinscrito pré-existente</actions>
+          <expectedresults>Aluno aparece com `recertification_number &gt; 0` intacto (dado preservado durante OFF).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Flag OFF: comportamento legado completo de inscrição/listagem mantido (regressão geral)">
+      <summary>Smoke regressivo geral: com flag OFF, todos os fluxos legados funcionam (inscrição original, listagem, edição, certificado VALID, expiração).</summary>
+      <preconditions>Acesso à página de Flipper Admin &#34;/admin/manage/features/recertificacao&#34;
+Curso com `has_recertification = true` (estado preparado quando flag estava ON)
+Usuário Admin com permissão para gerenciar features</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Garantir que a flag `:recertificacao` está OFF para a organização</actions>
+          <expectedresults>Flag desativada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Criar curso novo, vincular aluno via inscrição original (sem `recertification`)</actions>
+          <expectedresults>Aluno aparece com `recertification_number = 0` na lista de aprendizagem.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Editar o curso e salvar sem alterações</actions>
+          <expectedresults>Curso salvo. `events.has_recertification` permanece `false` (default).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Acessar a lista de aprendizagem em &#34;/learning_students?event_id={eventId}&#34;</actions>
+          <expectedresults>Aluno listado normalmente. Sem badge &#34;Substituído&#34;, sem filtro adicional, sem item &#34;Reinscrever&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Auditoria via Triggers PostgreSQL">    <testcase name="Insert em `event_participants` propaga `recertification_number` para `event_participant_info_logs`">
+      <summary>Validar trigger atualizado: insert de novo participant grava `recertification_number` em `event_participant_info_logs` (RN 26).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Banco `postgres_logs` (TimescaleDB) acessível
+Migrations de triggers aplicadas (`update_event_participant_info_logs_trigger_for_recertification`, `update_event_logs_trigger_with_has_recertification`)
+Curso com `has_recertification = true`</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Criar novo participant reinscrito (`recertification_number = 1`) pelo fluxo da suíte 2 TC3.</actions>
+          <expectedresults>Participant criado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Consultar via Rails/SQL no banco `postgres_logs` a tabela `event_participant_info_logs` filtrando pelo `event_participant_id` recém-criado</actions>
+          <expectedresults>1 row encontrada com coluna `recertification_number = 1`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Update em `events.has_recertification` propaga para `event_logs`">
+      <summary>Validar trigger atualizado: alteração em `events.has_recertification` grava o valor novo em `event_logs` (RN 26).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Banco `postgres_logs` (TimescaleDB) acessível
+Migrations de triggers aplicadas (`update_event_participant_info_logs_trigger_for_recertification`, `update_event_logs_trigger_with_has_recertification`)
+Curso com `has_recertification = true`</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Editar um curso e ativar o switch &#34;Habilitar reinscrição&#34;</actions>
+          <expectedresults>`events.has_recertification = true` persistido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Consultar a tabela `event_logs` no banco `postgres_logs` filtrando pelo `event_id`</actions>
+          <expectedresults>Row mais recente para o curso contém `has_recertification = true`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Triggers são reversíveis (migration `down` restaura comportamento)">
+      <summary>Validar que rollback da migration de trigger restaura a versão anterior do trigger (RN 26.1).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Banco `postgres_logs` (TimescaleDB) acessível
+Migrations de triggers aplicadas (`update_event_participant_info_logs_trigger_for_recertification`, `update_event_logs_trigger_with_has_recertification`)
+Curso com `has_recertification = true`</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Pré-condição: ambiente de staging com migrations de triggers no `STEP=último-deploy`.</actions>
+          <expectedresults>Estado preparado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Rodar `bin/rails db:rollback STEP=1` para reverter a última migration de trigger</actions>
+          <expectedresults>Migration reverte sem erro.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Repetir o fluxo de TC1 (criar participant reinscrito) e consultar `event_participant_info_logs`</actions>
+          <expectedresults>Row é gravada mas SEM a coluna `recertification_number` (ou com NULL — depende da versão anterior). Comportamento legado restaurado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Rodar `bin/rails db:migrate` para reaplicar a migration</actions>
+          <expectedresults>Trigger atualizado volta ao estado pós-deploy. Testes subsequentes voltam a gravar `recertification_number`.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Logs antigos (pré-deploy) consultáveis com COALESCE para nova coluna">
+      <summary>Validar compatibilidade retroativa: rows antigas têm `recertification_number = NULL` mas consultas continuam executáveis (RN 26.2).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA
+Banco `postgres_logs` (TimescaleDB) acessível
+Migrations de triggers aplicadas (`update_event_participant_info_logs_trigger_for_recertification`, `update_event_logs_trigger_with_has_recertification`)
+Curso com `has_recertification = true`</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Pré-condição: tabela `event_participant_info_logs` com rows pré-deploy (sem coluna `recertification_number`) e rows pós-deploy (com a coluna).</actions>
+          <expectedresults>Estado típico de staging com histórico.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Executar query `SELECT COALESCE(recertification_number, 0) AS rn, COUNT(*) FROM event_participant_info_logs GROUP BY rn`</actions>
+          <expectedresults>Query executa sem erro retornando agrupamento por `rn` (rows antigas com `0`, rows novas com seu valor).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Executar `SELECT * FROM event_participant_info_logs ORDER BY created_at DESC LIMIT 100`</actions>
+          <expectedresults>100 rows mais recentes retornadas, mesclando rows com e sem `recertification_number` preenchido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Isolamento em Ambientes Adicionais">    <testcase name="Reinscrição num env não afeta participants no env pareado">
+      <summary>Validar isolamento multi-tenant: criar participant reinscrito no env principal NÃO cria ou altera registros no env secundário pareado.</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA no env principal (`staging-base-de-conhecimento`)
+{&#39;Env secundário pareado (`staging-base-de-conhecimento-aditional` ou similar — REVISAR&#39;: &#39;confirmar nome do env)&#39;}
+Cursos com `has_recertification = true` em ambos os envs
+Aluno cadastrado em ambos os envs com mesmo e-mail (para validar isolamento)</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Capturar contagem atual de participants em ambos os envs para o mesmo aluno (`SELECT COUNT(*) FROM event_participants WHERE user_id = X`).</actions>
+          <expectedresults>Contagem inicial registrada por env.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Reinscrever o aluno no env principal pelo fluxo da suíte 2 TC3</actions>
+          <expectedresults>Novo participant criado APENAS no env principal.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Re-capturar a contagem em ambos os envs</actions>
+          <expectedresults>Env principal: contagem aumentou em 1. Env secundário: contagem inalterada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Toggle da flag :recertificacao no env principal NÃO afeta env secundário">
+      <summary>Validar escopo por organização da flag Flipper: desativar a flag para a organização do env principal não desativa no env secundário (organização distinta).</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA no env principal (`staging-base-de-conhecimento`)
+{&#39;Env secundário pareado (`staging-base-de-conhecimento-aditional` ou similar — REVISAR&#39;: &#39;confirmar nome do env)&#39;}
+Cursos com `has_recertification = true` em ambos os envs
+Aluno cadastrado em ambos os envs com mesmo e-mail (para validar isolamento)</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Pré-condição: flag ON em ambas as organizações (env principal e secundário).</actions>
+          <expectedresults>Estado preparado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Acessar Flipper Admin e remover APENAS a organização do env principal do actor da flag</actions>
+          <expectedresults>Actor da org do env principal removido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Acessar a edição de curso no env principal</actions>
+          <expectedresults>Switch &#34;Habilitar reinscrição&#34; NÃO está visível.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Acessar a edição de curso no env secundário</actions>
+          <expectedresults>Switch &#34;Habilitar reinscrição&#34; CONTINUA visível (flag ainda ON para a organização do env secundário). ---</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite></testsuite>

@@ -249,22 +249,61 @@ def check_antipatterns(suite: dict[str, Any]) -> list[Issue]:
     return issues
 
 
-def check_v1_restrictions(suite: dict[str, Any]) -> list[Issue]:
+def check_v1_restrictions(suite: dict[str, Any], contract_version: str = "1.0") -> list[Issue]:
     """As restrições v1 já são enforçadas pelo parser (raise ValueError).
     Esta função roda DEPOIS do parse — se chegou aqui, parser já validou.
-    Mantida como sanity check defensivo."""
+    Mantida como sanity check defensivo.
+
+    Em v1.2 (CONTRACT.md §16), `type='mixed'` é PERMITIDO mas reservado para
+    UI+DB (raro). Parser ainda bloqueia (TODO: relaxar parser quando alguém
+    precisar). Esta função respeita a versão.
+    """
     issues: list[Issue] = []
     fm = suite["frontmatter"]
-    if fm.get("executor") != "playwright":
+    # Executor: em v1.0/v1.1 só playwright; em v1.2 playwright|db|pentest (sem api)
+    allowed_executors = {"playwright"}
+    if contract_version == "1.2":
+        allowed_executors = {"playwright", "db", "pentest"}
+    if fm.get("executor") not in allowed_executors:
         issues.append((
             "error",
-            f"Suíte '{fm['suite']}': executor inválido em v1 (deveria ter sido bloqueado pelo parser)",
+            f"Suíte '{fm['suite']}': executor='{fm.get('executor')}' inválido em contract_version {contract_version} "
+            f"(permitidos: {sorted(allowed_executors)})",
         ))
-    for tc in suite["test_cases"]:
-        if tc.get("type") == "mixed":
+    # type=mixed: bloqueado em v1.0/v1.1, permitido em v1.2 (mas parser ainda bloqueia)
+    if contract_version != "1.2":
+        for tc in suite["test_cases"]:
+            if tc.get("type") == "mixed":
+                issues.append((
+                    "error",
+                    f"TC '{tc['title']}': type='mixed' inválido em contract_version {contract_version} "
+                    f"(deveria ter sido bloqueado pelo parser)",
+                ))
+    return issues
+
+
+def check_v12_endpoints_for_api_tcs(data: dict[str, Any]) -> list[Issue]:
+    """CONTRACT.md §16 v1.2: quando AT contém >=1 TC com `Tipo: api` ou `mixed`,
+    a seção `## Endpoints (referência)` é OBRIGATÓRIA. Alimenta clientes HTTP
+    em `agent-playwright/projects/<slug>/api/` e schemas em `schemas/`."""
+    issues: list[Issue] = []
+    has_api_tc = False
+    for suite in data["suites"]:
+        for tc in suite["test_cases"]:
+            if tc.get("type") in ("api", "mixed"):
+                has_api_tc = True
+                break
+        if has_api_tc:
+            break
+    if has_api_tc:
+        catalogs = data.get("catalogs") or {}
+        endpoints_content = (catalogs.get("endpoints") or "").strip()
+        if not endpoints_content:
             issues.append((
                 "error",
-                f"TC '{tc['title']}': type='mixed' inválido em v1 (deveria ter sido bloqueado pelo parser)",
+                "Catálogo '## Endpoints (referência)' obrigatório em contract_version 1.2 "
+                "quando há >=1 TC com Tipo: api ou mixed. Preencha com método, URL, "
+                "status de sucesso/erro de cada endpoint citado nos passos.",
             ))
     return issues
 
@@ -562,29 +601,36 @@ def validate(md_path: str | Path) -> tuple[list[str], list[str], str]:
              restrições v1 + schema)
       - 1.1: tudo de 1.0 + verificações novas (RN→TC, negativos amplos,
              combinatórias) — em Fase 0 (2026-05-22) ainda são placeholders.
+      - 1.2: tudo de 1.1 + executor enum reduzido (sem `api`), endpoints
+             obrigatório quando há TC Tipo: api, mixed permitido para UI+DB
+             (CONTRACT.md §16).
 
-    Ver CONTRACT.md §15 para detalhes.
+    Ver CONTRACT.md §15 e §16 para detalhes.
     """
     data = parse_canonical_md(md_path)
     contract_version = data.get("contract_version", "1.0")
 
     all_issues: list[Issue] = []
 
-    # === Regras comuns a 1.0 e 1.1 ===
+    # === Regras comuns a 1.0, 1.1 e 1.2 ===
     for suite in data["suites"]:
-        all_issues.extend(check_v1_restrictions(suite))
+        all_issues.extend(check_v1_restrictions(suite, contract_version))
         all_issues.extend(check_antipatterns(suite))
         all_issues.extend(check_playbooks(suite))
     all_issues.extend(check_catalogs(data))
     all_issues.extend(check_schema_completeness(data))
 
-    # === Regras adicionais de 1.1 ===
-    if contract_version == "1.1":
+    # === Regras adicionais de 1.1 (e 1.2, que herda) ===
+    if contract_version in ("1.1", "1.2"):
         all_issues.extend(check_v11_rn_to_tc(data))
         catalogs = data.get("catalogs") or {}
         for suite in data["suites"]:
             all_issues.extend(check_v11_negative_coverage(suite, catalogs))
             all_issues.extend(check_v11_combinatorial_filters(suite))
+
+    # === Regras adicionais de 1.2 ===
+    if contract_version == "1.2":
+        all_issues.extend(check_v12_endpoints_for_api_tcs(data))
 
     errors = [m for sev, m in all_issues if sev == "error"]
     warnings = [m for sev, m in all_issues if sev == "warning"]

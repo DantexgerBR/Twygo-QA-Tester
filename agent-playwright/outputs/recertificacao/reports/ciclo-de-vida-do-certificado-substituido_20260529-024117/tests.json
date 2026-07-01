@@ -1,0 +1,545 @@
+{
+  "config": {
+    "configFile": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright/outputs/recertificacao/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "projects/recertificacao/tests/features/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright/outputs/recertificacao/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "api",
+        "name": "api",
+        "testDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "projects/recertificacao/tests/api/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/recertificacao/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\recertificacao\\tests\\features\\ciclo-de-vida-do-certificado-substituido\\tc1-novo-certificado-anteriores-replaced.spec.ts",
+      "file": "projects/recertificacao/tests/features/ciclo-de-vida-do-certificado-substituido/tc1-novo-certificado-anteriores-replaced.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Ciclo de Vida do Certificado Substituído",
+          "file": "projects/recertificacao/tests/features/ciclo-de-vida-do-certificado-substituido/tc1-novo-certificado-anteriores-replaced.spec.ts",
+          "line": 6,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC1 — Após emitir novo certificado, anteriores são marcados em lote como REPLACED",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 22402,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Pré-condição: aluno aprovado com recertification_number = 0 e certificado VALID emitido → acessar lista de aprendizagem do curso seed e verificar que a página carrega",
+                          "duration": 11694
+                        },
+                        {
+                          "title": "2. Localizar linha do aluno com badge \"Substituído\" → RN 20/21: certificado mais antigo (recert_num=0) foi marcado REPLACED (situation=4) em lote pelo replace_previous_certificates_bulk ao emitir o cert novo",
+                          "duration": 324
+                        },
+                        {
+                          "title": "3. Localizar linha do aluno com badge \"Emitido\" → cert mais recente (recert_num=1) permanece VALID (situation=2) — invariante: só o cert vigente fica VALID; os anteriores viram REPLACED",
+                          "duration": 563
+                        },
+                        {
+                          "title": "4. Confirmar que coexistem as linhas \"Substituído\" e \"Emitido\" para o mesmo aluno → evidência do update em lote: o replace_previous_certificates_bulk gerou 2 rows distintas (situation=4 para cert antigo, situation=2 para cert novo)",
+                          "duration": 92
+                        }
+                      ],
+                      "startTime": "2026-05-29T05:37:42.658Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVjZXJ0aWZpY2HDp8OjbyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNpY2xvIGRlIFZpZGEgZG8gQ2VydGlmaWNhZG8gU3Vic3RpdHXDrWRvIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJBcMOzcyBlbWl0aXIgbm92byBjZXJ0aWZpY2FkbywgYW50ZXJpb3JlcyBzw6NvIG1hcmNhZG9zIGVtIGxvdGUgY29tbyBSRVBMQUNFRCJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJjcml0aWNhbCJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7InBhcmFtZXRlcnMiOlt7Im5hbWUiOiJmZWF0dXJlX2ZsYWciLCJ2YWx1ZSI6IjpyZWNlcnRpZmljYWNhbz1PTiAoZW52IHN0YWdpbmctcmVjZXJ0aWZpY2FjYW8gMzcwNDgpIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7InBhcmFtZXRlcnMiOlt7Im5hbWUiOiJzZWVkIiwidmFsdWUiOiJjdXJzbyA4MDcyODcsIGFsdW5vIHJpY2hhcmQuc2Vib2xkQHR3eWdvLmNvbSJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-87ef1-cados-em-lote-como-REPLACED-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-87ef1-cados-em-lote-como-REPLACED-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-87ef1-cados-em-lote-como-REPLACED-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-87ef1-cados-em-lote-como-REPLACED-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fc6f573d04bfbad90809-2c77bf66f7c84bb027e4",
+              "file": "projects/recertificacao/tests/features/ciclo-de-vida-do-certificado-substituido/tc1-novo-certificado-anteriores-replaced.spec.ts",
+              "line": 20,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\ciclo-de-vida-do-certificado-substituido\\tc2-worker-expires-certificates-propaga.spec.ts",
+      "file": "projects/recertificacao/tests/features/ciclo-de-vida-do-certificado-substituido/tc2-worker-expires-certificates-propaga.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Ciclo de Vida do Certificado Substituído",
+          "file": "projects/recertificacao/tests/features/ciclo-de-vida-do-certificado-substituido/tc2-worker-expires-certificates-propaga.spec.ts",
+          "line": 8,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC2 — Worker ExpiresCertificates expira VALID e propaga para REPLACED do mesmo par",
+              "ok": true,
+              "tags": [
+                "seed-heavy"
+              ],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 197996,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [
+                        {
+                          "text": "[desmatricularAlunoSafe] Falha em \"Curso com atividades/aluno-aprovado-fixo-w1-1780033063424@example.com\": locator.click: Timeout 5000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('tr, [role=\"row\"]').filter({ hasText: 'aluno-aprovado-fixo-w1-1780033063424@example.com' }).first().getByRole('button', { name: /cancelar/i })\u001b[22m\n\n"
+                        }
+                      ],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Pré-condição: aluno aprovado com cert Emitido (fixture) — linha visível na Aprendizagem",
+                          "duration": 10755
+                        },
+                        {
+                          "title": "2. Expirar certificado do aluno via menu kebab \"Expirar certificado\" → RN 22: expire_replaced_certificates processa o cert VALID e propaga REPLACED do par",
+                          "duration": 1299
+                        },
+                        {
+                          "title": "3. Verificar na Aprendizagem que a linha do aluno agora exibe badge \"Expirado\"",
+                          "duration": 15407
+                        }
+                      ],
+                      "startTime": "2026-05-29T05:37:42.678Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVjZXJ0aWZpY2HDp8OjbyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNpY2xvIGRlIFZpZGEgZG8gQ2VydGlmaWNhZG8gU3Vic3RpdHXDrWRvIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJXb3JrZXIgRXhwaXJlc0NlcnRpZmljYXRlcyBleHBpcmEgVkFMSUQgZSBwcm9wYWdhIHBhcmEgUkVQTEFDRUQgZG8gbWVzbW8gcGFyIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJub3JtYWwifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7InBhcmFtZXRlcnMiOlt7Im5hbWUiOiJzZWVkX2N1cnNvSWQiLCJ2YWx1ZSI6IjgwNzQwMyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7InBhcmFtZXRlcnMiOlt7Im5hbWUiOiJzZWVkX2FsdW5vRW1haWwiLCJ2YWx1ZSI6ImFsdW5vLWFwcm92YWRvLWZpeG8tdzEtMTc4MDAzMzA2MzQyNEBleGFtcGxlLmNvbSJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-66afe--para-REPLACED-do-mesmo-par-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-66afe--para-REPLACED-do-mesmo-par-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-66afe--para-REPLACED-do-mesmo-par-chromium\\video.webm"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-66afe--para-REPLACED-do-mesmo-par-chromium\\test-finished-2.png"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-66afe--para-REPLACED-do-mesmo-par-chromium\\test-finished-3.png"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-66afe--para-REPLACED-do-mesmo-par-chromium\\test-finished-4.png"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-66afe--para-REPLACED-do-mesmo-par-chromium\\test-finished-5.png"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-66afe--para-REPLACED-do-mesmo-par-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b67d52a60531b733ece4-2af330b7324f940ea3b5",
+              "file": "projects/recertificacao/tests/features/ciclo-de-vida-do-certificado-substituido/tc2-worker-expires-certificates-propaga.spec.ts",
+              "line": 21,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\ciclo-de-vida-do-certificado-substituido\\tc3-constante-certificate-replaced-4.spec.ts",
+      "file": "projects/recertificacao/tests/features/ciclo-de-vida-do-certificado-substituido/tc3-constante-certificate-replaced-4.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Ciclo de Vida do Certificado Substituído",
+          "file": "projects/recertificacao/tests/features/ciclo-de-vida-do-certificado-substituido/tc3-constante-certificate-replaced-4.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC3 — Constante CERTIFICATE_REPLACED = 4 espelhada em EventParticipant::REPLACED",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "TC declarado Tipo: db no MD canônico (test-analysis.md §TC3). Validação de constantes Rails (Certificate::CERTIFICATE_REPLACED, EventParticipant::REPLACED) exige Rails console em staging — fora do escopo Playwright. Executor futuro: agent-db (CONTRACT.md V2).",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\ciclo-de-vida-do-certificado-substituido\\tc3-constante-certificate-replaced-4.spec.ts",
+                        "line": 19,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-29T05:37:40.866Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "TC declarado Tipo: db no MD canônico (test-analysis.md §TC3). Validação de constantes Rails (Certificate::CERTIFICATE_REPLACED, EventParticipant::REPLACED) exige Rails console em staging — fora do escopo Playwright. Executor futuro: agent-db (CONTRACT.md V2).",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\ciclo-de-vida-do-certificado-substituido\\tc3-constante-certificate-replaced-4.spec.ts",
+                            "line": 19,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "e4d051e58ed8875e9ba7-6eafcfae3b59024aa629",
+              "file": "projects/recertificacao/tests/features/ciclo-de-vida-do-certificado-substituido/tc3-constante-certificate-replaced-4.spec.ts",
+              "line": 26,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\ciclo-de-vida-do-certificado-substituido\\tc4-certificados-legado-permanecem-valid.spec.ts",
+      "file": "projects/recertificacao/tests/features/ciclo-de-vida-do-certificado-substituido/tc4-certificados-legado-permanecem-valid.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Ciclo de Vida do Certificado Substituído",
+          "file": "projects/recertificacao/tests/features/ciclo-de-vida-do-certificado-substituido/tc4-certificados-legado-permanecem-valid.spec.ts",
+          "line": 6,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC4 — Certificados emitidos no fluxo legado (sem reinscrição) permanecem VALID indefinidamente",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 29654,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Pré-condição: aluno com recertification_number = 0 aprovado e VALID emitido → acessar lista de aprendizagem e verificar que a linha do aluno legado existe",
+                          "duration": 11962
+                        },
+                        {
+                          "title": "2. Verificar que a linha do aluno legado exibe badge \"Emitido\" (VALID) → RN 20/21: sem reinscrição, o cert original permanece situation=2 (VALID); replace_previous_certificates_bulk não foi acionado",
+                          "duration": 606
+                        },
+                        {
+                          "title": "3. Aplicar filtro \"Substituído\" e confirmar que a linha \"Emitido\" do aluno NÃO aparece → invariante de regressão: o cert vigente (recert_num=1) NÃO foi marcado REPLACED — apenas certs efetivamente substituídos (recert_num=0) aparecem no filtro",
+                          "duration": 5400
+                        }
+                      ],
+                      "startTime": "2026-05-29T05:37:42.703Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gUmVjZXJ0aWZpY2HDp8OjbyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkNpY2xvIGRlIFZpZGEgZG8gQ2VydGlmaWNhZG8gU3Vic3RpdHXDrWRvIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJDZXJ0aWZpY2Fkb3MgZW1pdGlkb3Mgbm8gZmx1eG8gbGVnYWRvIChzZW0gcmVpbnNjcmnDp8OjbykgcGVybWFuZWNlbSBWQUxJRCBpbmRlZmluaWRhbWVudGUifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJub3JtYWwifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7InBhcmFtZXRlcnMiOlt7Im5hbWUiOiJmZWF0dXJlX2ZsYWciLCJ2YWx1ZSI6IjpyZWNlcnRpZmljYWNhbz1PTiAoZW52IHN0YWdpbmctcmVjZXJ0aWZpY2FjYW8gMzcwNDgpIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7InBhcmFtZXRlcnMiOlt7Im5hbWUiOiJzZWVkIiwidmFsdWUiOiJjdXJzbyA4MDcyODcsIGFsdW5vIHJpY2hhcmQuc2Vib2xkQHR3eWdvLmNvbSJ9XX19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-8b492-necem-VALID-indefinidamente-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-8b492-necem-VALID-indefinidamente-chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-8b492-necem-VALID-indefinidamente-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-8b492-necem-VALID-indefinidamente-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bd696ed6d5afd53a1b6c-ed6943fb617808fcb6b3",
+              "file": "projects/recertificacao/tests/features/ciclo-de-vida-do-certificado-substituido/tc4-certificados-legado-permanecem-valid.spec.ts",
+              "line": 24,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-05-29T05:37:04.743Z",
+    "duration": 247481.703,
+    "expected": 3,
+    "skipped": 1,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

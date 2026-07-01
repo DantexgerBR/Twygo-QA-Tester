@@ -1,6 +1,19 @@
 ---
 name: twygo-report-generator
-description: Gera relatório Markdown estruturado por execução em outputs/reports/{slug}_{timestamp}/ (index.md + tests.md + exploratory.md + JSONs). Em modo regressivo, dispara também o Allure CLI para o relatório executivo com trend histórico (Allure mantém HTML — built-in). v3.1 adiciona auto-detect — se rodado sem flag mas test-results.json tem 1 única testsuite, promove pra per-suite com slug correto (evita pasta all-suites enganosa). v3.2 adiciona rotação automática — mantém só o latest por prefix em `outputs/<slug>/reports/`, move anteriores pra `outputs-archive/<slug>/reports/` (gitignored). v3.3 adiciona suporte a override de env por annotation — bug-report do TC usa URL/Login/Senha/orgId da Trial real quando o spec emite `testInfo.annotations.push({type: 'baseURL'|'orgId'|'emailRef'|'passwordRef'|'envLabel', description: ...})`, em vez de mostrar sempre o env principal do project.config.json. v3.4 endereça relatório opaco para leitor leigo — expande `playwrightHumanSummary` cobrindo asserts numéricos/booleanos/equal/HaveAttribute/HaveValue, propaga classificação automática do `gerar-bug-report-de-tc-red` (bug-produto/spec-frágil/modal-não-tratado/flakiness/inconclusivo) com próximas ações sugeridas por categoria no bloco `🐛 Pronto para registro de bug`, exige categoria+destinatário+próximo passo no fixme via `test.fixme(true, '[xml-desatualizado|seed-ausente|dep-externa|bloqueio-temporario] motivo')`, gera "Comportamento atual" interpretativo (não só repete o erro técnico), substitui placeholders `${VAR}` por "Credenciais via env: `VAR` (consulte `.env`)", e deduplica prefixo numérico do step impactado.
+description: Gera reportDir self-contained em outputs/<slug>/reports/{slug}_{ts}/ (index.md + tests.md + exploratory.md + JSONs). Regressivo dispara Allure CLI. v3.4 — bug-report propaga categoria sugerida, fixme exige `[xml-desatualizado|seed-ausente|dep-externa|bloqueio-temporario]`. Ver corpo p/ changelog detalhado.
+when_to_use: |
+  - Após Playwright run completar — Fase 6 do orchestrator
+  - Rodou `npx playwright test` direto e precisa gerar reportDir manual
+  - Regressivo precisa Allure HTML + trend histórico
+triggers:
+  - "agent:report"
+  - "twygo-report-generator"
+  - "index.md tests.md"
+  - "reportDir"
+  - "playwrightHumanSummary"
+  - "Allure CLI"
+  - "outputs/<slug>/reports/"
+  - "Comportamento atual"
 version: 3.4.0
 ---
 

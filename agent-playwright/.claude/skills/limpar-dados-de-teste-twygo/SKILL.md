@@ -1,6 +1,20 @@
 ---
 name: limpar-dados-de-teste-twygo
 description: Todo spec Playwright Twygo que cria/altera estado persistente (painel, item de menu, layout, contrato, toggle) precisa de afterAll/afterEach que limpe via variant *_safe do Page Object. Sem cleanup, runs sucessivos acumulam orphans nos envs compartilhados e cascateiam falhas em outros testes — toast genérico "Não foi possível inativar o painel" disparado por orphan menu items é o sintoma clássico. Skill define template canônico de cleanup, catálogo de variants *_safe existentes, ordem de operações quando há dependência (desassociar antes de deletar), e anti-patterns. Use sempre que gerar/revisar spec novo que cria estado, ou ao auditar suite legada antes de retrofit.
+when_to_use: |
+  - Generator emitindo spec novo que cria/altera estado persistente
+  - Auditar suite legada antes de retrofit de cleanup
+  - Spec falha intermitentemente com toast genérico "Não foi possível X"
+  - Env acumulou orphans (Painel TC* w0-..., menu items orphan)
+triggers:
+  - "cleanup obrigatório"
+  - "*_safe"
+  - "afterAll"
+  - "deletePanelByNameSafe"
+  - "disassociatePanelFromMenu_safe"
+  - "Não foi possível inativar o painel"
+  - "orphan"
+  - "worker-isolated"
 version: 1.0.0
 ---
 
@@ -336,6 +350,14 @@ Antes de salvar um spec novo:
 
 Failures em qualquer item ⇒ generator recusa salvar e retorna ao
 planejamento.
+
+## Quando NÃO usar
+
+- Spec é 100% read-only (apenas lê listagem/colunas, sem create/update/delete server-side) — cleanup desnecessário.
+- Spec usa `page.route()` mockando todos os requests de mutação — backend nunca é tocado, sem estado pra limpar.
+- Recurso é worker-isolated efêmero descartado pelo próprio framework (storage state local, cookies de sessão) — Playwright já isola.
+- TC opera em env Trial dedicado que será reciclado/zerado por outro fluxo (ver [[testar-exclusao-dados-trial-twygo]]) — cleanup duplicado.
+- Mutação foi feita via API e o próprio TC tem step "Deletar X" como expectativa do cenário — não duplicar em `afterAll`.
 
 ## Referências
 

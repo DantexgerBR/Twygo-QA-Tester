@@ -41,7 +41,7 @@ confirmando que era **artefato de automação**, não bug de produto.
 
 ## Padrão canônico — atuar via dispatchEvent
 
-Mesma família da skill [[clicar-parent-expander-sem-href-twygo]]: dispara o
+Mesma família da skill [[navegar-sidebar-admin-twygo]]: dispara o
 handler React direto, ignorando actionability/hit-test.
 
 ```ts
@@ -95,6 +95,6 @@ conectado", garanta que o seu clique realmente disparou o handler.
 
 ## Relacionadas
 
-- [[clicar-parent-expander-sem-href-twygo]] — mesma técnica (`dispatchEvent`) para `<a>` de expander de sidebar sem href.
+- [[navegar-sidebar-admin-twygo]] — mesma técnica (`dispatchEvent`) para `<a>` de expander de sidebar sem href.
 - [[seletores-visiveis-twygo]] — escopar ao menu/linha visível (o DOM duplica menus de todas as linhas).
 - [[debugar-bug-produto-stale]] — revalidar bug stale sem cravar por artefato de automação.

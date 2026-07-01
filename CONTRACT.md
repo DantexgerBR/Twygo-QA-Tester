@@ -14,6 +14,11 @@
 >   ativação automática do recon de protótipo. **Aplicada a projetos novos
 >   por escolha explícita** (`contract_version: 1.1` no frontmatter).
 >   ATs antigas em `1.0` continuam válidas — migração é opt-in. Detalhes na §15.
+> - **1.2** — consolidação de testes de API em `agent-playwright` (2026-05-27).
+>   Remove `executor: api` da enum (agent-api separado foi avaliado e descartado);
+>   testes de API rodam no `agent-playwright` via `request` fixture em
+>   `tests/api/`. Introduz convenção de separar TCs UI+API em 2 TCs.
+>   Detalhes na §16.
 
 > **Quem precisa ler este documento:**
 > - Quem mantém `agent-at` (escreve neste contrato como produtor)
@@ -189,7 +194,7 @@ local"). Permite metadados estruturados sem misturar com prosa.
 ```yaml
 ---
 suite: Listagem de painéis
-executor: playwright                      # playwright | api | db | pentest
+executor: playwright                      # playwright | db | pentest (testes API rodam em playwright/tests/api/ — ver §16)
 org: principal                            # chave simbólica — opcional, default `principal`
 playbooks:                                # skills Twygo aplicáveis à suíte inteira
   - filtro-drawer
@@ -259,7 +264,7 @@ Validar acesso à listagem e renomeação de menu/breadcrumb (R1).
 | Campo | Obrigatório | Valores | Mapeamento |
 |---|---|---|---|
 | `**Prioridade**` | ✅ | `critical` / `high` / `medium` / `low` | ★★★ / ★★ / ★ / (sem) · XMind: `priority-1/2/3` · TestLink XML: `<importance>3/2/1</importance>` |
-| `**Tipo**` | ✅ | `ui` / `api` / `db` / `mixed` | Informativo; auxilia executor a decidir cobertura |
+| `**Tipo**` | ✅ | `ui` / `api` / `db` / `mixed` | Informativo; auxilia executor a decidir cobertura. **A partir da v1.2**: TC `Tipo: api` em suíte `executor: playwright` vai em `tests/api/`. **TCs UI+API devem ser separados em 2 TCs** (`Tipo: ui` + `Tipo: api`) — ver §16. `Tipo: mixed` reservado para UI+DB (raro). |
 | `**Playbooks adicionais**` | ✅ (pode ser `[]`) | array de slugs | Acrescenta aos playbooks da suíte |
 | `### Objetivo` | ✅ | prosa | Vira `<summary>` do TestLink + nota do TC no XMind |
 | `### Passos` | ✅ | lista numerada `N. Ação\n   → Resultado` | Vira `<step>` do TestLink + filhos do TC no XMind |
@@ -389,10 +394,17 @@ Catálogo de modais (título + subtítulo + botões + campos).
 - **Botões**: "Cancelar" / "Renomear"
 ```
 
-### 5.4 `## Endpoints (referência)` — opcional
+### 5.4 `## Endpoints (referência)`
 
-Endpoints relevantes para o projeto. Útil para `[V2] agent-api`, mas já hoje
-ajuda Playwright a debugar via Network.
+Endpoints relevantes para o projeto.
+
+**Obrigatoriedade (v1.2+)**: quando a AT contém ≥1 TC com `Tipo: api` ou
+`Tipo: mixed` (UI+API), esta seção é **obrigatória**. Para ATs sem TC de
+API, segue opcional (ajuda Playwright a debugar via Network).
+
+A seção alimenta diretamente os clientes HTTP em
+`agent-playwright/projects/<slug>/api/` e os JSON Schemas em
+`agent-playwright/projects/<slug>/schemas/`.
 
 ```markdown
 ## Endpoints (referência)
@@ -591,46 +603,62 @@ pelo agent-at. Sem flag-day forçado.
 
 ## 11. Roadmap
 
-### [V2] Validações secundárias entre agentes
+### [v1.2] Validações secundárias — API inline, DB via subprocess
 
-**Quando ativar**: `agent-api` e `agent-db` rodando standalone primeiro.
+**API**: validações de API são **inline** no spec do `agent-playwright`, usando
+`request` fixture + JSON Schema (Ajv). Sem envelope cross-agente, sem IPC, sem
+arquivo intermediário. Exemplo:
 
-**Como vai ser** (especificação preliminar — não vinculante):
+```ts
+// agent-playwright/projects/<slug>/tests/api/<suite>.spec.ts
+import { test, expect } from '@playwright/test';
+import { reenrollResponseSchema } from '../../schemas/reenroll-response.schema.json';
+import { validateAgainstSchema } from '../../../../src/utils/schema';
 
-```markdown
-## TC2 — Criar painel persiste no banco corretamente
-**Prioridade**: critical
-**Tipo**: mixed
-**Executor**: playwright
-
-### Validações secundárias
-- agent: db
-  template: panels_by_name
-  params: {name: ${createdPanelName}}
-  expect:
-    count: 1
-    columns:
-      status: active
-
-- agent: api
-  request: GET /panels/${createdPanelId}
-  expect:
-    status: 200
-    body:
-      name: ${createdPanelName}
+test('TC2 — POST /api/v2/users/mass cria participants reinscritos', async ({ request }) => {
+  const response = await request.post('/api/v2/users/mass', { data: payload });
+  expect([200, 207]).toContain(response.status());
+  validateAgainstSchema(await response.json(), reenrollResponseSchema);
+});
 ```
 
-**Como roda**: executor primário (PW) chama agentes secundários via filesystem + CLI:
+**DB**: validações de DB **continuam via subprocess + filesystem** chamando
+`agent-db` (Python). Justificativa: agent-db tem read-only guard, keyset
+pagination e comparação por hash que não fazem sentido reimplementar em TS.
+
+Exemplo declarativo na AT (formato preliminar — não vinculante até implementação):
+
+```markdown
+## TC3 — Reinscrição em massa grava log em ai_indexing_logs
+**Prioridade**: critical
+**Tipo**: api
+**Validações secundárias** (DB):
+  - agent: db
+    template: indexing_logs_by_org
+    params: {org_id: ${orgId}, since: ${testStartTime}}
+    expect:
+      count: 1
+      columns:
+        status: completed
+```
+
+**Como roda** (DB apenas):
 
 ```
 PW spec.ts
-  → escreve input em agent-db/inputs/<runId>__panels-criados.md
+  → escreve input em agent-db/inputs/<runId>__<slug>.md
   → executa `python -m agent_db.main --input <path> --out <outpath>`
   → lê report.json em agent-db/outputs/<runId>/
   → incorpora resultado no relatório próprio
 ```
 
-**Envelope de report comum** (V2): `{agent, runId, suite, tc, results: [...], errors: [...]}`. Permite agent-docs-qa **[V3]** ou outro auditor consolidar.
+**Envelope de report comum (DB)**: `{agent: 'db', runId, suite, tc, results: [...], errors: [...]}`.
+Permite consolidação por agentes futuros (ex: agent-docs-qa **[V3]**).
+
+**TCs UI+API (mixed)**: a partir da v1.2, **TCs que combinam ações UI e API
+devem ser separados em 2 TCs** (`Tipo: ui` + `Tipo: api`), cada um focado num
+modo. Não declarar `Tipo: mixed` para UI+API — esse valor fica reservado para
+UI+DB (raro, ex: testar trigger Postgres a partir de ação UI). Detalhe em §16.
 
 ### [V2] Schema de envelope de report
 
@@ -640,7 +668,7 @@ Cada agente executor primário produz `outputs/<slug>/reports/<runId>/report.jso
 
 - `agent-tasks-qa`: PRECEDE o agent-at. Output dele é o input que hoje é o `.xlsx` manual de "Quebra de atividades". Schema próprio (TBD).
 - `agent-pentest`: executor primário próprio. Categorias OWASP no MD. Provavelmente roda em pipeline separado (semanal/release).
-- `agent-api`: executor primário OU validador acionável. Stack Python (Pytest+Requests) ou TS (Vitest+Supertest) — decisão futura.
+- ~~`agent-api`~~: **descartado em v1.2 (2026-05-27)** — testes de API rodam no `agent-playwright` via `request` fixture. Detalhes em §16.
 - `agent-docs-qa`: produtor de documentação de usabilidade para usuário final. Input/output a definir quando criar.
 
 ### [V3] Pipelines CI/CD
@@ -834,6 +862,95 @@ implícita). Em 1.1, eles são lidos e validados.
 
 ---
 
+## 16. Versão 1.2 — Consolidação de API no agent-playwright (2026-05-27)
+
+### Motivação
+
+Avaliação aprofundada (3 alternativas — agent-api separado / API em
+agent-playwright / agent-python unificando DB+API) chegou à conclusão de
+que **API testing pertence ao `agent-playwright`**, não a um agente
+separado. Principais drivers da decisão:
+
+1. **`APIRequestContext` (request fixture) do Playwright é nativo** e
+   designado exatamente para esse caso — TS first-class, sem dependência
+   de browser quando rodando em `--project api`.
+2. **TCs API Twygo carregam playbooks UI** (Flipper, Super Admin, contrato).
+   Exemplo concreto: TC4 da suíte "Reinscrição via API V2" requer toggle
+   Flipper antes do POST. `agent-playwright` já tem `FlipperAdminPage`,
+   `ensureFlipperActor` e `dismissCommonModals`. Agente separado
+   reimplementaria ou faria IPC reverso (anti-pattern).
+3. **Zero IPC para API**: validações inline (`request.post()` +
+   `validateAgainstSchema(body, schema)`) substituem envelope cross-agente
+   especificado em §11 V2. Latência menor, report unificado, traces
+   integrados.
+4. **Onboarding reduzido**: 2 stacks (TS PW+API + Python DB) em vez de 3
+   (TS PW + Python DB + Python/TS API).
+5. **`agent-db` permanece em Python** por reuso direto do migration-validator
+   (read-only guard, keyset pagination, hash compare). API não tem
+   necessidades irreducíveis de Python equivalentes.
+
+### Mudanças vinculantes em ATs `contract_version: 1.2`
+
+| Item | Mudança | Onde | Status na 1.2 |
+|---|---|---|---|
+| 1.1 | `executor:` enum reduzida — remove `api` | §4.2 | **breaking**: ATs com `executor: api` precisam migrar para `executor: playwright` |
+| 1.2 | `## Endpoints (referência)` vira obrigatório quando AT contém ≥1 TC `Tipo: api` ou `mixed (UI+API)` | §5.4 | **obrigatório** |
+| 1.3 | TCs UI+API separados em 2 TCs (`Tipo: ui` + `Tipo: api`) — `Tipo: mixed` reservado para UI+DB | §4.3 + §11 | **convenção** |
+| 1.4 | Validações secundárias **de API** são inline no spec PW (`request` fixture + Ajv); **de DB** seguem subprocess+filesystem agent-db | §11 | **mudança de fluxo** |
+
+### Convenção de organização no `agent-playwright`
+
+```
+agent-playwright/projects/<slug>/
+├── tests/
+│   ├── features/                  # E2E UI — atual
+│   └── api/                       # NOVO em v1.2 — TCs com Tipo: api
+├── api/                           # NOVO em v1.2 — clientes HTTP (estilo POM, mas para REST)
+│   └── <RecursoApiClient>.ts
+├── schemas/                       # NOVO em v1.2 — JSON Schemas para validação de response
+│   └── <endpoint>-response.schema.json
+└── pages/                         # POMs UI — atual
+```
+
+`playwright.config.ts` ganha um `project` adicional:
+
+```ts
+projects: [
+  { name: 'chromium', use: devices['Desktop Chrome'] },
+  { name: 'api', testMatch: /tests\/api\/.*\.spec\.ts/, use: { baseURL: process.env.API_BASE_URL } },
+]
+```
+
+### Compatibilidade e migração
+
+- **ATs com `contract_version: 1.0` ou `1.1` continuam válidas**
+  indefinidamente. `executor: api` não é usado por nenhuma AT em produção
+  no momento (verificado em 2026-05-27 — todas as suítes API atuais usam
+  `executor: playwright` com `Tipo: api` por TC).
+- **Migração de AT existente para 1.2**:
+  1. Editar frontmatter: `contract_version` → `1.2`
+  2. Se algum TC tem `Tipo: mixed` cobrindo UI+API, separar em 2 TCs
+     (`Tipo: ui` + `Tipo: api`)
+  3. Garantir que `## Endpoints (referência)` está preenchida se houver
+     TC `Tipo: api`
+
+### Quando agent-api separado seria criado no futuro
+
+A decisão de v1.2 é revertida apenas se ao menos um destes critérios
+emergir:
+
+1. Property-based testing (Schemathesis ou equivalente) virar requisito
+   recorrente em ≥3 projetos
+2. Backend team Twygo passar a escrever testes de API sem aprender TS
+3. Volume de testes de API ultrapassar ~200 specs e o report unificado do
+   PW ficar inviável
+4. Algum projeto exigir rodar API tests em ambiente isolado sem PW (CI
+   minimal)
+
+Reavaliação fica em aberto. Não há trabalho ativo previsto.
+
+---
+
 ## 13. Decisões registradas
 
 | Data | Decisão | Por quê |
@@ -848,6 +965,9 @@ implícita). Em 1.1, eles são lidos e validados.
 | 2026-05-22 | Introdução de `contract_version: 1.1` (hardening de cobertura) | Auditoria pós-execução do projeto Modelos identificou 5 padrões sistemáticos de bugs reais que passaram pela AT/Playwright automatizado. 5 mudanças vinculantes + 2 mudanças no fluxo do agent-at. Categorias I-K (race/network/estado inválido) reservadas para V2. ATs `1.0` continuam válidas; migração é opt-in. Detalhes em §15. |
 | 2026-05-22 | Validador `validate_md_canonical.py` passa a fazer branching de regras por `contract_version` | Permite coexistência sem regressão. ATs antigas seguem regras 1.0; novas usam 1.1 |
 | 2026-05-22 | Recon-prototipo automático com fallback gracioso (Opção C) | Histórico mostra que opt-in não foi usado (Base de Conhecimento e Modelos pularam recon). Default automático garante uso, mas fallback (timeout/login/MCP indisponível) impede travamento do fluxo. Override via flag `--no-recon` |
+| 2026-05-27 | Introdução de `contract_version: 1.2` — consolidação de API no `agent-playwright`; `agent-api` separado descartado (Opção B em comparativo de 3 alternativas) | Avaliação revelou que (a) `request` fixture do PW cobre o caso nativamente, (b) TCs API Twygo dependem de playbooks UI já canonizados (Flipper, Super Admin), (c) zero IPC para API valida secundárias, (d) onboarding reduzido. agent-db mantido em Python por reuso do migration-validator. Detalhes em §16 |
+| 2026-05-27 | TCs UI+API obrigatoriamente separados em 2 TCs (`Tipo: ui` + `Tipo: api`) | Mantém limpa a separação entre `tests/features/` (UI) e `tests/api/` (API). `Tipo: mixed` fica reservado para UI+DB (raro). Caso real: TC1 da suíte Reinscrição via API V2 do Recertificação tem passo UI dentro de TC `Tipo: api` — vai ser separado |
+| 2026-05-27 | `## Endpoints (referência)` vira obrigatório quando AT tem ≥1 TC `Tipo: api` | Alimenta diretamente os clientes HTTP em `agent-playwright/projects/<slug>/api/` e os JSON Schemas em `schemas/`. Sem isso, generator inventa endpoints ou força recon caro |
 
 ---
 

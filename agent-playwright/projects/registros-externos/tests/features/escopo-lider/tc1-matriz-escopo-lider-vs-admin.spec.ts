@@ -37,12 +37,12 @@ test.describe(SUITE, () => {
     });
 
     await allure.step('4. Admin clica na tab "Provedores" → listagem completa (não filtra por liderado)', async () => {
-      await prov.gotoList();
-      await expect(prov.eventSourcesTab()).toHaveAttribute('aria-selected', 'true', { timeout: 20_000 });
+      await prov.gotoTab();
+      expect(await prov.isTabActive(), 'tab Provedores ativa').toBe(true);
       // Provedores são compartilhados: a tab carrega a lista (tabela ou empty
       // state), independente de escopo de liderado. Confirma que a tab abre e
       // renderiza sem filtro implícito.
-      await prov.waitListSettled().catch(() => {});
+      await prov.expectLoaded().catch(() => {});
     });
   });
 

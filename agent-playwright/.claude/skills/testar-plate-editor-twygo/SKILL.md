@@ -1,6 +1,18 @@
 ---
 name: testar-plate-editor-twygo
 description: Padrão canônico de teste do Plate Editor em Twygo — editor rich-text (Plate.js) com customizações (kit de marca, espaços reservados para IA, logos, color picker). Documenta interações internas (inserir bloco, upload, undo/redo, custom plugins) e anti-patterns típicos. Use ao gerar specs Playwright para TCs envolvendo Plate Editor (criação de Design de Página, edição de aula, etc.) — substitui o tratamento "caixa preta" (`Plate Editor é exibido`) por validações detalhadas. Introduzida pelo CONTRACT.md v1.1 §2.1.
+when_to_use: |
+  - TC envolve criação/edição de Design de Página ou Aula (RN 41+ Modelos)
+  - Cobertura de Plate Editor que antes era "caixa preta"
+  - Spec precisa testar bloco IA, color picker, font do kit de marca
+triggers:
+  - "Plate Editor"
+  - "Plate.js"
+  - "Design de Página"
+  - "kit de marca"
+  - "rich-text"
+  - "Espaço reservado para IA"
+  - "color picker"
 version: 1.0.0
 ---
 

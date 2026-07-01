@@ -1,0 +1,29 @@
+{
+  "runId": "reinscricao-via-api-v2_20260528-200327",
+  "scope": "Apenas testsuite contendo \"Reinscrição via API V2\"",
+  "tests": {
+    "total": 3,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 1,
+    "durationMs": 1623
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 0,
+    "tests": 64,
+    "outOfScope": {
+      "errors": 277,
+      "warnings": 196,
+      "info": 7
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

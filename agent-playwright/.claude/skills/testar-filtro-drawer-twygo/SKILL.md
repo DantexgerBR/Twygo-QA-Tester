@@ -1,6 +1,20 @@
 ---
 name: testar-filtro-drawer-twygo
 description: Como testar listagens Twygo cujo "Filtrar" é um drawer Chakra slide-in com 2 modos (Lista de filtros vs Edição de filtro), filtros padrão (radio) + filtros por coluna (accordion + Opções de filtro), e botão `#clear-filter` externo. Use ao gerar specs para qualquer testsuite "Pesquisa e Filtros" ou afim — Painéis, Modos de uso, e quaisquer listagens novas Twygo que herdem o componente.
+when_to_use: |
+  - TC numa testsuite "Pesquisa e Filtros" ou listagem com drawer Filtrar
+  - Spec falha porque o drawer abre em modo B (Edição) quando spec assume A (Lista)
+  - Generator precisa cobrir filtros padrão (radio) + filtros por coluna (accordion)
+triggers:
+  - "Filtrar"
+  - "drawer Chakra"
+  - "#open-filter"
+  - "#list-filter-apply"
+  - "#form-filter-apply"
+  - "#clear-filter"
+  - "Lista de filtros"
+  - "Edição de filtro"
+  - "Opções de filtro"
 version: 1.0.0
 ---
 

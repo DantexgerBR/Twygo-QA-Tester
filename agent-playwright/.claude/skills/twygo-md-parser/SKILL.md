@@ -1,6 +1,17 @@
 ---
 name: twygo-md-parser
 description: Lê o MD canônico (test-analysis.md) produzido pelo agent-at v1+ e produz um JSON estruturado consumível pelo twygo-test-orchestrator. Substitui (com coexistência) o twygo-xml-parser. Schema do MD definido em CONTRACT.md §4. Output JSON inclui campos extras (executor, playbooks, org, catálogos) que o XML legado não tem.
+when_to_use: |
+  - Input é `test-analysis.md` canônico (CONTRACT.md v1+)
+  - Orchestrator precisa converter MD pra JSON consumível
+  - Output deve incluir executor/playbooks/org/catálogos
+triggers:
+  - "test-analysis.md"
+  - "MD canônico"
+  - "agent:parse-md"
+  - "CONTRACT.md §4"
+  - "parseCanonicalMd"
+  - "MD parser"
 version: 1.0.0
 ---
 

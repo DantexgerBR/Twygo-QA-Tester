@@ -1,0 +1,453 @@
+{
+  "config": {
+    "configFile": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\playwright.config.ts",
+    "rootDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright/outputs/recertificacao/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "projects/recertificacao/tests/features/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright/outputs/recertificacao/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "api",
+        "name": "api",
+        "testDir": "C:/Claude/Recertificação/twygo-agents-qa/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "projects/recertificacao/tests/api/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/recertificacao/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc1-progresso-score-attendance-zerados.spec.ts",
+      "file": "projects/recertificacao/tests/features/isolamento-de-progresso-score-e-attendance-por-inscricao/tc1-progresso-score-attendance-zerados.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Isolamento de Progresso, Score e Attendance por Inscrição",
+          "file": "projects/recertificacao/tests/features/isolamento-de-progresso-score-e-attendance-por-inscricao/tc1-progresso-score-attendance-zerados.spec.ts",
+          "line": 11,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC1 — Aluno reinscrito tem progress/score/attendance zerados na nova inscrição",
+              "ok": true,
+              "tags": [
+                "seed-heavy"
+              ],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "AT-inferiu-toast-inexistente: pipeline completo OK, click Reinscrever atinge alvo correto (fix Chakra multi-menu aplicado), mas toast Reinscri|sucesso não aparece. Mesma raiz TC3 Suite 2. Revisar AT pra validar pela listagem em vez de toast.",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc1-progresso-score-attendance-zerados.spec.ts",
+                        "line": 76,
+                        "column": 12
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 155093,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [
+                        {
+                          "text": "[desmatricularAlunoSafe] Falha em \"Curso com atividades/aluno-aprovado-fixo-w0-1780058917121@example.com\": locator.waitFor: Timeout 5000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('heading', { name: /Lista de Participantes/i }).first() to be visible\u001b[22m\n\n"
+                        }
+                      ],
+                      "retry": 0,
+                      "startTime": "2026-05-29T12:48:33.785Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "AT-inferiu-toast-inexistente: pipeline completo OK, click Reinscrever atinge alvo correto (fix Chakra multi-menu aplicado), mas toast Reinscri|sucesso não aparece. Mesma raiz TC3 Suite 2. Revisar AT pra validar pela listagem em vez de toast.",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc1-progresso-score-attendance-zerados.spec.ts",
+                            "line": 76,
+                            "column": 12
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-490eb-e-zerados-na-nova-inscrição-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-490eb-e-zerados-na-nova-inscrição-chromium\\test-finished-2.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-490eb-e-zerados-na-nova-inscrição-chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-490eb-e-zerados-na-nova-inscrição-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-490eb-e-zerados-na-nova-inscrição-chromium\\test-finished-2.png"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-490eb-e-zerados-na-nova-inscrição-chromium\\test-finished-3.png"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-490eb-e-zerados-na-nova-inscrição-chromium\\test-finished-4.png"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-490eb-e-zerados-na-nova-inscrição-chromium\\test-finished-5.png"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-490eb-e-zerados-na-nova-inscrição-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "63ff5443f9bbc51e60d4-51e6d8f0fccb6ac377b2",
+              "file": "projects/recertificacao/tests/features/isolamento-de-progresso-score-e-attendance-por-inscricao/tc1-progresso-score-attendance-zerados.spec.ts",
+              "line": 57,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc2-progresso-historico-mantido-recertification-zero.spec.ts",
+      "file": "projects/recertificacao/tests/features/isolamento-de-progresso-score-e-attendance-por-inscricao/tc2-progresso-historico-mantido-recertification-zero.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Isolamento de Progresso, Score e Attendance por Inscrição",
+          "file": "projects/recertificacao/tests/features/isolamento-de-progresso-score-e-attendance-por-inscricao/tc2-progresso-historico-mantido-recertification-zero.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC2 — Aluno NÃO reinscrito (recertification_number = 0) mantém progresso histórico após deploy",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "DB-only: requer aluno pré-deploy com event_content_users.event_participant_id IS NULL — artefato de backfill da migration. Não provisionável via UI (criar um aluno hoje já grava event_participant_id preenchido) nem validável via menu Aprendizagem sem esse dado específico. Validar via psql/Rails console no env 37048 ou via agent-db (V2 do CONTRACT.md).",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc2-progresso-historico-mantido-recertification-zero.spec.ts",
+                        "line": 23,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "skipped",
+                      "duration": 1051,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-29T12:48:33.806Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "DB-only: requer aluno pré-deploy com event_content_users.event_participant_id IS NULL — artefato de backfill da migration. Não provisionável via UI (criar um aluno hoje já grava event_participant_id preenchido) nem validável via menu Aprendizagem sem esse dado específico. Validar via psql/Rails console no env 37048 ou via agent-db (V2 do CONTRACT.md).",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc2-progresso-historico-mantido-recertification-zero.spec.ts",
+                            "line": 23,
+                            "column": 10
+                          }
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-53d5c-resso-histórico-após-deploy-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-53d5c-resso-histórico-após-deploy-chromium\\video.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-53d5c-resso-histórico-após-deploy-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\outputs\\recertificacao\\test-artifacts\\projects-recertificacao-te-53d5c-resso-histórico-após-deploy-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "579aecd8d5c957b4a6e9-0feb4f612946d060b6d6",
+              "file": "projects/recertificacao/tests/features/isolamento-de-progresso-score-e-attendance-por-inscricao/tc2-progresso-historico-mantido-recertification-zero.spec.ts",
+              "line": 8,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc3-indice-unique-participant-rejeita-duplicata.spec.ts",
+      "file": "projects/recertificacao/tests/features/isolamento-de-progresso-score-e-attendance-por-inscricao/tc3-indice-unique-participant-rejeita-duplicata.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Isolamento de Progresso, Score e Attendance por Inscrição",
+          "file": "projects/recertificacao/tests/features/isolamento-de-progresso-score-e-attendance-por-inscricao/tc3-indice-unique-participant-rejeita-duplicata.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC3 — Índice único `unique_participant` rejeita duplicata `(user_id, event_id, partner_rel, recertification_number)`",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "Tipo: db (MD §1409). Valida índice PostgreSQL unique_participant via psql/Rails console — não há fluxo UI que tente inserir dois participants idênticos (UI sempre incrementa recertification_number). Executar manualmente via psql INSERT duplicado esperando SQLSTATE 23505, ou via agent-db (V2 do CONTRACT.md).",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc3-indice-unique-participant-rejeita-duplicata.spec.ts",
+                        "line": 16,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-29T12:48:32.752Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "Tipo: db (MD §1409). Valida índice PostgreSQL unique_participant via psql/Rails console — não há fluxo UI que tente inserir dois participants idênticos (UI sempre incrementa recertification_number). Executar manualmente via psql INSERT duplicado esperando SQLSTATE 23505, ou via agent-db (V2 do CONTRACT.md).",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc3-indice-unique-participant-rejeita-duplicata.spec.ts",
+                            "line": 16,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "c3af970dae9a53f638ca-b1051bbead48b0a5cfc0",
+              "file": "projects/recertificacao/tests/features/isolamento-de-progresso-score-e-attendance-por-inscricao/tc3-indice-unique-participant-rejeita-duplicata.spec.ts",
+              "line": 21,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc4-uniqueness-email-cpf-escopa-por-recertification.spec.ts",
+      "file": "projects/recertificacao/tests/features/isolamento-de-progresso-score-e-attendance-por-inscricao/tc4-uniqueness-email-cpf-escopa-por-recertification.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Isolamento de Progresso, Score e Attendance por Inscrição",
+          "file": "projects/recertificacao/tests/features/isolamento-de-progresso-score-e-attendance-por-inscricao/tc4-uniqueness-email-cpf-escopa-por-recertification.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC4 — Validações Rails de email/cpf escopam por `[:event_id, :recertification_number]`",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "Tipo: db (MD §1426). Valida Rails uniqueness validator (scope: [:event_id, :recertification_number]) via Rails console — não observável via menu Aprendizagem (UI não expõe erros de validação do modelo diretamente; o fluxo UI normal nunca tenta duplicar email+recert_num). Executar via Rails console ou agent-db (V2 do CONTRACT.md).",
+                      "location": {
+                        "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc4-uniqueness-email-cpf-escopa-por-recertification.spec.ts",
+                        "line": 15,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-29T12:48:32.754Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "Tipo: db (MD §1426). Valida Rails uniqueness validator (scope: [:event_id, :recertification_number]) via Rails console — não observável via menu Aprendizagem (UI não expõe erros de validação do modelo diretamente; o fluxo UI normal nunca tenta duplicar email+recert_num). Executar via Rails console ou agent-db (V2 do CONTRACT.md).",
+                          "location": {
+                            "file": "C:\\Claude\\Recertificação\\twygo-agents-qa\\agent-playwright\\projects\\recertificacao\\tests\\features\\isolamento-de-progresso-score-e-attendance-por-inscricao\\tc4-uniqueness-email-cpf-escopa-por-recertification.spec.ts",
+                            "line": 15,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "4301119fce538411fb52-0018a2e2705183bd9b77",
+              "file": "projects/recertificacao/tests/features/isolamento-de-progresso-score-e-attendance-por-inscricao/tc4-uniqueness-email-cpf-escopa-por-recertification.spec.ts",
+              "line": 20,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-05-29T12:47:57.023Z",
+    "duration": 203247.83000000002,
+    "expected": 0,
+    "skipped": 4,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

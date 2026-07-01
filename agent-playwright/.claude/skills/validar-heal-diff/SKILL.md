@@ -1,6 +1,17 @@
 ---
 name: validar-heal-diff
 description: Valida estaticamente que o diff produzido pelo `playwright-test-healer` respeita a regra dura #11 (healer só toca seletor/timing/asserção, nunca intenção). Roda entre Etapa 8 (heal aceito pelo QA) e Etapa 8.5 (auto-PR opcional) do twygo-test-orchestrator. Bloqueia mudanças que indicam drift de intenção do teste.
+when_to_use: |
+  - Orchestrator pós-healing, antes de auto-PR ou commit
+  - Validar que heal não fez assertion polarity flip / step reorder / fixme add
+  - Auditoria automática de PR aberto pelo healer
+triggers:
+  - "validar-heal-diff"
+  - "regra dura #11"
+  - "assertion polarity flip"
+  - "drift de intenção"
+  - "healer diff"
+  - "BLOQUEADO PERMITIDO REVISAR"
 version: 1.0.0
 ---
 

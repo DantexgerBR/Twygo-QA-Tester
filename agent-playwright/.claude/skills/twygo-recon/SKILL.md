@@ -1,6 +1,17 @@
 ---
 name: twygo-recon
 description: Reconnaissance pass — antes dos planners, faz UMA varredura na área de uma testsuite (login + navegação a partir das pré-condições + dump completo de test-ids/labels/role+name encontrados) e salva em `inputs/recon-{slug}.md`. Planners consomem esse catálogo e pulam exploração ao vivo, cortando ~70% do tempo de planning.
+when_to_use: |
+  - Antes de invocar `playwright-test-planner` para nova testsuite
+  - Quer cortar tempo de planning catalogando DOM uma única vez
+  - Generator/healer precisa de catálogo de test-ids da área
+triggers:
+  - "agent:recon"
+  - "recon"
+  - "inputs/recon-"
+  - "reconnaissance pass"
+  - "catalogar test-ids"
+  - "antes do planner"
 version: 1.0.0
 ---
 

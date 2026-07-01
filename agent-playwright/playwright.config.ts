@@ -50,6 +50,19 @@ const projectConfig: ProjectConfig = JSON.parse(
 const activeEnvName = process.env.TWYGO_ENV?.trim() || projectConfig.environment;
 const env = getEnvByName(activeEnvName);
 
+// Padrões de testMatch — UI fica em tests/features/, API em tests/api/
+// (CONTRACT.md §16, regra dura #14 do agent-playwright/CLAUDE.md).
+const projectTestsBase = PROJECT_ALL ? 'projects/*/tests' : `projects/${activeSlug}/tests`;
+
+const uiTestMatch = [
+  'tests/setup/**/*.spec.ts',
+  `${projectTestsBase}/features/**/*.spec.ts`,
+];
+
+const apiTestMatch = [
+  `${projectTestsBase}/api/**/*.spec.ts`,
+];
+
 const browserProjects = projectConfig.browsers.map((browser) => {
   const deviceKey =
     browser === 'chromium'
@@ -61,9 +74,24 @@ const browserProjects = projectConfig.browsers.map((browser) => {
           : 'Desktop Edge';
   return {
     name: browser,
+    testMatch: uiTestMatch,
     use: { ...devices[deviceKey] },
   };
 });
+
+// Projeto 'api' — sem device de browser, baseURL aponta para o host de API.
+// Storage state inherited do globalSetup (cookie de sessão pode ser reusado se
+// o backend aceitar; bearer token vem via fixture authHeaders — ver skill
+// provisionar-token-api-twygo).
+const apiProject = {
+  name: 'api',
+  testMatch: apiTestMatch,
+  use: {
+    // API_BASE_URL é exigido em .env quando rodar `--project api`. Se ausente,
+    // requests caem em string vazia + path → mensagem de erro clara do request fixture.
+    baseURL: process.env.API_BASE_URL,
+  },
+};
 
 // storageState é compartilhado (mesmo Twygo, mesma credencial) — fica em
 // outputs/.auth/ na raiz, NÃO subpasta por projeto. Subpasta por projeto se
@@ -74,21 +102,9 @@ const STORAGE_PATH = resolve(__dirname, 'outputs/.auth/storage.json');
 const OUTPUT_SLUG = PROJECT_ALL ? '_all' : activeSlug;
 const outputBase = `${projectConfig.reporting.outputDir}/${OUTPUT_SLUG}`;
 
-// testMatch controla quais specs entram. tests/setup/ + tests/auth/ são
-// genéricos (sempre rodam). projects/<slug>/tests/ depende do modo:
-// - PROJECT específico: só aquele projeto
-// - PROJECT_ALL=true: todos os projetos
-const testMatch = PROJECT_ALL
-  ? [
-      'tests/setup/**/*.spec.ts',
-      'tests/auth/**/*.spec.ts',
-      'projects/*/tests/**/*.spec.ts',
-    ]
-  : [
-      'tests/setup/**/*.spec.ts',
-      'tests/auth/**/*.spec.ts',
-      `projects/${activeSlug}/tests/**/*.spec.ts`,
-    ];
+// testMatch global = união de UI + API. Cada projeto refina via testMatch
+// próprio (browserProjects → uiTestMatch; apiProject → apiTestMatch).
+const testMatch = [...uiTestMatch, ...apiTestMatch];
 
 export default defineConfig({
   testDir: './',
@@ -156,7 +172,7 @@ export default defineConfig({
     // continuam funcionando.
     storageState: STORAGE_PATH,
   },
-  projects: browserProjects,
+  projects: [...browserProjects, apiProject],
   expect: {
     timeout: 10_000,
   },

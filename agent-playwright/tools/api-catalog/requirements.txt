@@ -1,0 +1,6 @@
+# Dependências Python para as tools de catálogo de API.
+# Use venv dedicado pra não conflitar com o runtime TS do agent-playwright:
+#   python -m venv .venv && source .venv/Scripts/activate
+#   pip install -r requirements.txt
+
+requests>=2.32.3

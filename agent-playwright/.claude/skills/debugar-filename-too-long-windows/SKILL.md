@@ -1,6 +1,18 @@
 ---
 name: debugar-filename-too-long-windows
 description: Em Windows com `MAX_PATH=260` (default), operações git (`pull`, `stash`, `checkout`, `clone`, `reset`) falham com `fatal: Unable to process path ... Filename too long` quando o repo tem paths em `outputs/widgets/reports/<run-id>/artifacts/<test-folder>/step-NN-<descrição-longa>-<sha>.png` ou similares. Use quando uma operação git abortar com `Filename too long` no working tree (não no protocolo SSH/HTTP — esse é outro erro). COBRE TAMBÉM a variante silenciosa — clone/checkout que aborta no meio e deixa o working tree parcial (`git status` cheio de `D`, runtime/projeto inteiro ausente do disco), facilmente confundida com "branch quebrada no remoto".
+when_to_use: |
+  - `git pull`/`git checkout`/`git stash` aborta com `Filename too long`
+  - `git add outputs/<slug>/reports/` falha em Windows
+  - Path em `outputs/<slug>/reports/<run-id>/artifacts/` excede 260 chars
+triggers:
+  - "Filename too long"
+  - "Unable to process path"
+  - "MAX_PATH"
+  - "core.longpaths"
+  - "Windows path"
+  - "outputs/reports"
+  - "git pull falhou"
 version: 1.1.0
 ---
 

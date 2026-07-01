@@ -1,6 +1,20 @@
 ---
 name: interagir-switch-chakra-twygo
 description: Switches Chakra (`<label data-test-id="..." class="chakra-switch">` envolvendo `<input type="checkbox">` oculto) exigem 2 cuidados conjuntos pra clique funcionar — (1) o label intercepta pointer events do input, então click no `role=checkbox` dá timeout; (2) em drawers altos (Configurações do widget, etc), o label fica fora do viewport e mesmo `force:true` falha com "Element is outside of the viewport". Padrão canônico: helper `setSwitch(locator, on)` idempotente que faz `scrollIntoViewIfNeeded()` + `click({force:true})` no label. Use ao gerar/healing specs que interagem com switches Chakra em qualquer drawer/form Twygo.
+when_to_use: |
+  - Spec falha com `locator.click: Timeout` em `getByRole('checkbox', ...)` switch Chakra
+  - Spec falha com "Element is outside of the viewport" em switch
+  - Generator/healer mexendo em form/drawer com switch Chakra
+  - `toBeChecked()` falha após click aparentemente bem-sucedido
+triggers:
+  - "switch Chakra"
+  - "chakra-switch"
+  - "setSwitch"
+  - "data-checked"
+  - "toBeChecked falha"
+  - "Element is outside of the viewport"
+  - "chakra-switch__input"
+  - "scrollIntoViewIfNeeded"
 version: 1.0.0
 ---
 
@@ -172,3 +186,11 @@ em switch (alguns com force, alguns sem, alguns com scrollIntoView). O padrão
 3-em-1 (idempotente + scroll + force) cobre todos os casos observados em
 Twygo até hoje. Generator que ler esta skill emite `setSwitch` correto de
 primeira.
+
+## Quando NÃO usar
+
+- Elemento é checkbox `<input type="checkbox">` (não Chakra Switch) — use `check()`/`uncheck()` Playwright nativos; não precisa do padrão idempotente daqui.
+- Elemento é radio button — `check()` direto. Radios são exclusivos dentro do mesmo `name`, sem semântica idempotente.
+- Elemento é toggle do tipo Tab (`role="tab"`) — usar [[navegar-sidebar-admin-twygo]] / `getByRole('tab', { name })` + `.click()`.
+- Switch é controlado por confirmação modal (toggle dispara dialog "Tem certeza?") — a seção "Switch que dispara confirmação" mostra que `setSwitch` não basta; combinar com tratamento explícito de dialog.
+- Switch é `data-disabled` (UI bloqueada por contrato/permissão) — não tente toggle, valide só presença + estado (ver seção "Switch readonly/disabled"). Pode ser caso de [[alterar-funcionalidade-contrato-twygo]].
