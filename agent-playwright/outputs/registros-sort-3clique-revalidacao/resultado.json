@@ -1,0 +1,191 @@
+{
+  "card": 20283,
+  "env": "https://registrosf2.stage.twygoead.com",
+  "org": "37079",
+  "areas": {
+    "admin_registros_pessoa": {
+      "headerText": "Pessoa",
+      "colIndex": 1,
+      "iconInicial": "M3.646 9.146a.5.5 0 0 1 .708 0L8 12.793l3.646-3.647a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 0-.708m0-2.292a.5.5 0 0 0 .708 0L8 3.207l3.646 3.647a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 0 0 0 .708",
+      "valoresInicial": [
+        "QA11 TC3qa11tc342816@twygotest.com",
+        "QA11 TC3qa11tc342816@twygotest.com",
+        "QA11 TC3qa11tc342816@twygotest.com",
+        "Richard Seboldrichard.sebold@twygo.com",
+        "QA Testerdante.tavares@twygo.com",
+        "liderado 1liderado1@teste.com"
+      ],
+      "icon1": "M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708",
+      "valores1": [
+        "Carla Silvacarla@sophia.tech.com.br",
+        "Carla Silvacarla@sophia.tech.com.br",
+        "Carla Silvacarla@sophia.tech.com.br",
+        "Carla Silvacarla@sophia.tech.com.br",
+        "Carla Silvacarla@sophia.tech.com.br",
+        "Carla Silvacarla@sophia.tech.com.br"
+      ],
+      "icon2": "M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708z",
+      "valores2": [
+        "Vanessa Pereiravanessa@sophia.tech.com.br",
+        "Vanessa Pereiravanessa@sophia.tech.com.br",
+        "Vanessa Pereiravanessa@sophia.tech.com.br",
+        "Vanessa Pereiravanessa@sophia.tech.com.br",
+        "Vanessa Pereiravanessa@sophia.tech.com.br",
+        "Vanessa Pereiravanessa@sophia.tech.com.br"
+      ],
+      "icon3": "M3.646 9.146a.5.5 0 0 1 .708 0L8 12.793l3.646-3.647a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 0-.708m0-2.292a.5.5 0 0 0 .708 0L8 3.207l3.646 3.647a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 0 0 0 .708",
+      "valores3": [
+        "Vanessa Pereiravanessa@sophia.tech.com.br",
+        "Vanessa Pereiravanessa@sophia.tech.com.br",
+        "Vanessa Pereiravanessa@sophia.tech.com.br",
+        "Vanessa Pereiravanessa@sophia.tech.com.br",
+        "Vanessa Pereiravanessa@sophia.tech.com.br",
+        "Vanessa Pereiravanessa@sophia.tech.com.br"
+      ],
+      "iconVoltouAoNeutro": true,
+      "ordemRestaurada": false,
+      "direcaoMudouEntre1e2": true,
+      "limpouCorretamente": false
+    },
+    "aluno_meu_historico": {
+      "headerText": "Conteúdo",
+      "colIndex": 2,
+      "iconInicial": "M3.646 9.146a.5.5 0 0 1 .708 0L8 12.793l3.646-3.647a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 0-.708m0-2.292a.5.5 0 0 0 .708 0L8 3.207l3.646 3.647a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 0 0 0 .708",
+      "valoresInicial": [
+        "ApiVinc-1782403745203-rec",
+        "QA11-V3-Alura-Python",
+        "QA11-F2-USP-Estatistica",
+        "QA11-F2-Udemy-Node",
+        "QA11-F2-Udemy-PowerBI",
+        "QA11-F2-Udemy-Excel"
+      ],
+      "icon1": "M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708",
+      "valores1": [
+        "Academia de liderança",
+        "Academia de vendas",
+        "ApiVinc-1782403745203-rec",
+        "Áreas funcionais",
+        "Certificações",
+        "Comunicação e oratória"
+      ],
+      "icon2": "M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708z",
+      "valores2": [
+        "Storytelling",
+        "Segurança do trabalho",
+        "SalesKit (material do vendedor)",
+        "Rotina de SEO",
+        "Rotina de gestão de Google ADS",
+        "QA11-V3-Alura-Python"
+      ],
+      "icon3": "M3.646 9.146a.5.5 0 0 1 .708 0L8 12.793l3.646-3.647a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 0-.708m0-2.292a.5.5 0 0 0 .708 0L8 3.207l3.646 3.647a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 0 0 0 .708",
+      "valores3": [
+        "Storytelling",
+        "Segurança do trabalho",
+        "SalesKit (material do vendedor)",
+        "Rotina de SEO",
+        "Rotina de gestão de Google ADS",
+        "QA11-V3-Alura-Python"
+      ],
+      "iconVoltouAoNeutro": true,
+      "ordemRestaurada": false,
+      "direcaoMudouEntre1e2": true,
+      "limpouCorretamente": false
+    },
+    "admin_provedores_nome": {
+      "headerText": "Nome",
+      "colIndex": 1,
+      "iconInicial": "M3.646 9.146a.5.5 0 0 1 .708 0L8 12.793l3.646-3.647a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 0-.708m0-2.292a.5.5 0 0 0 .708 0L8 3.207l3.646 3.647a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 0 0 0 .708",
+      "valoresInicial": [
+        "provedor 2",
+        "registrosf2adicional",
+        "null",
+        "null",
+        "null",
+        "null"
+      ],
+      "icon1": "M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708",
+      "valores1": [
+        "null",
+        "null",
+        "null",
+        "null",
+        "null",
+        "null"
+      ],
+      "icon2": "M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708z",
+      "valores2": [
+        "USP",
+        "Udemy",
+        "registrosf2adicional",
+        "QA114-Web-vazio",
+        "QA114-Web-vazio",
+        "QA114-Web-url_valida"
+      ],
+      "icon3": "M3.646 9.146a.5.5 0 0 1 .708 0L8 12.793l3.646-3.647a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 0-.708m0-2.292a.5.5 0 0 0 .708 0L8 3.207l3.646 3.647a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 0 0 0 .708",
+      "valores3": [
+        "USP",
+        "Udemy",
+        "registrosf2adicional",
+        "QA114-Web-vazio",
+        "QA114-Web-vazio",
+        "QA114-Web-url_valida"
+      ],
+      "iconVoltouAoNeutro": true,
+      "ordemRestaurada": false,
+      "direcaoMudouEntre1e2": true,
+      "limpouCorretamente": false
+    },
+    "admin_usuarios_nome": {
+      "headerText": "Usuário",
+      "colIndex": 1,
+      "iconInicial": "M3.646 9.146a.5.5 0 0 1 .708 0L8 12.793l3.646-3.647a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 0-.708m0-2.292a.5.5 0 0 0 .708 0L8 3.207l3.646 3.647a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 0 0 0 .708",
+      "valoresInicial": [
+        "Lider Runnerliderunner@teste.com",
+        "QA116 Lideradoqa116.liderado@twygotest.com",
+        "QA116 Liderqa116.lider@twygotest.com",
+        "QA Aluno r630qa.reval.aluno.r630@twygotest.com",
+        "QA Gestor r630qa.reval.gestor.r630@twygotest.com",
+        "qualid adequalidadeinativo@teste.com"
+      ],
+      "icon1": "M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708",
+      "valores1": [
+        "Carla Silvacarla@sophia.tech.com.br",
+        "Danilo Marquesdanilo@sophia.tech.com.br",
+        "dev testedevtestes@teste.com",
+        "Gabriel Souzagabriel@sophia.tech.com.br",
+        "Julia Oliveirajulia@sophia.tech.com.br",
+        "lider .qalider@teste.com"
+      ],
+      "icon2": "M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708z",
+      "valores2": [
+        "Vanessa Pereiravanessa@sophia.tech.com.br",
+        "Usuario Trialusuario.trial@sophia.tech.com.br",
+        "Richard Seboldrichard.sebold@twygo.com",
+        "qualid adequalidadeinativo@teste.com",
+        "QALider Puro116qaliderpuro@teste.com",
+        "QAInativo TC4-75295qainativo_75295@twygotest.com"
+      ],
+      "icon3": "M3.646 9.146a.5.5 0 0 1 .708 0L8 12.793l3.646-3.647a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 0-.708m0-2.292a.5.5 0 0 0 .708 0L8 3.207l3.646 3.647a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 0 0 0 .708",
+      "valores3": [
+        "Vanessa Pereiravanessa@sophia.tech.com.br",
+        "Usuario Trialusuario.trial@sophia.tech.com.br",
+        "Richard Seboldrichard.sebold@twygo.com",
+        "qualid adequalidadeinativo@teste.com",
+        "QALider Puro116qaliderpuro@teste.com",
+        "QAInativo TC4-75295qainativo_75295@twygotest.com"
+      ],
+      "iconVoltouAoNeutro": true,
+      "ordemRestaurada": false,
+      "direcaoMudouEntre1e2": true,
+      "limpouCorretamente": false
+    }
+  },
+  "veredito": {
+    "admin": false,
+    "aluno": false,
+    "outrasListagens": {
+      "provedores": false,
+      "usuarios": false
+    }
+  }
+}
