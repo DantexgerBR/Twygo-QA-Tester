@@ -1,7 +1,7 @@
 ---
 name: testar-toast-chakra-twygo
-description: Toasts Chakra (`.chakra-toast`) acumulam no toast-manager quando ações sucessivas disparam vários — assert `expect(toast).toBeVisible()` filtrado só por texto viola strict-mode com `resolved to N elements`. Documenta o padrão canônico `getToast()` com `.first()` + helper `waitForToastsToClear()` para sincronizar antes de interagir com elementos sob o toast manager (Salvar Layout etc). Use ao gerar specs Twygo que validam toast de sucesso/erro após save em form, ou que clicam botões próximos ao canto `bottom-right`/`top-right` da tela.
-version: 1.0.0
+description: Toasts Chakra (`.chakra-toast`) acumulam no toast-manager quando ações sucessivas disparam vários — assert `expect(toast).toBeVisible()` filtrado só por texto viola strict-mode com `resolved to N elements`. Documenta o padrão canônico `getToast()` com `.first()` + helper `waitForToastsToClear()` para sincronizar antes de interagir com elementos sob o toast manager (Salvar Layout etc). Use ao gerar specs Twygo que validam toast de sucesso/erro após save em form, ou que clicam botões próximos ao canto `bottom-right`/`top-right` da tela. Para VALIDAÇÃO AO VIVO via twy_playwright MCP (não spec), ver `interagir-chakra-live-mcp-evaluate` — screenshot não pega o toast transitório; capture texto+estilo dentro de um `browser_evaluate`.
+version: 1.1.0
 ---
 
 # testar-toast-chakra-twygo
