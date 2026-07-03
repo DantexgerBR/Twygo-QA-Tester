@@ -1,0 +1,53 @@
+{
+  "card": "P2 - Ação em massa em Registros: ajustar toast + notificação",
+  "pr": "https://github.com/Twygo/twyg-app/pull/10978",
+  "prState": "MERGED (base feature/registros-externos)",
+  "env": "https://registrosf2.stage.twygoead.com",
+  "org": "37079",
+  "data": "2026-07-03",
+  "veredito": "PASSOU",
+  "toasts": {
+    "aprovar": {
+      "texto": "Aprovação dos registros em andamento\nAção em massa em andamento\n2 registros serão aprovados (2 ignorados por não atender aos critérios).",
+      "selecao": "2 validos (Externo+Aguardando) + 2 ignorados (1 Interno, 1 Externo-Aprovado)",
+      "bate_card": true
+    },
+    "recusar": {
+      "texto": "Recusas dos registros em andamento\nAção em massa em andamento\n3 registros serão recusados (5 ignorados por não atender aos critérios).",
+      "selecao": "3 validos (Externo+Aguardando) + 5 ignorados",
+      "bate_card": true
+    },
+    "excluir": {
+      "texto": "Exclusão dos registros em andamento\nAção em massa em andamento\n2 registros serão excluídos (2 ignorados por não atender aos critérios).",
+      "selecao": "2 validos (Externo+Aprovado, registros QA116 descartaveis) + 2 ignorados (Interno)",
+      "bate_card": true
+    }
+  },
+  "toastEstilo": {
+    "dataStatus": "info",
+    "backgroundColor": "rgb(190, 227, 248)",
+    "fontFamily": "Lato, sans-serif",
+    "linhas": 3,
+    "obs": "toast azul 'info' 3 linhas com preserveLineBreaks — mesmo padrao do 'Inscrever em curso', so o texto muda, conforme card"
+  },
+  "notificacoes": {
+    "aprovar": "Ação em massa concluída / Aprovação dos registros realizadas",
+    "recusar": "Ação em massa concluída / Recusas dos registros realizadas",
+    "excluir": "Ação em massa concluída / Exclusão dos registros realizadas",
+    "cliqueRedireciona": "/o/37079/records (listagem de registros) — confirmado ao vivo (Aprovar), abriu em nova aba"
+  },
+  "mutacaoConfirmada": {
+    "aprovar": "2 registros Aguardando -> Aprovado (contador aguardando 66->64)",
+    "recusar": "3 registros Aguardando -> Recusado (recusados 24->27, aguardando 64->61)",
+    "excluir": "2 registros QA116 removidos da listagem (aguardando 61 mantido; ignorados intactos)"
+  },
+  "confirmacaoDialogs": {
+    "aprovar": "Aprovar 4 registro(s) selecionado(s)? Somente registros externos pendentes serão aprovados. Os demais serão ignorados.",
+    "excluir": "Excluir 4 registro(s) selecionado(s)? Somente registros externos não pendentes serão excluídos. Os demais serão ignorados."
+  },
+  "achados": {
+    "async_vs_sync": "PR body diz 'processamento síncrono' mas o codigo mergeado é ASSÍNCRONO (RecordsMassActionWorker.perform_async); contagem do toast vem de dry_run:true separado. Nao é bug — coerente com 'em andamento' + notificacao de conclusao. Na pratica contagens do toast e do worker bateram.",
+    "lista_nao_refresh": "records foi removido de MODELS_WITH_LIST_REFRESH (useMassActions.ts) — a listagem nao auto-atualiza mais apos a acao; usuario depende da notificacao. Coerente com o processamento async.",
+    "recusar_justificativa": "Recusar exige campo Justificativa obrigatorio no drawer (nao citado no card, comportamento correto)."
+  }
+}
