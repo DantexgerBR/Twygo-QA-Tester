@@ -36,4 +36,4 @@ mantém exatamente o sintoma reportado ("a interface não renderiza o card de co
 - 20092-09-botao-concluir-clicado.png (modal do botão "Concluir geração com IA")
 - 20092-10-botao-pos-30s-sem-card.png (sem card / atividade segue 4 pendentes)
 - findings.md (breakdown completo dos generation_tasks + erros do backend)
-Evidência no link: <preencher após push>
+Evidência no link: https://github.com/DantexgerBR/Twygo-QA-Tester/commit/a46ef7acfe12912de458fb269cce4ac74837c98c
