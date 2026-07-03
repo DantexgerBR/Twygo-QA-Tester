@@ -114,5 +114,5 @@ repassado pelo Dante.
 - 12/13/14-tentativa-registrosf2 mesmas rotas, host de controle (histórico; 404)
 - 15-sidekiq-dashboard.png
 - resultado.json (payload bruto da API de export)
-Evidência no link: <preencher com a URL do commit final após push>
+Evidência no link: https://github.com/DantexgerBR/Twygo-QA-Tester/commit/26804a6b92a239d3ba84677d66073818043b893c
 ```
