@@ -90,5 +90,5 @@ estiver disponível.
 - 02-registrosf2-login-marcadagua-falhou.png
 - 03-sanity-recertificacao-no-home-36675-falhou.png
 - 04-sanity-marcadagua-no-home-36675-sucesso.png
-Evidência no link: <preencher com a URL do commit após push>
+Evidência no link: https://github.com/DantexgerBR/Twygo-QA-Tester/commit/cc3fe73d2d83509915a44b7cd192ae99b05bab93
 ```
