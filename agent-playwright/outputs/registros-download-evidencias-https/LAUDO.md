@@ -101,5 +101,5 @@ mailer preview neste ambiente.
 - 12/13/14-tentativa-registrosf2...(mesmas rotas, host de controle) — todas 404
 - 15-sidekiq-dashboard.png
 - resultado.json (payload bruto da API de export + status de cada tentativa)
-Evidência no link: <preencher com a URL do commit após push>
+Evidência no link: https://github.com/DantexgerBR/Twygo-QA-Tester/commit/090abb360499029ec1d4d6bc11ccec4ba4dcc4a0
 ```
