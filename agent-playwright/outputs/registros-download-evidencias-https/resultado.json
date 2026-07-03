@@ -1,0 +1,44 @@
+{
+  "timestamp": "2026-07-03T20:16:24.420Z",
+  "orgAlvo": {
+    "host": "stage10.stage.twygoead.com",
+    "orgId": "36602",
+    "nomeConfirmadoNaSidebar": "Stage 10"
+  },
+  "exportApi": {
+    "status": 201,
+    "body": "{\"data\":{\"export_id\":104,\"status\":\"processing\",\"total_parts\":1},\"message\":\"Exportação de anexos iniciada com sucesso\",\"status\":201,\"errors\":[]}"
+  },
+  "notificacaoInApp": "(notificação de exportação não encontrada ainda)",
+  "tentativasLetterOpenerMailerPreview": [
+    {
+      "url": "https://stage10.stage.twygoead.com/letter_opener",
+      "status": 404
+    },
+    {
+      "url": "https://stage10.stage.twygoead.com/rails/mailers",
+      "status": 404
+    },
+    {
+      "url": "https://stage10.stage.twygoead.com/rails/mailers/export_attachments_notification_mailer",
+      "status": 404
+    },
+    {
+      "url": "https://registrosf2.stage.twygoead.com/letter_opener",
+      "status": 404
+    },
+    {
+      "url": "https://registrosf2.stage.twygoead.com/rails/mailers",
+      "status": 404
+    },
+    {
+      "url": "https://registrosf2.stage.twygoead.com/rails/mailers/export_attachments_notification_mailer",
+      "status": 404
+    }
+  ],
+  "sidekiq": {
+    "url": "https://stage10.stage.twygoead.com/sidekiq",
+    "status": 200
+  },
+  "conclusao": "Nenhuma via disponível neste stage rendeu o HTML do e-mail (letter_opener e /rails/mailers 404 tanto no host alvo quanto num host de controle; API de export não expõe a URL final; sino de notificação só informa \"acesse o e-mail\"). Sem acesso à caixa evertongambeta@gmail.com, não foi possível ler o scheme (http/https) do link efetivamente gerado pelo mailer. Veredito: BLOQUEADO."
+}
