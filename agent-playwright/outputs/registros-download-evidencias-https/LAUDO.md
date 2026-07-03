@@ -50,45 +50,58 @@ O critério do PR é o **scheme do link gerado no e-mail**, não se a URL de dow
 quando colada manualmente — isso funcionava também no build quebrado (é literalmente o
 paliativo citado no card). Cravar ✅ nessa base seria falso positivo.
 
+## Desbloqueio (2026-07-03) — link do e-mail obtido
+
+O export disparado nesta validação gerou um e-mail fresco na caixa `evertongambeta@gmail.com`,
+repassado pelo Dante. O link cru veio:
+
+```
+https://stage10.stage.twygoead.com/attachments-exports/<token>/download/0
+```
+
+**`https://`** — contra o `http://` do screenshot original do bug. Mesmo host, mesmo endpoint,
+mesmo template; só o scheme mudou. Token decodificado confirma que é de fato um link de
+download de exportação de anexos (`pur: subscription_attachments_export/attachments_export_download`,
+id 102) e que expira em 10/07/2026 17:12 BRT → gerado hoje, pelo código atual do stage (não é
+resquício antigo). Detalhe em `16-email-link-https-recebido.md`.
+
 ## Veredito
 
-**❌ Falhou (bloqueado)** — não foi possível confirmar se o link gerado pelo mailer nesta org
-("Stage 10", sem domínio SSL, a mesma do bug) vem como `https://` ou ainda `http://`. Todas as
-vias de leitura do e-mail renderizado sem acessar a caixa de correio real (letter_opener,
-`/rails/mailers`, notificação in-app, resposta da API de export) foram tentadas e não expõem o
-conteúdo do mailer. Fica pendente: (a) acesso à caixa `evertongambeta@gmail.com`, ou (b)
-confirmação via `rails runner` pelo dev (mesmo método usado para validar o PR), ou (c) liberar
-letter_opener/mailer preview neste stage.
+**✅ Passou** — o link de download da exportação de evidências no e-mail, gerado pelo código
+atual do stage para a org "Stage 10" (a mesma org sem domínio SSL do bug original), agora vem
+como `https://`, exatamente o que o PR #10983 força (`protocol: 'https'` em `build_download_urls`).
+No bug o mesmo link vinha `http://` (screenshot original), o que fazia o navegador tratar o
+download como inseguro e o clique não disparar. Critério discriminante confirmado pela fonte de
+verdade (o link realmente entregue no e-mail), não pelo paliativo.
 
 ## Comentário KQA (pronto pra colar no Artia)
 
 ```
 ⇝ QA ⇜
 :: Teste ::
-❌ Falhou
+✅ Passou
 :: Ambiente ::
 🧪 Stage (stage10.stage.twygoead.com, org "Stage 10" / id 36602 — mesmo tenant do 19653
 acessado via testedemigracao.stage.twygoead.com)
 :: Validação ::
-Disparei uma exportação real de Evidências nos Registros da org "Stage 10" (a mesma do print
-original do bug) — API confirmou 201/"Exportação de anexos iniciada com sucesso" e o pipeline
-assíncrono concluiu (notificação in-app "Acesse o e-mail para baixar os arquivos"). O critério
-do PR #10983 é o scheme do link GERADO NO E-MAIL (http→https via `protocol: 'https'` forçado
-no mailer) — não se a URL de download funciona quando colada manualmente, isso é o paliativo e
-funcionava também no build quebrado. Tentei ler o HTML renderizado do mailer por 3 vias sem
-depender da caixa de e-mail: letter_opener (404), preview /rails/mailers (404) e resposta da
-API de export (não inclui a URL final, só metadados do job). Testei também num host de
-controle (registrosf2.stage.twygoead.com) para descartar peculiaridade da org — mesmas rotas
-também 404 lá, confirmando que letter_opener/preview não estão disponíveis em nenhum destes
-stages.
+Disparei uma exportação real e nova de Evidências nos Registros da org "Stage 10" (a mesma do
+print original do bug, org sem domínio SSL) — API 201 "Exportação de anexos iniciada com
+sucesso", pipeline assíncrono concluiu. O e-mail "Exportação de anexos concluída" gerado por
+esse export trouxe o link de download como https://stage10.stage.twygoead.com/attachments-exports/
+<token>/download/0 — contra o http:// do bug original (mesmo host, mesmo endpoint, mesmo
+template; só o scheme mudou), exatamente o que o PR #10983 força (protocol: 'https' em
+build_download_urls). Token decodificado confirma que é o link de download de exportação de
+anexos (pur subscription_attachments_export/attachments_export_download, id 102) e expira em
+10/07/2026 17:12 → gerado hoje pelo código atual do stage.
 :: Obs ::
-Não crei um falso ✅ a partir do paliativo (colar o link em outra aba), porque isso não
-discrimina entre o build corrigido e o quebrado. Sem acesso à caixa evertongambeta@gmail.com
-(fora do escopo de automação local), não há via observável neste stage para ler o scheme real
-do link. Peço uma das opções: (a) acesso/print do e-mail recebido, (b) confirmação via `rails
-runner` pelo dev (mesmo método citado na validação do PR), ou (c) habilitar letter_opener/
-mailer preview neste ambiente.
+Critério validado pela FONTE DE VERDADE (o link realmente entregue no e-mail, repassado da
+caixa evertongambeta@gmail.com), não pelo paliativo de colar a URL em outra aba — esse último
+funcionava tanto no build quebrado quanto no corrigido e não discriminaria o fix. Uma 1ª
+tentativa ficou bloqueada porque letter_opener/mailer preview não estão montados neste stage
+(evidências 09-15, preservadas) e não há acesso direto ao Gmail; destravado com o e-mail
+repassado pelo Dante.
 :: Evidência(s) ::
+- 16-email-link-https-recebido.md (link https do e-mail + decode do token + comparação com o bug)
 - 01-login-preenchido.png
 - 02-pos-login.png
 - 03-org-context-stage10.png
@@ -97,9 +110,9 @@ mailer preview neste ambiente.
 - 06-drawer-evidencias-selecionado.png
 - 07-export-disparado.png
 - 08-notificacao-exportacao-concluida.png
-- 09/10/11-tentativa-stage10...(letter_opener / rails mailers) — todas 404
-- 12/13/14-tentativa-registrosf2...(mesmas rotas, host de controle) — todas 404
+- 09/10/11-tentativa-stage10 letter_opener / rails mailers (histórico do bloqueio; 404)
+- 12/13/14-tentativa-registrosf2 mesmas rotas, host de controle (histórico; 404)
 - 15-sidekiq-dashboard.png
-- resultado.json (payload bruto da API de export + status de cada tentativa)
-Evidência no link: https://github.com/DantexgerBR/Twygo-QA-Tester/commit/090abb360499029ec1d4d6bc11ccec4ba4dcc4a0
+- resultado.json (payload bruto da API de export)
+Evidência no link: <preencher com a URL do commit final após push>
 ```
