@@ -152,5 +152,5 @@ correto). Uma 1ª tentativa com credenciais do .env não autenticou na org 37079
 - 12-excluir-confirmacao.png
 - 13-notificacoes-3-acoes.png
 - resultado-toast-notificacao.json (textos exatos de toast/notificação lidos ao vivo do DOM + estilo + mutação por ação)
-Evidência no link: <preencher com a URL do commit após push>
+Evidência no link: https://github.com/DantexgerBR/Twygo-QA-Tester/commit/aa67e043fcc52b407b320029ef698387fbdf5c80
 ```
