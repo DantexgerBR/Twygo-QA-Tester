@@ -210,4 +210,5 @@ estado de 8 colunas, não resolve o crux acima.
 - diag-06-admin-access.png (HTTP 404 em /admin — sem Super Admin)
 - diag-07-dropdown-admin.png / diag-08-config-organizacao.png (nenhuma opção de reverter encontrada)
 - resultado-interromper-beta.json / resultado-pos-beta.json (dados consolidados)
+Evidência no link: https://github.com/DantexgerBR/Twygo-QA-Tester/commit/240275e362344f7c74441c479505a23013a92e65
 ```
