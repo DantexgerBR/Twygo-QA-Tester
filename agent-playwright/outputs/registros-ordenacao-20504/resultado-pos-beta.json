@@ -1,0 +1,86 @@
+{
+  "card": 20504,
+  "fase": "revalidacao-autorizada-interromper-beta-teste",
+  "pr": "https://github.com/Twygo/twyg-app/pull/10991",
+  "env": "https://registrosf2.stage.twygoead.com",
+  "org": "37079",
+  "usuario_teste": "devtestes@teste.com (perfil Administrador da org; sem acesso Super Admin)",
+
+  "headers_thead_th_antes_de_interromper": [
+    "", "Pessoa", "Conteúdo", "Origem", "Criado por", "Provedor", "Situação", "Certificado", "Carga horária", ""
+  ],
+
+  "acao_interromper_beta": {
+    "botao": "#beta-testing-end-beta-test-button (\"Interromper BETA teste\")",
+    "tipo_de_confirmacao": "NAO foi um simples modal confirmar/cancelar. Foi uma pesquisa de satisfacao NPS com 5 perguntas OBRIGATORIAS (marcadas com *) que precisou ser preenchida para o botao \"Enviar\" ficar funcional e a acao ser concluida.",
+    "titulo_modal": "Antes de cancelar o BETA teste, conta pra gente como foi sua experiência",
+    "texto_indica_nome_interno_da_acao": "cancelar o BETA teste",
+    "modal_avisava_sobre_reversibilidade": false,
+    "campos_preenchidos_para_teste": {
+      "1_satisfacao": "Intuitivo",
+      "2_sugestao": "Acao de QA para revalidacao do card 20504 (ordenacao de colunas) - nao e feedback real de usuario.",
+      "3_escala_0_a_10": "8",
+      "4_dificuldade_tecnica": "Nenhuma dificuldade tecnica; acao executada para fins de teste de QA (card 20504).",
+      "5_impeditivo_compra": "Outro: N/A - acao de QA, nao e avaliacao real de compra."
+    },
+    "resultado_apos_enviar": "Pesquisa enviada com sucesso! Obrigado pelo seu feedback. (toast de confirmacao)",
+    "banner_amarelo_modo_beta_removido": true,
+    "badge_BETA_ao_lado_de_Registros_no_menu_removido": true,
+    "badges_BETA_em_Skills_e_Planos_e_Metas_continuam_presentes": true
+  },
+
+  "hipotese_testada": "Interromper o BETA revelaria a listagem ANTIGA de Registros com todas as colunas do card (Valor do conteúdo, Progresso, Desempenho, 5 colunas de data).",
+  "resultado_da_hipotese": "REFUTADA. Interromper o BETA nao revelou nenhuma coluna nova; em vez disso, o acesso a funcionalidade Registros deixou de funcionar para a sessao/usuario testado.",
+
+  "escopo_da_observacao_de_bloqueio": "IMPORTANTE: testado com 1 UNICO usuario (devtestes@teste.com, perfil Administrador da org). Nao foi confirmado com um 2o usuario/credencial se o bloqueio e por ORGANIZACAO (todos os admins da org 37079 perdem acesso) ou algo mais restrito a sessao/usuario. Enrollment de BETA no Twygo costuma ser feito por organizacao inteira (nao por usuario individual), entao e PROVAVEL que seja org-wide - mas isso e inferencia, nao fato confirmado empiricamente com credencial adicional.",
+
+  "leitura_da_perda_de_acesso_ao_optar_por_saida_do_beta": "INCERTO (achado secundario, nao e alegacao de bug) - pode ser esperado (padrao comum de programa BETA: org perde o modulo ate reingressar/recontratar) OU nao (o video original do bug de 03/07/2026 mostra as colunas do card existindo em algum momento para o MESMO dataset/org, o que nao permite descartar que devesse existir um caminho de 'downgrade' sem perder o modulo por completo). Pedir confirmacao do dev - nao afirmar bug.",
+  "crux_para_o_dev_mais_importante_que_reversibilidade": "Mesmo com o BETA LIGADO (Rodada 1, ANTES desta acao stateful), a listagem ja so tinha 8 colunas - NENHUMA delas do card. Ou seja, em NENHUM dos 2 estados alcancados neste stage (BETA ligado ou opt-out) as colunas do card existiram. Isso significa que restaurar o acesso ao BETA e tentar de novo NAO destrava a validacao por si so - so devolve o estado de 8 colunas ja testado. A pergunta que efetivamente destrava a revalidacao do card 20504 e: o PR 10991 esta implantado neste stage? Em qual tela/rota as colunas Valor do conteudo/Progresso/Desempenho/datas deveriam aparecer?",
+
+  "detalhe_temporal_relevante": "Logo APOS enviar a pesquisa e fechar o modal, dentro da MESMA sessao/aba, a listagem de Registros AINDA funcionou normalmente (screenshot 13-listagem-pos-interromper.png: banner e badge BETA ja removidos, tabela com as mesmas 8 colunas carregando normalmente, headers extraidos com sucesso). O bloqueio 'Você não tem permissão' só foi observado em verificacoes SEGUINTES, em sessoes de login novas (diag-01, diag-05 x2). Isso sugere que o enrollment/permissao pode levar um instante para propagar no backend (nao foi instantaneo), e reforca a leitura de 'downgrade de acesso pos-opt-out' em vez de um erro imediato/crash.",
+
+  "evidencia_do_bloqueio": {
+    "item_Registros_desaparece_do_menu_lateral": "Confirmado via dump de todos os links do sidebar (#menu a) em sessao nova (login do zero, mesmo usuario devtestes@teste.com): o item 'Registros' que antes existia sob 'Aprendizagem' (junto com Conteúdos, Compartilhamentos, Certificados, Base de conhecimento) NAO aparece mais em lugar nenhum do menu.",
+    "acesso_direto_via_URL": {
+      "GET /o/37079/records": "HTTP 200, mas renderiza pagina de erro 'Você não tem permissão para acessar esta página.' (com link Voltar)",
+      "GET /o/37079/records?tab=records-tab": "Mesmo resultado - 'Você não tem permissão para acessar esta página.'"
+    },
+    "reproduzido_em_3_verificacoes_independentes_mesmo_usuario": "diag-01.png, diag-05-records-sem-query.png (2x, incluindo com/sem query string) - todas em sessoes de login novas do MESMO usuario devtestes@teste.com, nao e cache de aba. NAO testado com 2o usuario (ver escopo_da_observacao_de_bloqueio).",
+    "dado_perdido_de_vista_mas_potencialmente_intacto_no_backend": "Antes de interromper, a tela mostrava 82 certificados emitidos, 61 registros aguardando confirmacao, 27 recusados, 230 inscricoes, 14.600 horas de carga horaria total - esses dados nao foram confirmados como deletados, apenas a TELA que os exibia ficou inacessivel. Nao ha evidencia de perda de dado, apenas de perda de ACESSO/rota."
+  },
+
+  "tentativas_de_reverter": [
+    {
+      "tentativa": "Procurar opcao de reativar/retornar ao BETA no proprio menu Registros (badge clicavel)",
+      "resultado": "Impossivel - o item Registros nao existe mais no menu para ser clicado."
+    },
+    {
+      "tentativa": "Dropdown do perfil (canto superior direito, 'Administrador') - procurar 'Novidades'/'Beta'/opcao de opt-in",
+      "resultado": "Nao encontrado. Opcoes disponiveis: Administrador/Gestor de turma/Instrutor/Colaborador (troca de perfil), Editar perfil, Falar com administrador, Cancelar inscricao, Cancelar assinatura, Twygo Academy, Twygo Connect, Falar com suporte, Sair."
+    },
+    {
+      "tentativa": "Configuracoes > Organizacao (e demais itens do menu Configuracoes: Navegacao, Integracoes, Piloto automatico, Regras do Jogo, Comunicacao, Cobranca de inscricao, Plano e assinatura, Seguranca, Controle de IA, Aparencia)",
+      "resultado": "Nenhuma opcao de re-habilitar Registros/BETA encontrada. A aba 'Registros de alterações' dentro de Organizacao e apenas o audit log de mudancas de configuracao - sem relacao com a funcionalidade Registros de avaliacao."
+    },
+    {
+      "tentativa": "Acesso Super Admin (/admin) com a conta devtestes@teste.com",
+      "resultado": "HTTP 404 - 'Desculpe, a página que você está tentando acessar não existe.' A conta de teste NAO tem acesso Super Admin. Sem esse acesso nao e possivel checar/reverter via Flipper flag ou contrato (rotas documentadas nas skills testar-feature-flag-twygo / alterar-funcionalidade-contrato-twygo do agent-playwright)."
+    }
+  ],
+
+  "conclusao_reversibilidade": "NAO e autorreparavel pelo admin da org com o acesso testado (usuario Administrador da org, SEM Super Admin) - nao existe botao/rota de re-opt-in visivel para esse perfil. NAO E IRREVERSIVEL, porem: a rota de restauracao provavel e via Super Admin (Flipper actor 'Organization;37079' ou configuracao de contrato - ver skills testar-feature-flag-twygo / alterar-funcionalidade-contrato-twygo do agent-playwright), que esta FORA do escopo de acesso desta validacao. IMPORTANTE: restaurar o BETA NAO destrava a validacao do card por si so (ver crux_para_o_dev_mais_importante_que_reversibilidade) - com BETA ligado a listagem ja so tinha 8 colunas. RECOMENDA-SE, em ordem: (a) confirmar com o dev/produto ONDE as colunas do card deveriam aparecer neste stage / se o PR 10991 esta implantado aqui - essa e a pergunta que destrava a revalidacao; (b) separadamente, confirmar se a perda de acesso ao sair do BETA e esperada; (c) so entao, se fizer sentido, restaurar o acesso via Super Admin para nova tentativa.",
+
+  "colunas_do_card_nunca_foram_exercitadas": {
+    "Valor do conteúdo": "NUNCA apareceu na listagem, em nenhum momento da validacao (nem antes, nem depois de interromper o BETA)",
+    "Progresso": "idem",
+    "Desempenho": "idem",
+    "Data de início": "idem",
+    "Data de término": "idem",
+    "Data de aprovação": "idem",
+    "Data do certificado": "idem",
+    "Data de validade": "idem",
+    "observacao": "Como a listagem ficou totalmente inacessivel apos interromper o BETA, NENHUMA ordenacao dessas colunas pode ser exercitada nesta rodada. O resultado da ordenacao da coluna 'Carga horária' (unica numerica presente) ja havia sido validado em rodada anterior (ver resultado.json) como matematicamente correto em asc e desc, ANTES desta acao stateful - nao repetido aqui pois a tela ficou bloqueada logo apos a acao autorizada."
+  },
+
+  "veredito": "BLOQUEIO (nao e resultado de sort) - Nao foi possivel validar a correcao de ordenacao do card 20504 (PR 10991). Crux: em NENHUM dos 2 estados alcancados neste stage (BETA ligado - Rodada 1 - ou apos opt-out) as colunas do card existiram; a hipotese de que interromper o BETA revelaria a listagem antiga foi refutada. Alem disso, apos a acao autorizada o acesso a funcionalidade Registros parou de funcionar para o usuario testado (devtestes@teste.com), sem opcao de reverter disponivel para o perfil Administrador da org (restauravel apenas via Super Admin, fora do escopo desta validacao) - mas restaurar isso NAO destravaria a validacao por si so, ja que o problema real e que as colunas nunca apareceram nem com o BETA ligado. Isso NAO comprova nem refuta o bug de ordenacao do card 20504. Se a perda de acesso ao sair do BETA e esperada ou nao, fica incerto e pedimos confirmacao do time de dev - nao estamos alegando bug de produto nesse ponto secundario."
+}

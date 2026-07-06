@@ -1,0 +1,36 @@
+{
+  "card": 20504,
+  "fase": "interromper-beta",
+  "env": "https://registrosf2.stage.twygoead.com",
+  "org": "37079",
+  "headers_antes": [
+    "",
+    "Pessoa",
+    "Conteúdo",
+    "Origem",
+    "Criado por",
+    "Provedor",
+    "Situação",
+    "Certificado",
+    "Carga horária",
+    ""
+  ],
+  "botao_encontrado": true,
+  "modal_apareceu": true,
+  "modal_texto": "Antes de cancelar o BETA teste, conta pra gente como foi sua experiência\n1) Qual seu nível de satisfação com a funcionalidade em relação a experiência de uso?\n*\nMuito intuitivo\nIntuitivo\nNeutro\nPouco intuitivo\nNada intuitivo\n2) O que podemos fazer para tornar essa funcionalidade ainda mais fácil e útil para você?\n*\n\n0 / 1000\n\n3) Em uma escala de 0 a 10, quanto essa funcionalidade agregou valor para sua operação?\n*\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n4) Encontrou alguma dificuldade técnica ou problema durante o uso?\n*\n\n0 / 1000\n\n5) O que impediria você de adquirir esta funcionalidade?\n*\nPreço alto\nFalta recursos pra funcionalidade\nDifícil ou pouco uso\nOrçamento/aprovação interna\nOutro:\n\n0 / 1000\n\n6) Tem mais alguma sugestão ou observação? Deixe um recado para o nosso time de inovação e tecnologia.\n\n0 / 1000\n\nEnviar",
+  "modal_tipo": "pesquisa-satisfacao-nps-obrigatoria",
+  "modal_confirmado_via": "Enviar (pesquisa NPS preenchida)",
+  "headers_depois": [
+    "",
+    "Pessoa",
+    "Conteúdo",
+    "Origem",
+    "Criado por",
+    "Provedor",
+    "Situação",
+    "Certificado",
+    "Carga horária",
+    ""
+  ],
+  "banner_beta_ainda_presente": false
+}

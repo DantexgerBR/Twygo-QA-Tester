@@ -1,0 +1,80 @@
+{
+  "card": 20504,
+  "checagem": "scroll horizontal + column-picker + botao Interromper BETA teste",
+  "env": "https://registrosf2.stage.twygoead.com",
+  "org": "37079",
+  "headers_thead_th": [
+    "",
+    "Pessoa",
+    "Conteúdo",
+    "Origem",
+    "Criado por",
+    "Provedor",
+    "Situação",
+    "Certificado",
+    "Carga horária",
+    ""
+  ],
+  "scroll_chain": [
+    {
+      "tag": "TABLE",
+      "cls": "chakra-table css-3i5wu0",
+      "scrollWidth": 1538,
+      "clientWidth": 1538,
+      "overflowX": "visible"
+    },
+    {
+      "tag": "DIV",
+      "cls": "css-oq9t12",
+      "scrollWidth": 1538,
+      "clientWidth": 1538,
+      "overflowX": "auto"
+    },
+    {
+      "tag": "DIV",
+      "cls": "css-1ijbxy6",
+      "scrollWidth": 1538,
+      "clientWidth": 1538,
+      "overflowX": "visible"
+    },
+    {
+      "tag": "DIV",
+      "cls": "chakra-tabs__tab-panel css-47dblg",
+      "scrollWidth": 1538,
+      "clientWidth": 1538,
+      "overflowX": "visible"
+    },
+    {
+      "tag": "DIV",
+      "cls": "chakra-tabs__tab-panels css-8atqhb",
+      "scrollWidth": 1538,
+      "clientWidth": 1538,
+      "overflowX": "visible"
+    }
+  ],
+  "scroll_horizontal": {
+    "encontrado": false,
+    "container": null
+  },
+  "candidatos_column_picker": [
+    {
+      "texto": "grid_view",
+      "count": 1
+    }
+  ],
+  "list_icon_toggle": {
+    "clicado": false,
+    "motivo": "view_list nao encontrado"
+  },
+  "botao_interromper_beta": {
+    "encontrado": true,
+    "tag": "BUTTON",
+    "box": {
+      "x": 1431.890625,
+      "y": 78,
+      "width": 194.5625,
+      "height": 40
+    },
+    "outerHTML_preview": "<button type=\"button\" class=\"chakra-button css-17isggn\" id=\"beta-testing-end-beta-test-button\">Interromper BETA teste</button>"
+  }
+}
