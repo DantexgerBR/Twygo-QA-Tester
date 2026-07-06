@@ -1,0 +1,42 @@
+{
+  "card": 20504,
+  "pr": "https://github.com/Twygo/twyg-app/pull/10991",
+  "fase": "rodada-3-validacao-via-api-order_by",
+  "env": "https://registrosf2.stage.twygoead.com",
+  "org": "37079",
+  "usuario_testado": "devtestes@teste.com",
+  "acesso_voltou": false,
+  "gate_checado": {
+    "texto_sem_permissao_presente": true,
+    "tabela_renderizou_linhas": false,
+    "linhas_tabela": 0,
+    "xhr_fetch_de_listagem_de_registros_disparada": false,
+    "url_final": "https://registrosf2.stage.twygoead.com/o/37079/records?tab=records-tab",
+    "http_status_documento": "200 (pagina de erro renderizada, nao a listagem)"
+  },
+  "network_capturada": {
+    "total_xhr_fetch": 42,
+    "relacionadas_a_registros_de_verdade": 0,
+    "observacao": "As 4 respostas que casaram com regex /record/i sao falsos-positivos: dominio get-demo-backend-prod.getdemo.com.br, endpoint /public/v1/recording/.../prepare-view (widget de tour/demo 'getdemo', nao tem relacao com a feature Registros do Twygo). Nenhuma XHR/fetch para /o/37079/records ou API interna de listagem foi disparada -- a pagina de erro 'Voce nao tem permissao' e renderizada diretamente no documento HTML (server-side), sem chamada de API de listagem client-side."
+  },
+  "endpoint_de_listagem_descoberto": null,
+  "motivo_endpoint_nao_descoberto": "Bloqueio de acesso impediu a listagem de renderizar e, por consequencia, de disparar a request que a alimenta. Sem essa request de referencia (URL completa + params order_by/order_direction reais), nao ha base segura para tentar 'adivinhar' o endpoint e replay-lo -- faria-lo seria forcar o acesso, o que a task explicitamente proibe.",
+  "replay_de_ordenacao": {
+    "executado": false,
+    "motivo": "Gate de acesso falhou (passo 1 da task). Instrucao explicita: parar aqui e nao tentar forcar."
+  },
+  "campos_planejados_nao_testados": [
+    "content_value",
+    "progress_score",
+    "final_score",
+    "workload_seconds (controle)",
+    "start_date",
+    "end_date",
+    "approved_at",
+    "certificate_date",
+    "expiration_date"
+  ],
+  "veredito": "FALHOU_POR_BLOQUEIO_DE_ACESSO",
+  "nota_sobre_simbolo_veredito": "A task pediu explicitamente para categorizar bloqueio como 'Falhou' (com Obs diferenciando de falha real de ordenacao) -- rubric seguido. A regra geral anti-falso-positivo do projeto sugere Inconclusivo na duvida; a divergencia foi sinalizada a Dante no comentario KQA e no laudo para ele decidir o simbolo final.",
+  "observacao_final": "Isso NAO e reprodução do bug de ordenacao nem indício de que o PR 10991 falhou -- e ausência de acesso à tela/API que impede qualquer teste (mesma causa raiz documentada na Rodada 2: opt-out do BETA quebrou o acesso de devtestes@teste.com a /o/37079/records, HTTP 200 com pagina 'Você não tem permissão', sem alteração nesta rodada). Nenhuma ordenação foi exercitada, nem via UI nem via API replay."
+}

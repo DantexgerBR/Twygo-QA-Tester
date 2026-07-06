@@ -148,7 +148,155 @@ destrava a revalidação; (2) separadamente, confirmar se a perda de acesso
 ao optar por saída do BETA é esperada; (3) só then, se fizer sentido,
 restaurar o acesso via Super Admin para uma nova tentativa.
 
-## Comentário KQA (pronto pra colar no Artia)
+## Rodada 3 (validação via API `order_by`) — 06/07/2026
+
+**Objetivo desta rodada**: já que o PR 10991 ordena no BACKEND (header da
+grid dispara `order_by`+`order_direction` → API → `RecordRepository#apply_ordering`),
+tentamos validar direto na resposta da API, **sem depender das colunas
+estarem renderizadas na grid** — contornando o achado da Rodada 2 (colunas
+do card ausentes em ambos os estados de BETA alcançados).
+
+### (a) Acesso voltou?
+
+**NÃO.** Primeiro check da task, feito com listener de `page.on('response')`
+ativo **antes** do `goto`, capturando toda XHR/fetch da sessão.
+
+- `GET/navegação /o/37079/records?tab=records-tab` → documento renderiza
+  diretamente a página de erro: **"Você não tem permissão para acessar
+  esta página."** (mesmo texto e comportamento da Rodada 2 — HTTP 200 no
+  documento, mas conteúdo de bloqueio).
+- Tabela: **0 linhas renderizadas**.
+- Network: 42 XHR/fetch capturadas na sessão inteira; não identifiquei
+  nenhuma como listagem de Registros (dump completo em
+  `recon-network-order-by.json`). As 4 que casaram com o regex `/record/i`
+  são falso-positivo — domínio `get-demo-backend-prod.getdemo.com.br`,
+  endpoint `/public/v1/recording/.../prepare-view` (widget de tour/demo
+  "GetDemo", sem relação com a feature Registros do Twygo). Essa checagem
+  de network é reforço; a prova principal do bloqueio é a página de erro
+  renderizada + 0 linhas na tabela (screenshot).
+- Conclusão: a página de erro é renderizada **server-side**, direto no
+  HTML do documento — não há nem chamada de API de listagem client-side
+  disparada. Não existe request de referência pra descobrir o endpoint
+  real e fazer o replay com `order_by`/`order_direction`.
+
+Screenshot: `20-gate-acesso-records.png` (tela "Você não tem permissão").
+JSON completo da captura de rede: `recon-network-order-by.json`.
+
+**Ação tomada, conforme instrução explícita da task**: PAREI aqui. Não
+tentei forçar acesso, adivinhar o endpoint, nem replay-lo sem uma request
+real de referência.
+
+### (b) Endpoint de listagem descoberto
+
+**Nenhum.** Não descoberto — ver (a). Sem acesso à listagem, não há XHR
+de referência pra extrair URL/params/headers reais.
+
+### (c) Resultado por campo/direção
+
+**Nenhum campo pôde ser testado.** Nenhuma das 9 chamadas planejadas
+(`content_value`, `progress_score`, `final_score`, `workload_seconds`
+controle, `start_date`, `end_date`, `approved_at`, `certificate_date`,
+`expiration_date`) foi executada — bloqueadas antes do primeiro replay
+pelo gate de acesso (passo 1 da task).
+
+### (d) Veredito
+
+**❌ Falhou — por BLOQUEIO de acesso (categoria explícita do rubric da
+task), NÃO por resultado de ordenação.** Mesma causa raiz da Rodada 2,
+sem alteração; requer restauração via Super Admin.
+
+Nota de transparência sobre a escolha do símbolo: a task pediu
+explicitamente para eu categorizar bloqueio como ❌ com a Obs
+diferenciando de falha real ("❌ Falhou — algum campo ... OU bloqueio
+(acesso/dados). Obs categoriza."). Segui esse rubric. Mas registro a
+tensão: a regra geral deste projeto (anti-falso-positivo) diz "na dúvida
+entre ❌ e ⚠, escolha ⚠" — e cogitei ⚠ por esse motivo. Optei por honrar
+a instrução explícita da task em vez de sobrepor silenciosamente com a
+regra geral; **Dante, se preferir ⚠ aqui, é só avisar que eu ajusto**.
+Em qualquer um dos dois símbolos, o conteúdo da Obs é o mesmo e é o que
+importa: a ordenação do PR 10991 **não foi exercitada em nenhum ponto**
+(nem UI, nem API) — não há evidência nem a favor nem contra o fix. O
+bloqueio de acesso de `devtestes@teste.com` a `/o/37079/records`,
+identificado na Rodada 2 após o opt-out do BETA, **persiste sem
+alteração** nesta rodada (mesmo texto de erro, mesma ausência de request
+de listagem — isso NÃO é uma regressão nova, é o mesmo bloqueio inalterado).
+
+**Anti-falso-positivo aplicado**: não afirmamos "PR falhou" nem "bug
+reproduzido" — a causa observada é ausência de acesso à tela/API, não um
+resultado de ordenação incorreta. Também não tentamos contornar o bloqueio
+adivinhando o endpoint (ex.: chutar `/o/37079/records.json?order_by=...`
+sem uma request real de referência) — isso poderia mascarar um bloqueio
+mais amplo (ex.: toda a rota de records, incluindo API, pode estar
+protegida pelo mesmo `before_action` de permissão) e gerar falso sinal.
+
+### (e) Caminho pra destravar
+
+Igual ao apontado na Rodada 2: a restauração de acesso (via Super Admin —
+Flipper actor `Organization;37079` ou configuração de contrato) é
+pré-requisito. Diferente da Rodada 2, esta rodada não depende mais de as
+colunas aparecerem na grid — só precisa que a rota `/o/37079/records`
+volte a responder normalmente (200 com a tabela), para então capturar a
+request real de listagem e fazer o replay de `order_by`/`order_direction`
+nos 8 campos do PR.
+
+## Comentário KQA — CANÔNICO (consolidado Rodadas 1-3, pronto pra colar no Artia)
+
+> Este é o comentário vigente e completo. O bloco "## Comentário KQA —
+> HISTÓRICO" mais abaixo é de uma versão anterior — não colar, é só contexto.
+
+```
+⇝ QA ⇜
+:: Teste ::
+❌ Falhou (BLOQUEIO de acesso — NÃO é falha de ordenação)
+:: Ambiente ::
+🧪 Stage (registrosf2.stage.twygoead.com, org 37079)
+:: Validação ::
+Revalidação do PR 10991 (ordenação numérica/data na listagem de Registros).
+Não consegui exercitar a ordenação das colunas do card por nenhum caminho:
+(1) na grid atual (modo BETA "Registros de avaliação") as colunas do card —
+Valor do conteúdo, Progresso, Desempenho e as 5 datas — NÃO existem (só 8
+colunas fixas; descartei scroll horizontal e column-picker com evidência).
+Só "Carga horária" está presente e ordena certo, mas isso NÃO valida o PR
+(o campo workload já estava mapeado antes dele).
+(2) Ação autorizada "Interromper BETA teste" (que abre uma pesquisa NPS
+obrigatória, não um confirm) não revelou as colunas e deixou o acesso a
+Registros bloqueado p/ devtestes@teste.com ("Você não tem permissão", item
+some do menu).
+(3) Tentei validar direto na API (order_by/order_direction) — o acesso segue
+bloqueado, sem request de listagem pra fazer o replay.
+:: Obs ::
+Isto NÃO comprova nem refuta o fix — nenhum campo do PR foi exercitado; é
+ausência de acesso, não ordenação errada.
+Análise do PR 10991 (MERGED, base feature/registros-externos): o sort da grid
+é BACKEND (header → order_by → RecordRepository#apply_ordering; react-table
+inerte). O fix mapeia no ORDER_COLUMNS content_value, progress_score,
+final_score (Desempenho), workload_seconds e as 5 datas — antes caíam no
+fallback event_participants.id (a ordem caótica do bug). Dev validou via rails
+runner (content_value ASC → 2,2,7,7,10,10,70,300,999...).
+CRUX pro dev (2 perguntas que destravam a revalidação):
+1) As colunas do card devem voltar à grid do modo BETA, OU a revalidação é
+   via API? (o vídeo de 03/07, pré-BETA, mostra as colunas presentes — provável
+   que o redesenho BETA "Registros de avaliação" as tenha tirado da listagem).
+2) O PR 10991 está implantado neste stage registrosf2?
+BLOQUEADOR operacional: o acesso a Registros de devtestes@teste.com na org
+37079 está quebrado desde o opt-out do BETA e NÃO é autorreparável pelo admin
+da org — precisa restauração via Super Admin (Flipper actor Organization;37079
+ou contrato). Isso trava esta validação (UI e API) e provavelmente os cards
+irmãos de Registros nesse stage.
+Achado secundário (incerto, não afirmo bug): a perda de acesso ao sair do BETA
+pode ser esperada (padrão de programa BETA) ou não — peço confirmação do dev.
+Escopo/anti-falso-positivo: testei com 1 credencial (bloqueio provável org-wide,
+não confirmado com 2º user); sem evidência de perda de DADO, só de ACESSO.
+:: Evidência(s) ::
+- 05-apos-toggle-grid.png / 06-scroll-nao-encontrado.png / 10-view-grid-cards.png (grid BETA: 8 colunas, sem scroll/picker)
+- 12c-modal-confirmacao.png (pesquisa NPS obrigatória ao "Interromper BETA teste")
+- 13-listagem-pos-interromper.png / diag-05-records-sem-query.png (bloqueio de acesso pós opt-out)
+- 20-gate-acesso-records.png (acesso ainda bloqueado na tentativa via API)
+- resultado.json / resultado-pos-beta.json / resultado-api-order-by.json (dados consolidados)
+Evidência no link: https://github.com/DantexgerBR/Twygo-QA-Tester/commit/240275e362344f7c74441c479505a23013a92e65
+```
+
+## Comentário KQA — HISTÓRICO (Rodada 1-2, NÃO colar — mantido só como contexto)
 
 ```
 ⇝ QA ⇜
