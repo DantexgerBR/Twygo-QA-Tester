@@ -172,16 +172,28 @@ reproduzido em 3 sessões novas. Nenhuma ordenação pôde ser exercitada.
 :: Obs ::
 Isso NÃO comprova nem refuta o bug de ordenação nas colunas do card — elas
 nunca puderam ser exercitadas (bloqueio, não resultado de sort). A coluna
-"Carga horária" (única numérica presente em modo BETA) já havia sido
-validada como correta em rodada anterior a esta ação.
-CRUX pro dev (o que realmente destrava a revalidação): mesmo com o BETA
-LIGADO (rodada anterior, antes desta ação), a listagem já só tinha 8
-colunas, nenhuma do card. Ou seja, em nenhum dos 2 estados alcançados
-neste stage (BETA ligado ou opt-out) as colunas existiram. Preciso saber:
-o PR 10991 está implantado neste stage? Em qual tela/rota as colunas
-Valor do conteúdo/Progresso/Desempenho/datas deveriam aparecer? Sem essa
-resposta, só restaurar o acesso ao BETA e tentar de novo NÃO destrava a
-validação (devolve o mesmo estado de 8 colunas já testado).
+"Carga horária" (única numérica presente em modo BETA) ordenou correto —
+MAS isso NÃO valida a correção do PR 10991: o campo "workload" já estava
+mapeado ANTES deste PR. O PR adiciona o mapeamento de content_value,
+progress_score, final_score (Desempenho) e as 5 datas — exatamente as
+colunas que não conseguimos exercitar.
+Análise do PR 10991 (estado: MERGED, base feature/registros-externos): a
+ordenação da grid é BACKEND (header → order_by na API →
+RecordRepository#apply_ordering; o react-table fica inerte). O fix mapeia
+cada campo do card para a coluna SQL real e o dev validou via rails runner
+(ex.: content_value ASC → 2,2,7,7,10,10,70,300,999...). Como o sort é
+backend por order_by, a validação definitiva NÃO depende de a coluna estar
+visível na grid: basta chamar o endpoint de registros com
+order_by=content_value (e os demais campos) + order_direction e conferir a
+ordem da resposta, com registros de valores variados. Esse é o caminho que
+destrava a revalidação de verdade.
+CRUX pro dev: em nenhum dos 2 estados alcançados neste stage (BETA ligado
+ou opt-out) as colunas do card aparecem na grid — logo, pela UI não há
+header pra disparar o sort dessas colunas. Provável que o redesenho BETA
+"Registros de avaliação" tenha removido essas colunas da listagem (o vídeo
+de 03/07, pré/BETA, mostra elas presentes). Preciso confirmar: (1) essas
+colunas devem voltar à grid, ou a revalidação deve ser via API (order_by)?
+(2) o PR está implantado neste stage registrosf2?
 Achado secundário (incerto, não é alegação de bug): a perda de acesso ao
 optar por saída do BETA pode ser esperada (padrão comum de programa BETA)
 ou não (o vídeo original mostra as colunas existindo em algum momento
