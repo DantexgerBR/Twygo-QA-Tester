@@ -362,7 +362,7 @@ para colunas SQL de data reais; o bug (meses/anos fora de ordem) não reproduz.
 - api-replay-ordenacao.json (ordem por campo/direção + comparação num vs lex)
 - api-discovery.json (shape da response, 9 campos do card presentes)
 - 31-acesso-restaurado-grid.png (acesso restaurado, listagem carregando)
-Evidência no link: <preencher após commit>
+Evidência no link: https://github.com/DantexgerBR/Twygo-QA-Tester/commit/776ac20b36ed1f7f53d7a9ffe10397330af9423b
 ```
 
 ## Comentário KQA — CANÔNICO Rodadas 1-3 (BLOQUEIO — histórico, NÃO colar)
