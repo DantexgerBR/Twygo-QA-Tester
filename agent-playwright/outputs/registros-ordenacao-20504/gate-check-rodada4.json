@@ -1,0 +1,18 @@
+{
+  "card": 20504,
+  "rodada": 4,
+  "data": "2026-07-07",
+  "usuario": "devtestes@teste.com",
+  "url_final": "https://registrosf2.stage.twygoead.com/o/37079/records?tab=records-tab",
+  "login_ok": true,
+  "sem_permissao": true,
+  "linhas_tabela": 0,
+  "acesso_restaurado": false,
+  "listing_xhr_candidatas": [
+    {
+      "status": 200,
+      "url": "https://registrosf2.stage.twygoead.com/o/37079/records?tab=records-tab",
+      "type": "document"
+    }
+  ]
+}

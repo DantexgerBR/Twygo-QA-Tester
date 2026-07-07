@@ -239,6 +239,24 @@ volte a responder normalmente (200 com a tabela), para então capturar a
 request real de listagem e fazer o replay de `order_by`/`order_direction`
 nos 8 campos do PR.
 
+## Rodada 4 (re-check do gate de acesso) — 07/07/2026
+
+Re-checagem única e barata do gate, com a credencial do próprio card
+(`devtestes@teste.com`), sem repetir a investigação das rodadas 2/3.
+
+**Login OK, acesso a Registros AINDA BLOQUEADO — sem alteração.**
+`/o/37079/records?tab=records-tab` → "Você não tem permissão para acessar
+esta página" (0 linhas na tabela; único request é o próprio documento HTTP
+200 com a página de erro renderizada server-side). Mesmo estado das rodadas
+2 e 3 — o bloqueio pós-opt-out do BETA persiste, não é autorreparável pelo
+admin da org, requer restauração via Super Admin (Flipper actor
+`Organization;37079` ou contrato). Veredito inalterado: **❌ Falhou por
+BLOQUEIO de acesso** (não por resultado de ordenação — o PR 10991 segue
+sem poder ser exercitado, UI ou API).
+
+Evidência: `30-gate-check-rodada4.png`, `gate-check-rodada4.json`.
+Script: `scripts-adhoc/gate-check-records-20504.mjs`.
+
 ## Comentário KQA — CANÔNICO (consolidado Rodadas 1-3, pronto pra colar no Artia)
 
 > Este é o comentário vigente e completo. O bloco "## Comentário KQA —
