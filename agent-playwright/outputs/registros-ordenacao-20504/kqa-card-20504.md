@@ -257,10 +257,117 @@ sem poder ser exercitado, UI ou API).
 Evidência: `30-gate-check-rodada4.png`, `gate-check-rodada4.json`.
 Script: `scripts-adhoc/gate-check-records-20504.mjs`.
 
-## Comentário KQA — CANÔNICO (consolidado Rodadas 1-3, pronto pra colar no Artia)
+## Rodada 5 (validação DEFINITIVA via API — acesso restaurado) — 07/07/2026
 
-> Este é o comentário vigente e completo. O bloco "## Comentário KQA —
-> HISTÓRICO" mais abaixo é de uma versão anterior — não colar, é só contexto.
+Dante restaurou o acesso de `devtestes@teste.com` a `/o/37079/records`
+(via Super Admin). Gate re-checado: **acesso OK, 25 linhas renderizadas**
+(`31-acesso-restaurado-grid.png`). A grid segue no layout BETA "Registros
+de avaliação" com as mesmas 8 colunas — as colunas do card (Valor do
+conteúdo, Progresso, Desempenho, 5 datas) **continuam ausentes da UI** —
+então validei pela API, que é onde o sort do PR 10991 realmente acontece.
+
+### (a) Endpoint real descoberto
+
+`GET /api/v1/o/37079/records?order_by=<campo>&order_type=asc|desc&per_page&page`
+(capturado no carregamento da listagem). Response: `data.records[]` com todos
+os 9 campos do card presentes com os nomes exatos que o PR mapeia.
+
+### (b) Método
+
+Para cada campo, chamei o endpoint em `asc` e `desc` e comparei a sequência
+retornada contra (1) sort numérico/cronológico e (2) sort lexicográfico
+(string) — isso discrimina exatamente a causa raiz do card ("trata número
+como texto"). `per_page=300`, 32–300 valores não-nulos por campo.
+
+### (c) Resultado por campo — TODOS corretos (asc e desc)
+
+**Numéricos** (ordem numérica confirmada; lexicográfico DIVERGE e foi
+descartado — prova que não é mais string sort):
+
+| Campo | order_by | asc (valores distintos, em ordem) |
+|---|---|---|
+| Valor do conteúdo | `content_value` | **0, 7, 10, 70, 100, 155, 999.99** ← cenário exato do card |
+| Progresso | `progress_score` | 0, 5.67, 13.2, 17, 19.8, 23… |
+| Desempenho | `final_score` | 0, 99.99, 100 |
+| Carga horária (controle) | `workload_seconds` | 1, 600, 1800, 3600, 5400, 10800… |
+
+**Datas** (ordem cronológica confirmada asc e desc, 32–300 registros):
+`start_date`, `end_date`, `approved_at`, `certificate_date`,
+`expiration_date` — todas monotônicas na escala de data (ex.: `start_date`
+asc começa em 2022-12-12 e sobe dia a dia).
+
+> Nota honesta sobre datas: como a API retorna ISO-8601, ordem de string e
+> ordem cronológica coincidem — por ordem só, o replay não distingue "sort
+> como string ISO" de "sort como data". Mas (1) a ordem cronológica está
+> correta em ambas direções em centenas de registros, e (2) o PR mapeia
+> essas colunas para colunas SQL de data reais. O bug ("meses/anos fora de
+> ordem") não se reproduz.
+
+### (d) Prova decisiva (campo do card)
+
+O card reportou `content_value` saindo "10, 70, 70, 7, 999" (lexicográfico).
+Agora `content_value` asc = **0, 7, 10, 70, 100, 155, 999.99** e desc = o
+reverso exato. Sort lexicográfico daria 0, 10, 100, 155, 7, 70, 999.99
+(`'1' < '7'`) — não é o que a API retorna. **Numérico confirmado no exato
+campo e valores do bug original.**
+
+### (e) Veredito
+
+**✅ PASSOU.** PR 10991 corrige a ordenação: os 4 campos numéricos ordenam
+matematicamente (não lexicograficamente) e os 5 campos de data ordenam
+cronologicamente, em ambas as direções. Evidência decisiva no campo
+"Valor do conteúdo", que era o exemplo do card.
+
+Evidências: `api-replay-ordenacao.json` (dados completos por campo/direção),
+`api-discovery.json` (shape da response), `31-acesso-restaurado-grid.png`.
+Scripts: `scripts-adhoc/api-replay-ordenacao-20504.mjs`,
+`api-discovery-20504.mjs`, `gate-check-records-20504.mjs`.
+
+## Comentário KQA — CANÔNICO (Rodada 5 — VIGENTE, pronto pra colar no Artia)
+
+> Este é o comentário vigente. Os blocos abaixo (Rodadas 1-3) são versões
+> anteriores, do período em que o acesso estava bloqueado — NÃO colar.
+
+```
+⇝ QA ⇜
+:: Teste ::
+✅ Passou
+:: Ambiente ::
+🧪 Stage (registrosf2.stage.twygoead.com, org 37079)
+:: Validação ::
+PR 10991 (ordenação numérica/data na listagem de Registros) validado via API.
+As colunas do card não estão renderizadas na grid atual (layout BETA "Registros
+de avaliação" com 8 colunas), mas o sort do PR é backend (order_by na API) — então
+validei direto no endpoint /api/v1/o/37079/records?order_by=<campo>&order_type=asc|desc.
+Para cada campo, comparei a ordem retornada (asc e desc) contra sort numérico/
+cronológico vs sort lexicográfico (string), o que discrimina exatamente a causa
+raiz do card ("trata número como texto").
+Resultado — TODOS os 9 campos corretos em asc e desc:
+• Numéricos (ordem matemática, lexicográfico descartado): content_value (Valor do
+  conteúdo) → 0, 7, 10, 70, 100, 155, 999.99; progress_score (Progresso); final_score
+  (Desempenho); workload_seconds (Carga horária, controle).
+• Datas (ordem cronológica): start_date, end_date, approved_at, certificate_date,
+  expiration_date.
+Prova decisiva: o card reportou "Valor do conteúdo" saindo 10,70,70,7,999
+(lexicográfico); agora sai 0,7,10,70,100,155,999.99 (asc) e o reverso exato (desc).
+:: Obs ::
+Acesso a Registros de devtestes@teste.com (que estava bloqueado desde o opt-out do
+BETA nas rodadas anteriores) foi restaurado via Super Admin — pré-requisito que
+destravou esta validação.
+Datas: como a API retorna ISO-8601, ordem de string e cronológica coincidem; por
+ordem só não dá pra distinguir "sort ISO string" de "sort data" — mas a ordem
+cronológica está correta em ambas direções em centenas de registros e o PR mapeia
+para colunas SQL de data reais; o bug (meses/anos fora de ordem) não reproduz.
+:: Evidência(s) ::
+- api-replay-ordenacao.json (ordem por campo/direção + comparação num vs lex)
+- api-discovery.json (shape da response, 9 campos do card presentes)
+- 31-acesso-restaurado-grid.png (acesso restaurado, listagem carregando)
+Evidência no link: <preencher após commit>
+```
+
+## Comentário KQA — CANÔNICO Rodadas 1-3 (BLOQUEIO — histórico, NÃO colar)
+
+> Vigente apenas enquanto o acesso esteve bloqueado. Superado pela Rodada 5.
 
 ```
 ⇝ QA ⇜

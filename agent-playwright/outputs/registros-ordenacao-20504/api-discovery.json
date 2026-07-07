@@ -1,0 +1,45 @@
+{
+  "status": 200,
+  "dataKeys": [
+    "pagination",
+    "records"
+  ],
+  "count": 100,
+  "sample": {
+    "id": 44378999,
+    "person": "Lider Runner",
+    "user_email": "liderunner@teste.com",
+    "user_cpf": "",
+    "user_avatar": "https://cdn-stage.twygo.com/images/nopic-man.jpg",
+    "content": "AV-TC1-w0-1782418224683",
+    "origin": "external",
+    "created_by": "dev teste",
+    "can_delete": true,
+    "workload": 4,
+    "workload_seconds": 14400,
+    "provider": "Alura",
+    "website": null,
+    "evidences": [
+      {
+        "id": 12611701,
+        "name": "xcf9skyrpdkz8ubsmwyp (1).png",
+        "type": "image/png"
+      }
+    ],
+    "learning_experience": "Curso",
+    "created_at": "2026-07-03T16:18:18.000Z",
+    "completed_at": "2026-07-16T03:00:00.000Z",
+    "progress_score": null,
+    "approved_at": "2026-07-03T03:00:00.000Z",
+    "situation": "approved",
+    "certificate_situation": null,
+    "certificate_enabled": true,
+    "course_id": null,
+    "final_score": null,
+    "content_value": null,
+    "start_date": null,
+    "end_date": "2026-07-16T03:00:00.000Z",
+    "certificate_date": null,
+    "expiration_date": null
+  }
+}
