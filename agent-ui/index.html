@@ -1045,7 +1045,9 @@ function finishRun(o, ctx, area) {
   const extra = s ? `${s.flaky ? ` · ${s.flaky} instáveis` : ''}${s.skipped ? ` · ${s.skipped} pulados` : ''}` : '';
   if (ro) ro.src = '/assets/' + (nothingRan ? 'sophia-neutra' : (ok ? 'sophia-festejando' : 'sophia-brava')) + '.png';
   if (sub) sub.innerHTML = nothingRan
-    ? `<b style="color:var(--gold)">Nada executado</b> — 0 casos automatizados nesta suíte (spec ainda não gerado?).`
+    ? (s && s.skipped
+        ? `<b style="color:var(--gold)">Nada executado</b> — ${s.skipped} caso(s) pulado(s) de propósito (fixme) nesta suíte.`
+        : `<b style="color:var(--gold)">Nada executado</b> — 0 casos automatizados nesta suíte (spec ainda não gerado?).`)
     : `<b style="color:${ok ? 'var(--lime)' : 'var(--coral)'}">${ok ? 'Tudo verde! 🎉' : 'Alguns casos falharam'}</b>${extra}`;
   return nothingRan ? 'vazio' : (ok ? 'ok' : 'falhou');
 }
@@ -1084,10 +1086,16 @@ function runCard(b, specCounts) {
   const state = failed > 0 ? 'has-fail' : (nothingRan ? 'no-run' : 'all-pass');
   const icon = failed > 0 ? '✕' : (nothingRan ? '∅' : '✓');
   const label = failed > 0 ? 'Falhou' : (nothingRan ? 'Nada executado' : 'Passou');
-  // 0 casos: distingue "suíte realmente sem spec" de "specs existem → foi credencial/config".
+  // 0 casos: distingue "pulado de propósito" (skipped>0 — specs rodaram e foram pulados, ex.: fixme) de
+  // "suíte realmente sem spec" e de "specs existem mas 0 skipped → foi credencial/config" (global-setup falhou antes de registrar nada).
   const suiteName = (String(b.scope || '').match(/"([^"]+)"/) || [])[1] || '';
   const hasSpecs = specCounts && suiteName && (specCounts[suiteName] || 0) > 0;
-  const hint = nothingRan ? (hasSpecs ? ' · specs existem — foi credencial/config (ver Conexão/.env)' : ' · 0 casos automatizados (sem spec pra esta suíte?)') : '';
+  const skipped = Number(t.skipped) || 0;
+  const hint = nothingRan
+    ? (skipped ? ` · ${skipped} caso(s) pulado(s) de propósito (fixme) — ver relatório`
+      : hasSpecs ? ' · specs existem — foi credencial/config (ver Conexão/.env)'
+      : ' · 0 casos automatizados (sem spec pra esta suíte?)')
+    : '';
   const dur = t.durationMs ? ` · ${Math.round(t.durationMs / 1000)}s` : '';
   const badges = `<span class="rb pass ${state === 'all-pass' ? 'on' : ''}">${passed} ✓</span><span class="rb fail ${failed > 0 ? 'on' : ''}">${failed} ✗</span>${t.skipped ? `<span class="rb skip">${t.skipped} ⤼</span>` : ''}`;
   return `<div class="run-card ${state}" data-run="${escapeHtml(b.runId)}" data-source="${b.source}" data-files="${b.files.join(',')}">
