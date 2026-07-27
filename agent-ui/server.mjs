@@ -407,6 +407,33 @@ const server = createServer(async (req, res) => {
       return json(res, 200, await listRuns(project));
     }
 
+    // Status por caso (TCN) de um run — pro comentário KQA de suítes automatizadas.
+    // Casa pelo NÚMERO em "TCN — ..." no título do teste (convenção do gerador) — não por texto,
+    // evita fragilidade de match textual (nome do caso na AT pode ter crase/pontuação diferente do título do spec).
+    if (url.pathname === '/api/run-cases') {
+      const project = url.searchParams.get('project');
+      if (!safeSlug(project)) return json(res, 400, { error: 'project inválido' });
+      const base = url.searchParams.get('source') === 'archive' ? 'outputs-archive' : 'outputs';
+      const run = url.searchParams.get('run') || '';
+      if (!noTraversal(run) || run.includes('/')) return json(res, 400, { error: 'run inválido' });
+      try {
+        const raw = JSON.parse(await readFile(join(AP, base, project, 'reports', run, 'tests.json'), 'utf8'));
+        const STATUS = { passed: 'pass', failed: 'fail', timedOut: 'fail', interrupted: 'fail', skipped: 'skip' };
+        const byTc = {};
+        const walk = (suite) => {
+          for (const spec of (suite.specs || [])) {
+            const m = String(spec.title || '').match(/^TC(\d+)\b/i);
+            if (!m) continue;
+            const last = (spec.tests || []).flatMap((t) => t.results || []).pop();
+            if (last) byTc[m[1]] = STATUS[last.status] || '';
+          }
+          for (const s of (suite.suites || [])) walk(s);
+        };
+        (raw.suites || []).forEach(walk);
+        return json(res, 200, { cases: byTc });
+      } catch { return json(res, 404, { error: 'resultados não encontrados' }); }
+    }
+
     // Resultados: Markdown cru de um arquivo do bundle (index|tests|exploratory) ou de um .md avulso.
     if (url.pathname === '/api/report') {
       const project = url.searchParams.get('project');

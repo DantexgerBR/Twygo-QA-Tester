@@ -683,21 +683,21 @@ function exportXLSX(rows, base) {
   const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, 'QA');
   XLSX.writeFile(wb, base + '.xlsx');
 }
-// Comentário no padrão KQA (pra colar no Artia). Manuais usam o status marcado; automáticos vêm como ⚠️ (QA ajusta após rodar).
+// Comentário no padrão KQA (pra colar no Artia). Manuais usam o status marcado; automáticos usam o
+// resultado real do último run (casado por TCN — ver /api/run-cases). Sem run ou sem match: ⚠️ Inconclusivo.
 // Todos os casos de uma suíte (subárvore) — a "atividade" (= card do Artia) cobre a suíte inteira.
-// _suite carrega o nome da suíte DONA de cada caso (chave do estado manual é por sub-suíte, não pela de topo).
-function suiteAllCases(s) { return [...(s.cases||[]).map(c=>({ ...c, _suite: s.name })), ...(s.children||[]).flatMap(suiteAllCases)]; }
-// 1 comentário KQA por ATIVIDADE (= suíte): status agregado + casos resumidos em :: Validação ::.
-function kqaSuiteBlock(suiteName, cases, tab, state, env) {
+// _suite carrega o nome da suíte DONA de cada caso; _tc é a posição (1-based) dentro dela (= número do TCN).
+function suiteAllCases(s) { return [...(s.cases||[]).map((c,i)=>({ ...c, _suite: s.name, _tc: i+1 })), ...(s.children||[]).flatMap(suiteAllCases)]; }
+// Convenção do time: a atividade fecha como Passou se AO MENOS UM caso passou (mesmo com outros falhando) —
+// os casos que falharam viram retrabalho à parte, não travam o card inteiro em Falhou/Inconclusivo.
+function kqaSuiteBlock(suiteName, cases, tab, state, env, runCases) {
   const key = (c) => (c._suite || suiteName) + '::' + c.name;
-  const vOf = (c) => tab === 'manual' ? mv(state[key(c)]) : '';
+  const vOf = (c) => tab === 'manual' ? mv(state[key(c)]) : ((runCases && runCases[String(c._tc)]) || '');
   const label = (v) => ({ pass: '✅ Passou', fail: '❌ Falhou' })[v] || '⚠️ Inconclusivo';
+  const vs = cases.map(vOf);
   let agg = '⚠️ Inconclusivo';
-  if (tab === 'manual') {
-    const vs = cases.map(vOf);
-    if (vs.some(v => v === 'fail')) agg = '❌ Falhou';
-    else if (cases.length && vs.every(v => v === 'pass')) agg = '✅ Passou';
-  }
+  if (vs.some(v => v === 'pass')) agg = '✅ Passou';
+  else if (vs.some(v => v === 'fail')) agg = '❌ Falhou';
   const validacao = `[${suiteName}]\n` + cases.map(c => {
     const cm = tab === 'manual' ? mc(state[key(c)]) : '';
     return `${label(vOf(c))} — ${c.name}${cm ? ` (${cm})` : ''}`;
@@ -711,11 +711,21 @@ function findSuite(tree, name) {
   for (const s of tree) { if (s.name === name) return s; const r = s.children && findSuite(s.children, name); if (r) return r; }
   return null;
 }
+// Resultado real do último run de uma suíte (por TCN) — null se nunca rodou ou o bundle não tem tests.json.
+async function kqaRunCases(project, lastRunOf, suiteName) {
+  const lr = lastRunOf ? lastRunOf(suiteName) : null;
+  if (!lr) return null;
+  const r = await api(`/api/run-cases?project=${encodeURIComponent(project)}&source=${lr.source}&run=${encodeURIComponent(lr.runId)}`).catch(() => null);
+  return r ? r.cases : null;
+}
 // Export global: 1 bloco por ATIVIDADE (suíte de topo), não 1 por caso.
-async function exportKQA(project, tab, filtered) {
+async function exportKQA(project, tab, filtered, lastRunOf) {
   const env = await kqaEnv(project);
   const state = tab === 'manual' ? await api('/api/manual?project=' + encodeURIComponent(project)).catch(() => ({})) : {};
-  const blocks = filtered.map(s => kqaSuiteBlock(s.name, suiteAllCases(s), tab, state, env));
+  const blocks = await Promise.all(filtered.map(async s => {
+    const runCases = tab === 'manual' ? null : await kqaRunCases(project, lastRunOf, s.name);
+    return kqaSuiteBlock(s.name, suiteAllCases(s), tab, state, env, runCases);
+  }));
   download(`${project}-${tab}-kqa.txt`, new Blob([blocks.join('\n' + '─'.repeat(44) + '\n\n')], { type: 'text/plain;charset=utf-8' }));
 }
 function testesToolbar(n, isManual) {
@@ -770,13 +780,14 @@ async function renderTestes() {
     const base = `${project}-${testesTab}`;
     $('#exp-csv').onclick = () => exportCSV(rows, base);
     $('#exp-xlsx').onclick = () => exportXLSX(rows, base);
-    $('#exp-kqa').onclick = () => exportKQA(project, testesTab, filtered);
+    $('#exp-kqa').onclick = () => exportKQA(project, testesTab, filtered, lastRunOf);
     // ⇝ KQA por ATIVIDADE (suíte): copia 1 comentário pra colar no card do Artia (fallback: baixa .txt).
     body.querySelectorAll('.btn-kqa1').forEach(b => b.onclick = async (e) => {
       e.preventDefault(); e.stopPropagation();
       const suite = findSuite(filtered, b.dataset.suite); if (!suite) return;
       const env = await kqaEnv(project);
-      const txt = kqaSuiteBlock(suite.name, suiteAllCases(suite), isManual ? 'manual' : 'auto', isManual ? state : {}, env);
+      const runCases = isManual ? null : await kqaRunCases(project, lastRunOf, suite.name);
+      const txt = kqaSuiteBlock(suite.name, suiteAllCases(suite), isManual ? 'manual' : 'auto', isManual ? state : {}, env, runCases);
       const orig = b.textContent;
       try { await navigator.clipboard.writeText(txt); b.textContent = '✓ copiado'; }
       catch { download(`${project}-${suite.name.replace(/[^a-z0-9]+/gi,'-').toLowerCase()}-kqa.txt`, new Blob([txt], { type: 'text/plain;charset=utf-8' })); b.textContent = '⇓ baixado'; }
