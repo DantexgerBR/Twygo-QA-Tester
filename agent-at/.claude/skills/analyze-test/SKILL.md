@@ -152,14 +152,22 @@ Se estiver rodando interativamente (sessão normal do Claude Code, não
 headless): apresentar estrutura ao usuário e perguntar se deseja ajustar
 antes de prosseguir. Se rodando headless (via `claude -p`, sem humano na
 sessão): gravar a estrutura decidida em
-`projects/<slug>/output/estrutura-proposta.md` (mesmo formato da skill
-`analyze-test-plan`) com `aprovada: false`, informar em texto que a
-estrutura foi gravada e PARAR aqui — não prosseguir pra Etapa 4 sem
-aprovação.
+`projects/<slug>/output/estrutura-proposta.md` com `aprovada: false` —
+antes de gravar, **leia `../analyze-test-plan/SKILL.md`, Etapa 4, e
+reproduza EXATAMENTE o mesmo formato de frontmatter e corpo descrito
+lá** — os campos `aprovada`, `project`, `generated_at`, `docs_lidos`,
+`docs_pulados` cada um em sua própria linha, sem comentários ou texto
+extra na linha do `aprovada` (um parser downstream depende de um match
+exato dessa linha pra aprovar a proposta depois). Informar em texto que
+a estrutura foi gravada e PARAR aqui — não prosseguir pra Etapa 4 sem
+aprovação. Termine sua resposta imediatamente após informar isso — não
+chame nenhuma ferramenta (Read/Write/Edit/Bash/Glob/Grep) depois de
+gravar o arquivo e escrever a mensagem, e não prossiga para a Etapa 4
+nesta mesma sessão.
 
 ## Etapa 4: Criação dos casos de teste
 
-=== Fase 6: Criação dos casos de teste ===
+=== Fase 5: Criação dos casos de teste ===
 
 Para cada suíte, criar casos de teste seguindo as convenções da skill
 `twygo-qa-conventions` (carregada automaticamente). Consultar
@@ -186,7 +194,7 @@ Para exemplos de casos bem escritos, consultar:
 
 ## Etapa 5: Geração do MD canônico (fonte de verdade)
 
-=== Fase 7: Geração do MD canônico ===
+=== Fase 6: Geração do MD canônico ===
 
 Invocar a skill `/generate-md-canonical` para emitir
 `projects/<slug>/output/test-analysis.md` seguindo o schema do CONTRACT.md.
@@ -219,7 +227,7 @@ com os mesmos problemas, e o agent-playwright marcará `// REVISAR` ou
 
 ## Etapa 6: Geração dos derivados (paralelo)
 
-=== Fase 8: Geração de XMind e XML TestLink ===
+=== Fase 7: Geração de XMind e XML TestLink ===
 
 Invocar em sequência (não importa ordem entre eles):
 
@@ -232,7 +240,7 @@ Ambos derivados são regerados sempre que o MD canônico muda.
 
 ## Etapa 7: Validação cruzada
 
-=== Fase 9: Validação cruzada ===
+=== Fase 8: Validação cruzada ===
 
 Confirmar que os 3 arquivos batem entre si:
 
@@ -245,7 +253,7 @@ grep -c "<testcase " projects/<slug>/output/Analise_Teste_*.xml
 
 ## Etapa 8: Entrega
 
-=== Fase 10: Entrega ===
+=== Fase 9: Entrega ===
 
 Informar ao usuário:
 - Caminhos dos 3 arquivos gerados
