@@ -813,12 +813,12 @@ const server = createServer(async (req, res) => {
       const project = url.searchParams.get('project');
       if (!safeSlug(project)) return json(res, 400, { error: 'project inválido' });
       if (atRunning.has(project)) return json(res, 409, { error: 'já tem uma geração de AT em andamento pra este projeto' });
-      // Guarda-custo: só dispara o /analyze-test (caro) se a estrutura já foi aprovada via /api/at-approve.
-      let estruturaAtual = '';
-      try { estruturaAtual = await readFile(join(AAT, 'projects', project, 'output', 'estrutura-proposta.md'), 'utf8'); } catch {}
-      if (!/^aprovada:\s*true\s*$/m.test(estruturaAtual)) return json(res, 400, { error: 'nenhuma estrutura aprovada pra este projeto ainda — rode /api/at-plan e aprove primeiro' });
-      atRunning.add(project);
+      atRunning.add(project); // add() logo após has(), sem await no meio — trava atômica antes do check de aprovação
       try {
+        // Guarda-custo: só dispara o /analyze-test (caro) se a estrutura já foi aprovada via /api/at-approve.
+        let estruturaAtual = '';
+        try { estruturaAtual = await readFile(join(AAT, 'projects', project, 'output', 'estrutura-proposta.md'), 'utf8'); } catch {}
+        if (!/^aprovada:\s*true\s*$/m.test(estruturaAtual)) return json(res, 400, { error: 'nenhuma estrutura aprovada pra este projeto ainda — rode /api/at-plan e aprove primeiro' });
         res.writeHead(200, { 'content-type': 'text/event-stream; charset=utf-8', 'cache-control': 'no-cache', connection: 'keep-alive', 'x-accel-buffering': 'no' });
         const send = (o) => res.write('data: ' + JSON.stringify(o) + '\n\n');
         send({ type: 'start' });
