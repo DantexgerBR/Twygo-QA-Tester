@@ -3,7 +3,7 @@ import path from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 
-import { injectApproved, parseStreamJsonLine, runClaudeSkill } from '../claude-cli.mjs';
+import { costOf, injectApproved, parseStreamJsonLine, runClaudeSkill } from '../claude-cli.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const fixture = (name) => path.join(here, 'fixtures', name);
@@ -103,4 +103,9 @@ test('runClaudeSkill nao quebra quando send() lanca excecao', async () => {
     timeoutMs: 5000,
   });
   assert.equal(result.ok, true);
+});
+
+test('costOf usa o usd armazenado quando presente, senao estima por tabela de preco', () => {
+  assert.equal(costOf({ usd: 0.42, in: 100, out: 100 }, { in: 1, out: 1 }), 0.42);
+  assert.equal(costOf({ in: 1000000, out: 0 }, { in: 2, out: 0 }), 2);
 });

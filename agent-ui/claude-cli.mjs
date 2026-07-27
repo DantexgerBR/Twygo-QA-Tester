@@ -88,3 +88,10 @@ export function injectApproved(mdText) {
   if (/^---\s*$/m.test(mdText)) return mdText.replace(/^---\s*$/m, '---\naprovada: true');
   return `---\naprovada: true\n---\n\n${mdText}`;
 }
+
+// Custo de um evento do ledger: usa o usd real armazenado (Claude, via total_cost_usd) quando presente;
+// senão estima por tokens × preço da tabela (fluxo antigo, OpenAI-compatível).
+export function costOf(event, price) {
+  if (typeof event.usd === 'number') return event.usd;
+  return (event.in || 0) / 1e6 * price.in + (event.out || 0) / 1e6 * price.out;
+}

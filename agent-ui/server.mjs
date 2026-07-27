@@ -17,7 +17,7 @@ import {
   parseJsonResponse,
   stripMarkdownFence,
 } from './ai-engine.mjs';
-import { injectApproved, runClaudeSkill } from './claude-cli.mjs';
+import { costOf, injectApproved, runClaudeSkill } from './claude-cli.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 // Localização dos agentes: env var override > sibling relativo (default). Não fixar o caminho — cada
@@ -511,8 +511,7 @@ const server = createServer(async (req, res) => {
       const priceOf = (m) => prices[m] || prices._default || { in: 0.15, out: 0.6 };
       let usd = 0, tIn = 0, tOut = 0;
       const enriched = events.map((e) => {
-        const p = priceOf(e.model);
-        const c = (e.in || 0) / 1e6 * p.in + (e.out || 0) / 1e6 * p.out;
+        const c = costOf(e, priceOf(e.model));
         usd += c; tIn += e.in || 0; tOut += e.out || 0;
         return { ...e, usd: c, brl: fx.rate ? c * fx.rate : null };
       });
