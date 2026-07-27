@@ -30,6 +30,7 @@ const REPO = process.env.QA_REPO || join(AP, '..'); // raiz do monorepo Twygo-QA
 const TSX = join(AP, 'node_modules', 'tsx', 'dist', 'cli.mjs');
 const ORCHESTRATOR = join(AP, '.claude', 'skills', 'twygo-test-orchestrator', 'orchestrator.ts');
 const PORT = process.env.PORT || 4321;
+const atRunning = new Set(); // slugs de projeto com /api/at-plan ou /api/at-build em andamento (evita corrida no mesmo projeto)
 
 const json = (res, code, obj) => {
   // no-store: resposta de API nunca cacheia (dado muda; evita servir stale/500 antigo do disk cache do browser).
@@ -774,15 +775,23 @@ const server = createServer(async (req, res) => {
     if (url.pathname === '/api/at-plan') {
       const project = url.searchParams.get('project');
       if (!safeSlug(project)) return json(res, 400, { error: 'project inválido' });
-      res.writeHead(200, { 'content-type': 'text/event-stream; charset=utf-8', 'cache-control': 'no-cache', connection: 'keep-alive', 'x-accel-buffering': 'no' });
-      const send = (o) => res.write('data: ' + JSON.stringify(o) + '\n\n');
-      send({ type: 'start' });
-      const r = await runClaudeSkill(`/analyze-test-plan --project ${project}`, { cwd: AAT, send });
-      await appendUsage({ ts: new Date().toISOString(), action: 'gerar-at-plan', project, model: r.model || 'claude', in: r.usageIn, out: r.usageOut, usd: r.costUsd });
-      let estrutura = '';
-      try { estrutura = await readFile(join(AAT, 'projects', project, 'output', 'estrutura-proposta.md'), 'utf8'); } catch {}
-      send({ type: 'done', ok: r.ok, estrutura });
-      res.end();
+      if (atRunning.has(project)) return json(res, 409, { error: 'já tem uma geração de AT em andamento pra este projeto' });
+      atRunning.add(project);
+      try {
+        res.writeHead(200, { 'content-type': 'text/event-stream; charset=utf-8', 'cache-control': 'no-cache', connection: 'keep-alive', 'x-accel-buffering': 'no' });
+        const send = (o) => res.write('data: ' + JSON.stringify(o) + '\n\n');
+        send({ type: 'start' });
+        const r = await runClaudeSkill(`/analyze-test-plan --project ${project}`, { cwd: AAT, send });
+        // nunca lança daqui pra cima — headers SSE já foram enviados, um throw aqui vira unhandled rejection
+        try { await appendUsage({ ts: new Date().toISOString(), action: 'gerar-at-plan', project, model: r.model || 'claude', in: r.usageIn, out: r.usageOut, usd: r.costUsd }); }
+        catch (e) { console.error('appendUsage falhou (gerar-at-plan):', e); }
+        let estrutura = '';
+        try { estrutura = await readFile(join(AAT, 'projects', project, 'output', 'estrutura-proposta.md'), 'utf8'); } catch {}
+        send({ type: 'done', ok: r.ok, timedOut: r.timedOut, estrutura });
+        res.end();
+      } finally {
+        atRunning.delete(project);
+      }
       return;
     }
 
@@ -803,15 +812,27 @@ const server = createServer(async (req, res) => {
     if (url.pathname === '/api/at-build') {
       const project = url.searchParams.get('project');
       if (!safeSlug(project)) return json(res, 400, { error: 'project inválido' });
-      res.writeHead(200, { 'content-type': 'text/event-stream; charset=utf-8', 'cache-control': 'no-cache', connection: 'keep-alive', 'x-accel-buffering': 'no' });
-      const send = (o) => res.write('data: ' + JSON.stringify(o) + '\n\n');
-      send({ type: 'start' });
-      const r = await runClaudeSkill(`/analyze-test --project ${project}`, { cwd: AAT, send });
-      await appendUsage({ ts: new Date().toISOString(), action: 'gerar-at-build', project, model: r.model || 'claude', in: r.usageIn, out: r.usageOut, usd: r.costUsd });
-      let files = [];
-      try { files = (await readdir(join(AAT, 'projects', project, 'output'))).filter((f) => f === 'test-analysis.md' || /^Analise_Teste_.*\.(xmind|xml)$/.test(f)); } catch {}
-      send({ type: 'done', ok: r.ok, files });
-      res.end();
+      if (atRunning.has(project)) return json(res, 409, { error: 'já tem uma geração de AT em andamento pra este projeto' });
+      // Guarda-custo: só dispara o /analyze-test (caro) se a estrutura já foi aprovada via /api/at-approve.
+      let estruturaAtual = '';
+      try { estruturaAtual = await readFile(join(AAT, 'projects', project, 'output', 'estrutura-proposta.md'), 'utf8'); } catch {}
+      if (!/^aprovada:\s*true\s*$/m.test(estruturaAtual)) return json(res, 400, { error: 'nenhuma estrutura aprovada pra este projeto ainda — rode /api/at-plan e aprove primeiro' });
+      atRunning.add(project);
+      try {
+        res.writeHead(200, { 'content-type': 'text/event-stream; charset=utf-8', 'cache-control': 'no-cache', connection: 'keep-alive', 'x-accel-buffering': 'no' });
+        const send = (o) => res.write('data: ' + JSON.stringify(o) + '\n\n');
+        send({ type: 'start' });
+        const r = await runClaudeSkill(`/analyze-test --project ${project}`, { cwd: AAT, send });
+        // nunca lança daqui pra cima — headers SSE já foram enviados, um throw aqui vira unhandled rejection
+        try { await appendUsage({ ts: new Date().toISOString(), action: 'gerar-at-build', project, model: r.model || 'claude', in: r.usageIn, out: r.usageOut, usd: r.costUsd }); }
+        catch (e) { console.error('appendUsage falhou (gerar-at-build):', e); }
+        let files = [];
+        try { files = (await readdir(join(AAT, 'projects', project, 'output'))).filter((f) => f === 'test-analysis.md' || /^Analise_Teste_.*\.(xmind|xml)$/.test(f)); } catch {}
+        send({ type: 'done', ok: r.ok, timedOut: r.timedOut, files });
+        res.end();
+      } finally {
+        atRunning.delete(project);
+      }
       return;
     }
 
