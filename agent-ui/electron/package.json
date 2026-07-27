@@ -1,0 +1,39 @@
+{
+  "name": "twygo-qa-desktop",
+  "version": "0.1.0",
+  "description": "Twygo QA — interface desktop (Electron wrap do agent-ui, zero-dep server)",
+  "author": "Dante de Oliveira Tavares",
+  "license": "UNLICENSED",
+  "private": true,
+  "main": "main.mjs",
+  "type": "module",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win",
+    "dist:mac": "electron-builder --mac",
+    "dist:linux": "electron-builder --linux"
+  },
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.twygo.qa",
+    "productName": "Twygo QA",
+    "icon": "build/icon.png",
+    "asar": false,
+    "directories": { "output": "dist-electron" },
+    "files": [
+      "main.mjs",
+      "../server.mjs",
+      "../index.html",
+      "../ai-config.mjs",
+      "../ai-prices.json",
+      "../assets/**/*"
+    ],
+    "win": { "target": "nsis" },
+    "mac": { "target": "dmg", "identity": null },
+    "linux": { "target": "AppImage", "category": "Development" }
+  }
+}

@@ -1,0 +1,6 @@
+# estado runtime do checklist manual (por usuário, não versionar)
+state/
+# deps do npm (o xlsx é vendorizado em assets/vendor/; node_modules não vai pro git)
+node_modules/
+# chave de IA (Codex) — nunca versionar
+.secrets/
