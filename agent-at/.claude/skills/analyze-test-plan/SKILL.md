@@ -44,7 +44,7 @@ terá todas as informações consolidadas.
 === Fase 3: Recon de protótipo ===
 
 Igual à Etapa 2.5 do `/analyze-test` completo (ver
-`../analyze-test/SKILL.md`): se `project.config.json` tem
+`../analyze-test/SKILL.md`): se `projects/<slug>/project.config.json` tem
 `prototypeUrl`/`figmaPrototype` preenchido, invocar `/recon-prototipo`.
 Fallback gracioso se MCP indisponível, login exigido ou timeout — NUNCA
 travar esta skill por causa do recon (rodando headless, é ainda mais
@@ -53,6 +53,12 @@ provável que o MCP não esteja disponível — trate como skip normal).
 ## Etapa 3: Proposta de estrutura de suítes
 
 === Fase 4: Proposta de estrutura ===
+
+Antes de propor qualquer estrutura, confirmar que
+`projects/<slug>/output/requisitos_extraidos.md` existe e não está
+trivialmente vazio. Se estiver ausente ou vazio, tratar como os demais
+casos "PARAR" desta skill: parar e informar por quê (não propor estrutura
+a partir de nada).
 
 Com base nos requisitos extraídos (e no recon, se houver):
 
@@ -86,6 +92,8 @@ pelo agent-ui):
 aprovada: false
 project: <slug>
 generated_at: <ISO timestamp>
+docs_lidos: [<arquivo1>, <arquivo2>, ...]
+docs_pulados: [<arquivo3 — motivo>, ...]
 ---
 
 # Proposta de Estrutura — <Nome do Projeto>
@@ -101,6 +109,10 @@ generated_at: <ISO timestamp>
 ## Suíte: <Nome da suíte 2>
 ...
 ```
+
+`docs_pulados` fica `[]` se o `/read-docs` não pulou nenhum arquivo —
+o objetivo é só deixar visível pro humano revisando a proposta se algum
+doc-fonte ficou de fora antes de aprovar.
 
 Ao terminar, informar em texto simples (sem pausar esperando resposta):
 quantidade de suítes propostas + caminho do arquivo gravado. **Esta skill
