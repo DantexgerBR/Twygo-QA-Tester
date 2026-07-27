@@ -17,6 +17,7 @@ import {
   parseJsonResponse,
   stripMarkdownFence,
 } from './ai-engine.mjs';
+import { injectApproved, runClaudeSkill } from './claude-cli.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 // Localização dos agentes: env var override > sibling relativo (default). Não fixar o caminho — cada
@@ -767,6 +768,51 @@ const server = createServer(async (req, res) => {
         : join(AAT, 'projects', project, 'output', 'test-analysis.md');
       try { const md = await readFile(target, 'utf8'); res.writeHead(200, { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'no-store' }); return res.end(md); }
       catch { return json(res, 404, { error: 'test-analysis.md não encontrado' }); }
+    }
+
+    // Fases 1-3 do /analyze-test: propõe estrutura de suítes (sem casos ainda) via claude -p headless.
+    if (url.pathname === '/api/at-plan') {
+      const project = url.searchParams.get('project');
+      if (!safeSlug(project)) return json(res, 400, { error: 'project inválido' });
+      res.writeHead(200, { 'content-type': 'text/event-stream; charset=utf-8', 'cache-control': 'no-cache', connection: 'keep-alive', 'x-accel-buffering': 'no' });
+      const send = (o) => res.write('data: ' + JSON.stringify(o) + '\n\n');
+      send({ type: 'start' });
+      const r = await runClaudeSkill(`/analyze-test-plan --project ${project}`, { cwd: AAT, send });
+      await appendUsage({ ts: new Date().toISOString(), action: 'gerar-at-plan', project, model: r.model || 'claude', in: r.usageIn, out: r.usageOut, usd: r.costUsd });
+      let estrutura = '';
+      try { estrutura = await readFile(join(AAT, 'projects', project, 'output', 'estrutura-proposta.md'), 'utf8'); } catch {}
+      send({ type: 'done', ok: r.ok, estrutura });
+      res.end();
+      return;
+    }
+
+    // Grava a estrutura (possivelmente editada pelo QA) como aprovada. Não dispara nada — só salva.
+    if (url.pathname === '/api/at-approve' && req.method === 'POST') {
+      const project = url.searchParams.get('project');
+      if (!safeSlug(project)) return json(res, 400, { error: 'project inválido' });
+      let data; try { data = JSON.parse((await readBody(req)) || '{}'); } catch { return json(res, 400, { error: 'json inválido' }); }
+      const estrutura = String(data.estrutura || '').trim();
+      if (!estrutura) return json(res, 400, { error: 'estrutura vazia' });
+      const dir = join(AAT, 'projects', project, 'output');
+      await mkdir(dir, { recursive: true });
+      await writeFile(join(dir, 'estrutura-proposta.md'), injectApproved(estrutura));
+      return json(res, 200, { ok: true });
+    }
+
+    // Fases 5-8 do /analyze-test: usa a estrutura já aprovada, escreve os casos + gera os 3 arquivos.
+    if (url.pathname === '/api/at-build') {
+      const project = url.searchParams.get('project');
+      if (!safeSlug(project)) return json(res, 400, { error: 'project inválido' });
+      res.writeHead(200, { 'content-type': 'text/event-stream; charset=utf-8', 'cache-control': 'no-cache', connection: 'keep-alive', 'x-accel-buffering': 'no' });
+      const send = (o) => res.write('data: ' + JSON.stringify(o) + '\n\n');
+      send({ type: 'start' });
+      const r = await runClaudeSkill(`/analyze-test --project ${project}`, { cwd: AAT, send });
+      await appendUsage({ ts: new Date().toISOString(), action: 'gerar-at-build', project, model: r.model || 'claude', in: r.usageIn, out: r.usageOut, usd: r.costUsd });
+      let files = [];
+      try { files = (await readdir(join(AAT, 'projects', project, 'output'))).filter((f) => f === 'test-analysis.md' || /^Analise_Teste_.*\.(xmind|xml)$/.test(f)); } catch {}
+      send({ type: 'done', ok: r.ok, files });
+      res.end();
+      return;
     }
 
     // Gera a AT (test-analysis.md) por IA (B). Input: descrição + .md de contexto (docs/ + output/). Salva DRAFT.
