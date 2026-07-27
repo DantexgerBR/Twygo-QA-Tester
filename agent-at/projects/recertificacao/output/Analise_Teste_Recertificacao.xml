@@ -19,17 +19,22 @@ Pelo menos 1 trilha pré-existente (para validar paridade do switch)</preconditi
           <execution_type>2</execution_type>
         </step>        <step>
           <step_number>3</step_number>
-          <actions>Clicar em &#34;Editar&#34; no menu de ações do curso</actions>
-          <expectedresults>Página de edição do curso é exibida na rota &#34;/e/:id/edit&#34; (HAML) ou &#34;/contents/:id/edit&#34; (React facelift).</expectedresults>
+          <actions>Clicar no botão `more_vert` da linha do curso → &#34;Gerenciar&#34;</actions>
+          <expectedresults>Página de edição do curso é exibida na rota `/o/{orgId}/contents/{id}/edit?tab=identification` (aba &#34;Identificação&#34; ativa por default).</expectedresults>
           <execution_type>2</execution_type>
         </step>        <step>
           <step_number>4</step_number>
-          <actions>Localizar a seção &#34;Detalhes&#34; ou seção principal do formulário</actions>
-          <expectedresults>Switch &#34;Habilitar reinscrição&#34; está visível no formulário.</expectedresults>
+          <actions>Clicar na aba &#34;Acesso&#34; do formulário de edição</actions>
+          <expectedresults>URL atualiza para `?tab=access` e tabpanel &#34;Acesso&#34; renderiza, contendo a seção &#34;Inscrição&#34; → &#34;Permitir registro de inscrição por&#34;.</expectedresults>
           <execution_type>2</execution_type>
         </step>        <step>
           <step_number>5</step_number>
-          <actions>Posicionar o cursor sobre o ícone de ajuda do switch &#34;Habilitar reinscrição&#34;</actions>
+          <actions>Localizar o checkbox &#34;Habilitar reinscrição&#34; dentro da seção &#34;Permitir registro de inscrição por&#34;</actions>
+          <expectedresults>Checkbox &#34;Habilitar reinscrição&#34; está visível no formulário (controle HTML padrão, não Chakra switch).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>6</step_number>
+          <actions>Posicionar o cursor sobre o ícone de ajuda do checkbox &#34;Habilitar reinscrição&#34;</actions>
           <expectedresults>Tooltip de ajuda é exibido com o texto da chave I18n &#34;activerecord.attributes.event.has_recertification_tooltip&#34;.</expectedresults>
           <execution_type>2</execution_type>
         </step>      </steps>
@@ -48,8 +53,8 @@ Pelo menos 1 trilha pré-existente (para validar paridade do switch)</preconditi
           <execution_type>2</execution_type>
         </step>        <step>
           <step_number>2</step_number>
-          <actions>Acessar a tela de edição de um curso existente em &#34;/e/{eventId}/edit&#34;</actions>
-          <expectedresults>Página de edição do curso é exibida normalmente.</expectedresults>
+          <actions>Acessar a tela de edição de um curso existente em `/o/{orgId}/contents/{eventId}/edit?tab=access`</actions>
+          <expectedresults>Página de edição do curso é exibida normalmente na aba &#34;Acesso&#34;.</expectedresults>
           <execution_type>2</execution_type>
         </step>        <step>
           <step_number>3</step_number>
@@ -696,8 +701,8 @@ Pelo menos 3 alunos elegíveis pré-cadastrados (para reinscrição via CSV)</pr
           <expectedresults>Apenas o aluno A recebe e-mail com assunto `recertification_mailer.reenrollment.subject` (template `reenrollment_mail`). Alunos B e C não recebem este e-mail diferenciado.</expectedresults>
           <execution_type>2</execution_type>
         </step>      </steps>
-    </testcase>  </testsuite>  <testsuite name="Reinscrição via API V2">    <testcase name="POST /api/v2/users/mass com `recertification=true` cria participants reinscritos">
-      <summary>Validar fluxo principal da API V2: payload com `recertification: true` por participant cria participants reinscritos com `recertification_number` incrementado (RN 14).</summary>
+    </testcase>  </testsuite>  <testsuite name="Reinscrição via API V2">    <testcase name="POST /api/v2/attendees com `recertification=true` para user novo retorna 200 (validação API)">
+      <summary>Validar fluxo principal da API V2: payload com `recertification: true` por participant em curso elegível retorna sucesso (HTTP 200) com shape de response conforme contrato (RN 14). Validação UI complementar fica em TC5.</summary>
       <preconditions>Feature flag `:recertificacao` ATIVA na organização
 Curso &#34;Curso API V2 Reinscrição w{workerIndex}&#34; com `has_recertification = true`
 Curso &#34;Curso API V2 SEM Reinscrição w{workerIndex}&#34; com `has_recertification = false`
@@ -707,27 +712,22 @@ Pelo menos 2 alunos pré-cadastrados e elegíveis
       <importance>3</importance>
       <steps>        <step>
           <step_number>1</step_number>
-          <actions>Preparar payload JSON `{&#34;participants&#34;: [{&#34;email&#34;:&#34;aluno1@example.com&#34;, &#34;event_id&#34;: &lt;id_com_recertification&gt;, &#34;recertification&#34;: true}]}`</actions>
+          <actions>Preparar payload JSON `{&#34;participants&#34;: [{&#34;email&#34;:&#34;&lt;email-unique&gt;&#34;,&#34;first_name&#34;:&#34;Aluno&#34;,&#34;last_name&#34;:&#34;TC1&#34;,&#34;status&#34;:&#34;1&#34;,&#34;recertification&#34;: true}], &#34;content_ids&#34;: [&lt;id_com_recertification&gt;]}` — email deve ser único por run (worker+timestamp) para idempotência</actions>
           <expectedresults>Payload pronto.</expectedresults>
           <execution_type>2</execution_type>
         </step>        <step>
           <step_number>2</step_number>
-          <actions>Disparar `POST /api/v2/users/mass` com o payload, autenticado com token de admin</actions>
-          <expectedresults>Response retorna HTTP 200 ou 207 (multi-status).</expectedresults>
+          <actions>Disparar `POST /api/v2/attendees` com o payload, autenticado com Bearer token (`API_TOKEN` do `.env`)</actions>
+          <expectedresults>Response retorna HTTP 200.</expectedresults>
           <execution_type>2</execution_type>
         </step>        <step>
           <step_number>3</step_number>
           <actions>Inspecionar o corpo da resposta</actions>
-          <expectedresults>Item correspondente ao aluno aparece com status de sucesso, sem erro.</expectedresults>
-          <execution_type>2</execution_type>
-        </step>        <step>
-          <step_number>4</step_number>
-          <actions>Acessar a lista de aprendizagem do curso em &#34;/learning_students?event_id={eventId}&#34;</actions>
-          <expectedresults>&#34;aluno1@example.com&#34; aparece com `recertification_number = N+1`, `progress_score = 0`, status &#34;Pendente&#34;.</expectedresults>
+          <expectedresults>Body valida contra `schemas/attendees-create-response.schema.json`. `participants.success[&lt;content_id&gt;]` contém 1 item com `email` matching e `cpf`. `participants.error` ausente. `errors: []`.</expectedresults>
           <execution_type>2</execution_type>
         </step>      </steps>
-    </testcase>    <testcase name="Item com `recertification=true` em curso com `has_recertification=false` retorna erro por item (HTTP 207)">
-      <summary>Validar resposta multi-status: payload misto com itens válidos e itens inválidos retorna sucessos e erros por item (RN 14.1).</summary>
+    </testcase>    <testcase name="Recertificação de user não-aprovado em curso retorna 422 com mensagem descritiva">
+      <summary>Validar regra de negócio do backend (descoberta em validação live 2026-05-28): quando `recertification: true` em payload para participant cuja inscrição anterior NÃO está aprovada, backend recusa com HTTP 422 e mensagem específica (RN 14.1). Substitui hipótese original sobre `recertification_disabled_for_event` que NÃO foi confirmada na API real.</summary>
       <preconditions>Feature flag `:recertificacao` ATIVA na organização
 Curso &#34;Curso API V2 Reinscrição w{workerIndex}&#34; com `has_recertification = true`
 Curso &#34;Curso API V2 SEM Reinscrição w{workerIndex}&#34; com `has_recertification = false`
@@ -737,22 +737,22 @@ Pelo menos 2 alunos pré-cadastrados e elegíveis
       <importance>3</importance>
       <steps>        <step>
           <step_number>1</step_number>
-          <actions>Preparar payload JSON com 2 items: item A: `{&#34;email&#34;:&#34;aluno_valido@example.com&#34;, &#34;event_id&#34;: &lt;id_com_recertification&gt;, &#34;recertification&#34;: true}` item B: `{&#34;email&#34;:&#34;aluno_invalido@example.com&#34;, &#34;event_id&#34;: &lt;id_SEM_recertification&gt;, &#34;recertification&#34;: true}`</actions>
+          <actions>Preparar payload JSON com 2 participants e 2 content_ids — todos com `recertification: true`. Emails são estáticos (TC depende de user pré-existente: `rec-v2-tc1@example.com` foi inscrito em TC1 anterior, ainda não aprovado). payload: `{&#34;participants&#34;: [{&#34;email&#34;:&#34;rec-v2-tc1@example.com&#34;, &#34;first_name&#34;:&#34;Aluno&#34;, &#34;last_name&#34;:&#34;TC2a&#34;, &#34;status&#34;:&#34;1&#34;, &#34;recertification&#34;: true}, {&#34;email&#34;:&#34;rec-v2-tc3@example.com&#34;, &#34;first_name&#34;:&#34;Aluno&#34;, &#34;last_name&#34;:&#34;TC2b&#34;, &#34;status&#34;:&#34;1&#34;, &#34;recertification&#34;: true}], &#34;content_ids&#34;: [&lt;curso_com_rec&gt;, &lt;curso_sem_rec&gt;]}`</actions>
           <expectedresults>Payload pronto.</expectedresults>
           <execution_type>2</execution_type>
         </step>        <step>
           <step_number>2</step_number>
-          <actions>Disparar `POST /api/v2/users/mass` autenticado</actions>
-          <expectedresults>Response retorna HTTP 207 (multi-status).</expectedresults>
+          <actions>Disparar `POST /api/v2/attendees` autenticado</actions>
+          <expectedresults>Response retorna HTTP 422.</expectedresults>
           <execution_type>2</execution_type>
         </step>        <step>
           <step_number>3</step_number>
           <actions>Inspecionar o corpo da resposta</actions>
-          <expectedresults>Array de resultados: item A com sucesso e participant criado; item B com erro estruturado contendo chave I18n `reenroll_participant.errors.recertification_disabled_for_event`.</expectedresults>
+          <expectedresults>`participants.error[&lt;content_id&gt;]` contém array com items `{email, cpf, error: [&#34;Aluno já inscrito mas não aprovado — recertificação não criada&#34;]}`. Mensagem de erro deve conter substring &#34;não aprovado&#34; e &#34;recertificação não criada&#34;.</expectedresults>
           <execution_type>2</execution_type>
         </step>      </steps>
-    </testcase>    <testcase name="Payload sem `recertification` segue fluxo legado (regressão)">
-      <summary>Validar compatibilidade retroativa: payloads de integrações antigas (sem chave `recertification`) seguem o fluxo de inscrição original (RN 14).</summary>
+    </testcase>    <testcase name="Payload sem `recertification` segue fluxo legado — regressão (validação API)">
+      <summary>Validar compatibilidade retroativa da API V2: payloads de integrações antigas (sem chave `recertification`) retornam sucesso HTTP 200 sem erro de validação (RN 14). Validação UI complementar (confirmar `recertification_number = 0` na listagem) fica em TC6.</summary>
       <preconditions>Feature flag `:recertificacao` ATIVA na organização
 Curso &#34;Curso API V2 Reinscrição w{workerIndex}&#34; com `has_recertification = true`
 Curso &#34;Curso API V2 SEM Reinscrição w{workerIndex}&#34; com `has_recertification = false`
@@ -762,22 +762,17 @@ Pelo menos 2 alunos pré-cadastrados e elegíveis
       <importance>3</importance>
       <steps>        <step>
           <step_number>1</step_number>
-          <actions>Preparar payload JSON antigo `{&#34;participants&#34;: [{&#34;email&#34;:&#34;aluno_legado@example.com&#34;, &#34;event_id&#34;: &lt;id_com_recertification&gt;}]}` (sem `recertification`)</actions>
+          <actions>Preparar payload JSON antigo `{&#34;participants&#34;: [{&#34;email&#34;:&#34;&lt;email-unique&gt;&#34;,&#34;first_name&#34;:&#34;Aluno&#34;,&#34;last_name&#34;:&#34;TC3&#34;,&#34;status&#34;:&#34;1&#34;}], &#34;content_ids&#34;: [&lt;id_com_recertification&gt;]}` (SEM chave `recertification`) — email único por run</actions>
           <expectedresults>Payload pronto.</expectedresults>
           <execution_type>2</execution_type>
         </step>        <step>
           <step_number>2</step_number>
-          <actions>Disparar `POST /api/v2/users/mass` autenticado</actions>
-          <expectedresults>Response retorna HTTP 200 com sucesso.</expectedresults>
-          <execution_type>2</execution_type>
-        </step>        <step>
-          <step_number>3</step_number>
-          <actions>Acessar a lista de aprendizagem</actions>
-          <expectedresults>&#34;aluno_legado@example.com&#34; aparece com `recertification_number = 0` (fluxo de inscrição original — sem reinscrição).</expectedresults>
+          <actions>Disparar `POST /api/v2/attendees` autenticado</actions>
+          <expectedresults>Response retorna HTTP 200 com sucesso. Body valida contra `schemas/attendees-create-response.schema.json`. `participants.success[&lt;content_id&gt;]` contém 1 item correspondente ao email enviado, sem erro.</expectedresults>
           <execution_type>2</execution_type>
         </step>      </steps>
-    </testcase>    <testcase name="Com flag OFF, parâmetro `recertification` é ignorado silenciosamente">
-      <summary>Validar compatibilidade: com flag OFF na org, payload com `recertification: true` é processado como inscrição normal sem retornar erro (RN 14.2).</summary>
+    </testcase>    <testcase name="Com flag OFF, parâmetro `recertification` é ignorado silenciosamente (validação API)">
+      <summary>Validar compatibilidade da API V2 com flag OFF: payload com `recertification: true` é processado sem retornar erro relacionado a feature flag (RN 14.2). Validação UI complementar (confirmar `recertification_number = 0` apesar do parâmetro) fica em TC7.</summary>
       <preconditions>Feature flag `:recertificacao` ATIVA na organização
 Curso &#34;Curso API V2 Reinscrição w{workerIndex}&#34; com `has_recertification = true`
 Curso &#34;Curso API V2 SEM Reinscrição w{workerIndex}&#34; com `has_recertification = false`
@@ -787,18 +782,73 @@ Pelo menos 2 alunos pré-cadastrados e elegíveis
       <importance>3</importance>
       <steps>        <step>
           <step_number>1</step_number>
-          <actions>Desativar a feature flag `:recertificacao` para a organização</actions>
-          <expectedresults>Flag fica OFF.</expectedresults>
+          <actions>Desativar a feature flag `:recertificacao` para a organização via Super Admin (Flipper)</actions>
+          <expectedresults>Flag fica OFF para a org de teste (actor `Organization;&lt;orgId&gt;` removido).</expectedresults>
           <execution_type>2</execution_type>
         </step>        <step>
           <step_number>2</step_number>
-          <actions>Disparar `POST /api/v2/users/mass` com payload contendo `recertification: true` por item</actions>
-          <expectedresults>Response retorna HTTP 200 com sucesso. Sem erro relacionado a feature flag.</expectedresults>
+          <actions>Disparar `POST /api/v2/attendees` com payload `{&#34;participants&#34;: [{&#34;email&#34;:&#34;&lt;email-unique&gt;&#34;,&#34;first_name&#34;:&#34;Aluno&#34;,&#34;last_name&#34;:&#34;TC4&#34;,&#34;status&#34;:&#34;1&#34;,&#34;recertification&#34;: true}], &#34;content_ids&#34;: [&lt;id_com_recertification&gt;]}` autenticado</actions>
+          <expectedresults>Response retorna HTTP 200 com sucesso. Body valida contra `schemas/attendees-create-response.schema.json`. `participants.error` ausente OU vazio. Campo `errors` (string ou array) não contém substring &#34;feature_flag&#34; nem &#34;recertificacao_disabled&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Aluno reinscrito via API V2 aparece na lista de aprendizagem com `recertification_number` incrementado (validação UI)">
+      <summary>Complementa TC1 validando o efeito da reinscrição via API V2 na UI admin. A criação do participant reinscrito é setup (API), o teste em si valida o render da lista de aprendizagem.</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA na organização
+Curso &#34;Curso API V2 Reinscrição w{workerIndex}&#34; com `has_recertification = true`
+Curso &#34;Curso API V2 SEM Reinscrição w{workerIndex}&#34; com `has_recertification = false`
+Pelo menos 2 alunos pré-cadastrados e elegíveis
+{&#39;Token de acesso à API V2 disponível (REVISAR&#39;: &#39;como obter token em staging)&#39;}</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Pré-condição (setup via API): disparar `POST /api/v2/users/mass` no `beforeAll` com payload `{&#34;participants&#34;: [{&#34;email&#34;:&#34;aluno1@example.com&#34;, &#34;event_id&#34;: &lt;id_com_recertification&gt;, &#34;recertification&#34;: true}]}` autenticado</actions>
+          <expectedresults>Participant reinscrito criado com `recertification_number = N+1` no DB.</expectedresults>
           <execution_type>2</execution_type>
         </step>        <step>
-          <step_number>3</step_number>
-          <actions>Acessar a lista de aprendizagem</actions>
-          <expectedresults>Aluno aparece com `recertification_number = 0` (parâmetro foi ignorado).</expectedresults>
+          <step_number>2</step_number>
+          <actions>Acessar a URL &#34;/learning_students?event_id={eventIdComRecertification}&#34;</actions>
+          <expectedresults>Listagem exibe linha de &#34;aluno1@example.com&#34; com colunas: `recertification_number = N+1`, `progress_score = 0`, status &#34;Pendente&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Aluno inscrito sem `recertification` via API V2 aparece com `recertification_number = 0` (regressão UI)">
+      <summary>Complementa TC3 validando via UI que payload legado (sem `recertification`) preserva o fluxo de inscrição original — participant aparece com `recertification_number = 0` na lista admin.</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA na organização
+Curso &#34;Curso API V2 Reinscrição w{workerIndex}&#34; com `has_recertification = true`
+Curso &#34;Curso API V2 SEM Reinscrição w{workerIndex}&#34; com `has_recertification = false`
+Pelo menos 2 alunos pré-cadastrados e elegíveis
+{&#39;Token de acesso à API V2 disponível (REVISAR&#39;: &#39;como obter token em staging)&#39;}</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Pré-condição (setup via API): disparar `POST /api/v2/users/mass` no `beforeAll` com payload `{&#34;participants&#34;: [{&#34;email&#34;:&#34;aluno_legado@example.com&#34;, &#34;event_id&#34;: &lt;id_com_recertification&gt;}]}` (SEM chave `recertification`), autenticado</actions>
+          <expectedresults>Participant inscrito com `recertification_number = 0` (fluxo legado).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Acessar a URL &#34;/learning_students?event_id={eventIdComRecertification}&#34;</actions>
+          <expectedresults>Listagem exibe linha de &#34;aluno_legado@example.com&#34; com `recertification_number = 0` e status &#34;Pendente&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Com flag OFF, aluno aparece com `recertification_number = 0` apesar do parâmetro (UI confirma RN 14.2)">
+      <summary>Complementa TC4 validando via UI que `recertification: true` no payload é silenciosamente ignorado quando a flag está OFF — UI confirma que o efeito de persistência reflete o estado da flag.</summary>
+      <preconditions>Feature flag `:recertificacao` ATIVA na organização
+Curso &#34;Curso API V2 Reinscrição w{workerIndex}&#34; com `has_recertification = true`
+Curso &#34;Curso API V2 SEM Reinscrição w{workerIndex}&#34; com `has_recertification = false`
+Pelo menos 2 alunos pré-cadastrados e elegíveis
+{&#39;Token de acesso à API V2 disponível (REVISAR&#39;: &#39;como obter token em staging)&#39;}</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Pré-condição (setup combinado UI+API): desativar feature flag `:recertificacao` para a org via Super Admin (Flipper) no `beforeAll`; em seguida disparar `POST /api/v2/users/mass` com payload `{&#34;participants&#34;: [{&#34;email&#34;:&#34;aluno_flag_off@example.com&#34;, &#34;event_id&#34;: &lt;id_com_recertification&gt;, &#34;recertification&#34;: true}]}` autenticado. Reativar flag no `afterAll`</actions>
+          <expectedresults>Flag fica OFF; participant criado com `recertification_number = 0` (parâmetro `recertification` ignorado).</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Acessar a URL &#34;/learning_students?event_id={eventIdComRecertification}&#34;</actions>
+          <expectedresults>Listagem exibe linha de &#34;aluno_flag_off@example.com&#34; com `recertification_number = 0`, demonstrando que o parâmetro foi ignorado pela API quando flag OFF.</expectedresults>
           <execution_type>2</execution_type>
         </step>      </steps>
     </testcase>  </testsuite>  <testsuite name="Reinscrição pelo Aluno (Play e Link Público)">    <testcase name="Botão &#34;Reinscreva-se&#34; aparece no banner do Play para aluno elegível">
