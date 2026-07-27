@@ -550,6 +550,7 @@ async function api(path, opts) {
 const PROJ_KEY = 'twygo-qa-project';
 let project = localStorage.getItem(PROJ_KEY) || '';
 let projects = [];
+let atSSE = null;
 const suitesCache = {};
 
 const LABELS = {
@@ -1478,6 +1479,7 @@ async function renderDb(){
 
 // ================= WORKSPACE agent-at (R2) =================
 async function renderAt(){
+  if (atSSE) { atSSE.close(); atSSE = null; }
   $('#view').innerHTML = projectBar('Agentes', 'Análise de Teste') + `<div id="at-body"></div>`;
   wireProjectBar(renderAt);
   const body = $('#at-body');
@@ -1537,6 +1539,7 @@ async function renderAt(){
     const runAtSSE = (path, logEl) => new Promise((resolve) => {
       logEl.textContent = '';
       const es = new EventSource(`${path}?project=${encodeURIComponent(project)}`);
+      atSSE = es;
       es.onmessage = (ev) => {
         const o = JSON.parse(ev.data);
         if (o.type === 'phase') logEl.textContent += `\n▸ ${o.name}\n`;
@@ -1548,25 +1551,28 @@ async function renderAt(){
     });
     $('#at-plan-go').onclick = async () => {
       const btn = $('#at-plan-go'), msg = $('#at-plan-msg'), log = $('#at-plan-log');
-      btn.disabled = true; msg.innerHTML = '<span class="spin"></span> propondo estrutura… (pode levar minutos)';
+      const otherBtn = $('#at-build-go');
+      btn.disabled = true; if (otherBtn) otherBtn.disabled = true;
+      msg.innerHTML = '<span class="spin"></span> propondo estrutura… (pode levar minutos)';
       const o = await runAtSSE('/api/at-plan', log);
-      btn.disabled = false;
-      if (!o.ok || !o.estrutura) { msg.innerHTML = `<b style="color:var(--coral)">Não deu pra propor a estrutura — ver log acima.</b>`; return; }
+      btn.disabled = false; if (otherBtn) otherBtn.disabled = false;
+      if (!o.ok || !o.estrutura) { msg.innerHTML = `<b style="color:var(--coral)">Não deu pra propor a estrutura — se o log acima está vazio, provavelmente já tem uma geração rodando pra este projeto; tente de novo em instantes. Senão, veja o log.</b>`; return; }
       msg.innerHTML = `<span style="color:var(--lime)">✓ estrutura proposta</span>`;
       $('#at-plan-estrutura').value = o.estrutura;
       $('#at-plan-review').style.display = '';
     };
     $('#at-build-go').onclick = async () => {
       const btn = $('#at-build-go'), msg = $('#at-build-msg'), log = $('#at-build-log'), out = $('#at-build-out');
-      btn.disabled = true; msg.innerHTML = '<span class="spin"></span> salvando estrutura aprovada…'; out.innerHTML = '';
+      const otherBtn = $('#at-plan-go');
+      btn.disabled = true; if (otherBtn) otherBtn.disabled = true; msg.innerHTML = '<span class="spin"></span> salvando estrutura aprovada…'; out.innerHTML = '';
       try {
         const ar = await fetch(`/api/at-approve?project=${encodeURIComponent(project)}`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ estrutura: $('#at-plan-estrutura').value }) });
-        if (!ar.ok) { const ad = await ar.json(); msg.innerHTML = `<b style="color:var(--coral)">${escapeHtml(ad.error || ar.statusText)}</b>`; btn.disabled = false; return; }
-      } catch (e) { msg.innerHTML = `<b style="color:var(--coral)">${escapeHtml(e.message)}</b>`; btn.disabled = false; return; }
+        if (!ar.ok) { const ad = await ar.json(); msg.innerHTML = `<b style="color:var(--coral)">${escapeHtml(ad.error || ar.statusText)}</b>`; btn.disabled = false; if (otherBtn) otherBtn.disabled = false; return; }
+      } catch (e) { msg.innerHTML = `<b style="color:var(--coral)">${escapeHtml(e.message)}</b>`; btn.disabled = false; if (otherBtn) otherBtn.disabled = false; return; }
       msg.innerHTML = '<span class="spin"></span> gerando casos + arquivos… (pode levar minutos)';
       const o = await runAtSSE('/api/at-build', log);
-      btn.disabled = false;
-      if (!o.ok) { msg.innerHTML = `<b style="color:var(--coral)">Falhou — ver log acima.</b>`; return; }
+      btn.disabled = false; if (otherBtn) otherBtn.disabled = false;
+      if (!o.ok) { msg.innerHTML = `<b style="color:var(--coral)">Falhou — se o log acima está vazio, provavelmente já tem uma geração rodando pra este projeto ou a estrutura ainda não foi aprovada (refaça o passo 1); senão, veja o log.</b>`; return; }
       msg.innerHTML = `<span style="color:var(--lime)">✓ AT gerada</span>`;
       out.innerHTML = (o.files || []).length ? `<div class="form-hint">Arquivos: ${o.files.map(escapeHtml).join(', ')}</div>` : '<div class="form-hint">Concluído, mas nenhum arquivo esperado foi encontrado — confira o log.</div>';
     };
