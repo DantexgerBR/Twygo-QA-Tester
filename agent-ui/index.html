@@ -693,7 +693,8 @@ function suiteAllCases(s) { return [...(s.cases||[]).map((c,i)=>({ ...c, _suite:
 // os casos que falharam viram retrabalho à parte, não travam o card inteiro em Falhou/Inconclusivo.
 function kqaSuiteBlock(suiteName, cases, tab, state, env, runCases) {
   const key = (c) => (c._suite || suiteName) + '::' + c.name;
-  const vOf = (c) => tab === 'manual' ? mv(state[key(c)]) : ((runCases && runCases[String(c._tc)]) || '');
+  const rc = (c) => runCases && runCases[String(c._tc)];
+  const vOf = (c) => tab === 'manual' ? mv(state[key(c)]) : ((rc(c) && rc(c).status) || '');
   const label = (v) => ({ pass: '✅ Passou', fail: '❌ Falhou' })[v] || '⚠️ Inconclusivo';
   const vs = cases.map(vOf);
   let agg = '⚠️ Inconclusivo';
@@ -703,7 +704,11 @@ function kqaSuiteBlock(suiteName, cases, tab, state, env, runCases) {
     const cm = tab === 'manual' ? mc(state[key(c)]) : '';
     return `${label(vOf(c))} — ${c.name}${cm ? ` (${cm})` : ''}`;
   }).join('\n');
-  return `⇝ QA ⇜\n:: Teste ::\n${agg}\n\n:: Ambiente ::\n🧪 Stage — ${env.stageUrl || '<url do stage>'}${env.orgId ? ` · org ${env.orgId}` : ''}\n\n:: Validação ::\n${validacao}\n\n:: Obs ::\n—\n\n:: Evidência(s) ::\n- <anexe o print da evidência>\n`;
+  // Evidência real do último run (screenshot por caso, via attachment do Playwright) — cai pro placeholder
+  // manual quando não há run casado (tab manual, ou automatizado sem match/nunca rodou).
+  const shots = tab === 'manual' ? [] : cases.flatMap(c => (rc(c) && rc(c).screenshots) || []);
+  const evidencia = shots.length ? shots.map(s => `- ${s}`).join('\n') : '- <anexe o print da evidência>';
+  return `⇝ QA ⇜\n:: Teste ::\n${agg}\n\n:: Ambiente ::\n🧪 Stage — ${env.stageUrl || '<url do stage>'}${env.orgId ? ` · org ${env.orgId}` : ''}\n\n:: Validação ::\n${validacao}\n\n:: Obs ::\n—\n\n:: Evidência(s) ::\n${evidencia}\n`;
 }
 async function kqaEnv(project) {
   try { const c = await api('/api/conn?project=' + encodeURIComponent(project)); return { stageUrl: c.stageUrl, orgId: c.orgId }; } catch { return {}; }

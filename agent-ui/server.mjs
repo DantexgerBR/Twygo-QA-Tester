@@ -427,7 +427,15 @@ const server = createServer(async (req, res) => {
             const m = String(spec.title || '').match(/^TC(\d+)\b/i);
             if (!m) continue;
             const last = (spec.tests || []).flatMap((t) => t.results || []).pop();
-            if (last) byTc[m[1]] = STATUS[last.status] || '';
+            if (!last) continue;
+            // path do attachment é absoluto (fs da máquina que rodou); reports/<run>/artifacts/ tem a MESMA
+            // subpasta (test-artifacts/<pasta>/...) copiada — recorta a partir de "test-artifacts" pra virar
+            // um caminho relativo ao bundle do run (mesma convenção usada no tests.md/report-asset).
+            const screenshots = (last.attachments || [])
+              .filter((a) => a.name === 'screenshot' && a.path)
+              .map((a) => { const i = a.path.replace(/\\/g, '/').indexOf('test-artifacts/'); return i < 0 ? null : 'artifacts/' + a.path.replace(/\\/g, '/').slice(i + 'test-artifacts/'.length); })
+              .filter(Boolean);
+            byTc[m[1]] = { status: STATUS[last.status] || '', screenshots };
           }
           for (const s of (suite.suites || [])) walk(s);
         };
