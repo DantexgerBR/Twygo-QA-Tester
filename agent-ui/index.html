@@ -1581,6 +1581,15 @@ async function renderAt(){
       msg.innerHTML = `<span style="color:var(--lime)">✓ AT gerada</span>`;
       out.innerHTML = (o.files || []).length ? `<div class="form-hint">Arquivos: ${o.files.map(escapeHtml).join(', ')}</div>` : '<div class="form-hint">Concluído, mas nenhum arquivo esperado foi encontrado — confira o log.</div>';
     };
+    try {
+      const er = await fetch('/api/at-estrutura?project=' + encodeURIComponent(project));
+      if (er.ok) {
+        const ed = await er.json();
+        $('#at-plan-msg').innerHTML = `<span style="color:var(--lime)">✓ estrutura proposta</span><span style="color:var(--faint);font-weight:400;font-size:12px"> · carregada do disco (passo 1 já rodado antes)</span>`;
+        $('#at-plan-estrutura').value = ed.estrutura;
+        $('#at-plan-review').style.display = '';
+      }
+    } catch {}
     if (first) {
       const load = async (src) => {
         body.querySelectorAll('.rtab').forEach(t => t.classList.toggle('active', t.dataset.src === src));

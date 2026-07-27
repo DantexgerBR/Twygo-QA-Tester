@@ -778,6 +778,17 @@ const server = createServer(async (req, res) => {
       catch { return json(res, 404, { error: 'test-analysis.md não encontrado' }); }
     }
 
+    // Recarrega uma estrutura-proposta.md já salva em disco (sem disparar claude -p) — pra UI
+    // não perder o passo 1 já pago se o QA navegar pra outra aba e voltar.
+    if (url.pathname === '/api/at-estrutura' && req.method === 'GET') {
+      const project = url.searchParams.get('project');
+      if (!safeSlug(project)) return json(res, 400, { error: 'project inválido' });
+      try {
+        const estrutura = await readFile(join(AAT, 'projects', project, 'output', 'estrutura-proposta.md'), 'utf8');
+        return json(res, 200, { estrutura, approved: /^aprovada:\s*true\s*$/m.test(estrutura) });
+      } catch { return json(res, 404, { error: 'nenhuma estrutura proposta salva ainda' }); }
+    }
+
     // Fases 1-3 do /analyze-test: propõe estrutura de suítes (sem casos ainda) via claude -p headless.
     if (url.pathname === '/api/at-plan') {
       const project = url.searchParams.get('project');
