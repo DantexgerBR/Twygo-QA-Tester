@@ -17,14 +17,7 @@ import {
   parseJsonResponse,
   stripMarkdownFence,
 } from './ai-engine.mjs';
-import { costOf, injectApproved } from './claude-cli.mjs';
-import {
-  AT_ENGINES,
-  atEngineConfigStatus,
-  atEngineLabel,
-  normalizeAtEngine,
-  runAtAgent,
-} from './agent-at-engine.mjs';
+import { costOf, injectApproved, runClaudeSkill } from './claude-cli.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 // Localização dos agentes: env var override > sibling relativo (default). Não fixar o caminho — cada
@@ -105,7 +98,7 @@ async function appendUsage(ev) { const dir = join(__dirname, 'state'); await mkd
 async function loadPrices() { try { return JSON.parse(await readFile(join(__dirname, 'ai-prices.json'), 'utf8')); } catch { return { _default: { in: 0.15, out: 0.6 } }; } }
 // Modelo de IA ativo: env > state/settings.json > default. Configurável na UI (Conexão).
 async function readSettings() { try { return JSON.parse(await readFile(join(__dirname, 'state', 'settings.json'), 'utf8')); } catch { return {}; } }
-async function aiModel() { return process.env.OPENAI_MODEL || (await readSettings()).model || 'gpt-5.6-terra'; }
+async function aiModel() { return process.env.OPENAI_MODEL || (await readSettings()).model || 'gpt-5'; }
 // gpt-5 / o-series (reasoning) só aceitam temperature padrão (1) → omite o custom pra não dar 400.
 function tempOpt(model, t) { return /^(gpt-5|o[134])/i.test(model) ? {} : { temperature: t }; }
 // gpt-5-pro (e o1-pro/o3-pro) só existem na Responses API, não no chat/completions.
@@ -170,18 +163,6 @@ async function aiConfigured() {
   const engine = await aiEngine();
   if (engine === AI_ENGINES.CODEX_CLI && await commandAvailable(process.env.CODEX_CLI_BIN || 'codex')) return true;
   return !!(await codexKey());
-}
-
-// Motor do agente de AT (Análise de Teste): 'codex-cli' (padrão, sem chave) ou 'claude-api'
-// (ANTHROPIC_API_KEY, fallback manual). Separado do seletor "Motor de IA" (aiEngine/aiModel) — ali é
-// completion de 1 tiro; aqui é agente autônomo com bash/arquivo (capacidade diferente, não misturar).
-async function atEngine() { return normalizeAtEngine(process.env.AT_ENGINE || (await readSettings()).atEngine || AT_ENGINES.CODEX_CLI); }
-// Chave da API oficial da Anthropic — cai na exceção do ToS Consumer que proíbe automação sem API key.
-// Só env (sem fallback de arquivo — não há uso hoje fora deste motor).
-async function anthropicKey() { return process.env.ANTHROPIC_API_KEY || ''; }
-async function atConfigured(engine) {
-  if (engine === AT_ENGINES.CLAUDE_API) return !!(await anthropicKey());
-  return await commandAvailable(process.env.CODEX_CLI_BIN || 'codex');
 }
 
 // Chave da IA (Codex) — de .secrets/codex.key (gitignored) ou env. Aceita "NAME=valor" ou a chave crua. NUNCA logar/expor.
@@ -292,51 +273,6 @@ function dbSpecErrors(spec) {
   return e;
 }
 
-function indent(code, spaces) {
-  const pad = ' '.repeat(spaces);
-  return String(code).split('\n').map((l) => (l ? pad + l : l)).join('\n');
-}
-
-// Monta o .spec.ts de validação negativa (skill cenarios-negativos-twygo) de forma DETERMINÍSTICA —
-// só o conteúdo (comentário/setup/cenários/asserção) vem da IA; a FORMA (1 array + 1 test() em loop,
-// nunca N tests separados) é garantida aqui em código, porque testado ao vivo 2x: pedir isso só por
-// prompt não é confiável (gpt-5 ignorou a instrução mesmo com exemplo de código embutido).
-function buildNegativeMatrixSpec(p) {
-  const suiteName = String(p?.suiteName || 'Validações negativas').trim();
-  const fileComment = String(p?.fileComment || 'Validação negativa gerada por IA — revisar antes de usar.').trim();
-  const extraImports = String(p?.extraImports || '').trim();
-  const setupCode = String(p?.setupCode || '// TODO: setup não gerado pela IA — revisar').trim();
-  const assertCode = String(p?.assertCode || '// TODO: asserção não gerada pela IA — revisar').trim();
-  const cleanupCode = String(p?.cleanupCode || '').trim();
-  const scenarios = Array.isArray(p?.scenarios)
-    ? p.scenarios
-        .map((s) => ({ nome: String(s?.nome || ''), categoria: String(s?.categoria || ''), input: String(s?.input ?? ''), esperado: String(s?.esperado || '') }))
-        .filter((s) => s.nome)
-    : [];
-  const warn = scenarios.length ? '' : '// ⚠ AVISO: a IA não devolveu cenários — gere de novo ou preencha "cenarios" à mão.\n';
-  return `/*
-${fileComment}
-Padrão data-driven (skill cenarios-negativos-twygo): 1 array de cenários + 1 test() em loop.
-*/
-import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js';
-${extraImports ? extraImports + '\n' : ''}
-test.describe('${suiteName}', () => {
-  async function openForm(page) {
-${indent(setupCode, 4)}
-  }
-
-  ${warn}const cenarios = ${JSON.stringify(scenarios, null, 2)};
-
-  for (const c of cenarios) {
-    test(\`${suiteName}: \${c.nome} (categoria \${c.categoria})\`, async ({ page }) => {
-      const { fieldInput, saveBtn, errorEl } = await openForm(page);
-${indent(assertCode, 6)}
-    });
-  }
-${cleanupCode ? `\n  test.afterAll(async () => {\n${indent(cleanupCode, 4)}\n  });\n` : ''}});
-`;
-}
-
 // Enxuga a árvore do parsed.json pro que a tela precisa (nome, casos, auto/manual, tipo).
 const trimSuite = (s) => ({
   name: s.name,
@@ -349,7 +285,6 @@ const trimSuite = (s) => ({
     importance: tc.importance || '',
     precond: tc.preconditions || '',             // pré-condições do caso (prosa; pode citar "≥1 curso", "aluno", "flag")
     summary: tc.summary || '',
-    vmatrix: tc.validationMatrix || [],          // matriz de cenários negativos (skill cenarios-negativos-twygo, categorias A-H)
   })),
   children: (s.childSuites || []).map(trimSuite),
 });
@@ -568,8 +503,7 @@ const server = createServer(async (req, res) => {
       }
       const prices = await loadPrices();
       const cur = await aiModel();
-      // ponytail: claude-* está no ai-prices.json só pra precificar o ledger do motor claude-api do agente de AT — não é modelo escolhível pro engine OpenAI/Codex.
-      const models = [...new Set([cur, ...Object.keys(prices).filter((k) => !k.startsWith('_') && !k.startsWith('claude-'))])];
+      const models = [...new Set([cur, ...Object.keys(prices).filter((k) => !k.startsWith('_'))])];
       const engine = await aiEngine();
       return json(res, 200, {
         model: cur, models, engine,
@@ -577,24 +511,6 @@ const server = createServer(async (req, res) => {
         envForced: !!process.env.OPENAI_MODEL,
         engineEnvForced: !!(process.env.AI_ENGINE || process.env.CODEX_AI_ENGINE),
       });
-    }
-
-    // Motor do agente de AT (Codex CLI vs API do Claude). GET → estado dos 2; POST {engine} → grava em state/settings.json.atEngine.
-    if (url.pathname === '/api/at-engine') {
-      if (req.method === 'POST') {
-        let data; try { data = JSON.parse((await readBody(req)) || '{}'); } catch { return json(res, 400, { error: 'json inválido' }); }
-        const dir = join(__dirname, 'state'); await mkdir(dir, { recursive: true });
-        const s = await readSettings(); s.atEngine = normalizeAtEngine(data.engine);
-        await writeFile(join(dir, 'settings.json'), JSON.stringify(s, null, 2));
-        return json(res, 200, { ok: true, engine: await atEngine() });
-      }
-      const engine = await atEngine();
-      const codexCliAvailable = await commandAvailable(process.env.CODEX_CLI_BIN || 'codex');
-      const hasKey = !!(await anthropicKey());
-      const engines = [AT_ENGINES.CODEX_CLI, AT_ENGINES.CLAUDE_API].map((id) => ({
-        id, label: atEngineLabel(id), ...atEngineConfigStatus({ engine: id, codexCliAvailable, hasKey }),
-      }));
-      return json(res, 200, { engine, engines, envForced: !!process.env.AT_ENGINE });
     }
 
     // Custo por token (F2): agrega o ledger de uso × preço do modelo × câmbio USD→BRL do dia.
@@ -689,39 +605,20 @@ const server = createServer(async (req, res) => {
       const project = safeSlug(data.project) ? data.project : '';
       const desc = String(data.description || '').trim();
       if (!desc) return json(res, 400, { error: 'descreva a suíte/funcionalidade.' });
-      let ai, code;
-      if (data.negativeMatrix) {
-        // Matriz de cenários negativos: a FORMA do spec (1 array + 1 test() em loop) é montada em
-        // código (buildNegativeMatrixSpec) — a IA só preenche os pedaços de conteúdo via JSON.
-        const sys = [
-          'Você prepara os PEDAÇOS de um spec Playwright de validação NEGATIVA data-driven (categorias A-H da skill cenarios-negativos-twygo: A=obrigatoriedade, B=boundary, C=caracteres permitidos, D=injection, E=tipo errado, F=extensão de arquivo, G=MIME mismatch, H=tamanho de arquivo). Responda SOMENTE JSON com este formato:',
-          '{"fileComment":"comentário topo: o que valida + nota de cleanup","extraImports":"linhas de import extras (POMs etc.) além de test/expect, uma por linha, ou vazio","suiteName":"título curto da suíte","setupCode":"código async que roda dentro de uma função openForm(page) já declarada — navega (via safeGoto, nunca page.goto cru), abre o formulário/tela, e TERMINA com `return { fieldInput, saveBtn, errorEl };` usando os nomes de variável que fizerem sentido pra tela real","scenarios":[{"nome":"curto","categoria":"A|B|C|D|E|F|G|H","input":"valor literal do cenário","esperado":"comportamento esperado, vira comentário"}],"assertCode":"código que roda DENTRO do loop; já tem em escopo page, fieldInput, saveBtn, errorEl (o que setupCode retornou) e c (cenário atual — c.input/c.categoria/c.esperado/c.nome); preenche fieldInput com c.input e assert conforme c.esperado","cleanupCode":"corpo do test.afterAll, ou string vazia se não precisar"}',
-          '- scenarios: cubra TODAS as categorias A-H que se aplicam ao campo descrito — não invente categoria que não se aplica (ex.: campo texto comum não tem F/G/H, que são de upload).',
-          '- Seletores: getByTestId (data-test-id), escopados pra evitar strict-mode; nunca encadear getByTestId a partir de <input>/<button> void.',
-          '- Ambiente: getBaseUrl()/getOrgId() de src/utils/environment.js dentro do setupCode se precisar — nunca hardcode URL/orgId.',
-        ].join('\n');
-        ai = await aiComplete({ system: sys, user: `Suíte/funcionalidade a testar (projeto ${project || '?'}):\n${desc}\n\nMonte os pedaços do spec de validação negativa.`, json: true, temp: 0.3 });
-        if (!ai.ok) return json(res, 502, { error: friendlyErr(ai.status) });
-        let parts = {};
-        try { parts = parseJsonResponse(ai.content || '{}'); } catch { return json(res, 502, { error: 'a IA não devolveu JSON válido — tente de novo.' }); }
-        code = buildNegativeMatrixSpec(parts);
-      } else {
-        const sys = [
-          'Você gera UM arquivo .spec.ts de teste E2E Playwright NO PADRÃO do repo Twygo QA (agent-playwright). Regras OBRIGATÓRIAS:',
-          '- Cabeçalho em comentário: referência ao MD canônico + o que valida + nota de cleanup.',
-          "- Imports: test/expect de '../../../../../src/fixtures/exploratory-fixture.js', allure-js-commons, POMs de '../../pages/', e um .data.ts irmão pros dados.",
-          '- Ambiente: use getBaseUrl()/getOrgId()/getEnvByName() de src/utils/environment.js — NUNCA hardcode URL nem orgId.',
-          '- Navegação via safeGoto (retry de rede), nunca page.goto cru. Login/storageState já vêm do setup.',
-          '- Seletores: prefira getByTestId (data-test-id), escopados pra evitar strict-mode; NÃO encadeie getByTestId a partir de <input> void.',
-          '- Asserções por INVARIANTE (ex.: "o primeiro item mudou"), NUNCA acopladas a count exato de seed. Timeouts explícitos pós-hydration (SPA Chakra/React).',
-          '- test.describe + um test() por caso; se criar dados, test.afterAll com cleanup via API DELETE.',
-          '- Se a suíte envolver validações negativas de campo (obrigatoriedade/boundary/caracteres/injection), prefira o modo "Matriz de validação negativa" da tela em vez de tentar cobrir aqui — ele garante o padrão data-driven da skill cenarios-negativos-twygo.',
-          '- Responda SOMENTE o código .spec.ts, sem cercas markdown, sem explicação.',
-        ].join('\n');
-        ai = await aiComplete({ system: sys, user: `Suíte/funcionalidade a testar (projeto ${project || '?'}):\n${desc}\n\nGere o .spec.ts completo.`, temp: 0.2 });
-        if (!ai.ok) return json(res, 502, { error: friendlyErr(ai.status) });
-        code = stripMarkdownFence(ai.content || '');
-      }
+      const sys = [
+        'Você gera UM arquivo .spec.ts de teste E2E Playwright NO PADRÃO do repo Twygo QA (agent-playwright). Regras OBRIGATÓRIAS:',
+        '- Cabeçalho em comentário: referência ao MD canônico + o que valida + nota de cleanup.',
+        "- Imports: test/expect de '../../../../../src/fixtures/exploratory-fixture.js', allure-js-commons, POMs de '../../pages/', e um .data.ts irmão pros dados.",
+        '- Ambiente: use getBaseUrl()/getOrgId()/getEnvByName() de src/utils/environment.js — NUNCA hardcode URL nem orgId.',
+        '- Navegação via safeGoto (retry de rede), nunca page.goto cru. Login/storageState já vêm do setup.',
+        '- Seletores: prefira getByTestId (data-test-id), escopados pra evitar strict-mode; NÃO encadeie getByTestId a partir de <input> void.',
+        '- Asserções por INVARIANTE (ex.: "o primeiro item mudou"), NUNCA acopladas a count exato de seed. Timeouts explícitos pós-hydration (SPA Chakra/React).',
+        '- test.describe + um test() por caso; se criar dados, test.afterAll com cleanup via API DELETE.',
+        '- Responda SOMENTE o código .spec.ts, sem cercas markdown, sem explicação.',
+      ].join('\n');
+      const ai = await aiComplete({ system: sys, user: `Suíte/funcionalidade a testar (projeto ${project || '?'}):\n${desc}\n\nGere o .spec.ts completo.`, temp: 0.2 });
+      if (!ai.ok) return json(res, 502, { error: friendlyErr(ai.status) });
+      const code = stripMarkdownFence(ai.content || '');
       await appendUsage({ ts: new Date().toISOString(), action: 'gerar-spec', project, model: ai.model, in: ai.usageIn, out: ai.usageOut });
       let saved = '';
       if (project && code) { // salva rascunho pra revisão (NUNCA sobrescreve spec real) — em projects/<slug>/tests/features/_ia-draft/
@@ -896,17 +793,15 @@ const server = createServer(async (req, res) => {
     if (url.pathname === '/api/at-plan') {
       const project = url.searchParams.get('project');
       if (!safeSlug(project)) return json(res, 400, { error: 'project inválido' });
-      const engine = await atEngine();
-      if (!(await atConfigured(engine))) return json(res, 400, { error: `motor de AT (${atEngineLabel(engine)}) não configurado — veja Conexão/AT.` });
       if (atRunning.has(project)) return json(res, 409, { error: 'já tem uma geração de AT em andamento pra este projeto' });
       atRunning.add(project);
       try {
         res.writeHead(200, { 'content-type': 'text/event-stream; charset=utf-8', 'cache-control': 'no-cache', connection: 'keep-alive', 'x-accel-buffering': 'no' });
         const send = (o) => res.write('data: ' + JSON.stringify(o) + '\n\n');
         send({ type: 'start' });
-        const r = await runAtAgent('plan', { project, engine, cwd: AAT, send, apiKey: await anthropicKey() });
+        const r = await runClaudeSkill(`/analyze-test-plan --project ${project}`, { cwd: AAT, send });
         // nunca lança daqui pra cima — headers SSE já foram enviados, um throw aqui vira unhandled rejection
-        try { await appendUsage({ ts: new Date().toISOString(), action: 'gerar-at-plan', project, model: r.model || engine, in: r.usageIn, out: r.usageOut, usd: r.costUsd }); }
+        try { await appendUsage({ ts: new Date().toISOString(), action: 'gerar-at-plan', project, model: r.model || 'claude', in: r.usageIn, out: r.usageOut, usd: r.costUsd }); }
         catch (e) { console.error('appendUsage falhou (gerar-at-plan):', e); }
         let estrutura = '';
         try { estrutura = await readFile(join(AAT, 'projects', project, 'output', 'estrutura-proposta.md'), 'utf8'); } catch {}
@@ -935,21 +830,19 @@ const server = createServer(async (req, res) => {
     if (url.pathname === '/api/at-build') {
       const project = url.searchParams.get('project');
       if (!safeSlug(project)) return json(res, 400, { error: 'project inválido' });
-      const engine = await atEngine();
-      if (!(await atConfigured(engine))) return json(res, 400, { error: `motor de AT (${atEngineLabel(engine)}) não configurado — veja Conexão/AT.` });
       if (atRunning.has(project)) return json(res, 409, { error: 'já tem uma geração de AT em andamento pra este projeto' });
       atRunning.add(project); // add() logo após has(), sem await no meio — trava atômica antes do check de aprovação
       try {
-        // Guarda-custo: só dispara a geração (cara) se a estrutura já foi aprovada via /api/at-approve.
+        // Guarda-custo: só dispara o /analyze-test (caro) se a estrutura já foi aprovada via /api/at-approve.
         let estruturaAtual = '';
         try { estruturaAtual = await readFile(join(AAT, 'projects', project, 'output', 'estrutura-proposta.md'), 'utf8'); } catch {}
         if (!/^aprovada:\s*true\s*$/m.test(estruturaAtual)) return json(res, 400, { error: 'nenhuma estrutura aprovada pra este projeto ainda — rode /api/at-plan e aprove primeiro' });
         res.writeHead(200, { 'content-type': 'text/event-stream; charset=utf-8', 'cache-control': 'no-cache', connection: 'keep-alive', 'x-accel-buffering': 'no' });
         const send = (o) => res.write('data: ' + JSON.stringify(o) + '\n\n');
         send({ type: 'start' });
-        const r = await runAtAgent('build', { project, engine, cwd: AAT, send, apiKey: await anthropicKey() });
+        const r = await runClaudeSkill(`/analyze-test --project ${project}`, { cwd: AAT, send });
         // nunca lança daqui pra cima — headers SSE já foram enviados, um throw aqui vira unhandled rejection
-        try { await appendUsage({ ts: new Date().toISOString(), action: 'gerar-at-build', project, model: r.model || engine, in: r.usageIn, out: r.usageOut, usd: r.costUsd }); }
+        try { await appendUsage({ ts: new Date().toISOString(), action: 'gerar-at-build', project, model: r.model || 'claude', in: r.usageIn, out: r.usageOut, usd: r.costUsd }); }
         catch (e) { console.error('appendUsage falhou (gerar-at-build):', e); }
         let files = [];
         try { files = (await readdir(join(AAT, 'projects', project, 'output'))).filter((f) => f === 'test-analysis.md' || /^Analise_Teste_.*\.(xmind|xml)$/.test(f)); } catch {}
