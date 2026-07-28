@@ -1,0 +1,957 @@
+{
+  "generatedAt": "2026-07-28T01:26:00.651Z",
+  "summary": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 1,
+    "tests": 2,
+    "outOfScope": {
+      "errors": 43,
+      "warnings": 8,
+      "info": 2
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  },
+  "testsuites": [
+    {
+      "testsuiteName": "Extração de dados de repositórios",
+      "totals": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "byKind": {},
+      "findings": [],
+      "coverage": [
+        {
+          "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+          "totalInteractive": 135,
+          "visibleInteractive": 60,
+          "samples": [
+            {
+              "role": "link",
+              "name": "dashboard-menu"
+            },
+            {
+              "role": "link",
+              "name": "new_contents-menu"
+            },
+            {
+              "role": "link",
+              "name": "shared_events-menu"
+            },
+            {
+              "role": "link",
+              "name": "certificates-menu"
+            },
+            {
+              "role": "link",
+              "name": "content_models-menu"
+            },
+            {
+              "role": "link",
+              "name": "knowledge_repositories-menu"
+            },
+            {
+              "role": "link",
+              "name": "new_library-menu"
+            },
+            {
+              "role": "link",
+              "name": "users-menu"
+            },
+            {
+              "role": "link",
+              "name": "companies-menu"
+            },
+            {
+              "role": "link",
+              "name": "exams-menu"
+            },
+            {
+              "role": "link",
+              "name": "research-menu"
+            },
+            {
+              "role": "link",
+              "name": "assessments-menu"
+            },
+            {
+              "role": "link",
+              "name": "communities-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization_chart-menu"
+            },
+            {
+              "role": "link",
+              "name": "roles-menu"
+            },
+            {
+              "role": "link",
+              "name": "competencies-menu"
+            },
+            {
+              "role": "link",
+              "name": "pdi-menu"
+            },
+            {
+              "role": "link",
+              "name": "performance_development-menu"
+            },
+            {
+              "role": "link",
+              "name": "performance_entries-menu"
+            },
+            {
+              "role": "link",
+              "name": "organization-name-menu"
+            },
+            {
+              "role": "link",
+              "name": "navigation-name-menu"
+            },
+            {
+              "role": "link",
+              "name": "integrations-menu"
+            },
+            {
+              "role": "link",
+              "name": "autopilot-menu"
+            },
+            {
+              "role": "link",
+              "name": "game-rules-menu"
+            },
+            {
+              "role": "link",
+              "name": "comunication-menu"
+            }
+          ]
+        }
+      ],
+      "outOfScope": {
+        "totals": {
+          "errors": 43,
+          "warnings": 8,
+          "info": 2
+        },
+        "byKind": {
+          "console_error": 31,
+          "a11y_violation": 22
+        },
+        "findings": [
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "requestStorageAccess: Permission denied.",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "requestStorageAccess: Permission denied.",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "[a11y/aria-allowed-attr] Elements must only use supported ARIA attributes",
+            "detail": {
+              "ruleId": "aria-allowed-attr",
+              "impact": "critical",
+              "tags": [
+                "cat.aria",
+                "wcag2a",
+                "wcag412",
+                "EN-301-549",
+                "EN-9.4.1.2",
+                "RGAAv4",
+                "RGAA-7.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-allowed-attr?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "#popover-trigger-\\:rd\\:"
+              ],
+              "firstNodeHtml": "<div id=\"popover-trigger-:rd:\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"popover-content-:rd:\" class=\"css-tz0gqg\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "[a11y/button-name] Buttons must have discernible text",
+            "detail": {
+              "ruleId": "button-name",
+              "impact": "critical",
+              "tags": [
+                "cat.name-role-value",
+                "wcag2a",
+                "wcag412",
+                "section508",
+                "section508.22.a",
+                "TTv5",
+                "TT6.a",
+                "EN-301-549",
+                "EN-9.4.1.2",
+                "ACT",
+                "RGAAv4",
+                "RGAA-11.9.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/button-name?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "#open-filter"
+              ],
+              "firstNodeHtml": "<button type=\"button\" class=\"chakra-button css-1py8e62\" id=\"open-filter\" data-test-id=\"filter-control-open-button\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "[a11y/color-contrast] Elements must meet minimum color contrast ratio thresholds",
+            "detail": {
+              "ruleId": "color-contrast",
+              "impact": "serious",
+              "tags": [
+                "cat.color",
+                "wcag2aa",
+                "wcag143",
+                "TTv5",
+                "TT13.c",
+                "EN-301-549",
+                "EN-9.1.4.3",
+                "ACT",
+                "RGAAv4",
+                "RGAA-3.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
+              "affectedNodes": 5,
+              "firstNodeTarget": [
+                ".brand-hidden > .back-dashboard[href$=\"dashboard\"]"
+              ],
+              "firstNodeHtml": "<a class=\"back-dashboard\" href=\"/o/36675/dashboard\">\nTwygo\n</a>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "info",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "[a11y/empty-table-header] Table header text should not be empty",
+            "detail": {
+              "ruleId": "empty-table-header",
+              "impact": "minor",
+              "tags": [
+                "cat.name-role-value",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/empty-table-header?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                ".css-8lx8ui"
+              ],
+              "firstNodeHtml": "<th class=\"css-8lx8ui\"></th>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "[a11y/image-alt] Images must have alternative text",
+            "detail": {
+              "ruleId": "image-alt",
+              "impact": "critical",
+              "tags": [
+                "cat.text-alternatives",
+                "wcag2a",
+                "wcag111",
+                "section508",
+                "section508.22.a",
+                "TTv5",
+                "TT7.a",
+                "TT7.b",
+                "EN-301-549",
+                "EN-9.1.1.1",
+                "ACT",
+                "RGAAv4",
+                "RGAA-1.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/image-alt?application=playwright",
+              "affectedNodes": 3,
+              "firstNodeTarget": [
+                "#mobile-close-menu > img"
+              ],
+              "firstNodeHtml": "<img src=\"/assets/svg/mobile-close-menu.svg\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "[a11y/landmark-one-main] Document should have one main landmark",
+            "detail": {
+              "ruleId": "landmark-one-main",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-one-main?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html lang=\"en\" xml:lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\" class=\"wf-materialicons-n4-inactive wf-materialsymbolsoutlined-n4-inactive wf-inactive\" data-theme=\"light\" style=\"color-scheme: light"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "[a11y/landmark-unique] Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+            "detail": {
+              "ruleId": "landmark-unique",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
+              "affectedNodes": 6,
+              "firstNodeTarget": [
+                ".chakra-portal:nth-child(30) > div[aria-label=\"Notifications-top\"][role=\"region\"][aria-live=\"polite\"]"
+              ],
+              "firstNodeHtml": "<div role=\"region\" aria-live=\"polite\" aria-label=\"Notifications-top\" id=\"chakra-toast-manager...\" style=\"position: fixed; z-i...\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "[a11y/list] <ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+            "detail": {
+              "ruleId": "list",
+              "impact": "serious",
+              "tags": [
+                "cat.structure",
+                "wcag2a",
+                "wcag131",
+                "EN-301-549",
+                "EN-9.1.3.1",
+                "RGAAv4",
+                "RGAA-9.3.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/list?application=playwright",
+              "affectedNodes": 2,
+              "firstNodeTarget": [
+                ".mobile-user-menu > .menu-main"
+              ],
+              "firstNodeHtml": "<ul class=\"menu-main\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "[a11y/meta-viewport] Zooming and scaling must not be disabled",
+            "detail": {
+              "ruleId": "meta-viewport",
+              "impact": "moderate",
+              "tags": [
+                "cat.sensory-and-visual-cues",
+                "wcag2aa",
+                "wcag144",
+                "EN-301-549",
+                "EN-9.1.4.4",
+                "ACT",
+                "RGAAv4",
+                "RGAA-10.4.2"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/meta-viewport?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "meta[name=\"viewport\"]"
+              ],
+              "firstNodeHtml": "<meta content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui\" name=\"viewport\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "[a11y/region] All page content should be contained by landmarks",
+            "detail": {
+              "ruleId": "region",
+              "impact": "moderate",
+              "tags": [
+                "cat.keyboard",
+                "best-practice",
+                "RGAAv4",
+                "RGAA-9.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=playwright",
+              "affectedNodes": 36,
+              "firstNodeTarget": [
+                "#mobile-logo > img[alt=\"Logo - Twygo\"][title=\"Logo - Twygo\"]"
+              ],
+              "firstNodeHtml": "<img title=\"Logo - Twygo\" alt=\"Logo - Twygo\" style=\"height: 50px; align: center\" src=\"https://cdn-stage.twygo.com/assets/twygo-brand-f6d14910670a003a0ff67641a9f5e2cc7661d1f0f9711496dabb7f8d458fe889.pn"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "[a11y/select-name] Select element must have an accessible name",
+            "detail": {
+              "ruleId": "select-name",
+              "impact": "critical",
+              "tags": [
+                "cat.forms",
+                "wcag2a",
+                "wcag412",
+                "section508",
+                "section508.22.n",
+                "TTv5",
+                "TT5.c",
+                "EN-301-549",
+                "EN-9.4.1.2",
+                "ACT",
+                "RGAAv4",
+                "RGAA-11.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/select-name?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "#select_pages"
+              ],
+              "firstNodeHtml": "<select id=\"select_pages\" class=\"chakra-select css-1gq5ikj\"><option value=\"25\" id=\"id_select_25\">25 por página </option><option value=\"50\" id=\"id_select_50\">50 por página </option><option value=\"100\" "
+            },
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "requestStorageAccess: Permission denied.",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "requestStorageAccess: Permission denied.",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "WebSocket connection to 'wss://chat-staging.twygo.com.br/socket.io/?token=&EIO=4&transport=websocket' failed: Error during WebSocket handshake: Unexpected response code: 503",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "Access to XMLHttpRequest at 'https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25' from origin 'https://twygo1772627238.stage.twygoead.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "Failed to load resource: net::ERR_FAILED",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "Access to XMLHttpRequest at 'https://chat-staging.twygo.com.br/v1/notificates/all?page=1&per_page=25' from origin 'https://twygo1772627238.stage.twygoead.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "Failed to load resource: net::ERR_FAILED",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "Failed to load resource: net::ERR_CONNECTION_RESET",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "Failed to load resource: net::ERR_CONNECTION_RESET",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "Failed to load resource: net::ERR_CONNECTION_RESET",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "Failed to load resource: net::ERR_CONNECTION_RESET",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "Failed to load resource: net::ERR_CONNECTION_RESET",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "Failed to load resource: net::ERR_CONNECTION_RESET",
+            "inScope": false
+          },
+          {
+            "kind": "console_error",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "Failed to load resource: net::ERR_CONNECTION_RESET",
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "[a11y/aria-allowed-attr] Elements must only use supported ARIA attributes",
+            "detail": {
+              "ruleId": "aria-allowed-attr",
+              "impact": "critical",
+              "tags": [
+                "cat.aria",
+                "wcag2a",
+                "wcag412",
+                "EN-301-549",
+                "EN-9.4.1.2",
+                "RGAAv4",
+                "RGAA-7.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/aria-allowed-attr?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "#popover-trigger-\\:rd\\:"
+              ],
+              "firstNodeHtml": "<div id=\"popover-trigger-:rd:\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"popover-content-:rd:\" class=\"css-tz0gqg\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "[a11y/button-name] Buttons must have discernible text",
+            "detail": {
+              "ruleId": "button-name",
+              "impact": "critical",
+              "tags": [
+                "cat.name-role-value",
+                "wcag2a",
+                "wcag412",
+                "section508",
+                "section508.22.a",
+                "TTv5",
+                "TT6.a",
+                "EN-301-549",
+                "EN-9.4.1.2",
+                "ACT",
+                "RGAAv4",
+                "RGAA-11.9.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/button-name?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "#open-filter"
+              ],
+              "firstNodeHtml": "<button type=\"button\" class=\"chakra-button css-1py8e62\" id=\"open-filter\" data-test-id=\"filter-control-open-button\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "[a11y/color-contrast] Elements must meet minimum color contrast ratio thresholds",
+            "detail": {
+              "ruleId": "color-contrast",
+              "impact": "serious",
+              "tags": [
+                "cat.color",
+                "wcag2aa",
+                "wcag143",
+                "TTv5",
+                "TT13.c",
+                "EN-301-549",
+                "EN-9.1.4.3",
+                "ACT",
+                "RGAAv4",
+                "RGAA-3.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=playwright",
+              "affectedNodes": 5,
+              "firstNodeTarget": [
+                ".brand-hidden > .back-dashboard[href$=\"dashboard\"]"
+              ],
+              "firstNodeHtml": "<a class=\"back-dashboard\" href=\"/o/36675/dashboard\">\nTwygo\n</a>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "info",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "[a11y/empty-table-header] Table header text should not be empty",
+            "detail": {
+              "ruleId": "empty-table-header",
+              "impact": "minor",
+              "tags": [
+                "cat.name-role-value",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/empty-table-header?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                ".css-8lx8ui"
+              ],
+              "firstNodeHtml": "<th class=\"css-8lx8ui\"></th>"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "[a11y/image-alt] Images must have alternative text",
+            "detail": {
+              "ruleId": "image-alt",
+              "impact": "critical",
+              "tags": [
+                "cat.text-alternatives",
+                "wcag2a",
+                "wcag111",
+                "section508",
+                "section508.22.a",
+                "TTv5",
+                "TT7.a",
+                "TT7.b",
+                "EN-301-549",
+                "EN-9.1.1.1",
+                "ACT",
+                "RGAAv4",
+                "RGAA-1.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/image-alt?application=playwright",
+              "affectedNodes": 3,
+              "firstNodeTarget": [
+                "#mobile-close-menu > img"
+              ],
+              "firstNodeHtml": "<img src=\"/assets/svg/mobile-close-menu.svg\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "[a11y/landmark-one-main] Document should have one main landmark",
+            "detail": {
+              "ruleId": "landmark-one-main",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-one-main?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "html"
+              ],
+              "firstNodeHtml": "<html lang=\"en\" xml:lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\" class=\"wf-materialicons-n4-inactive wf-materialsymbolsoutlined-n4-inactive wf-inactive\" data-theme=\"light\" style=\"color-scheme: light"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "[a11y/landmark-unique] Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+            "detail": {
+              "ruleId": "landmark-unique",
+              "impact": "moderate",
+              "tags": [
+                "cat.semantics",
+                "best-practice"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=playwright",
+              "affectedNodes": 6,
+              "firstNodeTarget": [
+                ".chakra-portal:nth-child(30) > div[aria-label=\"Notifications-top\"][role=\"region\"][aria-live=\"polite\"]"
+              ],
+              "firstNodeHtml": "<div role=\"region\" aria-live=\"polite\" aria-label=\"Notifications-top\" id=\"chakra-toast-manager...\" style=\"position: fixed; z-i...\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "[a11y/list] <ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+            "detail": {
+              "ruleId": "list",
+              "impact": "serious",
+              "tags": [
+                "cat.structure",
+                "wcag2a",
+                "wcag131",
+                "EN-301-549",
+                "EN-9.1.3.1",
+                "RGAAv4",
+                "RGAA-9.3.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/list?application=playwright",
+              "affectedNodes": 2,
+              "firstNodeTarget": [
+                ".mobile-user-menu > .menu-main"
+              ],
+              "firstNodeHtml": "<ul class=\"menu-main\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "[a11y/meta-viewport] Zooming and scaling must not be disabled",
+            "detail": {
+              "ruleId": "meta-viewport",
+              "impact": "moderate",
+              "tags": [
+                "cat.sensory-and-visual-cues",
+                "wcag2aa",
+                "wcag144",
+                "EN-301-549",
+                "EN-9.1.4.4",
+                "ACT",
+                "RGAAv4",
+                "RGAA-10.4.2"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/meta-viewport?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "meta[name=\"viewport\"]"
+              ],
+              "firstNodeHtml": "<meta content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui\" name=\"viewport\">"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "warn",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "[a11y/region] All page content should be contained by landmarks",
+            "detail": {
+              "ruleId": "region",
+              "impact": "moderate",
+              "tags": [
+                "cat.keyboard",
+                "best-practice",
+                "RGAAv4",
+                "RGAA-9.2.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/region?application=playwright",
+              "affectedNodes": 43,
+              "firstNodeTarget": [
+                "#mobile-logo > img[alt=\"Logo - Twygo\"][title=\"Logo - Twygo\"]"
+              ],
+              "firstNodeHtml": "<img title=\"Logo - Twygo\" alt=\"Logo - Twygo\" style=\"height: 50px; align: center\" src=\"https://cdn-stage.twygo.com/assets/twygo-brand-f6d14910670a003a0ff67641a9f5e2cc7661d1f0f9711496dabb7f8d458fe889.pn"
+            },
+            "inScope": false
+          },
+          {
+            "kind": "a11y_violation",
+            "severity": "error",
+            "url": "https://twygo1772627238.stage.twygoead.com/o/37007/knowledge_repositories",
+            "message": "[a11y/select-name] Select element must have an accessible name",
+            "detail": {
+              "ruleId": "select-name",
+              "impact": "critical",
+              "tags": [
+                "cat.forms",
+                "wcag2a",
+                "wcag412",
+                "section508",
+                "section508.22.n",
+                "TTv5",
+                "TT5.c",
+                "EN-301-549",
+                "EN-9.4.1.2",
+                "ACT",
+                "RGAAv4",
+                "RGAA-11.1.1"
+              ],
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/select-name?application=playwright",
+              "affectedNodes": 1,
+              "firstNodeTarget": [
+                "#select_pages"
+              ],
+              "firstNodeHtml": "<select id=\"select_pages\" class=\"chakra-select css-1gq5ikj\"><option value=\"25\" id=\"id_select_25\">25 por página </option><option value=\"50\" id=\"id_select_50\">50 por página </option><option value=\"100\" "
+            },
+            "inScope": false
+          }
+        ]
+      },
+      "activeProbes": {
+        "totals": {
+          "errors": 0,
+          "warnings": 0,
+          "info": 0
+        },
+        "byProbe": {},
+        "findings": []
+      }
+    }
+  ]
+}

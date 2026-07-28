@@ -1,0 +1,171 @@
+{
+  "generatedAt": "2026-07-23T18:35:01.654Z",
+  "project": "base-de-conhecimento",
+  "totalRed": 2,
+  "reports": [
+    {
+      "id": "listagem-basica-de-repositorios__tc2-validar-colunas-obrigatorias-da-listagem",
+      "title": "TC2 — Validar colunas obrigatórias da listagem — Error: expect(locator).toBeVisible() failed",
+      "testsuite": "Listagem básica de repositórios",
+      "testcase": "TC2 — Validar colunas obrigatórias da listagem",
+      "file": "projects/base-de-conhecimento/tests/features/listagem-basica-de-repositorios/tc2-validar-colunas-obrigatorias.spec.ts",
+      "status": "failed",
+      "durationMs": 49635,
+      "categoriaSugerida": "inconclusivo",
+      "categoriaConfianca": "baixa",
+      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
+      "severity": "media",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-base-de-conhecimento",
+        "baseUrl": "https://twygo1772627238.stage.twygoead.com/",
+        "orgId": "37007",
+        "browser": "chromium",
+        "user": "dante.tavares@twygo.com"
+      },
+      "buildCommit": "b735b34",
+      "generatedAt": "2026-07-23T18:35:01.654Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Navegar para /o/{orgId}/knowledge_repositories e verificar container",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "2. Verificar colunas obrigatórias: Nome, Descrição, Categoria, Classificação",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: expect(locator).toBeVisible() failed\n\nLocator: getByRole('columnheader', { name: 'Categoria' })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 10000ms\n  - waiting for getByRole('columnheader', { name: 'Categoria' })\n",
+      "errorLocation": "D:\\Estudo\\Programação\\cursor\\twygo-work\\Twygo-QA-Tester\\agent-playwright\\projects\\base-de-conhecimento\\tests\\features\\listagem-basica-de-repositorios\\tc2-validar-colunas-obrigatorias.spec.ts:30:11",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-base-de-conhecime-f1abe-as-obrigatórias-da-listagem-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-base-de-conhecime-f1abe-as-obrigatórias-da-listagem-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-base-de-conhecime-f1abe-as-obrigatórias-da-listagem-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-base-de-conhecime-f1abe-as-obrigatórias-da-listagem-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-base-de-conhecime-f1abe-as-obrigatórias-da-listagem-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37007",
+        "userId": null
+      }
+    },
+    {
+      "id": "listagem-basica-de-repositorios__tc4-validar-empty-state-quando-nao-ha-repositorios",
+      "title": "TC4 — Validar empty state quando não há repositórios — Error: expect(locator).toBeVisible() failed",
+      "testsuite": "Listagem básica de repositórios",
+      "testcase": "TC4 — Validar empty state quando não há repositórios",
+      "file": "projects/base-de-conhecimento/tests/features/listagem-basica-de-repositorios/tc4-validar-empty-state.spec.ts",
+      "status": "failed",
+      "durationMs": 47117,
+      "categoriaSugerida": "inconclusivo",
+      "categoriaConfianca": "baixa",
+      "categoriaJustificativa": "Sem sinal Network in-scope ou padrão de erro conhecido — revisar trace",
+      "severity": "media",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-base-de-conhecimento",
+        "baseUrl": "https://twygo1772627238.stage.twygoead.com/",
+        "orgId": "37007",
+        "browser": "chromium",
+        "user": "dante.tavares@twygo.com"
+      },
+      "buildCommit": "b735b34",
+      "generatedAt": "2026-07-23T18:35:01.654Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Navegar para a listagem (env sem repositórios seedados)",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "2. Verificar exibição do empty state",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Error: expect(locator).toBeVisible() failed\n\nLocator: getByText('Não há dados para exibir')\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 10000ms\n  - waiting for getByText('Não há dados para exibir')\n",
+      "errorLocation": "D:\\Estudo\\Programação\\cursor\\twygo-work\\Twygo-QA-Tester\\agent-playwright\\projects\\base-de-conhecimento\\tests\\features\\listagem-basica-de-repositorios\\tc4-validar-empty-state.spec.ts:60:57",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-base-de-conhecime-6955a--quando-não-há-repositórios-chromium/test-finished-1.png"
+        },
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-base-de-conhecime-6955a--quando-não-há-repositórios-chromium/test-failed-2.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-base-de-conhecime-6955a--quando-não-há-repositórios-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-base-de-conhecime-6955a--quando-não-há-repositórios-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-base-de-conhecime-6955a--quando-não-há-repositórios-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-base-de-conhecime-6955a--quando-não-há-repositórios-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37007",
+        "userId": null
+      }
+    }
+  ]
+}

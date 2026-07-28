@@ -1,0 +1,29 @@
+{
+  "runId": "extracao-de-dados-de-repositorios_20260727-222602",
+  "scope": "Apenas testsuite contendo \"Extração de dados de repositórios\"",
+  "tests": {
+    "total": 2,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 56041
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 1,
+    "tests": 2,
+    "outOfScope": {
+      "errors": 43,
+      "warnings": 8,
+      "info": 2
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

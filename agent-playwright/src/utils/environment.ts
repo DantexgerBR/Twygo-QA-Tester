@@ -106,6 +106,9 @@ function expandEntry(name: string): EnvEntry | undefined {
   const cached = expandedEnvCache.get(name);
   if (cached) return cached;
   const expanded = expandEnvRefs(raw[name]!, `${FILES.environment} (env "${name}")`);
+  // Override de baseUrl vindo da UI (Conexão → "mudar URL do stage"). Só ativa se a env var existir;
+  // sem ela, comportamento inalterado. Aponta a run inteira (login/smoke/specs) pro stage escolhido.
+  if (process.env.QA_UI_BASE_URL) expanded.baseUrl = process.env.QA_UI_BASE_URL;
   expandedEnvCache.set(name, expanded);
   return expanded;
 }

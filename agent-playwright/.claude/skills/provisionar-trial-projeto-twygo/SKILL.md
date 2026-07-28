@@ -1,7 +1,7 @@
 ---
 name: provisionar-trial-projeto-twygo
-description: Playbook interativo Claude+executor para provisionar 1 organização Trial dedicada (ICP "Outros" / coluna `icp5`) ao iniciar suite Trial num projeto Twygo. Sequência de 8 passos com 4 pausas manuais (DB update na `organization_icps.icp5`, email unlock, feature flags, contrato) e 1 etapa automatizada Claude (criação via /new/register/steps com intenção "Outros"). Produz `projects/<slug>/data/trial-env.json` com URL + email + ref a senha. Substitui a tentativa anterior de 5 envs Trial compartilhados (inviável porque a exclusão zera o env) e a de 5 Trials por projeto (custo alto por valor marginal — 1 Trial por projeto basta). Use ao iniciar QUALQUER suite Trial nova num projeto.
-version: 1.0.0
+description: Playbook interativo Claude+executor para provisionar 1 organização Trial dedicada (ICP "Outros" / coluna `icp5`) ao iniciar suite Trial num projeto Twygo. Sequência de 8 passos com 4 pausas manuais (DB update na `organization_icps.icp5`, email unlock, feature flags, contrato) e 1 etapa automatizada Claude (criação via POST `/api/v2/external_onboarding` com intenção "Outros"). Produz `projects/<slug>/data/trial-env.json` com URL + email + ref a senha. Substitui a tentativa anterior de 5 envs Trial compartilhados (inviável porque a exclusão zera o env) e a de 5 Trials por projeto (custo alto por valor marginal — 1 Trial por projeto basta). Use ao iniciar QUALQUER suite Trial nova num projeto.
+version: 1.1.0
 ---
 
 # provisionar-trial-projeto-twygo
@@ -86,58 +86,80 @@ Executor responde com confirmação explícita. Claude valida:
 - ❌ "deu erro X" → Claude pausa, pede diagnóstico do erro, não inventa
   workaround (escalation pro QA Lead se erro persistir).
 
-### Passo 3 — Claude cria 1 Trial via Playwright MCP
+### Passo 3 — Claude cria 1 Trial via API `/external_onboarding`
 
-Rota canônica: `https://stage.twygoead.com/new/register/steps`
+**Substituído o wizard por chamada direta à API** (v1.1 — antes exigia
+Playwright MCP dirigindo `/new/register/steps`; API é mais robusta,
+sem DOM/captcha, e devolve org_id/slug na hora).
 
-Claude executa o wizard completo escolhendo **intenção de uso "Outros"**
-(corresponde à coluna `icp5` atualizada no Passo 1).
+Endpoint: `POST https://stage.twygo.com/api/v2/external_onboarding`
 
-**Dados a preencher** (convenção sugerida — ajustar se projeto tiver outra):
+Corpo:
 
-- **Email**: `qa+<slug>-trial@twygo.com` (ex: `qa+widgets-trial@twygo.com`)
-- **Senha**: gerada por Claude (12+ chars, mix letras/números/símbolo).
-  Salvar em buffer temporário pra Passo 8.
-- **Nome da empresa / org**: `Trial QA <Slug>` (ex: `Trial QA Widgets`)
-- **Intenção de uso**: select com o rótulo **"Outros"** — único valor
-  aceito por este fluxo. Se executor pediu outro ICP, parar e pedir
-  esclarecimento (provavelmente engano).
-- **Outros campos do wizard**: dados de teste mínimos (nome, telefone
-  placeholder, etc).
+```json
+{
+  "name": "Trial QA <Slug>",
+  "email": "qa+<slug>-trial@twygo.com",
+  "environment_name": "trial-qa-<slug>",
+  "phone": "+55 (99) 9.9999-9999",
+  "icp": "other"
+}
+```
+
+- **email**: `qa+<slug>-trial@twygo.com` (convenção — ex:
+  `qa+widgets-trial@twygo.com`).
+- **environment_name**: `trial-qa-<slug>` — corresponde à intenção de
+  uso "Outros" / coluna `icp5` atualizada no Passo 1.
+- **icp**: sempre `"other"` — único valor aceito por este fluxo. Se
+  executor pediu outro ICP, parar e pedir esclarecimento (provavelmente
+  engano).
+- **Não envia senha** — a senha é escolhida pelo executor no link de
+  unlock do email (Passo 4), não gerada por Claude.
+
+A resposta traz **org_id/slug da Trial já criada** — Claude não precisa
+mais esperar o unlock pra saber qual org foi provisionada.
+
+⚠️ **Risco documentado**: este endpoint não está nas collections
+Postman versionadas do repo (`docs/postman-collections/`) — uso interno
+conhecido, mas sem contrato oficial documentado. Se passar a
+falhar/mudar de formato, o fallback é o wizard `/new/register/steps`
+(versão anterior desta skill, v1.0).
 
 **Tratamento de erros**:
-- Se o wizard falhar (validação rejeita email, captcha, etc), Claude
-  reporta no prompt e pergunta: tentar de novo? abortar?
+- Se a API retornar erro (validação, rate limit), Claude reporta no
+  prompt e pergunta: tentar de novo? cair pro wizard manual? abortar?
 - Se a falha vier de "ICP base não configurado" / dados copiados vazios,
   provavelmente Passo 1 não foi efetivo (DB update não aplicado de fato).
 
-Claude registra em buffer interno: `{ email, password, registeredAt }`.
-Ainda **não conhece a URL final** — vem só após o unlock.
+Claude registra em buffer interno: `{ email, orgId, slug, registeredAt }`.
+A URL final (`https://<slug>.stage.twygoead.com/`) já pode ser inferida
+do slug — não depende mais do unlock pra ser conhecida.
 
 ### Passo 4 — Claude solicita unlock de email
 
 > **Provisionamento Trial — Passo 4/8**
 >
-> Criei a conta Trial via wizard. O produto enviou email de
-> confirmação/desbloqueio para `qa+<slug>-trial@twygo.com`.
+> Criei a conta Trial via API (org/slug `<slug-da-api>`). O produto
+> enviou email de confirmação/desbloqueio para
+> `qa+<slug>-trial@twygo.com`.
 >
 > **Por favor**:
 > 1. Acesse a caixa de email da QA.
 > 2. Clique no link de desbloqueio da Trial.
-> 3. Após desbloqueio, o produto redireciona para a URL única da Trial
->    (formato `https://<slug-único>.stage.twygoead.com/`).
-> 4. **Me retorne a URL** (cole no prompt).
+> 3. **Crie sua senha** na própria página de unlock (não preciso saber
+>    qual é — grave direto no `.env`, ver Passo 8).
+> 4. **Me confirme** quando tiver feito isso.
 
-Claude **espera** — não segue sem a URL.
+Claude **espera** — não segue sem a confirmação.
 
-### Passo 5 — Executor devolve URL
+### Passo 5 — Executor confirma unlock (URL já conhecida)
 
-Executor cola a URL no prompt. Claude valida:
-- URL casa pattern `^https://[a-z0-9-]+\.stage\.twygoead\.com/?$`.
-- É a única URL na resposta (não embaralhada com texto extra).
+Como o org_id/slug já veio da API no Passo 3, Claude **não pede mais
+pra colar a URL** — só confirma que unlock+senha foram concluídos.
 
-Se malformada, Claude pergunta especificamente o que está errado e pede
-correção — **não advinha**.
+Se o executor reportar um slug/URL diferente do que a API devolveu no
+Passo 3, Claude **para e pergunta** antes de seguir — pode indicar que
+o unlock apontou pra org errada.
 
 ### Passo 6 — Claude solicita verificação de feature flags + contrato
 
@@ -190,7 +212,7 @@ Decisão é do executor — Claude NÃO escolhe sozinho.
   "_baseOrgId": "<orgId do env base, vem de getOrgId() em runtime>",
   "_baseEnvName": "staging-widgets",
   "icp": "other",
-  "url": "<url gerada pelo wizard /new/register/steps, ex: https://<slug>.stage.twygoead.com/>",
+  "url": "<url montada do slug devolvido pela API /external_onboarding, ex: https://<slug>.stage.twygoead.com/>",
   "email": "<email de QA dedicado ao Trial>",
   "passwordEnvVar": "TWYGO_WIDGETS_TRIAL_PASSWORD"
 }
@@ -336,8 +358,8 @@ Playwright executáveis):
 
 | TC do XML | Como o playbook cobre |
 |---|---|
-| **"Criação de trial via URL com painéis pré-definidos"** | Passo 3 do playbook executa o wizard `/new/register/steps`. As asserções do TC ("Trial criado", "painéis pré-definidos aparecem na lista", "menu acessível como aluno") são side-effects validados pelo executor nos passos 5 (recebe URL) e 7 (confere flags+contrato). Spec correspondente fica `test.fixme` com `executionType: manual` linkando este playbook. |
-| **"Criação de trial via API com painéis pré-definidos"** | **Override consciente** — não testamos criação via API. Coberta pelo mesmo wizard do TC anterior. Spec correspondente fica `test.fixme` permanente com mensagem documentando o override (decisão time QA 2026-05-15). |
+| **"Criação de trial via URL com painéis pré-definidos"** | Passo 3 do playbook cria a Trial via `POST /api/v2/external_onboarding` (v1.1 — antes era wizard `/new/register/steps`). As asserções do TC ("Trial criado", "painéis pré-definidos aparecem na lista", "menu acessível como aluno") são side-effects validados pelo executor nos passos 5 (confirma unlock) e 7 (confere flags+contrato). Spec correspondente fica `test.fixme` com `executionType: manual` linkando este playbook. |
+| **"Criação de trial via API com painéis pré-definidos"** | **Parcialmente coberto (v1.1)** — o playbook passou a usar essa mesma API como mecanismo de provisionamento (Passo 3), mas isso não constitui um spec automatizado validando as asserções específicas do TC (ex.: resposta/contrato da API do ponto de vista do cliente externo). Spec correspondente segue `test.fixme` — decisão original do time QA 2026-05-15 de não criar spec dedicado permanece, só a nota de "não usamos a API" ficou desatualizada. |
 
 Como resultado, projetos Twygo executam apenas TC3 (Exclusão SophiaTech)
 e TC4 (Exclusão Admin) automatizados; TC1 e TC2 são "manuais
@@ -347,9 +369,11 @@ auto-assistidos" via este playbook.
 
 - [[testar-exclusao-dados-trial-twygo]] — consome `trial-env.json`
   gerado por esta skill pra rodar os specs de exclusão.
-- [[fechar-modais-twygo]] — o wizard de `/new/register/steps` pode
-  acionar modais oportunistas (cookie banner, NPS); generator deve
-  plugar `dismissCommonModals` antes de cada submit do wizard.
+- [[fechar-modais-twygo]] — relevante só no fallback wizard
+  `/new/register/steps` (não no caminho primário via API v1.1+): o
+  wizard pode acionar modais oportunistas (cookie banner, NPS); generator
+  deve plugar `dismissCommonModals` antes de cada submit se cair nesse
+  fallback.
 - [[trocar-perfil-twygo]] — após provisionar, alguns specs Trial podem
   precisar trocar perfil Admin ↔ Aluno pra validar visão por persona.
 
@@ -376,7 +400,7 @@ quê não automatizar mais?
 | DB write em `organization_icps.icp5` | Claude não tem credencial DB (e não deveria — separação de privilégios). |
 | Email unlock | Caixa de email é do executor; abrir programaticamente exigiria credencial. |
 | Feature flags + contrato | Variam por projeto. Sem regra única automatizável. |
-| Senha em `.env` | Senha gerada por Claude não deve trafegar via tool result pra histórico do prompt — executor "pega no buffer" significa Claude exibe uma vez, executor copia, conversa segue. |
+| Senha em `.env` | Desde v1.1, o executor define a própria senha na página de unlock (Claude nunca gera nem vê) — evita expor senha via tool result no histórico do prompt. Executor grava direto em `.env`. |
 
 Cada pausa custa ~30s do executor. Total ~2min de interação humana
 distribuída ao longo de ~3-5min de execução. Vale o custo: provisionar

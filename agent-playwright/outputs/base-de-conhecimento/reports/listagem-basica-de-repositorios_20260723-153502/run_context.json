@@ -1,0 +1,11 @@
+{
+  "runId": "listagem-basica-de-repositorios_20260723-153502",
+  "mode": "per-suite",
+  "suiteFilter": "Listagem básica de repositórios",
+  "projectName": "Base de Conhecimento",
+  "environment": "staging-base-de-conhecimento",
+  "browsers": [
+    "chromium"
+  ],
+  "generatedAt": "2026-07-23T18:35:02.900Z"
+}

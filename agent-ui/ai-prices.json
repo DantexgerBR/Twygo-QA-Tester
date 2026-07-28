@@ -1,6 +1,11 @@
 {
-  "_nota": "Preços em USD por 1 milhão de tokens (entrada/saída). CONFIRA no painel do provedor — preços mudam. Edite este arquivo pra atualizar. ⚠️ gpt-5-pro/gpt-5 abaixo são PLACEHOLDER (chute) — ajuste com o preço real do painel OpenAI.",
-  "_fonte": "https://openai.com/api/pricing/  (valores aproximados de referência)",
+  "_nota": "Preços em USD por 1 milhão de tokens (entrada/saída). As chaves aqui também alimentam o seletor de Modelo de IA na Conexão — modelo fora desta lista cai no _default. CONFIRA no painel do provedor, preço muda. ponytail: só a tarifa Standard de contexto curto; contexto longo custa ~2x — modelar só se alguma geração passar do limite.",
+  "_fonte": "https://openai.com/api/pricing/ (aba API › Flagship models, Standard) — conferido em 28/07/2026. claude-*: platform.claude.com/docs (Sonnet 5 = 3/15; intro 2/10 até 31/08/2026).",
+  "_nota_claude": "As linhas de claude-* no ledger já gravam o usd REAL do Claude CLI (total_cost_usd) e costOf() usa esse valor — o preço abaixo é só rede de segurança se algum dia vier linha sem usd. Editar este número NÃO muda o custo já registrado.",
+  "gpt-5.6-sol": { "in": 5.00, "out": 30.00 },
+  "gpt-5.6-terra": { "in": 2.50, "out": 15.00 },
+  "gpt-5.6-luna": { "in": 1.00, "out": 6.00 },
+  "gpt-5.5-pro": { "in": 30.00, "out": 180.00 },
   "gpt-5-pro": { "in": 15.00, "out": 120.00 },
   "gpt-5": { "in": 1.25, "out": 10.00 },
   "gpt-5-mini": { "in": 0.25, "out": 2.00 },
@@ -9,5 +14,6 @@
   "gpt-4.1-mini": { "in": 0.40, "out": 1.60 },
   "gpt-4.1": { "in": 2.00, "out": 8.00 },
   "o4-mini": { "in": 1.10, "out": 4.40 },
-  "_default": { "in": 0.15, "out": 0.60 }
+  "claude-sonnet-5": { "in": 3.00, "out": 15.00 },
+  "_default": { "in": 1.00, "out": 6.00 }
 }

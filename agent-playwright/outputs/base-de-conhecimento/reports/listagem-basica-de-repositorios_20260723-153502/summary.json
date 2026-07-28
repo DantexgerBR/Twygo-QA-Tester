@@ -1,0 +1,29 @@
+{
+  "runId": "listagem-basica-de-repositorios_20260723-153502",
+  "scope": "Apenas testsuite contendo \"Listagem básica de repositórios\"",
+  "tests": {
+    "total": 4,
+    "passed": 2,
+    "failed": 2,
+    "skipped": 0,
+    "durationMs": 171587
+  },
+  "exploratory": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 1,
+    "tests": 4,
+    "outOfScope": {
+      "errors": 62,
+      "warnings": 17,
+      "info": 3
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "generatedAt": "2026-07-27T15:40:18.956Z",
+  "summary": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "testsuites": 0,
+    "tests": 0,
+    "outOfScope": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0
+    },
+    "activeProbes": {
+      "errors": 0,
+      "warnings": 0,
+      "info": 0,
+      "tests": 0
+    }
+  },
+  "testsuites": []
+}

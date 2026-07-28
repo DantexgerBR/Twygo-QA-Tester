@@ -49,6 +49,13 @@ export type Priority = 'critical' | 'high' | 'medium' | 'low';
 export type TcType = 'ui' | 'api' | 'db' | 'mixed';
 export type Executor = 'playwright' | 'api' | 'db' | 'pentest';
 
+export type ValidationMatrixRow = {
+  cenario: string;
+  categoria: string;
+  input: string;
+  esperado: string;
+};
+
 export type ParsedTestCase = {
   name: string;
   internalId?: string;
@@ -62,6 +69,9 @@ export type ParsedTestCase = {
   priority?: Priority;
   type?: TcType;
   playbooksAdicionais?: string[];
+  // ===== Extras do MD canônico (CONTRACT.md v1.1 §15 — skill cenarios-negativos-twygo) =====
+  rnsCobertas?: string[];
+  validationMatrix?: ValidationMatrixRow[];
 };
 
 export type ParsedTestSuite = {
@@ -259,6 +269,74 @@ function parseStepsBlock(text: string): ParsedStep[] {
   return steps;
 }
 
+function parseRnsCobertas(value: string): string[] {
+  const trimmed = value.trim();
+  if (trimmed === '[]' || trimmed === '' || trimmed === '—' || trimmed === '-') return [];
+  if (trimmed.startsWith('[')) {
+    try {
+      const arr = parseYaml(trimmed);
+      // RNs podem vir como número (1.1) — normaliza pra string.
+      return Array.isArray(arr) ? arr.map(String) : [];
+    } catch {
+      return [];
+    }
+  }
+  return trimmed
+    .split(',')
+    .map((s) => s.trim())
+    .filter((s) => s);
+}
+
+function splitTableRow(line: string): string[] {
+  return line
+    .trim()
+    .replace(/^\|/, '')
+    .replace(/\|$/, '')
+    .split('|')
+    .map((p) => p.trim());
+}
+
+// Header aceita variações (sem acento, sinônimo) — mesmo mapeamento do
+// md_canonical_parser.py (agent-at), pra manter os dois parsers coerentes.
+const VALIDATION_MATRIX_HEADER_MAP: Record<string, string> = {
+  cenário: 'cenario',
+  cenario: 'cenario',
+  categoria: 'categoria',
+  cat: 'categoria',
+  input: 'input',
+  entrada: 'input',
+  esperado: 'esperado',
+  resultado: 'esperado',
+  'resultado esperado': 'esperado',
+};
+
+function parseValidationMatrix(tableMd: string): ValidationMatrixRow[] {
+  const lines = tableMd
+    .trim()
+    .split('\n')
+    .map((l) => l.trim())
+    .filter((l) => l);
+  if (lines.length < 2) return [];
+  const cols = splitTableRow(lines[0]).map((h) => VALIDATION_MATRIX_HEADER_MAP[h.toLowerCase()] ?? h.toLowerCase());
+  const rows: ValidationMatrixRow[] = [];
+  for (const line of lines.slice(1)) {
+    const cells = splitTableRow(line);
+    if (cells.every((c) => /^[-:]*$/.test(c))) continue; // linha separadora |---|---|
+    if (cells.length !== cols.length) continue;
+    const row: Record<string, string> = {};
+    cols.forEach((c, i) => {
+      row[c] = cells[i];
+    });
+    rows.push({
+      cenario: row.cenario || '',
+      categoria: row.categoria || '',
+      input: row.input || '',
+      esperado: row.esperado || '',
+    });
+  }
+  return rows;
+}
+
 function parseTcMetaLine(line: string, key: string): string | null {
   // Match: **<key>**: <valor>
   const m = line.match(new RegExp(`^\\*\\*${key}\\*\\*:\\s*(.+)$`));
@@ -328,6 +406,16 @@ function parseTestCaseBlock(
     }
   }
 
+  // ===== Campos novos em contract_version 1.1 (CONTRACT.md §15) =====
+  // Buscados no body inteiro (não só nas linhas '**...**' de cima) porque a
+  // tabela do Validation matrix pode vir antes do ### Objetivo OU dentro do
+  // ### Passos, dependendo do TC (ver skill cenarios-negativos-twygo).
+  const rnsMatch = body.match(/^\*\*RNs cobertas\*\*:\s*(\[.*?\]|\S.*)$/m);
+  const rnsCobertas = rnsMatch ? parseRnsCobertas(rnsMatch[1]) : [];
+
+  const matrixMatch = body.match(/^\*\*Validation matrix\*\*:\s*\n((?:\|.+\|\s*\n?)+)/m);
+  const validationMatrix = matrixMatch ? parseValidationMatrix(matrixMatch[1]) : [];
+
   // Split por header H3 (`### `) para isolar Objetivo / Passos / outros.
   // Evita regex com flag `m` + `$` lookahead (que casava muito cedo).
   const h3Sections = body.split(/^###\s+/m);
@@ -360,6 +448,8 @@ function parseTestCaseBlock(
     priority,
     type,
     playbooksAdicionais,
+    rnsCobertas,
+    validationMatrix,
   };
 
   if (steps.length === 0) {

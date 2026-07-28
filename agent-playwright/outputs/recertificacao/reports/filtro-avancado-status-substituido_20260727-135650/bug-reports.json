@@ -1,0 +1,93 @@
+{
+  "generatedAt": "2026-07-27T16:56:49.490Z",
+  "project": "recertificacao",
+  "totalRed": 1,
+  "reports": [
+    {
+      "id": "filtro-avancado-status-substituido__tc2-filtrar-por-substituido-exibe-apenas-alunos-com-certificate-status-4",
+      "title": "TC2 — Filtrar por \"Substituído\" exibe apenas alunos com certificate_status = 4 — Test timeout of 120000ms exceeded.",
+      "testsuite": "Filtro Avançado Status Substituído",
+      "testcase": "TC2 — Filtrar por \"Substituído\" exibe apenas alunos com certificate_status = 4",
+      "file": "projects/recertificacao/tests/features/filtro-avancado-status-substituido/tc2-filtrar-por-substituido-exibe-status-4.spec.ts",
+      "status": "timedOut",
+      "durationMs": 128855,
+      "categoriaSugerida": "spec-fragil",
+      "categoriaConfianca": "media",
+      "categoriaJustificativa": "Timeout sem HTTP error — possível wait/seletor frágil. Confirmar via chrome-mcp",
+      "severity": "baixa",
+      "severityRevisar": true,
+      "environment": {
+        "name": "staging-recertificacao",
+        "baseUrl": "https://recertificacao-testeqa.stage.twygoead.com/",
+        "orgId": "37048",
+        "browser": "chromium",
+        "user": "agents.qa@claude.com"
+      },
+      "buildCommit": "7e29862",
+      "generatedAt": "2026-07-27T16:56:49.490Z",
+      "reproSteps": [
+        {
+          "n": 1,
+          "action": "1. Acessar a lista de aprendizagem em \"/learning_students\" → Lista exibe todos os alunos",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 2,
+          "action": "2. Abrir o filtro avançado de \"Status do certificado\", marcar APENAS a opção \"Substituído\" e aplicar → Drawer fecha, listagem refilra",
+          "status": "passed",
+          "errorAtStep": false
+        },
+        {
+          "n": 3,
+          "action": "3. Inspecionar as linhas listadas → Apenas alunos com certificate_status = 4 aparecem; demais (VALID, EXPIRED, PENDING) ficam ocultos",
+          "status": "failed",
+          "errorAtStep": true
+        }
+      ],
+      "expected": "[REVISAR — preencher com expectedresults do XML do step que falhou]",
+      "observed": "Test timeout of 120000ms exceeded.",
+      "errorLocation": "",
+      "network": [],
+      "console": [],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relPath": "test-artifacts/projects-recertificacao-te-f6b62-os-com-certificate-status-4-chromium/test-failed-1.png"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-recertificacao-te-f6b62-os-com-certificate-status-4-chromium/video-1.webm"
+        },
+        {
+          "name": "video",
+          "relPath": "test-artifacts/projects-recertificacao-te-f6b62-os-com-certificate-status-4-chromium/video.webm"
+        },
+        {
+          "name": "error-context",
+          "relPath": "test-artifacts/projects-recertificacao-te-f6b62-os-com-certificate-status-4-chromium/error-context.md"
+        },
+        {
+          "name": "trace",
+          "relPath": "test-artifacts/projects-recertificacao-te-f6b62-os-com-certificate-status-4-chromium/trace.zip"
+        }
+      ],
+      "taxaReproducao": "1/1 nesta execução",
+      "taxaRevisar": true,
+      "regressao": "desconhecida",
+      "regressaoRevisar": true,
+      "impacto": "desconhecido",
+      "impactoRevisar": true,
+      "isolamento": {
+        "outroUsuario": null,
+        "outraOrg": null,
+        "revisar": true
+      },
+      "workaround": null,
+      "ids": {
+        "orgId": "37048",
+        "userId": null
+      }
+    }
+  ]
+}

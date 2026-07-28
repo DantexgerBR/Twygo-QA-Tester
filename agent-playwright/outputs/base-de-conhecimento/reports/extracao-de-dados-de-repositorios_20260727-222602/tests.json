@@ -1,0 +1,353 @@
+{
+  "config": {
+    "configFile": "D:\\Estudo\\Programação\\cursor\\twygo-work\\Twygo-QA-Tester\\agent-playwright\\playwright.config.ts",
+    "rootDir": "D:/Estudo/Programação/cursor/twygo-work/Twygo-QA-Tester/agent-playwright",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "D:\\Estudo\\Programação\\cursor\\twygo-work\\Twygo-QA-Tester\\agent-playwright\\tests\\setup\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/Estudo/Programação/cursor/twygo-work/Twygo-QA-Tester/agent-playwright/outputs/base-de-conhecimento/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "D:/Estudo/Programação/cursor/twygo-work/Twygo-QA-Tester/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "tests/setup/**/*.spec.ts",
+          "projects/base-de-conhecimento/tests/features/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "D:/Estudo/Programação/cursor/twygo-work/Twygo-QA-Tester/agent-playwright/outputs/base-de-conhecimento/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "api",
+        "name": "api",
+        "testDir": "D:/Estudo/Programação/cursor/twygo-work/Twygo-QA-Tester/agent-playwright",
+        "testIgnore": [
+          "**/auth/**",
+          "**/seed.spec.ts",
+          "**/node_modules/**"
+        ],
+        "testMatch": [
+          "projects/base-de-conhecimento/tests/api/**/*.spec.ts"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "outputs/base-de-conhecimento/test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "projects\\base-de-conhecimento\\tests\\features\\extracao-de-dados-de-repositorios\\exportacao-respeita-filtros-aplicados.spec.ts",
+      "file": "projects/base-de-conhecimento/tests/features/extracao-de-dados-de-repositorios/exportacao-respeita-filtros-aplicados.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Extração de dados de repositórios",
+          "file": "projects/base-de-conhecimento/tests/features/extracao-de-dados-de-repositorios/exportacao-respeita-filtros-aplicados.spec.ts",
+          "line": 34,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC2 — Exportação respeita filtros aplicados",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 41609,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Navegar para a listagem de repositórios",
+                          "duration": 24028
+                        },
+                        {
+                          "title": "2. Garantir estado limpo (sem filtro residual)",
+                          "duration": 587
+                        },
+                        {
+                          "title": "3. Aplicar filtro Categoria=\"Geral\" via drawer",
+                          "duration": 11106
+                        },
+                        {
+                          "title": "4. Abrir modal \"Configurações da extração\"",
+                          "duration": 234
+                        },
+                        {
+                          "title": "5. Marcar Formato=CSV, Dados=Filtro atual, Colunas=Todas",
+                          "duration": 140
+                        },
+                        {
+                          "title": "6. Click \"Extrair\" e aguardar toast de progresso",
+                          "duration": 1451
+                        }
+                      ],
+                      "startTime": "2026-07-28T01:25:14.963Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gQmFzZSBkZSBDb25oZWNpbWVudG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkV4dHJhw6fDo28gZGUgZGFkb3MgZGUgcmVwb3NpdMOzcmlvcyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJUQzIg4oCUIEV4cG9ydGHDp8OjbyByZXNwZWl0YSBmaWx0cm9zIGFwbGljYWRvcyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJub3JtYWwifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InRhZyIsInZhbHVlIjoiQVRfT1VUREFURURfQVNZTkNfRVhQT1JUIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InRhZyIsInZhbHVlIjoiQkxPQ0tFRF9CWV9SQUlMU181MDBfRklMVEVSX0NBQ0hFX0tFWSJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InRhZyIsInZhbHVlIjoiTkVFRFNfQ09OVEVOVF9WQUxJREFUSU9OIn1dfX0="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\Twygo-QA-Tester\\agent-playwright\\outputs\\base-de-conhecimento\\test-artifacts\\projects-base-de-conhecime-18ca7--respeita-filtros-aplicados-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\Twygo-QA-Tester\\agent-playwright\\outputs\\base-de-conhecimento\\test-artifacts\\projects-base-de-conhecime-18ca7--respeita-filtros-aplicados-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\Twygo-QA-Tester\\agent-playwright\\outputs\\base-de-conhecimento\\test-artifacts\\projects-base-de-conhecime-18ca7--respeita-filtros-aplicados-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\Twygo-QA-Tester\\agent-playwright\\outputs\\base-de-conhecimento\\test-artifacts\\projects-base-de-conhecime-18ca7--respeita-filtros-aplicados-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "850a4ab37a6a51cab075-6b42c8a3f8452150267c",
+              "file": "projects/base-de-conhecimento/tests/features/extracao-de-dados-de-repositorios/exportacao-respeita-filtros-aplicados.spec.ts",
+              "line": 35,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "projects\\base-de-conhecimento\\tests\\features\\extracao-de-dados-de-repositorios\\exportar-listagem-completa.spec.ts",
+      "file": "projects/base-de-conhecimento/tests/features/extracao-de-dados-de-repositorios/exportar-listagem-completa.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Extração de dados de repositórios",
+          "file": "projects/base-de-conhecimento/tests/features/extracao-de-dados-de-repositorios/exportar-listagem-completa.spec.ts",
+          "line": 9,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC1 — Exportar listagem completa",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 14432,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "1. Navegar para a listagem de repositórios",
+                          "duration": 8728
+                        },
+                        {
+                          "title": "2. Verificar pré-condição: listagem tem ≥1 repositório",
+                          "duration": 64
+                        },
+                        {
+                          "title": "3. Abrir modal \"Configurações da extração\"",
+                          "duration": 286
+                        },
+                        {
+                          "title": "4. Marcar Formato=CSV, Dados=Todos, Colunas=Todas",
+                          "duration": 240
+                        },
+                        {
+                          "title": "5. Click \"Extrair\" e aguardar toast de progresso",
+                          "duration": 1337
+                        }
+                      ],
+                      "startTime": "2026-07-28T01:25:14.963Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImVwaWMiLCJ2YWx1ZSI6IlR3eWdvIC0gQmFzZSBkZSBDb25oZWNpbWVudG8ifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6ImZlYXR1cmUiLCJ2YWx1ZSI6IkV4dHJhw6fDo28gZGUgZGFkb3MgZGUgcmVwb3NpdMOzcmlvcyJ9XX19"
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InN0b3J5IiwidmFsdWUiOiJUQzEg4oCUIEV4cG9ydGFyIGxpc3RhZ2VtIGNvbXBsZXRhIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InNldmVyaXR5IiwidmFsdWUiOiJub3JtYWwifV19fQ=="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InRhZyIsInZhbHVlIjoiQVRfT1VUREFURURfQVNZTkNfRVhQT1JUIn1dfX0="
+                        },
+                        {
+                          "name": "Allure Metadata (metadata)",
+                          "contentType": "application/vnd.allure.message+json",
+                          "body": "eyJ0eXBlIjoibWV0YWRhdGEiLCJkYXRhIjp7ImxhYmVscyI6W3sibmFtZSI6InRhZyIsInZhbHVlIjoiTkVFRFNfQ09OVEVOVF9WQUxJREFUSU9OIn1dfX0="
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\Twygo-QA-Tester\\agent-playwright\\outputs\\base-de-conhecimento\\test-artifacts\\projects-base-de-conhecime-0912b--Exportar-listagem-completa-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\Twygo-QA-Tester\\agent-playwright\\outputs\\base-de-conhecimento\\test-artifacts\\projects-base-de-conhecime-0912b--Exportar-listagem-completa-chromium\\video-1.webm"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\Twygo-QA-Tester\\agent-playwright\\outputs\\base-de-conhecimento\\test-artifacts\\projects-base-de-conhecime-0912b--Exportar-listagem-completa-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Estudo\\Programação\\cursor\\twygo-work\\Twygo-QA-Tester\\agent-playwright\\outputs\\base-de-conhecimento\\test-artifacts\\projects-base-de-conhecime-0912b--Exportar-listagem-completa-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a883482ed976159d2838-609e53cd1440754aaf8d",
+              "file": "projects/base-de-conhecimento/tests/features/extracao-de-dados-de-repositorios/exportar-listagem-completa.spec.ts",
+              "line": 10,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-07-28T01:24:38.771Z",
+    "duration": 80835.181,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
