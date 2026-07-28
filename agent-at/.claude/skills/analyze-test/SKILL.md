@@ -9,11 +9,6 @@ allowed-tools: Read Write Edit Bash Glob Grep
 
 Você é o agente de AT da Twygo. Siga este fluxo ao ser invocado.
 
-**Convenção de progresso**: sempre que uma etapa abaixo tiver uma linha
-`=== Fase N: ... ===`, escreva essa linha EXATA como texto da sua resposta
-(sozinha, antes de agir na etapa) — não a omita e não parafraseie. Um
-sistema de progresso ao vivo no `agent-ui` lê essas linhas.
-
 > **Mudança importante (v1 do CONTRACT.md, 2026-05-18)**: o fluxo agora
 > produz o **MD canônico** (`test-analysis.md`) como fonte de verdade,
 > e gera XMind + XML TestLink como **derivados automáticos**. O fluxo
@@ -21,8 +16,6 @@ sistema de progresso ao vivo no `agent-ui` lê essas linhas.
 > deixou de exigir export manual pelo XMind Desktop.
 
 ## Etapa 1: Identificação do projeto
-
-=== Fase 1: Identificação do projeto ===
 
 1. Identificar o slug do projeto:
    - Flag `--project <slug>` (se invocado por script)
@@ -38,16 +31,12 @@ sistema de progresso ao vivo no `agent-ui` lê essas linhas.
 
 ## Etapa 2: Leitura e interpretação dos documentos
 
-=== Fase 2: Leitura de documentação ===
-
 Invocar a skill `/read-docs` para ler e interpretar todos os arquivos da
 pasta `projects/<slug>/docs/`. Ao final, um arquivo
 `projects/<slug>/output/requisitos_extraidos.md` será gerado com todas as
 informações consolidadas (intermediário — input do `generate-md-canonical`).
 
 ## Etapa 2.5: Recon de protótipo (CONTRACT.md v1.1: AUTOMÁTICA)
-
-=== Fase 3: Recon de protótipo ===
 
 A partir de `contract_version: 1.1`, esta etapa é **default automática
 com fallback gracioso** (Opção C aprovada em 2026-05-22). Histórico
@@ -117,16 +106,6 @@ compatibilidade com ATs antigas. Skill ainda existe como
 
 ## Etapa 3: Definição da estrutura de suítes
 
-=== Fase 4: Definição da estrutura ===
-
-**Antes de propor a estrutura**: checar se
-`projects/<slug>/output/estrutura-proposta.md` existe E tem
-`aprovada: true` no frontmatter. Se sim, **pular todo o resto desta
-etapa** — usar a estrutura de suítes descrita nesse arquivo tal como
-está (não gerar outra, não perguntar nada) e ir direto pra Etapa 4. Se
-não existir, ou existir mas `aprovada: false`/ausente, seguir o fluxo
-normal abaixo.
-
 Com base nos requisitos extraídos:
 
 1. Se houver **planilha de quebra de atividades**: filtrar atividades do
@@ -148,26 +127,10 @@ Para cada suíte, decidir:
 - **Org alvo** (`principal` / `secundario` / `trial-<projeto>` etc.)
 - **Pré-condições** (estado de ambiente, dados, feature flags, perfil)
 
-Se estiver rodando interativamente (sessão normal do Claude Code, não
-headless): apresentar estrutura ao usuário e perguntar se deseja ajustar
-antes de prosseguir. Se rodando headless (via `claude -p`, sem humano na
-sessão): gravar a estrutura decidida em
-`projects/<slug>/output/estrutura-proposta.md` com `aprovada: false` —
-antes de gravar, **leia `../analyze-test-plan/SKILL.md`, Etapa 4, e
-reproduza EXATAMENTE o mesmo formato de frontmatter e corpo descrito
-lá** — os campos `aprovada`, `project`, `generated_at`, `docs_lidos`,
-`docs_pulados` cada um em sua própria linha, sem comentários ou texto
-extra na linha do `aprovada` (um parser downstream depende de um match
-exato dessa linha pra aprovar a proposta depois). Informar em texto que
-a estrutura foi gravada e PARAR aqui — não prosseguir pra Etapa 4 sem
-aprovação. Termine sua resposta imediatamente após informar isso — não
-chame nenhuma ferramenta (Read/Write/Edit/Bash/Glob/Grep) depois de
-gravar o arquivo e escrever a mensagem, e não prossiga para a Etapa 4
-nesta mesma sessão.
+Apresentar estrutura ao usuário e perguntar se deseja ajustar antes de
+prosseguir.
 
 ## Etapa 4: Criação dos casos de teste
-
-=== Fase 5: Criação dos casos de teste ===
 
 Para cada suíte, criar casos de teste seguindo as convenções da skill
 `twygo-qa-conventions` (carregada automaticamente). Consultar
@@ -193,8 +156,6 @@ Para exemplos de casos bem escritos, consultar:
 - [examples/bloqueio_example.md](examples/bloqueio_example.md)
 
 ## Etapa 5: Geração do MD canônico (fonte de verdade)
-
-=== Fase 6: Geração do MD canônico ===
 
 Invocar a skill `/generate-md-canonical` para emitir
 `projects/<slug>/output/test-analysis.md` seguindo o schema do CONTRACT.md.
@@ -227,8 +188,6 @@ com os mesmos problemas, e o agent-playwright marcará `// REVISAR` ou
 
 ## Etapa 6: Geração dos derivados (paralelo)
 
-=== Fase 7: Geração de XMind e XML TestLink ===
-
 Invocar em sequência (não importa ordem entre eles):
 
 1. `/generate-xmind` — gera `projects/<slug>/output/Analise_Teste_<NomeLegivel>.xmind`
@@ -240,8 +199,6 @@ Ambos derivados são regerados sempre que o MD canônico muda.
 
 ## Etapa 7: Validação cruzada
 
-=== Fase 8: Validação cruzada ===
-
 Confirmar que os 3 arquivos batem entre si:
 
 ```bash
@@ -252,8 +209,6 @@ grep -c "<testcase " projects/<slug>/output/Analise_Teste_*.xml
 ```
 
 ## Etapa 8: Entrega
-
-=== Fase 9: Entrega ===
 
 Informar ao usuário:
 - Caminhos dos 3 arquivos gerados

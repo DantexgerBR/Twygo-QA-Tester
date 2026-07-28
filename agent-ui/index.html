@@ -550,7 +550,6 @@ async function api(path, opts) {
 const PROJ_KEY = 'twygo-qa-project';
 let project = localStorage.getItem(PROJ_KEY) || '';
 let projects = [];
-let atSSE = null;
 const suitesCache = {};
 
 const LABELS = {
@@ -693,8 +692,7 @@ function suiteAllCases(s) { return [...(s.cases||[]).map((c,i)=>({ ...c, _suite:
 // os casos que falharam viram retrabalho à parte, não travam o card inteiro em Falhou/Inconclusivo.
 function kqaSuiteBlock(suiteName, cases, tab, state, env, runCases) {
   const key = (c) => (c._suite || suiteName) + '::' + c.name;
-  const rc = (c) => runCases && runCases[String(c._tc)];
-  const vOf = (c) => tab === 'manual' ? mv(state[key(c)]) : ((rc(c) && rc(c).status) || '');
+  const vOf = (c) => tab === 'manual' ? mv(state[key(c)]) : ((runCases && runCases[String(c._tc)]) || '');
   const label = (v) => ({ pass: '✅ Passou', fail: '❌ Falhou' })[v] || '⚠️ Inconclusivo';
   const vs = cases.map(vOf);
   let agg = '⚠️ Inconclusivo';
@@ -704,11 +702,7 @@ function kqaSuiteBlock(suiteName, cases, tab, state, env, runCases) {
     const cm = tab === 'manual' ? mc(state[key(c)]) : '';
     return `${label(vOf(c))} — ${c.name}${cm ? ` (${cm})` : ''}`;
   }).join('\n');
-  // Evidência real do último run (screenshot por caso, via attachment do Playwright) — cai pro placeholder
-  // manual quando não há run casado (tab manual, ou automatizado sem match/nunca rodou).
-  const shots = tab === 'manual' ? [] : cases.flatMap(c => (rc(c) && rc(c).screenshots) || []);
-  const evidencia = shots.length ? shots.map(s => `- ${s}`).join('\n') : '- <anexe o print da evidência>';
-  return `⇝ QA ⇜\n:: Teste ::\n${agg}\n\n:: Ambiente ::\n🧪 Stage — ${env.stageUrl || '<url do stage>'}${env.orgId ? ` · org ${env.orgId}` : ''}\n\n:: Validação ::\n${validacao}\n\n:: Obs ::\n—\n\n:: Evidência(s) ::\n${evidencia}\n`;
+  return `⇝ QA ⇜\n:: Teste ::\n${agg}\n\n:: Ambiente ::\n🧪 Stage — ${env.stageUrl || '<url do stage>'}${env.orgId ? ` · org ${env.orgId}` : ''}\n\n:: Validação ::\n${validacao}\n\n:: Obs ::\n—\n\n:: Evidência(s) ::\n- <anexe o print da evidência>\n`;
 }
 async function kqaEnv(project) {
   try { const c = await api('/api/conn?project=' + encodeURIComponent(project)); return { stageUrl: c.stageUrl, orgId: c.orgId }; } catch { return {}; }
@@ -1484,7 +1478,6 @@ async function renderDb(){
 
 // ================= WORKSPACE agent-at (R2) =================
 async function renderAt(){
-  if (atSSE) { atSSE.close(); atSSE = null; }
   $('#view').innerHTML = projectBar('Agentes', 'Análise de Teste') + `<div id="at-body"></div>`;
   wireProjectBar(renderAt);
   const body = $('#at-body');
@@ -1509,17 +1502,6 @@ async function renderAt(){
       <textarea id="at-gen-desc" class="db-sel" rows="3" style="width:100%;resize:vertical" placeholder="Descreva a funcionalidade / regras a cobrir. Os .md de docs/ e output/ do projeto entram como contexto automaticamente."></textarea>
       <div class="db-row" style="margin-top:10px"><button class="btn-run" id="at-gen">✨ Gerar AT</button><span id="at-gen-msg" class="form-hint"></span></div>
       <div id="at-gen-out" style="margin-top:12px"></div>
-    </div>
-    <div class="db-panel"><h3>Gerar AT completa <span style="color:var(--faint);font-weight:400;font-size:12px">· 🧠 rigor total (analyze-test), 2 passos</span></h3>
-      <div class="form-hint">Passo 1 lê os docs e propõe a estrutura de suítes (sem casos ainda). Você revisa/edita. Passo 2 escreve os casos, valida anti-patterns e gera os 3 arquivos (test-analysis.md + xmind + xml). Cada passo dispara uma sessão real do Claude Code — tem custo, aparece em Custo.</div>
-      <div class="db-row" style="margin-top:10px"><button class="btn-run" id="at-plan-go">1. Propor estrutura</button><span id="at-plan-msg" class="form-hint"></span></div>
-      <div id="at-plan-log" class="form-hint" style="white-space:pre-wrap;max-height:160px;overflow:auto;margin-top:8px"></div>
-      <div id="at-plan-review" style="display:none;margin-top:12px">
-        <textarea id="at-plan-estrutura" class="db-sel" rows="12" style="width:100%;resize:vertical;font-family:monospace"></textarea>
-        <div class="db-row" style="margin-top:10px"><button class="btn-run" id="at-build-go">2. Gerar AT completa</button><span id="at-build-msg" class="form-hint"></span></div>
-        <div id="at-build-log" class="form-hint" style="white-space:pre-wrap;max-height:160px;overflow:auto;margin-top:8px"></div>
-        <div id="at-build-out" style="margin-top:12px"></div>
-      </div>
     </div>`;
     const showToggle = d.hasAt && d.hasPublished && d.inSync === false;
     const toggle = showToggle ? `<div class="db-row" style="margin-bottom:10px"><button class="rtab active" data-src="at">Fonte (agent-at)</button><button class="rtab" data-src="published">Publicado (Playwright)</button></div>` : '';
@@ -1540,56 +1522,6 @@ async function renderAt(){
       } catch (e) { msg.innerHTML = `<b style="color:var(--coral)">${escapeHtml(e.message)}</b>`; }
       finally { btn.disabled = false; }
     };
-    // Roda /api/at-plan ou /api/at-build (SSE) — mostra fase/log ao vivo, resolve com o payload do "done".
-    const runAtSSE = (path, logEl) => new Promise((resolve) => {
-      logEl.textContent = '';
-      const es = new EventSource(`${path}?project=${encodeURIComponent(project)}`);
-      atSSE = es;
-      es.onmessage = (ev) => {
-        const o = JSON.parse(ev.data);
-        if (o.type === 'phase') logEl.textContent += `\n▸ ${o.name}\n`;
-        else if (o.type === 'log') logEl.textContent += o.line + '\n';
-        logEl.scrollTop = logEl.scrollHeight;
-        if (o.type === 'done') { es.close(); resolve(o); }
-      };
-      es.onerror = () => { es.close(); resolve({ ok: false }); };
-    });
-    $('#at-plan-go').onclick = async () => {
-      const btn = $('#at-plan-go'), msg = $('#at-plan-msg'), log = $('#at-plan-log');
-      const otherBtn = $('#at-build-go');
-      btn.disabled = true; if (otherBtn) otherBtn.disabled = true;
-      msg.innerHTML = '<span class="spin"></span> propondo estrutura… (pode levar minutos)';
-      const o = await runAtSSE('/api/at-plan', log);
-      btn.disabled = false; if (otherBtn) otherBtn.disabled = false;
-      if (!o.ok || !o.estrutura) { msg.innerHTML = `<b style="color:var(--coral)">Não deu pra propor a estrutura — se o log acima está vazio, provavelmente já tem uma geração rodando pra este projeto; tente de novo em instantes. Senão, veja o log.</b>`; return; }
-      msg.innerHTML = `<span style="color:var(--lime)">✓ estrutura proposta</span>`;
-      $('#at-plan-estrutura').value = o.estrutura;
-      $('#at-plan-review').style.display = '';
-    };
-    $('#at-build-go').onclick = async () => {
-      const btn = $('#at-build-go'), msg = $('#at-build-msg'), log = $('#at-build-log'), out = $('#at-build-out');
-      const otherBtn = $('#at-plan-go');
-      btn.disabled = true; if (otherBtn) otherBtn.disabled = true; msg.innerHTML = '<span class="spin"></span> salvando estrutura aprovada…'; out.innerHTML = '';
-      try {
-        const ar = await fetch(`/api/at-approve?project=${encodeURIComponent(project)}`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ estrutura: $('#at-plan-estrutura').value }) });
-        if (!ar.ok) { const ad = await ar.json(); msg.innerHTML = `<b style="color:var(--coral)">${escapeHtml(ad.error || ar.statusText)}</b>`; btn.disabled = false; if (otherBtn) otherBtn.disabled = false; return; }
-      } catch (e) { msg.innerHTML = `<b style="color:var(--coral)">${escapeHtml(e.message)}</b>`; btn.disabled = false; if (otherBtn) otherBtn.disabled = false; return; }
-      msg.innerHTML = '<span class="spin"></span> gerando casos + arquivos… (pode levar minutos)';
-      const o = await runAtSSE('/api/at-build', log);
-      btn.disabled = false; if (otherBtn) otherBtn.disabled = false;
-      if (!o.ok) { msg.innerHTML = `<b style="color:var(--coral)">Falhou — se o log acima está vazio, provavelmente já tem uma geração rodando pra este projeto ou a estrutura ainda não foi aprovada (refaça o passo 1); senão, veja o log.</b>`; return; }
-      msg.innerHTML = `<span style="color:var(--lime)">✓ AT gerada</span>`;
-      out.innerHTML = (o.files || []).length ? `<div class="form-hint">Arquivos: ${o.files.map(escapeHtml).join(', ')}</div>` : '<div class="form-hint">Concluído, mas nenhum arquivo esperado foi encontrado — confira o log.</div>';
-    };
-    try {
-      const er = await fetch('/api/at-estrutura?project=' + encodeURIComponent(project));
-      if (er.ok) {
-        const ed = await er.json();
-        $('#at-plan-msg').innerHTML = `<span style="color:var(--lime)">✓ estrutura proposta</span><span style="color:var(--faint);font-weight:400;font-size:12px"> · carregada do disco (passo 1 já rodado antes)</span>`;
-        $('#at-plan-estrutura').value = ed.estrutura;
-        $('#at-plan-review').style.display = '';
-      }
-    } catch {}
     if (first) {
       const load = async (src) => {
         body.querySelectorAll('.rtab').forEach(t => t.classList.toggle('active', t.dataset.src === src));

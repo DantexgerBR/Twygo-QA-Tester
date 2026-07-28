@@ -17,7 +17,6 @@ import {
   parseJsonResponse,
   stripMarkdownFence,
 } from './ai-engine.mjs';
-import { costOf, injectApproved, runClaudeSkill } from './claude-cli.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 // Localização dos agentes: env var override > sibling relativo (default). Não fixar o caminho — cada
@@ -30,7 +29,6 @@ const REPO = process.env.QA_REPO || join(AP, '..'); // raiz do monorepo Twygo-QA
 const TSX = join(AP, 'node_modules', 'tsx', 'dist', 'cli.mjs');
 const ORCHESTRATOR = join(AP, '.claude', 'skills', 'twygo-test-orchestrator', 'orchestrator.ts');
 const PORT = process.env.PORT || 4321;
-const atRunning = new Set(); // slugs de projeto com /api/at-plan ou /api/at-build em andamento (evita corrida no mesmo projeto)
 
 const json = (res, code, obj) => {
   // no-store: resposta de API nunca cacheia (dado muda; evita servir stale/500 antigo do disk cache do browser).
@@ -427,15 +425,7 @@ const server = createServer(async (req, res) => {
             const m = String(spec.title || '').match(/^TC(\d+)\b/i);
             if (!m) continue;
             const last = (spec.tests || []).flatMap((t) => t.results || []).pop();
-            if (!last) continue;
-            // path do attachment é absoluto (fs da máquina que rodou); reports/<run>/artifacts/ tem a MESMA
-            // subpasta (test-artifacts/<pasta>/...) copiada — recorta a partir de "test-artifacts" pra virar
-            // um caminho relativo ao bundle do run (mesma convenção usada no tests.md/report-asset).
-            const screenshots = (last.attachments || [])
-              .filter((a) => a.name === 'screenshot' && a.path)
-              .map((a) => { const i = a.path.replace(/\\/g, '/').indexOf('test-artifacts/'); return i < 0 ? null : 'artifacts/' + a.path.replace(/\\/g, '/').slice(i + 'test-artifacts/'.length); })
-              .filter(Boolean);
-            byTc[m[1]] = { status: STATUS[last.status] || '', screenshots };
+            if (last) byTc[m[1]] = STATUS[last.status] || '';
           }
           for (const s of (suite.suites || [])) walk(s);
         };
@@ -519,7 +509,8 @@ const server = createServer(async (req, res) => {
       const priceOf = (m) => prices[m] || prices._default || { in: 0.15, out: 0.6 };
       let usd = 0, tIn = 0, tOut = 0;
       const enriched = events.map((e) => {
-        const c = costOf(e, priceOf(e.model));
+        const p = priceOf(e.model);
+        const c = (e.in || 0) / 1e6 * p.in + (e.out || 0) / 1e6 * p.out;
         usd += c; tIn += e.in || 0; tOut += e.out || 0;
         return { ...e, usd: c, brl: fx.rate ? c * fx.rate : null };
       });
@@ -776,82 +767,6 @@ const server = createServer(async (req, res) => {
         : join(AAT, 'projects', project, 'output', 'test-analysis.md');
       try { const md = await readFile(target, 'utf8'); res.writeHead(200, { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'no-store' }); return res.end(md); }
       catch { return json(res, 404, { error: 'test-analysis.md não encontrado' }); }
-    }
-
-    // Recarrega uma estrutura-proposta.md já salva em disco (sem disparar claude -p) — pra UI
-    // não perder o passo 1 já pago se o QA navegar pra outra aba e voltar.
-    if (url.pathname === '/api/at-estrutura' && req.method === 'GET') {
-      const project = url.searchParams.get('project');
-      if (!safeSlug(project)) return json(res, 400, { error: 'project inválido' });
-      try {
-        const estrutura = await readFile(join(AAT, 'projects', project, 'output', 'estrutura-proposta.md'), 'utf8');
-        return json(res, 200, { estrutura, approved: /^aprovada:\s*true\s*$/m.test(estrutura) });
-      } catch { return json(res, 404, { error: 'nenhuma estrutura proposta salva ainda' }); }
-    }
-
-    // Fases 1-3 do /analyze-test: propõe estrutura de suítes (sem casos ainda) via claude -p headless.
-    if (url.pathname === '/api/at-plan') {
-      const project = url.searchParams.get('project');
-      if (!safeSlug(project)) return json(res, 400, { error: 'project inválido' });
-      if (atRunning.has(project)) return json(res, 409, { error: 'já tem uma geração de AT em andamento pra este projeto' });
-      atRunning.add(project);
-      try {
-        res.writeHead(200, { 'content-type': 'text/event-stream; charset=utf-8', 'cache-control': 'no-cache', connection: 'keep-alive', 'x-accel-buffering': 'no' });
-        const send = (o) => res.write('data: ' + JSON.stringify(o) + '\n\n');
-        send({ type: 'start' });
-        const r = await runClaudeSkill(`/analyze-test-plan --project ${project}`, { cwd: AAT, send });
-        // nunca lança daqui pra cima — headers SSE já foram enviados, um throw aqui vira unhandled rejection
-        try { await appendUsage({ ts: new Date().toISOString(), action: 'gerar-at-plan', project, model: r.model || 'claude', in: r.usageIn, out: r.usageOut, usd: r.costUsd }); }
-        catch (e) { console.error('appendUsage falhou (gerar-at-plan):', e); }
-        let estrutura = '';
-        try { estrutura = await readFile(join(AAT, 'projects', project, 'output', 'estrutura-proposta.md'), 'utf8'); } catch {}
-        send({ type: 'done', ok: r.ok, timedOut: r.timedOut, estrutura });
-        res.end();
-      } finally {
-        atRunning.delete(project);
-      }
-      return;
-    }
-
-    // Grava a estrutura (possivelmente editada pelo QA) como aprovada. Não dispara nada — só salva.
-    if (url.pathname === '/api/at-approve' && req.method === 'POST') {
-      const project = url.searchParams.get('project');
-      if (!safeSlug(project)) return json(res, 400, { error: 'project inválido' });
-      let data; try { data = JSON.parse((await readBody(req)) || '{}'); } catch { return json(res, 400, { error: 'json inválido' }); }
-      const estrutura = String(data.estrutura || '').trim();
-      if (!estrutura) return json(res, 400, { error: 'estrutura vazia' });
-      const dir = join(AAT, 'projects', project, 'output');
-      await mkdir(dir, { recursive: true });
-      await writeFile(join(dir, 'estrutura-proposta.md'), injectApproved(estrutura));
-      return json(res, 200, { ok: true });
-    }
-
-    // Fases 5-8 do /analyze-test: usa a estrutura já aprovada, escreve os casos + gera os 3 arquivos.
-    if (url.pathname === '/api/at-build') {
-      const project = url.searchParams.get('project');
-      if (!safeSlug(project)) return json(res, 400, { error: 'project inválido' });
-      if (atRunning.has(project)) return json(res, 409, { error: 'já tem uma geração de AT em andamento pra este projeto' });
-      atRunning.add(project); // add() logo após has(), sem await no meio — trava atômica antes do check de aprovação
-      try {
-        // Guarda-custo: só dispara o /analyze-test (caro) se a estrutura já foi aprovada via /api/at-approve.
-        let estruturaAtual = '';
-        try { estruturaAtual = await readFile(join(AAT, 'projects', project, 'output', 'estrutura-proposta.md'), 'utf8'); } catch {}
-        if (!/^aprovada:\s*true\s*$/m.test(estruturaAtual)) return json(res, 400, { error: 'nenhuma estrutura aprovada pra este projeto ainda — rode /api/at-plan e aprove primeiro' });
-        res.writeHead(200, { 'content-type': 'text/event-stream; charset=utf-8', 'cache-control': 'no-cache', connection: 'keep-alive', 'x-accel-buffering': 'no' });
-        const send = (o) => res.write('data: ' + JSON.stringify(o) + '\n\n');
-        send({ type: 'start' });
-        const r = await runClaudeSkill(`/analyze-test --project ${project}`, { cwd: AAT, send });
-        // nunca lança daqui pra cima — headers SSE já foram enviados, um throw aqui vira unhandled rejection
-        try { await appendUsage({ ts: new Date().toISOString(), action: 'gerar-at-build', project, model: r.model || 'claude', in: r.usageIn, out: r.usageOut, usd: r.costUsd }); }
-        catch (e) { console.error('appendUsage falhou (gerar-at-build):', e); }
-        let files = [];
-        try { files = (await readdir(join(AAT, 'projects', project, 'output'))).filter((f) => f === 'test-analysis.md' || /^Analise_Teste_.*\.(xmind|xml)$/.test(f)); } catch {}
-        send({ type: 'done', ok: r.ok, timedOut: r.timedOut, files });
-        res.end();
-      } finally {
-        atRunning.delete(project);
-      }
-      return;
     }
 
     // Gera a AT (test-analysis.md) por IA (B). Input: descrição + .md de contexto (docs/ + output/). Salva DRAFT.
