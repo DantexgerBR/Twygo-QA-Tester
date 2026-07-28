@@ -512,6 +512,17 @@
   .prq-list { margin:8px 0 0; padding-left:18px; color:var(--dim); font-size:12.5px; }
   .prq-list li { margin:2px 0; }
   .prq-list li.data { color:var(--sky); font-weight:500; }
+  /* Matriz de cenários negativos (skill cenarios-negativos-twygo, CONTRACT.md §15) */
+  .case-neg { border-top:1px solid var(--line-soft); padding:0 16px 8px 44px; }
+  .case-neg summary { list-style:none; cursor:pointer; padding:6px 0; }
+  .case-neg summary::-webkit-details-marker { display:none; }
+  .c-neg { font-size:11px; font-weight:600; padding:2px 8px; border-radius:999px; white-space:nowrap; border:1px solid; color:var(--coral); border-color:rgba(220,115,96,.45); background:rgba(220,115,96,.08); }
+  .vmatrix { overflow-x:auto; margin:0 0 6px; border-radius:9px; border:1px solid rgba(220,115,96,.18); background:rgba(220,115,96,.05); }
+  .vmatrix table { width:100%; border-collapse:collapse; font-size:12px; }
+  .vmatrix th, .vmatrix td { text-align:left; padding:5px 10px; border-bottom:1px solid var(--line-soft); vertical-align:top; }
+  .vmatrix tr:last-child td { border-bottom:none; }
+  .vmatrix th { color:var(--coral); font-family:'Baloo 2',sans-serif; font-weight:600; white-space:nowrap; }
+  .vmatrix td.cat { font-weight:700; color:var(--dim); white-space:nowrap; }
 </style>
 </head>
 <body>
@@ -839,8 +850,14 @@ async function renderTestes() {
     const barClear = $('#sel-bar-clear'); if (barClear) barClear.onclick = () => { body.querySelectorAll('.s-check:checked').forEach(cb => cb.checked = false); updateSel(); };
   } catch (e) { body.innerHTML = `<div class="err"><b>Não deu pra carregar:</b> ${escapeHtml(e.message)}</div>`; }
 }
+function renderVMatrix(vm){
+  if (!vm || !vm.length) return '';
+  const hasCenario = vm.some(r=>r.cenario);
+  const rows = vm.map(r=>`<tr><td class="cat">${escapeHtml(r.categoria||'')}</td>${hasCenario?`<td>${escapeHtml(r.cenario||'')}</td>`:''}<td>${escapeHtml(r.input||'')}</td><td>${escapeHtml(r.esperado||'')}</td></tr>`).join('');
+  return `<details class="case-neg"><summary><span class="c-neg" title="matriz de cenários negativos — skill cenarios-negativos-twygo (categorias A-H)">🧪 ${vm.length} cenário${vm.length>1?'s':''}</span></summary><div class="vmatrix"><table><thead><tr><th>Cat.</th>${hasCenario?'<th>Cenário</th>':''}<th>Input</th><th>Esperado</th></tr></thead><tbody>${rows}</tbody></table></div></details>`;
+}
 function suiteBlockAuto(s,i,lastRunOf,specCounts){
-  const cases=(s.cases||[]).map(c=>`<div class="case"><span class="c-name">${escapeHtml(c.name)}</span>${c.type?`<span class="badge">${escapeHtml(c.type)}</span>`:''}</div>`).join('');
+  const cases=(s.cases||[]).map(c=>`<div class="case"><span class="c-name">${escapeHtml(c.name)}</span>${c.type?`<span class="badge">${escapeHtml(c.type)}</span>`:''}</div>${renderVMatrix(c.vmatrix)}`).join('');
   const children=(s.children||[]).map((c,j)=>suiteBlockAuto(c,j,lastRunOf,specCounts)).join('');
   const types = [...new Set((s.cases||[]).map(c=>c.type).filter(Boolean))];
   const tag = types.length ? `<span class="s-tag">${escapeHtml(types.join('/'))}</span>` : '';
@@ -885,6 +902,7 @@ function suiteBlockManual(s,i,state){
           <button class="mbtn pass ${v==='pass'?'on':''}" data-v="pass">✓ Passou</button>
           <button class="mbtn fail ${v==='fail'?'on':''}" data-v="fail">✗ Falhou</button>
         </span></div>
+      ${renderVMatrix(c.vmatrix)}
       <input type="text" class="mc-input ${v==='fail'?'show':''}" placeholder="motivo da falha (opcional) — vai pro comentário KQA…" value="${escapeHtml(cm)}" /></div>`; };
   const cases=(s.cases||[]).map(row).join('');
   const children=(s.children||[]).map((c,j)=>suiteBlockManual(c,j,state)).join('');
@@ -1180,21 +1198,26 @@ function renderGerar(){
       <div class="form-row" style="flex:1"><label>Tipo</label><select id="gen-mode"><option value="automatizado">Automatizado</option><option value="manual">Manual</option></select></div>
       <div class="form-row" style="width:96px"><label>Quantos</label><input id="gen-count" type="number" min="1" max="20" value="6" /></div>
     </div>
+    <div class="form-row" id="gen-negmatrix-row" style="display:none"><label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:400">
+      <input type="checkbox" id="gen-negmatrix" style="width:auto" /> 🧪 Matriz de validação negativa (data-driven, categorias A-H — <a href="#/testes" style="color:var(--coral)">skill cenarios-negativos-twygo</a>)</label></div>
     <div class="form-actions"><button class="btn-run" id="gen-go">✨ Gerar casos</button><span id="gen-msg" class="form-hint"></span></div>
     <div class="form-sec">A IA (Codex) sugere os casos — <b>revise antes de usar/entregar</b>. O gasto de tokens aparece após gerar (base pro custo, F2).</div>
   </div><div id="gen-out"></div>`;
   body.querySelectorAll('.preset').forEach(p => p.onclick = () => {
     const ta = $('#gen-desc'); ta.value = (ta.value.trim() ? ta.value.trim() + '\n' : '') + p.dataset.p; ta.focus();
   });
+  const toggleNegRow = () => { $('#gen-negmatrix-row').style.display = $('#gen-output').value === 'spec' ? '' : 'none'; };
+  $('#gen-output').onchange = toggleNegRow; toggleNegRow();
   $('#gen-go').onclick = async () => {
     const description = $('#gen-desc').value.trim();
     const mode = $('#gen-mode').value, count = $('#gen-count').value, output = $('#gen-output').value;
+    const negativeMatrix = output === 'spec' && $('#gen-negmatrix').checked;
     if (!description) { $('#gen-msg').textContent = 'descreva o que testar.'; return; }
     $('#gen-msg').innerHTML = '<span class="spin" style="display:inline-block;width:14px;height:14px;vertical-align:-2px"></span> gerando…';
     $('#gen-out').innerHTML = '';
     try {
       if (output === 'spec') {
-        const r = await api('/api/generate-spec', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ description, project }) });
+        const r = await api('/api/generate-spec', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ description, project, negativeMatrix }) });
         $('#gen-msg').innerHTML = `<b style="color:var(--lime)">✓ spec gerado</b> · ${escapeHtml(r.model)} · ${(r.usage.in || 0) + (r.usage.out || 0)} tokens`;
         $('#gen-out').innerHTML = `<div class="toolbar" style="margin-top:22px"><span class="tb-count">.spec.ts <b style="color:var(--gold)">beta — revise antes de usar</b>${r.saved ? ` · salvo em <code>${escapeHtml(r.saved)}</code>` : ''}</span><div class="tb-actions"><button class="btn-export" id="spec-copy">⧉ Copiar</button></div></div><pre class="code-block"><code id="spec-code"></code></pre>`;
         $('#spec-code').textContent = r.code || '(vazio)';
@@ -1491,7 +1514,10 @@ async function renderAt(){
   if (!project) { body.innerHTML = needProject(); return; }
   body.innerHTML = `<div class="loading"><span class="spin"></span> Carregando AT…</div>`;
   try {
-    const d = await api('/api/at?project=' + encodeURIComponent(project));
+    const [d, eng] = await Promise.all([
+      api('/api/at?project=' + encodeURIComponent(project)),
+      api('/api/at-engine').catch(() => ({ engine: 'codex-cli', engines: [] })),
+    ]);
     const pill = (ok, yes, no) => `<span class="st ${ok?'st-PASS':'st-WARN'}">${ok?yes:no}</span>`;
     const syncPill = d.inSync === null ? '' : `<span class="st ${d.inSync?'st-PASS':'st-FAIL'}">${d.inSync?'em sync':'publicado difere'}</span>`;
     const when = (t) => t ? escapeHtml(t.slice(0,16).replace('T',' ')) : '—';
@@ -1511,7 +1537,12 @@ async function renderAt(){
       <div id="at-gen-out" style="margin-top:12px"></div>
     </div>
     <div class="db-panel"><h3>Gerar AT completa <span style="color:var(--faint);font-weight:400;font-size:12px">· 🧠 rigor total (analyze-test), 2 passos</span></h3>
-      <div class="form-hint">Passo 1 lê os docs e propõe a estrutura de suítes (sem casos ainda). Você revisa/edita. Passo 2 escreve os casos, valida anti-patterns e gera os 3 arquivos (test-analysis.md + xmind + xml). Cada passo dispara uma sessão real do Claude Code — tem custo, aparece em Custo.</div>
+      <div class="form-hint">Passo 1 lê os docs e propõe a estrutura de suítes (sem casos ainda). Você revisa/edita. Passo 2 escreve os casos, valida anti-patterns e gera os 3 arquivos (test-analysis.md + xmind + xml). Cada passo dispara o motor de IA abaixo — tem custo, aparece em Custo.</div>
+      <div class="db-row" style="margin:10px 0;gap:10px;align-items:center">
+        <label class="form-hint" style="margin:0">Motor:</label>
+        <select id="at-engine" class="db-sel">${(eng.engines || []).map(e => `<option value="${escapeHtml(e.id)}"${e.id === eng.engine ? ' selected' : ''}>${escapeHtml(e.label)}${e.configured ? '' : ' · não configurado'}</option>`).join('')}</select>
+        <span id="at-engine-msg" class="form-hint"></span>
+      </div>
       <div class="db-row" style="margin-top:10px"><button class="btn-run" id="at-plan-go">1. Propor estrutura</button><span id="at-plan-msg" class="form-hint"></span></div>
       <div id="at-plan-log" class="form-hint" style="white-space:pre-wrap;max-height:160px;overflow:auto;margin-top:8px"></div>
       <div id="at-plan-review" style="display:none;margin-top:12px">
@@ -1539,6 +1570,15 @@ async function renderAt(){
         out.innerHTML = `<div class="db-summary"><span style="color:var(--lime)">✓ rascunho salvo</span><span style="color:var(--faint);font-weight:400;font-size:12px">· ${escapeHtml(dd.saved||'')} · revise antes de publicar</span></div><div class="report-box"><div class="md">${renderMd(dd.md||'', null)}</div></div>`;
       } catch (e) { msg.innerHTML = `<b style="color:var(--coral)">${escapeHtml(e.message)}</b>`; }
       finally { btn.disabled = false; }
+    };
+    const atEngSel = $('#at-engine');
+    if (atEngSel) atEngSel.onchange = async () => {
+      const m = $('#at-engine-msg');
+      m.textContent = 'salvando…';
+      try {
+        const r = await api('/api/at-engine', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ engine: atEngSel.value }) });
+        m.innerHTML = `<b style="color:var(--lime)">✓ ${escapeHtml(r.engine)}</b>`;
+      } catch (e) { m.innerHTML = `<b style="color:var(--coral)">${escapeHtml(e.message)}</b>`; }
     };
     // Roda /api/at-plan ou /api/at-build (SSE) — mostra fase/log ao vivo, resolve com o payload do "done".
     const runAtSSE = (path, logEl) => new Promise((resolve) => {
