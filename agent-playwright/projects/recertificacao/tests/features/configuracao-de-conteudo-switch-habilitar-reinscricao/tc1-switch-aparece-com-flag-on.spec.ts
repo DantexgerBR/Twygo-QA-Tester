@@ -4,7 +4,7 @@ import { resolve } from 'node:path';
 import { getOrgId } from '../../../../../src/utils/environment.js';
 import { safeGoto } from '../../../../../src/utils/modals.js';
 import { ContentEditPage } from '../../../pages/ContentEditPage.js';
-import { SeedAdminPage } from '../../../pages/SeedAdminPage.js';
+import { SeedAdminPage } from '../../../../../src/pages/SeedAdminPage.js';
 
 const STORAGE_PATH = resolve(process.cwd(), 'outputs/.auth/storage.json');
 

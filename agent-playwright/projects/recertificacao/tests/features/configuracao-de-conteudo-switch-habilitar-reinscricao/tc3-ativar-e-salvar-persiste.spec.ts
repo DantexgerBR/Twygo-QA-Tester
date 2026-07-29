@@ -2,7 +2,7 @@ import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js
 import * as allure from 'allure-js-commons';
 import { resolve } from 'node:path';
 import { ContentEditPage } from '../../../pages/ContentEditPage.js';
-import { SeedAdminPage } from '../../../pages/SeedAdminPage.js';
+import { SeedAdminPage } from '../../../../../src/pages/SeedAdminPage.js';
 
 const STORAGE_PATH = resolve(process.cwd(), 'outputs/.auth/storage.json');
 

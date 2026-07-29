@@ -1,5 +1,5 @@
 import { test } from '../../../../../src/fixtures/exploratory-fixture.js';
-import { SeedAdminPage } from '../../../pages/SeedAdminPage.js';
+import { SeedAdminPage } from '../../../../../src/pages/SeedAdminPage.js';
 import { fixedSeed } from '../../../data/fixed-seed.data.js';
 
 /**

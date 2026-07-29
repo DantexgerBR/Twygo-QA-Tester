@@ -1,16 +1,16 @@
 import type { Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
-import { BasePage } from '../../../src/pages/BasePage.js';
-import { ProfileSwitcher } from '../../../src/pages/ProfileSwitcher.js';
-import { getOrgId } from '../../../src/utils/environment.js';
-import { dismissCommonModals, safeGoto } from '../../../src/utils/modals.js';
+import { BasePage } from './BasePage.js';
+import { ProfileSwitcher } from './ProfileSwitcher.js';
+import { getBaseUrl, getOrgId } from '../utils/environment.js';
+import { dismissCommonModals, safeGoto } from '../utils/modals.js';
 
 /**
- * Page Object de **provisionamento de seed via UI admin** para o projeto
- * Recertificação. Centraliza criação/limpeza de recursos pré-condição
+ * Page Object de **provisionamento de seed via UI admin**, compartilhado por
+ * qualquer projeto. Centraliza criação/limpeza de recursos pré-condição
  * (curso, trilha, pacote, usuário aluno, matrícula) que antes eram
- * placeholders em `.data.ts` (incidente 2026-05-26 — 25 fixmes "seed
- * inválido"). Skill canônica: `provisionar-seed`.
+ * placeholders em `.data.ts` (incidente 2026-05-26 no projeto Recertificação —
+ * 25 fixmes "seed inválido"). Skill canônica: `provisionar-seed`.
  *
  * Padrão de uso:
  *
@@ -1119,8 +1119,7 @@ export class SeedAdminPage extends BasePage {
       certificate_link: string;
     } | null;
   }> {
-    const baseURL =
-      data.baseURL || process.env.API_BASE_URL || `https://recertificacao-testeqa.stage.twygoead.com`;
+    const baseURL = data.baseURL || process.env.API_BASE_URL || getBaseUrl();
     const apiToken = data.apiToken || process.env.API_TOKEN || '';
     const certTimeoutMs = data.certTimeoutMs ?? 60_000;
 

@@ -2,10 +2,10 @@ import { test as base } from './exploratory-fixture.js';
 import type { Browser } from '@playwright/test';
 import { resolve } from 'node:path';
 import { ProfileSwitcher } from '../pages/ProfileSwitcher.js';
-import { SeedAdminPage } from '../../projects/recertificacao/pages/SeedAdminPage.js';
+import { SeedAdminPage } from '../pages/SeedAdminPage.js';
 
 /**
- * Fixtures canônicas de seed para o projeto Recertificação.
+ * Fixtures canônicas de seed — usáveis por qualquer projeto.
  *
  * Use estas fixtures em specs que declaram pré-condição "X pré-existente"
  * — o test descreve o que precisa, a fixture provê (criando ou reusando).
