@@ -755,7 +755,7 @@ export class SeedAdminPage extends BasePage {
 
 ```ts
 import { test, expect } from '../../../../../src/fixtures/exploratory-fixture.js';
-import { SeedAdminPage } from '../../../pages/SeedAdminPage.js';
+import { SeedAdminPage } from '../../../../../src/pages/SeedAdminPage.js';
 import { ProfileSwitcher } from '../../../../../src/pages/ProfileSwitcher.js';
 import { safeGoto } from '../../../../../src/utils/modals.js';
 import { getOrgId } from '../../../../../src/utils/environment.js';
