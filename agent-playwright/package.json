@@ -25,6 +25,7 @@
     "agent:triage": "tsx .claude/skills/twygo-triage-report/generator.ts",
     "agent:bug-reports": "tsx .claude/skills/gerar-bug-report-de-tc-red/generator.ts",
     "agent:cleanup-orphans": "tsx scripts/cleanup-env-orphans.ts",
+    "agent:seed": "tsx scripts/seed-cli.ts",
     "typecheck": "tsc --noEmit",
     "clean": "rimraf outputs/screenshots outputs/traces outputs/test-results.json outputs/html-report outputs/playwright-summary.md outputs/exploratory outputs/exploratory-findings.json outputs/reports outputs/allure-results outputs/allure-report outputs/test-analysis.parsed.json outputs/*/playwright-summary.md outputs/*/html-report"
   },
