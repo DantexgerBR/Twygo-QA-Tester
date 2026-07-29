@@ -149,6 +149,29 @@ export class SeedAdminPage extends BasePage {
   }
 
   /**
+   * Abre um popper Chakra (kebab/ações) e clica no menuitem indicado.
+   *
+   * Usa `dispatchEvent('click')` em vez de `.click()` no menuitem: o clique
+   * com mouse simulado do Playwright, mesmo mirando a coordenada certa (bbox
+   * do elemento correto, confirmado via trace), **não gera nenhum evento
+   * `click` no documento** nesse popper específico — reproduzido ao vivo em
+   * 2026-07-29 com um listener de captura em `document` (zero eventos
+   * capturados, embora `aria-expanded` do trigger confirme o menu seguir
+   * aberto). Suspeita: o movimento de mouse do Playwright antes do clique
+   * dispara um gesto de arraste nativo do Chromium sobre o menuitem, que
+   * suprime o `click` (o "fantasma" do texto do item flutuando sobre a
+   * linha vizinha no screenshot de falha é consistente com um drag ghost
+   * nativo). `dispatchEvent` insere o evento diretamente, sem simulação de
+   * mouse — testado ao vivo e confirmado disparar a navegação normalmente.
+   */
+  private async clickMenuItemAfterOpening(trigger: Locator, itemName: RegExp): Promise<void> {
+    await trigger.click();
+    const item = this.page.getByRole('menuitem', { name: itemName }).first();
+    await item.waitFor({ state: 'visible', timeout: 10_000 });
+    await item.dispatchEvent('click');
+  }
+
+  /**
    * Localizador do input de "Nome" no form de evento (curso/trilha) e
    * no form de pacote. REVISAR-RECON-LIVE: rota `/events/new` usa HAML
    * com `<input id="event_name">` (padrão Rails) ou React `getByLabel('Nome')`.
@@ -506,11 +529,7 @@ export class SeedAdminPage extends BasePage {
           );
           return;
         }
-        await actionsTrigger.click();
-        await this.page
-          .getByRole('menuitem', { name: /^Excluir$/i })
-          .first()
-          .click();
+        await this.clickMenuItemAfterOpening(actionsTrigger, /^Excluir$/i);
       }
       // Modal de confirmação Chakra/Bootstrap.
       // REVISAR: aguardando data-test-id `event-delete-confirm`.
@@ -794,11 +813,7 @@ export class SeedAdminPage extends BasePage {
           );
           return;
         }
-        await actions.click();
-        await this.page
-          .getByRole('menuitem', { name: /^Excluir$/i })
-          .first()
-          .click();
+        await this.clickMenuItemAfterOpening(actions, /^Excluir$/i);
       }
       const confirm = this.page
         .getByRole('alertdialog')
@@ -864,8 +879,7 @@ export class SeedAdminPage extends BasePage {
       .or(row.getByRole('button', { name: 'more_vert' }))
       .first();
     await kebab.scrollIntoViewIfNeeded();
-    await kebab.click();
-    await this.page.getByRole('menuitem', { name: /Inscrição/i }).first().click();
+    await this.clickMenuItemAfterOpening(kebab, /Inscrição/i);
 
     // Tela completa "Detalhes do evento" abre — URL NÃO muda (continua em
     // /events?tab=events). Header "Detalhes do evento" + heading h3
@@ -961,8 +975,7 @@ export class SeedAdminPage extends BasePage {
       .or(row.getByRole('button', { name: 'more_vert' }))
       .first();
     await kebab.scrollIntoViewIfNeeded();
-    await kebab.click();
-    await this.page.getByRole('menuitem', { name: /Inscrição/i }).first().click();
+    await this.clickMenuItemAfterOpening(kebab, /Inscrição/i);
 
     await this.page
       .getByRole('heading', { name: /Lista de Participantes/i })
@@ -1051,8 +1064,7 @@ export class SeedAdminPage extends BasePage {
         .locator('[data-test-id^="events-"][data-test-id$="-actions-kebab"]')
         .or(row.getByRole('button', { name: 'more_vert' }))
         .first();
-      await kebab.click();
-      await this.page.getByRole('menuitem', { name: /Inscrição/i }).first().click();
+      await this.clickMenuItemAfterOpening(kebab, /Inscrição/i);
 
       // Drawer abre. Aguarda heading e localiza linha do aluno.
       await this.page
