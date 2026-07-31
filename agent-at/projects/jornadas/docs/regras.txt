@@ -1,0 +1,451 @@
+
+***Visão com perfil de ADMINISTRADOR***
+Ao acessar o menu Jornadas, haverão três submenus: Jornada padrão, Execuções e Agenda.
+
+**MENU JORNADA PADRÃO**
+O primeiro submenu é a Jornada padrão. Nele serão cadastradas todas as jornadas e o usuário poderá acompanhar a listagem de jornadas já criadas.
+
+Vamos ter alguns dashboards nela também. O primeiro é Situação das Jornadas, que vai mostrar todas as situações disponíveis, liberada, em desenvolvimento, suspensa e encerrada, a quantidade correspondente a cada uma e o percentual.
+O segundo dashboard é a distribuição dos inscritos. Ele vai mostrar o total de inscrições de acordo com a situação delas: confirmados, pendentes, desistentes e cancelados. Também vai mostrar os valores em número e percentual.
+Haverá o dashboard tipo de experiência que exibirá os tipos de experiência preenchidos nas jornadas. Caso existam mais que cinco itens a serem exibidos, mostrará as quatro primeiras opções que contém uma quantidade maior e contabilizará as demais numa opção chamada outros, que será sempre exibida por último.
+Haverá o dashboard de classificação, que, assim como o tipo de experiência, mostrará as classificações preenchidas nas jornadas, mostrará também as quatro primeiras opções que contém uma quantidade maior e contabilizará as demais numa opção chamada outros, que será sempre exibida por último.
+
+Na listagem, nós teremos por padrão exibidas as colunas nome da jornada, inscrições, progresso médio, Situação, tipo de experiência, classificação e a coluna de ações.
+Na coluna Inscrições serão mostradas o total de inscrições e o totalizador das pendentes, confirmadas, desistentes e canceladas.
+A coluna de progresso médio mostrará uma barra de progresso e o valor percentual ao lado.
+A coluna Situação mostrará, assim como na lista de conteúdos, uma abreviação da situação da jornada, identificada pela cor e pela sigla da inicial da situação.
+O tipo de experiência será mostrado no formato de badge, com o tipo de experiência preenchido no cadastro da jornada.
+A classificação também será mostrada no formato de badge, com o valor preenchido no cadastro da jornada.
+A coluna Ações irá mostrar a opção Gerenciar, Duplicar e Excluir.
+A opção duplicar irá duplicar a jornada com todas as suas informações cadastrais, acrescentando a palavra (cópia) ao final do nome da jornada para que ela possa ser diferenciada na listagem. A única informação que não será duplicada é a aba "Inscrição"
+A opção excluir irá excluir a jornada e todos os seus dados, sempre mostrando uma mensagem de confirmação antes da exclusão. Não será possível excluir jornadas que possuírem algum engajamento, ou seja, dados de progresso ou histórico de movimentação de usuários.
+
+Nesta aba teremos as funções:
+- Adicionar
+- Extrair dados, que utilizará a extração padrão da Twygo em formato CSV ou PDF.
+- Busca rápida, que possibilitará pesquisar por nome da jornada.
+- Filtro, que utilizará o componente padrão de filtro da Twygo.
+	* Filtros padrão: Liberadas, Em desenvolvimento, Suspensas, Encerradas.
+	* Campos para filtrar: Nome da jornada, Progresso, Situação, Tipo de experiência, Classificação, Código da jornada, Duração, Carga horária, Categoria, Quem pode ver, Permite grupo de inscrições, Vigência, Exige confirmação de inscrição, Duração de acordo com tarefas, Restringir o acesso fora do horário, Permite registro de inscrição por, Publicada em, Última atualização em, Criada em, Criada por.
+	* Colunas para exibir: Nome da jornada, Inscrições, Progresso, Situação, Tipo de experiência, Classificação, Time, Código da jornada, Duração, Carga horária, Categoria, Link da jornada,  Quem pode ver, Grupo de inscrição, Vigência, Confirmação de inscrição, Duração de acordo com tarefas, Restringir o acesso fora do horário, Permite registro de inscrição por, Curtidas, Salvamentos, Modelo do certificado, Publicada em, Última atualização em, Criada em, Criada por.
+
+A opção Gerenciar irá levar o usuário para a página de criação/edição da jornada. Nela haverão as seguintes abas: Identificação, Acesso, Banner, Aprovação, Time, Cronograma e Inscrição, nesta ordem.
+
+*ABA IDENTIFICAÇÃO*
+Na aba Identificação, haverão os seguintes campos:
+- Nome da jornada, campo de texto.
+- Tipo de experiência, um campo onde poderá ser selecionado um tipo de experiência já existente ou criado um novo.
+- Classificação, onde também poderá ser selecionado uma classificação já existente ou criada uma nova.
+- Situação, que conterá as opções: em desenvolvimento, liberado, suspenso e encerrado, nesta ordem.
+- Quem pode ver (visualização), que conterá as opções: inscritos, colaborador e usuários, nesta ordem.
+- Carga horária.
+- Descrição, que será um campo de texto no mesmo padrão da criação de conteúdos.
+- Categorias, que será no mesmo padrão do campo de categorias da criação de conteúdos, onde o usuário poderá selecionar uma categoria já existente ou criar uma nova.
+- Prolongar duração de acordo com o período das tarefas, que será do tipo switch e virá por default desabilitado.
+- Duração, campo numérico. O usuário também poderá alterar a duração através do slider abaixo deste campo.
+- Unidade, que conterá as opções: dias, semanas ou meses. Quando o campo Prolongar duração de acordo com o período das tarefas estiver habilitar, este campo e a duração ficarão desabilitados para edição.
+
+*ABA ACESSO*
+Na aba Acesso, haverão os seguintes campos:
+Sessão Contato:
+- Campo e-mail de contato
+
+Sessão Inscrição. conterá os parâmetros:
+- Exigir confirmação de inscrição
+- Permitir registro de grupo de inscrições
+- Permitir registro de inscrição por:
+	* Pessoa física
+	* Pessoa jurídica (empresa com CNPJ)
+- Dias de acesso individual (vigência)
+- Atualizar dias de acesso individual dos inscritos atuais
+
+Sessão Acesso fora de horário:
+- Restringir o acesso fora do horário configurado no modo de uso
+
+Sessão Anexos:
+- Habilitar o envio de anexos na inscrição.
+
+Toda essa aba deve seguir o mesmo padrão da aba de acessos da criação de conteúdos.
+
+*ABA BANNER*
+Aba Banner: Toda essa aba deve seguir o mesmo padrão da aba de banner da criação de conteúdos.
+
+*ABA APROVAÇÃO*
+Aba Aprovação: Toda essa aba deve seguir o mesmo padrão da aba de banner da criação de conteúdos. A única diferença é que na sessão "Critérios de aprovação" haverá apenas o critério: Progresso maior ou igual a.
+
+*ABA TIME*
+Nesta aba serão listados os papéis vinculados à jornada. Haverá:
+- A tabela com a listagem de papéis.
+- A opção adicionar.
+- O campo de busca, onde será possível pesquisar por papel ou usuário.
+- O botão para alternar entre a visão de cards ou lista.
+- E o filtro.
+	* Filtros padrão: Vínculo definido na inscrição, Vínculo fixo na jornada.
+	* Opções de filtro: Papel, Rótulo, Tipo de vínculo, Pessoa vinculada, Permissões.
+	* Colunas para exibir: Papel, Rótulo, Tipo de vínculo, Pessoa vinculada, Permissões, Ações.
+
+A listagem conterá as seguintes colunas exibidas por padrão:
+- Papel, que mostrará o nome do papel que está sendo listado.
+- Rótulo, que mostrará o rótulo escolhido para exibir o nome deste papel.
+- Tipo de vínculo, se vai ser um papel fixo ou definido na inscrição do usuário, e será exibido no formato de badge.
+- Pessoa vinculada, que exibirá o nome da pessoa vinculada a este papel, caso já exista.
+- Permissões, que mostrará a quantidade de permissões atribuídas a esse papel.
+- Ações, que mostrará as opções editar e excluir.
+
+
+Ao clicar em adicionar, o usuário será redirecionado para uma página de adição do papel, que conterá os seguintes campos:
+- Papel, que listará os papéis cadastrados no menu de papéis e permissões.
+- Rótulo, que será um campo de texto onde o usuário preencherá como ele quer que esse papel seja exibido para os usuários.
+- Tipo de preenchimento do papel, campo de seleção única, que conterá as opções:
+	* Pessoa definida na inscrição do participante
+	* Pessoa definida na criação da jornada.
+- Permissões deste papel, que conterá as seguintes opções:
+Seção acesso à jornada padrão
+- Visualizar a jornada
+- Editar dados cadastrais
+- Alterar o time da jornada
+- Alterar o cronograma.
+Seção comunicação
+- Receber notificações da jornada
+- Receber alertas de atraso
+- Ser notificado sobre conclusão da jornada
+Seção acompanhamento da execução
+- Visualizar execução da jornada
+- Criar tarefas
+- Reagendar compromissos
+- Marcar tarefas manuais como concluídas
+Seção inscrições
+- Visualizar inscritos
+- Inscrever pessoas
+- Alterar a situação da inscrição
+- Excluir informações
+
+
+*ABA CRONOGRAMA*
+Nesta aba haverá o botão Adicionar e uma tabela com o cronograma das tarefas.
+Por default, será exibido o primeiro dia.
+
+Ao clicar em adicionar, o usuário terá duas opções: Fase ou tarefa.
+
+* Adicionar Fase*
+Ao clicar em adicionar Fase, será aberta uma página com os seguintes campos:
+- Nome da fase, campo de texto.
+- Cor, componente padrão de seleção de cores da Twygo.
+- Descrição, campo de texto.
+- Dia de início, campo numérico.
+- Duração, campo numérico.
+- Unidade, conterá as opções: dias, semenas e meses.
+- Dia de término (calculado), campo de texto que ficará bloqueado para edição e será calculado automaticamente com o dia de início + duração.
+
+Haverá um slider abaixo da duração para o ajuste rápido do valor dela.
+Haverá um texto auxiliar abaixo do período da fase, indicando o dia de início e término dela:
+- Quando o dia de início e término forem iguais a frase deve ser: "Esta fase será executada no Xº dia da jornada."
+- Quando forem diferentes deve ser: "Esta fase será executada do Xº dia ao Xº dia da jornada."
+Ao adicionar a fase, o usuário será redirecionado novamente para a página do cronograma. Nela será adicionado um card com o período informado na fase. Será criada uma coluna para o dia de início da fase e outra para o dia de término dessa fase, caso ainda não exista na tabela. Os dias intermediários não serão adicionados automaticamente no cronograma.
+
+*Adicionar Tarefa*
+Ao clicar em adicionar Tarefa, será aberta uma página com os seguintes campos:
+
+Sessão Dados básicos:
+- Nome da tarefa, campo de texto
+- Cor, componente padrão de seleção de cores da Twygo.
+- Fase:
+	* Listará as fases já criadas anteriormente
+	* Caso nenhuma tenha sido criada ainda este campo ficará bloqueado para seleção exibindo a opção "Sem fase".
+- Descrição, campo de texto.
+
+Sessão Período e duração:
+- Dia de início, campo numérico.
+- Duração, campo numérico.
+- Unidade, conterá as opções: dias, semenas e meses.
+- Dia de término (calculado), campo de texto que ficará bloqueado para edição e será calculado automaticamente com o dia de início + duração.
+- Permitir que esta tarefa seja reagendada pelo inscrito, checkbox
+
+Haverá um slider abaixo da duração para o ajuste rápido do valor dela.
+Haverá um texto auxiliar abaixo do período da tarefa, indicando o dia de início e término dela:
+- Quando o dia de início e término forem iguais a frase deve ser: "Esta tarefa será executada no Xº dia da jornada."
+- Quando forem diferentes deve ser: "Esta tarefa será executada do Xº dia ao Xº dia da jornada."
+Ao adicionar a tarefa, o usuário será redirecionado novamente para a página do cronograma. Nela será adicionado um card com o período informado na tarefa. Será criada uma coluna para o dia de início da tarefa e outra para o dia de término dessa tarefa, caso ainda não exista na tabela. Os dias intermediários não serão adicionados automaticamente no cronograma.
+Caso a tarefa pertença a uma fase, será adicionada dentro do card desta. Caso contrário, ficará fora da área pertencente a fase.
+
+Sessão Envolvidos:
+- Quem deve executar ou receber esta tarefa, campo de múltipla seleção que conterá as opções:
+	* Inscrito na jornada
+	* Exibirá também as opções criadas na aba "Time" da jornada.
+
+Sessão Tipo da tarefa:
+Conterá as opções
+- Aprendizagem,
+- Compromisso,
+- Manual
+- Mensagem.
+
+Quando selecionada a opção "Aprendizagem", serão exibidos os seguintes campos:
+- Conteúdos, exibido por default, campo de multipla seleção.
+- Botão "Adicionar mais critérios", que conterá as opções
+	* Categoria, campo de multipla seleção.
+	* Tipo de experiência, campo de multipla seleção.
+	* Classificação, campo de multipla seleção.
+- Como considerar a tarefa concluída, que será um campo de seleção única, que conterá as opções:
+	* Progresso maior ou igual a, valor percentual de 1 a 100.
+	* Carga horária mínima, valor numérico de 1 a 999.
+	* Quantidade de conteúdos, valor numérico de 1 a 999.
+
+O campo “Conteúdos” virá exibido por default, porém o usuário poderá adicionar outras opções: Categoria, Tipo de experiência, Classificação. Quando uma dessas outras opções for adicionada, o usuário poderá remover a opção “Conteúdos”. Ao menos uma dessas quatro opções deve estar selecionada, ou seja, quando apenas uma estiver exibida, ela não poderá ser removida.
+
+Quando selecionada a opção "Compromisso", serão exibidos os seguintes campos:
+- Descrição do compromisso, campo de texto.
+- Local ou link, campo de texto.
+
+Quando selecionada a opção "Manual", serão exibidos os seguintes campos:
+- Desrição da tarefa
+
+Quando selecionada a opção "Mensagem", será exibido o texto:
+As mensagens desta tarefa serão definidas na seção Ações automáticas, onde você poderá configurar o envio de mensagens automáticas para os participantes da jornada.
+
+Sessão Ações automáticas:
+As opções disponíveis nesta seção vão depender do tipo de tarefa selecionado.
+Para os tipos "Aprendizagem", "Compromisso" e "Manual", estarão disponíveis as seguintes ações automáticas:
+- Enviar e-mail
+- Enviar notificação interna
+- Inscrição em conteúdo
+Para o tipo de tarefa "Mensagem", estarão disponíveis as ações automáticas:
+- Enviar e-mail
+- Enviar notificação interna
+
+Ao clicar na ação "Enviar e-mail", será aberto um drawer lateral com os campos:
+- Idioma, com as opções: português, inglês e espanhol;
+- Modelo de e-mail;
+- Remetente;
+- Assunto do e-mail;
+- Conteúdo do e-mail;
+- Botão enviar e-mail teste;
+- Botão Salvar;
+- Botão Cancelar;
+
+Quando o usuário selecionar um modelo de e-mail, será aberta uma caixa de texto logo abaixo do campo, contendo um texto de exemplo. Haverá um botão "Usar este modelo" e quando o usuário clicar sobre ele, o texto será preenchido automaticamente no campo conteúdo do e-mail.
+Esta função deve seguir o mesmo padrão e regras do disparo de e-mail do Piloto automático.
+
+Ao clicar na ação "Enviar notificação", será aberto um drawer lateral com os seguintes campos:
+- Idioma, com as opções: português, inglês e espanhol;
+- Título;
+- Conteúdo;
+- Link (endereço URL)
+- Botão Salvar;
+- Botão Cancelar.
+Esta função deve seguir o mesmo padrão e regras do disparo de notificações do Piloto automático.
+
+Ao clicar na ação "Inscrever em conteúdo", será aberto um drawer lateral com os seguintes campos:
+- Tipo de conteúdo, com as opções: Todos, Cursos, Trilhas e Pacotes. Todos selecionada por default;
+- Situação, com as opções: Todos, Em desenvolvimento, Liberados, Supensos. Todos selecionada por default;
+- Conteúdo, campo de seleção multipla;
+- Enviar notificação de inscrição, checkbox;
+
+Os campos "Tipo de conteúdo" e "Situação" funcionarão como filtros para o campo "Conteúdo".
+Quando o parâmetro "Enviar notificação de inscrição" estiver desmarcado o usuário não receberá os e-mails de inscrição nestes conteúdos.
+
+O card da fase exibirá: nome da fase, dia de início e término, ações de editar e excluir.
+O card da tarefa exibirá: Nome da tarefa, badge com o tipo da tarefa, badge com a quantidade de ações contidas na tarefa, ações de duplicar, editar e excluir.
+As colunas do cronograma poderão ser excluídas caso não tenha nenhuma tarefa que comece ou termine naquele dia.
+No caso do cronograma conter muitas colunas, será exibido um scroll lateral.
+
+*ABA INSCRIÇÕES*
+A aba Inscrição conterá uma tabela com as seguintes colunas: Participante, Inscrito em, Ambiente, Situação da Inscrição, Etiqueta, ações de Editar, Excluir e Recalcular progresso.
+Conterá as opções:
+- Adicionar;
+- Ações em massa
+- Extrair dados;
+- A busca rápida, onde será possível pesquisar por nome, e-mail, CPF ou código do participante;
+- Visão de lista ou cards;
+- Filtro;
+	* Filtros padrão: Confirmados, Pendentes, Cancelados, Desistentes.
+	* Opções de filtro: Participante, Inscrito em, Ambiente, Situação da inscrição, Etiqueta, Expiração da inscrição.
+	* Colunas para exibir: Participante, Inscrito em, Ambiente, Situação da inscrição, Etiqueta, Expiração da inscrição.
+
+Deve ser utilizada a mesma tela de inscrições que existe em "Pacotes", que já está em react. As novas funções adicionadas aqui na jornada devem ser replicadas para pacotes também.
+
+Botão "Ações em massa" conterá com as seguintes opções:
+- Atualizar para confirmados
+- Atualizar para pendentes
+- Atualizar para cancelados
+- Atualizar para desistentes
+- Recalcular progresso
+- Alterar a etiqueta
+	* Ao selecionar essa opção haverá um campo de texto "Alterar para" onde o usuário informará o valor para o qual o campo será atualizado.
+
+Botão de "Adicionar" levará o usuário para uma página com os seguintes campos:
+Sessão Identificação do participante:
+- Participante
+Sessão Controle da inscrição:
+- Dia de início da jornada
+- Etiqueta
+- Situação
+- Expiração da inscrição
+Sessão Responsáveis
+- Exibirá os papeis definidos na aba "Time" que tiverem marcada a opção 'Pessoa definida na inscrição do participante'
+
+
+**MENU EXECUÇÕES**
+O segundo menu é "Execuções", nele teremos alguns dashboards no topo da tela.
+O primeiro é o "Total de execuções", que contabilizará todas as execuções de jornadas deste ambiente.
+Abaixo dele teremos o dashboard "Em andamento", que contabilizará todas as jornadas que possuem alguma tarefa com status diferente de concluído ou cancelada. 
+Depois teremos o dashboard de "Situação das execuções", que contabilizará as jornadas de acordo com a situação das tarefas. Teremos as seguintes situações: sem pendências, com atraso, concluídas no prazo, concluídas com atraso.
+E por último, teremos o dashboard de "Distribuição de progresso", que mostrará uma visão da quantidade de jornadas de acordo com o progresso delas. Nós teremos faixas de:
+- 0 a 25%;
+- 26 a 50%;
+- 51 a 75%;
+- 76 a 99%; e
+- 100%.
+
+Haverá a opção de:
+- Extrair dados;
+- Busca rápida, onde será possível pesquisar por participante ou jornada;
+- As opções de visualizar a tabela no formato de lista ou cards;
+- E o filtro.
+	* Filtros padrão: Sem pendências, Com atraso, Concluídas no prazo, Concluídas com atraso.
+	* Opções de filtro: Participante, Jornada, Time, Progresso, Situação das tarefas, Aprovação, Certificado, Iniciada em, Finalizada em, Duração, Última atividade, Inscrito em.
+	* Colunas para exibir: Participante, Jornada, Time, Progresso, Situação das tarefas, Aprovação, Certificado, Iniciada em, Finalizada em, Duração, Última atividade, Inscrito em, Tarefas concluídas, Ações disparadas.
+
+A tabela listará todas as execuções de jornadas do ambiente, ou seja, todos os participantes de todas as jornadas, ordenando por default pela data de inscrição do participantes, listando os mais recentes no topo.
+A tabela exibirá por padrão as seguintes colunas: Participante, Jornada, Time, Progresso, Situação das tarefas, Aprovação, Certificado e os botões "Emitir/Expirar certificado", "Histórico de certificados" e "Ver detalhes".
+
+A coluna "Certificado" exibirá as opções: Pendente, Emitido, Expirado, Aguardando assinatura.
+Quando o certificado está "Pendente" a ação é "Emitir certificado", quando o certificado está "Emitido" a ação é "Expirar certificado", quando o certificado é "Expirado"  a ação é "Emitir certificado".
+Um certificado só poderá ser emitido se o participante estiver aprovado.
+Mesmas regras que já existem na tela de aprendizagem dos conteúdos.
+
+Ao clicar em "Histórico de certificados" o usuário será direcionado para uma tela contendo a listagem de todos os certificados já emitidos para esta jornada.
+A tabela conterá as colunas: Situação, Emitido em, Expirado em, Versão do certificado, ícones de visualizar e baixar.
+Mesma página já existente na tela de aprendizagem dos conteúdos.
+
+Ao clicar em "Ver detalhes" o usuário será direcionado para uma página com os detalhes da execução da jornada deste usuário. Terá as seguintes informações:
+No topo:
+- Nome do usuário
+Cabeçalho:
+- Jornada;
+- Inscrito em;
+- Iniciada em;
+- Finalizada em;
+- Duração total;
+- Situação das tarefas;
+- Aprovação;
+- Certificado;
+- Nome dos membros do time com seu respectivo papel.
+Dashboards:
+- Progresso geral, em formato percentual;
+- Tarefas concluídas, mostrando no formato X/Y;
+- Ações disparadas, quantidade de ações;
+- Última atividade, data e hora da última atividade/ação realizada pelo usuário na jornada.
+
+Conterá as opções:
+- Extrair dados;
+- A busca rápida, onde será possível pesquisar por ação ou descrição.
+- Filtro;
+	* Filtros padrão: Ações automáticas, Ações manuais
+	* Opções de filtro: Ação, Tipo de ação, Realizada por, Realizada em, IP.
+	* Colunas para exibir: Ação, Descrição, Tipo de ação, Realizada por, Realizada em, IP.
+
+
+A tabela listará todas as ações/atividades realizadas referentes a esta jornada do usuário, sendo ações realizadas por ele, por teceiros (líder por exemplo) ou automáticas pelo sistema.
+A tabela exibirá por padrão as seguintes colunas: Ação, Descrição, Tipo de ação, Realizada por, Realizada em, IP.
+Coluna "Ação" poderá ter as seguintes opções:
+- Iniciou a jornada;
+- Finalizou a jornada;
+- Iniciou uma fase;
+- Finalizou uma fase;
+- Visualizou uma tarefa;
+- Iniciou uma tarefa;
+- Finalizou uma tarefa;
+- Reagendou uma tarefa;
+- Inscrição realizada;
+- Notificação enviada;
+- E-mail enviado;
+- Foi aprovado;
+- Certificado emitido;
+
+A coluna "Descrição" irá exibir a tarefa ou ação realizada de acordo com a ação realizada:
+- Iniciou a jornada -> Nome da jornada;
+- Finalizou a jornada -> Nome da jornada;
+- Iniciou uma fase -> Nome da fase;
+- Finalizou uma fase -> Nome da fase;
+- Visualizou uma tarefa -> Nome da tarefa;
+- Iniciou uma tarefa -> Nome da tarefa;
+- Finalizou uma tarefa -> Nome da tarefa;
+- Reagendou uma tarefa -> Nome da tarefa;
+- Inscrição realizada -> Nome do conteúdo;
+- Notificação enviada -> Título da notificação;
+- E-mail enviado -> Título do e-mail;
+- Foi aprovado -> sem descrição;
+- Certificado emitido -> sem descrição;
+
+"Tipo de ação" poderá ser automática ou manual.
+"Realizada por" exibirá o usuário ou "Sistema" em caso de ações automáticas.
+"IP" exibirá o IP do usuário ou "-" em caso de ações automáticas.
+
+**MENU AGENDA**
+O terceiro menu menu é "Agenda"
+
+Conterá as opções:
+- Extrair dados; [REMOVER DA FASE 01]
+- Modo de exibição: "por usuários" ou "por jornadas".
+- A busca rápida, onde será possível pesquisar por usuário, jornada ou tarefa.
+- Filtro;
+	* Filtros padrão: Sem pendências, Com atraso, Concluídas no prazo, Concluídas com atraso.
+	* Opções de filtro: Usuário, Jornada, Situação da tarefa, Fase, Tarefa, Tipo de tarefa, Ação automática.
+	* Colunas para exibir: Esta seção será ocultada do filtro pois não se aplica a este contexto.
+
+A tabela abaixo será exibida no formato de calendário exibindo por padrão o dia atual por primeiro.
+O usuário poderá visualizar os dias passados e futuros. Limitar a visualizar no período que existirem tarefas.
+
+Quando o modo de exibição "Por usuários" estiver selecionado, a tabela exibirá na primeira coluna o usuário, exibindo um por linha. As demais colunas exibirão os dias subsequentes ao dia atual e as tarefas contidas em cada dia.
+O card da tarefa conterá as seguintes informações: Nome da tarefa, ícone com a situação, nome da jornada, badge com nome da fase, ícone com o tipo da tarefa, quantidade de ações contidas na tarefa.
+
+Quando o modo de exibição "Por jornadas" estiver selecionado, a tabela exibirá na primeira coluna a jornada, exibindo uma por linha. As demais colunas exibirão os dias subsequentes ao dia atual e as tarefas contidas em cada dia.
+O card da tarefa conterá as seguintes informações: Nome da tarefa, ícone com a situação, badge com nome da fase, ícone com o tipo da tarefa, quantidade de ações contidas na tarefa, usuários vinculados à tarefa.
+As tarefas repetidas estarão agrupadas por dia, situação e usuários.
+
+
+***Visão com perfil de GESTOR DE TURMA***
+O gestor de turma terá a mesma visualização que o administrador, porém só visualizará as jornadas que ele estiver atribuído na aba "Time".
+As permissões que ele terá em cada jornada vão depender das permissões concedidas nesta tela também.
+
+
+***Visão com perfil de INSTRUTOR***
+O instrutor terá a mesma visualização que o administrador, porém só visualizará as jornadas que ele estiver atribuído na aba "Time".
+As permissões que ele terá em cada jornada vão depender das permissões concedidas nesta tela também.
+
+
+***Visão para o LÍDER DE EQUIPE***
+O líder de equipe terá acesso aos menus "Execuções" e "Agenda", porém só visualiza informações das pessoas que ele lidera.
+
+
+***Visão com perfil de ALUNO***
+No Play será exibido um novo card para jornadas.
+O card resumido exibirá: o tipo de experiência, o nome da jornada e o banner.
+O card detalhado exibirá:
+- Aba detalhes: o botão de acesso, botão curtir, botão salvar, botão visualizar certificado, nome da jornada, badge com o tipo de experiência, badge com a classificação, Duração da jornada, Carga horária, Descrição da jornada, Quantidade de tarefas, Categorias.
+- Aba cronograma: Lista de tarefas contidas na jornada.
+	* Serão listadas as tarefas porém elas não serão acessadas por aqui.
+
+O botão de acesso poderá ter as seguintes nomenclaturas:
+- Inscreva-se: Quando o usuário ainda não está inscrito.
+- Acessar: Quando o usuário já está inscrito.
+
+Ao clicar no botão "Acessar" serrá aberta uma nova página com: banner da jornada no topo e um calendário abaixo com as tarefas.
+
+Ao clicar na tarefa será aberto um modal com os detalhes.
+
+Quando a tarefa for do tipo APRENDIZAGEM conterá as seguintes informações: o nome da tarefa, a data de início e término para a realização, o tipo da tarefa, a descrição, o critério de conclusão, o progresso atual e uma lista com os conteúdos vinculados a esta tarefa.
+- Na lista de tarefas serão exibidas as seguintes informações: a ordenação, o banner do conteúdo, o nome do conteúdo, o tipo e a descrição do conteúdo.
+- Quando contiverem apenas conteúdos do tipo curso ou trilha, será exibido um botão "Iniciar" nesta modal, que redirecionará o usuário para o primeiro conteúdo da lista que não estiver concluído.
+- Caso uma tarefa contenha apenas um conteúdo do tipo pacote, o botão "Iniciar" será alterado para "Explorar pacote".
+- Quando houver algum conteúdo do tipo pacote, será exibida uma sessão informativa no final, escrito: "Sobre o pacote: O pacote agrupa diversos conteúdos e permite que você escolha quais deseja realizar e em quais deseja se inscrever."
+	* Ao clicar sobre o conteúdo do tipo pacote, o usuário será redirecionado para a página atual que lista os conteúdos do pacote.
+
+Quando a tarefa for do tipo MANUAL ou COMPROMISSO, será exibido um modal com as seguintes informações: nome da tarefa, data para realização, a descrição da tarefa, o link ou o local de realização (caso tenha sido preenchido), a opção de reagendar a tarefa (caso essa seja uma permissão que o usuário possua), a opção de marcar como realizada.
+
+
+
+WIDGET DE TAREFAS
+
+O usuário também poderá acompanhar as tarefas pendentes através do widget de tarefas, caso este esteja disponível para o seu modo de uso.

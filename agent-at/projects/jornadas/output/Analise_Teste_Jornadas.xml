@@ -1,0 +1,1177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="">  <testsuite name="Acesso ao módulo e navegação por perfil">    <testcase name="Acessar o módulo Jornadas como Administrador">
+      <summary>Validar o bloco próprio do módulo e a ordem canônica dos submenus.</summary>
+      <preconditions>Funcionalidade Jornadas habilitada no contrato da organização
+Eventual feature flag do módulo ativa
+Usuários de teste disponíveis nos perfis Administrador, Gestor de Turma, Instrutor, Líder de Equipe e Aluno</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar o menu &#34;Jornadas&#34;</actions>
+          <expectedresults>Bloco &#34;Jornadas&#34; é exibido fora do bloco &#34;Conteúdos&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no submenu &#34;Jornada Padrão&#34;</actions>
+          <expectedresults>Submenus são exibidos nesta ordem: &#34;Jornada Padrão&#34;, &#34;Execuções&#34; e &#34;Agenda&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Restringir o módulo quando o add-on estiver desabilitado">
+      <summary>Validar o bloqueio contratual do módulo.</summary>
+      <preconditions>Funcionalidade Jornadas habilitada no contrato da organização
+Eventual feature flag do módulo ativa
+Usuários de teste disponíveis nos perfis Administrador, Gestor de Turma, Instrutor, Líder de Equipe e Aluno</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar o menu &#34;Jornadas&#34;</actions>
+          <expectedresults>Submenus &#34;Jornada Padrão&#34;, &#34;Execuções&#34; e &#34;Agenda&#34; não são exibidos.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Exibir navegação compatível com o perfil">
+      <summary>Validar visões distintas para Administrador, Gestor de Turma, Instrutor, Líder de Equipe e Aluno.</summary>
+      <preconditions>Funcionalidade Jornadas habilitada no contrato da organização
+Eventual feature flag do módulo ativa
+Usuários de teste disponíveis nos perfis Administrador, Gestor de Turma, Instrutor, Líder de Equipe e Aluno</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar o menu &#34;Jornadas&#34;</actions>
+          <expectedresults>Itens permitidos ao perfil autenticado são exibidos e itens sem permissão não são exibidos.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no submenu &#34;Agenda&#34;</actions>
+          <expectedresults>Conteúdo da &#34;Agenda&#34; exibe somente dados pertencentes ao escopo do perfil autenticado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Listagem e gestão de Jornadas Padrão">    <testcase name="Exibir dashboards, tabela e ações da listagem">
+      <summary>Validar a composição principal da listagem.</summary>
+      <preconditions>Usuário logado como Administrador
+Jornadas com diferentes situações, tipos, classificações, inscrições e níveis de progresso cadastradas
+Jornada sem engajamento e jornada com engajamento disponíveis para validar exclusão</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no submenu &#34;Jornada Padrão&#34;</actions>
+          <expectedresults>Dashboards &#34;Situação das Jornadas&#34;, &#34;Distribuição dos Inscritos&#34;, &#34;Tipo de Experiência&#34; e &#34;Classificação&#34; são exibidos com quantidade e percentual.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar &#34;Nome da jornada&#34; ser exibido</actions>
+          <expectedresults>Tabela exibe colunas &#34;Nome da jornada&#34;, &#34;Inscrições&#34;, &#34;Progresso médio&#34;, &#34;Situação&#34;, &#34;Tipo de experiência&#34; e &#34;Classificação&#34;, sem coluna &#34;teste&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Combinar busca e filtros com validações do campo &#34;Situação&#34;">
+      <summary>Validar busca nominal ao filtrar por situação e filtrar por tipo de experiência simultaneamente.</summary>
+      <preconditions>Usuário logado como Administrador
+Jornadas com diferentes situações, tipos, classificações, inscrições e níveis de progresso cadastradas
+Jornada sem engajamento e jornada com engajamento disponíveis para validar exclusão</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Preencher o campo &#34;Buscar&#34; com &#34;Jornada Liderança&#34;</actions>
+          <expectedresults>Listagem exibe somente jornadas cujo nome contém &#34;Jornada Liderança&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Selecionar &#34;Liberado&#34; no dropdown &#34;Situação&#34;</actions>
+          <expectedresults>Filtro &#34;Situação&#34; exibe &#34;Liberado&#34; e a listagem mantém somente jornadas liberadas.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Selecionar &#34;Liderança&#34; no dropdown &#34;Tipo de experiência&#34;</actions>
+          <expectedresults>Listagem mantém somente jornadas chamadas &#34;Jornada Liderança&#34;, liberadas e do tipo &#34;Liderança&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Duplicar e proteger exclusão por engajamento">
+      <summary>Validar cópia sem inscrições e bloqueio de exclusão com histórico.</summary>
+      <preconditions>Usuário logado como Administrador
+Jornadas com diferentes situações, tipos, classificações, inscrições e níveis de progresso cadastradas
+Jornada sem engajamento e jornada com engajamento disponíveis para validar exclusão</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no botão &#34;Duplicar&#34;</actions>
+          <expectedresults>Nova linha exibe o nome da jornada original acrescido de &#34;(cópia)&#34; e o valor &#34;0&#34; na coluna &#34;Inscrições&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;Excluir&#34;</actions>
+          <expectedresults>A jornada com engajamento permanece exibida na tabela.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Identificação da Jornada Padrão">    <testcase name="Cadastrar identificação válida">
+      <summary>Validar o caminho feliz da identificação.</summary>
+      <preconditions>Usuário logado como Administrador com permissão para criar e editar jornadas
+Tipos de experiência, classificações e categorias previamente cadastrados</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Preencher o campo &#34;Nome&#34; com &#34;Jornada de Liderança&#34;</actions>
+          <expectedresults>Campo &#34;Nome&#34; exibe &#34;Jornada de Liderança&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Selecionar &#34;Liberado&#34; no dropdown &#34;Situação&#34;</actions>
+          <expectedresults>Dropdown &#34;Situação&#34; exibe &#34;Liberado&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Selecionar &#34;Usuários&#34; no dropdown &#34;Quem pode ver&#34;</actions>
+          <expectedresults>Dropdown &#34;Quem pode ver&#34; exibe &#34;Usuários&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Validar os campos &#34;Nome da jornada&#34;, &#34;Situação&#34;, &#34;Quem pode ver&#34;, &#34;Duração&#34; e &#34;Unidade&#34;">
+      <summary>Validar a obrigatoriedade do nome sem inventar mensagem não documentada.</summary>
+      <preconditions>Usuário logado como Administrador com permissão para criar e editar jornadas
+Tipos de experiência, classificações e categorias previamente cadastrados</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Preencher o campo &#34;Nome&#34; com &#34; &#34;</actions>
+          <expectedresults>Campo &#34;Nome&#34; exibe estado de validação inválida e botão &#34;Salvar&#34; permanece desabilitado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Recalcular duração pelo período das tarefas">
+      <summary>Validar switch, bloqueio de campos e unidade do slider.</summary>
+      <preconditions>Usuário logado como Administrador com permissão para criar e editar jornadas
+Tipos de experiência, classificações e categorias previamente cadastrados</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Ativar o switch &#34;Prolongar duração de acordo com o período das tarefas&#34;</actions>
+          <expectedresults>Campos &#34;Duração&#34; e &#34;Unidade&#34; ficam desabilitados.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar &#34;Duração&#34; ser exibido</actions>
+          <expectedresults>Valor de &#34;Duração&#34; corresponde ao maior período configurado nas tarefas e o slider exibe a unidade selecionada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Acesso e regras de inscrição">    <testcase name="Configurar contato e vigência válidos">
+      <summary>Validar os dados essenciais da aba Acesso.</summary>
+      <preconditions>Jornada Padrão em edição
+Usuário logado como Administrador com permissão de alteração
+Massa com períodos de vigência, grupos e regras de confirmação disponível</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar na aba &#34;Acesso&#34;</actions>
+          <expectedresults>Campos de contato, inscrição, confirmação, grupos, vigência, restrição de horário e anexos são exibidos.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Preencher o campo &#34;E-mail de contato&#34; com &#34;qa.jornadas@example.com&#34;</actions>
+          <expectedresults>Campo &#34;E-mail de contato&#34; exibe &#34;qa.jornadas@example.com&#34; sem estado de validação inválida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Validar o campo &#34;E-mail de contato&#34;">
+      <summary>Validar formato do e-mail.</summary>
+      <preconditions>Jornada Padrão em edição
+Usuário logado como Administrador com permissão de alteração
+Massa com períodos de vigência, grupos e regras de confirmação disponível</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Preencher o campo &#34;E-mail de contato&#34; com &#34;email-invalido&#34;</actions>
+          <expectedresults>Campo &#34;E-mail de contato&#34; exibe estado de validação inválida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Restringir inscrição fora do horário permitido">
+      <summary>Validar a regra temporal de acesso à inscrição.</summary>
+      <preconditions>Jornada Padrão em edição
+Usuário logado como Administrador com permissão de alteração
+Massa com períodos de vigência, grupos e regras de confirmação disponível</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Ativar o switch &#34;Restringir acesso fora do horário&#34;</actions>
+          <expectedresults>Controles de período permitido ficam habilitados.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Acessar o link &#34;Inscreva-se&#34;</actions>
+          <expectedresults>Botão &#34;Inscreva-se&#34; não é exibido fora do período configurado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Banners da Jornada Padrão">    <testcase name="Enviar os quatro formatos de banner">
+      <summary>Validar upload e renderização real dos banners.</summary>
+      <preconditions>Jornada Padrão em edição e usuário Administrador autorizado
+Arquivos de imagem válidos e inválidos disponíveis para os quatro formatos de banner</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar na aba &#34;Banner&#34;</actions>
+          <expectedresults>Quatro campos de banner equivalentes aos formatos de Conteúdo são exibidos.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Fazer upload do arquivo &#34;banner-valido.png&#34; no campo &#34;Banner&#34;</actions>
+          <expectedresults>Prévia do arquivo &#34;banner-valido.png&#34; exibe imagem carregada com largura natural maior que zero.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Validar o campo &#34;Uploads de banner/anexo&#34;">
+      <summary>Validar extensão e MIME inválidos.</summary>
+      <preconditions>Jornada Padrão em edição e usuário Administrador autorizado
+Arquivos de imagem válidos e inválidos disponíveis para os quatro formatos de banner</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Fazer upload do arquivo &#34;banner-invalido.txt&#34; no campo &#34;Banner&#34;</actions>
+          <expectedresults>Campo &#34;Banner&#34; exibe estado de validação inválida e nenhuma prévia de imagem é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Cancelar alteração de banner">
+      <summary>Validar descarte de alteração não salva.</summary>
+      <preconditions>Jornada Padrão em edição e usuário Administrador autorizado
+Arquivos de imagem válidos e inválidos disponíveis para os quatro formatos de banner</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Fazer upload do arquivo &#34;banner-novo.png&#34; no campo &#34;Banner&#34;</actions>
+          <expectedresults>Prévia do arquivo &#34;banner-novo.png&#34; é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;Cancelar&#34;</actions>
+          <expectedresults>Banner anteriormente salvo volta a ser exibido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Aprovação, certificado e recálculo">    <testcase name="Configurar critério de aprovação válido">
+      <summary>Validar o único critério percentual suportado.</summary>
+      <preconditions>Jornada com tarefas e participantes em percentuais de progresso distintos
+Modelos de certificado ativos disponíveis
+Usuário Administrador com permissão de acompanhamento e emissão</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar na aba &#34;Aprovação&#34;</actions>
+          <expectedresults>Critério &#34;Progresso maior ou igual a X%&#34; é exibido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Preencher o campo &#34;Progresso&#34; com &#34;80&#34;</actions>
+          <expectedresults>Campo &#34;Progresso&#34; exibe &#34;80&#34; sem estado de validação inválida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Validar os campos &#34;Situação&#34; e &#34;Progresso de conclusão&#34;">
+      <summary>Validar os limites do percentual.</summary>
+      <preconditions>Jornada com tarefas e participantes em percentuais de progresso distintos
+Modelos de certificado ativos disponíveis
+Usuário Administrador com permissão de acompanhamento e emissão</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Preencher o campo &#34;Progresso&#34; com &#34;101&#34;</actions>
+          <expectedresults>Campo &#34;Progresso&#34; exibe estado de validação inválida e botão &#34;Salvar&#34; permanece desabilitado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Emitir certificado somente após aprovação">
+      <summary>Validar elegibilidade e estados de certificado.</summary>
+      <preconditions>Jornada com tarefas e participantes em percentuais de progresso distintos
+Modelos de certificado ativos disponíveis
+Usuário Administrador com permissão de acompanhamento e emissão</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no botão &#34;Emitir certificado&#34;</actions>
+          <expectedresults>Participante não aprovado mantém certificado com situação &#34;Pendente&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;Recalcular progresso&#34;</actions>
+          <expectedresults>Participante elegível exibe aprovação e certificado disponível para emissão.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Time, papéis e permissões da jornada">    <testcase name="Adicionar vínculo fixo ao Time">
+      <summary>Validar criação de membro fixo.</summary>
+      <preconditions>Jornada Padrão em edição
+Papéis padrão e personalizados cadastrados
+Pessoas elegíveis para vínculos fixos e dinâmicos disponíveis</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar na aba &#34;Time&#34;</actions>
+          <expectedresults>Tabela exibe colunas &#34;Papel&#34;, &#34;Rótulo&#34;, &#34;Tipo de vínculo&#34;, &#34;Pessoa vinculada&#34; e &#34;Permissões&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Selecionar &#34;Fixo na jornada&#34; no dropdown &#34;Tipo de vínculo&#34;</actions>
+          <expectedresults>Campo &#34;Pessoa vinculada&#34; fica habilitado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Configurar responsável definido na inscrição">
+      <summary>Validar vínculo dinâmico.</summary>
+      <preconditions>Jornada Padrão em edição
+Papéis padrão e personalizados cadastrados
+Pessoas elegíveis para vínculos fixos e dinâmicos disponíveis</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Selecionar &#34;Definido na inscrição&#34; no dropdown &#34;Tipo de vínculo&#34;</actions>
+          <expectedresults>Campo &#34;Pessoa vinculada&#34; não exige pessoa fixa e o papel passa a ser solicitado na inscrição.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Preservar permissões herdadas">
+      <summary>Validar herança e adição de permissão local.</summary>
+      <preconditions>Jornada Padrão em edição
+Papéis padrão e personalizados cadastrados
+Pessoas elegíveis para vínculos fixos e dinâmicos disponíveis</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no botão &#34;Editar&#34;</actions>
+          <expectedresults>Permissões herdadas aparecem marcadas e desabilitadas.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Marcar &#34;Reagendar&#34;</actions>
+          <expectedresults>Permissão adicional &#34;Reagendar&#34; fica marcada sem desmarcar permissões herdadas.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Cronograma em Kanban">    <testcase name="Exibir cronograma ordinal em Kanban">
+      <summary>Validar colunas necessárias, cards e separadores.</summary>
+      <preconditions>Jornada Padrão em edição com duração configurada
+Massa com cronograma vazio, cronograma extenso e cronograma com engajamento disponível</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar na aba &#34;Cronograma&#34;</actions>
+          <expectedresults>Kanban inicia no primeiro dia e exibe somente colunas necessárias ao início e término cadastrados.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar &#34;1º dia&#34; ser exibido</actions>
+          <expectedresults>Cards de fase exibem nome e período; cards de tarefa exibem nome, tipo e quantidade de ações.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Navegar em cronograma extenso">
+      <summary>Validar scroll lateral e separadores semanais.</summary>
+      <preconditions>Jornada Padrão em edição com duração configurada
+Massa com cronograma vazio, cronograma extenso e cronograma com engajamento disponível</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a URL &#34;/o/{org}/jornadas/cronograma&#34;</actions>
+          <expectedresults>Cronograma extenso exibe scroll lateral e separadores semanais sem sobrepor cards.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Proteger exclusão com engajamento">
+      <summary>Validar integridade histórica do cronograma.</summary>
+      <preconditions>Jornada Padrão em edição com duração configurada
+Massa com cronograma vazio, cronograma extenso e cronograma com engajamento disponível</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no botão &#34;Excluir&#34;</actions>
+          <expectedresults>Card com engajamento atual ou histórico permanece exibido no Kanban.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Cadastro de fases">    <testcase name="Cadastrar fase de um dia">
+      <summary>Validar cálculo e texto singular.</summary>
+      <preconditions>Jornada Padrão com aba Cronograma acessível
+Usuário Administrador com permissão de alteração do cronograma</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Preencher o campo &#34;Nome&#34; com &#34;Integração&#34;</actions>
+          <expectedresults>Campo &#34;Nome&#34; exibe &#34;Integração&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Preencher o campo &#34;Dia de início&#34; com &#34;2&#34;</actions>
+          <expectedresults>Texto auxiliar exibido: &#34;Esta fase será executada no 2º dia da jornada.&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Cadastrar fase com intervalo">
+      <summary>Validar término calculado e bloqueado.</summary>
+      <preconditions>Jornada Padrão com aba Cronograma acessível
+Usuário Administrador com permissão de alteração do cronograma</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Preencher o campo &#34;Duração&#34; com &#34;3&#34;</actions>
+          <expectedresults>Campo &#34;Dia de término&#34; exibe valor calculado e permanece desabilitado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar &#34;Esta fase será executada do 2º dia ao 4º dia da jornada.&#34; ser exibido</actions>
+          <expectedresults>Texto auxiliar exibido: &#34;Esta fase será executada do 2º dia ao 4º dia da jornada.&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Validar os campos &#34;Nome da fase&#34; e &#34;Dia de início&#34;">
+      <summary>Validar obrigatoriedade e limite ordinal positivo.</summary>
+      <preconditions>Jornada Padrão com aba Cronograma acessível
+Usuário Administrador com permissão de alteração do cronograma</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Preencher o campo &#34;Nome&#34; com &#34; &#34;</actions>
+          <expectedresults>Campo &#34;Nome&#34; exibe estado de validação inválida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Preencher o campo &#34;Dia de início&#34; com &#34;0&#34;</actions>
+          <expectedresults>Campo &#34;Dia de início&#34; exibe estado de validação inválida e botão &#34;Salvar&#34; permanece desabilitado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Cadastro de tarefas">    <testcase name="Cadastrar tarefa de Aprendizagem">
+      <summary>Validar critérios e envolvidos da aprendizagem.</summary>
+      <preconditions>Jornada com e sem fases cadastradas
+Conteúdos, categorias, tipos de experiência e classificações disponíveis
+Papéis do Time disponíveis como envolvidos</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Selecionar &#34;Aprendizagem&#34; no dropdown &#34;Tipo&#34;</actions>
+          <expectedresults>Critérios &#34;Progresso&#34;, &#34;Carga horária&#34; e &#34;Quantidade de conteúdos&#34; são exibidos.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Preencher o campo &#34;Progresso&#34; com &#34;100&#34;</actions>
+          <expectedresults>Campo &#34;Progresso&#34; exibe &#34;100&#34; sem estado de validação inválida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Validar tipos Compromisso, Manual e Mensagem">
+      <summary>Validar campos específicos dos tipos não aprendizagem.</summary>
+      <preconditions>Jornada com e sem fases cadastradas
+Conteúdos, categorias, tipos de experiência e classificações disponíveis
+Papéis do Time disponíveis como envolvidos</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Selecionar &#34;Compromisso&#34; no dropdown &#34;Tipo&#34;</actions>
+          <expectedresults>Campos &#34;Descrição&#34; e &#34;Local/link&#34; são exibidos sem opção de integração &#34;Teams&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Selecionar &#34;Mensagem&#34; no dropdown &#34;Tipo&#34;</actions>
+          <expectedresults>Texto auxiliar exibido: &#34;As mensagens desta tarefa serão definidas na seção Ações automáticas, onde você poderá configurar o envio de mensagens automáticas para os participantes da jornada.&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Validar os campos &#34;Nome da tarefa&#34;, &#34;Progresso de conclusão&#34;, &#34;Carga horária mínima&#34; e &#34;Quantidade de conteúdos&#34;">
+      <summary>Validar limites 1–100 e 1–999.</summary>
+      <preconditions>Jornada com e sem fases cadastradas
+Conteúdos, categorias, tipos de experiência e classificações disponíveis
+Papéis do Time disponíveis como envolvidos</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Preencher o campo &#34;Progresso&#34; com &#34;0&#34;</actions>
+          <expectedresults>Campo &#34;Progresso&#34; exibe estado de validação inválida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Preencher o campo &#34;Quantidade de conteúdos&#34; com &#34;1000&#34;</actions>
+          <expectedresults>Campo &#34;Quantidade de conteúdos&#34; exibe estado de validação inválida e botão &#34;Salvar&#34; permanece desabilitado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Ações automáticas">    <testcase name="Configurar ação de E-mail">
+      <summary>Validar campos e uso de modelo.</summary>
+      <preconditions>Tarefas dos quatro tipos disponíveis para edição
+Modelos de e-mail, remetentes e conteúdos elegíveis cadastrados
+Infraestrutura de e-mail e notificações habilitada no ambiente</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no botão &#34;E-mail&#34;</actions>
+          <expectedresults>Drawer exibe &#34;Idioma&#34;, &#34;Modelo&#34;, &#34;Remetente&#34;, &#34;Assunto&#34;, &#34;Conteúdo&#34;, &#34;Enviar e-mail teste&#34;, &#34;Salvar&#34; e &#34;Cancelar&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;Usar este modelo&#34;</actions>
+          <expectedresults>Campos &#34;Assunto&#34; e &#34;Conteúdo&#34; exibem os valores do modelo selecionado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Configurar ação de Notificação">
+      <summary>Validar idiomas e campos da notificação.</summary>
+      <preconditions>Tarefas dos quatro tipos disponíveis para edição
+Modelos de e-mail, remetentes e conteúdos elegíveis cadastrados
+Infraestrutura de e-mail e notificações habilitada no ambiente</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no botão &#34;Notificação&#34;</actions>
+          <expectedresults>Drawer exibe &#34;Idioma&#34;, &#34;Título&#34;, &#34;Conteúdo&#34;, &#34;Link&#34;, &#34;Salvar&#34; e &#34;Cancelar&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Selecionar &#34;espanhol&#34; no dropdown &#34;Idioma&#34;</actions>
+          <expectedresults>Dropdown &#34;Idioma&#34; exibe &#34;espanhol&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Restringir ações do tipo Mensagem">
+      <summary>Validar que Mensagem não inscreve em conteúdo.</summary>
+      <preconditions>Tarefas dos quatro tipos disponíveis para edição
+Modelos de e-mail, remetentes e conteúdos elegíveis cadastrados
+Infraestrutura de e-mail e notificações habilitada no ambiente</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Selecionar &#34;Mensagem&#34; no dropdown &#34;Tipo&#34;</actions>
+          <expectedresults>Ações &#34;E-mail&#34; e &#34;Notificação&#34; são exibidas e ação &#34;Inscrição em conteúdo&#34; não é exibida.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Inscrições da Jornada Padrão">    <testcase name="Cadastrar inscrição e validar o campo &#34;Situação&#34;">
+      <summary>Validar campos de inscrição e responsáveis do Time.</summary>
+      <preconditions>Jornada configurada com papéis de vínculo definido na inscrição
+Participantes nas situações Confirmada, Pendente, Cancelada e Desistente disponíveis
+Usuário Administrador com permissão de gerenciar inscrições</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no botão &#34;Adicionar&#34;</actions>
+          <expectedresults>Formulário exibe &#34;Participante&#34;, &#34;Dia de início&#34;, &#34;Etiqueta&#34;, &#34;Situação&#34;, &#34;Expiração&#34; e responsáveis definidos no Time.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Selecionar &#34;Confirmada&#34; no dropdown &#34;Situação&#34;</actions>
+          <expectedresults>Dropdown &#34;Situação&#34; exibe &#34;Confirmada&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Combinar busca e filtros de inscrição">
+      <summary>Validar busca multifonte ao filtrar por situação e filtrar por etiqueta simultaneamente.</summary>
+      <preconditions>Jornada configurada com papéis de vínculo definido na inscrição
+Participantes nas situações Confirmada, Pendente, Cancelada e Desistente disponíveis
+Usuário Administrador com permissão de gerenciar inscrições</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Preencher o campo &#34;Buscar&#34; com &#34;aluno@example.com&#34;</actions>
+          <expectedresults>Tabela exibe somente participante com e-mail &#34;aluno@example.com&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Selecionar &#34;Confirmados&#34; no dropdown &#34;Situação&#34;</actions>
+          <expectedresults>Filtro &#34;Situação&#34; exibe &#34;Confirmados&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Selecionar &#34;Onboarding&#34; no dropdown &#34;Etiqueta&#34;</actions>
+          <expectedresults>Tabela mantém somente inscrições confirmadas com etiqueta &#34;Onboarding&#34; para o participante buscado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Executar alterações em massa">
+      <summary>Validar ações em massa suportadas.</summary>
+      <preconditions>Jornada configurada com papéis de vínculo definido na inscrição
+Participantes nas situações Confirmada, Pendente, Cancelada e Desistente disponíveis
+Usuário Administrador com permissão de gerenciar inscrições</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no botão &#34;Ações em massa&#34;</actions>
+          <expectedresults>Opções de alterar situação, recalcular progresso e alterar etiqueta são exibidas.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;Recalcular progresso&#34;</actions>
+          <expectedresults>Coluna &#34;Progresso&#34; exibe valores recalculados para as inscrições selecionadas.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Listagem e acompanhamento de execuções">    <testcase name="Exibir dashboards e faixas de progresso">
+      <summary>Validar indicadores e distribuição.</summary>
+      <preconditions>Execuções em todas as situações e faixas de progresso disponíveis
+Participantes aprovados e não aprovados com certificados pendentes, emitidos, expirados e aguardando assinatura
+Usuário Administrador com acesso completo às execuções</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no submenu &#34;Execuções&#34;</actions>
+          <expectedresults>Dashboards &#34;Total de execuções&#34;, &#34;Em andamento&#34;, &#34;Situação das execuções&#34; e &#34;Distribuição do progresso&#34; são exibidos.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar &#34;Distribuição do progresso&#34; ser exibido</actions>
+          <expectedresults>Faixas &#34;0–25&#34;, &#34;26–50&#34;, &#34;51–75&#34;, &#34;76–99&#34; e &#34;100%&#34; são exibidas.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Combinar busca e filtros de execução com validações do campo &#34;Situação&#34;">
+      <summary>Validar atualização conjunta ao filtrar por situação das tarefas e filtrar por aprovação com busca textual.</summary>
+      <preconditions>Execuções em todas as situações e faixas de progresso disponíveis
+Participantes aprovados e não aprovados com certificados pendentes, emitidos, expirados e aguardando assinatura
+Usuário Administrador com acesso completo às execuções</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Preencher o campo &#34;Buscar&#34; com &#34;Ana QA&#34;</actions>
+          <expectedresults>Tabela exibe somente execuções relacionadas a &#34;Ana QA&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Selecionar &#34;Com atraso&#34; no dropdown &#34;Situação das tarefas&#34;</actions>
+          <expectedresults>Filtro &#34;Situação das tarefas&#34; exibe &#34;Com atraso&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Selecionar &#34;Aprovado&#34; no dropdown &#34;Aprovação&#34;</actions>
+          <expectedresults>Tabela e dashboards exibem somente execuções atrasadas e aprovadas de &#34;Ana QA&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Validar estados e emissão de certificado">
+      <summary>Validar estados documentados e elegibilidade.</summary>
+      <preconditions>Execuções em todas as situações e faixas de progresso disponíveis
+Participantes aprovados e não aprovados com certificados pendentes, emitidos, expirados e aguardando assinatura
+Usuário Administrador com acesso completo às execuções</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Aguardar &#34;Certificado&#34; ser exibido</actions>
+          <expectedresults>Coluna &#34;Certificado&#34; contém estados &#34;Pendente&#34;, &#34;Emitido&#34;, &#34;Expirado&#34; ou &#34;Aguardando assinatura&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;Emitir certificado&#34;</actions>
+          <expectedresults>Ação de emissão fica disponível somente na linha de participante aprovado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Detalhe da execução e auditoria">    <testcase name="Exibir resumo da execução">
+      <summary>Validar cabeçalho e indicadores.</summary>
+      <preconditions>Execução com histórico de ações manuais e automáticas disponível
+Log contém ações realizadas por usuário, terceiro e Sistema
+Usuário Administrador com permissão de visualizar detalhes</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no botão &#34;Gerenciar&#34;</actions>
+          <expectedresults>Detalhe exibe membros do time com papel, progresso geral, tarefas concluídas no formato &#34;X/Y&#34;, ações disparadas e última atividade.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Exibir log completo em ordem decrescente">
+      <summary>Validar eventos e colunas de auditoria ao filtrar por tipo de ação, filtrar por responsável e realizar busca textual.</summary>
+      <preconditions>Execução com histórico de ações manuais e automáticas disponível
+Log contém ações realizadas por usuário, terceiro e Sistema
+Usuário Administrador com permissão de visualizar detalhes</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar na aba &#34;Log&#34;</actions>
+          <expectedresults>Tabela exibe colunas &#34;Ação&#34;, &#34;Descrição&#34;, &#34;Tipo de ação&#34;, &#34;Realizada por&#34;, &#34;Realizada em&#34; e &#34;IP&#34; ordenadas do registro mais recente ao mais antigo.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar &#34;Sistema&#34; ser exibido</actions>
+          <expectedresults>Ação automática exibe &#34;Sistema&#34; em &#34;Realizada por&#34; e &#34;–&#34; em &#34;IP&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Preencher o campo &#34;Buscar&#34; com &#34;Certificado emitido&#34;</actions>
+          <expectedresults>Tabela exibe registros cuja descrição contém &#34;Certificado emitido&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>4</step_number>
+          <actions>Selecionar &#34;Certificado emitido&#34; no dropdown &#34;Tipo de ação&#34;</actions>
+          <expectedresults>Filtro &#34;Tipo de ação&#34; exibe &#34;Certificado emitido&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>5</step_number>
+          <actions>Selecionar &#34;Sistema&#34; no dropdown &#34;Realizada por&#34;</actions>
+          <expectedresults>Tabela exibe somente registros de certificado emitido realizados por &#34;Sistema&#34; que correspondem à busca.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Restringir detalhe sem permissão">
+      <summary>Validar autorização do detalhe.</summary>
+      <preconditions>Execução com histórico de ações manuais e automáticas disponível
+Log contém ações realizadas por usuário, terceiro e Sistema
+Usuário Administrador com permissão de visualizar detalhes</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a URL &#34;/o/{org}/jornadas/execucoes/{execucaoId}&#34;</actions>
+          <expectedresults>Dados da execução não são exibidos ao usuário sem permissão de visualização.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Agenda de tarefas">    <testcase name="Alternar modos da Agenda">
+      <summary>Validar modos e limites do calendário.</summary>
+      <preconditions>Tarefas passadas, atuais e futuras em múltiplas jornadas e execuções disponíveis
+Massa com tarefas repetidas para validar agrupamento
+Usuário Administrador com acesso à Agenda</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no submenu &#34;Agenda&#34;</actions>
+          <expectedresults>Modos &#34;Por usuários&#34; e &#34;Por jornadas&#34; são exibidos e botão &#34;Extrair dados&#34; não é exibido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar na aba &#34;Por jornadas&#34;</actions>
+          <expectedresults>Calendário inicia no dia atual e se limita ao período que contém tarefas.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Combinar busca e filtros da Agenda com validações do campo &#34;Situação&#34;">
+      <summary>Validar busca ao filtrar por jornada e filtrar por período sem seção de colunas.</summary>
+      <preconditions>Tarefas passadas, atuais e futuras em múltiplas jornadas e execuções disponíveis
+Massa com tarefas repetidas para validar agrupamento
+Usuário Administrador com acesso à Agenda</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Preencher o campo &#34;Buscar&#34; com &#34;Tarefa Mentoria&#34;</actions>
+          <expectedresults>Calendário exibe somente itens relacionados a &#34;Tarefa Mentoria&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Selecionar &#34;Jornada Liderança&#34; no dropdown &#34;Jornada&#34;</actions>
+          <expectedresults>Filtro &#34;Jornada&#34; exibe &#34;Jornada Liderança&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>3</step_number>
+          <actions>Selecionar &#34;Hoje&#34; no dropdown &#34;Período&#34;</actions>
+          <expectedresults>Calendário exibe tarefas de hoje da &#34;Jornada Liderança&#34; relacionadas à busca e não exibe seção &#34;Colunas&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Agrupar tarefas repetidas">
+      <summary>Validar agrupamento por dia, situação e usuários.</summary>
+      <preconditions>Tarefas passadas, atuais e futuras em múltiplas jornadas e execuções disponíveis
+Massa com tarefas repetidas para validar agrupamento
+Usuário Administrador com acesso à Agenda</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Aguardar &#34;Tarefa Mentoria&#34; ser exibido</actions>
+          <expectedresults>Tarefas repetidas no mesmo dia e situação aparecem agrupadas com a quantidade de usuários.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Papéis e Permissões customizados">    <testcase name="Visualizar papéis padrão sem edição">
+      <summary>Validar imutabilidade dos papéis padrão.</summary>
+      <preconditions>Usuário logado como Administrador com acesso ao módulo auxiliar
+Papéis padrão e ao menos um papel personalizado cadastrados
+Catálogo de permissões de Jornada disponível</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no link &#34;Administrador&#34;</actions>
+          <expectedresults>Papel padrão &#34;Administrador&#34; é exibido e botão &#34;Salvar&#34; não é exibido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Criar papel personalizado por herança">
+      <summary>Validar herança obrigatória e permissões adicionais.</summary>
+      <preconditions>Usuário logado como Administrador com acesso ao módulo auxiliar
+Papéis padrão e ao menos um papel personalizado cadastrados
+Catálogo de permissões de Jornada disponível</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no botão &#34;Adicionar&#34;</actions>
+          <expectedresults>Campo &#34;Papel padrão&#34; é exibido como obrigatório.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Selecionar &#34;Instrutor&#34; no dropdown &#34;Papel padrão&#34;</actions>
+          <expectedresults>Permissões herdadas de &#34;Instrutor&#34; aparecem marcadas e desabilitadas.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Impedir remoção de permissão herdada">
+      <summary>Validar que personalizados apenas adicionam permissões.</summary>
+      <preconditions>Usuário logado como Administrador com acesso ao módulo auxiliar
+Papéis padrão e ao menos um papel personalizado cadastrados
+Catálogo de permissões de Jornada disponível</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Desmarcar &#34;Visualizar jornada&#34;</actions>
+          <expectedresults>Permissão herdada &#34;Visualizar jornada&#34; permanece marcada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Escopo de Gestor de Turma e Instrutor">    <testcase name="Limitar Gestor de Turma às jornadas vinculadas">
+      <summary>Validar escopo por vínculo.</summary>
+      <preconditions>Gestor de Turma e Instrutor vinculados a algumas jornadas e não vinculados a outras
+Permissões globais e locais configuradas em combinações distintas</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no submenu &#34;Jornada Padrão&#34;</actions>
+          <expectedresults>Tabela exibe jornadas vinculadas ao Gestor de Turma e não exibe jornadas sem vínculo.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Combinar permissões globais e locais do Instrutor">
+      <summary>Validar a interseção de permissões.</summary>
+      <preconditions>Gestor de Turma e Instrutor vinculados a algumas jornadas e não vinculados a outras
+Permissões globais e locais configuradas em combinações distintas</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no botão &#34;Gerenciar&#34;</actions>
+          <expectedresults>Instrutor visualiza a jornada vinculada e somente ações permitidas global e localmente ficam habilitadas.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Bloquear URL de jornada não vinculada">
+      <summary>Validar tentativa de acesso direto fora do escopo.</summary>
+      <preconditions>Gestor de Turma e Instrutor vinculados a algumas jornadas e não vinculados a outras
+Permissões globais e locais configuradas em combinações distintas</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a URL &#34;/o/{org}/jornadas/{jornadaNaoVinculadaId}&#34;</actions>
+          <expectedresults>Dados da jornada não vinculada não são exibidos.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Escopo do Líder de Equipe">    <testcase name="Exibir somente Execuções das pessoas lideradas">
+      <summary>Validar isolamento do escopo do líder.</summary>
+      <preconditions>Líder de Equipe com pessoas lideradas e usuários fora de sua equipe
+Execuções e tarefas de Agenda existentes para ambos os grupos</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no submenu &#34;Execuções&#34;</actions>
+          <expectedresults>Tabela exibe participantes liderados e não exibe usuários fora da equipe.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Exibir somente Agenda das pessoas lideradas">
+      <summary>Validar o mesmo escopo no calendário.</summary>
+      <preconditions>Líder de Equipe com pessoas lideradas e usuários fora de sua equipe
+Execuções e tarefas de Agenda existentes para ambos os grupos</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no submenu &#34;Agenda&#34;</actions>
+          <expectedresults>Calendário exibe tarefas das pessoas lideradas e não exibe tarefas de usuários fora da equipe.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Bloquear dados fora da equipe por URL direta">
+      <summary>Validar autorização além do filtro visual.</summary>
+      <preconditions>Líder de Equipe com pessoas lideradas e usuários fora de sua equipe
+Execuções e tarefas de Agenda existentes para ambos os grupos</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a URL &#34;/o/{org}/jornadas/execucoes/{execucaoForaDaEquipeId}&#34;</actions>
+          <expectedresults>Dados da execução fora da equipe não são exibidos.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Jornada no catálogo Play">    <testcase name="Exibir card resumido e detalhado">
+      <summary>Validar catálogo e metadados.</summary>
+      <preconditions>Usuário logado como Aluno
+Jornadas visíveis com aluno inscrito e não inscrito, banners e metadados preenchidos</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a URL &#34;/play&#34;</actions>
+          <expectedresults>Card resumido de jornada exibe tipo de experiência, nome e banner carregado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no link &#34;Jornada de Liderança&#34;</actions>
+          <expectedresults>Card detalhado exibe abas &#34;Detalhes&#34; e &#34;Cronograma&#34;, metadados e lista não acionável de tarefas.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Inscrever aluno em jornada">
+      <summary>Validar transição do CTA.</summary>
+      <preconditions>Usuário logado como Aluno
+Jornadas visíveis com aluno inscrito e não inscrito, banners e metadados preenchidos</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no botão &#34;Inscreva-se&#34;</actions>
+          <expectedresults>Botão &#34;Acessar&#34; é exibido após a inscrição.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Restringir jornada e validar o campo &#34;Quem pode ver&#34;">
+      <summary>Validar regra &#34;Quem pode ver&#34;.</summary>
+      <preconditions>Usuário logado como Aluno
+Jornadas visíveis com aluno inscrito e não inscrito, banners e metadados preenchidos</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a URL &#34;/play/jornadas/{jornadaRestritaId}&#34;</actions>
+          <expectedresults>Card da jornada restrita não é exibido ao aluno fora do público permitido.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Página interna da jornada do aluno">    <testcase name="Carregar página interna da jornada">
+      <summary>Validar loading, banner e calendário.</summary>
+      <preconditions>Aluno inscrito em jornada com execução iniciada
+Jornada contém banner e tarefas distribuídas em diferentes datas</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no botão &#34;Acessar&#34;</actions>
+          <expectedresults>Indicador de carregamento é exibido até os dados da execução serem carregados.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar &#34;Calendário&#34; ser exibido</actions>
+          <expectedresults>Banner da jornada exibe imagem carregada e calendário exibe tarefas nas datas da execução.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Exibir estado vazio sem tarefas no período">
+      <summary>Validar período sem tarefas sem inventar mensagem.</summary>
+      <preconditions>Aluno inscrito em jornada com execução iniciada
+Jornada contém banner e tarefas distribuídas em diferentes datas</preconditions>
+      <execution_type>2</execution_type>
+      <importance>2</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no botão &#34;Próximo período&#34;</actions>
+          <expectedresults>Calendário exibe zero cards de tarefa no período sem tarefas.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Impedir acesso sem inscrição">
+      <summary>Validar acesso apenas à execução do aluno.</summary>
+      <preconditions>Aluno inscrito em jornada com execução iniciada
+Jornada contém banner e tarefas distribuídas em diferentes datas</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a URL &#34;/play/jornadas/{jornadaSemInscricaoId}&#34;</actions>
+          <expectedresults>Página interna e dados da execução não são exibidos.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Interação do aluno com tarefas">    <testcase name="Executar tarefa de Aprendizagem">
+      <summary>Validar modal, critérios e CTA por tipo de conteúdo.</summary>
+      <preconditions>Aluno inscrito em jornada com tarefas de Aprendizagem, Compromisso, Manual e Mensagem
+Massa contém Curso, Trilha e Pacote, incluindo conteúdo concluído previamente
+Há tarefas com e sem permissão de reagendamento</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no link &#34;Tarefa de Aprendizagem&#34;</actions>
+          <expectedresults>Modal exibe tarefa, período, tipo, descrição, critério, progresso e conteúdos.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;Iniciar&#34;</actions>
+          <expectedresults>Primeiro Curso ou Trilha ainda não concluído é aberto.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Explorar Pacote e contabilizar conteúdo concluído">
+      <summary>Validar texto literal e progresso do pacote.</summary>
+      <preconditions>Aluno inscrito em jornada com tarefas de Aprendizagem, Compromisso, Manual e Mensagem
+Massa contém Curso, Trilha e Pacote, incluindo conteúdo concluído previamente
+Há tarefas com e sem permissão de reagendamento</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no botão &#34;Explorar pacote&#34;</actions>
+          <expectedresults>Texto exibido: &#34;Sobre o pacote: O pacote agrupa diversos conteúdos e permite que você escolha quais deseja realizar e em quais deseja se inscrever.&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Aguardar &#34;Progresso&#34; ser exibido</actions>
+          <expectedresults>Progresso inclui conteúdos concluídos antes do início da execução.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Concluir, reagendar e restringir tarefas">
+      <summary>Validar estados sem &#34;Em andamento&#34; e permissões de reagendamento.</summary>
+      <preconditions>Aluno inscrito em jornada com tarefas de Aprendizagem, Compromisso, Manual e Mensagem
+Massa contém Curso, Trilha e Pacote, incluindo conteúdo concluído previamente
+Há tarefas com e sem permissão de reagendamento</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no botão &#34;Marcar como realizada&#34;</actions>
+          <expectedresults>Tarefa Manual ou Compromisso passa de &#34;Pendente&#34; ou &#34;Atrasada&#34; para &#34;Concluída&#34; sem estado &#34;Em andamento&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;Reagendar&#34;</actions>
+          <expectedresults>Controle &#34;Reagendar&#34; é exibido somente para tarefa e usuário autorizados; tarefa Mensagem permanece apenas informativa.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Widgets de Tarefas e Calendário">    <testcase name="Agrupar tarefas do aluno no widget">
+      <summary>Validar agrupamentos e autoria.</summary>
+      <preconditions>Projeto de Painéis Personalizados/Widgets disponível e integrado a Jornadas
+Painel do Aluno configurado com widgets de Tarefas e Calendário
+Aluno possui tarefas atrasadas, de hoje e futuras, próprias e de terceiros</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a URL &#34;/play/painel&#34;</actions>
+          <expectedresults>Widget &#34;Tarefas&#34; exibe grupos &#34;Atrasadas&#34;, &#34;Hoje&#34; e &#34;Próximas&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar na aba &#34;Hoje&#34;</actions>
+          <expectedresults>Lista exibe somente tarefas de hoje atribuídas ao aluno autenticado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Reutilizar Agenda no widget Calendário">
+      <summary>Validar consistência entre os dois consumidores.</summary>
+      <preconditions>Projeto de Painéis Personalizados/Widgets disponível e integrado a Jornadas
+Painel do Aluno configurado com widgets de Tarefas e Calendário
+Aluno possui tarefas atrasadas, de hoje e futuras, próprias e de terceiros</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Aguardar &#34;Calendário&#34; ser exibido</actions>
+          <expectedresults>Widget &#34;Calendário&#34; exibe as mesmas tarefas e datas da Agenda do aluno.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Ocultar tarefas de terceiros">
+      <summary>Validar privacidade do painel.</summary>
+      <preconditions>Projeto de Painéis Personalizados/Widgets disponível e integrado a Jornadas
+Painel do Aluno configurado com widgets de Tarefas e Calendário
+Aluno possui tarefas atrasadas, de hoje e futuras, próprias e de terceiros</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Preencher o campo &#34;Buscar&#34; com &#34;Tarefa de Terceiro&#34;</actions>
+          <expectedresults>Widgets &#34;Tarefas&#34; e &#34;Calendário&#34; exibem zero cards chamados &#34;Tarefa de Terceiro&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Linha de base, reagendamento e replanejamento">    <testcase name="Criar snapshot independente ao iniciar execução">
+      <summary>Validar cópia de fases, tarefas, ações, envolvidos e conversão de dias.</summary>
+      <preconditions>Jornada Padrão com fases, tarefas, ações automáticas e time configurados
+Execuções iniciadas em datas distintas, incluindo uma anterior a alterações na Jornada Padrão
+Usuários com e sem permissões de reagendar e replanejar disponíveis</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no botão &#34;Iniciar execução&#34;</actions>
+          <expectedresults>Execução exibe fases, tarefas, ações e envolvidos copiados com datas reais calculadas pelo dia inicial.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;Salvar&#34; da Jornada Padrão</actions>
+          <expectedresults>Execução iniciada mantém a linha de base anterior e nova execução recebe a configuração atualizada.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Reagendar sem alterar data prevista">
+      <summary>Validar separação entre datas prevista e efetiva.</summary>
+      <preconditions>Jornada Padrão com fases, tarefas, ações automáticas e time configurados
+Execuções iniciadas em datas distintas, incluindo uma anterior a alterações na Jornada Padrão
+Usuários com e sem permissões de reagendar e replanejar disponíveis</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no botão &#34;Reagendar&#34;</actions>
+          <expectedresults>Campo &#34;Data efetiva&#34; é alterável e campo &#34;Data prevista&#34; mantém o valor original.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar no botão &#34;Salvar&#34;</actions>
+          <expectedresults>Execução exibe a nova data efetiva e preserva indicador de atraso quando aplicável.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Replanejar somente com permissão">
+      <summary>Validar alteração da linha de base e autorização.</summary>
+      <preconditions>Jornada Padrão com fases, tarefas, ações automáticas e time configurados
+Execuções iniciadas em datas distintas, incluindo uma anterior a alterações na Jornada Padrão
+Usuários com e sem permissões de reagendar e replanejar disponíveis</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no botão &#34;Replanejar&#34;</actions>
+          <expectedresults>Usuário autorizado altera a data prevista e indicador de atraso é recalculado.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Acessar a URL &#34;/o/{org}/jornadas/execucoes/{execucaoId}/replanejar&#34;</actions>
+          <expectedresults>Controles de replanejamento não são exibidos ao usuário sem permissão.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite>  <testsuite name="Isolamento entre organizações">    <testcase name="Isolar Jornadas Padrão entre organizações">
+      <summary>Validar isolamento multi-tenant da listagem.</summary>
+      <preconditions>Jornadas habilitado em DUAS organizações (a principal e a secundária)
+Qual org faz o papel de secundária NÃO é fixada aqui; o QA escolhe o profile e informa credenciais em organizações adicionais
+Jornada, execuções, inscrições e tarefas existentes em cada uma das duas orgs, com nomes distinguíveis
+Usuário da org secundária SEM nenhum vínculo com os dados da principal</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no submenu &#34;Jornada Padrão&#34;</actions>
+          <expectedresults>Organização secundária exibe &#34;Jornada Secundária&#34; e não exibe &#34;Jornada Principal&#34;.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Isolar execuções e inscrições">
+      <summary>Validar isolamento dos dados derivados.</summary>
+      <preconditions>Jornadas habilitado em DUAS organizações (a principal e a secundária)
+Qual org faz o papel de secundária NÃO é fixada aqui; o QA escolhe o profile e informa credenciais em organizações adicionais
+Jornada, execuções, inscrições e tarefas existentes em cada uma das duas orgs, com nomes distinguíveis
+Usuário da org secundária SEM nenhum vínculo com os dados da principal</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Clicar no submenu &#34;Execuções&#34;</actions>
+          <expectedresults>Tabela exibe execuções da organização secundária e não exibe execuções da organização principal.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>        <step>
+          <step_number>2</step_number>
+          <actions>Clicar na aba &#34;Inscrição&#34;</actions>
+          <expectedresults>Tabela exibe inscrições da organização secundária e não exibe participantes exclusivos da organização principal.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>    <testcase name="Bloquear acesso direto a tarefa de outra organização">
+      <summary>Validar isolamento por autorização além das listagens.</summary>
+      <preconditions>Jornadas habilitado em DUAS organizações (a principal e a secundária)
+Qual org faz o papel de secundária NÃO é fixada aqui; o QA escolhe o profile e informa credenciais em organizações adicionais
+Jornada, execuções, inscrições e tarefas existentes em cada uma das duas orgs, com nomes distinguíveis
+Usuário da org secundária SEM nenhum vínculo com os dados da principal</preconditions>
+      <execution_type>2</execution_type>
+      <importance>3</importance>
+      <steps>        <step>
+          <step_number>1</step_number>
+          <actions>Acessar a URL &#34;/o/{orgSecundaria}/jornadas/tarefas/{tarefaDaOrgPrincipalId}&#34;</actions>
+          <expectedresults>Dados da tarefa da organização principal não são exibidos na organização secundária.</expectedresults>
+          <execution_type>2</execution_type>
+        </step>      </steps>
+    </testcase>  </testsuite></testsuite>

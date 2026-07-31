@@ -1,0 +1,17 @@
+{
+  "name": "Jornadas",
+  "slug": "jornadas",
+  "description": "Análise de Teste do módulo 'Jornadas' da Twygo (visão admin: Jornadas · visão aluno: Play).",
+  "environment": "staging-marca-dagua",
+  "envSecondary": null,
+  "prototypeUrl": "https://www.figma.com/make/gXnDK5r5aV0dBxLF2uK4To/Jornadas?p=f&fullscreen=1",
+  "sourceDocs": [
+    "docs/discovery.md",
+    "docs/spike.md",
+    "docs/documentacao-completa.md",
+    "docs/especificacao.docx",
+    "docs/regras.txt"
+  ],
+  "contractVersion": "1.1",
+  "atVersion": 1
+}
