@@ -109,6 +109,11 @@ function expandEntry(name: string): EnvEntry | undefined {
   // Override de baseUrl vindo da UI (Conexão → "mudar URL do stage"). Só ativa se a env var existir;
   // sem ela, comportamento inalterado. Aponta a run inteira (login/smoke/specs) pro stage escolhido.
   if (process.env.QA_UI_BASE_URL) expanded.baseUrl = process.env.QA_UI_BASE_URL;
+  // Par do de cima: a org que a UI detectou na URL colada (o link do admin traz `/o/<id>/`). Sem
+  // isso, apontar o baseUrl pra outra org deixa todo path `/o/${getOrgId()}/` no tenant do profile —
+  // 404/redirect cross-tenant, o mesmo problema que o `orgIdOverride` do ProfileSwitcher documenta.
+  // Guardado pela env var: sem ela, comportamento inalterado.
+  if (process.env.QA_UI_ORG_ID) expanded.orgId = process.env.QA_UI_ORG_ID;
   expandedEnvCache.set(name, expanded);
   return expanded;
 }
