@@ -69,12 +69,17 @@ export const uploadFixtures = {
     /** AT: `banner.exe`. Mesma substituição que o README já abençoa pro `.exe`: o ZIP de 22 bytes. */
     bannerExe: join(ROOT, 'uploads/documents/Nova Pasta Compactada.zip'),
     /**
-     * AT: `banner-acima-limite.png`. PLACEHOLDER — e é EXATAMENTE a mesma lacuna do `pngOversized`
-     * acima, então aponta pro mesmo path de propósito: depositar 1 arquivo >50 MB destrava os dois
-     * projetos de uma vez. O limite do campo de banner na Twygo não está documentado em lugar nenhum
-     * do repo — confirmar antes de escolher o tamanho.
+     * AT: `banner-acima-limite.png`. **NÃO é placeholder e NÃO precisa de depósito.**
+     * O limite do campo de banner é **10 MB**, medido ao vivo no modal "Personalizar imagem"
+     * ("Tamanho máximo: 10 MB", 04/08/2026) — não os 50 MB do upload de Mídia. O
+     * `colibri-de-cores-vivas-na-natureza.jpg` (~16 MB) já passa desse limite E está num formato que o
+     * campo aceita (`.jpg`/`.jpeg`/`.png`, também lido na tela), então serve pro cenário "acima do
+     * limite" sem depositar nada.
+     * ⚠️ Não confundir com o `pngOversized` acima: aquele é >50 MB pro limite de Mídia. São gaps
+     * DIFERENTES — a 1ª versão desta entrada apontava pro mesmo TODO e teria travado este caso pra
+     * sempre esperando um arquivo que ele nem precisa.
      */
-    bannerOversized: join(ROOT, 'uploads/images/TODO-png-oversized.png'),
+    bannerOversized: join(ROOT, 'uploads/images/colibri-de-cores-vivas-na-natureza.jpg'),
     /**
      * PLACEHOLDERS — aqui o **nome ou os bytes são o caso de teste**, então não há substituto possível
      * entre os assets existentes. Todos são deriváveis de um PNG válido por copiar/renomear/truncar,

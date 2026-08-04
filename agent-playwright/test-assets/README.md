@@ -86,7 +86,7 @@ o **nome ou os bytes SÃO o caso de teste**.
 | `banner-novo.png` | `images.bannerNew` | `playwritgh.png` 158 KB | ✅ e **tem** que diferir do anterior (caso "trocar banner") |
 | `banner-invalido.txt` | `images.bannerUnsupportedTxt` | CSV ~24 KB | ✅ texto fora da lista aceita |
 | `banner.exe` | `images.bannerExe` | ZIP 22 bytes | ✅ mesma substituição já usada em `unsupportedExe` |
-| `banner-acima-limite.png` | `images.bannerOversized` | **PENDENTE** — aponta pro mesmo `TODO-png-oversized.png` do `pngOversized` | ❌ depositar 1 arquivo >50 MB destrava **os dois projetos**. ⚠️ o limite do campo de banner na Twygo não está documentado no repo — confirmar antes |
+| `banner-acima-limite.png` | `images.bannerOversized` | `colibri-de-cores-vivas-na-natureza.jpg` ~16 MB | ✅ **limite do banner é 10 MB**, medido ao vivo no modal ("Tamanho máximo: 10 MB", 04/08). O JPG de 16 MB já excede, e `.jpg` está entre os formatos aceitos (`.jpg`/`.jpeg`/`.png`, lidos na tela). **Não precisa de depósito** — e NÃO é o mesmo gap do `pngOversized`, que é >50 MB pro limite de Mídia |
 | `banner.png.exe` | `images.bannerDoubleExtension` | **PENDENTE** | ❌ extensão dupla é o caso de teste |
 | `banner` (sem extensão) | `images.bannerNoExtension` | **PENDENTE** | ❌ ausência de extensão é o caso |
 | `banner.PNG` (MIME real de imagem) | `images.bannerUppercaseExt` | **PENDENTE** | ❌ nome em maiúscula é o caso |
@@ -94,8 +94,13 @@ o **nome ou os bytes SÃO o caso de teste**.
 | `banner-vazio.png` | `images.bannerEmpty` | **PENDENTE** | ❌ 0 bytes |
 | `banner-minimo.png` | `images.bannerMinimal` | **PENDENTE** | ❌ valor de borda (mínimo aceito) — `playwritgh.png` 158 KB não expressa |
 
-Os 6 `PENDENTE` que não são o oversized são **triviais de derivar** de um PNG válido
-(copiar/renomear/truncar), mas o depósito é **manual**: Anti-pattern H proíbe gerar fixture em runtime.
+Sobram **5** `PENDENTE`, todos **triviais de derivar** de um PNG válido (copiar/renomear/truncar), mas o
+depósito é **manual**: Anti-pattern H proíbe gerar fixture em runtime.
+
+**Do campo, medido ao vivo em 04/08/2026** (modal "Personalizar imagem" da aba Banner): aceita
+`.jpg`, `.jpeg`, `.png`; **tamanho máximo 10 MB**; a tela mostra *dimensões recomendadas* mas **não
+declara mínimo** — então o caso `banner-minimo.png` da AT pode não ter borda inferior real pra validar.
+Confirmar com produto antes de depositar arquivo pra ele.
 
 > ⚠️ **O passo 4 de "Como adicionar um novo arquivo" (abaixo) não funciona como está escrito.**
 > `agent-playwright/.gitignore:86` tem `test-assets/uploads/**`, então **`git commit` não leva binário
