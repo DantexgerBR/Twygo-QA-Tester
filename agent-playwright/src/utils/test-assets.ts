@@ -49,6 +49,50 @@ export const uploadFixtures = {
      * Depositar uma imagem real >50 MB e atualizar este path pra destravar.
      */
     pngOversized: join(ROOT, 'uploads/images/TODO-png-oversized.png'),
+
+    // --- Banner de Jornada Padrão (projeto `jornadas`, suíte "Banners da Jornada Padrão") ---
+    // O AT de jornadas nomeia 11 arquivos literais. Metade tem substituto semântico entre os assets
+    // já catalogados (mesmo critério do `unsupportedExe`/`unsupportedBmp` acima: o que o TC valida é a
+    // CATEGORIA do arquivo, não o nome); a outra metade precisa de depósito porque o **nome ou os bytes
+    // SÃO o caso de teste** e nenhum asset existente os expressa. Ver a tabela de discrepâncias no
+    // README pra o mapeamento completo.
+    /** AT: `banner-valido.png`. Reusa o happy-path PNG — o TC valida upload aceito, não o nome. */
+    bannerValid: join(ROOT, 'uploads/images/Cursos Udemy.png'),
+    /**
+     * AT: `banner-novo.png` — usado no caso de TROCAR o banner já existente.
+     * Reusa o PNG pequeno de propósito: tem que ser arquivo DIFERENTE do `bannerValid`, senão a
+     * asserção "o banner mudou" não consegue distinguir antes de depois.
+     */
+    bannerNew: join(ROOT, 'uploads/images/playwritgh.png'),
+    /** AT: `banner-invalido.txt`. Reusa o CSV — texto, fora da lista aceita pelo campo de banner. */
+    bannerUnsupportedTxt: join(ROOT, 'uploads/documents/Teste - Aquivo para validar erros CSV.csv'),
+    /** AT: `banner.exe`. Mesma substituição que o README já abençoa pro `.exe`: o ZIP de 22 bytes. */
+    bannerExe: join(ROOT, 'uploads/documents/Nova Pasta Compactada.zip'),
+    /**
+     * AT: `banner-acima-limite.png`. PLACEHOLDER — e é EXATAMENTE a mesma lacuna do `pngOversized`
+     * acima, então aponta pro mesmo path de propósito: depositar 1 arquivo >50 MB destrava os dois
+     * projetos de uma vez. O limite do campo de banner na Twygo não está documentado em lugar nenhum
+     * do repo — confirmar antes de escolher o tamanho.
+     */
+    bannerOversized: join(ROOT, 'uploads/images/TODO-png-oversized.png'),
+    /**
+     * PLACEHOLDERS — aqui o **nome ou os bytes são o caso de teste**, então não há substituto possível
+     * entre os assets existentes. Todos são deriváveis de um PNG válido por copiar/renomear/truncar,
+     * mas o depósito é manual: Anti-pattern H (CLAUDE.md §7.6) proíbe gerar fixture em runtime.
+     * Enquanto não existirem, os casos correspondentes ficam `fixme`.
+     */
+    bannerDoubleExtension: join(ROOT, 'uploads/images/TODO-banner.png.exe'), // AT: `banner.png.exe`
+    bannerNoExtension: join(ROOT, 'uploads/images/TODO-banner'),             // AT: `banner` (sem extensão)
+    /** AT: `banner.PNG` com MIME real de imagem — valida extensão case-insensitive. Não pode reusar o
+     *  `Cursos Udemy.png`: o que se testa é o nome em maiúscula. */
+    bannerUppercaseExt: join(ROOT, 'uploads/images/TODO-banner.PNG'),
+    /** AT: `executavel.png` — extensão de imagem com conteúdo executável (MIME divergente). */
+    bannerMimeMismatch: join(ROOT, 'uploads/images/TODO-executavel.png'),
+    /** AT: `banner-vazio.png` — 0 bytes. */
+    bannerEmpty: join(ROOT, 'uploads/images/TODO-banner-vazio.png'),
+    /** AT: `banner-minimo.png` — valor de BORDA (dimensão/tamanho mínimo aceito). Não reusa o
+     *  `pngValidSmall` porque "mínimo" é o limite inferior, e 158 KB não o expressa. */
+    bannerMinimal: join(ROOT, 'uploads/images/TODO-banner-minimo.png'),
   },
   documents: {
     /** ~1.1 MB — PDF com texto real (`GRAMMAR e QUICK TIPS.pdf`).

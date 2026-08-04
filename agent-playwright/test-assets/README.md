@@ -73,6 +73,39 @@ substituto imperfeito). Pra cobertura ideal, depositar:
 | (BMP unsupported pra mídia) | — | ZIP de documents/ | ⚠️ Funciona, mas semanticamente cross-categoria |
 | (imagem >50 MB) | 51 MB | **PENDENTE** (placeholder `TODO-png-oversized.png`) | ❌ TC4 Mídia segue `fixme` até depositar imagem entre 50–100 MB |
 
+### Banner de Jornada Padrão — projeto `jornadas` (auditado 2026-08-04)
+
+O AT de `jornadas` (suíte "Banners da Jornada Padrão", 3 casos) nomeia **11 arquivos literais**.
+Metade tem substituto semântico entre os assets já catalogados — mesmo critério do `unsupportedExe`:
+o que o TC valida é a **categoria** do arquivo, não o nome. A outra metade precisa de depósito porque
+o **nome ou os bytes SÃO o caso de teste**.
+
+| Esperado pelo AT | Chave no helper | Substituto atual | Substituto OK? |
+|---|---|---|---|
+| `banner-valido.png` | `images.bannerValid` | `Cursos Udemy.png` 1.1 MB | ✅ o TC valida upload aceito |
+| `banner-novo.png` | `images.bannerNew` | `playwritgh.png` 158 KB | ✅ e **tem** que diferir do anterior (caso "trocar banner") |
+| `banner-invalido.txt` | `images.bannerUnsupportedTxt` | CSV ~24 KB | ✅ texto fora da lista aceita |
+| `banner.exe` | `images.bannerExe` | ZIP 22 bytes | ✅ mesma substituição já usada em `unsupportedExe` |
+| `banner-acima-limite.png` | `images.bannerOversized` | **PENDENTE** — aponta pro mesmo `TODO-png-oversized.png` do `pngOversized` | ❌ depositar 1 arquivo >50 MB destrava **os dois projetos**. ⚠️ o limite do campo de banner na Twygo não está documentado no repo — confirmar antes |
+| `banner.png.exe` | `images.bannerDoubleExtension` | **PENDENTE** | ❌ extensão dupla é o caso de teste |
+| `banner` (sem extensão) | `images.bannerNoExtension` | **PENDENTE** | ❌ ausência de extensão é o caso |
+| `banner.PNG` (MIME real de imagem) | `images.bannerUppercaseExt` | **PENDENTE** | ❌ nome em maiúscula é o caso |
+| `executavel.png` (MIME executável) | `images.bannerMimeMismatch` | **PENDENTE** | ❌ divergência nome×conteúdo é o caso |
+| `banner-vazio.png` | `images.bannerEmpty` | **PENDENTE** | ❌ 0 bytes |
+| `banner-minimo.png` | `images.bannerMinimal` | **PENDENTE** | ❌ valor de borda (mínimo aceito) — `playwritgh.png` 158 KB não expressa |
+
+Os 6 `PENDENTE` que não são o oversized são **triviais de derivar** de um PNG válido
+(copiar/renomear/truncar), mas o depósito é **manual**: Anti-pattern H proíbe gerar fixture em runtime.
+
+> ⚠️ **O passo 4 de "Como adicionar um novo arquivo" (abaixo) não funciona como está escrito.**
+> `agent-playwright/.gitignore:86` tem `test-assets/uploads/**`, então **`git commit` não leva binário
+> de fixture**. Só `README.md` e os 3 `.gitkeep` são versionados. Na prática o depósito é **por
+> máquina**, e este catálogo é o contrato que diz o que depositar. Quem chegar num checkout novo tem
+> **zero** asset (medido em 04/08/2026: `find test-assets/uploads -type f ! -name .gitkeep` = 0), e
+> nesse estado **toda** suíte de upload — não só a de banner — está inexecutável. Decidir de que lado
+> corrigir (remover o ignore e versionar, adotar Git LFS, ou trocar o passo 4 por instrução de
+> depósito) é decisão do TL.
+
 > **Limite GitHub**: arquivos individuais devem ser ≤100 MB (hard limit) e
 > idealmente ≤50 MB (soft warning). Pra cobertura "oversized" (>50 MB) sem
 > ultrapassar 100 MB, escolher arquivos entre 51–99 MB.
