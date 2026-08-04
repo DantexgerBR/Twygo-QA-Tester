@@ -18,6 +18,13 @@ export class JourneyIdentificationPage {
     const environment = getEnvByName(this.environmentName);
     const orgId = environment.orgId ?? getOrgId();
     const baseUrl = environment.baseUrl || getBaseUrl();
+    // Entrar pela VISÃO DE ADM antes do path da jornada. O storageState não carrega esse estado: cada
+    // test roda em contexto novo e, indo direto em `/o/<id>/journeys/new`, a app responde "Você não tem
+    // permissão para acessar esta página." A própria página de erro aponta o caminho — o link "Voltar"
+    // vai pra `/o/<id>/events?tab=events`, que é o landing do Administrador (`?profile=admin`, ver
+    // .claude/skills/trocar-perfil-twygo). Medido 04/08/2026: sem esta navegação, 4/4 vermelho no
+    // waitFor do tab-identification, mesmo com login novo e mesmo passando pela raiz limpa antes.
+    await safeGoto(this.page, new URL(`/o/${orgId}/events?tab=events&profile=admin`, baseUrl).toString());
     await safeGoto(this.page, new URL(`/o/${orgId}/journeys/new`, baseUrl).toString());
     await this.getIdentificationTab().waitFor({ state: 'visible', timeout: 60_000 });
     await fecharAvisosTwygo(this.page);
