@@ -257,28 +257,51 @@ Validar o caminho feliz da identificação.
 **Validation matrix**:
 | Cenário | Campo | Categoria | Input | Esperado |
 |---|---|---|---|---|
-| Nome vazio | Nome da jornada | A | "" | Campo "Nome" exibe estado de validação inválida e botão "Salvar" permanece desabilitado |
-| Nome só com espaços | Nome da jornada | A | "   " | Campo "Nome" exibe estado de validação inválida e botão "Salvar" permanece desabilitado |
+| Nome vazio | Nome da jornada | A | "" | Campo "Nome" fica com validação inválida; "Salvar" permanece HABILITADO e, ao ser acionado, o envio é bloqueado e o formulário exibe "O nome da jornada é obrigatório" |
+| Nome só com espaços | Nome da jornada | A | "   " | Idem "Nome vazio": inválido, envio bloqueado no submit com a mensagem de campo obrigatório |
 | Nome com um caractere | Nome da jornada | B | "J" | Campo "Nome" aceita "J" |
 | Nome com acentos e emoji | Nome da jornada | C | "Jornada de Ações 🎯" | Campo "Nome" preserva acentos e emoji sem quebrar a codificação |
 | Nome com script | Nome da jornada | D | "<script>alert(1)</script>" | Conteúdo é exibido escapado e nenhum alerta é executado |
-| Situação vazia | Situação | A | "" | Dropdown "Situação" exibe estado de validação inválida e botão "Salvar" permanece desabilitado |
 | Situação fora da lista | Situação | A | "Arquivado" | Opção "Arquivado" não é exibida no dropdown "Situação" |
-| Visibilidade vazia | Quem pode ver | A | "" | Dropdown "Quem pode ver" exibe estado de validação inválida e botão "Salvar" permanece desabilitado |
 | Visibilidade fora da lista | Quem pode ver | A | "Público" | Opção "Público" não é exibida no dropdown "Quem pode ver" |
-| Duração vazia | Duração | A | "" | Campo "Duração" exibe estado de validação inválida |
 | Duração mínima | Duração | B | "1" | Campo "Duração" aceita "1" |
-| Duração zero | Duração | B | "0" | Campo "Duração" exibe estado de validação inválida |
-| Duração textual | Duração | E | "abc" | Campo "Duração" rejeita texto e exibe estado de validação inválida |
-| Unidade vazia | Unidade | A | "" | Dropdown "Unidade" exibe estado de validação inválida |
+| Duração vazia / zero / textual / negativa | Duração | A/B/E | "" · "0" · "abc" · "-1" | ⚠️ **A CARACTERIZAR** — ver nota 3. Automatizado como `TC8b` em `test.fixme` (aparece como ⊘ no report) |
 | Unidade fora da lista | Unidade | A | "horas" | Opção "horas" não é exibida no dropdown "Unidade" |
 
+> **Correções aplicadas em 03/08/2026, medidas no stage (não presumidas):**
+> 1. A expectativa "botão Salvar permanece desabilitado" era mais estrita que o produto. O Twygo valida
+>    **no submit**: `Salvar` fica habilitado, o clique não cria nada (a URL segue em `/journeys/new`) e o
+>    formulário exibe `O nome da jornada é obrigatório`. Não é bug — é validate-on-submit.
+> 2. Removidos os cenários **"Situação vazia"**, **"Visibilidade vazia"** e **"Unidade vazia"**: os três
+>    controles são `<select>` nativos que abrem com opção pré-selecionada ("Em desenvolvimento",
+>    "Inscritos", "Dias"), então o estado vazio **não é alcançável pela UI**. A matriz negativa foi
+>    escrita como se fossem campos de texto. Ao gerar matriz da categoria A (campo obrigatório vazio),
+>    checar antes se o controle é select com default.
+> 3. **"Duração": regra NÃO caracterizada — a matriz antiga estava errada, mas a nova ainda não existe.**
+>    O campo é `type="text"` com sanitização de entrada e **nunca** recebe `aria-invalid` (o inválido
+>    aparece como mensagem no formulário). Só que **3 medições no stage deram 3 resultados diferentes**,
+>    dependendo de como o campo é editado:
+>    - `fill("0")` → virou `"1"`; e `"10"` quando o campo já continha `"1"` (o clear interno do `fill`
+>      dispara o sanitizador, que repõe valor, e o texto digitado concatena);
+>    - select-all + Delete + digitar `"0"` → ficou **vazio**;
+>    - `fill("")` → exibiu `A duração é obrigatória`; select-all + Delete → vazio **sem** mensagem.
+>
+>    Ou seja: o comportamento observado é artefato do método de interação tanto quanto do produto.
+>    **Não substituí por outra expectativa chutada.** Automatizado como `TC8b` em `test.fixme`, com as
+>    observações cruas em `CASOS_DURACAO` (`.data.ts`), pra a lacuna ficar visível no report (⊘) em vez
+>    de sumir. Fechar isso é decisão de produto: `0` e `"abc"` devem ser corrigidos em silêncio ou
+>    recusados com mensagem?
+> 4. ⚠️ **Cuidado ao acionar Salvar em cenário de Duração:** quando a sanitização deixa um valor válido,
+>    o formulário fica válido e **a jornada é criada de fato**. Uma sonda salvou por engano (id 858396,
+>    apagada e conferida em seguida). Caso de matriz não deve acionar Salvar, exceto quando o cenário
+>    for exatamente "envio bloqueado".
+
 ### Objetivo
-Validar a obrigatoriedade do nome sem inventar mensagem não documentada.
+Validar a obrigatoriedade do nome e o bloqueio do envio, com a mensagem real do produto.
 
 ### Passos
-1. Preencher o campo "Nome" com " "
-   → Campo "Nome" exibe estado de validação inválida e botão "Salvar" permanece desabilitado.
+1. Preencher o campo "Nome" com " " e acionar "Salvar"
+   → Campo "Nome" fica inválido, o envio é bloqueado e o formulário exibe "O nome da jornada é obrigatório".
 
 ## TC9 — Recalcular duração pelo período das tarefas
 **Prioridade**: high
@@ -293,7 +316,19 @@ Validar switch, bloqueio de campos e unidade do slider.
 1. Ativar o switch "Prolongar duração de acordo com o período das tarefas"
    → Campos "Duração" e "Unidade" ficam desabilitados.
 2. Aguardar "Duração" ser exibido
-   → Valor de "Duração" corresponde ao maior período configurado nas tarefas e o slider exibe a unidade selecionada.
+   → Campos "Duração" e "Unidade" ficam bloqueados, o valor de "Duração" passa a ser a **SOMA dos períodos das tarefas** configuradas no cronograma, o sistema recalcula a cada adição/edição/remoção de tarefa, e o slider exibe a unidade selecionada.
+
+> **Correção de 03/08/2026 — a AT dizia "maior período configurado", e a especificação diz SOMA.**
+> `docs/especificacao.docx` §4.1.2 ("Comportamento do 'Prolongar duração de acordo com o período das
+> tarefas'"), verbatim: *"O valor da Duração passa a ser calculado automaticamente **somando os períodos
+> das tarefas** configuradas no cronograma. A cada alteração de tarefa (adição, edição, remoção), o
+> sistema recalcula e atualiza o campo."* Com uma tarefa só, soma e máximo coincidem — por isso o erro
+> passou despercebido; com 2+ tarefas as duas leituras divergem.
+>
+> ⚠️ **Estado no stage (medido 03/08): o recálculo NÃO acontece.** Os campos são bloqueados como a spec
+> manda, mas a Duração fica em "1" mesmo com tarefa cobrindo do dia 1 ao dia 5. Automatizado em `TC9b`,
+> que fica VERMELHO de propósito — é detecção, não spec quebrado. Ver bug-report do run
+> `identificacao-da-jornada-padrao_20260803-123844`.
 
 ---
 suite: Acesso e regras de inscrição
@@ -606,6 +641,14 @@ preconditions:
 ---
 # Cadastro de fases
 
+> **Correção de 03/08/2026 — medido no stage, padrão que vale para o módulo inteiro.**
+> Campo numérico da Twygo **sanitiza a entrada em vez de invalidar**, e o botão **"Salvar" nunca fica
+> desabilitado** — a validação acontece no submit, com mensagem no formulário. Já confirmado em três
+> lugares independentes: `Duração` da Identificação, `Dia de início` da fase e `Progresso` da tarefa.
+> Expectativas do tipo "campo X exibe estado inválido e Salvar permanece desabilitado" descrevem um
+> comportamento que o produto não tem. Ao escrever matriz de categoria A/B/E para campo numérico,
+> medir antes: o provável é sanitização.
+
 ## TC25 — Cadastrar fase de um dia
 **Prioridade**: critical
 **Tipo**: ui
@@ -649,9 +692,9 @@ Validar término calculado e bloqueado.
 | Nome com um caractere | Nome da fase | B | "F" | Campo "Nome" aceita "F" |
 | Nome com acentos e emoji | Nome da fase | C | "Integração 🎯" | Campo "Nome" preserva acentos e emoji sem quebrar a codificação |
 | Nome com script | Nome da fase | D | "<script>alert(1)</script>" | Conteúdo é exibido escapado e nenhum alerta é executado |
-| Dia vazio | Dia de início | A | "" | Campo "Dia de início" exibe estado de validação inválida |
+| Dia vazio | Dia de início | A | "" | ⚠️ **A CARACTERIZAR** — medido 03/08: campo fica vazio, sem `aria-invalid` e sem mensagem própria. Ver nota da suíte |
 | Primeiro dia | Dia de início | B | "1" | Campo "Dia de início" aceita "1" |
-| Dia zero | Dia de início | B | "0" | Campo "Dia de início" exibe estado de validação inválida |
+| Dia zero | Dia de início | B | "0" | Campo **sanitiza** para "1"; "Salvar" permanece HABILITADO (validação no submit) |
 | Dia negativo | Dia de início | E | "-1" | Campo "Dia de início" exibe estado de validação inválida |
 | Dia textual | Dia de início | E | "abc" | Campo "Dia de início" rejeita texto e exibe estado de validação inválida |
 
@@ -675,6 +718,14 @@ preconditions:
   - Papéis do Time disponíveis como envolvidos
 ---
 # Cadastro de tarefas
+
+> **Correção de 03/08/2026 — medido no stage, padrão que vale para o módulo inteiro.**
+> Campo numérico da Twygo **sanitiza a entrada em vez de invalidar**, e o botão **"Salvar" nunca fica
+> desabilitado** — a validação acontece no submit, com mensagem no formulário. Já confirmado em três
+> lugares independentes: `Duração` da Identificação, `Dia de início` da fase e `Progresso` da tarefa.
+> Expectativas do tipo "campo X exibe estado inválido e Salvar permanece desabilitado" descrevem um
+> comportamento que o produto não tem. Ao escrever matriz de categoria A/B/E para campo numérico,
+> medir antes: o provável é sanitização.
 
 ## TC28 — Cadastrar tarefa de Aprendizagem
 **Prioridade**: critical
@@ -721,7 +772,7 @@ Validar campos específicos dos tipos não aprendizagem.
 | Nome com SQL injection | Nome da tarefa | D | "'; DROP TABLE tasks;--" | Conteúdo permanece sem efeito SQL e é exibido escapado |
 | Progresso mínimo | Progresso de conclusão | B | "1" | Campo "Progresso" aceita "1" |
 | Progresso máximo | Progresso de conclusão | B | "100" | Campo "Progresso" aceita "100" |
-| Progresso fora do limite | Progresso de conclusão | B | "101" | Campo "Progresso" exibe estado de validação inválida |
+| Progresso fora do limite | Progresso de conclusão | B | "101" | ⚠️ **A CARACTERIZAR** — o campo sanitiza em vez de invalidar (medido com "0" → "1"); limite superior não verificado |
 | Progresso textual | Progresso de conclusão | E | "abc" | Campo "Progresso" rejeita texto |
 | Carga horária mínima | Carga horária mínima | B | "1" | Campo "Carga horária" aceita "1" |
 | Carga horária máxima | Carga horária mínima | B | "999" | Campo "Carga horária" aceita "999" |
@@ -752,6 +803,16 @@ preconditions:
   - Infraestrutura de e-mail e notificações habilitada no ambiente
 ---
 # Ações automáticas
+
+> ⛔ **FORA DA FASE 1 — não executar esta suíte.** Decisão do time em 03/08/2026: as abas
+> **"Ações automáticas"** e **"Aprendizagem"** do formulário de Jornada Padrão entram na **Fase 2** e
+> não são usadas nesta entrega. Medido no stage: as duas ficam permanentemente `disabled` — testado em
+> jornada nova, com tarefa Manual, com tarefa Aprendizagem, com tarefa Mensagem e após reload. **Não é
+> defeito**, é escopo não entregue. Não abrir retrabalho por isso.
+>
+> Consequência pra automação: os TCs desta suíte ficam sem executor até a Fase 2, e o texto auxiliar da
+> tarefa tipo Mensagem ("As mensagens desta tarefa serão definidas na seção Ações automáticas...") pode
+> ser verificado, mas o destino que ele aponta ainda não existe.
 
 ## TC31 — Configurar ação de E-mail
 **Prioridade**: critical
